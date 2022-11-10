@@ -10,7 +10,7 @@ class CustomThemeData {
               brightness: Brightness.light,
               primary: Color(0xff08A74A),
               onPrimary: Colors.black,
-              secondary: Color(0xff121212),
+              secondary: Color(0xFFDFEFFD),
               onSecondary: Colors.white,
               error: Colors.red,
               onError: Colors.white,
@@ -21,34 +21,35 @@ class CustomThemeData {
             ),
             primaryColor: const Color(0xff08A74A),
             textTheme: TextTheme(
-              titleSmall: GoogleFonts.inter(
+              titleSmall: GoogleFonts.roboto(
                 fontSize: 15,
                 color: Colors.black54,
                 textStyle: const TextStyle(
                   overflow: TextOverflow.visible,
                 ),
               ),
-              titleMedium: GoogleFonts.inter(
+              titleMedium: GoogleFonts.roboto(
                 fontSize: 17,
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
+                //color: Colors.white,
+                fontWeight: FontWeight.w700,
               ),
-              titleLarge: GoogleFonts.inter(
+              titleLarge: GoogleFonts.roboto(
                 fontSize: 22,
                 fontWeight: FontWeight.w500,
               ),
-              labelSmall: GoogleFonts.inter(
+              labelSmall: GoogleFonts.roboto(
                 fontSize: 13,
                 fontWeight: FontWeight.w400,
               ),
-              labelMedium: GoogleFonts.inter(
+              labelMedium: GoogleFonts.roboto(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
+                color: Colors.grey.shade600,
                 textStyle: const TextStyle(
                   overflow: TextOverflow.visible,
                 ),
               ),
-              labelLarge: GoogleFonts.inter(
+              labelLarge: GoogleFonts.roboto(
                 fontSize: 19,
                 fontWeight: FontWeight.w400,
                 textStyle: const TextStyle(
@@ -56,13 +57,13 @@ class CustomThemeData {
                 ),
               ),
             ),
-            scaffoldBackgroundColor: const Color(0xff121212),
+            scaffoldBackgroundColor: Colors.white, //const Color(0xff121212),
             appBarTheme: AppBarTheme(
-              color: const Color(0xff08A74A),
-              centerTitle: true,
+              color: Colors.white,
+              centerTitle: false,
               titleTextStyle: GoogleFonts.inter(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
                 color: Colors.black,
               ),
               iconTheme: const IconThemeData(
@@ -166,5 +167,15 @@ class CustomThemeData {
               ),
             ),
           );
+  }
+
+  static List<BoxShadow> getShadow() {
+    return const [
+      BoxShadow(
+        color: Colors.black12,
+        blurRadius: 4,
+        offset: Offset(0, 1),
+      ),
+    ];
   }
 }

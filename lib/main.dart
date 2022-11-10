@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
             ),
             home: (logInBox!.get("isLoggedIn") == null ||
                     !logInBox!.get("isLoggedIn"))
-                ? const AuthenticationScreen()
+                ? const Home() //const Authentication()
                 : const Home(),
             builder: (context, child) {
               return MediaQuery(
