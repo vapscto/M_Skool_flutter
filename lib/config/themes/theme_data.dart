@@ -23,7 +23,7 @@ class CustomThemeData {
             textTheme: TextTheme(
               titleSmall: GoogleFonts.roboto(
                 fontSize: 15,
-                color: Colors.black54,
+                color: Colors.black,
                 textStyle: const TextStyle(
                   overflow: TextOverflow.visible,
                 ),

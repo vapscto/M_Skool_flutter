@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/attendance/screens/home_page.dart';
+import 'package:m_skool_flutter/exam/screen/exam_home.dart';
 import 'package:m_skool_flutter/feedback/screens/feedback_home.dart';
+import 'package:m_skool_flutter/fees/screens/fee_receipt_home.dart';
+import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
+import 'package:m_skool_flutter/timetable/screens/time_table_home.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -113,6 +117,98 @@ class _HomeState extends State<Home> {
               subtitle: const Text("Opens Feedback screen"),
               onTap: () {
                 Get.to(() => const FeedBackHome());
+              },
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            ListTile(
+              tileColor: Theme.of(context).primaryColor.withOpacity(0.2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              leading: CircleAvatar(
+                backgroundColor: Colors.green.shade200,
+                child: const Icon(
+                  Icons.date_range_outlined,
+                  color: Colors.white,
+                ),
+              ),
+              title: const Text(
+                "Exam",
+              ),
+              subtitle: const Text("Opens Exam screen"),
+              onTap: () {
+                Get.to(() => const ExamHome());
+              },
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            ListTile(
+              tileColor: Theme.of(context).primaryColor.withOpacity(0.2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              leading: CircleAvatar(
+                backgroundColor: Colors.green.shade200,
+                child: const Icon(
+                  Icons.date_range_outlined,
+                  color: Colors.white,
+                ),
+              ),
+              title: const Text(
+                "Library",
+              ),
+              subtitle: const Text("Opens Library screen"),
+              onTap: () {
+                Get.to(() => const LibraryHome());
+              },
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            ListTile(
+              tileColor: Theme.of(context).primaryColor.withOpacity(0.2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              leading: CircleAvatar(
+                backgroundColor: Colors.green.shade200,
+                child: const Icon(
+                  Icons.date_range_outlined,
+                  color: Colors.white,
+                ),
+              ),
+              title: const Text(
+                "Time table",
+              ),
+              subtitle: const Text("Opens Time table screen"),
+              onTap: () {
+                Get.to(() => const TimeTableHome());
+              },
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            ListTile(
+              tileColor: Theme.of(context).primaryColor.withOpacity(0.2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              leading: CircleAvatar(
+                backgroundColor: Colors.green.shade200,
+                child: const Icon(
+                  Icons.date_range_outlined,
+                  color: Colors.white,
+                ),
+              ),
+              title: const Text(
+                "Fee Receipt",
+              ),
+              subtitle: const Text("Opens Time Fee screen"),
+              onTap: () {
+                Get.to(() => const FeeReceiptHome());
               },
             )
           ],

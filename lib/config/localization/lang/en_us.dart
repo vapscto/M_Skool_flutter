@@ -14,4 +14,9 @@ const Map<String, String> enUS = {
   "Please Complete This Form To Report The Feedback And Issue To Vaps Technosoft - School":
       "Please Complete This Form To Report The Feedback And Issue To Vaps Technosoft - School",
   'Enter Feedback': 'Enter Feedback',
+  "Exam": "Exam",
+  "Subject Wise": "Subject Wise",
+  "Exam Wise": "Exam Wise",
+  "Select Exam": "Select Exam",
+  "Select Subject": "Select Subject",
 };
