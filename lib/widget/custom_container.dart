@@ -5,8 +5,12 @@ import 'package:m_skool_flutter/config/themes/theme_data.dart';
 
 class CustomContainer extends StatelessWidget {
   final Widget child;
+  final Color? color;
+  final LinearGradient? gradient;
   const CustomContainer({
     super.key,
+    this.color,
+    this.gradient,
     required this.child,
   });
 
@@ -15,9 +19,10 @@ class CustomContainer extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: color ?? Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: CustomThemeData.getShadow(),
+        gradient: gradient,
       ),
       child: child,
     );

@@ -9,7 +9,9 @@ class CustomAppBar {
 
   PreferredSizeWidget getAppBar() {
     return AppBar(
-      title: Text(title),
+      title: Text(
+        title,
+      ),
       leadingWidth: 30.0,
       leading: const CustomGoBackButton(),
     );

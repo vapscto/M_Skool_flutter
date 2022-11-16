@@ -265,7 +265,7 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.to(() => AttendanceDetails());
+                      Get.to(() => const AttendanceDetails());
                     },
                     borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(16.0),

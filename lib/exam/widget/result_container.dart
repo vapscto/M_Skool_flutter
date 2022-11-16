@@ -15,6 +15,7 @@ class ResultContainerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
+      color: Colors.red.shade100,
       child: Column(
         children: [
           Container(

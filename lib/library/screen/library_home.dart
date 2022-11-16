@@ -37,7 +37,7 @@ class LibraryStatusDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: (Get.size.width * 0.5) - 48,
+      //width: (Get.size.width * 0.5) - 48,
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),
@@ -47,12 +47,22 @@ class LibraryStatusDate extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.titleMedium,
+            style:
+                Theme.of(context).textTheme.labelMedium!.merge(const TextStyle(
+                      fontSize: 14.0,
+                    )),
           ),
           const SizedBox(
             height: 8.0,
           ),
-          Text(date)
+          Text(
+            date,
+            style: Theme.of(context).textTheme.titleSmall!.merge(
+                  const TextStyle(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+          )
         ],
       ),
     );

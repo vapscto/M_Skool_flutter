@@ -13,6 +13,21 @@ List months = [
   'Dec'
 ];
 
+List fullMonths = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+
 List numberList = [
   "00",
   "01",
@@ -90,3 +105,53 @@ List numberList = [
   "73",
   "74"
 ];
+String getFormatedDate(DateTime dt) {
+  String formattedDt = "";
+  if (dt.day < 10) {
+    formattedDt += "0${dt.day}";
+  } else {
+    formattedDt += dt.day.toString();
+  }
+
+  switch (dt.month) {
+    case 1:
+      formattedDt += " Jan";
+      break;
+    case 2:
+      formattedDt += " Feb";
+      break;
+    case 3:
+      formattedDt += " Mar";
+      break;
+    case 4:
+      formattedDt += " Apr";
+      break;
+    case 6:
+      formattedDt += " Jun";
+      break;
+    case 7:
+      formattedDt += " Jul";
+      break;
+    case 8:
+      formattedDt += " Aug";
+      break;
+    case 9:
+      formattedDt += " Sep";
+      break;
+    case 10:
+      formattedDt += " Oct";
+      break;
+    case 11:
+      formattedDt += " Nov";
+      break;
+    case 12:
+      formattedDt += " Dec";
+      break;
+    case 5:
+      formattedDt += " May";
+      break;
+  }
+  formattedDt += " ${dt.year}";
+
+  return formattedDt;
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,7 +9,7 @@ class CustomThemeData {
         ? ThemeData(
             colorScheme: const ColorScheme(
               brightness: Brightness.light,
-              primary: Color(0xff08A74A),
+              primary: Color(0xFF1E38FC),
               onPrimary: Colors.black,
               secondary: Color(0xFFDFEFFD),
               onSecondary: Colors.white,
@@ -19,7 +20,7 @@ class CustomThemeData {
               surface: Colors.white,
               onSurface: Color(0xff525252),
             ),
-            primaryColor: const Color(0xff08A74A),
+            primaryColor: const Color(0xFF1E38FC),
             textTheme: TextTheme(
               titleSmall: GoogleFonts.roboto(
                 fontSize: 15,
@@ -59,26 +60,29 @@ class CustomThemeData {
             ),
             scaffoldBackgroundColor: Colors.white, //const Color(0xff121212),
             appBarTheme: AppBarTheme(
-              color: Colors.white,
+              //color: Colors.white,
               centerTitle: false,
               titleTextStyle: GoogleFonts.inter(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
-                color: Colors.black,
+                // color: Colors.black,
               ),
               iconTheme: const IconThemeData(
-                color: Colors.black,
+                color: Colors.white,
               ),
               elevation: 1,
             ),
             bottomAppBarTheme: const BottomAppBarTheme(
-              color: Color(0xff121212),
+              color: Colors.white,
               elevation: 5,
             ),
             cardTheme: const CardTheme(
               color: Colors.white,
               elevation: 4,
               shadowColor: Colors.white,
+            ),
+            tabBarTheme: const TabBarTheme(
+              unselectedLabelColor: Colors.black54,
             ),
             shadowColor: const Color(0xffBDC8DF).withOpacity(0.7),
             textButtonTheme: TextButtonThemeData(
@@ -130,7 +134,7 @@ class CustomThemeData {
               labelSmall: TextStyle(
                 fontSize: Get.height * 0.0101,
                 fontWeight: FontWeight.w500,
-                color: Colors.green,
+                color: Get.theme.primaryColor,
               ),
             ),
             scaffoldBackgroundColor: Colors.black87,
@@ -177,5 +181,28 @@ class CustomThemeData {
         offset: Offset(0, 1),
       ),
     ];
+  }
+
+  static void changeStatusBarColor(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor:
+            MediaQuery.of(context).platformBrightness == Brightness.light
+                ? const Color(0xFF1E38FC)
+                : Colors.black,
+        statusBarIconBrightness:
+            MediaQuery.of(context).platformBrightness == Brightness.light
+                ? Brightness.dark
+                : Brightness.light,
+        systemNavigationBarColor:
+            MediaQuery.of(context).platformBrightness == Brightness.light
+                ? Colors.white
+                : Colors.black,
+        systemNavigationBarIconBrightness:
+            MediaQuery.of(context).platformBrightness == Brightness.light
+                ? Brightness.dark
+                : Brightness.light,
+      ),
+    );
   }
 }

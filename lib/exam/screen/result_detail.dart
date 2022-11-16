@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/exam/model/result_model.dart';
+import 'package:m_skool_flutter/exam/widget/result_analysis_item.dart';
 import 'package:m_skool_flutter/exam/widget/result_container.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -73,10 +74,13 @@ class _ResultDetailState extends State<ResultDetail> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            VapsContainer(
-              child: Column(
-                children: [
-                  Container(
+            const SizedBox(
+              height: 12.0,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
                     //padding: const EdgeInsets.all(12.0),
                     decoration: BoxDecoration(
                       color: Theme.of(context).scaffoldBackgroundColor,
@@ -139,10 +143,12 @@ class _ResultDetailState extends State<ResultDetail> {
                       onChanged: (s) {},
                     ),
                   ),
-                  const SizedBox(
-                    height: 12.0,
-                  ),
-                  Container(
+                ),
+                const SizedBox(
+                  width: 12.0,
+                ),
+                Expanded(
+                  child: Container(
                     //padding: const EdgeInsets.all(12.0),
                     decoration: BoxDecoration(
                       color: Theme.of(context).scaffoldBackgroundColor,
@@ -209,14 +215,17 @@ class _ResultDetailState extends State<ResultDetail> {
                       onChanged: (s) {},
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             const SizedBox(
-              height: 16.0,
+              height: 24.0,
             ),
-            ResultContainerWidget(
-                title: "English Literature", resultModel: resultModel)
+            // ResultContainerWidget(
+            //     title: "English Literature", resultModel: resultModel)
+
+            ResultAnalysisItem(
+                color: Colors.red.shade100, type: "English Literature"),
           ],
         ),
       ),

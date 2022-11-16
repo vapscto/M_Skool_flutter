@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/attendance/screens/home_page.dart';
+import 'package:m_skool_flutter/certificates/screens/cert_home.dart';
+import 'package:m_skool_flutter/coe/screen/coe_home.dart';
+import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/exam/screen/exam_home.dart';
 import 'package:m_skool_flutter/feedback/screens/feedback_home.dart';
 import 'package:m_skool_flutter/fees/screens/fee_receipt_home.dart';
@@ -30,6 +33,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    CustomThemeData.changeStatusBarColor(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
@@ -209,6 +213,52 @@ class _HomeState extends State<Home> {
               subtitle: const Text("Opens Time Fee screen"),
               onTap: () {
                 Get.to(() => const FeeReceiptHome());
+              },
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            ListTile(
+              tileColor: Theme.of(context).primaryColor.withOpacity(0.2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              leading: CircleAvatar(
+                backgroundColor: Colors.green.shade200,
+                child: const Icon(
+                  Icons.date_range_outlined,
+                  color: Colors.white,
+                ),
+              ),
+              title: const Text(
+                "Certificate",
+              ),
+              subtitle: const Text("Opens Time Certificate screen"),
+              onTap: () {
+                Get.to(() => const CertificateHomeScreen());
+              },
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            ListTile(
+              tileColor: Theme.of(context).primaryColor.withOpacity(0.2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              leading: CircleAvatar(
+                backgroundColor: Colors.green.shade200,
+                child: const Icon(
+                  Icons.date_range_outlined,
+                  color: Colors.white,
+                ),
+              ),
+              title: const Text(
+                "COE",
+              ),
+              subtitle: const Text("Opens Time COE screen"),
+              onTap: () {
+                Get.to(() => const CoeHome());
               },
             )
           ],

@@ -19,4 +19,13 @@ const Map<String, String> enUS = {
   "Exam Wise": "Exam Wise",
   "Select Exam": "Select Exam",
   "Select Subject": "Select Subject",
+  " Reason ": " Reason ",
+  'Type your reason here.': 'Type your reason here.',
+  " Certificate Type ": " Certificate Type ",
+  " Date ": " Date ",
+  'Select Date': 'Select Date',
+  "You didn't selected the date": "You didn't selected the date",
+  "COE": "COE",
+  "Select Month": "Select Month",
+  "View File": "View File",
 };

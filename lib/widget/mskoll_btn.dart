@@ -9,7 +9,7 @@ class MSkollBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Theme.of(context).primaryColor,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -20,7 +20,7 @@ class MSkollBtn extends StatelessWidget {
         title,
         style: Theme.of(context).textTheme.labelSmall!.merge(
               const TextStyle(
-                color: Color(0xFF35658F),
+                color: Colors.white,
                 letterSpacing: 0.3,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,

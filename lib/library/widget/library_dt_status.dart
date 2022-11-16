@@ -25,12 +25,25 @@ class LibraryStatusDate extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context).textTheme.titleSmall!.merge(
+                  const TextStyle(
+                    fontSize: 14.0,
+                  ),
+                ),
+            maxLines: 1,
           ),
           const SizedBox(
             height: 8.0,
           ),
-          Text(date)
+          Text(
+            date,
+            style: Theme.of(context).textTheme.titleSmall!.merge(
+                  const TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+          )
         ],
       ),
     );
