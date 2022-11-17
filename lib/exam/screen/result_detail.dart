@@ -116,7 +116,10 @@ class _ResultDetailState extends State<ResultDetail> {
                           style: Theme.of(context)
                               .textTheme
                               .labelLarge!
-                              .merge(TextStyle(color: Colors.grey.shade600)),
+                              .merge(TextStyle(
+                                color: Colors.grey.shade600,
+                                fontSize: 19.0,
+                              )),
                         ),
                       ),
                       icon: const Icon(
@@ -134,9 +137,10 @@ class _ResultDetailState extends State<ResultDetail> {
                                 .textTheme
                                 .labelSmall!
                                 .merge(const TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 16.0,
-                                    letterSpacing: 0.3)),
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16.0,
+                                  letterSpacing: 0.3,
+                                )),
                           ),
                         ),
                       ),
@@ -185,10 +189,9 @@ class _ResultDetailState extends State<ResultDetail> {
                           widget.resultType == 0
                               ? "Select Exam".tr
                               : "Select Subject".tr,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge!
-                              .merge(TextStyle(color: Colors.grey.shade600)),
+                          style: Theme.of(context).textTheme.labelLarge!.merge(
+                              TextStyle(
+                                  color: Colors.grey.shade600, fontSize: 14)),
                         ),
                       ),
                       icon: const Icon(

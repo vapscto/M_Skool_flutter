@@ -1,6 +1,8 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class ResultAnalysisItem extends StatelessWidget {
@@ -12,74 +14,148 @@ class ResultAnalysisItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(
-        12.0,
-      ),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: color.withOpacity(0.4),
+        color: color.withOpacity(0.2),
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Chip(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-            backgroundColor: color,
-            label: Text(type),
-          ),
-          const SizedBox(
-            height: 12.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          Padding(
+            padding: const EdgeInsets.all(
+              12.0,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Chip(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0, vertical: 6.0),
+                  backgroundColor: color,
+                  label: Text(type),
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Mark Obtained",
-                      style: Theme.of(context).textTheme.labelMedium,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Mark Obtained",
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                        const SizedBox(
+                          height: 6.0,
+                        ),
+                        Text(
+                          "10",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .merge(const TextStyle(fontSize: 20.0)),
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 6.0,
-                    ),
-                    Text(
-                      "10",
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
-                          .merge(const TextStyle(fontSize: 20.0)),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "Grade",
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                        const SizedBox(
+                          height: 6.0,
+                        ),
+                        Text(
+                          "A+",
+                          style: Theme.of(context).textTheme.titleMedium!.merge(
+                              const TextStyle(
+                                  fontSize: 20.0, color: Color(0xFF0F8D85))),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Grade",
-                      style: Theme.of(context).textTheme.labelMedium,
+              ],
+            ),
+          ),
+          const Divider(
+            thickness: 1.5,
+            height: 1.5,
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: MarksAnalysisItem(
+                      marks: "20",
+                      title: "Class Highest",
                     ),
-                    const SizedBox(
-                      height: 6.0,
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: MarksAnalysisItem(
+                      marks: "18",
+                      title: "Section Highest",
                     ),
-                    Text(
-                      "A+",
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
-                          .merge(const TextStyle(fontSize: 20.0)),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: MarksAnalysisItem(
+                      marks: "14.5",
+                      title: "Section Avg",
                     ),
-                  ],
-                ),
-              ),
-            ],
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: MarksAnalysisItem(
+                      marks: "12.5",
+                      title: "Class Avg",
+                    ),
+                  ),
+                ]),
           ),
         ],
       ),
     );
+  }
+}
+
+class MarksAnalysisItem extends StatelessWidget {
+  final String marks;
+  final String title;
+  const MarksAnalysisItem({
+    Key? key,
+    required this.marks,
+    required this.title,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Text(
+        marks,
+        style: Theme.of(context).textTheme.titleMedium,
+      ),
+      const SizedBox(
+        height: 6.0,
+      ),
+      Text(
+        title,
+        //maxLines: 2,
+        textAlign: TextAlign.center,
+        style: Theme.of(context)
+            .textTheme
+            .labelMedium!
+            .merge(TextStyle(fontSize: Get.width * 0.0287)),
+      )
+    ]);
   }
 }

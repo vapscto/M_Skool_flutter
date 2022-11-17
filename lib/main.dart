@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
+import 'package:m_skool_flutter/screens/splash_screen.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'config/localization/localization_services.dart';
@@ -23,6 +24,9 @@ Box? localeServiceBox;
 Box? logInBox;
 Box? cookieBox;
 Box? profileBox;
+Box? institutionalCode;
+Box? institutionalCookie;
+Box? importantIds;
 
 Logger logger =
     Logger(printer: PrettyPrinter(methodCount: 0), filter: MyFilter());
@@ -36,6 +40,10 @@ void main() async {
   localeServiceBox = await Hive.openBox("language");
   logInBox = await Hive.openBox("login");
   Hive.openBox("cookie").then((value) => cookieBox = value);
+  Hive.openBox("institutionalCode").then((value) => institutionalCode = value);
+  Hive.openBox("insCookie").then((value) => institutionalCookie = value);
+  importantIds = await Hive.openBox("commonCodes");
+
   profileBox = await Hive.openBox("profileData");
   if (themeBox!.get("isLightMode") != null) {
     themeData.isLightMode.value = themeBox!.get("isLightMode");
@@ -68,10 +76,11 @@ class MyApp extends StatelessWidget {
               'en',
               'US',
             ),
-            home: (logInBox!.get("isLoggedIn") == null ||
-                    !logInBox!.get("isLoggedIn"))
-                ? const Home() //const Authentication()
-                : const Home(),
+            home: SplashScreen(),
+            // home: (logInBox!.get("isLoggedIn") == null ||
+            //         !logInBox!.get("isLoggedIn"))
+            //     ? const Home() //const Authentication()
+            //     : const Home(),
             builder: (context, child) {
               return MediaQuery(
                   data: MediaQuery.of(context).copyWith(

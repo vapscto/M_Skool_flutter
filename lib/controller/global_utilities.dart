@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
 import '../main.dart';
@@ -9,6 +10,13 @@ RxBool isPageLoading = false.obs;
 RxString mobileNumber = "".obs;
 RxString passWord = "".obs;
 RxInt currentAuthTab = 0.obs;
+
+Dio? dio;
+
+Dio getGlobalDio() {
+  dio ??= Dio();
+  return dio!;
+}
 
 Future<bool> checkConnectivity() async {
   var connectivityResult = await (Connectivity().checkConnectivity());
@@ -26,6 +34,13 @@ Map<String, dynamic> getSession() {
   };
   return header;
 }
+
+// Map<String,dynamic> getInsSession(){
+//   Map<String, dynamic> header = {
+//     "cookie": cookieBox!.get("session"),
+//   };
+//   return header;
+// }
 
 DateTime getDateTimeFromSeconds(
   int seconds,

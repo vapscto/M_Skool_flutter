@@ -28,4 +28,6 @@ const Map<String, String> enUS = {
   "COE": "COE",
   "Select Month": "Select Month",
   "View File": "View File",
+  "Please provide an institutional code":
+      "Please provide an institutional code",
 };
