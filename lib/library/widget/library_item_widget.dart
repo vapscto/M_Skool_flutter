@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/library/model/library_data_model.dart';
 import 'package:m_skool_flutter/library/widget/library_dt_status.dart';
 import 'package:m_skool_flutter/library/widget/library_sub_item.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class LibraryItemWidget extends StatelessWidget {
+  final Color color;
+  final LibraryDetailsValues bookDetails;
   const LibraryItemWidget({
     Key? key,
+    required this.color,
+    required this.bookDetails,
   }) : super(key: key);
 
   @override
@@ -13,7 +19,7 @@ class LibraryItemWidget extends StatelessWidget {
     return CustomContainer(
       child: Container(
         decoration: BoxDecoration(
-            color: Color.fromARGB(101, 255, 232, 231),
+            color: color.withOpacity(0.10),
             borderRadius: BorderRadius.circular(10.0)),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -21,26 +27,29 @@ class LibraryItemWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Too Good To Be True",
+                bookDetails.lMBBookTitle!,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(
                 height: 8.0,
               ),
-              const LibrarySubItem(title: "Accession No", value: "2011202"),
+              LibrarySubItem(
+                  title: "Accession No", value: bookDetails.lMBANOAccessionNo!),
               const SizedBox(
                 height: 12.0,
               ),
-              const LibrarySubItem(title: "Status", value: "Issued"),
+              LibrarySubItem(title: "Status", value: bookDetails.lBTRStatus!),
               const SizedBox(
                 height: 12.0,
               ),
-              const LibrarySubItem(title: "Total Fine", value: "₹ 100"),
+              LibrarySubItem(
+                  title: "Total Fine", value: "₹ ${bookDetails.lBTRTotalFine}"),
               const SizedBox(
                 height: 12.0,
               ),
-              const LibrarySubItem(
-                  title: "Total Fine Collected", value: "₹ 110"),
+              LibrarySubItem(
+                  title: "Total Fine Collected",
+                  value: "₹ ${bookDetails.lBTRFineCollected}"),
               const SizedBox(
                 height: 12.0,
               ),
@@ -53,28 +62,37 @@ class LibraryItemWidget extends StatelessWidget {
                     Expanded(
                       child: LibraryStatusDate(
                         title: "Issued Date",
-                        date: "10 Oct 2022",
+                        date: bookDetails.lBTRIssuedDate == null
+                            ? "N/A"
+                            : getFormatedDate(
+                                DateTime.parse(bookDetails.lBTRIssuedDate!)),
                         color: Theme.of(context).colorScheme.secondary,
                       ),
                     ),
                     const SizedBox(
                       width: 8.0,
                     ),
-                    const Expanded(
+                    Expanded(
                       child: LibraryStatusDate(
                         title: "Due Date",
-                        date: "12 Oct 2022",
-                        color: Color(0xFFFF968F),
+                        date: bookDetails.lBTRDueDate == null
+                            ? "N/A"
+                            : getFormatedDate(
+                                DateTime.parse(bookDetails.lBTRDueDate!)),
+                        color: const Color(0xFFFF968F),
                       ),
                     ),
                     const SizedBox(
                       width: 8.0,
                     ),
-                    const Expanded(
+                    Expanded(
                       child: LibraryStatusDate(
                         title: "Return Date",
-                        date: "11 Oct 2022",
-                        color: Color(0xFFB9F0B8),
+                        date: bookDetails.lBTRReturnedDate == null
+                            ? "N/A"
+                            : getFormatedDate(
+                                DateTime.parse(bookDetails.lBTRReturnedDate!)),
+                        color: const Color(0xFFB9F0B8),
                       ),
                     ),
                   ],

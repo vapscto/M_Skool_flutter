@@ -91,7 +91,7 @@ class ResultAnalysisItem extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
+                children: const [
                   Expanded(
                     flex: 1,
                     child: MarksAnalysisItem(
@@ -110,14 +110,14 @@ class ResultAnalysisItem extends StatelessWidget {
                     flex: 1,
                     child: MarksAnalysisItem(
                       marks: "14.5",
-                      title: "Section Avg",
+                      title: "Section Average",
                     ),
                   ),
                   Expanded(
                     flex: 1,
                     child: MarksAnalysisItem(
                       marks: "12.5",
-                      title: "Class Avg",
+                      title: "Class Average",
                     ),
                   ),
                 ]),
@@ -151,10 +151,14 @@ class MarksAnalysisItem extends StatelessWidget {
         title,
         //maxLines: 2,
         textAlign: TextAlign.center,
-        style: Theme.of(context)
-            .textTheme
-            .labelMedium!
-            .merge(TextStyle(fontSize: Get.width * 0.0287)),
+        style: Theme.of(context).textTheme.titleSmall!.merge(
+              TextStyle(
+                // fontSize: Get.width * 0.0287,
+                fontWeight: FontWeight.w500,
+                color: Colors.grey.shade700,
+                letterSpacing: 0.2,
+              ),
+            ),
       )
     ]);
   }

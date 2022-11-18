@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 List months = [
   'Jan',
   'Feb',
@@ -151,7 +153,18 @@ String getFormatedDate(DateTime dt) {
       formattedDt += " May";
       break;
   }
-  formattedDt += " ${dt.year}";
+  formattedDt += " ${dt.year % 100}";
 
   return formattedDt;
 }
+
+List<Color> colors = [
+  Colors.green.shade100,
+  Colors.redAccent.shade100,
+  Colors.purpleAccent.shade100,
+  Colors.pinkAccent.shade100,
+  Colors.greenAccent.shade100,
+  Colors.tealAccent.shade100,
+  Colors.limeAccent.shade100,
+  Colors.deepOrange.shade100,
+];

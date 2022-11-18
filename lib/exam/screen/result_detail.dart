@@ -66,10 +66,10 @@ class _ResultDetailState extends State<ResultDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-              title:
-                  widget.resultType == 0 ? "Exam Wise".tr : "Subject Wise".tr)
-          .getAppBar(),
+      // appBar: CustomAppBar(
+      //         title:
+      //             widget.resultType == 0 ? "Exam Wise".tr : "Subject Wise".tr)
+      //     .getAppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(

@@ -52,6 +52,9 @@ class AuthenticateUserApi {
     await importantIds!.put(URLS.asmayId, loginSuccessModel.asmaYId);
     await importantIds!.put(URLS.ivrmrtId, 0);
     await importantIds!.put(URLS.amstId, loginSuccessModel.amsTId);
+    await logInBox!.put("userName", userName);
+    await logInBox!.put("password", password);
+    // await logInBox!.put("logBasUrl", loginBaseUrl);
     return Future.value(loginSuccessModel);
   }
 }

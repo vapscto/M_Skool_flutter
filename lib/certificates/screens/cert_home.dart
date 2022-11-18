@@ -3,11 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/certificates/screens/apply_now.dart';
 import 'package:m_skool_flutter/certificates/screens/view_details.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/controller/tab_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
 class CertificateHomeScreen extends StatefulWidget {
-  const CertificateHomeScreen({super.key});
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  const CertificateHomeScreen(
+      {super.key,
+      required this.loginSuccessModel,
+      required this.mskoolController});
 
   @override
   State<CertificateHomeScreen> createState() => _CertificateHomeScreenState();
@@ -19,15 +26,19 @@ class _CertificateHomeScreenState extends State<CertificateHomeScreen>
   final TabStateController tabStateController =
       Get.put<TabStateController>(TabStateController());
 
-  final List<Widget> tabsChildren = const [
-    ApplyNow(),
-    ViewDetails(),
-  ];
+  final List<Widget> tabsChildren = [];
 
   final PageController pageViewController = PageController();
 
   @override
   void initState() {
+    tabsChildren.addAll([
+      ApplyNow(
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController,
+      ),
+      ViewDetails(),
+    ]);
     tabController = TabController(length: 2, vsync: this);
     tabController!.addListener(() {
       tabStateController.updateSelectedIndex(tabController!.index);

@@ -1,6 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/categories_api_item.dart';
 
 import '../main.dart';
 
@@ -30,7 +32,7 @@ Future<bool> checkConnectivity() async {
 
 Map<String, dynamic> getSession() {
   Map<String, dynamic> header = {
-    "cookie": cookieBox!.get("session"),
+    "Cookie": cookieBox!.get("cookie"),
   };
   return header;
 }
@@ -57,4 +59,18 @@ DateTime getDateTimeFromSeconds(
 
 toCapitalized(String value) {
   return value.capitalize;
+}
+
+String baseUrlFromInsCode(String pageName, MskoolController mskoolController) {
+  for (int i = 0;
+      i < mskoolController.universalInsCodeModel!.value.apiarray.values.length;
+      i++) {
+    final CategoriesApiItem api = mskoolController
+        .universalInsCodeModel!.value.apiarray.values
+        .elementAt(i);
+    if (api.iivrscurLAPIName.toLowerCase() == pageName) {
+      return api.iivrscurLAPIURL;
+    }
+  }
+  return "";
 }

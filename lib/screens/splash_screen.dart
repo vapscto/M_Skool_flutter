@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:m_skool_flutter/apis/authenticate_user_api.dart';
 import 'package:m_skool_flutter/apis/institutional_code_api.dart';
+import 'package:m_skool_flutter/config/themes/theme_data.dart';
+import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/institutional_code_model.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/home.dart';
 import 'package:m_skool_flutter/screens/institutional_login.dart';
 import 'package:m_skool_flutter/screens/login_screen.dart';
@@ -26,6 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     //InstitutionalCodeApi.instance.loginWithInsCode("DEMOBGH");
+    CustomThemeData.changeStatusBarColor(context);
     return Scaffold(
       body: FutureBuilder<Widget>(
           future: handleAuth(),
@@ -89,14 +95,31 @@ class _SplashScreenState extends State<SplashScreen> {
           .loginWithInsCode(institutionalCode!.get("institutionalCode"), true);
 
       mskoolController.updateUniversalInsCodeModel(codeModel);
-      if (institutionalCode!.get("isLoggedIn") == null ||
-          !institutionalCode!.get("isLoggedIn")) {
+      if (logInBox!.get("isLoggedIn") == null || !logInBox!.get("isLoggedIn")) {
         return Future.value(LoginScreen(
           mskoolController: mskoolController,
         ));
       }
 
-      return Future.value(const Home());
+      String userName = logInBox!.get("userName");
+      String password = logInBox!.get("password");
+      int miId = importantIds!.get(URLS.miId);
+      String loginBaseUrl = "";
+      for (int i = 0; i < codeModel.apiarray.values.length; i++) {
+        final CategoriesApiItem apiItem =
+            codeModel.apiarray.values.elementAt(i);
+        if (apiItem.iivrscurLAPIName.toLowerCase() == "login") {
+          loginBaseUrl = apiItem.iivrscurLAPIURL;
+        }
+      }
+      final LoginSuccessModel loginSuccessModel = await AuthenticateUserApi
+          .instance
+          .authenticateNow(userName, password, miId, loginBaseUrl);
+
+      return Future.value(Home(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+      ));
     } on Exception catch (e) {
       debugPrint(e.toString());
       return Future.error("error");

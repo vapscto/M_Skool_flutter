@@ -140,7 +140,7 @@ class _EmailPasswordLoginState extends State<EmailPasswordLogin> {
                             Fluttertoast.showToast(
                                 msg: "Logged in successfully");
                             logInBox!.put("isLoggedIn", true);
-                            Get.offAll(() => const Home());
+                            //Get.offAll(() => const Home());
                           } else {
                             print("Failed");
                           }

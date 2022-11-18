@@ -28,4 +28,7 @@ class URLS {
   // Endpoints for different Categories
 
   static String login = "api/LoginFacade";
+  static String lib = "api/StudentDashboardFacade/onclick_LIB/";
+  static String getCertitificateType =
+      "api/TransferCertificateFacade/getdetails/";
 }

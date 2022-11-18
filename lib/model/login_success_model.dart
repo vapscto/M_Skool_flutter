@@ -252,16 +252,16 @@ class MiIdList {
 
 class Staffmobileappprivileges {
   String? type;
-  List<Values>? values;
+  List<LoginValues>? values;
 
   Staffmobileappprivileges({this.type, this.values});
 
   Staffmobileappprivileges.fromJson(Map<String, dynamic> json) {
     type = json['\$type'];
     if (json['\$values'] != null) {
-      values = <Values>[];
+      values = <LoginValues>[];
       json['\$values'].forEach((v) {
-        values!.add(Values.fromJson(v));
+        values!.add(LoginValues.fromJson(v));
       });
     }
   }
@@ -276,7 +276,7 @@ class Staffmobileappprivileges {
   }
 }
 
-class Values {
+class LoginValues {
   int? amsTId;
   int? smscreditalert;
   bool? smsalrtflag;
@@ -323,7 +323,7 @@ class Values {
   bool? ivrmumalPDeleteFlg;
   int? almsTId;
 
-  Values(
+  LoginValues(
       {this.amsTId,
       this.smscreditalert,
       this.smsalrtflag,
@@ -370,7 +370,7 @@ class Values {
       this.ivrmumalPDeleteFlg,
       this.almsTId});
 
-  Values.fromJson(Map<String, dynamic> json) {
+  LoginValues.fromJson(Map<String, dynamic> json) {
     amsTId = json['amsT_Id'];
     smscreditalert = json['smscreditalert'];
     smsalrtflag = json['smsalrtflag'];

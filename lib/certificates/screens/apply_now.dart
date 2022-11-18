@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/certificates/api/get_certificate_type.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class ApplyNow extends StatefulWidget {
-  const ApplyNow({super.key});
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  const ApplyNow(
+      {super.key,
+      required this.loginSuccessModel,
+      required this.mskoolController});
 
   @override
   State<ApplyNow> createState() => _ApplyNowState();
@@ -27,6 +36,12 @@ class _ApplyNowState extends State<ApplyNow> {
 
   @override
   Widget build(BuildContext context) {
+    GetCertificateType.instance.getCertificateType(
+        amstId: widget.loginSuccessModel.amsTId!,
+        asmayId: widget.loginSuccessModel.asmaYId!,
+        baseUrl: baseUrlFromInsCode("portal", widget.mskoolController),
+        ivrmrtId: 7,
+        miId: widget.loginSuccessModel.mIID!);
     return SingleChildScrollView(
       padding: const EdgeInsets.all(
         16.0,

@@ -153,12 +153,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ),
                                         onPressed: () async {
                                           Navigator.pop(context);
+
                                           logInBox!.put("isLoggedIn", true);
                                           Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
                                               builder: (_) {
-                                                return Home();
+                                                return Home(
+                                                  loginSuccessModel:
+                                                      snapshot.data!,
+                                                  mskoolController:
+                                                      widget.mskoolController,
+                                                );
                                               },
                                             ),
                                           );

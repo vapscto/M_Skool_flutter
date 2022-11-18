@@ -37,6 +37,8 @@ class LibraryStatusDate extends StatelessWidget {
           ),
           Text(
             date,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.titleSmall!.merge(
                   const TextStyle(
                     fontSize: 14.0,
