@@ -180,192 +180,328 @@ class _HomeState extends State<Home> {
               const SizedBox(
                 height: 16.0,
               ),
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: dashBoard.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 8.0,
-                  crossAxisSpacing: 4.0,
-                  mainAxisExtent: 85,
-                ),
-                itemBuilder: (_, index) {
-                  // LoginValues val = values.elementAt(index);
 
-                  // String pageName = val.pagename!.toLowerCase();
-                  // if (pageName == "student attendance") {
-                  //   pageName = "Attendance";
-                  // } else if (pageName == "fee details") {
-                  //   return const SizedBox();
-                  // }
-                  return InkWell(
-                    onTap: () {
-                      String category =
-                          dashBoard.elementAt(index).title.toLowerCase();
-                      if (category == "attendance") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return const AttendanceHomeScreen();
-                            },
-                          ),
-                        );
-                        return;
-                      }
-
-                      if (category == "exam") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return const ExamHome();
-                            },
-                          ),
-                        );
-                        return;
-                      }
-
-                      if (category == "task") {
-                        return;
-                      }
-
-                      if (category == "coe") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return const CoeHome();
-                            },
-                          ),
-                        );
-                        return;
-                      }
-
-                      if (category == "library") {
-                        String base = baseUrlFromInsCode(
-                            "portal", widget.mskoolController);
-                        // debugPrint(base);
-                        // debugPrint("Miid -> ${widget.loginSuccessModel.mIID}");
-                        // debugPrint(
-                        //     "asmayId -> ${widget.loginSuccessModel.asmaYId}");
-                        // debugPrint(
-                        //     "amstId -> ${widget.loginSuccessModel.amsTId}");
-                        if (base.isEmpty) {
+              ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: widget.loginSuccessModel.staffmobileappprivileges!
+                      .values!.length,
+                  shrinkWrap: true,
+                  itemBuilder: (_, index) {
+                    final LoginValues values = widget
+                        .loginSuccessModel.staffmobileappprivileges!.values!
+                        .elementAt(index);
+                    final String category = values.pageurl!.toLowerCase();
+                    return ListTile(
+                      onTap: () {
+                        if (category == "attendance") {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return const AttendanceHomeScreen();
+                              },
+                            ),
+                          );
                           return;
                         }
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return LibraryHome(
-                                miId: widget.loginSuccessModel.mIID!,
-                                asmayId: widget.loginSuccessModel.asmaYId!,
-                                asmtId: widget.loginSuccessModel.amsTId!,
-                                base: base,
-                              );
-                            },
-                          ),
-                        );
-                        return;
-                      }
-                      if (category == "timetable") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return const TimeTableHome();
-                            },
-                          ),
-                        );
-                        return;
-                      }
-                      if (category == "noticeboard") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return const NoticeHome();
-                            },
-                          ),
-                        );
-                        return;
-                      }
-                      if (category == "apply certificate") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return CertificateHomeScreen(
-                                loginSuccessModel: widget.loginSuccessModel,
-                                mskoolController: widget.mskoolController,
-                              );
-                            },
-                          ),
-                        );
-                        return;
-                      }
 
-                      if (category == "feedback") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return const FeedBackHome();
-                            },
-                          ),
-                        );
-                        return;
-                      }
-                    },
-                    child: Container(
-                      height: 85,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.0)),
-                      child: Stack(
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            height: 85,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12.0),
-                              child: SvgPicture.asset(
-                                dashBoard.elementAt(index).assetLoc,
-                                fit: BoxFit.cover,
-                              ),
+                        if (category == "exam") {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return const ExamHome();
+                              },
                             ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    dashBoard.elementAt(index).title,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .merge(
-                                          const TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                  )
-                                ],
-                              ),
+                          );
+                          return;
+                        }
+
+                        if (category == "task") {
+                          return;
+                        }
+
+                        if (category == "events") {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return const CoeHome();
+                              },
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
+                          );
+                          return;
+                        }
+
+                        if (category == "library") {
+                          String base = baseUrlFromInsCode(
+                              "portal", widget.mskoolController);
+                          // debugPrint(base);
+                          // debugPrint("Miid -> ${widget.loginSuccessModel.mIID}");
+                          // debugPrint(
+                          //     "asmayId -> ${widget.loginSuccessModel.asmaYId}");
+                          // debugPrint(
+                          //     "amstId -> ${widget.loginSuccessModel.amsTId}");
+                          if (base.isEmpty) {
+                            return;
+                          }
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return LibraryHome(
+                                  miId: widget.loginSuccessModel.mIID!,
+                                  asmayId: widget.loginSuccessModel.asmaYId!,
+                                  asmtId: widget.loginSuccessModel.amsTId!,
+                                  base: base,
+                                );
+                              },
+                            ),
+                          );
+                          return;
+                        }
+                        if (category == "timetable") {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return const TimeTableHome();
+                              },
+                            ),
+                          );
+                          return;
+                        }
+                        if (category == "notice") {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return const NoticeHome();
+                              },
+                            ),
+                          );
+                          return;
+                        }
+                        if (category == "certificate") {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return CertificateHomeScreen(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                );
+                              },
+                            ),
+                          );
+                          return;
+                        }
+
+                        if (category == "feedback") {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return const FeedBackHome();
+                              },
+                            ),
+                          );
+                          return;
+                        }
+                      },
+                      title: Text(widget
+                          .loginSuccessModel.staffmobileappprivileges!.values!
+                          .elementAt(index)
+                          .pagename!),
+                    );
+                  }),
+
+              // GridView.builder(
+              //   shrinkWrap: true,
+              //   physics: const NeverScrollableScrollPhysics(),
+              //   itemCount: dashBoard.length,
+              //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              //     crossAxisCount: 2,
+              //     mainAxisSpacing: 8.0,
+              //     crossAxisSpacing: 4.0,
+              //     mainAxisExtent: 85,
+              //   ),
+              //   itemBuilder: (_, index) {
+              //     // LoginValues val = values.elementAt(index);
+
+              //     // String pageName = val.pagename!.toLowerCase();
+              //     // if (pageName == "student attendance") {
+              //     //   pageName = "Attendance";
+              //     // } else if (pageName == "fee details") {
+              //     //   return const SizedBox();
+              //     // }
+              //     return InkWell(
+              //       onTap: () {
+              //         String category =
+              //             dashBoard.elementAt(index).title.toLowerCase();
+              //         if (category == "attendance") {
+              //           Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //               builder: (_) {
+              //                 return const AttendanceHomeScreen();
+              //               },
+              //             ),
+              //           );
+              //           return;
+              //         }
+
+              //         if (category == "exam") {
+              //           Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //               builder: (_) {
+              //                 return const ExamHome();
+              //               },
+              //             ),
+              //           );
+              //           return;
+              //         }
+
+              //         if (category == "task") {
+              //           return;
+              //         }
+
+              //         if (category == "coe") {
+              //           Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //               builder: (_) {
+              //                 return const CoeHome();
+              //               },
+              //             ),
+              //           );
+              //           return;
+              //         }
+
+              //         if (category == "library") {
+              //           String base = baseUrlFromInsCode(
+              //               "portal", widget.mskoolController);
+              //           // debugPrint(base);
+              //           // debugPrint("Miid -> ${widget.loginSuccessModel.mIID}");
+              //           // debugPrint(
+              //           //     "asmayId -> ${widget.loginSuccessModel.asmaYId}");
+              //           // debugPrint(
+              //           //     "amstId -> ${widget.loginSuccessModel.amsTId}");
+              //           if (base.isEmpty) {
+              //             return;
+              //           }
+              //           Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //               builder: (_) {
+              //                 return LibraryHome(
+              //                   miId: widget.loginSuccessModel.mIID!,
+              //                   asmayId: widget.loginSuccessModel.asmaYId!,
+              //                   asmtId: widget.loginSuccessModel.amsTId!,
+              //                   base: base,
+              //                 );
+              //               },
+              //             ),
+              //           );
+              //           return;
+              //         }
+              //         if (category == "timetable") {
+              //           Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //               builder: (_) {
+              //                 return const TimeTableHome();
+              //               },
+              //             ),
+              //           );
+              //           return;
+              //         }
+              //         if (category == "noticeboard") {
+              //           Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //               builder: (_) {
+              //                 return const NoticeHome();
+              //               },
+              //             ),
+              //           );
+              //           return;
+              //         }
+              //         if (category == "apply certificate") {
+              //           Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //               builder: (_) {
+              //                 return CertificateHomeScreen(
+              //                   loginSuccessModel: widget.loginSuccessModel,
+              //                   mskoolController: widget.mskoolController,
+              //                 );
+              //               },
+              //             ),
+              //           );
+              //           return;
+              //         }
+
+              //         if (category == "feedback") {
+              //           Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //               builder: (_) {
+              //                 return const FeedBackHome();
+              //               },
+              //             ),
+              //           );
+              //           return;
+              //         }
+              //       },
+              //       child: Container(
+              //         height: 85,
+              //         decoration: BoxDecoration(
+              //             borderRadius: BorderRadius.circular(12.0)),
+              //         child: Stack(
+              //           children: [
+              //             SizedBox(
+              //               width: double.infinity,
+              //               height: 85,
+              //               child: ClipRRect(
+              //                 borderRadius: BorderRadius.circular(12.0),
+              //                 child: SvgPicture.asset(
+              //                   dashBoard.elementAt(index).assetLoc,
+              //                   fit: BoxFit.cover,
+              //                 ),
+              //               ),
+              //             ),
+              //             Align(
+              //               alignment: Alignment.bottomRight,
+              //               child: Padding(
+              //                 padding: const EdgeInsets.all(16.0),
+              //                 child: Column(
+              //                   mainAxisAlignment: MainAxisAlignment.end,
+              //                   crossAxisAlignment: CrossAxisAlignment.end,
+              //                   children: [
+              //                     Text(
+              //                       dashBoard.elementAt(index).title,
+              //                       style: Theme.of(context)
+              //                           .textTheme
+              //                           .titleSmall!
+              //                           .merge(
+              //                             const TextStyle(
+              //                               fontWeight: FontWeight.w600,
+              //                               color: Colors.white,
+              //                             ),
+              //                           ),
+              //                     )
+              //                   ],
+              //                 ),
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     );
+              //   },
+              // ),
             ],
           ),
         ),

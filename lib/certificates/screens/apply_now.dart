@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/certificates/api/get_certificate_type.dart';
+import 'package:m_skool_flutter/certificates/model/certificate_drop_down.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -22,26 +23,26 @@ class ApplyNow extends StatefulWidget {
 }
 
 class _ApplyNowState extends State<ApplyNow> {
-  List<String> certificates = [
-    "SLC Certificate",
-    "Marksheet",
-    "Transfer Certificate",
-    "Leave Grant Certificate",
-    "Passing Certificate",
-  ];
+  // List<String> certificates = [
+  //   "SLC Certificate",
+  //   "Marksheet",
+  //   "Transfer Certificate",
+  //   "Leave Grant Certificate",
+  //   "Passing Certificate",
+  // ];
 
-  String selectedValue = "Transfer Certificate";
+  CertificateDropDownValues? selectedValue;
   final TextEditingController reason = TextEditingController();
   final TextEditingController date = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    GetCertificateType.instance.getCertificateType(
-        amstId: widget.loginSuccessModel.amsTId!,
-        asmayId: widget.loginSuccessModel.asmaYId!,
-        baseUrl: baseUrlFromInsCode("portal", widget.mskoolController),
-        ivrmrtId: 7,
-        miId: widget.loginSuccessModel.mIID!);
+    // GetCertificateType.instance.getCertificateType(
+    //     amstId: widget.loginSuccessModel.amsTId!,
+    //     asmayId: widget.loginSuccessModel.asmaYId!,
+    //     baseUrl: baseUrlFromInsCode("portal", widget.mskoolController),
+    //     ivrmrtId: widget.loginSuccessModel.roleId!,
+    //     miId: widget.loginSuccessModel.mIID!);
     return SingleChildScrollView(
       padding: const EdgeInsets.all(
         16.0,
@@ -54,50 +55,102 @@ class _ApplyNowState extends State<ApplyNow> {
                 height: 4.0,
               ),
               CustomContainer(
-                child: DropdownButtonFormField<String>(
-                  value: selectedValue,
-                  decoration: InputDecoration(
-                    focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
+                child: FutureBuilder<CertificateDropDown>(
+                    future: GetCertificateType.instance.getCertificateType(
+                      miId: widget.loginSuccessModel.mIID!,
+                      asmayId: widget.loginSuccessModel.asmaYId!,
+                      ivrmrtId: widget.loginSuccessModel.roleId!,
+                      amstId: widget.loginSuccessModel.amsTId!,
+                      baseUrl: baseUrlFromInsCode(
+                        "portal",
+                        widget.mskoolController,
                       ),
                     ),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                      ),
-                    ),
-                    label: Text(
-                      " Certificate Type ".tr,
-                      style: Theme.of(context).textTheme.labelMedium!.merge(
-                            const TextStyle(
-                              fontSize: 20.0,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        selectedValue = snapshot.data!.values!.first;
+                        return DropdownButtonFormField<
+                            CertificateDropDownValues>(
+                          value: snapshot.data!.values!.first,
+                          decoration: InputDecoration(
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
                             ),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            label: Text(
+                              " Certificate Type ".tr,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .merge(
+                                    const TextStyle(
+                                      fontSize: 20.0,
+                                    ),
+                                  ),
+                            ),
+                            border: const OutlineInputBorder(),
                           ),
-                    ),
-                    border: const OutlineInputBorder(),
-                  ),
-                  icon: const Icon(
-                    Icons.keyboard_arrow_down_outlined,
-                    size: 30,
-                  ),
-                  items: List.generate(
-                    certificates.length,
-                    (index) => DropdownMenuItem<String>(
-                      value: certificates.elementAt(index),
-                      child: Text(
-                        certificates.elementAt(index),
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .merge(const TextStyle(fontSize: 16.0)),
-                      ),
-                    ),
-                  ),
-                  onChanged: (value) {
-                    selectedValue = value!;
-                  },
-                ),
+                          icon: const Icon(
+                            Icons.keyboard_arrow_down_outlined,
+                            size: 30,
+                          ),
+                          items: List.generate(
+                            snapshot.data!.values!.length,
+                            (index) {
+                              CertificateDropDownValues
+                                  certificateDropDownValues =
+                                  snapshot.data!.values!.elementAt(index);
+                              return DropdownMenuItem<
+                                  CertificateDropDownValues>(
+                                value: certificateDropDownValues,
+                                child: Text(
+                                  certificateDropDownValues
+                                      .amcTCertificateName!,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .merge(const TextStyle(fontSize: 16.0)),
+                                ),
+                              );
+                            },
+                          ),
+                          onChanged: (value) {
+                            selectedValue = value!;
+                            debugPrint(selectedValue.toString());
+                          },
+                        );
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 6.0,
+                            ),
+                            const SizedBox(
+                              height: 24.0,
+                              width: 24.0,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.0,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 16.0,
+                            ),
+                            Text(
+                              "Getting Certificates",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            )
+                          ],
+                        ),
+                      );
+                    }),
               ),
             ],
           ),
