@@ -30,6 +30,57 @@ List fullMonths = [
   'December'
 ];
 
+List<Map<String, dynamic>> fullMonthsWithIndex = [
+  {
+    "month": 'January',
+    "day": 1,
+  },
+  {
+    "month": 'February',
+    "day": 2,
+  },
+  {
+    "month": 'March',
+    "day": 3,
+  },
+  {
+    "month": 'April',
+    "day": 4,
+  },
+  {
+    "month": 'May',
+    "day": 5,
+  },
+  {
+    "month": 'June',
+    "day": 6,
+  },
+  {
+    "month": 'July',
+    "day": 7,
+  },
+  {
+    "month": 'August',
+    "day": 8,
+  },
+  {
+    "month": 'September',
+    "day": 9,
+  },
+  {
+    "month": 'October',
+    "day": 10,
+  },
+  {
+    "month": 'November',
+    "day": 11,
+  },
+  {
+    "month": 'December',
+    "day": 12,
+  },
+];
+
 List numberList = [
   "00",
   "01",
