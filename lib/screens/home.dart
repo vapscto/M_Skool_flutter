@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/exam/screen/exam_home.dart';
 import 'package:m_skool_flutter/feedback/screens/feedback_home.dart';
+import 'package:m_skool_flutter/information/screen/info_home.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/dashboard_item_model.dart';
@@ -276,7 +277,19 @@ class _HomeState extends State<Home> {
                           );
                           return;
                         }
-                        if (category == "timetable") {
+
+                        if (category == "classwork") {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return const InfoHome();
+                              },
+                            ),
+                          );
+                          return;
+                        }
+                        if (category == "homework") {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -292,7 +305,9 @@ class _HomeState extends State<Home> {
                             context,
                             MaterialPageRoute(
                               builder: (_) {
-                                return const NoticeHome();
+                                return const NoticeHome(
+                                  showAppBar: true,
+                                );
                               },
                             ),
                           );

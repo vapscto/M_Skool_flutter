@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/attendance/widgets/attendance_area_chart.dart';
+import 'package:m_skool_flutter/attendance/widgets/attendance_column_chart.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
@@ -120,7 +121,52 @@ class _AttendanceDetailsState extends State<AttendanceDetails> {
             //         ])
             //       ]),
             // ),
-            const CustomContainer(child: AttendanceAreaChart()),
+            CustomContainer(
+                child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 16.0,
+                  ),
+                  Row(
+                    children: [
+                      Row(
+                        children: const [
+                          Icon(
+                            Icons.circle,
+                            color: Color(0xFFDFEFFD),
+                          ),
+                          SizedBox(
+                            width: 8.0,
+                          ),
+                          Text("Total Present"),
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 16.0,
+                      ),
+                      Row(
+                        children: const [
+                          Icon(
+                            Icons.circle,
+                            color: Color(0xFF35658F),
+                          ),
+                          SizedBox(
+                            width: 8.0,
+                          ),
+                          Text("Total Class Held"),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16.00,
+                  ),
+                  const AttendanceColumnChart(),
+                ],
+              ),
+            )),
           ],
         ),
       ),
