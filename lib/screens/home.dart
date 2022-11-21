@@ -17,6 +17,8 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/timetable/screens/time_table_home.dart';
 
+import '../fees/screens/fee_home_screen.dart';
+
 class Home extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
@@ -204,6 +206,17 @@ class _HomeState extends State<Home> {
                             ),
                           );
                           return;
+                        }
+                        if (category == 'fees') {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) {
+                              return FeeHomeScreen(
+                                loginSuccessModel: widget.loginSuccessModel,
+                                mskoolController: widget.mskoolController,
+                              );
+                            }),
+                          );
                         }
 
                         if (category == "exam") {
