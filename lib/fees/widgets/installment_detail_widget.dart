@@ -8,10 +8,10 @@ import 'custom_analysis_container.dart';
 class InstallmentDetailWidget extends StatefulWidget {
   final String leadText;
   final String instalText;
-  final int netAmount;
-  final int concessionAmount;
-  final int paidAmount;
-  final int balanceAmount;
+  final double netAmount;
+  final double concessionAmount;
+  final double paidAmount;
+  final double balanceAmount;
   final Color? instalTextBgColor;
   final Color? backgroundColor;
   const InstallmentDetailWidget({

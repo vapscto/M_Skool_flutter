@@ -9,22 +9,25 @@ import 'package:m_skool_flutter/fees/tabs/fee_receipt_tab.dart';
 import 'package:m_skool_flutter/fees/tabs/pay_online_tab.dart';
 import 'package:m_skool_flutter/main.dart';
 
+import '../../controller/mskoll_controller.dart';
+import '../../model/login_success_model.dart';
 import '../../widget/custom_back_btn.dart';
 import 'fee_receipt_home.dart';
 
 class FeeHomeScreen extends StatefulWidget {
-  const FeeHomeScreen({super.key});
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  const FeeHomeScreen({
+    super.key,
+    required this.loginSuccessModel,
+    required this.mskoolController,
+  });
 
   @override
   State<FeeHomeScreen> createState() => _FeeHomeScreenState();
 }
 
 class _FeeHomeScreenState extends State<FeeHomeScreen> {
-  List<Widget> tabBody = const [
-    FeeAnalysisTab(),
-    FeeReceiptTab(),
-    PayOnlineTab(),
-  ];
   int selectedTab = 0;
   @override
   Widget build(BuildContext context) {
@@ -54,7 +57,7 @@ class _FeeHomeScreenState extends State<FeeHomeScreen> {
                 labelColor: Colors.black,
                 indicatorSize: TabBarIndicatorSize.tab,
                 isScrollable: true,
-                indicator: BoxDecoration(
+                indicator: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(12.0),
                     topRight: Radius.circular(12.0),
@@ -142,7 +145,14 @@ class _FeeHomeScreenState extends State<FeeHomeScreen> {
         ),
         body: TabBarView(
           physics: const NeverScrollableScrollPhysics(),
-          children: tabBody,
+          children: [
+            FeeAnalysisTab(
+              loginSuccessModel: widget.loginSuccessModel,
+              mskoolController: widget.mskoolController,
+            ),
+            FeeReceiptTab(),
+            PayOnlineTab(),
+          ],
         ),
       ),
     );

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
+import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
 import 'package:m_skool_flutter/fees/widgets/installment_detail_widget.dart';
 
 class HeadwiseAnalysisTab extends StatefulWidget {
@@ -11,6 +13,7 @@ class HeadwiseAnalysisTab extends StatefulWidget {
 }
 
 class _HeadwiseAnalysisTabState extends State<HeadwiseAnalysisTab> {
+  final feeController = Get.put(FeeController());
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

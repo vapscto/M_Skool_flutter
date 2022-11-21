@@ -210,7 +210,10 @@ class _HomeState extends State<Home> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (_) {
-                              return const FeeHomeScreen();
+                              return FeeHomeScreen(
+                                loginSuccessModel: widget.loginSuccessModel,
+                                mskoolController: widget.mskoolController,
+                              );
                             }),
                           );
                         }
