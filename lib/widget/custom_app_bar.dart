@@ -4,7 +4,13 @@ import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 
 class CustomAppBar {
   final String title;
-  const CustomAppBar({required this.title});
+  final List<Widget>? action;
+  final PreferredSize? bottom;
+  const CustomAppBar({
+    required this.title,
+    this.action,
+    this.bottom,
+  });
 
   PreferredSizeWidget getAppBar() {
     return AppBar(
@@ -13,6 +19,8 @@ class CustomAppBar {
         title,
       ),
       leadingWidth: 30.0,
+      actions: action,
+      bottom: bottom,
       leading: const CustomGoBackButton(),
     );
   }

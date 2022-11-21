@@ -53,7 +53,7 @@ class InstitutionalCodeApi {
       return Future.error({
         "errorTitle": "Unable to process request",
         "errorMsg":
-            "Sorry! but we are unable to process your request right now. Try after some time",
+            "Sorry! but we are unable to connect to server right now, Try after some time",
       });
     }
 
