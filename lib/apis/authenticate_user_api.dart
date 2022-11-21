@@ -21,7 +21,7 @@ class AuthenticateUserApi {
     if (Platform.isAndroid) {
       AndroidDeviceInfo deviceInfo = await deviceInfoPlugin.androidInfo;
       mobileUniqueID = deviceInfo.id;
-      debugPrint(deviceInfo.toString());
+      //debugPrint(deviceInfo.toString());
     } else {
       IosDeviceInfo deviceInfo = await deviceInfoPlugin.iosInfo;
       deviceInfo.identifierForVendor!;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 
 class CustomAppBar {
@@ -9,6 +8,7 @@ class CustomAppBar {
 
   PreferredSizeWidget getAppBar() {
     return AppBar(
+      elevation: 0,
       title: Text(
         title,
       ),

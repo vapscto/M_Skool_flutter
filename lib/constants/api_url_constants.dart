@@ -31,4 +31,9 @@ class URLS {
   static String lib = "api/StudentDashboardFacade/onclick_LIB/";
   static String getCertitificateType =
       "api/TransferCertificateFacade/getdetails/";
+
+  static String saveFeedBack = "api/StudentFeedbackFormFacade/savefeedback/";
+  static String getFeedBack = "api/StudentFeedbackFormFacade/getloaddata/";
+  static String getAcademicYear = "api/AttendanceDetailsFacade/getloaddata/";
+  static String coeData = "api/COEFacade/getcoedata/";
 }

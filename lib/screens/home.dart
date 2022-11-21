@@ -236,7 +236,10 @@ class _HomeState extends State<Home> {
                             context,
                             MaterialPageRoute(
                               builder: (_) {
-                                return const CoeHome();
+                                return CoeHome(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                );
                               },
                             ),
                           );
@@ -307,12 +310,15 @@ class _HomeState extends State<Home> {
                           return;
                         }
 
-                        if (category == "feedback") {
+                        if (category == "syllabus") {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (_) {
-                                return const FeedBackHome();
+                                return FeedBackHome(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                );
                               },
                             ),
                           );

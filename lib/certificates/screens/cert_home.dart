@@ -71,48 +71,57 @@ class _CertificateHomeScreenState extends State<CertificateHomeScreen>
           SizedBox(
             height: 60,
             child: Obx(() {
-              return TabBar(
-                controller: tabController,
-                indicatorColor: Get.theme.primaryColor,
-                indicatorWeight: 3,
+              return Container(
+                height: 60,
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                width: double.infinity,
+                color: Theme.of(context).primaryColor,
+                child: TabBar(
+                  controller: tabController,
+                  //indicatorColor: Get.theme.primaryColor,
 
-                // unselectedLabelStyle: Theme.of(context)
-                //     .textTheme
-                //     .labelMedium!
-                //     .merge(const TextStyle(fontSize: 14.0)),
-                tabs: [
-                  Tab(
-                    child: Text(
-                      "Apply",
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
-                          .merge(TextStyle(
-                            color: tabStateController.selectedIndex.value == 0
-                                ? Get.theme.primaryColor
-                                : Colors.black54,
-                          )),
+                  indicator: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(12.0),
+                      topRight: Radius.circular(12.0),
                     ),
                   ),
-                  Tab(
-                    child: Text(
-                      "View Details",
-                      style: Theme.of(context).textTheme.titleMedium!.merge(
-                            TextStyle(
-                              color: tabStateController.selectedIndex.value == 1
+
+                  tabs: [
+                    Tab(
+                      child: Text(
+                        "Apply",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .merge(TextStyle(
+                              color: tabStateController.selectedIndex.value == 0
                                   ? Get.theme.primaryColor
-                                  : Colors.black54,
-                            ),
-                          ),
+                                  : Colors.white,
+                            )),
+                      ),
                     ),
-                  ),
-                ],
+                    Tab(
+                      child: Text(
+                        "View Details",
+                        style: Theme.of(context).textTheme.titleMedium!.merge(
+                              TextStyle(
+                                color:
+                                    tabStateController.selectedIndex.value == 1
+                                        ? Get.theme.primaryColor
+                                        : Colors.white,
+                              ),
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
               );
             }),
           ),
-          const Divider(
-            thickness: 2,
-            height: 1,
+          const SizedBox(
+            height: 12.0,
           ),
           Expanded(
             child: SizedBox(
