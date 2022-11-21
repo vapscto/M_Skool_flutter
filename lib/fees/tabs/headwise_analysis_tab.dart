@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
@@ -14,49 +15,65 @@ class HeadwiseAnalysisTab extends StatefulWidget {
 
 class _HeadwiseAnalysisTabState extends State<HeadwiseAnalysisTab> {
   final feeController = Get.put(FeeController());
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
-        children: const [
-          InstallmentDetailWidget(
-            leadText: 'Tution Fees',
-            instalText: 'I Installment',
-            netAmount: 15925,
-            concessionAmount: 0,
-            paidAmount: 5390,
-            balanceAmount: 0,
-          ),
-          SizedBox(height: 16),
-          InstallmentDetailWidget(
-            leadText: 'Tution Fees',
-            instalText: 'II Installment',
-            netAmount: 15925,
-            concessionAmount: 0,
-            paidAmount: 5390,
-            balanceAmount: 0,
-          ),
-          SizedBox(height: 16),
-          InstallmentDetailWidget(
-            leadText: 'Tution Fees',
-            instalText: 'III Installment',
-            netAmount: 15925,
-            concessionAmount: 0,
-            paidAmount: 5390,
-            balanceAmount: 0,
-          ),
-          SizedBox(height: 16),
-          InstallmentDetailWidget(
-            leadText: 'Term Fees',
-            instalText: 'I Installment',
-            netAmount: 1500,
-            concessionAmount: 0,
-            paidAmount: 1500,
-            balanceAmount: 0,
-            backgroundColor: Color.fromRGBO(238, 232, 255, 0.4),
-            instalTextBgColor: Color.fromRGBO(209, 193, 255, 1),
-          ),
+        children: [
+          ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return const InstallmentDetailWidget(
+                  leadText: 'Tution Fees',
+                  instalText: 'I Installment',
+                  netAmount: 15925,
+                  concessionAmount: 0,
+                  paidAmount: 5390,
+                  balanceAmount: 0,
+                );
+              }),
+
+          //   InstallmentDetailWidget(
+          //     leadText: 'Tution Fees',
+          //     instalText: 'I Installment',
+          //     netAmount: 15925,
+          //     concessionAmount: 0,
+          //     paidAmount: 5390,
+          //     balanceAmount: 0,
+          //   ),
+          //   SizedBox(height: 16),
+          //   InstallmentDetailWidget(
+          //     leadText: 'Tution Fees',
+          //     instalText: 'II Installment',
+          //     netAmount: 15925,
+          //     concessionAmount: 0,
+          //     paidAmount: 5390,
+          //     balanceAmount: 0,
+          //   ),
+          //   SizedBox(height: 16),
+          //   InstallmentDetailWidget(
+          //     leadText: 'Tution Fees',
+          //     instalText: 'III Installment',
+          //     netAmount: 15925,
+          //     concessionAmount: 0,
+          //     paidAmount: 5390,
+          //     balanceAmount: 0,
+          //   ),
+          //   SizedBox(height: 16),
+          //   InstallmentDetailWidget(
+          //     leadText: 'Term Fees',
+          //     instalText: 'I Installment',
+          //     netAmount: 1500,
+          //     concessionAmount: 0,
+          //     paidAmount: 1500,
+          //     balanceAmount: 0,
+          //     backgroundColor: Color.fromRGBO(238, 232, 255, 0.4),
+          //     instalTextBgColor: Color.fromRGBO(209, 193, 255, 1),
+          //   ),
         ],
       ),
     );

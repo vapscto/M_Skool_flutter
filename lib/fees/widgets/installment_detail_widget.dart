@@ -35,6 +35,7 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: const EdgeInsets.symmetric(vertical: 14),
       elevation: 6,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
