@@ -34,6 +34,7 @@ class LoginSuccessModel {
   Staffmobileappprivileges? institutionlist;
   String? asmaYYear;
   String? flag;
+  String? clsnme;
   String? dob;
   int? mobno;
   String? studname;
@@ -88,6 +89,7 @@ class LoginSuccessModel {
       this.institutionlist,
       this.asmaYYear,
       this.flag,
+      this.clsnme,
       this.dob,
       this.mobno,
       this.studname,
@@ -151,6 +153,7 @@ class LoginSuccessModel {
         : null;
     asmaYYear = json['asmaY_Year'];
     flag = json['flag'];
+    clsnme = json['clsnme'];
     dob = json['dob'];
     mobno = json['mobno'];
     studname = json['studname'];
@@ -213,6 +216,7 @@ class LoginSuccessModel {
     }
     data['asmaY_Year'] = asmaYYear;
     data['flag'] = flag;
+    data['clsnme'] = clsnme;
     data['dob'] = dob;
     data['mobno'] = mobno;
     data['studname'] = studname;

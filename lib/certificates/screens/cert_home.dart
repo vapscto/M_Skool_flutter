@@ -37,7 +37,10 @@ class _CertificateHomeScreenState extends State<CertificateHomeScreen>
         loginSuccessModel: widget.loginSuccessModel,
         mskoolController: widget.mskoolController,
       ),
-      ViewDetails(),
+      ViewDetails(
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController,
+      ),
     ]);
     tabController = TabController(length: 2, vsync: this);
     tabController!.addListener(() {
@@ -58,7 +61,8 @@ class _CertificateHomeScreenState extends State<CertificateHomeScreen>
   void dispose() {
     tabController!.dispose();
     pageViewController.dispose();
-    tabStateController.dispose();
+
+    Get.delete<TabStateController>();
     super.dispose();
   }
 

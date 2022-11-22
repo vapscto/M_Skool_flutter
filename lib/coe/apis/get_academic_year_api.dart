@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:m_skool_flutter/coe/controller/coe_data_handler.dart';
 import 'package:m_skool_flutter/coe/models/academic_year_model.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -11,7 +12,9 @@ class GetAcademicYearApi {
     required int miId,
     required int amstId,
     required String base,
+    required CoeDataHandler handler,
   }) async {
+    handler.updateShowAllLoadingProgress(true);
     final Dio ins = getGlobalDio();
     String getAcadmeicApiUrl = base + URLS.getAcademicYear;
     try {
@@ -29,6 +32,13 @@ class GetAcademicYearApi {
       AcademicYearModel academicYearModel =
           AcademicYearModel.fromJson(response.data);
 
+      handler.updateAcademicYearList(academicYearModel.attyearlist!.values!);
+      handler.updateSelectedInDropDown(
+          academicYearModel.attyearlist!.values!.first);
+      handler
+          .updateAsmayId(academicYearModel.attyearlist!.values!.first.asmaYId!);
+      handler.updateShowAllLoadingProgress(false);
+      handler.updateShowEventLoading(true);
       return Future.value(academicYearModel.attyearlist!.values!);
     } on Exception catch (e) {
       logger.e(e);

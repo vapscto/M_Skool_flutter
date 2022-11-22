@@ -1,4 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:m_skool_flutter/coe/apis/get_academic_year_api.dart';
+import 'package:m_skool_flutter/coe/controller/coe_data_handler.dart';
+import 'package:m_skool_flutter/coe/models/academic_year_model.dart';
 import 'package:m_skool_flutter/coe/models/coe_data_model.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -13,7 +16,8 @@ class GetEventsApi {
       required int amstId,
       required int asmayId,
       required int month,
-      required String base}) async {
+      required String base,
+      required int asmclID}) async {
     final Dio ins = getGlobalDio();
     final String coeApi = base + URLS.coeData;
     // logger.d(
@@ -33,6 +37,7 @@ class GetEventsApi {
           "ASMAY_Id": asmayId,
           "MI_Id": miId,
           "month": month,
+          "ASMCL_Id": asmclID,
         },
       );
       final CoeDataModel coeDataModel = CoeDataModel.fromJson(response.data);
@@ -52,5 +57,32 @@ class GetEventsApi {
         },
       );
     }
+  }
+
+  getCoeData({
+    required int miId,
+    required int amstId,
+    required int asmayId,
+    required int month,
+    required String base,
+    required int asmclID,
+    required CoeDataHandler coeDataHandler,
+  }) async {
+    if (coeDataHandler.coeReport.isNotEmpty) {
+      coeDataHandler.coeReport.clear();
+    }
+    //  = await GetAcademicYearApi
+    //     .instance
+    //     .getAcademicYear(miId: miId, amstId: amstId, base: base);
+
+    coeDataHandler.updateCoeReport(await getEvents(
+        miId: miId,
+        amstId: amstId,
+        asmayId: asmayId,
+        month: month,
+        base: base,
+        asmclID: asmclID));
+
+    coeDataHandler.updateShowEventLoading(false);
   }
 }

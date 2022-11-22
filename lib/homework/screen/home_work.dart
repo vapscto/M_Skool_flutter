@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/homework/screen/hwcw_detail_screen.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -102,7 +101,7 @@ class HwCwItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          color: colors.elementAt(2).withOpacity(0.1),
+          color: colors.elementAt(2).withOpacity(0.05),
         ),
         child: Row(
           children: [

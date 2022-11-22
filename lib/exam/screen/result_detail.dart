@@ -99,7 +99,8 @@ class _ResultDetailState extends State<ResultDetail> {
                         // border: OutlineInputBorder(
                         //   borderRadius: BorderRadius.circular(12.0),
                         // ),
-
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 12.0),
                         focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Colors.transparent,
@@ -173,6 +174,8 @@ class _ResultDetailState extends State<ResultDetail> {
                         // border: OutlineInputBorder(
                         //   borderRadius: BorderRadius.circular(12.0),
                         // ),
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 12.0),
 
                         focusedBorder: const OutlineInputBorder(
                           borderSide: BorderSide(
@@ -189,9 +192,12 @@ class _ResultDetailState extends State<ResultDetail> {
                           widget.resultType == 0
                               ? "Select Exam".tr
                               : "Select Subject".tr,
-                          style: Theme.of(context).textTheme.labelLarge!.merge(
-                              TextStyle(
-                                  color: Colors.grey.shade600, fontSize: 14)),
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelLarge!
+                              .merge(TextStyle(
+                                color: Colors.grey.shade600,
+                              )),
                         ),
                       ),
                       icon: const Icon(
