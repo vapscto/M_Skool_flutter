@@ -17,13 +17,18 @@ class FeeController extends GetxController {
     required int amstId,
     required String base,
   }) async {
-    FeeDetails? feeDetails = await getFeeAnalysisList(
-        miId: miId, asmayId: asmayId, amstId: amstId, base: base);
-    if (feeDetails!.feeAnalysisList!.values != null) {
-      overAllAnalysisData.add(feeDetails.feeAnalysisList!.values!.first);
-      logger.d(feeDetails.feeAnalysisList!.values!.first);
-      return true;
+    try {
+      FeeDetails? feeDetails = await getFeeAnalysisList(
+          miId: miId, asmayId: asmayId, amstId: amstId, base: base);
+      if (feeDetails!.feeAnalysisList!.values != null) {
+        overAllAnalysisData.add(feeDetails.feeAnalysisList!.values!.first);
+        logger.d(feeDetails.feeAnalysisList!.values!.first);
+        return true;
+      }
+      return false;
+    } on Exception catch (e) {
+      logger.e(e.toString());
+      return false;
     }
-    return false;
   }
 }

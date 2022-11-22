@@ -8,6 +8,8 @@ import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
 import 'package:m_skool_flutter/fees/widgets/custom_analysis_container.dart';
 import 'package:m_skool_flutter/fees/widgets/graphical_analysisof_fee_widget.dart';
 
+import '../../widget/pgr_widget.dart';
+
 class OverallAnalysisTab extends StatefulWidget {
   const OverallAnalysisTab({super.key});
 
@@ -21,9 +23,7 @@ class _OverallAnalysisTabState extends State<OverallAnalysisTab> {
   Widget build(BuildContext context) {
     return Obx(
       () => feeController.isLoading.value
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+          ? const Center(child: ProgressWidget())
           : SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: Column(
@@ -64,7 +64,7 @@ class _OverallAnalysisTabState extends State<OverallAnalysisTab> {
                               Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 7),
-                                height: 30,
+                                height: 35,
                                 decoration: const BoxDecoration(
                                   color: Color.fromRGBO(81, 169, 100, 1),
                                   borderRadius: BorderRadius.all(
