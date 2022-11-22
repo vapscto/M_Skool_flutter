@@ -19,19 +19,23 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
-    tabController!.addListener(() {
-      // pageController.animateToPage(tabController!.index,
-      //     duration: const Duration(milliseconds: 800),
-      //     curve: Curves.fastLinearToSlowEaseIn);
-    });
-    pageController.addListener(() {
-      //currentPage.value = tabController!.index;
-    });
+    // tabController!.addListener(() {
+    //   pageController.animateToPage(tabController!.index,
+    //       duration: const Duration(milliseconds: 800),
+    //       curve: Curves.fastLinearToSlowEaseIn);
+    // });
+    // pageController.addListener(() {
+    //   currentPage.value = tabController!.index;
+    // });
+
+    // tabController!.addListener(() {
+
+    // });
     super.initState();
   }
 
   RxInt currentPage = RxInt(0);
-  List<Widget> pages = [
+  List<Widget> pages = const [
     HomeWorkScreen(),
     ClassworkHome(),
     NoticeHome(
@@ -139,9 +143,10 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
                     ),
                   ),
                   onTap: (e) {
+                    currentPage.value = e;
                     pageController.animateToPage(e,
                         duration: const Duration(milliseconds: 800),
-                        curve: Curves.easeInOut);
+                        curve: Curves.fastLinearToSlowEaseIn);
                   },
                   tabs: [
                     Tab(
@@ -235,7 +240,7 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
                 return pages.elementAt(index);
               },
               onPageChanged: (v) {
-                //currentPage.value = v;
+                currentPage.value = v;
                 tabController!.animateTo(v);
               },
             ),
