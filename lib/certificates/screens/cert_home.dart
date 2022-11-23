@@ -101,7 +101,10 @@ class _CertificateHomeScreenState extends State<CertificateHomeScreen>
                             .titleMedium!
                             .merge(TextStyle(
                               color: tabStateController.selectedIndex.value == 0
-                                  ? Get.theme.primaryColor
+                                  ? Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .color
                                   : Colors.white,
                             )),
                       ),
@@ -113,7 +116,10 @@ class _CertificateHomeScreenState extends State<CertificateHomeScreen>
                               TextStyle(
                                 color:
                                     tabStateController.selectedIndex.value == 1
-                                        ? Get.theme.primaryColor
+                                        ? Theme.of(context)
+                                            .textTheme
+                                            .titleMedium!
+                                            .color
                                         : Colors.white,
                               ),
                             ),

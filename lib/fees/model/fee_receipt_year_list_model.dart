@@ -1,37 +1,17 @@
 // To parse this JSON data, do
 //
-//     final feesDetails = feesDetailsFromJson(jsonString);
+//     final feeReceiptYearListModel = feeReceiptYearListModelFromJson(jsonString);
 
 import 'dart:convert';
 
-FeeDetails feesDetailsFromJson(String str) =>
-    FeeDetails.fromJson(json.decode(str));
+FeeReceiptYearListModel feeReceiptYearListModelFromJson(String str) =>
+    FeeReceiptYearListModel.fromJson(json.decode(str));
 
-String feesDetailsToJson(FeeDetails data) => json.encode(data.toJson());
+String feeReceiptYearListModelToJson(FeeReceiptYearListModel data) =>
+    json.encode(data.toJson());
 
-class Acdlist {
-  Acdlist({
-    this.type,
-    this.values,
-  });
-
-  String? type;
-  List<FeeDetails>? values;
-
-  factory Acdlist.fromJson(Map<String, dynamic> json) => Acdlist(
-        type: json["\$type"],
-        values: List<FeeDetails>.from(
-            json["\$values"].map((x) => FeeDetails.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "\$type": type,
-        "\$values": List<dynamic>.from(values!.map((x) => x.toJson())),
-      };
-}
-
-class FeeDetails {
-  FeeDetails({
+class FeeReceiptYearListModel {
+  FeeReceiptYearListModel({
     this.stdupdate,
     this.stuonlineexam,
     this.mobilenumber,
@@ -100,13 +80,14 @@ class FeeDetails {
     this.receivable,
     this.balance,
     this.paid,
-    this.studentfeedetails,
-    this.feeAnalysisList,
+    this.yearlist,
     this.fyPId,
     this.month,
     this.amsTMobileNo,
     this.amsTDob,
     this.hrmEId,
+    this.specialheaddetails,
+    this.specialheadlist,
     this.studentaccyear,
     this.ftPConcessionAmt,
     this.ftPPaidAmt,
@@ -121,7 +102,7 @@ class FeeDetails {
     this.ttmCId,
     this.ttfgDId,
     this.ttfGId,
-    this.feesDetailsHrmEId,
+    this.feeReceiptYearListModelHrmEId,
     this.ttmDId,
     this.ttmPId,
     this.ismSId,
@@ -156,10 +137,6 @@ class FeeDetails {
     this.subjorder,
     this.estsUElecetiveFlag,
     this.amaYRollNo,
-    this.acdlist,
-    this.asmaYYear,
-    this.fmHFeeName,
-    this.ftIName,
   });
 
   int? stdupdate;
@@ -201,10 +178,10 @@ class FeeDetails {
   int? fsSAdjustedAmount;
   int? fsSWaivedAmount;
   int? fsSRebateAmount;
-  double? fsSFineAmount;
+  int? fsSFineAmount;
   int? fsSRefundAmount;
   int? fsSRefundAmountAdjusted;
-  double? fsSNetAmount;
+  int? fsSNetAmount;
   bool? fsSChequeBounceFlag;
   bool? updateflag;
   bool? fsSArrearFlag;
@@ -230,32 +207,33 @@ class FeeDetails {
   int? receivable;
   int? balance;
   int? paid;
-  StudentFeeDetails? studentfeedetails;
-  FeeAnalysisList? feeAnalysisList;
+  Yearlist? yearlist;
   int? fyPId;
   int? month;
   int? amsTMobileNo;
   DateTime? amsTDob;
   int? hrmEId;
+  Specialheaddetails? specialheaddetails;
+  Specialheadlist? specialheadlist;
   int? studentaccyear;
-  double? ftPConcessionAmt;
-  double? ftPPaidAmt;
-  double? ftPFineAmt;
+  int? ftPConcessionAmt;
+  int? ftPPaidAmt;
+  int? ftPFineAmt;
   DateTime? fyPDate;
   DateTime? fyPDdChequeDate;
-  double? fyPTotAmount;
-  double? fyPTotFineAmt;
-  double? fyPTotConcessionAmt;
+  int? fyPTotAmount;
+  int? fyPTotFineAmt;
+  int? fyPTotConcessionAmt;
   int? fmTId;
   int? dueamount;
   int? ttmCId;
   int? ttfgDId;
   int? ttfGId;
-  int? feesDetailsHrmEId;
+  int? feeReceiptYearListModelHrmEId;
   int? ttmDId;
   int? ttmPId;
   int? ismSId;
-  double? ttmBAfterPeriod;
+  int? ttmBAfterPeriod;
   int? idUId;
   bool? idUActiveFlag;
   int? intBId;
@@ -286,12 +264,9 @@ class FeeDetails {
   int? subjorder;
   bool? estsUElecetiveFlag;
   int? amaYRollNo;
-  Acdlist? acdlist;
-  String? asmaYYear;
-  String? fmHFeeName;
-  String? ftIName;
 
-  factory FeeDetails.fromJson(Map<String, dynamic> json) => FeeDetails(
+  factory FeeReceiptYearListModel.fromJson(Map<String, dynamic> json) =>
+      FeeReceiptYearListModel(
         stdupdate: json["stdupdate"],
         stuonlineexam: json["stuonlineexam"],
         mobilenumber: json["mobilenumber"],
@@ -360,17 +335,15 @@ class FeeDetails {
         receivable: json["receivable"],
         balance: json["balance"],
         paid: json["paid"],
-        studentfeedetails: json["studentfeedetails"] == null
-            ? null
-            : StudentFeeDetails.fromJson(json["studentfeedetails"]),
-        feeAnalysisList: json["feeAnalysisList"] == null
-            ? null
-            : FeeAnalysisList.fromJson(json["feeAnalysisList"]),
+        yearlist: Yearlist.fromJson(json["yearlist"]),
         fyPId: json["fyP_Id"],
         month: json["month"],
         amsTMobileNo: json["amsT_MobileNo"],
         amsTDob: DateTime.parse(json["amsT_DOB"]),
         hrmEId: json["hrmE_ID"],
+        specialheaddetails:
+            Specialheaddetails.fromJson(json["specialheaddetails"]),
+        specialheadlist: Specialheadlist.fromJson(json["specialheadlist"]),
         studentaccyear: json["studentaccyear"],
         ftPConcessionAmt: json["ftP_Concession_Amt"],
         ftPPaidAmt: json["ftP_Paid_Amt"],
@@ -385,7 +358,7 @@ class FeeDetails {
         ttmCId: json["ttmC_Id"],
         ttfgDId: json["ttfgD_Id"],
         ttfGId: json["ttfG_Id"],
-        feesDetailsHrmEId: json["hrmE_Id"],
+        feeReceiptYearListModelHrmEId: json["hrmE_Id"],
         ttmDId: json["ttmD_Id"],
         ttmPId: json["ttmP_Id"],
         ismSId: json["ismS_Id"],
@@ -420,11 +393,6 @@ class FeeDetails {
         subjorder: json["subjorder"],
         estsUElecetiveFlag: json["estsU_ElecetiveFlag"],
         amaYRollNo: json["amaY_RollNo"],
-        acdlist:
-            json["acdlist"] == null ? null : Acdlist.fromJson(json["acdlist"]),
-        asmaYYear: json["asmaY_Year"] ?? null,
-        fmHFeeName: json["fmH_FeeName"] ?? null,
-        ftIName: json["ftI_Name"] ?? null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -496,15 +464,14 @@ class FeeDetails {
         "receivable": receivable,
         "balance": balance,
         "paid": paid,
-        "studentfeedetails":
-            studentfeedetails == null ? null : studentfeedetails!.toJson(),
-        "feeAnalysisList":
-            feeAnalysisList == null ? null : feeAnalysisList!.toJson(),
+        "yearlist": yearlist!.toJson(),
         "fyP_Id": fyPId,
         "month": month,
         "amsT_MobileNo": amsTMobileNo,
         "amsT_DOB": amsTDob!.toIso8601String(),
         "hrmE_ID": hrmEId,
+        "specialheaddetails": specialheaddetails!.toJson(),
+        "specialheadlist": specialheadlist!.toJson(),
         "studentaccyear": studentaccyear,
         "ftP_Concession_Amt": ftPConcessionAmt,
         "ftP_Paid_Amt": ftPPaidAmt,
@@ -519,7 +486,7 @@ class FeeDetails {
         "ttmC_Id": ttmCId,
         "ttfgD_Id": ttfgDId,
         "ttfG_Id": ttfGId,
-        "hrmE_Id": feesDetailsHrmEId,
+        "hrmE_Id": feeReceiptYearListModelHrmEId,
         "ttmD_Id": ttmDId,
         "ttmP_Id": ttmPId,
         "ismS_Id": ismSId,
@@ -554,82 +521,23 @@ class FeeDetails {
         "subjorder": subjorder,
         "estsU_ElecetiveFlag": estsUElecetiveFlag,
         "amaY_RollNo": amaYRollNo,
-        "acdlist": acdlist == null ? null : acdlist!.toJson(),
-        "asmaY_Year": asmaYYear ?? null,
-        "fmH_FeeName": fmHFeeName ?? null,
-        "ftI_Name": ftIName ?? null,
       };
 }
 
-class StudentFeeDetails {
-  StudentFeeDetails({
-    this.type,
-    this.values,
-  });
-  String? type;
-  List<HeadwiseAnalysisData>? values;
-  factory StudentFeeDetails.fromJson(Map<String, dynamic> json) =>
-      StudentFeeDetails(
-        type: json["\$type"],
-        values: List<HeadwiseAnalysisData>.from(
-            json["\$values"].map((x) => HeadwiseAnalysisData.fromJson(x))),
-      );
-  Map<String, dynamic> toJson() => {
-        "\$type": type,
-        "\$values": List<dynamic>.from(values!.map((x) => x.toJson())),
-      };
-}
-
-class HeadwiseAnalysisData {
-  HeadwiseAnalysisData({
-    this.fmhFeeName,
-    this.ftiName,
-    this.netAmount,
-    this.concessionAmount,
-    this.paidAmount,
-    this.balanceAmount,
-  });
-  String? fmhFeeName;
-  String? ftiName;
-  double? netAmount;
-  double? concessionAmount;
-  double? paidAmount;
-  int? balanceAmount;
-
-  factory HeadwiseAnalysisData.fromJson(Map<String, dynamic> json) =>
-      HeadwiseAnalysisData(
-        fmhFeeName: json["fmH_FeeName"],
-        ftiName: json["ftI_Name"],
-        netAmount: json["fyP_Tot_Amount"],
-        concessionAmount: json["ftP_Concession_Amt"],
-        paidAmount: json["ftP_Paid_Amt"],
-        balanceAmount: json["dueamount"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "fmH_FeeName": fmhFeeName,
-        "ftI_Name": ftiName,
-        "fyP_Tot_Amount": netAmount,
-        "ftP_Concession_Amt": concessionAmount,
-        "ftP_Paid_Amt": paidAmount,
-        "dueamount": balanceAmount,
-      };
-}
-
-class FeeAnalysisList {
-  FeeAnalysisList({
+class Specialheaddetails {
+  Specialheaddetails({
     this.type,
     this.values,
   });
 
   String? type;
-  List<OverAllAnalysisValue>? values;
+  List<SpecialheaddetailsValue>? values;
 
-  factory FeeAnalysisList.fromJson(Map<String, dynamic> json) =>
-      FeeAnalysisList(
+  factory Specialheaddetails.fromJson(Map<String, dynamic> json) =>
+      Specialheaddetails(
         type: json["\$type"],
-        values: List<OverAllAnalysisValue>.from(
-            json["\$values"].map((x) => OverAllAnalysisValue.fromJson(x))),
+        values: List<SpecialheaddetailsValue>.from(
+            json["\$values"].map((x) => SpecialheaddetailsValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -638,47 +546,317 @@ class FeeAnalysisList {
       };
 }
 
-class OverAllAnalysisValue {
-  OverAllAnalysisValue({
+class SpecialheaddetailsValue {
+  SpecialheaddetailsValue({
+    this.fmsfHId,
+    this.mIId,
+    this.fmHId,
+    this.fmsfHName,
+    this.fmsfHActiceFlag,
+    this.ivrmstauLId,
+    this.returnval,
+    this.editidh,
+    this.fmHName,
+    this.fmsfhfHId,
+    this.fmsfhfHActiceFlag,
+  });
+
+  int? fmsfHId;
+  int? mIId;
+  int? fmHId;
+  FmsfHName? fmsfHName;
+  bool? fmsfHActiceFlag;
+  int? ivrmstauLId;
+  bool? returnval;
+  int? editidh;
+  String? fmHName;
+  int? fmsfhfHId;
+  bool? fmsfhfHActiceFlag;
+
+  factory SpecialheaddetailsValue.fromJson(Map<String, dynamic> json) =>
+      SpecialheaddetailsValue(
+        fmsfHId: json["fmsfH_Id"],
+        mIId: json["mI_Id"],
+        fmHId: json["fmH_ID"],
+        fmsfHName: fmsfHNameValues.map![json["fmsfH_Name"]],
+        fmsfHActiceFlag: json["fmsfH_ActiceFlag"],
+        ivrmstauLId: json["ivrmstauL_Id"],
+        returnval: json["returnval"],
+        editidh: json["editidh"],
+        fmHName: json["fmH_Name"],
+        fmsfhfHId: json["fmsfhfH_Id"],
+        fmsfhfHActiceFlag: json["fmsfhfH_ActiceFlag"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "fmsfH_Id": fmsfHId,
+        "mI_Id": mIId,
+        "fmH_ID": fmHId,
+        "fmsfH_Name": fmsfHNameValues.reverse![fmsfHName],
+        "fmsfH_ActiceFlag": fmsfHActiceFlag,
+        "ivrmstauL_Id": ivrmstauLId,
+        "returnval": returnval,
+        "editidh": editidh,
+        "fmH_Name": fmHName,
+        "fmsfhfH_Id": fmsfhfHId,
+        "fmsfhfH_ActiceFlag": fmsfhfHActiceFlag,
+      };
+}
+
+enum FmsfHName { ANNUAL_FEE, TEST }
+
+final fmsfHNameValues =
+    EnumValues({"Annual Fee": FmsfHName.ANNUAL_FEE, "test": FmsfHName.TEST});
+
+class Specialheadlist {
+  Specialheadlist({
     this.type,
-    this.asmayId,
-    this.asmayYear,
-    this.receivable,
-    this.concession,
-    this.collection,
-    this.adjusted,
-    this.balance,
+    this.values,
   });
 
   String? type;
-  int? asmayId;
-  String? asmayYear;
-  dynamic receivable;
-  dynamic concession;
-  dynamic collection;
-  dynamic adjusted;
-  dynamic balance;
+  List<SpecialheadlistValue>? values;
 
-  factory OverAllAnalysisValue.fromJson(Map<String, dynamic> json) =>
-      OverAllAnalysisValue(
+  factory Specialheadlist.fromJson(Map<String, dynamic> json) =>
+      Specialheadlist(
         type: json["\$type"],
-        asmayId: json["ASMAY_Id"],
-        asmayYear: json["ASMAY_Year"],
-        receivable: json["RECEIVABLE"],
-        concession: json["CONCESSION"],
-        collection: json["COLLECTION"],
-        adjusted: json["ADJUSTED"],
-        balance: json["BALANCE"],
+        values: List<SpecialheadlistValue>.from(
+            json["\$values"].map((x) => SpecialheadlistValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "\$type": type,
-        "ASMAY_Id": asmayId,
-        "ASMAY_Year": asmayYear,
-        "RECEIVABLE": receivable,
-        "CONCESSION": concession,
-        "COLLECTION": collection,
-        "ADJUSTED": adjusted,
-        "BALANCE": balance,
+        "\$values": List<dynamic>.from(values!.map((x) => x.toJson())),
       };
+}
+
+class SpecialheadlistValue {
+  SpecialheadlistValue({
+    this.fmsfHId,
+    this.mIId,
+    this.fmsfHName,
+    this.fmsfHActiceFlag,
+    this.ivrmstauLId,
+    this.fmsfHConcessionFlag,
+    this.createdDate,
+    this.updatedDate,
+  });
+
+  int? fmsfHId;
+  int? mIId;
+  FmsfHName? fmsfHName;
+  bool? fmsfHActiceFlag;
+  int? ivrmstauLId;
+  String? fmsfHConcessionFlag;
+  DateTime? createdDate;
+  DateTime? updatedDate;
+
+  factory SpecialheadlistValue.fromJson(Map<String, dynamic> json) =>
+      SpecialheadlistValue(
+        fmsfHId: json["fmsfH_Id"],
+        mIId: json["mI_Id"],
+        fmsfHName: fmsfHNameValues.map![json["fmsfH_Name"]],
+        fmsfHActiceFlag: json["fmsfH_ActiceFlag"],
+        ivrmstauLId: json["ivrmstauL_Id"],
+        fmsfHConcessionFlag: json["fmsfH_ConcessionFlag"] == null
+            ? null
+            : json["fmsfH_ConcessionFlag"],
+        createdDate: DateTime.parse(json["createdDate"]),
+        updatedDate: DateTime.parse(json["updatedDate"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "fmsfH_Id": fmsfHId,
+        "mI_Id": mIId,
+        "fmsfH_Name": fmsfHNameValues.reverse![fmsfHName],
+        "fmsfH_ActiceFlag": fmsfHActiceFlag,
+        "ivrmstauL_Id": ivrmstauLId,
+        "fmsfH_ConcessionFlag":
+            fmsfHConcessionFlag == null ? null : fmsfHConcessionFlag,
+        "createdDate": createdDate!.toIso8601String(),
+        "updatedDate": updatedDate!.toIso8601String(),
+      };
+}
+
+class Yearlist {
+  Yearlist({
+    this.type,
+    this.values,
+  });
+
+  String? type;
+  List<YearlistValue>? values;
+
+  factory Yearlist.fromJson(Map<String, dynamic> json) => Yearlist(
+        type: json["\$type"],
+        values: List<YearlistValue>.from(
+            json["\$values"].map((x) => YearlistValue.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "\$type": type,
+        "\$values": List<dynamic>.from(values!.map((x) => x.toJson())),
+      };
+}
+
+class YearlistValue {
+  YearlistValue({
+    this.asmaYId,
+    this.mIId,
+    this.asmaYYear,
+    this.asmaYFromDate,
+    this.asmaYToDate,
+    this.asmaYPreAdmFDate,
+    this.asmaYPreAdmTDate,
+    this.asmaYOrder,
+    this.asmaYActiveFlag,
+    this.asmaYCutOfDate,
+    this.asmaYPreActiveFlag,
+    this.isActive,
+    this.asmaYReggularFlg,
+    this.asmaYNewFlg,
+    this.asmaYNewAdmissionFlg,
+    this.asmaYCreatedBy,
+    this.asmaYUpdatedBy,
+    this.asmaYAcademicYearCode,
+    this.asmaYRegularFeeFDate,
+    this.asmaYRegularFeeTDate,
+    this.createdDate,
+    this.updatedDate,
+    this.asmaYTransportSDate,
+    this.asmaYTransportEDate,
+    this.asmaYReferenceDate,
+    this.asmaYAdvanceFeeDate,
+    this.asmaYArrearFeeDate,
+  });
+
+  int? asmaYId;
+  int? mIId;
+  String? asmaYYear;
+  DateTime? asmaYFromDate;
+  DateTime? asmaYToDate;
+  DateTime? asmaYPreAdmFDate;
+  DateTime? asmaYPreAdmTDate;
+  int? asmaYOrder;
+  int? asmaYActiveFlag;
+  DateTime? asmaYCutOfDate;
+  int? asmaYPreActiveFlag;
+  bool? isActive;
+  bool? asmaYReggularFlg;
+  bool? asmaYNewFlg;
+  bool? asmaYNewAdmissionFlg;
+  int? asmaYCreatedBy;
+  int? asmaYUpdatedBy;
+  String? asmaYAcademicYearCode;
+  DateTime? asmaYRegularFeeFDate;
+  DateTime? asmaYRegularFeeTDate;
+  DateTime? createdDate;
+  DateTime? updatedDate;
+  DateTime? asmaYTransportSDate;
+  DateTime? asmaYTransportEDate;
+  DateTime? asmaYReferenceDate;
+  DateTime? asmaYAdvanceFeeDate;
+  DateTime? asmaYArrearFeeDate;
+
+  factory YearlistValue.fromJson(Map<String, dynamic> json) => YearlistValue(
+        asmaYId: json["asmaY_Id"],
+        mIId: json["mI_Id"],
+        asmaYYear: json["asmaY_Year"],
+        asmaYFromDate: DateTime.parse(json["asmaY_From_Date"]),
+        asmaYToDate: DateTime.parse(json["asmaY_To_Date"]),
+        asmaYPreAdmFDate: DateTime.parse(json["asmaY_PreAdm_F_Date"]),
+        asmaYPreAdmTDate: DateTime.parse(json["asmaY_PreAdm_T_Date"]),
+        asmaYOrder: json["asmaY_Order"],
+        asmaYActiveFlag: json["asmaY_ActiveFlag"],
+        asmaYCutOfDate: DateTime.parse(json["asmaY_Cut_Of_Date"]),
+        asmaYPreActiveFlag: json["asmaY_Pre_ActiveFlag"],
+        isActive: json["is_Active"],
+        asmaYReggularFlg: json["asmaY_ReggularFlg"],
+        asmaYNewFlg: json["asmaY_NewFlg"],
+        asmaYNewAdmissionFlg: json["asmaY_NewAdmissionFlg"],
+        asmaYCreatedBy: json["asmaY_CreatedBy"],
+        asmaYUpdatedBy: json["asmaY_UpdatedBy"],
+        asmaYAcademicYearCode: json["asmaY_AcademicYearCode"],
+        asmaYRegularFeeFDate: json["asmaY_RegularFeeFDate"] == null
+            ? null
+            : DateTime.parse(json["asmaY_RegularFeeFDate"]),
+        asmaYRegularFeeTDate: json["asmaY_RegularFeeTDate"] == null
+            ? null
+            : DateTime.parse(json["asmaY_RegularFeeTDate"]),
+        createdDate: DateTime.parse(json["createdDate"]),
+        updatedDate: DateTime.parse(json["updatedDate"]),
+        asmaYTransportSDate: json["asmaY_TransportSDate"] == null
+            ? null
+            : DateTime.parse(json["asmaY_TransportSDate"]),
+        asmaYTransportEDate: json["asmaY_TransportEDate"] == null
+            ? null
+            : DateTime.parse(json["asmaY_TransportEDate"]),
+        asmaYReferenceDate: json["asmaY_ReferenceDate"] == null
+            ? null
+            : DateTime.parse(json["asmaY_ReferenceDate"]),
+        asmaYAdvanceFeeDate: json["asmaY_AdvanceFeeDate"] == null
+            ? null
+            : DateTime.parse(json["asmaY_AdvanceFeeDate"]),
+        asmaYArrearFeeDate: json["asmaY_ArrearFeeDate"] == null
+            ? null
+            : DateTime.parse(json["asmaY_ArrearFeeDate"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "asmaY_Id": asmaYId,
+        "mI_Id": mIId,
+        "asmaY_Year": asmaYYear,
+        "asmaY_From_Date": asmaYFromDate!.toIso8601String(),
+        "asmaY_To_Date": asmaYToDate!.toIso8601String(),
+        "asmaY_PreAdm_F_Date": asmaYPreAdmFDate!.toIso8601String(),
+        "asmaY_PreAdm_T_Date": asmaYPreAdmTDate!.toIso8601String(),
+        "asmaY_Order": asmaYOrder,
+        "asmaY_ActiveFlag": asmaYActiveFlag,
+        "asmaY_Cut_Of_Date": asmaYCutOfDate!.toIso8601String(),
+        "asmaY_Pre_ActiveFlag": asmaYPreActiveFlag,
+        "is_Active": isActive,
+        "asmaY_ReggularFlg": asmaYReggularFlg,
+        "asmaY_NewFlg": asmaYNewFlg,
+        "asmaY_NewAdmissionFlg": asmaYNewAdmissionFlg,
+        "asmaY_CreatedBy": asmaYCreatedBy,
+        "asmaY_UpdatedBy": asmaYUpdatedBy,
+        "asmaY_AcademicYearCode": asmaYAcademicYearCode,
+        "asmaY_RegularFeeFDate": asmaYRegularFeeFDate == null
+            ? null
+            : asmaYRegularFeeFDate!.toIso8601String(),
+        "asmaY_RegularFeeTDate": asmaYRegularFeeTDate == null
+            ? null
+            : asmaYRegularFeeTDate!.toIso8601String(),
+        "createdDate": createdDate!.toIso8601String(),
+        "updatedDate": updatedDate!.toIso8601String(),
+        "asmaY_TransportSDate": asmaYTransportSDate == null
+            ? null
+            : asmaYTransportSDate!.toIso8601String(),
+        "asmaY_TransportEDate": asmaYTransportEDate == null
+            ? null
+            : asmaYTransportEDate!.toIso8601String(),
+        "asmaY_ReferenceDate": asmaYReferenceDate == null
+            ? null
+            : asmaYReferenceDate!.toIso8601String(),
+        "asmaY_AdvanceFeeDate": asmaYAdvanceFeeDate == null
+            ? null
+            : asmaYAdvanceFeeDate!.toIso8601String(),
+        "asmaY_ArrearFeeDate": asmaYArrearFeeDate == null
+            ? null
+            : asmaYArrearFeeDate!.toIso8601String(),
+      };
+}
+
+class EnumValues<T> {
+  Map<String, T>? map;
+  Map<T, String>? reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String>? get reverse {
+    if (reverseMap == null) {
+      reverseMap = map!.map((k, v) => new MapEntry(v, k));
+    }
+    return reverseMap;
+  }
 }

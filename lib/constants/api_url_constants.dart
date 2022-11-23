@@ -47,6 +47,12 @@ class URLS {
   static String getAcademicYear = "api/AttendanceDetailsFacade/getloaddata/";
   static String coeData = "api/COEFacade/getcoedata/";
 
+  //Attendance
+  static String getAttendanceDetails = "api/StudentDashboardFacade/Getdetails";
+
+  //NoticeBoard
+  static String getNotice = "api/StudentDashboardFacade/onclick_notice/";
+
   // Fee Module Endpoints
   static String getFeeAnalysis = 'api/CumulativeFeeAnalysisFacade/getloaddata/';
 }

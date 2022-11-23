@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
 import 'package:m_skool_flutter/fees/widgets/installment_detail_widget.dart';
 
+import '../../widget/pgr_widget.dart';
+
 class HeadwiseAnalysisTab extends StatefulWidget {
   const HeadwiseAnalysisTab({super.key});
 
@@ -20,61 +22,35 @@ class _HeadwiseAnalysisTabState extends State<HeadwiseAnalysisTab> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Column(
-        children: [
-          ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return const InstallmentDetailWidget(
-                  leadText: 'Tution Fees',
-                  instalText: 'I Installment',
-                  netAmount: 15925,
-                  concessionAmount: 0,
-                  paidAmount: 5390,
-                  balanceAmount: 0,
-                );
-              }),
-
-          //   InstallmentDetailWidget(
-          //     leadText: 'Tution Fees',
-          //     instalText: 'I Installment',
-          //     netAmount: 15925,
-          //     concessionAmount: 0,
-          //     paidAmount: 5390,
-          //     balanceAmount: 0,
-          //   ),
-          //   SizedBox(height: 16),
-          //   InstallmentDetailWidget(
-          //     leadText: 'Tution Fees',
-          //     instalText: 'II Installment',
-          //     netAmount: 15925,
-          //     concessionAmount: 0,
-          //     paidAmount: 5390,
-          //     balanceAmount: 0,
-          //   ),
-          //   SizedBox(height: 16),
-          //   InstallmentDetailWidget(
-          //     leadText: 'Tution Fees',
-          //     instalText: 'III Installment',
-          //     netAmount: 15925,
-          //     concessionAmount: 0,
-          //     paidAmount: 5390,
-          //     balanceAmount: 0,
-          //   ),
-          //   SizedBox(height: 16),
-          //   InstallmentDetailWidget(
-          //     leadText: 'Term Fees',
-          //     instalText: 'I Installment',
-          //     netAmount: 1500,
-          //     concessionAmount: 0,
-          //     paidAmount: 1500,
-          //     balanceAmount: 0,
-          //     backgroundColor: Color.fromRGBO(238, 232, 255, 0.4),
-          //     instalTextBgColor: Color.fromRGBO(209, 193, 255, 1),
-          //   ),
-        ],
+      child: Obx(
+        () => feeController.isLoading.value
+            ? const Center(child: ProgressWidget())
+            : Column(
+                children: [
+                  ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: feeController.headWiseAnalysisData.length,
+                    itemBuilder: (context, index) {
+                      return InstallmentDetailWidget(
+                        leadText: feeController
+                            .headWiseAnalysisData[index].fmhFeeName!,
+                        instalText:
+                            feeController.headWiseAnalysisData[index].ftiName!,
+                        netAmount: feeController
+                            .headWiseAnalysisData[index].netAmount!,
+                        concessionAmount: feeController
+                            .headWiseAnalysisData[index].concessionAmount!,
+                        paidAmount: feeController
+                            .headWiseAnalysisData[index].paidAmount!,
+                        balanceAmount: feeController
+                            .headWiseAnalysisData[index].balanceAmount!
+                            .toDouble(),
+                      );
+                    },
+                  ),
+                ],
+              ),
       ),
     );
   }

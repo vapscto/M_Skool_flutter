@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/classwork/screen/classwork_home.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/homework/screen/home_work.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
 class InfoHome extends StatefulWidget {
-  const InfoHome({super.key});
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  const InfoHome(
+      {super.key,
+      required this.loginSuccessModel,
+      required this.mskoolController});
 
   @override
   State<InfoHome> createState() => _InfoHomeState();
@@ -16,8 +23,18 @@ class InfoHome extends StatefulWidget {
 class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
   TabController? tabController;
   final PageController pageController = PageController();
+  List<Widget> pages = [];
   @override
   void initState() {
+    pages.addAll([
+      HomeWorkScreen(),
+      ClassworkHome(),
+      NoticeHome(
+        showAppBar: false,
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController,
+      ),
+    ]);
     tabController = TabController(length: 3, vsync: this);
     // tabController!.addListener(() {
     //   pageController.animateToPage(tabController!.index,
@@ -35,13 +52,7 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
   }
 
   RxInt currentPage = RxInt(0);
-  List<Widget> pages = const [
-    HomeWorkScreen(),
-    ClassworkHome(),
-    NoticeHome(
-      showAppBar: false,
-    ),
-  ];
+
   RxBool showFilter = RxBool(false);
 
   @override

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_titled_container/flutter_titled_container.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:data_tables/data_tables.dart';
 
 import '../widgets/receiptno_card.dart';
 
@@ -30,6 +32,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               decoration: BoxDecoration(
@@ -117,7 +120,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                     controller: _controller,
                     child: ListView.builder(
                       controller: _controller,
-                      itemCount: 10,
+                      itemCount: 5,
                       itemBuilder: (context, indext) {
                         return ReceiptNoCard();
                       },
@@ -134,6 +137,111 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                 ),
               ],
             ),
+            const SizedBox(height: 25),
+            Text(
+              'Fee Details',
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium!
+                  .copyWith(color: Colors.black),
+            ),
+            const SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/vpslogo.png',
+                  height: 36,
+                ),
+                const SizedBox(
+                  width: 12.0,
+                ),
+                Text(
+                  "VAPS International School",
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .merge(const TextStyle(color: Color(0xFF35658F))),
+                ),
+              ],
+            ),
+            const SizedBox(height: 15),
+            Container(
+              width: double.infinity,
+              child: Center(
+                child: DataTable(
+                  dataTextStyle: const TextStyle(
+                      fontSize: 11,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500),
+                  dataRowHeight: 24,
+                  headingRowHeight: 20,
+                  horizontalMargin: 2,
+                  columnSpacing: 20,
+                  dividerThickness: 1,
+                  headingTextStyle: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w600),
+                  border: TableBorder.all(width: 1, color: Colors.black),
+                  showBottomBorder: true,
+                  headingRowColor:
+                      MaterialStateProperty.all(Colors.blue.shade400),
+                  columns: const [
+                    DataColumn(
+                      numeric: true,
+                      label: Text(
+                        ' S.No',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Particular',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Installment',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Concession',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Text(
+                        'Paid Amount',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ],
+                  rows: [
+                    DataRow(
+                      cells: [
+                        DataCell(Center(child: Text('1'))),
+                        DataCell(Center(child: Text('Tution Fees'))),
+                        DataCell(Center(child: Text('I Installment'))),
+                        DataCell(Center(child: Text('0'))),
+                        DataCell(Center(child: Text('5390'))),
+                      ],
+                    ),
+                    DataRow(
+                      cells: [
+                        DataCell(Center(child: Text('2'))),
+                        DataCell(Center(child: Text('Tution Fees'))),
+                        DataCell(Center(child: Text('II Installment'))),
+                        DataCell(Center(child: Text('0'))),
+                        DataCell(Center(child: Text('15925'))),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),

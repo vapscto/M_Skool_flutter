@@ -16,7 +16,7 @@ class InstitutionalCodeApi {
       Response response = await ins.post(
         insApiUrl,
         data: {
-          "INSTITUTECODE": insCode,
+          "INSTITUTECODE": insCode.trim(),
         },
       );
 

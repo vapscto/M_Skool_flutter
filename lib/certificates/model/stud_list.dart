@@ -58,6 +58,7 @@ class StudListValues {
   bool? returnval;
   int? hrmEId;
   bool? duplicate;
+  String? ascaReason;
 
   StudListValues(
       {this.ascAId,
@@ -92,7 +93,8 @@ class StudListValues {
       this.amcTActiceFlag,
       this.returnval,
       this.hrmEId,
-      this.duplicate});
+      this.duplicate,
+      this.ascaReason});
 
   StudListValues.fromJson(Map<String, dynamic> json) {
     ascAId = json['ascA_Id'];
@@ -128,6 +130,7 @@ class StudListValues {
     returnval = json['returnval'];
     hrmEId = json['hrmE_Id'];
     duplicate = json['duplicate'];
+    ascaReason = json['asca_reason'];
   }
 
   Map<String, dynamic> toJson() {
@@ -165,6 +168,7 @@ class StudListValues {
     data['returnval'] = returnval;
     data['hrmE_Id'] = hrmEId;
     data['duplicate'] = duplicate;
+    data['asca_reason'] = ascaReason;
     return data;
   }
 }

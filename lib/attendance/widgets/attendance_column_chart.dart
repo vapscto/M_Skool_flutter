@@ -3,70 +3,62 @@ import 'dart:convert';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:m_skool_flutter/attendance/controller/attendance_handler.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class AttendanceColumnChart extends StatefulWidget {
-  const AttendanceColumnChart({super.key});
+  final AttendanceHandler handler;
+  const AttendanceColumnChart({super.key, required this.handler});
 
   @override
   State<AttendanceColumnChart> createState() => _AttendanceColumnChartState();
 }
 
 class _AttendanceColumnChartState extends State<AttendanceColumnChart> {
-  List<ChartData> attendance = [
-    ChartData(
-      xAxisValues: XAxisValues(month: "January"),
-      yAxisValue: YAxisValue(totalClassHeld: 12, totalPresent: 8),
-    ),
-    ChartData(
-      xAxisValues: XAxisValues(month: "February"),
-      yAxisValue: YAxisValue(totalClassHeld: 20, totalPresent: 14),
-    ),
-    ChartData(
-      xAxisValues: XAxisValues(month: "March"),
-      yAxisValue: YAxisValue(totalClassHeld: 16, totalPresent: 9),
-    ),
-    ChartData(
-      xAxisValues: XAxisValues(month: "April"),
-      yAxisValue: YAxisValue(totalClassHeld: 18, totalPresent: 12),
-    ),
-    // ChartData(
-    //   xAxisValues: XAxisValues(month: "May"),
-    //   yAxisValue: YAxisValue(totalClassHeld: 20, totalPresent: 10),
-    // ),
-    // ChartData(
-    //   xAxisValues: XAxisValues(month: "June"),
-    //   yAxisValue: YAxisValue(totalClassHeld: 12, totalPresent: 8),
-    // ),
-    // ChartData(
-    //   xAxisValues: XAxisValues(month: "July"),
-    //   yAxisValue: YAxisValue(totalClassHeld: 20, totalPresent: 14),
-    // ),
-    // ChartData(
-    //   xAxisValues: XAxisValues(month: "August"),
-    //   yAxisValue: YAxisValue(totalClassHeld: 16, totalPresent: 9),
-    // ),
-    // ChartData(
-    //   xAxisValues: XAxisValues(month: "September"),
-    //   yAxisValue: YAxisValue(totalClassHeld: 18, totalPresent: 12),
-    // ),
-    // ChartData(
-    //   xAxisValues: XAxisValues(month: "October"),
-    //   yAxisValue: YAxisValue(totalClassHeld: 20, totalPresent: 10),
-    // )
-  ];
+  RxList<ChartData> attendance = RxList<ChartData>();
+
+  @override
+  void initState() {
+    for (int i = 0; i < widget.handler.attendanceData.length; i++) {
+      attendance.add(
+        ChartData(
+          xAxisValues: XAxisValues(
+              month: widget.handler.attendanceData.elementAt(i).mONTHNAME!),
+          yAxisValue: YAxisValue(
+            totalClassHeld: int.parse(
+                widget.handler.attendanceData.elementAt(i).cLASSHELD!),
+            totalPresent: double.parse(widget.handler.attendanceData
+                    .elementAt(i)
+                    .tOTALPRESENT
+                    .toString())
+                .toInt(),
+          ),
+        ),
+      );
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SfCartesianChart(
       primaryXAxis: CategoryAxis(
         name: "months",
+        labelStyle: Theme.of(context)
+            .textTheme
+            .labelSmall!
+            .merge(const TextStyle(letterSpacing: 0.2)),
         majorGridLines: const MajorGridLines(width: 0.0),
       ),
       primaryYAxis: NumericAxis(
           minimum: 0,
-          maximum: 30,
+          maximum: 35,
           interval: 5,
+          labelStyle: Theme.of(context)
+              .textTheme
+              .labelSmall!
+              .merge(const TextStyle(letterSpacing: 0.2)),
           majorGridLines: const MajorGridLines(width: 0.0)),
       enableSideBySideSeriesPlacement: false,
       tooltipBehavior: TooltipBehavior(enable: true),
@@ -74,12 +66,13 @@ class _AttendanceColumnChartState extends State<AttendanceColumnChart> {
       series: <ChartSeries<ChartData, String>>[
         ColumnSeries(
             name: "Total Class Held",
-            color: const Color(0xFF35658F),
+            color: Theme.of(context).primaryColor,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(12.0),
               topRight: Radius.circular(12.0),
             ),
-            dataSource: attendance,
+            dataSource: attendance.value,
+            xAxisName: "Months",
             xValueMapper: (datum, index) {
               return datum.xAxisValues.month;
             },
@@ -93,7 +86,7 @@ class _AttendanceColumnChartState extends State<AttendanceColumnChart> {
               topLeft: Radius.circular(12.0),
               topRight: Radius.circular(12.0),
             ),
-            dataSource: attendance,
+            dataSource: attendance.value,
             xValueMapper: (datum, index) {
               return datum.xAxisValues.month;
             },
