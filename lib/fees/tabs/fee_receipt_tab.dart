@@ -232,144 +232,163 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                       ],
                     ),
                     const SizedBox(height: 25),
-                    feeController.isFeeDetail.value
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : feeController.feeReceiptDetails.isEmpty
-                            ? feeController.feeReceiptNoList.isEmpty
-                                ? const SizedBox()
-                                : const Center(
-                                    child: Text(
-                                        'No Receipt Details available for selected receipt No.!!'),
-                                  )
-                            : Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Fee Details',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .copyWith(color: Colors.black),
-                                    ),
-                                    const SizedBox(height: 15),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          'assets/images/vpslogo.png',
-                                          height: 36,
-                                        ),
-                                        const SizedBox(
-                                          width: 12.0,
-                                        ),
-                                        Text(
-                                          "VAPS International School",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium!
-                                              .merge(const TextStyle(
-                                                  color: Color(0xFF35658F))),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 15),
-                                    Container(
-                                      width: double.infinity,
-                                      child: Center(
-                                        child: DataTable(
-                                          dataTextStyle: const TextStyle(
-                                              fontSize: 10,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w500),
-                                          dataRowHeight: 24,
-                                          headingRowHeight: 20,
-                                          horizontalMargin: 2,
-                                          columnSpacing: 20,
-                                          dividerThickness: 1,
-                                          headingTextStyle: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w600),
-                                          border: TableBorder.all(
-                                              width: 1, color: Colors.black),
-                                          showBottomBorder: true,
-                                          headingRowColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.blue.shade400),
-                                          columns: const [
-                                            DataColumn(
-                                              numeric: true,
-                                              label: Text(
-                                                ' S.No',
-                                                style: TextStyle(fontSize: 10),
+                    Obx(
+                      () => feeController.isFeeDetail.value
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : feeController.feeReceiptDetails.isEmpty
+                              ? feeController.feeReceiptNoList.isEmpty
+                                  ? const SizedBox()
+                                  : const Center(
+                                      child: Text(
+                                          'No Receipt Details available for selected receipt No.!!'),
+                                    )
+                              :
+                              // ListView.builder(
+                              //     physics: const NeverScrollableScrollPhysics(),
+                              //     shrinkWrap: true,
+                              //     itemCount:
+                              //         feeController.feeReceiptDetailList.length,
+                              //     itemBuilder: (context, index) {
+                              //       return
+                              Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Fee Details',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
+                                            .copyWith(color: Colors.black),
+                                      ),
+                                      const SizedBox(height: 15),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'assets/images/vpslogo.png',
+                                            height: 36,
+                                          ),
+                                          const SizedBox(
+                                            width: 12.0,
+                                          ),
+                                          Text(
+                                            "VAPS International School",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .merge(const TextStyle(
+                                                    color: Color(0xFF35658F))),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 15),
+                                      Container(
+                                        width: double.infinity,
+                                        child: Center(
+                                          child: DataTable(
+                                            dataTextStyle: const TextStyle(
+                                                fontSize: 10,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500),
+                                            dataRowHeight: 24,
+                                            headingRowHeight: 20,
+                                            horizontalMargin: 2,
+                                            columnSpacing: 20,
+                                            dividerThickness: 1,
+                                            headingTextStyle: const TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w600),
+                                            border: TableBorder.all(
+                                                width: 1, color: Colors.black),
+                                            showBottomBorder: true,
+                                            headingRowColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.blue.shade400),
+                                            columns: const [
+                                              DataColumn(
+                                                numeric: true,
+                                                label: Text(
+                                                  ' S.No',
+                                                  style:
+                                                      TextStyle(fontSize: 10),
+                                                ),
                                               ),
-                                            ),
-                                            DataColumn(
-                                              label: Text(
-                                                'Particular',
-                                                style: TextStyle(fontSize: 10),
+                                              DataColumn(
+                                                label: Text(
+                                                  'Particular',
+                                                  style:
+                                                      TextStyle(fontSize: 10),
+                                                ),
                                               ),
-                                            ),
-                                            DataColumn(
-                                              label: Text(
-                                                'Installment',
-                                                style: TextStyle(fontSize: 10),
+                                              DataColumn(
+                                                label: Text(
+                                                  'Installment',
+                                                  style:
+                                                      TextStyle(fontSize: 10),
+                                                ),
                                               ),
-                                            ),
-                                            DataColumn(
-                                              label: Text(
-                                                'Concession',
-                                                style: TextStyle(fontSize: 10),
+                                              DataColumn(
+                                                label: Text(
+                                                  'Concession',
+                                                  style:
+                                                      TextStyle(fontSize: 10),
+                                                ),
                                               ),
-                                            ),
-                                            DataColumn(
-                                              label: Text(
-                                                'Paid Amount',
-                                                style: TextStyle(fontSize: 10),
+                                              DataColumn(
+                                                label: Text(
+                                                  'Paid Amount',
+                                                  style:
+                                                      TextStyle(fontSize: 10),
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                          rows: List.generate(
-                                              feeController.feeReceiptDetails
-                                                  .length, (index) {
-                                            var i = index + 1;
-                                            return DataRow(
-                                              cells: [
-                                                DataCell(Text('$i')),
-                                                DataCell(Text(feeController
-                                                    .feeReceiptDetails
-                                                    .elementAt(index)
-                                                    .fmHFeeName!)),
-                                                DataCell(Text(feeController
-                                                    .feeReceiptDetails
-                                                    .elementAt(index)
-                                                    .ftIName!)),
-                                                DataCell(Center(
-                                                    child: Text(feeController
-                                                        .feeReceiptDetails
-                                                        .elementAt(index)
-                                                        .ftPConcessionAmt
-                                                        .toString()))),
-                                                DataCell(Center(
-                                                    child: Text(feeController
-                                                        .feeReceiptDetails
-                                                        .elementAt(index)
-                                                        .ftPPaidAmt
-                                                        .toString()))),
-                                              ],
-                                            );
-                                          }),
+                                            ],
+                                            rows: List.generate(
+                                                feeController.feeReceiptDetails
+                                                    .length, (index) {
+                                              var i = index + 1;
+                                              return DataRow(
+                                                cells: [
+                                                  DataCell(Text('$i')),
+                                                  DataCell(Text(feeController
+                                                      .feeReceiptDetails
+                                                      .elementAt(index)
+                                                      .fmHFeeName!)),
+                                                  DataCell(Text(feeController
+                                                      .feeReceiptDetails
+                                                      .elementAt(index)
+                                                      .ftIName!)),
+                                                  DataCell(Center(
+                                                      child: Text(feeController
+                                                          .feeReceiptDetails
+                                                          .elementAt(index)
+                                                          .ftPConcessionAmt
+                                                          .toString()))),
+                                                  DataCell(Center(
+                                                      child: Text(feeController
+                                                          .feeReceiptDetails
+                                                          .elementAt(index)
+                                                          .ftPPaidAmt
+                                                          .toString()))),
+                                                ],
+                                              );
+                                            }),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
+                      // }),
+                    ),
                     const SizedBox(height: 200),
                   ],
                 ),

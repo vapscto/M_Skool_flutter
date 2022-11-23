@@ -39,11 +39,11 @@ class _ReceiptNoCardState extends State<ReceiptNoCard> {
             onChanged: (value) {
               setState(
                 () {
-                  widget.function(widget.receiptDetail.fyPId!.toInt());
+                  if (value!) {
+                    widget.function(widget.receiptDetail.fyPId!.toInt());
+                  }
 
-                  isChecked = value!;
-                  logger.d(value, widget.receiptDetail.fyPId);
-                  logger.d(widget.asmayId);
+                  isChecked = value;
                 },
               );
             },

@@ -82,7 +82,6 @@ class FeeController extends GetxController {
     required int amstId,
     required String base,
   }) async {
-    feeReceiptDetails.clear();
     try {
       FeeReceiptYearListModel? feeReceiptYearListModel =
           await getFeeReceiptYearList(
