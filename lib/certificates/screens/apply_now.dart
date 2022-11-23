@@ -321,7 +321,7 @@ class _ApplyNowState extends State<ApplyNow> {
 
                                             if (snapshot.hasError) {
                                               return ErrWidget(
-                                                err: snapshot.data
+                                                err: snapshot.error
                                                     as Map<String, dynamic>,
                                               );
                                             }

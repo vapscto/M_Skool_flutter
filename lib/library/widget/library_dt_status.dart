@@ -25,6 +25,7 @@ class LibraryStatusDate extends StatelessWidget {
         children: [
           Text(
             title,
+            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleSmall!.merge(
                   const TextStyle(
                     fontSize: 14.0,

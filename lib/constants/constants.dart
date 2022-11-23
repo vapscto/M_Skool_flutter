@@ -209,6 +209,21 @@ String getFormatedDate(DateTime dt) {
   return formattedDt;
 }
 
+List<String> shortMonth = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
 List<Color> colors = [
   Colors.green.shade100,
   Colors.redAccent.shade100,
@@ -218,4 +233,13 @@ List<Color> colors = [
   Colors.tealAccent.shade100,
   Colors.limeAccent.shade100,
   Colors.deepOrange.shade100,
+];
+List<Color> noticeColor = const [
+  Color(0xFFAD65C7),
+  Color(0xFFD05954),
+  Color(0xFF0B8FD9),
+  Color(0xFF3DBA9C),
+  Color(0xFF63A06B),
+  Color(0xFFB99E56),
+  Color(0xFF7D5CDB)
 ];

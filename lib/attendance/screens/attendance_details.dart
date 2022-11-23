@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/attendance/controller/attendance_handler.dart';
 import 'package:m_skool_flutter/attendance/widgets/attendance_area_chart.dart';
 import 'package:m_skool_flutter/attendance/widgets/attendance_column_chart.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class AttendanceDetails extends StatefulWidget {
-  const AttendanceDetails({super.key});
+  final AttendanceHandler handler;
+  final Map<String, dynamic> details;
+  const AttendanceDetails(
+      {super.key, required this.handler, required this.details});
 
   @override
   State<AttendanceDetails> createState() => _AttendanceDetailsState();
@@ -42,7 +46,7 @@ class _AttendanceDetailsState extends State<AttendanceDetails> {
                 text: "Total Class Held : ".tr,
                 children: [
                   TextSpan(
-                    text: "26",
+                    text: widget.details['tch'].toString(),
                     style: Theme.of(context).textTheme.labelSmall!.merge(
                           const TextStyle(
                             fontSize: 15.0,
@@ -67,7 +71,7 @@ class _AttendanceDetailsState extends State<AttendanceDetails> {
                 text: "Total Class Attended : ".tr,
                 children: [
                   TextSpan(
-                    text: "0",
+                    text: widget.details['tca'].toString(),
                     style: Theme.of(context).textTheme.labelSmall!.merge(
                           const TextStyle(
                             fontSize: 15.0,
@@ -92,7 +96,7 @@ class _AttendanceDetailsState extends State<AttendanceDetails> {
                 text: "Total Class Percentage : ".tr,
                 children: [
                   TextSpan(
-                    text: "0.00%",
+                    text: "${widget.details['tcp']}%",
                     style: Theme.of(context).textTheme.labelSmall!.merge(
                           const TextStyle(
                             fontSize: 15.0,
@@ -163,7 +167,9 @@ class _AttendanceDetailsState extends State<AttendanceDetails> {
                   const SizedBox(
                     height: 16.00,
                   ),
-                  const AttendanceColumnChart(),
+                  AttendanceColumnChart(
+                    handler: widget.handler,
+                  ),
                 ],
               ),
             )),
