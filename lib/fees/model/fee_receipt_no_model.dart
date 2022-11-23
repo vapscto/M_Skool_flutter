@@ -198,10 +198,10 @@ class FeeReceiptNoModel {
   int? fsSAdjustedAmount;
   int? fsSWaivedAmount;
   int? fsSRebateAmount;
-  int? fsSFineAmount;
-  int? fsSRefundAmount;
-  int? fsSRefundAmountAdjusted;
-  int? fsSNetAmount;
+  num? fsSFineAmount;
+  num? fsSRefundAmount;
+  num? fsSRefundAmountAdjusted;
+  num? fsSNetAmount;
   bool? fsSChequeBounceFlag;
   bool? updateflag;
   bool? fsSArrearFlag;
@@ -227,31 +227,31 @@ class FeeReceiptNoModel {
   int? receivable;
   int? balance;
   int? paid;
-  Recnolist? recnolist;
+  Recnolists? recnolist;
   int? fyPId;
   int? month;
   int? amsTMobileNo;
   DateTime? amsTDob;
   int? hrmEId;
   int? studentaccyear;
-  int? ftPConcessionAmt;
-  int? ftPPaidAmt;
-  int? ftPFineAmt;
+  num? ftPConcessionAmt;
+  num? ftPPaidAmt;
+  num? ftPFineAmt;
   DateTime? fyPDate;
   DateTime? fyPDdChequeDate;
-  int? fyPTotAmount;
-  int? fyPTotFineAmt;
-  int? fyPTotConcessionAmt;
-  int? fmTId;
-  int? dueamount;
-  int? ttmCId;
-  int? ttfgDId;
-  int? ttfGId;
-  int? feeReceiptNoModelHrmEId;
-  int? ttmDId;
-  int? ttmPId;
-  int? ismSId;
-  int? ttmBAfterPeriod;
+  num? fyPTotAmount;
+  num? fyPTotFineAmt;
+  num? fyPTotConcessionAmt;
+  num? fmTId;
+  num? dueamount;
+  num? ttmCId;
+  num? ttfgDId;
+  num? ttfGId;
+  num? feeReceiptNoModelHrmEId;
+  num? ttmDId;
+  num? ttmPId;
+  num? ismSId;
+  num? ttmBAfterPeriod;
   int? idUId;
   bool? idUActiveFlag;
   int? intBId;
@@ -356,7 +356,7 @@ class FeeReceiptNoModel {
         paid: json["paid"],
         recnolist: json["recnolist"] == null
             ? null
-            : Recnolist.fromJson(json["recnolist"]),
+            : Recnolists.fromJson(json["recnolist"]),
         fyPId: json["fyP_Id"],
         month: json["month"],
         amsTMobileNo: json["amsT_MobileNo"],
@@ -540,5 +540,42 @@ class FeeReceiptNoModel {
         "estsU_ElecetiveFlag": estsUElecetiveFlag,
         "amaY_RollNo": amaYRollNo,
         "fyP_Receipt_No": fyPReceiptNo ?? null,
+      };
+}
+
+class Recnolists {
+  Recnolists({
+    this.type,
+    this.values,
+  });
+  String? type;
+  List<ReceiptNoList>? values;
+  factory Recnolists.fromJson(Map<String, dynamic> json) => Recnolists(
+        type: json["\$type"],
+        values: List<ReceiptNoList>.from(
+            json["\$values"].map((x) => ReceiptNoList.fromJson(x))),
+      );
+  Map<String, dynamic> toJson() => {
+        "\$type": type,
+        "\$values": List<dynamic>.from(values!.map((x) => x.toJson())),
+      };
+}
+
+class ReceiptNoList {
+  ReceiptNoList({
+    this.receiptNo,
+    this.fyPId,
+  });
+  String? receiptNo;
+  num? fyPId;
+
+  factory ReceiptNoList.fromJson(Map<String, dynamic> json) => ReceiptNoList(
+        receiptNo: json["fyP_Receipt_No"],
+        fyPId: json["fyP_Id"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "fyP_Receipt_No": receiptNo,
+        "fyP_Id": fyPId,
       };
 }
