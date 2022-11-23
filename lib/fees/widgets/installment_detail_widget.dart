@@ -2,19 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:m_skool_flutter/main.dart';
 
 import 'custom_analysis_container.dart';
 
 class InstallmentDetailWidget extends StatefulWidget {
-  final String leadText;
+  String leadText;
   final String instalText;
   final double netAmount;
   final double concessionAmount;
   final double paidAmount;
   final double balanceAmount;
-  final Color? instalTextBgColor;
-  final Color? backgroundColor;
-  const InstallmentDetailWidget({
+
+  InstallmentDetailWidget({
     super.key,
     required this.leadText,
     required this.instalText,
@@ -22,8 +22,6 @@ class InstallmentDetailWidget extends StatefulWidget {
     required this.concessionAmount,
     required this.paidAmount,
     required this.balanceAmount,
-    this.instalTextBgColor,
-    this.backgroundColor,
   });
 
   @override
@@ -34,16 +32,20 @@ class InstallmentDetailWidget extends StatefulWidget {
 class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
   @override
   Widget build(BuildContext context) {
+    logger.d(widget.leadText);
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 14),
+      margin: const EdgeInsets.symmetric(vertical: 12),
       elevation: 6,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: widget.backgroundColor ??
-              const Color.fromRGBO(255, 235, 212, 0.4),
+          color: widget.leadText == 'Tution Fees'
+              ? const Color.fromRGBO(255, 235, 212, 0.4)
+              : widget.leadText == 'Term Fees'
+                  ? const Color.fromRGBO(238, 232, 255, 0.4)
+                  : const Color.fromRGBO(25, 2552, 255, 1),
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: Column(
@@ -69,8 +71,11 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
                     height: 30,
                     decoration: BoxDecoration(
-                      color: widget.instalTextBgColor ??
-                          const Color.fromRGBO(251, 213, 170, 1),
+                      color: widget.leadText == 'Tution Fees'
+                          ? const Color.fromRGBO(251, 213, 170, 1)
+                          : widget.leadText == 'Term Fees'
+                              ? const Color.fromRGBO(209, 193, 255, 1)
+                              : const Color.fromRGBO(25, 2552, 25, 1),
                       borderRadius: const BorderRadius.all(
                         Radius.circular(12),
                       ),

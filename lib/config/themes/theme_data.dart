@@ -43,7 +43,7 @@ class CustomThemeData {
                 fontWeight: FontWeight.w400,
               ),
               labelMedium: GoogleFonts.roboto(
-                fontSize: 15,
+                fontSize: 16,
                 fontWeight: FontWeight.w600,
                 color: Colors.grey.shade600,
                 textStyle: const TextStyle(

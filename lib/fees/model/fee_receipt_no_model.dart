@@ -1,27 +1,28 @@
 // To parse this JSON data, do
 //
-//     final feesDetails = feesDetailsFromJson(jsonString);
+//     final feeReceiptNoModel = feeReceiptNoModelFromJson(jsonString);
 
 import 'dart:convert';
 
-FeeDetails feesDetailsFromJson(String str) =>
-    FeeDetails.fromJson(json.decode(str));
+FeeReceiptNoModel feeReceiptNoModelFromJson(String str) =>
+    FeeReceiptNoModel.fromJson(json.decode(str));
 
-String feesDetailsToJson(FeeDetails data) => json.encode(data.toJson());
+String feeReceiptNoModelToJson(FeeReceiptNoModel data) =>
+    json.encode(data.toJson());
 
-class Acdlist {
-  Acdlist({
+class Recnolist {
+  Recnolist({
     this.type,
     this.values,
   });
 
   String? type;
-  List<FeeDetails>? values;
+  List<FeeReceiptNoModel>? values;
 
-  factory Acdlist.fromJson(Map<String, dynamic> json) => Acdlist(
+  factory Recnolist.fromJson(Map<String, dynamic> json) => Recnolist(
         type: json["\$type"],
-        values: List<FeeDetails>.from(
-            json["\$values"].map((x) => FeeDetails.fromJson(x))),
+        values: List<FeeReceiptNoModel>.from(
+            json["\$values"].map((x) => FeeReceiptNoModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -30,8 +31,8 @@ class Acdlist {
       };
 }
 
-class FeeDetails {
-  FeeDetails({
+class FeeReceiptNoModel {
+  FeeReceiptNoModel({
     this.stdupdate,
     this.stuonlineexam,
     this.mobilenumber,
@@ -100,8 +101,7 @@ class FeeDetails {
     this.receivable,
     this.balance,
     this.paid,
-    this.studentfeedetails,
-    this.feeAnalysisList,
+    this.recnolist,
     this.fyPId,
     this.month,
     this.amsTMobileNo,
@@ -121,7 +121,7 @@ class FeeDetails {
     this.ttmCId,
     this.ttfgDId,
     this.ttfGId,
-    this.feesDetailsHrmEId,
+    this.feeReceiptNoModelHrmEId,
     this.ttmDId,
     this.ttmPId,
     this.ismSId,
@@ -156,10 +156,7 @@ class FeeDetails {
     this.subjorder,
     this.estsUElecetiveFlag,
     this.amaYRollNo,
-    this.acdlist,
-    this.asmaYYear,
-    this.fmHFeeName,
-    this.ftIName,
+    this.fyPReceiptNo,
   });
 
   int? stdupdate;
@@ -201,10 +198,10 @@ class FeeDetails {
   int? fsSAdjustedAmount;
   int? fsSWaivedAmount;
   int? fsSRebateAmount;
-  double? fsSFineAmount;
+  int? fsSFineAmount;
   int? fsSRefundAmount;
   int? fsSRefundAmountAdjusted;
-  double? fsSNetAmount;
+  int? fsSNetAmount;
   bool? fsSChequeBounceFlag;
   bool? updateflag;
   bool? fsSArrearFlag;
@@ -230,32 +227,31 @@ class FeeDetails {
   int? receivable;
   int? balance;
   int? paid;
-  StudentFeeDetails? studentfeedetails;
-  FeeAnalysisList? feeAnalysisList;
+  Recnolist? recnolist;
   int? fyPId;
   int? month;
   int? amsTMobileNo;
   DateTime? amsTDob;
   int? hrmEId;
   int? studentaccyear;
-  double? ftPConcessionAmt;
-  double? ftPPaidAmt;
-  double? ftPFineAmt;
+  int? ftPConcessionAmt;
+  int? ftPPaidAmt;
+  int? ftPFineAmt;
   DateTime? fyPDate;
   DateTime? fyPDdChequeDate;
-  double? fyPTotAmount;
-  double? fyPTotFineAmt;
-  double? fyPTotConcessionAmt;
+  int? fyPTotAmount;
+  int? fyPTotFineAmt;
+  int? fyPTotConcessionAmt;
   int? fmTId;
   int? dueamount;
   int? ttmCId;
   int? ttfgDId;
   int? ttfGId;
-  int? feesDetailsHrmEId;
+  int? feeReceiptNoModelHrmEId;
   int? ttmDId;
   int? ttmPId;
   int? ismSId;
-  double? ttmBAfterPeriod;
+  int? ttmBAfterPeriod;
   int? idUId;
   bool? idUActiveFlag;
   int? intBId;
@@ -286,12 +282,10 @@ class FeeDetails {
   int? subjorder;
   bool? estsUElecetiveFlag;
   int? amaYRollNo;
-  Acdlist? acdlist;
-  String? asmaYYear;
-  String? fmHFeeName;
-  String? ftIName;
+  String? fyPReceiptNo;
 
-  factory FeeDetails.fromJson(Map<String, dynamic> json) => FeeDetails(
+  factory FeeReceiptNoModel.fromJson(Map<String, dynamic> json) =>
+      FeeReceiptNoModel(
         stdupdate: json["stdupdate"],
         stuonlineexam: json["stuonlineexam"],
         mobilenumber: json["mobilenumber"],
@@ -360,12 +354,9 @@ class FeeDetails {
         receivable: json["receivable"],
         balance: json["balance"],
         paid: json["paid"],
-        studentfeedetails: json["studentfeedetails"] == null
+        recnolist: json["recnolist"] == null
             ? null
-            : StudentFeeDetails.fromJson(json["studentfeedetails"]),
-        feeAnalysisList: json["feeAnalysisList"] == null
-            ? null
-            : FeeAnalysisList.fromJson(json["feeAnalysisList"]),
+            : Recnolist.fromJson(json["recnolist"]),
         fyPId: json["fyP_Id"],
         month: json["month"],
         amsTMobileNo: json["amsT_MobileNo"],
@@ -385,7 +376,7 @@ class FeeDetails {
         ttmCId: json["ttmC_Id"],
         ttfgDId: json["ttfgD_Id"],
         ttfGId: json["ttfG_Id"],
-        feesDetailsHrmEId: json["hrmE_Id"],
+        feeReceiptNoModelHrmEId: json["hrmE_Id"],
         ttmDId: json["ttmD_Id"],
         ttmPId: json["ttmP_Id"],
         ismSId: json["ismS_Id"],
@@ -420,11 +411,8 @@ class FeeDetails {
         subjorder: json["subjorder"],
         estsUElecetiveFlag: json["estsU_ElecetiveFlag"],
         amaYRollNo: json["amaY_RollNo"],
-        acdlist:
-            json["acdlist"] == null ? null : Acdlist.fromJson(json["acdlist"]),
-        asmaYYear: json["asmaY_Year"] ?? null,
-        fmHFeeName: json["fmH_FeeName"] ?? null,
-        ftIName: json["ftI_Name"] ?? null,
+        fyPReceiptNo:
+            json["fyP_Receipt_No"] == null ? null : json["fyP_Receipt_No"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -496,10 +484,7 @@ class FeeDetails {
         "receivable": receivable,
         "balance": balance,
         "paid": paid,
-        "studentfeedetails":
-            studentfeedetails == null ? null : studentfeedetails!.toJson(),
-        "feeAnalysisList":
-            feeAnalysisList == null ? null : feeAnalysisList!.toJson(),
+        "recnolist": recnolist == null ? null : recnolist!.toJson(),
         "fyP_Id": fyPId,
         "month": month,
         "amsT_MobileNo": amsTMobileNo,
@@ -519,7 +504,7 @@ class FeeDetails {
         "ttmC_Id": ttmCId,
         "ttfgD_Id": ttfgDId,
         "ttfG_Id": ttfGId,
-        "hrmE_Id": feesDetailsHrmEId,
+        "hrmE_Id": feeReceiptNoModelHrmEId,
         "ttmD_Id": ttmDId,
         "ttmP_Id": ttmPId,
         "ismS_Id": ismSId,
@@ -554,131 +539,6 @@ class FeeDetails {
         "subjorder": subjorder,
         "estsU_ElecetiveFlag": estsUElecetiveFlag,
         "amaY_RollNo": amaYRollNo,
-        "acdlist": acdlist == null ? null : acdlist!.toJson(),
-        "asmaY_Year": asmaYYear ?? null,
-        "fmH_FeeName": fmHFeeName ?? null,
-        "ftI_Name": ftIName ?? null,
-      };
-}
-
-class StudentFeeDetails {
-  StudentFeeDetails({
-    this.type,
-    this.values,
-  });
-  String? type;
-  List<HeadwiseAnalysisData>? values;
-  factory StudentFeeDetails.fromJson(Map<String, dynamic> json) =>
-      StudentFeeDetails(
-        type: json["\$type"],
-        values: List<HeadwiseAnalysisData>.from(
-            json["\$values"].map((x) => HeadwiseAnalysisData.fromJson(x))),
-      );
-  Map<String, dynamic> toJson() => {
-        "\$type": type,
-        "\$values": List<dynamic>.from(values!.map((x) => x.toJson())),
-      };
-}
-
-class HeadwiseAnalysisData {
-  HeadwiseAnalysisData({
-    this.fmhFeeName,
-    this.ftiName,
-    this.netAmount,
-    this.concessionAmount,
-    this.paidAmount,
-    this.balanceAmount,
-  });
-  String? fmhFeeName;
-  String? ftiName;
-  double? netAmount;
-  double? concessionAmount;
-  double? paidAmount;
-  int? balanceAmount;
-
-  factory HeadwiseAnalysisData.fromJson(Map<String, dynamic> json) =>
-      HeadwiseAnalysisData(
-        fmhFeeName: json["fmH_FeeName"],
-        ftiName: json["ftI_Name"],
-        netAmount: json["fyP_Tot_Amount"],
-        concessionAmount: json["ftP_Concession_Amt"],
-        paidAmount: json["ftP_Paid_Amt"],
-        balanceAmount: json["dueamount"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "fmH_FeeName": fmhFeeName,
-        "ftI_Name": ftiName,
-        "fyP_Tot_Amount": netAmount,
-        "ftP_Concession_Amt": concessionAmount,
-        "ftP_Paid_Amt": paidAmount,
-        "dueamount": balanceAmount,
-      };
-}
-
-class FeeAnalysisList {
-  FeeAnalysisList({
-    this.type,
-    this.values,
-  });
-
-  String? type;
-  List<OverAllAnalysisValue>? values;
-
-  factory FeeAnalysisList.fromJson(Map<String, dynamic> json) =>
-      FeeAnalysisList(
-        type: json["\$type"],
-        values: List<OverAllAnalysisValue>.from(
-            json["\$values"].map((x) => OverAllAnalysisValue.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "\$type": type,
-        "\$values": List<dynamic>.from(values!.map((x) => x.toJson())),
-      };
-}
-
-class OverAllAnalysisValue {
-  OverAllAnalysisValue({
-    this.type,
-    this.asmayId,
-    this.asmayYear,
-    this.receivable,
-    this.concession,
-    this.collection,
-    this.adjusted,
-    this.balance,
-  });
-
-  String? type;
-  int? asmayId;
-  String? asmayYear;
-  dynamic receivable;
-  dynamic concession;
-  dynamic collection;
-  dynamic adjusted;
-  dynamic balance;
-
-  factory OverAllAnalysisValue.fromJson(Map<String, dynamic> json) =>
-      OverAllAnalysisValue(
-        type: json["\$type"],
-        asmayId: json["ASMAY_Id"],
-        asmayYear: json["ASMAY_Year"],
-        receivable: json["RECEIVABLE"],
-        concession: json["CONCESSION"],
-        collection: json["COLLECTION"],
-        adjusted: json["ADJUSTED"],
-        balance: json["BALANCE"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "\$type": type,
-        "ASMAY_Id": asmayId,
-        "ASMAY_Year": asmayYear,
-        "RECEIVABLE": receivable,
-        "CONCESSION": concession,
-        "COLLECTION": collection,
-        "ADJUSTED": adjusted,
-        "BALANCE": balance,
+        "fyP_Receipt_No": fyPReceiptNo ?? null,
       };
 }
