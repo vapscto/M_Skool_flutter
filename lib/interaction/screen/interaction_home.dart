@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/interaction/screen/inbox_tab.dart';
 import 'package:m_skool_flutter/interaction/screen/unread_tab.dart';
 
 import '../../widget/custom_back_btn.dart';
+import '../widget/custom_tab_bar.dart';
 
 class InteractionHomeScreen extends StatefulWidget {
   const InteractionHomeScreen({super.key});
@@ -19,7 +20,6 @@ class InteractionHomeScreen extends StatefulWidget {
 class _InteractionHomeScreenState extends State<InteractionHomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  final tabNotifier = ValueNotifier<int>(0);
   @override
   void initState() {
     _tabController = TabController(initialIndex: 0, length: 4, vsync: this);
@@ -36,32 +36,7 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
         leading: const CustomGoBackButton(),
       ),
       body: Column(children: [
-        ValueListenableBuilder(
-            valueListenable: tabNotifier,
-            builder: (context, value, c) {
-              return Material(
-                color: Theme.of(context).primaryColor,
-                child: TabBar(
-                    onTap: (index) => tabNotifier.value = index,
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    controller: _tabController,
-                    unselectedLabelColor: Colors.white,
-                    labelColor: Colors.black,
-                    indicator: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(12.0),
-                        topRight: Radius.circular(12.0),
-                      ),
-                      color: Colors.white,
-                    ),
-                    tabs: [
-                      tab("Compose", "compose.svg", 0),
-                      tab("Index", "compose.svg", 1),
-                      tab("All", "compose.svg", 2),
-                      tab("Unread", "compose.svg", 3)
-                    ]),
-              );
-            }),
+        CustomTabBar(onTabSelect: (value) => _tabController.animateTo(value)),
         Expanded(
           child: TabBarView(controller: _tabController, children: const [
             ComposeTabScreen(),
@@ -84,7 +59,7 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
               ? SvgPicture.asset('assets/svg/$asset', width: 12, height: 12)
               : const SizedBox(),
           const SizedBox(
-            width: 4.0,
+            width: 6.0,
           ),
           AutoSizeText(
             title,
@@ -92,7 +67,8 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
                   TextStyle(
                       fontWeight: FontWeight.w600,
                       letterSpacing: 0.1,
-                      fontSize: 13.5,
+                      fontSize:
+                          _tabController.index == isCurrentPage ? 13.5 : 10,
                       color: _tabController.index != isCurrentPage
                           ? Colors.white
                           : Colors.black),
