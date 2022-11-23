@@ -60,7 +60,9 @@ class CertificateDetailItem extends StatelessWidget {
                 const SizedBox(
                   height: 8.0,
                 ),
-                Text("Reason will go here"),
+                Text(values.ascaReason == null
+                    ? "Reason field is not present in db"
+                    : values.ascaReason!),
                 const SizedBox(
                   height: 8.0,
                 ),

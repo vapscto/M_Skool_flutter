@@ -61,7 +61,7 @@ class LibraryItemWidget extends StatelessWidget {
                   children: [
                     Expanded(
                       child: LibraryStatusDate(
-                        title: "Issued Date",
+                        title: "Issued",
                         date: bookDetails.lBTRIssuedDate == null
                             ? "N/A"
                             : getFormatedDate(
@@ -74,7 +74,7 @@ class LibraryItemWidget extends StatelessWidget {
                     ),
                     Expanded(
                       child: LibraryStatusDate(
-                        title: "Due Date",
+                        title: "Due",
                         date: bookDetails.lBTRDueDate == null
                             ? "N/A"
                             : getFormatedDate(
@@ -87,7 +87,7 @@ class LibraryItemWidget extends StatelessWidget {
                     ),
                     Expanded(
                       child: LibraryStatusDate(
-                        title: "Return Date",
+                        title: "Return",
                         date: bookDetails.lBTRReturnedDate == null
                             ? "N/A"
                             : getFormatedDate(

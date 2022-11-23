@@ -201,7 +201,10 @@ class _HomeState extends State<Home> {
                             context,
                             MaterialPageRoute(
                               builder: (_) {
-                                return const AttendanceHomeScreen();
+                                return AttendanceHomeScreen(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                );
                               },
                             ),
                           );
@@ -283,7 +286,10 @@ class _HomeState extends State<Home> {
                             context,
                             MaterialPageRoute(
                               builder: (_) {
-                                return const InfoHome();
+                                return InfoHome(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                );
                               },
                             ),
                           );
@@ -305,8 +311,10 @@ class _HomeState extends State<Home> {
                             context,
                             MaterialPageRoute(
                               builder: (_) {
-                                return const NoticeHome(
+                                return NoticeHome(
                                   showAppBar: true,
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
                                 );
                               },
                             ),

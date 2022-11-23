@@ -32,6 +32,13 @@ class SubmitCertRequestApi {
         "ASCA_Id": 0
       });
       logger.d(response.data);
+      if (response.data['duplicate'] == true) {
+        return Future.error({
+          "errorTitle": "Already applied",
+          "errorMsg":
+              "We already have request to generate this certificate, you cannot reapply."
+        });
+      }
       return Future.value(true);
     } on Exception catch (e) {
       logger.e(e.toString());
