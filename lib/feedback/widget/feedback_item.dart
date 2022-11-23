@@ -20,7 +20,10 @@ class FeedBackItem extends StatelessWidget {
             padding: const EdgeInsets.all(12.0),
             child: Text(
               getFormatedDate(DateTime.parse(feedBacks.asgfEFeedbackDate!)),
-              style: Theme.of(context).textTheme.titleSmall,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall!
+                  .merge(TextStyle(color: Colors.grey.shade700)),
             ),
           ),
           const Divider(

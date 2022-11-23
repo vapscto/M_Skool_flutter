@@ -47,7 +47,28 @@ class _SplashScreenState extends State<SplashScreen> {
               return snapshot.data!;
             }
             if (snapshot.hasError) {
-              return Text("${snapshot.error.toString()}");
+              Map<String, dynamic> err = snapshot.data as Map<String, dynamic>;
+              return Center(
+                child: Column(
+                  children: [
+                    Text(
+                      err['errorTitle'],
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleMedium!.merge(
+                            const TextStyle(fontSize: 20.0),
+                          ),
+                    ),
+                    const SizedBox(
+                      height: 12.0,
+                    ),
+                    Text(
+                      err['errorMsg'],
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
+                  ],
+                ),
+              );
             }
 
             return Center(
@@ -122,7 +143,13 @@ class _SplashScreenState extends State<SplashScreen> {
       ));
     } on Exception catch (e) {
       debugPrint(e.toString());
-      return Future.error("error");
+      return Future.error(
+        {
+          "errorTitle": "Something went wrong",
+          "erroMsg":
+              "An error occured in server side, may be currently it is down or page is not available."
+        },
+      );
     }
   }
 }

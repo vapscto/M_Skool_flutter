@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:m_skool_flutter/certificates/model/certificate_drop_down.dart';
+import 'package:m_skool_flutter/certificates/model/cert_list_model.dart';
+import 'package:m_skool_flutter/certificates/model/certlist_asca_model.dart';
+
 import 'package:m_skool_flutter/certificates/model/get_cert_data_model.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -9,7 +11,7 @@ class GetCertificateType {
   GetCertificateType.init();
   static final GetCertificateType instance = GetCertificateType.init();
 
-  Future<CertificateDropDown> getCertificateType({
+  Future<CertListAsca> getCertificateType({
     required int miId,
     required int asmayId,
     required int ivrmrtId,
@@ -31,11 +33,16 @@ class GetCertificateType {
       final GetCertificateDataModel dataModel =
           GetCertificateDataModel.fromJson(response.data);
 
-      return Future.value(dataModel.certificateDropdown);
+      final CertListAsca ascaAndCertList = CertListAsca(
+          ascaId: dataModel.studentdetails!.values!.first.ascAId!,
+          certificateList: dataModel.certificatelist!);
+
+      return Future.value(ascaAndCertList);
     } on Exception catch (e) {
       logger.e(e.toString());
       return Future.error(
         {
+          "errorTitle": "Unable to connect to server",
           "errorMsg":
               "An error occured while fetching the list of certificate you can apply for.",
         },

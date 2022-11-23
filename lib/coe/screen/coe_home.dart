@@ -1,11 +1,12 @@
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/coe/apis/get_academic_year_api.dart';
 import 'package:m_skool_flutter/coe/apis/get_event_api.dart';
+import 'package:m_skool_flutter/coe/controller/coe_data_handler.dart';
 import 'package:m_skool_flutter/coe/models/academic_year_model.dart';
 import 'package:m_skool_flutter/coe/models/coe_data_model.dart';
+import 'package:m_skool_flutter/coe/screen/video_screen.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -46,338 +47,236 @@ class _CoeHomeState extends State<CoeHome> {
 
   AttyearlistValues? selectedValue;
   //final DateTime selected = DateTime.now();
+  final CoeDataHandler handler = Get.put(CoeDataHandler());
+
+  @override
+  void initState() {
+    loadData();
+    super.initState();
+  }
+
+  Future<void> loadData() async {
+    await GetAcademicYearApi.instance.getAcademicYear(
+        miId: widget.loginSuccessModel.mIID!,
+        amstId: widget.loginSuccessModel.amsTId!,
+        base: baseUrlFromInsCode("portal", widget.mskoolController),
+        handler: handler);
+    await GetEventsApi.instance.getCoeData(
+        miId: widget.loginSuccessModel.mIID!,
+        amstId: widget.loginSuccessModel.amsTId!,
+        base: baseUrlFromInsCode("portal", widget.mskoolController),
+        month: month.value,
+        asmayId: handler.asmayId.value,
+        asmclID: int.parse(widget.loginSuccessModel.clsnme!),
+        coeDataHandler: handler);
+  }
+
+  Future<void> reloadEvent() async {
+    handler.showEventLoading(true);
+    await GetEventsApi.instance.getCoeData(
+        miId: widget.loginSuccessModel.mIID!,
+        amstId: widget.loginSuccessModel.amsTId!,
+        base: baseUrlFromInsCode("portal", widget.mskoolController),
+        month: month.value,
+        asmayId: handler.asmayId.value,
+        asmclID: int.parse(widget.loginSuccessModel.clsnme!),
+        coeDataHandler: handler);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: "COE".tr).getAppBar(),
-      body: SingleChildScrollView(
-        //padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  // const SizedBox(
-                  //   height: 8.0,
-                  // ),
-                  // FutureBuilder<List<AttyearlistValues>>(
-                  //     future: GetAcademicYearApi.instance.getAcademicYear(
-                  //       miId: widget.loginSuccessModel.mIID!,
-                  //       amstId: widget.loginSuccessModel.amsTId!,
-                  //       base:
-                  //           baseUrlFromInsCode("portal", widget.mskoolController),
-                  //     ),
-                  //     builder: (context, snapshot) {
-                  //       if (snapshot.hasData) {
-                  //         return CustomContainer(
-                  //           child: Stack(
-                  //             children: [
-                  //               Container(
-                  //                 width: double.infinity,
-                  //                 height: 55,
-                  //                 decoration: BoxDecoration(
-                  //                   color: Theme.of(context).primaryColor,
-                  //                   borderRadius: const BorderRadius.only(
-                  //                     bottomLeft: Radius.circular(8.0),
-                  //                     bottomRight: Radius.circular(8.0),
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //               CalendarDatePicker2(
-                  //                 initialValue: [selected],
-                  //                 onValueChanged: ((value) {}),
-                  //                 onDisplayedMonthChanged: (value) {},
-
-                  //                 config: CalendarDatePicker2Config(
-                  //                   calendarViewMode: DatePickerMode.day,
-                  //                   calendarType: CalendarDatePicker2Type.single,
-                  //                   firstDate: DateTime(
-                  //                     int.parse(
-                  //                       snapshot.data!.last.asmaYYear!
-                  //                           .split("-")
-                  //                           .first,
-                  //                     ),
-                  //                   ),
-                  //                   lastDate: DateTime(
-                  //                     int.parse(
-                  //                       snapshot.data!.first.asmaYYear!
-                  //                           .split("-")
-                  //                           .last,
-                  //                     ),
-                  //                   ),
-                  //                   selectedDayTextStyle: Theme.of(context)
-                  //                       .textTheme
-                  //                       .titleMedium!
-                  //                       .merge(
-                  //                         const TextStyle(
-                  //                           color: Colors.white,
-                  //                         ),
-                  //                       ),
-                  //                   dayTextStyle:
-                  //                       Theme.of(context).textTheme.labelMedium,
-                  //                   lastMonthIcon: const Icon(
-                  //                     Icons.chevron_left_outlined,
-                  //                     color: Colors.white,
-                  //                   ),
-                  //                   nextMonthIcon: const Icon(
-                  //                     Icons.chevron_right_outlined,
-                  //                     color: Colors.white,
-                  //                   ),
-                  //                   controlsHeight: 55,
-                  //                   controlsTextStyle: Theme.of(context)
-                  //                       .textTheme
-                  //                       .titleMedium!
-                  //                       .merge(
-                  //                         const TextStyle(
-                  //                           color: Colors.white,
-                  //                         ),
-                  //                       ),
-                  //                   weekdayLabels: [
-                  //                     "Su",
-                  //                     "Mo",
-                  //                     "Tu",
-                  //                     "We",
-                  //                     "Th",
-                  //                     "Fr",
-                  //                     "Sa",
-                  //                   ],
-                  //                   weekdayLabelTextStyle: Theme.of(context)
-                  //                       .textTheme
-                  //                       .titleMedium!
-                  //                       .merge(
-                  //                         const TextStyle(fontSize: 14.0),
-                  //                       ),
-                  //                 ),
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         );
-                  //       }
-
-                  //       return Padding(
-                  //         padding: const EdgeInsets.all(16.0),
-                  //         child: Row(
-                  //           children: [
-                  //             CircularProgressIndicator(
-                  //               strokeWidth: 2,
-                  //             ),
-                  //             const SizedBox(
-                  //               width: 12.0,
-                  //             ),
-                  //             Text(
-                  //               "Getting Academic Year",
-                  //               style: Theme.of(context).textTheme.titleMedium,
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       );
-                  //     }),
-
-                  const SizedBox(
-                    height: 16.0,
-                  ),
-                  CustomContainer(
-                    child: FutureBuilder<List<AttyearlistValues>>(
-                        future: GetAcademicYearApi.instance.getAcademicYear(
-                          miId: widget.loginSuccessModel.mIID!,
-                          amstId: widget.loginSuccessModel.amsTId!,
-                          base: baseUrlFromInsCode(
-                              "portal", widget.mskoolController),
-                        ),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            selectedValue = snapshot.data!.first;
-                            //asmayId.value = snapshot.data!.first.asmaYId!;
-                            return DropdownButtonFormField<AttyearlistValues>(
-                              value: selectedValue!,
-                              decoration: InputDecoration(
-                                // border: OutlineInputBorder(
-                                //   borderRadius: BorderRadius.circular(12.0),
-                                // ),
-
-                                focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-
-                                label: Text(
-                                  "Academic Year".tr,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge!
-                                      .merge(TextStyle(
-                                          color: Colors.grey.shade600)),
-                                ),
-                              ),
-                              icon: const Icon(
-                                Icons.keyboard_arrow_down_rounded,
-                                size: 30,
-                              ),
-                              iconSize: 30,
-                              items: List.generate(
-                                snapshot.data!.length,
-                                (index) => DropdownMenuItem<AttyearlistValues>(
-                                  value: snapshot.data!.elementAt(index),
-                                  child: Text(
-                                    snapshot.data!.elementAt(index).asmaYYear!,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall!
-                                        .merge(const TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.3)),
-                                  ),
-                                ),
-                              ),
-                              onChanged: (s) {
-                                selectedValue = s;
-                                asmayId.value = s!.asmaYId!;
-                                setState(() {});
-                              },
-                            );
-                          }
-                          return Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: [
-                                const CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                ),
-                                const SizedBox(
-                                  width: 12.0,
-                                ),
-                                Text(
-                                  "Getting Academic Year",
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                              ],
-                            ),
-                          );
-                        }),
-                  ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  CustomContainer(
-                    child: DropdownButtonFormField<Map<String, dynamic>>(
-                      value: selectedMonth,
-                      decoration: InputDecoration(
-                        // border: OutlineInputBorder(
-                        //   borderRadius: BorderRadius.circular(12.0),
-                        // ),
-
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-
-                        label: Text(
-                          "Select Month".tr,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge!
-                              .merge(TextStyle(color: Colors.grey.shade600)),
-                        ),
+      body: SafeArea(
+        child: Obx(() {
+          return handler.showAllLoadingProgress.value
+              ? Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      const SizedBox(
+                        height: 16.0,
                       ),
-                      icon: const Icon(
-                        Icons.keyboard_arrow_down_rounded,
-                        size: 30,
-                      ),
-                      iconSize: 30,
-                      items: List.generate(
-                        fullMonthsWithIndex.length,
-                        (index) => DropdownMenuItem<Map<String, dynamic>>(
-                          value: fullMonthsWithIndex.elementAt(index),
-                          child: Text(
-                            fullMonthsWithIndex.elementAt(index)['month'],
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall!
-                                .merge(const TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 16.0,
-                                    letterSpacing: 0.3)),
-                          ),
-                        ),
-                      ),
-                      onChanged: (s) {
-                        selectedMonth = s!;
-                        month.value = s['day'];
-                        setState(() {});
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // Obx(() {
-            // logger.d(selectedValue!.value!.asmaYId!);
-            // logger.d(month.value);
-            FutureBuilder<List<CoereportlistValues>>(
-                future: GetEventsApi.instance.getEvents(
-                    miId: widget.loginSuccessModel.mIID!,
-                    amstId: widget.loginSuccessModel.amsTId!,
-                    asmayId: asmayId.value,
-                    month: month.value,
-                    base:
-                        baseUrlFromInsCode("portal", widget.mskoolController)),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return ErrWidget(
-                        err: snapshot.error as Map<String, dynamic>);
-                  }
-                  if (snapshot.hasData && snapshot.data!.isEmpty) {
-                    return Center(
-                      child: Text(
-                        "No Event found",
+                      Text(
+                        "Getting Academic Year and events",
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
-                    );
-                  }
-                  if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                    logger.d("message");
+                    ],
+                  ),
+                )
+              : SingleChildScrollView(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 24.0,
+                      ),
+                      Obx(() {
+                        return handler.academicYearList.isEmpty
+                            ? const SizedBox()
+                            : CustomContainer(
+                                child:
+                                    DropdownButtonFormField<AttyearlistValues>(
+                                  value: handler.selectedInDorpDown.value,
+                                  decoration: InputDecoration(
+                                    // border: OutlineInputBorder(
+                                    //   borderRadius: BorderRadius.circular(12.0),
+                                    // ),
 
-                    return ListView.separated(
-                        //controller: ScrollController(),
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.all(16.0),
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          return CoeItem(
-                            values: snapshot.data!.elementAt(index),
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return const SizedBox(
-                            height: 16.0,
-                          );
-                        },
-                        itemCount: snapshot.data!.length);
-                  }
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
 
-                  return const CustomPgrWidget(
-                      title: "Your events are comming.",
-                      desc:
-                          "All your event will appear here for a particular academic year. you can use dropdown to see different events.");
-                })
-            // }),
-          ],
-        ),
+                                    label: Text(
+                                      "Academic Year".tr,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge!
+                                          .merge(TextStyle(
+                                              color: Colors.grey.shade600)),
+                                    ),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_down_rounded,
+                                    size: 30,
+                                  ),
+                                  iconSize: 30,
+                                  items: List.generate(
+                                    handler.academicYearList.length,
+                                    (index) =>
+                                        DropdownMenuItem<AttyearlistValues>(
+                                      value: handler.academicYearList
+                                          .elementAt(index),
+                                      child: Text(
+                                        handler.academicYearList
+                                            .elementAt(index)
+                                            .asmaYYear!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .merge(const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 16.0,
+                                                letterSpacing: 0.3)),
+                                      ),
+                                    ),
+                                  ),
+                                  onChanged: (s) {
+                                    // selectedValue = s;
+                                    // asmayId.value = s!.asmaYId!;
+                                    // setState(() {});
+                                    handler.updateSelectedInDropDown(s!);
+                                    handler.asmayId.value = s.asmaYId!;
+                                    logger.d(s.asmaYId);
+                                    reloadEvent();
+                                  },
+                                ),
+                              );
+                      }),
+                      const SizedBox(
+                        height: 24.0,
+                      ),
+                      CustomContainer(
+                        child: DropdownButtonFormField<Map<String, dynamic>>(
+                          value: selectedMonth,
+                          decoration: InputDecoration(
+                            // border: OutlineInputBorder(
+                            //   borderRadius: BorderRadius.circular(12.0),
+                            // ),
+
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                            ),
+
+                            label: Text(
+                              "Select Month".tr,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge!
+                                  .merge(
+                                      TextStyle(color: Colors.grey.shade600)),
+                            ),
+                          ),
+                          icon: const Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            size: 30,
+                          ),
+                          iconSize: 30,
+                          items: List.generate(
+                            fullMonthsWithIndex.length,
+                            (index) => DropdownMenuItem<Map<String, dynamic>>(
+                              value: fullMonthsWithIndex.elementAt(index),
+                              child: Text(
+                                fullMonthsWithIndex.elementAt(index)['month'],
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .merge(const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 16.0,
+                                        letterSpacing: 0.3)),
+                              ),
+                            ),
+                          ),
+                          onChanged: (s) {
+                            selectedMonth = s!;
+                            month.value = s['day'];
+                            reloadEvent();
+                            //setState(() {});
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 24.0,
+                      ),
+                      Obx(() {
+                        return handler.showEventLoading.value
+                            ? const CustomPgrWidget(
+                                title: "Your events are comming.",
+                                desc:
+                                    "All your event will appear here for a particular academic year. you can use dropdown to see different events.")
+                            : handler.coeReport.isEmpty
+                                ? Center(
+                                    child: Text(
+                                      "No Event found",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
+                                    ),
+                                  )
+                                : ListView.separated(
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      return CoeItem(
+                                          values: handler.coeReport
+                                              .elementAt(index));
+                                    },
+                                    separatorBuilder: (_, index) {
+                                      return const SizedBox(height: 16.0);
+                                    },
+                                    itemCount: handler.coeReport.length,
+                                  );
+                      })
+                    ],
+                  ),
+                );
+        }),
       ),
     );
   }
@@ -413,27 +312,57 @@ class CoeItem extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(9.0)),
                   itemBuilder: (_) {
-                    return [
-                      PopupMenuItem(
-                        onTap: () {},
-                        child: Text(
-                          "View File".tr,
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                      ),
-                      PopupMenuItem(
-                        onTap: () {},
-                        child: Text(
-                          "View Video".tr,
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                      ),
-                    ];
+                    List<PopupMenuEntry<dynamic>> popupItem = values
+                                    .coeeVVideos ==
+                                null ||
+                            values.coeeVVideos!.isEmpty
+                        ? []
+                        : [
+                            PopupMenuItem(
+                              value: "Video",
+                              // onTap: () {
+
+                              //   // Get.to(() =>
+                              //   //     VideoScreen(videoUrl: values.coeeVVideos!));
+
+                              // },
+                              child: ListTile(
+                                onTap: () {
+                                  logger.d(values.coeeVVideos);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => VideoScreen(
+                                              videoUrl: values.coeeVVideos!)));
+                                },
+                                title: Text(
+                                  "View Video".tr,
+                                  style: Theme.of(context).textTheme.titleSmall,
+                                ),
+                              ),
+                            ),
+                          ];
+                    return popupItem;
+                    // return [
+                    //   PopupMenuItem(
+                    //     onTap: () {},
+                    //     child: Text(
+                    //       "View File".tr,
+                    //       style: Theme.of(context).textTheme.titleSmall,
+                    //     ),
+                    //   ),
+                    //   PopupMenuItem(
+                    //     onTap: () {},
+                    //     child: Text(
+                    //       "View Video".tr,
+                    //       style: Theme.of(context).textTheme.titleSmall,
+                    //     ),
+                    //   ),
+                    // ];
                   },
                 )
               ],
             ),
-
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
@@ -466,34 +395,33 @@ class CoeItem extends StatelessWidget {
                     width: 8.0,
                   ),
                   Text(
-                    "09:00 - 06:00 pm",
+                    "${values.coeEEStartTime} - ${values.coeEEEndTime}",
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ],
               ),
             ),
-            // !showImage
-            //     ? const SizedBox(
-            //         height: 16.0,
-            //       )
-            //     : Container(
-            //         margin: const EdgeInsets.symmetric(
-            //           horizontal: 16.0,
-            //           vertical: 12.0,
-            //         ),
-            //         height: 180,
-            //         width: double.infinity,
-            //         decoration: BoxDecoration(
-            //           image: const DecorationImage(
-            //               fit: BoxFit.cover,
-            //               image: NetworkImage(
-            //                   "https://images.unsplash.com/photo-1531686264889-56fdcabd163f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80")),
-            //           borderRadius: BorderRadius.circular(
-            //             16.0,
-            //           ),
-            //           color: Colors.blueAccent.shade100.withOpacity(0.2),
-            //         ),
-            //       ),
+            values.coeeIImages == null || values.coeeIImages!.isEmpty
+                ? const SizedBox(
+                    height: 16.0,
+                  )
+                : Container(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 12.0,
+                    ),
+                    height: 180,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(values.coeeIImages!)),
+                      borderRadius: BorderRadius.circular(
+                        16.0,
+                      ),
+                      color: Colors.blueAccent.shade100.withOpacity(0.2),
+                    ),
+                  ),
           ],
         ),
       ),

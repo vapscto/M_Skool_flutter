@@ -28,12 +28,22 @@ class URLS {
   // Endpoints for different Categories
 
   static String login = "api/LoginFacade";
+
+  //Library
   static String lib = "api/StudentDashboardFacade/onclick_LIB/";
+
+  // Certificates
   static String getCertitificateType =
       "api/TransferCertificateFacade/getdetails/";
+  static String applyCertificate = "api/TransferCertificateFacade/tcApply/";
+  static String getAllAppliedCertificate =
+      "api/TransferCertificateFacade/getdetails/";
 
+  //feedback
   static String saveFeedBack = "api/StudentFeedbackFormFacade/savefeedback/";
   static String getFeedBack = "api/StudentFeedbackFormFacade/getloaddata/";
+
+  //Coe
   static String getAcademicYear = "api/AttendanceDetailsFacade/getloaddata/";
   static String coeData = "api/COEFacade/getcoedata/";
 
