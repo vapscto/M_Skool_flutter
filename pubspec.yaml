@@ -57,6 +57,7 @@ dependencies:
   calendar_date_picker2: ^0.3.1
   video_player: ^2.4.8
   flutter_titled_container: ^1.0.7
+  data_tables: ^1.4.0
 
 dev_dependencies:
   flutter_test:
