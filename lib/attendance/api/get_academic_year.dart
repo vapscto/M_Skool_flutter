@@ -16,9 +16,11 @@ class GetAttendanceAcademicYear {
     required String base,
     required AttendanceHandler handler,
   }) async {
+    handler.updateErrorHappend(false);
     handler.updateIsLoadingWholeScreen(true);
     final Dio ins = getGlobalDio();
     String getAcadmeicApiUrl = base + URLS.getAcademicYear;
+
     try {
       Response response = await ins.post(
         getAcadmeicApiUrl,
