@@ -30,4 +30,5 @@ const Map<String, String> enUS = {
   "View File": "View File",
   "Please provide an institutional code":
       "Please provide an institutional code",
+  "interaction": "Interaction"
 };
