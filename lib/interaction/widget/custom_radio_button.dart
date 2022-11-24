@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomRadioButton extends StatelessWidget {
@@ -19,12 +18,17 @@ class CustomRadioButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Radio(
+          activeColor: Theme.of(context).primaryColor,
+          focusColor: Theme.of(context).primaryColor,
+          fillColor:
+              MaterialStateProperty.all<Color>(Theme.of(context).primaryColor),
           value: value,
           groupValue: groupValue,
           onChanged: (selected) {},
         ),
         const SizedBox(width: 3),
-        AutoSizeText(label, style: const TextStyle(fontWeight: FontWeight.w500))
+        AutoSizeText(label,
+            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16))
       ],
     );
   }

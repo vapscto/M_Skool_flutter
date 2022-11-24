@@ -12,10 +12,10 @@ class CustomTabBar extends StatefulWidget {
 
 class _CustomTabBarState extends State<CustomTabBar> {
   List<Map<String, String>> names = [
-    {"name": "Inbox", "img": "compose.svg"},
-    {"name": "Compose", "img": "compose.svg"},
-    {"name": "Unread", "img": "compose.svg"},
-    {"name": "All", "img": "compose.svg"}
+    {"name": "Compose", "img": "edit.svg"},
+    {"name": "Inbox", "img": "inbox.svg"},
+    {"name": "All", "img": "layersall.svg"},
+    {"name": "Unread", "img": "unread.svg"}
   ];
   late double width;
   double height = 45;
@@ -23,7 +23,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
   double enlargeRatio = 1 + ((1.0 - 0.9) * 3);
   @override
   void initState() {
-    width = (Get.width - 10) / 4;
+    width = (Get.width) / 4;
     super.initState();
   }
 
