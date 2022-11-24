@@ -151,15 +151,15 @@ class _AttendanceDetailsState extends State<AttendanceDetails> {
                         width: 16.0,
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Icon(
                             Icons.circle,
-                            color: Color(0xFF35658F),
+                            color: Theme.of(context).primaryColor,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 8.0,
                           ),
-                          Text("Total Class Held"),
+                          const Text("Total Class Held"),
                         ],
                       ),
                     ],
