@@ -1,7 +1,10 @@
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/fees/apis/fee_related_api.dart';
+import 'package:m_skool_flutter/fees/model/fee_receipt_details_model.dart';
+import 'package:m_skool_flutter/fees/model/fee_receipt_year_list_model.dart';
 import 'package:m_skool_flutter/main.dart';
 import '../model/feeModel.dart';
+import '../model/fee_receipt_no_model.dart';
 
 class FeeController extends GetxController {
   RxList<OverAllAnalysisValue> overAllAnalysisData =
@@ -10,9 +13,32 @@ class FeeController extends GetxController {
   RxList<HeadwiseAnalysisData> headWiseAnalysisData =
       <HeadwiseAnalysisData>[].obs;
 
+  RxList<YearlistValue> feeReceiptYearList = <YearlistValue>[].obs;
+
+  RxList<ReceiptNoList> feeReceiptNoList = <ReceiptNoList>[].obs;
+
+  RxList<FillstudentviewdetailsValue> feeReceiptDetails =
+      <FillstudentviewdetailsValue>[].obs;
+
   RxBool isLoading = RxBool(false);
+  RxBool isFeeLoading = RxBool(false);
+  RxBool isReceipt = RxBool(false);
+  RxBool isFeeDetail = RxBool(false);
+
+  void isfeeDetail(bool loading) {
+    isFeeDetail.value = loading;
+  }
+
+  void isreceipt(bool loading) {
+    isReceipt.value = loading;
+  }
+
   void isloading(bool loading) {
     isLoading.value = loading;
+  }
+
+  void isfeeloading(bool loading) {
+    isFeeLoading.value = loading;
   }
 
   Future<bool> getFeeAnalysisData({
@@ -44,7 +70,105 @@ class FeeController extends GetxController {
         return true;
       }
       return false;
-    } on Exception catch (e) {
+    } catch (e) {
+      logger.e(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> getFeeReceiptYearData({
+    required int miId,
+    required int asmayId,
+    required int amstId,
+    required String base,
+  }) async {
+    try {
+      FeeReceiptYearListModel? feeReceiptYearListModel =
+          await getFeeReceiptYearList(
+              miId: miId, asmayId: asmayId, amstId: amstId, base: base);
+
+      if (feeReceiptYearListModel!.yearlist != null ||
+          feeReceiptYearListModel.yearlist!.values != null) {
+        feeReceiptYearList.clear();
+        for (var i = 0;
+            i < feeReceiptYearListModel.yearlist!.values!.length;
+            i++) {
+          feeReceiptYearList
+              .add(feeReceiptYearListModel.yearlist!.values!.elementAt(i));
+        }
+
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      logger.e(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> getFeeReceiptNoListData({
+    required int miId,
+    required int asmayId,
+    required int amstId,
+    required String base,
+  }) async {
+    try {
+      FeeReceiptNoModel? receiptNoList = await getFeeReceiptNoList(
+          miId: miId, asmayId: asmayId, amstId: amstId, base: base);
+
+      if (receiptNoList!.recnolist != null ||
+          receiptNoList.recnolist!.values != null) {
+        feeReceiptNoList.clear();
+        for (var i = 0; i < receiptNoList.recnolist!.values!.length; i++) {
+          feeReceiptNoList.add(receiptNoList.recnolist!.values!.elementAt(i));
+        }
+
+        logger.d('This one', feeReceiptNoList);
+
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      logger.e(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> getFeeReceiptDetail({
+    required int miId,
+    required int asmayId,
+    required int amstId,
+    required int fypId,
+    required String base,
+  }) async {
+    try {
+      FeeReceiptDetailsModel? feeReceiptDetailsModel =
+          await getFeeReceiptDetails(
+              fypId: fypId,
+              miId: miId,
+              asmayId: asmayId,
+              amstId: amstId,
+              base: base);
+
+      if (feeReceiptDetailsModel!.fillstudentviewdetails != null ||
+          feeReceiptDetailsModel.fillstudentviewdetails!.values != null) {
+        for (var i = 0;
+            i < feeReceiptDetailsModel.fillstudentviewdetails!.values!.length;
+            i++) {
+          feeReceiptDetails.add(feeReceiptDetailsModel
+              .fillstudentviewdetails!.values!
+              .elementAt(i));
+        }
+
+        logger.d('This one', feeReceiptDetails);
+
+        return true;
+      }
+
+      return false;
+    } catch (e) {
       logger.e(e.toString());
       return false;
     }

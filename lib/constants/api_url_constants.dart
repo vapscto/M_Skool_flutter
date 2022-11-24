@@ -55,4 +55,7 @@ class URLS {
 
   // Fee Module Endpoints
   static String getFeeAnalysis = 'api/CumulativeFeeAnalysisFacade/getloaddata/';
+  static String getFeeReceiptYear = 'api/FeeReceiptFacade/getloaddata/';
+  static String getFeeReceiptNo = 'api/FeeReceiptFacade/getrecdetails/';
+  static String getFeeReceiptDetails = 'api/FeeReceiptFacade/printreceipt/';
 }

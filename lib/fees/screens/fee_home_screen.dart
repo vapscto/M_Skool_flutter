@@ -150,7 +150,10 @@ class _FeeHomeScreenState extends State<FeeHomeScreen> {
               loginSuccessModel: widget.loginSuccessModel,
               mskoolController: widget.mskoolController,
             ),
-            FeeReceiptTab(),
+            FeeReceiptTab(
+              loginSuccessModel: widget.loginSuccessModel,
+              mskoolController: widget.mskoolController,
+            ),
             PayOnlineTab(),
           ],
         ),

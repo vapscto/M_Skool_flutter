@@ -2,9 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
+import 'package:m_skool_flutter/fees/model/fee_receipt_no_model.dart';
+import 'package:m_skool_flutter/main.dart';
 
 class ReceiptNoCard extends StatefulWidget {
-  const ReceiptNoCard({super.key});
+  final ReceiptNoList receiptDetail;
+  final int index;
+  final int asmayId;
+  final Function(int) function;
+  const ReceiptNoCard({
+    super.key,
+    required this.receiptDetail,
+    required this.index,
+    required this.asmayId,
+    required this.function,
+  });
 
   @override
   State<ReceiptNoCard> createState() => _ReceiptNoCardState();
@@ -26,12 +39,16 @@ class _ReceiptNoCardState extends State<ReceiptNoCard> {
             onChanged: (value) {
               setState(
                 () {
-                  isChecked = value!;
+                  if (value!) {
+                    widget.function(widget.receiptDetail.fyPId!.toInt());
+                  }
+
+                  isChecked = value;
                 },
               );
             },
           ),
-          Text('SF2212/22-23'),
+          Text(widget.receiptDetail.receiptNo!),
         ],
       ),
     );
