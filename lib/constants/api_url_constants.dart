@@ -28,6 +28,7 @@ class URLS {
   // Endpoints for different Categories
 
   static String login = "api/LoginFacade";
+  static String profile = "api/StudentDashboardFacade/Getdetails";
 
   //Library
   static String lib = "api/StudentDashboardFacade/onclick_LIB/";
@@ -52,6 +53,9 @@ class URLS {
 
   //NoticeBoard
   static String getNotice = "api/StudentDashboardFacade/onclick_notice/";
+
+  //Information
+  static String classWork = "api/StudentDashboardFacade/onclick_Classwork/";
 
   // Fee Module Endpoints
   static String getFeeAnalysis = 'api/CumulativeFeeAnalysisFacade/getloaddata/';

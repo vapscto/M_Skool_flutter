@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:m_skool_flutter/classwork/api/get_class_work.dart';
 import 'package:m_skool_flutter/classwork/screen/classwork_home.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/homework/screen/home_work.dart';
+import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/notice/api/get_notice_api.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
@@ -23,16 +29,22 @@ class InfoHome extends StatefulWidget {
 class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
   TabController? tabController;
   final PageController pageController = PageController();
+  final HwCwNbController hwCwNbController = Get.put(HwCwNbController());
   List<Widget> pages = [];
   @override
   void initState() {
     pages.addAll([
       HomeWorkScreen(),
-      ClassworkHome(),
+      ClassworkHome(
+        hwCwNbController: hwCwNbController,
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController,
+      ),
       NoticeHome(
         showAppBar: false,
         loginSuccessModel: widget.loginSuccessModel,
         mskoolController: widget.mskoolController,
+        hwCwNbController: hwCwNbController,
       ),
     ]);
     tabController = TabController(length: 3, vsync: this);
@@ -54,6 +66,14 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
   RxInt currentPage = RxInt(0);
 
   RxBool showFilter = RxBool(false);
+  // DateTime startDate = DateTime.now();
+  // DateTime endDate = DateTime.now();
+
+  @override
+  void dispose() {
+    Get.delete<HwCwNbController>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,79 +83,232 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
         action: [
           IconButton(
             onPressed: () {
-              showFilter.value = !showFilter.value;
+              if (showFilter.value) {
+                showFilter.value = false;
+              } else {
+                showFilter.value = true;
+              }
               setState(() {});
             },
             icon: SvgPicture.asset('assets/svg/filter.svg'),
           ),
         ],
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(showFilter.value ? 130 : 0.0),
-          child: !showFilter.value
-              ? const SizedBox()
-              : Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Filter",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .merge(const TextStyle(color: Colors.white)),
-                      ),
-                      const SizedBox(
-                        height: 12.0,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              padding:
-                                  const EdgeInsets.only(left: 12.0, right: 8.0),
-                              alignment: Alignment.centerLeft,
-                              width: double.infinity,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).cardColor,
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              child: Text(
-                                "Start Date",
-                                style: Theme.of(context).textTheme.titleSmall,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 16.0,
-                          ),
-                          Expanded(
-                              child: Container(
-                            width: double.infinity,
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0,
-                            ),
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).cardColor,
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            child: Text(
-                              "End Date",
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                          ))
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-        ),
+        // bottom: PreferredSize(
+        //   preferredSize: Size.fromHeight(showFilter.value ? 130 : 0.0),
+        //   child:
+        // ),
       ).getAppBar(),
       body: Column(
         children: [
+          Obx(() {
+            return showFilter.value == false
+                ? const SizedBox()
+                : Container(
+                    color: Theme.of(context).primaryColor,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 16.0,
+                        right: 16.0,
+                        bottom: 16.0,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Filter",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .merge(const TextStyle(color: Colors.white)),
+                          ),
+                          const SizedBox(
+                            height: 12.0,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () async {
+                                    DateTime firstDate = DateTime(
+                                      DateTime.now().month == 1
+                                          ? DateTime.now().year - 1
+                                          : DateTime.now().year,
+                                      DateTime.now().month == 1
+                                          ? 12
+                                          : DateTime.now().month,
+                                    );
+                                    final DateTime? startDate =
+                                        await showDatePicker(
+                                            context: context,
+                                            initialDate: DateTime.now(),
+                                            firstDate: firstDate,
+                                            lastDate: DateTime.now());
+                                    if (startDate == null) {
+                                      Fluttertoast.showToast(
+                                          msg: "Please select start date");
+                                      return;
+                                    }
+                                    hwCwNbController
+                                        .updateStartDateProvided(true);
+                                    hwCwNbController.updateStartBy(
+                                        "${startDate.year}-${startDate.month}-${startDate.day}");
+                                    hwCwNbController.dtList.add(startDate);
+                                    //hwCwNbController.dtList.add(startDate);
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 12.0, right: 8.0),
+                                    alignment: Alignment.centerLeft,
+                                    width: double.infinity,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).cardColor,
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    child: Builder(builder: (context) {
+                                      return Obx(() {
+                                        return Text(
+                                          hwCwNbController.startBy.value,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall,
+                                        );
+                                      });
+                                    }),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 16.0,
+                              ),
+                              Expanded(
+                                  child: InkWell(
+                                onTap: () async {
+                                  if (!hwCwNbController
+                                      .startDateProvided.value) {
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "Please provide start date before selecting end date");
+                                    return;
+                                  }
+                                  DateTime firstDate = DateTime(
+                                    DateTime.now().month == 1
+                                        ? DateTime.now().year - 1
+                                        : DateTime.now().year,
+                                    DateTime.now().month == 1
+                                        ? 12
+                                        : DateTime.now().month,
+                                  );
+                                  final DateTime? endDate =
+                                      await showDatePicker(
+                                          context: context,
+                                          initialDate: DateTime.now(),
+                                          firstDate: firstDate,
+                                          lastDate: DateTime.now());
+
+                                  if (endDate == null) {
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "Please select end date to start filter");
+                                    return;
+                                  }
+
+                                  if (hwCwNbController.dtList.first.day >
+                                      endDate.day) {
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "End Date must not be less than start date");
+                                    return;
+                                  }
+                                  hwCwNbController.updateEndby(
+                                      "${endDate.year}-${endDate.month}-${endDate.day}");
+                                  hwCwNbController.dtList.add(endDate);
+
+                                  // hwCwNbController
+                                  //     .updateStartDateProvided(false);
+                                  // hwCwNbController.updateStartBy("Start Date");
+                                  // hwCwNbController.updateEndby("End Date");
+
+                                  hwCwNbController.dtList.add(endDate);
+                                  hwCwNbController.updateShowFilter(
+                                      hwCwNbController.filter.value + 1);
+                                  showFilter.value = false;
+
+                                  Fluttertoast.showToast(
+                                      msg:
+                                          "Filter Applied.. now you will see the filtered result");
+
+                                  if (tabController!.index == 1) {
+                                    await GetClassWorkApi.instance
+                                        .getClassWorks(
+                                      miId: widget.loginSuccessModel.mIID!,
+                                      asmayId:
+                                          widget.loginSuccessModel.asmaYId!,
+                                      amstId: widget.loginSuccessModel.amsTId!,
+                                      startDate: hwCwNbController.dtList.first
+                                          .toLocal()
+                                          .toString(),
+                                      endDate: hwCwNbController.dtList.last
+                                          .toLocal()
+                                          .toString(),
+                                      controller: hwCwNbController,
+                                      base: baseUrlFromInsCode(
+                                        "portal",
+                                        widget.mskoolController,
+                                      ),
+                                    );
+                                    return;
+                                  }
+
+                                  if (tabController!.index == 2) {
+                                    await GetNoticeApi.instance.getNotice(
+                                      miId: widget.loginSuccessModel.mIID!,
+                                      asmayId:
+                                          widget.loginSuccessModel.asmaYId!,
+                                      amstId: widget.loginSuccessModel.amsTId!,
+                                      startDate: hwCwNbController.dtList.first
+                                          .toLocal()
+                                          .toString(),
+                                      endDate: hwCwNbController.dtList.last
+                                          .toLocal()
+                                          .toString(),
+                                      controller: hwCwNbController,
+                                      baseUrl: baseUrlFromInsCode(
+                                        "portal",
+                                        widget.mskoolController,
+                                      ),
+                                    );
+                                    return;
+                                  }
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  alignment: Alignment.centerLeft,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0,
+                                  ),
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).cardColor,
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  child: Obx(() {
+                                    return Text(
+                                      hwCwNbController.endBy.value,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                    );
+                                  }),
+                                ),
+                              ))
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+          }),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             width: double.infinity,

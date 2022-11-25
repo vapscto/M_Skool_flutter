@@ -67,7 +67,7 @@ class HomeWorkScreen extends StatelessWidget {
                   //     .inDays,
                   itemCount: 30,
                   separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(
+                    return const SizedBox(
                       width: 12.0,
                     );
                   },
@@ -78,10 +78,18 @@ class HomeWorkScreen extends StatelessWidget {
             InkWell(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return HwCwDetailScreen();
+                  return const HwCwDetailScreen(
+                    topic: '',
+                    assignment: '',
+                    date: '',
+                    subject: '',
+                  );
                 }));
               },
-              child: HwCwItem(),
+              child: const HwCwItem(
+                sub: "",
+                topic: "",
+              ),
             ),
           ],
         ),
@@ -91,8 +99,12 @@ class HomeWorkScreen extends StatelessWidget {
 }
 
 class HwCwItem extends StatelessWidget {
+  final String sub;
+  final String topic;
   const HwCwItem({
     Key? key,
+    required this.sub,
+    required this.topic,
   }) : super(key: key);
 
   @override
@@ -124,14 +136,14 @@ class HwCwItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "English",
+                    sub,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(
                     height: 8.0,
                   ),
                   Text(
-                    "Pros and Cons of Online Learning",
+                    topic,
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ],

@@ -72,12 +72,14 @@ class _HomeState extends State<Home> {
       CoeHome(
         loginSuccessModel: widget.loginSuccessModel,
         mskoolController: widget.mskoolController,
+        pageController: pageController,
       ),
     );
     homeViewPage.add(
       ProfileTab(
         loginSuccessModel: widget.loginSuccessModel,
         mskoolController: widget.mskoolController,
+        pageController: pageController,
       ),
     );
 
@@ -209,6 +211,7 @@ class _HomeState extends State<Home> {
 class HomeTab extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+
   const HomeTab({
     Key? key,
     required this.loginSuccessModel,
@@ -390,20 +393,21 @@ class _HomeTabState extends State<HomeTab> {
                         return;
                       }
 
-                      if (category == "events") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return CoeHome(
-                                loginSuccessModel: widget.loginSuccessModel,
-                                mskoolController: widget.mskoolController,
-                              );
-                            },
-                          ),
-                        );
-                        return;
-                      }
+                      // if (category == "events") {
+                      //   Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: (_) {
+                      //         return CoeHome(
+                      //           pageController: ,
+                      //           loginSuccessModel: widget.loginSuccessModel,
+                      //           mskoolController: widget.mskoolController,
+                      //         );
+                      //       },
+                      //     ),
+                      //   );
+                      //   return;
+                      // }
 
                       if (category == "library") {
                         String base = baseUrlFromInsCode(
@@ -459,18 +463,18 @@ class _HomeTabState extends State<HomeTab> {
                         return;
                       }
                       if (category == "notice") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return NoticeHome(
-                                showAppBar: true,
-                                loginSuccessModel: widget.loginSuccessModel,
-                                mskoolController: widget.mskoolController,
-                              );
-                            },
-                          ),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (_) {
+                        //       return NoticeHome(
+                        //         showAppBar: true,
+                        //         loginSuccessModel: widget.loginSuccessModel,
+                        //         mskoolController: widget.mskoolController,
+                        //       );
+                        //     },
+                        //   ),
+                        // );
                         return;
                       }
                       if (category == "certificate") {

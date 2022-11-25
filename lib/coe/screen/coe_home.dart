@@ -21,10 +21,12 @@ import 'package:m_skool_flutter/widget/err_widget.dart';
 class CoeHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final PageController pageController;
   const CoeHome(
       {super.key,
       required this.loginSuccessModel,
-      required this.mskoolController});
+      required this.mskoolController,
+      required this.pageController});
 
   @override
   State<CoeHome> createState() => _CoeHomeState();
@@ -87,7 +89,31 @@ class _CoeHomeState extends State<CoeHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "COE".tr).getAppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.chevron_left_rounded,
+            color: Colors.white,
+            size: 34,
+          ),
+          onPressed: () {
+            widget.pageController.animateToPage(0,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.fastLinearToSlowEaseIn);
+          },
+        ),
+        leadingWidth: 30,
+        title: Text("COE".tr),
+        // actions: [
+        //   // IconButton(
+        //   //   icon: SvgPicture.asset('assets/svg/bell.svg'),
+        //   //   onPressed: () {},
+        //   // ),
+        //   const SizedBox(
+        //     width: 8.0,
+        //   ),
+        // ],
+      ),
       body: SafeArea(
         child: Obx(() {
           return handler.showAllLoadingProgress.value
