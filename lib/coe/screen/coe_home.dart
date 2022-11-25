@@ -96,7 +96,7 @@ class _CoeHomeState extends State<CoeHome> {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircularProgressIndicator(),
+                      const CircularProgressIndicator(),
                       const SizedBox(
                         height: 16.0,
                       ),

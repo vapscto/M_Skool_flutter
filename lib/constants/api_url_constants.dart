@@ -58,4 +58,10 @@ class URLS {
   static String getFeeReceiptYear = 'api/FeeReceiptFacade/getloaddata/';
   static String getFeeReceiptNo = 'api/FeeReceiptFacade/getrecdetails/';
   static String getFeeReceiptDetails = 'api/FeeReceiptFacade/printreceipt/';
+
+  // Exam module
+  static String getExamAcademicYear = 'api/ExamReportFacade/getloaddata/';
+  static String getExamdetail = 'api/ExamReportFacade/getexamdata/';
+  static String getSubjectDetail = 'api/ExamReportFacade/getexamdata';
+  static String getMarksOverview = 'api/ExamReportFacade/StudentExamDetails/';
 }

@@ -1,18 +1,12 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
-import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/exam/model/subjectoverview_model.dart';
+import 'package:m_skool_flutter/exam/widget/result_analysis_item.dart';
 
-import '../model/markoverview_model.dart';
-
-class ResultAnalysisItem extends StatelessWidget {
-  final ExamWiseReportListValue datamodel;
-  const ResultAnalysisItem({
-    super.key,
-    required this.datamodel,
-  });
+class SubjectWiseContainer extends StatelessWidget {
+  final SubjectWiseReportListValue datamodel;
+  const SubjectWiseContainer({super.key, required this.datamodel});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +30,7 @@ class ResultAnalysisItem extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 6.0),
                   backgroundColor: Colors.red.shade100,
-                  label: Text(datamodel.ismsSubjectName!),
+                  label: Text(datamodel.emeExamName!),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -139,44 +133,5 @@ class ResultAnalysisItem extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class MarksAnalysisItem extends StatelessWidget {
-  final String marks;
-  final String title;
-  const MarksAnalysisItem({
-    Key? key,
-    required this.marks,
-    required this.title,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(children: [
-      Text(
-        marks,
-        style: Theme.of(context)
-            .textTheme
-            .labelMedium!
-            .merge(const TextStyle(color: Colors.black)),
-      ),
-      const SizedBox(
-        height: 6.0,
-      ),
-      Text(
-        title,
-        //maxLines: 2,
-        textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.titleSmall!.merge(
-              const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                color: Color.fromRGBO(124, 124, 124, 1),
-                letterSpacing: 0.2,
-              ),
-            ),
-      )
-    ]);
   }
 }

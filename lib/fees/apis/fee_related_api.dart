@@ -38,15 +38,9 @@ Future<FeeDetails?> getFeeAnalysisList({
       Fluttertoast.showToast(msg: 'Unable to fetch data');
       return null;
     }
-  } on Exception catch (e) {
+  } catch (e) {
     logger.e(e.toString());
-    return Future.error(
-      {
-        "errorTitle": "Unable to connect to server",
-        "errorMsg":
-            "Sorry!! We are unable to connect to server right now.. try again later",
-      },
-    );
+    return null;
   }
 }
 

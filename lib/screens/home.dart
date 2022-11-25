@@ -185,7 +185,7 @@ class _HomeState extends State<Home> {
               ),
 
               ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: widget.loginSuccessModel.staffmobileappprivileges!
                       .values!.length,
                   shrinkWrap: true,
@@ -227,7 +227,10 @@ class _HomeState extends State<Home> {
                             context,
                             MaterialPageRoute(
                               builder: (_) {
-                                return const ExamHome();
+                                return ExamHome(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                );
                               },
                             ),
                           );
