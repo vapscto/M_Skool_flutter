@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class HwCwDetailScreen extends StatelessWidget {
-  const HwCwDetailScreen({super.key});
+  final String subject;
+  final String topic;
+  final String assignment;
+  final String date;
+  final String? url;
+  final String? attachmentType;
+  final String? attachmentName;
+  final String? attachmentUrl;
+  const HwCwDetailScreen(
+      {super.key,
+      required this.subject,
+      required this.topic,
+      required this.assignment,
+      required this.date,
+      this.url,
+      this.attachmentType,
+      this.attachmentName,
+      this.attachmentUrl});
 
   @override
   Widget build(BuildContext context) {
+    final DateTime dateTime = DateTime.parse(date);
     return Scaffold(
       appBar: const CustomAppBar(title: "English").getAppBar(),
       body: SingleChildScrollView(
@@ -25,14 +42,14 @@ class HwCwDetailScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ),
-                Text(":"),
+                const Text(":"),
                 const SizedBox(
                   width: 24.0,
                 ),
                 Expanded(
                   flex: 7,
                   child: Text(
-                    "English",
+                    subject,
                     style: Theme.of(context).textTheme.titleSmall!.merge(
                           const TextStyle(
                             fontSize: 15.0,
@@ -56,14 +73,14 @@ class HwCwDetailScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ),
-                Text(":"),
+                const Text(":"),
                 const SizedBox(
                   width: 24.0,
                 ),
                 Expanded(
                   flex: 7,
                   child: Text(
-                    "English literature",
+                    topic,
                     style: Theme.of(context).textTheme.titleSmall!.merge(
                           const TextStyle(
                             fontSize: 15.0,
@@ -87,14 +104,14 @@ class HwCwDetailScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ),
-                Text(":"),
+                const Text(":"),
                 const SizedBox(
                   width: 24.0,
                 ),
                 Expanded(
                   flex: 7,
                   child: Text(
-                    "Pros and Cons of Online Learning",
+                    assignment,
                     style: Theme.of(context).textTheme.titleSmall!.merge(
                           const TextStyle(
                             fontSize: 15.0,
@@ -118,14 +135,14 @@ class HwCwDetailScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ),
-                Text(":"),
+                const Text(":"),
                 const SizedBox(
                   width: 24.0,
                 ),
                 Expanded(
                   flex: 7,
                   child: Text(
-                    "21-11-2022",
+                    "${dateTime.day}-${dateTime.month}-${dateTime.year}",
                     style: Theme.of(context).textTheme.titleSmall!.merge(
                           const TextStyle(
                             fontSize: 15.0,
@@ -150,7 +167,7 @@ class HwCwDetailScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ),
-                Text(":"),
+                const Text(":"),
                 const SizedBox(
                   width: 24.0,
                 ),
@@ -187,7 +204,7 @@ class HwCwDetailScreen extends StatelessWidget {
                         horizontal: VisualDensity.minimumDensity,
                       ),
                       minLeadingWidth: 24,
-                      title: Text("Screenshot.png"),
+                      title: const Text("Screenshot.png"),
                     ),
                   ),
                 ),
@@ -197,7 +214,7 @@ class HwCwDetailScreen extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.0),
-                      color: Color(0xFFD9EDFF)),
+                      color: const Color(0xFFD9EDFF)),
                   child: IconButton(
                       onPressed: () {},
                       icon: SvgPicture.asset(

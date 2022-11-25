@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 
 import 'package:m_skool_flutter/notice/model/notice_data_model.dart';
@@ -273,12 +272,18 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
                                     leading: Icon(
                                       Icons.image_outlined,
                                       color: Theme.of(context).primaryColor,
+                                      size: 30.0,
                                     ),
                                     visualDensity: const VisualDensity(
                                       horizontal: VisualDensity.minimumDensity,
                                     ),
                                     minLeadingWidth: 24,
-                                    title: Text(widget.value.intBAttachment!),
+                                    title: Text(
+                                      widget.value.intBAttachment!,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
+                                    ),
                                   ),
                                 ),
                               ),

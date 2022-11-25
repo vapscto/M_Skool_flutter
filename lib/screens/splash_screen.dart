@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
               return snapshot.data!;
             }
             if (snapshot.hasError) {
-              Map<String, dynamic> err = snapshot.data as Map<String, dynamic>;
+              Map<String, dynamic> err = snapshot.error as Map<String, dynamic>;
               return Center(
                 child: Column(
                   children: [
