@@ -22,9 +22,20 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
   late TabController _tabController;
   @override
   void initState() {
-    _tabController = TabController(initialIndex: 0, length: 4, vsync: this);
+    _tabController = TabController(
+        initialIndex: 0,
+        length: 4,
+        vsync: this,
+        animationDuration: const Duration(milliseconds: 300));
     super.initState();
   }
+
+  List<CustomTab> tabs = const [
+    CustomTab(name: "Compose", asset: "edit.svg"),
+    CustomTab(name: "Inbox", asset: "inbox.svg"),
+    CustomTab(name: "All", asset: "layersall.svg"),
+    CustomTab(name: "Unread", asset: "unread.svg"),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +47,10 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
         leading: const CustomGoBackButton(),
       ),
       body: Column(children: [
-        CustomTabBar(onTabSelect: (value) => _tabController.animateTo(value)),
+        CustomTabBar(
+          tabs: tabs,
+          tabController: _tabController,
+        ),
         Expanded(
           child: TabBarView(controller: _tabController, children: const [
             ComposeTabScreen(),
@@ -46,36 +60,6 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
           ]),
         )
       ]),
-    );
-  }
-
-  Widget tab(String title, String asset, int isCurrentPage) {
-    return Tab(
-      height: 40,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _tabController.index == isCurrentPage
-              ? SvgPicture.asset('assets/svg/$asset', width: 12, height: 12)
-              : const SizedBox(),
-          const SizedBox(
-            width: 6.0,
-          ),
-          AutoSizeText(
-            title,
-            style: Theme.of(context).textTheme.titleSmall!.merge(
-                  TextStyle(
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.1,
-                      fontSize:
-                          _tabController.index == isCurrentPage ? 13.5 : 10,
-                      color: _tabController.index != isCurrentPage
-                          ? Colors.white
-                          : Colors.black),
-                ),
-          ),
-        ],
-      ),
     );
   }
 }

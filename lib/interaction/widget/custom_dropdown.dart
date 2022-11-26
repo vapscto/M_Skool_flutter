@@ -1,7 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-import '../../widget/custom_container.dart';
+import '../../config/themes/theme_data.dart';
 
 class CustomDropdown extends StatelessWidget {
   final String label;
@@ -18,54 +18,68 @@ class CustomDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final indexNotifier = ValueNotifier<int?>(initial);
-    return CustomContainer(
-      child: ValueListenableBuilder<int?>(
-          valueListenable: indexNotifier,
-          builder: (context, value, _) {
-            return DropdownButtonFormField2<int?>(
-              value: value,
-              decoration: InputDecoration(
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 17),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
+    return Stack(
+      children: [
+        ValueListenableBuilder<int?>(
+            valueListenable: indexNotifier,
+            builder: (context, value, _) {
+              return Container(
+                margin: const EdgeInsets.only(top: 10),
+                decoration: BoxDecoration(
+                    boxShadow: CustomThemeData.getShadow(),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15)),
+                child: DropdownButtonFormField2<int?>(
+                  value: value,
+                  decoration: const InputDecoration(
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 12.3, horizontal: 10),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
                   ),
-                ),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    size: 30,
                   ),
-                ),
-                labelText: label,
-                labelStyle: const TextStyle(
-                    fontSize: 21,
-                    fontWeight: FontWeight.w200,
-                    backgroundColor: Colors.white,
-                    color: Color(0xff898989)),
-              ),
-              icon: const Icon(
-                Icons.keyboard_arrow_down_rounded,
-                size: 30,
-              ),
-              iconSize: 30,
-              items: List.generate(
-                items.length,
-                (index) => DropdownMenuItem(
-                  value: index,
-                  child: Text(
-                    items[index],
-                    style: Theme.of(context).textTheme.labelSmall!.merge(
-                        const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16.0,
-                            letterSpacing: 0.3)),
+                  iconSize: 30,
+                  items: List.generate(
+                    items.length,
+                    (index) => DropdownMenuItem(
+                      value: index,
+                      child: Text(
+                        items[index],
+                        style: Theme.of(context).textTheme.labelSmall!.merge(
+                            const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16.0,
+                                letterSpacing: 0.3)),
+                      ),
+                    ),
                   ),
+                  onChanged: onChange,
                 ),
-              ),
-              onChanged: onChange,
-            );
-          }),
+              );
+            }),
+        Positioned(
+            top: 0,
+            left: 13,
+            child: Text(
+              label,
+              style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  backgroundColor: Colors.white,
+                  color: Color(0xff898989)),
+            ))
+      ],
     );
   }
 }

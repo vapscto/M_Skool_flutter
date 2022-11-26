@@ -14,7 +14,7 @@ class CustomGoBackButton extends StatelessWidget {
       },
       icon: const Icon(
         Icons.chevron_left_rounded,
-        size: 30,
+        size: 32,
       ),
     );
   }

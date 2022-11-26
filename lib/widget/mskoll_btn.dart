@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 
 class MSkollBtn extends StatelessWidget {
   final String title;
+  final Size? size;
   final Function() onPress;
-  const MSkollBtn({super.key, required this.title, required this.onPress});
+  const MSkollBtn(
+      {super.key, required this.title, this.size, required this.onPress});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        fixedSize: size,
         backgroundColor: Theme.of(context).primaryColor,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12.0),
         shape: RoundedRectangleBorder(

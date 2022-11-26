@@ -3,31 +3,48 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class CustomTabBar extends StatefulWidget {
-  final ValueChanged<int> onTabSelect;
-  const CustomTabBar({required this.onTabSelect, super.key});
+  final ValueChanged<int>? onTabSelect;
+  final TabController tabController;
+  final List<CustomTab> tabs;
+  const CustomTabBar(
+      {this.onTabSelect,
+      required this.tabs,
+      required this.tabController,
+      super.key});
 
   @override
   State<CustomTabBar> createState() => _CustomTabBarState();
 }
 
 class _CustomTabBarState extends State<CustomTabBar> {
-  List<Map<String, String>> names = [
-    {"name": "Compose", "img": "edit.svg"},
-    {"name": "Inbox", "img": "inbox.svg"},
-    {"name": "All", "img": "layersall.svg"},
-    {"name": "Unread", "img": "unread.svg"}
-  ];
   late double width;
-  double height = 45;
-  double shrinkRatio = 0.9;
-  double enlargeRatio = 1 + ((1.0 - 0.9) * 3);
+  final double height = 45;
+  final double shrinkRatio = 0.9;
+  late double enlargeRatio;
+  final indexNotifier = ValueNotifier<int>(0);
   @override
   void initState() {
-    width = (Get.width) / 4;
+    widget.tabController.addListener(() {
+      if (indexNotifier.value != widget.tabController.index) {
+        indexNotifier.value = widget.tabController.index;
+      }
+    });
     super.initState();
   }
 
-  final indexNotifier = ValueNotifier<int>(0);
+  @override
+  void dispose() {
+    widget.tabController.removeListener(() {});
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // reload to see tab changes
+    enlargeRatio = 1 + ((1.0 - 0.9) * (widget.tabs.length - 1));
+    width = (Get.width) / widget.tabs.length;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +57,12 @@ class _CustomTabBarState extends State<CustomTabBar> {
             return Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                for (int i = 0; i < names.length; i++)
+                for (int i = 0; i < widget.tabs.length; i++)
                   InkWell(
                     onTap: () {
                       indexNotifier.value = i;
-                      widget.onTabSelect(i);
+                      widget.tabController.animateTo(i);
+                      if (widget.onTabSelect != null) widget.onTabSelect!(i);
                     },
                     child: CustomPaint(
                       painter: TabBarPainter(
@@ -52,7 +70,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
                           left: index == (i - 1),
                           right: index == (i + 1)),
                       child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 300),
+                        duration: const Duration(milliseconds: 400),
                         decoration: BoxDecoration(
                             color:
                                 index == i ? Colors.white : Colors.transparent,
@@ -67,10 +85,10 @@ class _CustomTabBarState extends State<CustomTabBar> {
                           children: [
                             index == i
                                 ? SvgPicture.asset(
-                                    "assets/svg/${names[i]["img"]}")
+                                    "assets/svg/${widget.tabs[i].asset}")
                                 : const SizedBox.shrink(),
                             const SizedBox(width: 6),
-                            Text(names[i]["name"] ?? '',
+                            Text(widget.tabs[i].name,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     letterSpacing: 0.1,
@@ -111,4 +129,10 @@ class TabBarPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(TabBarPainter oldDelegate) => false;
+}
+
+class CustomTab {
+  final String name;
+  final String asset;
+  const CustomTab({required this.name, required this.asset});
 }
