@@ -56,6 +56,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
 
   Future<void> getFeeReceiptList(int asmayId) async {
     feeController.feeReceiptNoList.clear();
+    feeController.feeReceiptDetailsList.clear();
     feeController.isreceipt(true);
 
     await feeController.getFeeReceiptNoListData(
@@ -68,7 +69,6 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
   }
 
   Future<void> getFeesReceiptDetail(int fypId) async {
-    feeController.feeReceiptDetails.clear();
     feeController.isfeeDetail(true);
     await feeController.getFeeReceiptDetail(
       miId: widget.loginSuccessModel.mIID!,
@@ -81,6 +81,10 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
       ),
     );
     feeController.isfeeDetail(false);
+  }
+
+  void removeFeeDetailsContainer(int index) {
+    feeController.feeReceiptDetailsList.removeAt(index);
   }
 
   @override
@@ -215,6 +219,8 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                             index: index,
                                             asmayId: selectedValue!.asmaYId!,
                                             function: getFeesReceiptDetail,
+                                            function1:
+                                                removeFeeDetailsContainer,
                                           );
                                         },
                                       ),
@@ -237,157 +243,277 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                           ? const Center(
                               child: CircularProgressIndicator(),
                             )
-                          : feeController.feeReceiptDetails.isEmpty
+                          : feeController.feeReceiptDetailsList.isEmpty
                               ? feeController.feeReceiptNoList.isEmpty
                                   ? const SizedBox()
                                   : const Center(
                                       child: Text(
                                           'No Receipt Details available for selected receipt No.!!'),
                                     )
-                              :
-                              // ListView.builder(
-                              //     physics: const NeverScrollableScrollPhysics(),
-                              //     shrinkWrap: true,
-                              //     itemCount:
-                              //         feeController.feeReceiptDetailList.length,
-                              //     itemBuilder: (context, index) {
-                              //       return
-                              Container(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Fee Details',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelMedium!
-                                            .copyWith(color: Colors.black),
-                                      ),
-                                      const SizedBox(height: 15),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Image.asset(
-                                            'assets/images/vpslogo.png',
-                                            height: 36,
-                                          ),
-                                          const SizedBox(
-                                            width: 12.0,
-                                          ),
-                                          Text(
-                                            "VAPS International School",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .merge(const TextStyle(
-                                                    color: Color(0xFF35658F))),
+                              : ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: feeController
+                                      .feeReceiptDetailsList.length,
+                                  itemBuilder: (context, receiptIndex) {
+                                    return Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 10),
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .scaffoldBackgroundColor,
+                                        borderRadius:
+                                            BorderRadius.circular(16.0),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            offset: Offset(0, 1),
+                                            blurRadius: 8,
+                                            color: Colors.black12,
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: 15),
-                                      Container(
-                                        width: double.infinity,
-                                        child: Center(
-                                          child: DataTable(
-                                            dataTextStyle: const TextStyle(
-                                                fontSize: 10,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w500),
-                                            dataRowHeight: 24,
-                                            headingRowHeight: 20,
-                                            horizontalMargin: 2,
-                                            columnSpacing: 20,
-                                            dividerThickness: 1,
-                                            headingTextStyle: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w600),
-                                            border: TableBorder.all(
-                                                width: 1, color: Colors.black),
-                                            showBottomBorder: true,
-                                            headingRowColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.blue.shade400),
-                                            columns: const [
-                                              DataColumn(
-                                                numeric: true,
-                                                label: Text(
-                                                  ' S.No',
-                                                  style:
-                                                      TextStyle(fontSize: 10),
-                                                ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Fee Details',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelMedium!
+                                                .copyWith(color: Colors.black),
+                                          ),
+                                          const SizedBox(height: 15),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Image.asset(
+                                                'assets/images/vpslogo.png',
+                                                height: 36,
                                               ),
-                                              DataColumn(
-                                                label: Text(
-                                                  'Particular',
-                                                  style:
-                                                      TextStyle(fontSize: 10),
-                                                ),
+                                              const SizedBox(
+                                                width: 12.0,
                                               ),
-                                              DataColumn(
-                                                label: Text(
-                                                  'Installment',
-                                                  style:
-                                                      TextStyle(fontSize: 10),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Text(
-                                                  'Concession',
-                                                  style:
-                                                      TextStyle(fontSize: 10),
-                                                ),
-                                              ),
-                                              DataColumn(
-                                                label: Text(
-                                                  'Paid Amount',
-                                                  style:
-                                                      TextStyle(fontSize: 10),
-                                                ),
+                                              Text(
+                                                "VAPS International School",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleMedium!
+                                                    .merge(const TextStyle(
+                                                        color:
+                                                            Color(0xFF35658F))),
                                               ),
                                             ],
-                                            rows: List.generate(
-                                                feeController.feeReceiptDetails
-                                                    .length, (index) {
-                                              var i = index + 1;
-                                              return DataRow(
-                                                cells: [
-                                                  DataCell(Text('$i')),
-                                                  DataCell(Text(feeController
-                                                      .feeReceiptDetails
-                                                      .elementAt(index)
-                                                      .fmHFeeName!)),
-                                                  DataCell(Text(feeController
-                                                      .feeReceiptDetails
-                                                      .elementAt(index)
-                                                      .ftIName!)),
-                                                  DataCell(Center(
-                                                      child: Text(feeController
-                                                          .feeReceiptDetails
-                                                          .elementAt(index)
-                                                          .ftPConcessionAmt
-                                                          .toString()))),
-                                                  DataCell(Center(
-                                                      child: Text(feeController
-                                                          .feeReceiptDetails
-                                                          .elementAt(index)
-                                                          .ftPPaidAmt
-                                                          .toString()))),
-                                                ],
-                                              );
-                                            }),
                                           ),
-                                        ),
+                                          const SizedBox(height: 15),
+                                          GridView(
+                                            shrinkWrap: true,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            gridDelegate:
+                                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 2,
+                                              crossAxisSpacing: 20,
+                                              childAspectRatio: 1 / 0.07,
+                                            ),
+                                            children: [
+                                              Text(
+                                                'Receipt No        : ${feeController.feeReceiptDetailsList.elementAt(receiptIndex).values!.first.fyPReceiptNo}',
+                                                style: const TextStyle(
+                                                    fontSize: 9,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                'Date                     : ${feeController.feeReceiptDetailsList.elementAt(receiptIndex).values!.first.fyPDate!.day} - ${feeController.feeReceiptDetailsList.elementAt(receiptIndex).values!.first.fyPDate!.month} - ${feeController.feeReceiptDetailsList.elementAt(receiptIndex).values!.first.fyPDate!.year}',
+                                                style: const TextStyle(
+                                                    fontSize: 9,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                'Adm No             : ${feeController.feeReceiptDetailsList.elementAt(receiptIndex).values!.first.admno}',
+                                                style: const TextStyle(
+                                                    fontSize: 9,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                'Session               :',
+                                                style: const TextStyle(
+                                                    fontSize: 9,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                'Name                 :',
+                                                style: const TextStyle(
+                                                    fontSize: 9,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                'Class/sec           :',
+                                                style: const TextStyle(
+                                                    fontSize: 9,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                'Father Name    :',
+                                                style: const TextStyle(
+                                                    fontSize: 9,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                'Type                    :',
+                                                style: const TextStyle(
+                                                    fontSize: 9,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                'TransactionId   : ${feeController.feeReceiptDetailsList.elementAt(receiptIndex).values!.first.fypTransactionId}',
+                                                style: const TextStyle(
+                                                    fontSize: 9,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                'Duration             :',
+                                                style: const TextStyle(
+                                                    fontSize: 9,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 10),
+                                          SizedBox(
+                                            width: double.infinity,
+                                            child: DataTable(
+                                              dataTextStyle: const TextStyle(
+                                                  fontSize: 9,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w500),
+                                              dataRowHeight: 24,
+                                              headingRowHeight: 20,
+                                              horizontalMargin: 2,
+                                              columnSpacing: 20,
+                                              dividerThickness: 1,
+                                              headingTextStyle: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w600),
+                                              border: TableBorder.all(
+                                                  width: 1,
+                                                  color: Colors.black),
+                                              showBottomBorder: true,
+                                              headingRowColor:
+                                                  MaterialStateProperty.all(
+                                                      Colors.blue.shade400),
+                                              columns: const [
+                                                DataColumn(
+                                                  numeric: true,
+                                                  label: Text(
+                                                    ' S.No',
+                                                    style:
+                                                        TextStyle(fontSize: 10),
+                                                  ),
+                                                ),
+                                                DataColumn(
+                                                  label: Text(
+                                                    'Particular',
+                                                    style:
+                                                        TextStyle(fontSize: 10),
+                                                  ),
+                                                ),
+                                                DataColumn(
+                                                  label: Text(
+                                                    'Installment',
+                                                    style:
+                                                        TextStyle(fontSize: 10),
+                                                  ),
+                                                ),
+                                                DataColumn(
+                                                  label: Text(
+                                                    'Concession',
+                                                    style:
+                                                        TextStyle(fontSize: 10),
+                                                  ),
+                                                ),
+                                                DataColumn(
+                                                  label: Text(
+                                                    'Paid Amount',
+                                                    style:
+                                                        TextStyle(fontSize: 10),
+                                                  ),
+                                                ),
+                                              ],
+                                              rows: List.generate(
+                                                  feeController
+                                                      .feeReceiptDetailsList
+                                                      .elementAt(receiptIndex)
+                                                      .values!
+                                                      .length, (index) {
+                                                var i = index + 1;
+                                                return DataRow(
+                                                  cells: [
+                                                    DataCell(Text('$i')),
+                                                    DataCell(Text(feeController
+                                                        .feeReceiptDetailsList
+                                                        .elementAt(receiptIndex)
+                                                        .values!
+                                                        .elementAt(index)
+                                                        .fmHFeeName!)),
+                                                    DataCell(Text(feeController
+                                                        .feeReceiptDetailsList
+                                                        .elementAt(receiptIndex)
+                                                        .values!
+                                                        .elementAt(index)
+                                                        .ftIName!)),
+                                                    DataCell(Center(
+                                                        child: Text(feeController
+                                                            .feeReceiptDetailsList
+                                                            .elementAt(
+                                                                receiptIndex)
+                                                            .values!
+                                                            .elementAt(index)
+                                                            .ftPConcessionAmt
+                                                            .toString()))),
+                                                    DataCell(Center(
+                                                        child: Text(feeController
+                                                            .feeReceiptDetailsList
+                                                            .elementAt(
+                                                                receiptIndex)
+                                                            .values!
+                                                            .elementAt(index)
+                                                            .ftPPaidAmt
+                                                            .toString()))),
+                                                  ],
+                                                );
+                                              }),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                      // }),
+                                    );
+                                  }),
                     ),
                     const SizedBox(height: 200),
                   ],
