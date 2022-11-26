@@ -102,232 +102,259 @@ class _SubjectWiseTabState extends State<SubjectWiseTab> {
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : Column(
-                children: [
-                  Row(
+            : examController.academicYearList.isEmpty
+                ? Center(
+                    child: Text(
+                      'Unable to fetch data from server...',
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelLarge!
+                          .merge(const TextStyle(
+                            color: Colors.black,
+                            fontSize: 19.0,
+                          )),
+                    ),
+                  )
+                : Column(
                     children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            borderRadius: BorderRadius.circular(16.0),
-                            boxShadow: const [
-                              BoxShadow(
-                                offset: Offset(0, 1),
-                                blurRadius: 8,
-                                color: Colors.black12,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                                borderRadius: BorderRadius.circular(16.0),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    offset: Offset(0, 1),
+                                    blurRadius: 8,
+                                    color: Colors.black12,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          child: DropdownButtonFormField<AcademicYearValues>(
-                            isExpanded: true,
-                            value: examController.selectedYear,
-                            decoration: InputDecoration(
-                              // border: OutlineInputBorder(
-                              //   borderRadius: BorderRadius.circular(12.0),
-                              // ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 12.0, horizontal: 12.0),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                ),
-                              ),
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                ),
-                              ),
+                              child:
+                                  DropdownButtonFormField<AcademicYearValues>(
+                                isExpanded: true,
+                                value: examController.selectedYear,
+                                decoration: InputDecoration(
+                                  // border: OutlineInputBorder(
+                                  //   borderRadius: BorderRadius.circular(12.0),
+                                  // ),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 12.0),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
 
-                              label: Text(
-                                "Academic Year",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelLarge!
-                                    .merge(TextStyle(
-                                      color: Colors.grey.shade600,
-                                      fontSize: 19.0,
-                                    )),
-                              ),
-                            ),
-                            icon: const Icon(
-                              Icons.keyboard_arrow_down_rounded,
-                              size: 30,
-                            ),
-                            iconSize: 30,
-                            items: List.generate(
-                              examController.academicYearList.length,
-                              (index) {
-                                return DropdownMenuItem<AcademicYearValues>(
-                                  value: examController.academicYearList
-                                      .elementAt(index),
-                                  child: Text(
-                                    examController.academicYearList
-                                        .elementAt(index)
-                                        .asmaYYear!,
+                                  label: Text(
+                                    "Academic Year",
                                     style: Theme.of(context)
                                         .textTheme
-                                        .labelSmall!
-                                        .merge(const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 16.0,
-                                          letterSpacing: 0.3,
+                                        .labelLarge!
+                                        .merge(TextStyle(
+                                          color: Colors.grey.shade600,
+                                          fontSize: 19.0,
                                         )),
                                   ),
-                                );
-                              },
-                            ),
-                            onChanged: (s) {
-                              examController.selectedYear = s;
-                              getsubList(s!.asmaYId!);
-                            },
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 12.0,
-                      ),
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            borderRadius: BorderRadius.circular(16.0),
-                            boxShadow: const [
-                              BoxShadow(
-                                offset: Offset(0, 1),
-                                blurRadius: 8,
-                                color: Colors.black12,
+                                ),
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  size: 30,
+                                ),
+                                iconSize: 30,
+                                items: List.generate(
+                                  examController.academicYearList.length,
+                                  (index) {
+                                    return DropdownMenuItem<AcademicYearValues>(
+                                      value: examController.academicYearList
+                                          .elementAt(index),
+                                      child: Text(
+                                        examController.academicYearList
+                                            .elementAt(index)
+                                            .asmaYYear!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .merge(const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 16.0,
+                                              letterSpacing: 0.3,
+                                            )),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                onChanged: (s) {
+                                  examController.selectedYear = s;
+                                  getsubList(s!.asmaYId!);
+                                },
                               ),
-                            ],
+                            ),
                           ),
-                          child: DropdownButtonFormField<SubjectListValue>(
-                            isExpanded: true,
-                            value: selectedSubject,
-                            decoration: InputDecoration(
-                              // border: OutlineInputBorder(
-                              //   borderRadius: BorderRadius.circular(12.0),
-                              // ),
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 12.0, horizontal: 12.0),
+                          const SizedBox(
+                            width: 12.0,
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                                borderRadius: BorderRadius.circular(16.0),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    offset: Offset(0, 1),
+                                    blurRadius: 8,
+                                    color: Colors.black12,
+                                  ),
+                                ],
+                              ),
+                              child: DropdownButtonFormField<SubjectListValue>(
+                                isExpanded: true,
+                                value: selectedSubject,
+                                decoration: InputDecoration(
+                                  // border: OutlineInputBorder(
+                                  //   borderRadius: BorderRadius.circular(12.0),
+                                  // ),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 12.0),
 
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                ),
-                              ),
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                ),
-                              ),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
 
-                              label: Text(
-                                'Select Subject',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelLarge!
-                                    .merge(TextStyle(
-                                      color: Colors.grey.shade600,
-                                    )),
+                                  label: Text(
+                                    'Select Subject',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!
+                                        .merge(TextStyle(
+                                          color: Colors.grey.shade600,
+                                        )),
+                                  ),
+                                ),
+                                icon: const Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  size: 30,
+                                ),
+                                iconSize: 30,
+                                items: List.generate(
+                                    examController.subjectList.length, (index) {
+                                  return DropdownMenuItem<SubjectListValue>(
+                                    value: examController.subjectList
+                                        .elementAt(index),
+                                    child: Text(
+                                      examController.subjectList
+                                          .elementAt(index)
+                                          .ismSSubjectName!,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall!
+                                          .merge(const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 16.0,
+                                              letterSpacing: 0.3)),
+                                    ),
+                                  );
+                                }),
+                                onChanged: (s) {
+                                  selectedSubject = s;
+                                  getsubjecData(s!.ismSId!);
+                                },
                               ),
                             ),
-                            icon: const Icon(
-                              Icons.keyboard_arrow_down_rounded,
-                              size: 30,
-                            ),
-                            iconSize: 30,
-                            items: List.generate(
-                                examController.subjectList.length, (index) {
-                              return DropdownMenuItem<SubjectListValue>(
-                                value:
-                                    examController.subjectList.elementAt(index),
-                                child: Text(
-                                  examController.subjectList
-                                      .elementAt(index)
-                                      .ismSSubjectName!,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelSmall!
-                                      .merge(const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 16.0,
-                                          letterSpacing: 0.3)),
-                                ),
-                              );
-                            }),
-                            onChanged: (s) {
-                              selectedSubject = s;
-                              getsubjecData(s!.ismSId!);
-                            },
-                          ),
-                        ),
-                      )
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      // const CircularProgressIndicator(),
+                      examController.issubjectdata.value
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : SizedBox(
+                              width: double.infinity,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Exam - Wise Assessment',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
+                                        .merge(
+                                          const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                  ),
+                                  examController
+                                          .subjectwiseMarkOverview.isNotEmpty
+                                      ? ListView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: examController
+                                              .subjectwiseMarkOverview.length,
+                                          itemBuilder: (context, index) {
+                                            return SubjectWiseContainer(
+                                              datamodel: examController
+                                                  .subjectwiseMarkOverview
+                                                  .elementAt(index),
+                                              chipColor: examController
+                                                  .chipColor
+                                                  .elementAt(index),
+                                              containerColor: examController
+                                                  .containerColor
+                                                  .elementAt(index),
+                                              gradeColor: examController
+                                                  .gradeColor
+                                                  .elementAt(index),
+                                            );
+                                          },
+                                        )
+                                      : Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 20.0),
+                                            child: Text(
+                                              'No data for selected subject....',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium!
+                                                  .merge(
+                                                    TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Colors.black
+                                                          .withOpacity(0.5),
+                                                    ),
+                                                  ),
+                                            ),
+                                          ),
+                                        ),
+                                ],
+                              ),
+                            )
                     ],
                   ),
-                  const SizedBox(height: 16),
-                  // const CircularProgressIndicator(),
-                  examController.issubjectdata.value
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : SizedBox(
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Exam - Wise Assessment',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium!
-                                    .merge(
-                                      const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                              ),
-                              examController.subjectwiseMarkOverview.isNotEmpty
-                                  ? ListView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: examController
-                                          .subjectwiseMarkOverview.length,
-                                      itemBuilder: (context, index) {
-                                        return SubjectWiseContainer(
-                                          datamodel: examController
-                                              .subjectwiseMarkOverview
-                                              .elementAt(index),
-                                        );
-                                      },
-                                    )
-                                  : Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 20.0),
-                                        child: Text(
-                                          'No data for selected subject....',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelMedium!
-                                              .merge(
-                                                TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black
-                                                      .withOpacity(0.5),
-                                                ),
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                            ],
-                          ),
-                        )
-                ],
-              ),
       ),
     );
   }

@@ -58,7 +58,11 @@ dependencies:
   flutter_titled_container: ^1.0.7
   data_tables: ^1.4.0
   dropdown_button2: ^1.9.1
+<<<<<<< HEAD
   file_picker: ^5.2.2
+=======
+  image_picker: ^0.8.6
+>>>>>>> 0f260517bbe7df5418c1dae48abd6f813d0f424e
 
 dev_dependencies:
   flutter_test:

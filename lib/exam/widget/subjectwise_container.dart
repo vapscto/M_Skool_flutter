@@ -6,7 +6,16 @@ import 'package:m_skool_flutter/exam/widget/result_analysis_item.dart';
 
 class SubjectWiseContainer extends StatelessWidget {
   final SubjectWiseReportListValue datamodel;
-  const SubjectWiseContainer({super.key, required this.datamodel});
+  final Color chipColor;
+  final Color containerColor;
+  final Color gradeColor;
+  const SubjectWiseContainer({
+    super.key,
+    required this.datamodel,
+    required this.chipColor,
+    required this.containerColor,
+    required this.gradeColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +23,7 @@ class SubjectWiseContainer extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 16),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.red.shade100.withOpacity(0.2),
+        color: containerColor,
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: Column(
@@ -29,7 +38,7 @@ class SubjectWiseContainer extends StatelessWidget {
                 Chip(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 6.0),
-                  backgroundColor: Colors.red.shade100,
+                  backgroundColor: chipColor,
                   label: Text(datamodel.emeExamName!),
                 ),
                 Padding(
@@ -79,8 +88,8 @@ class SubjectWiseContainer extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
-                                .merge(const TextStyle(
-                                    fontSize: 20.0, color: Color(0xFF0F8D85))),
+                                .merge(TextStyle(
+                                    fontSize: 20.0, color: gradeColor)),
                           ),
                         ],
                       ),

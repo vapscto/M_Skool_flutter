@@ -271,6 +271,13 @@ class _ExamWiseTabState extends State<ExamWiseTab> {
                                           datamodel: examController
                                               .examwiseMarkOverview
                                               .elementAt(index),
+                                          chipColor: examController.chipColor
+                                              .elementAt(index),
+                                          containerColor: examController
+                                              .containerColor
+                                              .elementAt(index),
+                                          gradeColor: examController.gradeColor
+                                              .elementAt(index),
                                         );
                                       },
                                     )

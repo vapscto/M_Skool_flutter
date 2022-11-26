@@ -17,8 +17,8 @@ class FeeController extends GetxController {
 
   RxList<ReceiptNoList> feeReceiptNoList = <ReceiptNoList>[].obs;
 
-  RxList<FillstudentviewdetailsValue> feeReceiptDetails =
-      <FillstudentviewdetailsValue>[].obs;
+  RxList<Fillstudentviewdetails> feeReceiptDetailsList =
+      <Fillstudentviewdetails>[].obs;
 
   RxBool isLoading = RxBool(false);
   RxBool isFeeLoading = RxBool(false);
@@ -150,19 +150,14 @@ class FeeController extends GetxController {
               miId: miId,
               asmayId: asmayId,
               amstId: amstId,
-              base: base);
+              base: base); //////////////////////
 
       if (feeReceiptDetailsModel!.fillstudentviewdetails != null ||
           feeReceiptDetailsModel.fillstudentviewdetails!.values != null) {
-        for (var i = 0;
-            i < feeReceiptDetailsModel.fillstudentviewdetails!.values!.length;
-            i++) {
-          feeReceiptDetails.add(feeReceiptDetailsModel
-              .fillstudentviewdetails!.values!
-              .elementAt(i));
-        }
+        feeReceiptDetailsList
+            .add(feeReceiptDetailsModel.fillstudentviewdetails!);
 
-        logger.d('This one', feeReceiptDetails);
+        logger.d('This one', feeReceiptDetailsList);
 
         return true;
       }

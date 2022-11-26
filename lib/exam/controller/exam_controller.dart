@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/exam/apis/exam_related_api.dart';
@@ -17,6 +18,56 @@ class ExamController extends GetxController {
       <ExamWiseReportListValue>[].obs;
   RxList<SubjectWiseReportListValue> subjectwiseMarkOverview =
       <SubjectWiseReportListValue>[].obs;
+
+  List<Color> chipColor = const [
+    Color.fromRGBO(255, 211, 211, 1),
+    Color.fromRGBO(202, 230, 255, 1),
+    Color.fromRGBO(219, 195, 254, 1),
+    Color.fromRGBO(172, 239, 233, 1),
+////////////
+    Color.fromRGBO(255, 211, 211, 1),
+    Color.fromRGBO(202, 230, 255, 1),
+    Color.fromRGBO(219, 195, 254, 1),
+    Color.fromRGBO(172, 239, 233, 1),
+    /////
+    ///
+    Color.fromRGBO(255, 211, 211, 1),
+    Color.fromRGBO(202, 230, 255, 1),
+    Color.fromRGBO(219, 195, 254, 1),
+    Color.fromRGBO(172, 239, 233, 1),
+  ];
+  List<Color> containerColor = const [
+    Color.fromRGBO(255, 232, 231, 0.4),
+    Color.fromRGBO(211, 239, 255, 0.4),
+    Color.fromRGBO(238, 232, 255, 0.4),
+    Color.fromRGBO(202, 244, 244, 0.4),
+////////
+    Color.fromRGBO(255, 232, 231, 0.4),
+    Color.fromRGBO(211, 239, 255, 0.4),
+    Color.fromRGBO(238, 232, 255, 0.4),
+    Color.fromRGBO(202, 244, 244, 0.4),
+    ///////
+    Color.fromRGBO(255, 232, 231, 0.4),
+    Color.fromRGBO(211, 239, 255, 0.4),
+    Color.fromRGBO(238, 232, 255, 0.4),
+    Color.fromRGBO(202, 244, 244, 0.4),
+  ];
+  List<Color> gradeColor = const [
+    Color.fromRGBO(15, 141, 133, 1),
+    Color.fromRGBO(234, 142, 5, 1),
+    Color.fromRGBO(236, 22, 240, 1),
+    Colors.redAccent,
+/////
+    Color.fromRGBO(15, 141, 133, 1),
+    Color.fromRGBO(234, 142, 5, 1),
+    Color.fromRGBO(236, 22, 240, 1),
+    Colors.redAccent,
+    ////
+    Color.fromRGBO(15, 141, 133, 1),
+    Color.fromRGBO(234, 142, 5, 1),
+    Color.fromRGBO(236, 22, 240, 1),
+    Colors.redAccent,
+  ];
 
   AcademicYearValues? selectedYear;
   ExamListValue? selectedExam;

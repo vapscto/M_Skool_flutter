@@ -11,12 +11,14 @@ class ReceiptNoCard extends StatefulWidget {
   final int index;
   final int asmayId;
   final Function(int) function;
+  final Function(int) function1;
   const ReceiptNoCard({
     super.key,
     required this.receiptDetail,
     required this.index,
     required this.asmayId,
     required this.function,
+    required this.function1,
   });
 
   @override
@@ -25,6 +27,14 @@ class ReceiptNoCard extends StatefulWidget {
 
 class _ReceiptNoCardState extends State<ReceiptNoCard> {
   bool isChecked = false;
+  addAndRemove(bool b) async {
+    if (b) {
+      await widget.function(widget.receiptDetail.fyPId!.toInt());
+    } else {
+      widget.function1(widget.index);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -39,11 +49,8 @@ class _ReceiptNoCardState extends State<ReceiptNoCard> {
             onChanged: (value) {
               setState(
                 () {
-                  if (value!) {
-                    widget.function(widget.receiptDetail.fyPId!.toInt());
-                  }
-
-                  isChecked = value;
+                  isChecked = value!;
+                  addAndRemove(value);
                 },
               );
             },

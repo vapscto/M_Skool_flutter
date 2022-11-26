@@ -243,3 +243,28 @@ List<Color> noticeColor = const [
   Color(0xFFB99E56),
   Color(0xFF7D5CDB)
 ];
+
+Map<String, dynamic> getMonthWithCount = {
+  "1": 31,
+  "3": 31,
+  "4": 30,
+  "5": 31,
+  "6": 30,
+  "7": 31,
+  "8": 30,
+  "9": 30,
+  "10": 31,
+  "11": 30,
+  "12": 31,
+  "2": DateTime.now().year % 4 == 0 ? 29 : 28
+};
+
+Map<String, dynamic> dayName = {
+  "1": "Mon",
+  "2": "Tue",
+  "3": "Wed",
+  "4": "Thu",
+  "5": "Fri",
+  "6": "Sat",
+  "7": "Sun",
+};
