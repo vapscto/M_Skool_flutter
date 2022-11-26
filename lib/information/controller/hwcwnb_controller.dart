@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:m_skool_flutter/classwork/model/class_work_model.dart';
+import 'package:m_skool_flutter/homework/model/date_wise.dart';
+import 'package:m_skool_flutter/homework/model/homework_data_model_values.dart';
 import 'package:m_skool_flutter/notice/model/notice_data_model.dart';
 
 class HwCwNbController extends GetxController {
@@ -61,5 +64,42 @@ class HwCwNbController extends GetxController {
       noticeList.clear();
     }
     noticeList.addAll(values);
+  }
+
+  final RxList<DateWiseModel> dateWiseModelList = RxList<DateWiseModel>();
+
+  void updateDateWiseModel(List<DateWiseModel> monthList) {
+    if (dateWiseModelList.isNotEmpty) {
+      dateWiseModelList.clear();
+    }
+    dateWiseModelList.addAll(monthList);
+  }
+
+  RxInt selectedIndex = RxInt(0);
+
+  RxBool isHomeWorkLoading = RxBool(true);
+  RxBool isErrorHappendInHomeWorkLoading = RxBool(false);
+
+  RxList<HomeWorkDataModelValues> homeWorkList =
+      RxList<HomeWorkDataModelValues>();
+  void updateHomeWorkDataModel(List<HomeWorkDataModelValues> values) {
+    if (homeWorkList.isNotEmpty) {
+      homeWorkList.clear();
+    }
+    homeWorkList.addAll(values);
+  }
+
+  void updateIsHomeWorkLoading(bool b) {
+    isHomeWorkLoading.value = b;
+  }
+
+  void updateIsErrorHappendInHomeWorkLoading(bool v) {
+    isErrorHappendInHomeWorkLoading.value = v;
+  }
+
+  RxList<XFile> assignmentPic = RxList<XFile>();
+
+  void updateAssignmentPic(List<XFile> xfile) {
+    assignmentPic.addAll(xfile);
   }
 }

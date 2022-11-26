@@ -94,6 +94,11 @@ class _FilteredClassWorkState extends State<FilteredClassWork> {
                             date: widget.hwCwNbController.classWorkList
                                 .elementAt(index)
                                 .icWFromDate!,
+                            ihcId: widget.hwCwNbController.classWorkList
+                                .elementAt(index)
+                                .icWId!,
+                            loginSuccessModel: widget.loginSuccessModel,
+                            mskoolController: widget.mskoolController,
                           );
                         }));
                       },

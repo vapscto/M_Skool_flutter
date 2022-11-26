@@ -28,8 +28,8 @@ class GetNoticeApi {
 
     if (startDate != null && endDate != null) {
       data.addAll({
-        "intB_StartDate": startDate,
-        "intB_EndDate": endDate,
+        "INTB_StartDate": startDate,
+        "INTB_EndDate": endDate,
       });
     }
 

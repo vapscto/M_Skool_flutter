@@ -52,6 +52,9 @@ class ClassworkHome extends StatelessWidget {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (_) {
                                 return HwCwDetailScreen(
+                                  loginSuccessModel: loginSuccessModel,
+                                  mskoolController: mskoolController,
+                                  ihcId: snapshot.data!.elementAt(index).icWId!,
                                   subject: snapshot.data!
                                       .elementAt(index)
                                       .ismSSubjectName!,

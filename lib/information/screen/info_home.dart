@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/classwork/api/get_class_work.dart';
 import 'package:m_skool_flutter/classwork/screen/classwork_home.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/homework/api/home_work_api.dart';
 import 'package:m_skool_flutter/homework/screen/home_work.dart';
 import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
@@ -34,7 +35,11 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
   @override
   void initState() {
     pages.addAll([
-      HomeWorkScreen(),
+      HomeWorkScreen(
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController,
+        hwCwNbController: hwCwNbController,
+      ),
       ClassworkHome(
         hwCwNbController: hwCwNbController,
         loginSuccessModel: widget.loginSuccessModel,
@@ -279,6 +284,29 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
                                       ),
                                     );
                                     return;
+                                  }
+
+                                  if (tabController!.index == 0) {
+                                    await GetHomeWorkApi.instance
+                                        .getHomeAssignment(
+                                            miId:
+                                                widget.loginSuccessModel.mIID!,
+                                            asmayId: widget
+                                                .loginSuccessModel.asmaYId!,
+                                            amstId: widget
+                                                .loginSuccessModel.amsTId!,
+                                            startDate: hwCwNbController
+                                                .dtList.first
+                                                .toLocal()
+                                                .toString(),
+                                            endDate: hwCwNbController
+                                                .dtList.last
+                                                .toLocal()
+                                                .toString(),
+                                            baseUrl: baseUrlFromInsCode(
+                                                "portal",
+                                                widget.mskoolController),
+                                            hwCwNbController: hwCwNbController);
                                   }
                                 },
                                 child: Container(
