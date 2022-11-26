@@ -9,9 +9,15 @@ import '../model/markoverview_model.dart';
 
 class ResultAnalysisItem extends StatelessWidget {
   final ExamWiseReportListValue datamodel;
+  final Color chipColor;
+  final Color containerColor;
+  final Color gradeColor;
   const ResultAnalysisItem({
     super.key,
     required this.datamodel,
+    required this.chipColor,
+    required this.containerColor,
+    required this.gradeColor,
   });
 
   @override
@@ -20,7 +26,7 @@ class ResultAnalysisItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 16),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.red.shade100.withOpacity(0.2),
+        color: containerColor,
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: Column(
@@ -35,7 +41,7 @@ class ResultAnalysisItem extends StatelessWidget {
                 Chip(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 6.0),
-                  backgroundColor: Colors.red.shade100,
+                  backgroundColor: chipColor,
                   label: Text(datamodel.ismsSubjectName!),
                 ),
                 Padding(
@@ -85,8 +91,9 @@ class ResultAnalysisItem extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
-                                .merge(const TextStyle(
-                                    fontSize: 20.0, color: Color(0xFF0F8D85))),
+                                .merge(
+                                  TextStyle(fontSize: 20.0, color: gradeColor),
+                                ),
                           ),
                         ],
                       ),
