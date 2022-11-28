@@ -2,16 +2,23 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/interaction/screen/all_tab.dart';
 import 'package:m_skool_flutter/interaction/screen/compose_tab.dart';
 import 'package:m_skool_flutter/interaction/screen/inbox_tab.dart';
 import 'package:m_skool_flutter/interaction/screen/unread_tab.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
 
 import '../../widget/custom_back_btn.dart';
 import '../widget/custom_tab_bar.dart';
 
 class InteractionHomeScreen extends StatefulWidget {
-  const InteractionHomeScreen({super.key});
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  const InteractionHomeScreen(
+      {required this.loginSuccessModel,
+      required this.mskoolController,
+      super.key});
 
   @override
   State<InteractionHomeScreen> createState() => _InteractionHomeScreenState();

@@ -515,9 +515,9 @@ class _HomeTabState extends State<HomeTab> {
                           MaterialPageRoute(
                             builder: (_) {
                               return InteractionHomeScreen(
-                                  // loginSuccessModel: widget.loginSuccessModel,
-                                  // mskoolController: widget.mskoolController,
-                                  );
+                                loginSuccessModel: widget.loginSuccessModel,
+                                mskoolController: widget.mskoolController,
+                              );
                             },
                           ),
                         );

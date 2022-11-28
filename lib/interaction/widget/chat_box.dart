@@ -74,7 +74,9 @@ class ChatBox extends StatelessWidget {
                           child: SvgPicture.asset(
                               "assets/svg/blue_double_check.svg"))
                   ],
-                )
+                ),
+              const Text("2 min",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400))
             ],
           ),
           if (isFromMe) ...[const SizedBox(width: 7), profile],
