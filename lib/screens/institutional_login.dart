@@ -37,25 +37,25 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-              padding: const EdgeInsets.only(top: 48.0),
-              height: Get.height * 0.45,
-              width: double.infinity,
-              color: Theme.of(context).primaryColor,
-              child: Image.asset("assets/images/student.png")),
-          Container(
-            padding: const EdgeInsets.all(24.0),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(24.0),
-                topRight: Radius.circular(24.0),
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+                padding: const EdgeInsets.only(top: 48.0),
+                height: Get.height * 0.45,
+                width: double.infinity,
+                color: Theme.of(context).primaryColor,
+                child: Image.asset("assets/images/student.png")),
+            Container(
+              padding: const EdgeInsets.all(24.0),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(24.0),
+                  topRight: Radius.circular(24.0),
+                ),
               ),
-            ),
-            margin: EdgeInsets.only(top: Get.height * 0.39),
-            child: SingleChildScrollView(
+              margin: EdgeInsets.only(top: Get.height * 0.39),
               child: Column(
                 // mainAxisSize: MainAxisSize.min,
                 // mainAxisAlignment: MainAxisAlignment.center,
@@ -300,8 +300,8 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

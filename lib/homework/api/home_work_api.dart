@@ -32,9 +32,17 @@ class GetHomeWorkApi {
         "INTB_EndDate": endDate
       });
 
+      logger.d({
+        "MI_Id": miId,
+        "ASMAY_Id": asmayId,
+        "AMST_Id": amstId,
+        "INTB_StartDate": startDate,
+        "INTB_EndDate": endDate
+      });
+
       final HomeWorkDataModel homeWorkDataModel =
           HomeWorkDataModel.fromJson(response.data['homeworklist']);
-      logger.d(homeWorkDataModel.toJson());
+      //logger.d(homeWorkDataModel.toJson());
       hwCwNbController.updateHomeWorkDataModel(homeWorkDataModel.values!);
       hwCwNbController.updateIsHomeWorkLoading(false);
     } on Exception catch (e) {

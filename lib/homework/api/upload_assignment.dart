@@ -27,8 +27,10 @@ class UploadAssignmentApi {
       "UserId": userId,
       "RoleId": roleId,
       "IHW_Id": ihwId,
-      "uploaddoc_array": ["await MultipartFile.fromFile(uploadArray.first)"],
+      "uploaddoc_array": uploadArray,
     };
+
+    logger.d(data);
 
     Response response = await dio.post(uploadApiUrl,
         options: Options(headers: getSession()), data: data);

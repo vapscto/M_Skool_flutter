@@ -59,6 +59,8 @@ class URLS {
   static String homeWork =
       "api/StudentDashboardFacade/onclick_Homework_datewise/";
   static String uploadHomeWork = "api/StudentDashboardFacade/savehome_doc";
+  static String classworkFiltered =
+      "api/StudentDashboardFacade/onclick_classwork_datewise/";
 
   // Fee Module Endpoints
   static String getFeeAnalysis = 'api/CumulativeFeeAnalysisFacade/getloaddata/';
@@ -71,4 +73,7 @@ class URLS {
   static String getExamdetail = 'api/ExamReportFacade/getexamdata/';
   static String getSubjectDetail = 'api/ExamReportFacade/getexamdata';
   static String getMarksOverview = 'api/ExamReportFacade/StudentExamDetails/';
+
+  //Time Table
+  static String tt = "api/Student_TTFacade/getStudentTT/";
 }

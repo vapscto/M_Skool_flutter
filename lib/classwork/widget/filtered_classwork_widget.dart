@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/classwork/api/get_class_work.dart';
+import 'package:m_skool_flutter/classwork/api/get_filtered_classwork.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/homework/screen/home_work.dart';
@@ -33,13 +35,13 @@ class _FilteredClassWorkState extends State<FilteredClassWork> {
   }
 
   Future<void> getAssignment() async {
-    await GetClassWorkApi.instance.getClassWorks(
+    await GetFilteredClasswork.instance.getFilteredClassWork(
       miId: widget.loginSuccessModel.mIID!,
       asmayId: widget.loginSuccessModel.asmaYId!,
       amstId: widget.loginSuccessModel.amsTId!,
       startDate: widget.hwCwNbController.dtList.first.toLocal().toString(),
       endDate: widget.hwCwNbController.dtList.last.toLocal().toString(),
-      controller: widget.hwCwNbController,
+      hwCwNbController: widget.hwCwNbController,
       base: baseUrlFromInsCode(
         "portal",
         widget.mskoolController,
@@ -69,53 +71,71 @@ class _FilteredClassWorkState extends State<FilteredClassWork> {
                     ],
                   ),
                 )
-              : ListView.separated(
+              : SingleChildScrollView(
                   padding: const EdgeInsets.all(16.0),
-                  itemCount: widget.hwCwNbController.classWorkList.length,
-                  itemBuilder: (_, index) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return HwCwDetailScreen(
-                            subject: widget.hwCwNbController.classWorkList
-                                .elementAt(index)
-                                .ismSSubjectName!,
-                            topic: widget.hwCwNbController.classWorkList
-                                .elementAt(index)
-                                .icWTopic!,
-                            assignment: widget.hwCwNbController.classWorkList
-                                        .elementAt(index)
-                                        .icWAssignment ==
-                                    null
-                                ? "N/A"
-                                : widget.hwCwNbController.classWorkList
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${getFormatedDate(widget.hwCwNbController.dtList.first.toLocal())} - ${getFormatedDate(widget.hwCwNbController.dtList.last.toLocal())}",
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(
+                        height: 16.0,
+                      ),
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: widget.hwCwNbController.classWorkList.length,
+                        itemBuilder: (_, index) {
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) {
+                                return HwCwDetailScreen(
+                                  subject: widget.hwCwNbController.classWorkList
+                                      .elementAt(index)
+                                      .ismSSubjectName!,
+                                  topic: widget.hwCwNbController.classWorkList
+                                      .elementAt(index)
+                                      .icWTopic!,
+                                  assignment: widget
+                                              .hwCwNbController.classWorkList
+                                              .elementAt(index)
+                                              .icWAssignment ==
+                                          null
+                                      ? "N/A"
+                                      : widget.hwCwNbController.classWorkList
+                                          .elementAt(index)
+                                          .icWAssignment!,
+                                  date: widget.hwCwNbController.classWorkList
+                                      .elementAt(index)
+                                      .icWFromDate!,
+                                  ihcId: widget.hwCwNbController.classWorkList
+                                      .elementAt(index)
+                                      .icWId!,
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                );
+                              }));
+                            },
+                            child: HwCwItem(
+                                sub: widget.hwCwNbController.classWorkList
                                     .elementAt(index)
-                                    .icWAssignment!,
-                            date: widget.hwCwNbController.classWorkList
-                                .elementAt(index)
-                                .icWFromDate!,
-                            ihcId: widget.hwCwNbController.classWorkList
-                                .elementAt(index)
-                                .icWId!,
-                            loginSuccessModel: widget.loginSuccessModel,
-                            mskoolController: widget.mskoolController,
+                                    .ismSSubjectName!,
+                                topic: widget.hwCwNbController.classWorkList
+                                    .elementAt(index)
+                                    .icWContent!),
                           );
-                        }));
-                      },
-                      child: HwCwItem(
-                          sub: widget.hwCwNbController.classWorkList
-                              .elementAt(index)
-                              .ismSSubjectName!,
-                          topic: widget.hwCwNbController.classWorkList
-                              .elementAt(index)
-                              .icWContent!),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(
-                      height: 16.0,
-                    );
-                  },
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const SizedBox(
+                            height: 16.0,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 );
     });
   }

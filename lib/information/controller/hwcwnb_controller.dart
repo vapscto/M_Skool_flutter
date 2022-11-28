@@ -102,4 +102,10 @@ class HwCwNbController extends GetxController {
   void updateAssignmentPic(List<XFile> xfile) {
     assignmentPic.addAll(xfile);
   }
+
+  RxBool errorHappendWhileLoadingClsWrk = RxBool(false);
+
+  void updateErrorHappendWhileLoadingClsWrk(bool v) {
+    errorHappendWhileLoadingClsWrk.value = v;
+  }
 }

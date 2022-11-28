@@ -100,147 +100,205 @@ class _TimeTableHomeState extends State<TimeTableHome> {
             const SizedBox(
               height: 16.0,
             ),
+
             CustomContainer(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16.0),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: DataTable(
+                child: DataTable(
+                    columnSpacing: 12.0,
                     headingRowColor: MaterialStateColor.resolveWith(
                       (states) => Theme.of(context).colorScheme.secondary,
                     ),
                     border: TableBorder(
+                      verticalInside:
+                          BorderSide(color: Colors.grey.shade300, width: 1.0),
                       horizontalInside: BorderSide(
                         color: Colors.grey.shade300,
-                      ),
-                      verticalInside: BorderSide(
-                        color: Colors.grey.shade300,
+                        width: 1.0,
                       ),
                     ),
-                    columns: [
+                    columns: const [
+                      DataColumn(label: Text("Periods")),
                       DataColumn(
-                          label: Center(
-                        child: Text(
-                          "Periods",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .merge(const TextStyle(
-                                fontWeight: FontWeight.w600,
-                              )),
-                        ),
+                          label: Text(
+                        "Mon",
+                        textAlign: TextAlign.center,
                       )),
-                      DataColumn(
-                          label: Center(
-                        child: Text(
-                          "Mon",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .merge(const TextStyle(
-                                fontWeight: FontWeight.w600,
-                              )),
-                        ),
-                      )),
-                      DataColumn(
-                          label: Center(
-                        child: Text(
-                          "Tue",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .merge(const TextStyle(
-                                fontWeight: FontWeight.w600,
-                              )),
-                        ),
-                      )),
-                      DataColumn(
-                          label: Center(
-                        child: Text(
-                          "Wed",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .merge(const TextStyle(
-                                fontWeight: FontWeight.w600,
-                              )),
-                        ),
-                      )),
-                      DataColumn(
-                          label: Center(
-                        child: Text(
-                          "Thu",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .merge(const TextStyle(
-                                fontWeight: FontWeight.w600,
-                              )),
-                        ),
-                      )),
-                      DataColumn(
-                          label: Center(
-                        child: Text(
-                          "Fri",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .merge(const TextStyle(
-                                fontWeight: FontWeight.w600,
-                              )),
-                        ),
-                      )),
-                      DataColumn(
-                          label: Center(
-                        child: Text(
-                          "Sat",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .merge(const TextStyle(
-                                fontWeight: FontWeight.w600,
-                              )),
-                        ),
-                      )),
+                      DataColumn(label: Text("Tue")),
+                      DataColumn(label: Text("Wed")),
+                      DataColumn(label: Text("Thu")),
+                      DataColumn(label: Text("Fri")),
+                      DataColumn(label: Text("Sat")),
                     ],
-                    rows: [
-                      // DataRow(
-                      //   cells: [
-                      //     DataCell(
-                      //       Center(child: Text("P1")),
-                      //     ),
-                      //     DataCell(
-                      //       Center(child:  Icon(Icons.circle)),
-                      //     ),
-                      //     DataCell(
-                      //       Center(child:  Icon(Icons.circle)),
-                      //     ),
-                      //     DataCell(
-                      //       Center(child:  Icon(Icons.circle)),
-                      //     ),
-                      //     DataCell(
-                      //       Center(child: Text("Hindi")),
-                      //     ),
-                      //     DataCell(
-                      //       Center(child: Text("Soc Sci")),
-                      //     ),
-                      //     DataCell(
-                      //       Center(child: Text("Chem")),
-                      //     ),
-                      //   ],
-                      // ),
-                      populateTimetable(),
-                      populateTimetable(),
-                      populateTimetable(),
-                      populateTimetable()
-                    ],
-                  ),
-                ),
+                    rows: const [
+                      DataRow(cells: [
+                        DataCell(
+                          Text("P1"),
+                        ),
+                        DataCell(
+                          Text("P1"),
+                        ),
+                        DataCell(
+                          Text("P1"),
+                        ),
+                        DataCell(
+                          Text("P1"),
+                        ),
+                        DataCell(
+                          Text("P1"),
+                        ),
+                        DataCell(
+                          Text("P1"),
+                        ),
+                        DataCell(
+                          Text("P1"),
+                        ),
+                      ]),
+                    ]),
               ),
             ),
-            const SizedBox(
-              height: 24.0,
-            ),
+
+            // CustomContainer(
+            //   child: ClipRRect(
+            //     borderRadius: BorderRadius.circular(16.0),
+            //     child: SingleChildScrollView(
+            //       scrollDirection: Axis.horizontal,
+            //       child: DataTable(
+            //         headingRowColor: MaterialStateColor.resolveWith(
+            //           (states) => Theme.of(context).colorScheme.secondary,
+            //         ),
+            //         border: TableBorder(
+            //           horizontalInside: BorderSide(
+            //             color: Colors.grey.shade300,
+            //           ),
+            //           verticalInside: BorderSide(
+            //             color: Colors.grey.shade300,
+            //           ),
+            //         ),
+            //         columns: [
+            //           DataColumn(
+            //               label: Center(
+            //             child: Text(
+            //               "Periods",
+            //               style: Theme.of(context)
+            //                   .textTheme
+            //                   .titleSmall!
+            //                   .merge(const TextStyle(
+            //                     fontWeight: FontWeight.w600,
+            //                   )),
+            //             ),
+            //           )),
+            //           DataColumn(
+            //               label: Center(
+            //             child: Text(
+            //               "Mon",
+            //               style: Theme.of(context)
+            //                   .textTheme
+            //                   .titleSmall!
+            //                   .merge(const TextStyle(
+            //                     fontWeight: FontWeight.w600,
+            //                   )),
+            //             ),
+            //           )),
+            //           DataColumn(
+            //               label: Center(
+            //             child: Text(
+            //               "Tue",
+            //               style: Theme.of(context)
+            //                   .textTheme
+            //                   .titleSmall!
+            //                   .merge(const TextStyle(
+            //                     fontWeight: FontWeight.w600,
+            //                   )),
+            //             ),
+            //           )),
+            //           DataColumn(
+            //               label: Center(
+            //             child: Text(
+            //               "Wed",
+            //               style: Theme.of(context)
+            //                   .textTheme
+            //                   .titleSmall!
+            //                   .merge(const TextStyle(
+            //                     fontWeight: FontWeight.w600,
+            //                   )),
+            //             ),
+            //           )),
+            //           DataColumn(
+            //               label: Center(
+            //             child: Text(
+            //               "Thu",
+            //               style: Theme.of(context)
+            //                   .textTheme
+            //                   .titleSmall!
+            //                   .merge(const TextStyle(
+            //                     fontWeight: FontWeight.w600,
+            //                   )),
+            //             ),
+            //           )),
+            //           DataColumn(
+            //               label: Center(
+            //             child: Text(
+            //               "Fri",
+            //               style: Theme.of(context)
+            //                   .textTheme
+            //                   .titleSmall!
+            //                   .merge(const TextStyle(
+            //                     fontWeight: FontWeight.w600,
+            //                   )),
+            //             ),
+            //           )),
+            //           DataColumn(
+            //               label: Center(
+            //             child: Text(
+            //               "Sat",
+            //               style: Theme.of(context)
+            //                   .textTheme
+            //                   .titleSmall!
+            //                   .merge(const TextStyle(
+            //                     fontWeight: FontWeight.w600,
+            //                   )),
+            //             ),
+            //           )),
+            //         ],
+            //         rows: [
+            //           // DataRow(
+            //           //   cells: [
+            //           //     DataCell(
+            //           //       Center(child: Text("P1")),
+            //           //     ),
+            //           //     DataCell(
+            //           //       Center(child:  Icon(Icons.circle)),
+            //           //     ),
+            //           //     DataCell(
+            //           //       Center(child:  Icon(Icons.circle)),
+            //           //     ),
+            //           //     DataCell(
+            //           //       Center(child:  Icon(Icons.circle)),
+            //           //     ),
+            //           //     DataCell(
+            //           //       Center(child: Text("Hindi")),
+            //           //     ),
+            //           //     DataCell(
+            //           //       Center(child: Text("Soc Sci")),
+            //           //     ),
+            //           //     DataCell(
+            //           //       Center(child: Text("Chem")),
+            //           //     ),
+            //           //   ],
+            //           // ),
+            //           populateTimetable(),
+            //           populateTimetable(),
+            //           populateTimetable(),
+            //           populateTimetable()
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: 24.0,
+            // ),
             Wrap(
               runSpacing: 12.0,
               spacing: 12.0,
