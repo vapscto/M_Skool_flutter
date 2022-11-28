@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:m_skool_flutter/classwork/api/get_class_work.dart';
+import 'package:m_skool_flutter/classwork/api/get_filtered_classwork.dart';
 import 'package:m_skool_flutter/classwork/screen/classwork_home.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -145,7 +146,10 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
                                     final DateTime? startDate =
                                         await showDatePicker(
                                             context: context,
-                                            initialDate: DateTime.now(),
+                                            initialDate: hwCwNbController
+                                                    .dtList.isNotEmpty
+                                                ? hwCwNbController.dtList.first
+                                                : DateTime.now(),
                                             firstDate: firstDate,
                                             lastDate: DateTime.now());
                                     if (startDate == null) {
@@ -207,7 +211,13 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
                                   final DateTime? endDate =
                                       await showDatePicker(
                                           context: context,
-                                          initialDate: DateTime.now(),
+                                          initialDate: hwCwNbController
+                                                      .dtList.isNotEmpty &&
+                                                  hwCwNbController
+                                                          .dtList.length >
+                                                      1
+                                              ? hwCwNbController.dtList.last
+                                              : DateTime.now(),
                                           firstDate: firstDate,
                                           lastDate: DateTime.now());
 
@@ -244,8 +254,8 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
                                           "Filter Applied.. now you will see the filtered result");
 
                                   if (tabController!.index == 1) {
-                                    await GetClassWorkApi.instance
-                                        .getClassWorks(
+                                    await GetFilteredClasswork.instance
+                                        .getFilteredClassWork(
                                       miId: widget.loginSuccessModel.mIID!,
                                       asmayId:
                                           widget.loginSuccessModel.asmaYId!,
@@ -256,7 +266,7 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
                                       endDate: hwCwNbController.dtList.last
                                           .toLocal()
                                           .toString(),
-                                      controller: hwCwNbController,
+                                      hwCwNbController: hwCwNbController,
                                       base: baseUrlFromInsCode(
                                         "portal",
                                         widget.mskoolController,
@@ -394,7 +404,7 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           currentPage.value == 1
-                              ? SvgPicture.asset('assets/svg/hwcw.svg')
+                              ? SvgPicture.asset('assets/svg/classwork.svg')
                               : const SizedBox(),
                           const SizedBox(
                             width: 6.0,
