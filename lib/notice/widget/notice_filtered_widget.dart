@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/homework/screen/hwcw_detail_screen.dart';
 import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/notice/api/get_datewise_notices.dart';
 import 'package:m_skool_flutter/notice/api/get_notice_api.dart';
 import 'package:m_skool_flutter/notice/screen/notice_detail_screen.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
@@ -37,14 +38,14 @@ class _NoticeFilteredWidgetState extends State<NoticeFilteredWidget> {
   }
 
   Future<void> getNotices() async {
-    await GetNoticeApi.instance.getNotice(
+    await GetDateWiseNotice.instance.getNotices(
       miId: widget.loginSuccessModel.mIID!,
       asmayId: widget.loginSuccessModel.asmaYId!,
       amstId: widget.loginSuccessModel.amsTId!,
-      baseUrl: baseUrlFromInsCode("portal", widget.mskoolController),
+      base: baseUrlFromInsCode("portal", widget.mskoolController),
       startDate: widget.hwCwNbController.dtList.first.toLocal().toString(),
       endDate: widget.hwCwNbController.dtList.last.toLocal().toString(),
-      controller: widget.hwCwNbController,
+      nbController: widget.hwCwNbController,
     );
   }
 
@@ -88,6 +89,7 @@ class _NoticeFilteredWidgetState extends State<NoticeFilteredWidget> {
                             color: noticeColor.elementAt(color),
                             value: widget.hwCwNbController.noticeList
                                 .elementAt(index),
+                            isFiltring: true,
                           );
                         }));
                       },

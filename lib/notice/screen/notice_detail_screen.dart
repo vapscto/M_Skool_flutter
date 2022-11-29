@@ -12,14 +12,53 @@ import 'package:url_launcher/url_launcher.dart';
 class NoticeDetailScreen extends StatefulWidget {
   final Color color;
   final NoticeDataModelValues value;
+  final bool isFiltring;
   const NoticeDetailScreen(
-      {super.key, required this.color, required this.value});
+      {super.key,
+      required this.color,
+      required this.value,
+      required this.isFiltring});
 
   @override
   State<NoticeDetailScreen> createState() => _NoticeDetailScreenState();
 }
 
 class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
+  bool showPdf = false;
+  bool showPng = false;
+
+  @override
+  void initState() {
+    if (widget.isFiltring) {
+      if (widget.value.iNTBFLFileName != null &&
+          widget.value.iNTBFLFileName!.endsWith(".pdf") &&
+          widget.value.iNTBFLFileName!.isNotEmpty) {
+        showPdf = true;
+      } else {
+        if (widget.value.iNTBFLFileName == null ||
+            widget.value.iNTBFLFilePath!.isEmpty) {
+          return;
+        }
+
+        showPng = true;
+      }
+    } else {
+      if (widget.value.intBAttachment != null &&
+          widget.value.intBAttachment!.endsWith("pdf") &&
+          widget.value.intBAttachment!.isNotEmpty) {
+        showPdf = true;
+      } else {
+        if (widget.value.intBAttachment == null ||
+            widget.value.intBAttachment!.isEmpty) {
+          return;
+        }
+
+        showPng = true;
+      }
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -190,9 +229,10 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
                     const SizedBox(
                       height: 8.0,
                     ),
-                    widget.value.intBAttachment != null &&
-                            widget.value.intBAttachment!.endsWith("pdf") &&
-                            widget.value.intBAttachment!.isNotEmpty
+                    // widget.value.intBAttachment != null &&
+                    //         widget.value.intBAttachment!.endsWith("pdf") &&
+                    //         widget.value.intBAttachment!.isNotEmpty
+                    showPdf
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -211,10 +251,13 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
                                       }
 
                                       if (await canLaunchUrl(Uri.parse(
-                                          widget.value.intBFilePath!))) {
+                                          widget.isFiltring
+                                              ? widget.value.iNTBFLFilePath!
+                                              : widget.value.intBFilePath!))) {
                                         await launchUrl(
-                                            Uri.parse(
-                                                widget.value.intBFilePath!),
+                                            Uri.parse(widget.isFiltring
+                                                ? widget.value.iNTBFLFilePath!
+                                                : widget.value.intBFilePath!),
                                             mode:
                                                 LaunchMode.externalApplication);
                                       }
@@ -254,9 +297,10 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
                     const SizedBox(
                       height: 16.0,
                     ),
-                    widget.value.intBAttachment != null &&
-                            !widget.value.intBAttachment!.endsWith("pdf") &&
-                            widget.value.intBAttachment!.isNotEmpty
+                    // widget.value.intBAttachment != null &&
+                    //         !widget.value.intBAttachment!.endsWith("pdf") &&
+                    //         widget.value.intBAttachment!.isNotEmpty
+                    showPng
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -279,7 +323,9 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
                                     ),
                                     minLeadingWidth: 24,
                                     title: Text(
-                                      widget.value.intBAttachment!,
+                                      widget.isFiltring
+                                          ? widget.value.iNTBFLFileName!
+                                          : widget.value.intBAttachment!,
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleSmall,
@@ -296,16 +342,29 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
                                     color: Color(0xFFD9EDFF)),
                                 child: IconButton(
                                     onPressed: () async {
-                                      if (widget.value.intBFilePath == null ||
-                                          widget.value.intBFilePath!.isEmpty) {
-                                        return;
+                                      if (widget.isFiltring) {
+                                        if (widget.value.iNTBFLFilePath ==
+                                                null ||
+                                            widget.value.iNTBFLFilePath!
+                                                .isEmpty) {
+                                          return;
+                                        }
+                                      } else {
+                                        if (widget.value.intBFilePath == null ||
+                                            widget
+                                                .value.intBFilePath!.isEmpty) {
+                                          return;
+                                        }
                                       }
 
                                       if (await canLaunchUrl(Uri.parse(
-                                          widget.value.intBFilePath!))) {
+                                          widget.isFiltring
+                                              ? widget.value.iNTBFLFilePath!
+                                              : widget.value.intBFilePath!))) {
                                         await launchUrl(
-                                            Uri.parse(
-                                                widget.value.intBFilePath!),
+                                            Uri.parse(widget.isFiltring
+                                                ? widget.value.iNTBFLFilePath!
+                                                : widget.value.intBFilePath!),
                                             mode:
                                                 LaunchMode.externalApplication);
                                       }
