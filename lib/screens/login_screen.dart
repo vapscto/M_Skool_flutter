@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/apis/authenticate_user_api.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/forgotpassword/screens/forgot_password_screen.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
@@ -244,7 +245,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Center(
                       child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) {
+                                  return ForgotPasswordScreen();
+                                },
+                              ),
+                            );
+                          },
                           child: Text(
                             "FORGOT PASSWORD ?",
                             style:

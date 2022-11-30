@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/homework/api/home_work_api.dart';
 import 'package:m_skool_flutter/homework/screen/home_work.dart';
 import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/notice/api/get_datewise_notices.dart';
 import 'package:m_skool_flutter/notice/api/get_notice_api.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
@@ -276,7 +277,7 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
                                   }
 
                                   if (tabController!.index == 2) {
-                                    await GetNoticeApi.instance.getNotice(
+                                    await GetDateWiseNotice.instance.getNotices(
                                       miId: widget.loginSuccessModel.mIID!,
                                       asmayId:
                                           widget.loginSuccessModel.asmaYId!,
@@ -287,12 +288,29 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
                                       endDate: hwCwNbController.dtList.last
                                           .toLocal()
                                           .toString(),
-                                      controller: hwCwNbController,
-                                      baseUrl: baseUrlFromInsCode(
+                                      nbController: hwCwNbController,
+                                      base: baseUrlFromInsCode(
                                         "portal",
                                         widget.mskoolController,
                                       ),
                                     );
+                                    // await GetNoticeApi.instance.getNotice(
+                                    //   miId: widget.loginSuccessModel.mIID!,
+                                    //   asmayId:
+                                    //       widget.loginSuccessModel.asmaYId!,
+                                    //   amstId: widget.loginSuccessModel.amsTId!,
+                                    //   startDate: hwCwNbController.dtList.first
+                                    //       .toLocal()
+                                    //       .toString(),
+                                    //   endDate: hwCwNbController.dtList.last
+                                    //       .toLocal()
+                                    //       .toString(),
+                                    //   controller: hwCwNbController,
+                                    //   baseUrl: baseUrlFromInsCode(
+                                    //     "portal",
+                                    //     widget.mskoolController,
+                                    //   ),
+                                    // );
                                     return;
                                   }
 

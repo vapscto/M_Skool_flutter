@@ -61,6 +61,8 @@ class URLS {
   static String uploadHomeWork = "api/StudentDashboardFacade/savehome_doc";
   static String classworkFiltered =
       "api/StudentDashboardFacade/onclick_classwork_datewise/";
+  static String noticeDatewise =
+      "api/StudentDashboardFacade/onclick_notice_datewise/";
 
   // Fee Module Endpoints
   static String getFeeAnalysis = 'api/CumulativeFeeAnalysisFacade/getloaddata/';

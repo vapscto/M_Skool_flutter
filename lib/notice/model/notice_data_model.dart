@@ -37,20 +37,25 @@ class NoticeDataModelValues {
   String? intBEndDate;
   int? asmcLId;
   int? filecount;
+  String? iNTBFLFileName;
+  String? iNTBFLFilePath;
 
-  NoticeDataModelValues(
-      {this.type,
-      this.intBId,
-      this.intBTitle,
-      this.intBDescription,
-      this.ntBTTSylabusFlg,
-      this.intBAttachment,
-      this.intBFilePath,
-      this.intBDisplayDate,
-      this.intBStartDate,
-      this.intBEndDate,
-      this.asmcLId,
-      this.filecount});
+  NoticeDataModelValues({
+    this.type,
+    this.intBId,
+    this.intBTitle,
+    this.intBDescription,
+    this.ntBTTSylabusFlg,
+    this.intBAttachment,
+    this.intBFilePath,
+    this.intBDisplayDate,
+    this.intBStartDate,
+    this.intBEndDate,
+    this.asmcLId,
+    this.filecount,
+    this.iNTBFLFileName,
+    this.iNTBFLFilePath,
+  });
 
   NoticeDataModelValues.fromJson(Map<String, dynamic> json) {
     type = json['\$type'];
@@ -65,6 +70,8 @@ class NoticeDataModelValues {
     intBEndDate = json['intB_EndDate'];
     asmcLId = json['asmcL_Id'];
     filecount = json['Filecount'];
+    iNTBFLFileName = json['INTBFL_FileName'];
+    iNTBFLFilePath = json['INTBFL_FilePath'];
   }
 
   Map<String, dynamic> toJson() {
@@ -81,6 +88,8 @@ class NoticeDataModelValues {
     data['intB_EndDate'] = intBEndDate;
     data['asmcL_Id'] = asmcLId;
     data['Filecount'] = filecount;
+    data['INTBFL_FileName'] = iNTBFLFileName;
+    data['INTBFL_FilePath'] = iNTBFLFilePath;
     return data;
   }
 }

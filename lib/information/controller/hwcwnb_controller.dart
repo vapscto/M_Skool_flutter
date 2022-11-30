@@ -12,6 +12,12 @@ class HwCwNbController extends GetxController {
   final RxString endBy = RxString("End Date");
   final RxBool startDateProvided = RxBool(false);
 
+  RxBool isErrorHappendWhileLoadingNotice = RxBool(false);
+
+  void updateIsErrorHappendWhileLoadingNotice(bool value) {
+    isErrorHappendWhileLoadingNotice.value = value;
+  }
+
   void updateStartBy(String start) {
     startBy.value = start;
   }

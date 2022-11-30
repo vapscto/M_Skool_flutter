@@ -82,6 +82,7 @@ class _NoticeHomeState extends State<NoticeHome> {
                             Get.to(() => NoticeDetailScreen(
                                   color: usedColor.elementAt(index),
                                   value: snapshot.data!.elementAt(index),
+                                  isFiltring: false,
                                 ));
                           },
                           child: NoticeItem(
