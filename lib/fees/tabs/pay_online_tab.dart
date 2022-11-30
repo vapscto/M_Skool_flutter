@@ -182,7 +182,7 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                   onPressed: () {
                     Map<String, dynamic> paymentDetails = {
                       "key": "rzp_test_K8eRz072cKAm0I",
-                      'amount': 100,
+                      'amount': 100 * 100,
                       'name': 'Test Payment',
                       'description': 'Smart phone',
                       'retry': {'enabled': true, 'max_count': 1},
