@@ -82,18 +82,26 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           children: [
                             InkWell(
                                 onTap: () {},
-                                child: SvgPicture.asset(
-                                  "assets/svg/clip.svg",
-                                  width: 21,
-                                  height: 21,
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 12.0, horizontal: 5.0),
+                                  child: SvgPicture.asset(
+                                    "assets/svg/clip.svg",
+                                    width: 21,
+                                    height: 21,
+                                  ),
                                 )),
                             const SizedBox(width: 17),
                             InkWell(
                                 onTap: () {},
-                                child: SvgPicture.asset(
-                                  "assets/svg/camera.svg",
-                                  width: 21,
-                                  height: 21,
+                                child: Container(
+                                  margin: const EdgeInsets.only(
+                                      right: 17.0, left: 5.0, bottom: 13),
+                                  child: SvgPicture.asset(
+                                    "assets/svg/camera.svg",
+                                    width: 21,
+                                    height: 21,
+                                  ),
                                 )),
                           ],
                         ))),

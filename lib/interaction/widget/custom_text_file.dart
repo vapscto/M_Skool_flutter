@@ -35,7 +35,7 @@ class CustomTextField extends StatelessWidget {
             style:
                 Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 18),
             decoration: InputDecoration(
-              suffix: suffix,
+              suffixIcon: suffix,
               hintText: hintText,
               contentPadding: contentPadding ??
                   const EdgeInsets.symmetric(vertical: 17, horizontal: 18),

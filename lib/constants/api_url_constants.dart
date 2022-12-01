@@ -81,4 +81,5 @@ class URLS {
 
   //Time Table
   static String tt = "api/Student_TTFacade/getStudentTT/";
+  static String getloaddata = "/api/IVRM_InteractionsFacade/getloaddata/";
 }

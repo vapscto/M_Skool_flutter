@@ -41,7 +41,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
   @override
   void didChangeDependencies() {
     // reload to see tab changes
-    enlargeRatio = 1 + ((1.0 - 0.9) * (widget.tabs.length - 1));
+    enlargeRatio = 1 + ((1.0 - shrinkRatio) * (widget.tabs.length - 1));
     width = (Get.width) / widget.tabs.length;
     super.didChangeDependencies();
   }
