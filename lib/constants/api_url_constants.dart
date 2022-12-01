@@ -63,6 +63,9 @@ class URLS {
       "api/StudentDashboardFacade/onclick_classwork_datewise/";
   static String noticeDatewise =
       "api/StudentDashboardFacade/onclick_notice_datewise/";
+  static String uploadHomeWorkBase = "https://bdcampus.azurewebsites.net/";
+  static String uploadHomeWorkEnd = "api/LoginFacade/HomeworkUpload";
+  static String uploadClasswork = "api/StudentDashboardFacade/savecls_doc";
 
   // Fee Module Endpoints
   static String getFeeAnalysis = 'api/CumulativeFeeAnalysisFacade/getloaddata/';

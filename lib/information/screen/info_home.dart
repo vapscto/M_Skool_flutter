@@ -142,7 +142,9 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
                                           : DateTime.now().year,
                                       DateTime.now().month == 1
                                           ? 12
-                                          : DateTime.now().month,
+                                          : DateTime.now().day == 1
+                                              ? DateTime.now().month - 1
+                                              : DateTime.now().month,
                                     );
                                     final DateTime? startDate =
                                         await showDatePicker(
@@ -160,9 +162,23 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
                                     }
                                     hwCwNbController
                                         .updateStartDateProvided(true);
-                                    hwCwNbController.updateStartBy(
-                                        "${startDate.year}-${startDate.month}-${startDate.day}");
-                                    hwCwNbController.dtList.add(startDate);
+                                    if (hwCwNbController.dtList.isEmpty) {
+                                      hwCwNbController.updateStartBy(
+                                          "${startDate.year}-${startDate.month}-${startDate.day}");
+                                      hwCwNbController.dtList.add(startDate);
+                                    }
+
+                                    if (hwCwNbController.dtList.length > 1) {
+                                      hwCwNbController.dtList.first = startDate;
+                                      hwCwNbController.updateShowFilter(
+                                          hwCwNbController.filter.value + 1);
+                                      showFilter.value = false;
+
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "Filter Applied.. now you will see the filtered result");
+                                      await filter();
+                                    }
                                     //hwCwNbController.dtList.add(startDate);
                                   },
                                   child: Container(
@@ -207,7 +223,9 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
                                         : DateTime.now().year,
                                     DateTime.now().month == 1
                                         ? 12
-                                        : DateTime.now().month,
+                                        : DateTime.now().day == 1
+                                            ? DateTime.now().month - 1
+                                            : DateTime.now().month,
                                   );
                                   final DateTime? endDate =
                                       await showDatePicker(
@@ -230,7 +248,9 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
                                   }
 
                                   if (hwCwNbController.dtList.first.day >
-                                      endDate.day) {
+                                          endDate.day &&
+                                      hwCwNbController.dtList.first.month >
+                                          endDate.month) {
                                     Fluttertoast.showToast(
                                         msg:
                                             "End Date must not be less than start date");
@@ -254,88 +274,7 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
                                       msg:
                                           "Filter Applied.. now you will see the filtered result");
 
-                                  if (tabController!.index == 1) {
-                                    await GetFilteredClasswork.instance
-                                        .getFilteredClassWork(
-                                      miId: widget.loginSuccessModel.mIID!,
-                                      asmayId:
-                                          widget.loginSuccessModel.asmaYId!,
-                                      amstId: widget.loginSuccessModel.amsTId!,
-                                      startDate: hwCwNbController.dtList.first
-                                          .toLocal()
-                                          .toString(),
-                                      endDate: hwCwNbController.dtList.last
-                                          .toLocal()
-                                          .toString(),
-                                      hwCwNbController: hwCwNbController,
-                                      base: baseUrlFromInsCode(
-                                        "portal",
-                                        widget.mskoolController,
-                                      ),
-                                    );
-                                    return;
-                                  }
-
-                                  if (tabController!.index == 2) {
-                                    await GetDateWiseNotice.instance.getNotices(
-                                      miId: widget.loginSuccessModel.mIID!,
-                                      asmayId:
-                                          widget.loginSuccessModel.asmaYId!,
-                                      amstId: widget.loginSuccessModel.amsTId!,
-                                      startDate: hwCwNbController.dtList.first
-                                          .toLocal()
-                                          .toString(),
-                                      endDate: hwCwNbController.dtList.last
-                                          .toLocal()
-                                          .toString(),
-                                      nbController: hwCwNbController,
-                                      base: baseUrlFromInsCode(
-                                        "portal",
-                                        widget.mskoolController,
-                                      ),
-                                    );
-                                    // await GetNoticeApi.instance.getNotice(
-                                    //   miId: widget.loginSuccessModel.mIID!,
-                                    //   asmayId:
-                                    //       widget.loginSuccessModel.asmaYId!,
-                                    //   amstId: widget.loginSuccessModel.amsTId!,
-                                    //   startDate: hwCwNbController.dtList.first
-                                    //       .toLocal()
-                                    //       .toString(),
-                                    //   endDate: hwCwNbController.dtList.last
-                                    //       .toLocal()
-                                    //       .toString(),
-                                    //   controller: hwCwNbController,
-                                    //   baseUrl: baseUrlFromInsCode(
-                                    //     "portal",
-                                    //     widget.mskoolController,
-                                    //   ),
-                                    // );
-                                    return;
-                                  }
-
-                                  if (tabController!.index == 0) {
-                                    await GetHomeWorkApi.instance
-                                        .getHomeAssignment(
-                                            miId:
-                                                widget.loginSuccessModel.mIID!,
-                                            asmayId: widget
-                                                .loginSuccessModel.asmaYId!,
-                                            amstId: widget
-                                                .loginSuccessModel.amsTId!,
-                                            startDate: hwCwNbController
-                                                .dtList.first
-                                                .toLocal()
-                                                .toString(),
-                                            endDate: hwCwNbController
-                                                .dtList.last
-                                                .toLocal()
-                                                .toString(),
-                                            baseUrl: baseUrlFromInsCode(
-                                                "portal",
-                                                widget.mskoolController),
-                                            hwCwNbController: hwCwNbController);
-                                  }
+                                  await filter();
                                 },
                                 child: Container(
                                   width: double.infinity,
@@ -488,5 +427,67 @@ class _InfoHomeState extends State<InfoHome> with TickerProviderStateMixin {
         ],
       ),
     );
+  }
+
+  Future<void> filter() async {
+    if (tabController!.index == 1) {
+      await GetFilteredClasswork.instance.getFilteredClassWork(
+        miId: widget.loginSuccessModel.mIID!,
+        asmayId: widget.loginSuccessModel.asmaYId!,
+        amstId: widget.loginSuccessModel.amsTId!,
+        startDate: hwCwNbController.dtList.first.toLocal().toString(),
+        endDate: hwCwNbController.dtList.last.toLocal().toString(),
+        hwCwNbController: hwCwNbController,
+        base: baseUrlFromInsCode(
+          "portal",
+          widget.mskoolController,
+        ),
+      );
+      return;
+    }
+
+    if (tabController!.index == 2) {
+      await GetDateWiseNotice.instance.getNotices(
+        miId: widget.loginSuccessModel.mIID!,
+        asmayId: widget.loginSuccessModel.asmaYId!,
+        amstId: widget.loginSuccessModel.amsTId!,
+        startDate: hwCwNbController.dtList.first.toLocal().toString(),
+        endDate: hwCwNbController.dtList.last.toLocal().toString(),
+        nbController: hwCwNbController,
+        base: baseUrlFromInsCode(
+          "portal",
+          widget.mskoolController,
+        ),
+      );
+      // await GetNoticeApi.instance.getNotice(
+      //   miId: widget.loginSuccessModel.mIID!,
+      //   asmayId:
+      //       widget.loginSuccessModel.asmaYId!,
+      //   amstId: widget.loginSuccessModel.amsTId!,
+      //   startDate: hwCwNbController.dtList.first
+      //       .toLocal()
+      //       .toString(),
+      //   endDate: hwCwNbController.dtList.last
+      //       .toLocal()
+      //       .toString(),
+      //   controller: hwCwNbController,
+      //   baseUrl: baseUrlFromInsCode(
+      //     "portal",
+      //     widget.mskoolController,
+      //   ),
+      // );
+      return;
+    }
+
+    if (tabController!.index == 0) {
+      await GetHomeWorkApi.instance.getHomeAssignment(
+          miId: widget.loginSuccessModel.mIID!,
+          asmayId: widget.loginSuccessModel.asmaYId!,
+          amstId: widget.loginSuccessModel.amsTId!,
+          startDate: hwCwNbController.dtList.first.toLocal().toString(),
+          endDate: hwCwNbController.dtList.last.toLocal().toString(),
+          baseUrl: baseUrlFromInsCode("portal", widget.mskoolController),
+          hwCwNbController: hwCwNbController);
+    }
   }
 }

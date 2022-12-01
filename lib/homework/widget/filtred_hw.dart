@@ -132,6 +132,7 @@ class _FiltredHwState extends State<FiltredHw> {
                                         .ihWFilePath,
                                     loginSuccessModel: widget.loginSuccessModel,
                                     mskoolController: widget.mskoolController,
+                                    screenType: 'homework',
                                   );
                                 }));
                               },

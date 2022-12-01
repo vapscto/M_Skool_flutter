@@ -61,6 +61,7 @@ class _FilteredClassWorkState extends State<FilteredClassWork> {
           : widget.hwCwNbController.classWorkList.isEmpty
               ? Center(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "No Classwork present",
@@ -116,6 +117,7 @@ class _FilteredClassWorkState extends State<FilteredClassWork> {
                                       .icWId!,
                                   loginSuccessModel: widget.loginSuccessModel,
                                   mskoolController: widget.mskoolController,
+                                  screenType: 'classwork',
                                 );
                               }));
                             },

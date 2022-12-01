@@ -83,6 +83,7 @@ class ClassworkHome extends StatelessWidget {
                                           date: snapshot.data!
                                               .elementAt(index)
                                               .icWFromDate!,
+                                          screenType: 'classwork',
                                         );
                                       }));
                                     },

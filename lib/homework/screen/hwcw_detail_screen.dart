@@ -10,12 +10,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/homework/api/upload_assignment.dart';
+import 'package:m_skool_flutter/information/controller/upload_assignment_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class HwCwDetailScreen extends StatelessWidget {
+class HwCwDetailScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final String subject;
@@ -27,6 +28,7 @@ class HwCwDetailScreen extends StatelessWidget {
   final String? attachmentName;
   final String? attachmentUrl;
   final int ihcId;
+  final String screenType;
 
   const HwCwDetailScreen(
       {super.key,
@@ -40,15 +42,23 @@ class HwCwDetailScreen extends StatelessWidget {
       this.attachmentUrl,
       required this.loginSuccessModel,
       required this.mskoolController,
-      required this.ihcId});
+      required this.ihcId,
+      required this.screenType});
 
   @override
+  State<HwCwDetailScreen> createState() => _HwCwDetailScreenState();
+}
+
+class _HwCwDetailScreenState extends State<HwCwDetailScreen> {
+  RxList<XFile> images = RxList<XFile>();
+  final ImagePicker picker = ImagePicker();
+  final UploadAssignmentController assignmentController =
+      Get.put<UploadAssignmentController>(UploadAssignmentController());
+  @override
   Widget build(BuildContext context) {
-    final DateTime dateTime = DateTime.parse(date);
-    RxList<XFile> images = RxList<XFile>();
-    final ImagePicker picker = ImagePicker();
+    final DateTime dateTime = DateTime.parse(widget.date);
     return Scaffold(
-      appBar: CustomAppBar(title: subject).getAppBar(),
+      appBar: CustomAppBar(title: widget.subject).getAppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -69,7 +79,7 @@ class HwCwDetailScreen extends StatelessWidget {
                 Expanded(
                   flex: 7,
                   child: Text(
-                    subject,
+                    widget.subject,
                     style: Theme.of(context).textTheme.titleSmall!.merge(
                           const TextStyle(
                             fontSize: 15.0,
@@ -100,7 +110,7 @@ class HwCwDetailScreen extends StatelessWidget {
                 Expanded(
                   flex: 7,
                   child: Text(
-                    topic,
+                    widget.topic,
                     style: Theme.of(context).textTheme.titleSmall!.merge(
                           const TextStyle(
                             fontSize: 15.0,
@@ -131,7 +141,7 @@ class HwCwDetailScreen extends StatelessWidget {
                 Expanded(
                   flex: 7,
                   child: Text(
-                    assignment,
+                    widget.assignment,
                     style: Theme.of(context).textTheme.titleSmall!.merge(
                           const TextStyle(
                             fontSize: 15.0,
@@ -204,7 +214,8 @@ class HwCwDetailScreen extends StatelessWidget {
             const SizedBox(
               height: 24.0,
             ),
-            attachmentType != null && attachmentType!.toLowerCase() == "pdf"
+            widget.attachmentType != null &&
+                    widget.attachmentType!.toLowerCase() == "pdf"
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -218,14 +229,15 @@ class HwCwDetailScreen extends StatelessWidget {
                             color: const Color(0xFFD9EDFF)),
                         child: IconButton(
                             onPressed: () async {
-                              if (attachmentUrl == null ||
-                                  attachmentUrl!.isEmpty) {
+                              if (widget.attachmentUrl == null ||
+                                  widget.attachmentUrl!.isEmpty) {
                                 return;
                               }
 
                               if (await canLaunchUrl(
-                                  Uri.parse(attachmentUrl!))) {
-                                await launchUrl(Uri.parse(attachmentUrl!),
+                                  Uri.parse(widget.attachmentUrl!))) {
+                                await launchUrl(
+                                    Uri.parse(widget.attachmentUrl!),
                                     mode: LaunchMode.externalApplication);
                               }
                             },
@@ -261,7 +273,8 @@ class HwCwDetailScreen extends StatelessWidget {
                     ],
                   )
                 : const SizedBox(),
-            attachmentType != null && attachmentType!.toLowerCase() == "others"
+            widget.attachmentType != null &&
+                    widget.attachmentType!.toLowerCase() == "others"
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -282,7 +295,7 @@ class HwCwDetailScreen extends StatelessWidget {
                               horizontal: VisualDensity.minimumDensity,
                             ),
                             minLeadingWidth: 24,
-                            title: Text(attachmentName!),
+                            title: Text(widget.attachmentName!),
                           ),
                         ),
                       ),
@@ -295,14 +308,15 @@ class HwCwDetailScreen extends StatelessWidget {
                             color: const Color(0xFFD9EDFF)),
                         child: IconButton(
                             onPressed: () async {
-                              if (attachmentUrl == null ||
-                                  attachmentUrl!.isEmpty) {
+                              if (widget.attachmentUrl == null ||
+                                  widget.attachmentUrl!.isEmpty) {
                                 return;
                               }
 
                               if (await canLaunchUrl(
-                                  Uri.parse(attachmentUrl!))) {
-                                await launchUrl(Uri.parse(attachmentUrl!),
+                                  Uri.parse(widget.attachmentUrl!))) {
+                                await launchUrl(
+                                    Uri.parse(widget.attachmentUrl!),
                                     mode: LaunchMode.externalApplication);
                               }
                             },
@@ -507,6 +521,119 @@ class HwCwDetailScreen extends StatelessWidget {
                     ),
                     onPressed: () {
                       uploadAssignment(images);
+                      Navigator.pop(context);
+                      showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) {
+                            return Dialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16.0)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Obx(() {
+                                      return assignmentController.status.value
+                                                  .toLowerCase() ==
+                                              "completed"
+                                          ? const CircleAvatar(
+                                              backgroundColor: Colors.green,
+                                              radius: 36.0,
+                                              child: Icon(
+                                                Icons.check,
+                                                color: Colors.white,
+                                                size: 36,
+                                              ),
+                                            )
+                                          : assignmentController.status.value ==
+                                                  "failed"
+                                              ? const CircleAvatar(
+                                                  backgroundColor: Colors.red,
+                                                  radius: 36.0,
+                                                  child: Icon(
+                                                    Icons.close,
+                                                    color: Colors.white,
+                                                    size: 36,
+                                                  ),
+                                                )
+                                              : const CircularProgressIndicator();
+                                    }),
+                                    const SizedBox(
+                                      height: 8.0,
+                                    ),
+                                    Obx(() {
+                                      return Text(
+                                        assignmentController.status.value ==
+                                                "failed"
+                                            ? "Failed to Upload Data"
+                                            : assignmentController
+                                                        .status.value ==
+                                                    "completed"
+                                                ? "Successfully sent to teacher"
+                                                : "Please Wait",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium!
+                                            .merge(
+                                              const TextStyle(fontSize: 20.0),
+                                            ),
+                                      );
+                                    }),
+                                    const SizedBox(
+                                      height: 8.0,
+                                    ),
+                                    Obx(() {
+                                      return Text(
+                                        assignmentController.desc.value,
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium,
+                                      );
+                                    }),
+                                    const SizedBox(
+                                      height: 16.0,
+                                    ),
+                                    Obx(() {
+                                      return assignmentController.status.value
+                                                      .toLowerCase() ==
+                                                  "completed" ||
+                                              assignmentController.status.value
+                                                      .toLowerCase() ==
+                                                  "failed"
+                                          ? ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  minimumSize: const Size(
+                                                      double.infinity, 50),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16.0),
+                                                  )),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text(
+                                                "Close",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleMedium!
+                                                    .merge(
+                                                      const TextStyle(
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                              ),
+                                            )
+                                          : const SizedBox();
+                                    }),
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
                     },
                     child: Text(
                       "Upload Assignment",
@@ -526,13 +653,16 @@ class HwCwDetailScreen extends StatelessWidget {
 
   void uploadAssignment(RxList<XFile> images) async {
     await UploadAssignmentApi.instance.uploadNow(
-        miId: loginSuccessModel.mIID!,
-        asmayId: loginSuccessModel.asmaYId!,
-        amstId: loginSuccessModel.amsTId!,
-        roleId: loginSuccessModel.roleId!,
-        userId: loginSuccessModel.userId!,
-        ihwId: ihcId,
-        uploadArray: images.map((element) => element.path).toList(),
-        base: baseUrlFromInsCode("portal", mskoolController));
+      miId: widget.loginSuccessModel.mIID!,
+      asmayId: widget.loginSuccessModel.asmaYId!,
+      amstId: widget.loginSuccessModel.amsTId!,
+      roleId: widget.loginSuccessModel.roleId!,
+      userId: widget.loginSuccessModel.userId!,
+      ihwId: widget.ihcId,
+      uploadArray: images.map((element) => element.path).toList(),
+      base: baseUrlFromInsCode("portal", widget.mskoolController),
+      uploadAssignmentController: assignmentController,
+      type: widget.screenType,
+    );
   }
 }

@@ -350,6 +350,7 @@ class _HomeWorkScreenState extends State<HomeWorkScreen> {
                                                     widget.loginSuccessModel,
                                                 mskoolController:
                                                     widget.mskoolController,
+                                                screenType: 'homework',
                                               );
                                             }));
                                           },
