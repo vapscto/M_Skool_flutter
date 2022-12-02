@@ -225,6 +225,7 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   final GlobalKey<ScaffoldState> _scaffold = GlobalKey<ScaffoldState>();
+  final ValueNotifier<int> carouselNotifier = ValueNotifier<int>(0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -268,7 +269,7 @@ class _HomeTabState extends State<HomeTab> {
                       itemCount: 2,
                       itemBuilder: (_, index, i) {
                         return Container(
-                          padding: const EdgeInsets.all(24.0),
+                          padding: const EdgeInsets.all(20.0),
                           height: Get.height * 0.2,
                           width: Get.width,
                           decoration: BoxDecoration(
@@ -317,7 +318,7 @@ class _HomeTabState extends State<HomeTab> {
                                   ],
                                 ),
                               ),
-                              Expanded(flex: 3, child: const SizedBox()),
+                              const Expanded(flex: 2, child: SizedBox()),
                             ],
                           ),
                         );
@@ -326,12 +327,43 @@ class _HomeTabState extends State<HomeTab> {
                         aspectRatio: 16 / 9,
                         autoPlay: true,
                         initialPage: 0,
+                        onPageChanged: (i, _) => carouselNotifier.value = i,
                         viewportFraction: 1,
                         enlargeCenterPage: true,
                         enableInfiniteScroll: true,
                       ),
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  ValueListenableBuilder(
+                      valueListenable: carouselNotifier,
+                      builder: (_, index, c) {
+                        return Center(
+                          child: Stack(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: const Color(0xffDFEFFD),
+                                    borderRadius: BorderRadius.circular(10)),
+                                height: 10,
+                                width: 2 * 21, //itemCount * chuckWidth
+                              ),
+                              AnimatedPositioned(
+                                top: 0,
+                                left: index * 21,
+                                duration: const Duration(microseconds: 500),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xff1E38FC),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  height: 10,
+                                  width: 21,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
                   const SizedBox(
                     height: 36.0,
                   ),
@@ -344,6 +376,24 @@ class _HomeTabState extends State<HomeTab> {
                   const SizedBox(
                     height: 16.0,
                   ),
+                  GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4, childAspectRatio: 1),
+                      itemCount: 1, //widget.loginSuccessModel
+                      //.staffmobileappprivileges!.values!.length,
+                      itemBuilder: (_, index) {
+                        return CircleAvatar(
+                          backgroundColor: const Color(0xffF9E8FF),
+                          child: Center(
+                            child:
+                                SvgPicture.asset("assets/svg/attendance.svg"),
+                          ),
+                        );
+                      }), //:TODO
+
                   ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: widget.loginSuccessModel

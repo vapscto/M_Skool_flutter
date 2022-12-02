@@ -1,7 +1,11 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'dart:ui' as ui;
+
+import '../config/themes/theme_data.dart';
 
 class DashboardProfile extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -11,7 +15,7 @@ class DashboardProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: Get.height / 2,
+      height: Get.height / 1.7,
       child: Stack(
         children: [
           SizedBox(
@@ -44,91 +48,205 @@ class DashboardProfile extends StatelessWidget {
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 20)),
                 const SizedBox(height: 15),
-                Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  child: SizedBox(
-                    width: Get.width * 0.8,
-                    height: 100,
+                _detailCard(),
+              ],
+            ),
+          ),
+          const Align(
+            alignment: Alignment.bottomCenter,
+            child: CarouselBanner(),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _detailCard() {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: SizedBox(
+        width: Get.width * 0.8,
+        height: 100,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              const Text('2012-055  |  IX A',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18)),
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: const [
+                            Text("Attendance",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 16)),
+                            Spacer(),
+                            Text("80 %",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 15))
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        const LinearProgressIndicator(
+                            value: 0.8,
+                            minHeight: 7,
+                            color: Color(0xffBFECE1),
+                            backgroundColor: Color(0xffBFECE1),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Color(0xff2EA689))),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: const [
+                            Text("Fee",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 16)),
+                            Spacer(),
+                            Text("56 %",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 15))
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        const LinearProgressIndicator(
+                          value: 0.5,
+                          minHeight: 7.5,
+                          color: Color(0xffFF8B00),
+                          backgroundColor: Color(0xffFFEBD4),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CarouselBanner extends StatelessWidget {
+  const CarouselBanner({super.key});
+  @override
+  Widget build(BuildContext context) {
+    ValueNotifier<int> slideNotifier = ValueNotifier<int>(0);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CarouselSlider.builder(
+              itemCount: 4,
+              itemBuilder: (_, i, j) => Container(
+                    padding: const EdgeInsets.all(5.0),
+
+                    decoration: BoxDecoration(
+                      boxShadow: CustomThemeData.getShadow(),
+                      color: const Color(0xffFFE8E7),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    // shape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(10),
+                    // ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      padding: const EdgeInsets.all(5.0),
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          const Text('2012-055  |  IX A',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500, fontSize: 18)),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                          SizedBox(
+                            width: Get.width * 0.6,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      children: const [
-                                        Text("Attendance",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 16)),
-                                        Spacer(),
-                                        Text("80 %",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 15))
-                                      ],
-                                    ),
-                                    const SizedBox(height: 8),
-                                    const LinearProgressIndicator(
-                                        value: 0.8,
-                                        minHeight: 7,
-                                        color: Color(0xffBFECE1),
-                                        backgroundColor: Color(0xffBFECE1),
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                Color(0xff2EA689))),
+                                    Container(
+                                        width: 10,
+                                        height: 10,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 5),
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xffDD2025),
+                                            borderRadius:
+                                                BorderRadius.circular(10))),
+                                    const Text("Announcement",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 18.5,
+                                            letterSpacing: 2.1)),
                                   ],
                                 ),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: const [
-                                        Text("Fee",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 16)),
-                                        Spacer(),
-                                        Text("56 %",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 15))
-                                      ],
-                                    ),
-                                    const SizedBox(height: 8),
-                                    const LinearProgressIndicator(
-                                      value: 0.5,
-                                      minHeight: 7,
-                                      color: Color(0xffFF8B00),
-                                      backgroundColor: Color(0xffFFEBD4),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
+                                const Text.rich(TextSpan(
+                                    text:
+                                        "School will remain closed on 09 Nov 2022 due to Bharth bandh",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 16)))
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: Get.width * 0.17,
+                            height: Get.width * 0.17,
+                            decoration: BoxDecoration(
+                              color: const Color(0xffDD2025),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: SvgPicture.asset(
+                                "assets/svg/announcement.svg",
+                                height: Get.width * 0.17,
+                                width: Get.width * 0.17),
                           )
                         ],
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          )
+              options: CarouselOptions(
+                aspectRatio: 3.43,
+                autoPlay: true,
+                initialPage: 0,
+                onPageChanged: (index, reason) => slideNotifier.value = index,
+                viewportFraction: 1,
+                enlargeCenterPage: true,
+                enableInfiniteScroll: true,
+              )),
+          const SizedBox(height: 10),
+          ValueListenableBuilder<int>(
+              valueListenable: slideNotifier,
+              builder: (context, value, index) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    for (int i = 0; i < 4; i++)
+                      AnimatedContainer(
+                        width: 8,
+                        height: 8,
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        duration: const Duration(milliseconds: 100),
+                        decoration: BoxDecoration(
+                            color: value == i
+                                ? const Color(0xff1E38FC)
+                                : const Color(0xffDFEFFD),
+                            borderRadius: BorderRadius.circular(15)),
+                      )
+                  ],
+                );
+              })
         ],
       ),
     );
