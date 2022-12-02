@@ -1,12 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/forgotpassword/api/reset_password.dart';
+
+import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/pgr_widget.dart';
+import 'package:m_skool_flutter/widget/success_widget.dart';
 
-class ResetPassword extends StatelessWidget {
-  const ResetPassword({super.key});
+class ResetPassword extends StatefulWidget {
+  final MskoolController mskoolController;
+  final LoginSuccessModel loginSuccessModel;
+
+  const ResetPassword(
+      {super.key,
+      required this.mskoolController,
+      required this.loginSuccessModel});
+
+  @override
+  State<ResetPassword> createState() => _ResetPasswordState();
+}
+
+class _ResetPasswordState extends State<ResetPassword> {
+  final TextEditingController previousPassword = TextEditingController();
+  final TextEditingController newPassword = TextEditingController();
+  final TextEditingController confirmPassword = TextEditingController();
+
+  @override
+  void dispose() {
+    previousPassword.dispose();
+    newPassword.dispose();
+    confirmPassword.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +77,7 @@ class ResetPassword extends StatelessWidget {
             ),
             CustomContainer(
               child: TextField(
+                controller: previousPassword,
                 style: Theme.of(context).textTheme.titleSmall!.merge(
                       TextStyle(
                           fontSize: 16,
@@ -75,6 +106,7 @@ class ResetPassword extends StatelessWidget {
             ),
             CustomContainer(
               child: TextField(
+                controller: newPassword,
                 style: Theme.of(context).textTheme.titleSmall!.merge(
                       TextStyle(
                           fontSize: 16,
@@ -103,6 +135,7 @@ class ResetPassword extends StatelessWidget {
             ),
             CustomContainer(
               child: TextField(
+                controller: confirmPassword,
                 style: Theme.of(context).textTheme.titleSmall!.merge(
                       TextStyle(
                           fontSize: 16,
@@ -127,14 +160,69 @@ class ResetPassword extends StatelessWidget {
                       ),
                       minimumSize: Size(Get.width * 0.6, 50)),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
+                    if (previousPassword.text.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Please provide previously used password");
+                      return;
+                    }
+                    if (previousPassword.text == newPassword.text) {
+                      Fluttertoast.showToast(
+                          msg:
+                              "New Password must not be same as previous password.");
+                      return;
+                    }
+
+                    if (newPassword.text.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Please provide new password");
+                      return;
+                    }
+                    if (newPassword.text != confirmPassword.text) {
+                      Fluttertoast.showToast(
+                          msg:
+                              "New Password and confirm password is not matching. It should match");
+                      return;
+                    }
+
+                    showDialog(
+                        context: context,
+                        barrierDismissible: false,
                         builder: (_) {
-                          return ResetPassword();
-                        },
-                      ),
-                    );
+                          return Dialog(
+                            insetPadding: const EdgeInsets.all(16.0),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(24.0)),
+                            child: FutureBuilder<bool>(
+                              future: ResetPasswordApi.instance.resetPassword(
+                                  password: previousPassword.text,
+                                  newPassword: newPassword.text,
+                                  userId: widget.loginSuccessModel.userId!,
+                                  miId: widget.mskoolController
+                                      .universalInsCodeModel!.value.miId,
+                                  base: baseUrlFromInsCode(
+                                      "login", widget.mskoolController)),
+                              builder: (_, snapshot) {
+                                if (snapshot.hasData && snapshot.data!) {
+                                  return SuccessWidget(
+                                    title: "Password Changed Successfully",
+                                    message:
+                                        "You can now use your new password for login.",
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                    },
+                                  );
+                                }
+                                if (snapshot.hasError) {
+                                  return ErrWidget(
+                                      err: snapshot.error
+                                          as Map<String, dynamic>);
+                                }
+                                return const ProgressWidget();
+                              },
+                            ),
+                          );
+                        });
                   },
                   child: Text(
                     "Save Password",

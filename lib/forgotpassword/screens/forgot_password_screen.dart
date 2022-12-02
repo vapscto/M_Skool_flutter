@@ -1,14 +1,36 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/forgotpassword/api/verify_username.dart';
+import 'package:m_skool_flutter/forgotpassword/model/verify_user_model.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/select_verification_type.dart';
 
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/pgr_widget.dart';
+import 'package:m_skool_flutter/widget/success_widget.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
-  const ForgotPasswordScreen({super.key});
+class ForgotPasswordScreen extends StatefulWidget {
+  final MskoolController mskoolController;
+  const ForgotPasswordScreen({super.key, required this.mskoolController});
+
+  @override
+  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+}
+
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  final TextEditingController userName = TextEditingController();
+
+  @override
+  void dispose() {
+    userName.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +118,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                   ),
                   CustomContainer(
                     child: TextField(
+                      controller: userName,
                       style: Theme.of(context).textTheme.titleSmall!.merge(
                             TextStyle(
                                 fontSize: 18,
@@ -149,14 +172,70 @@ class ForgotPasswordScreen extends StatelessWidget {
                             ),
                             minimumSize: Size(Get.width * 0.4, 50)),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
+                          if (userName.text.isEmpty) {
+                            Fluttertoast.showToast(
+                                msg:
+                                    "Please provide a username to get started your password reset process.");
+                            return;
+                          }
+                          showDialog(
+                              context: context,
+                              barrierDismissible: false,
                               builder: (_) {
-                                return SelectVerificationType();
-                              },
-                            ),
-                          );
+                                return Dialog(
+                                  insetPadding: const EdgeInsets.all(16.0),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(24.0)),
+                                  child: FutureBuilder<VerifyUserNameModel>(
+                                    future: VerifyUserNameApi.instance
+                                        .verifyUserName(
+                                      miId: widget.mskoolController
+                                          .universalInsCodeModel!.value.miId,
+                                      userName: userName.text,
+                                      base: baseUrlFromInsCode(
+                                        "login",
+                                        widget.mskoolController,
+                                      ),
+                                    ),
+                                    builder: (_, snapshot) {
+                                      if (snapshot.hasData) {
+                                        return SuccessWidget(
+                                          title: "Account Found Successfully",
+                                          message:
+                                              "In the next step, you will be going to receive otp to reset your password",
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (_) {
+                                                  return SelectVerificationType(
+                                                    mskoolController:
+                                                        widget.mskoolController,
+                                                    emailId:
+                                                        snapshot.data!.email!,
+                                                    mobileNo: snapshot
+                                                        .data!.mobileNo!,
+                                                    userName:
+                                                        userName.text.trim(),
+                                                  );
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      }
+                                      if (snapshot.hasError) {
+                                        return ErrWidget(
+                                            err: snapshot.error
+                                                as Map<String, dynamic>);
+                                      }
+                                      return const ProgressWidget();
+                                    },
+                                  ),
+                                );
+                              });
                         },
                         child: Text(
                           "Continue",

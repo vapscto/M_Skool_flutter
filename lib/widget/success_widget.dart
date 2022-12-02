@@ -41,6 +41,7 @@ class SuccessWidget extends StatelessWidget {
           Text(
             message,
             style: Theme.of(context).textTheme.labelMedium,
+            textAlign: TextAlign.center,
           ),
           const SizedBox(
             height: 16.0,

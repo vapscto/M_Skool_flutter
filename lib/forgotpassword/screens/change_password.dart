@@ -1,13 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/forgotpassword/api/change_password_api.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/reset_password.dart';
+import 'package:m_skool_flutter/screens/login_screen.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/pgr_widget.dart';
+import 'package:m_skool_flutter/widget/success_widget.dart';
 
-class ChangePassword extends StatelessWidget {
-  const ChangePassword({super.key});
+class ChangePassword extends StatefulWidget {
+  final String userName;
+  final MskoolController mskoolController;
+  const ChangePassword({
+    super.key,
+    required this.userName,
+    required this.mskoolController,
+  });
+
+  @override
+  State<ChangePassword> createState() => _ChangePasswordState();
+}
+
+class _ChangePasswordState extends State<ChangePassword> {
+  final TextEditingController newPassword = TextEditingController();
+  final TextEditingController confirmPassword = TextEditingController();
+
+  @override
+  void dispose() {
+    newPassword.dispose();
+    confirmPassword.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +75,8 @@ class ChangePassword extends StatelessWidget {
             ),
             CustomContainer(
               child: TextField(
+                controller: newPassword,
+                obscureText: true,
                 style: Theme.of(context).textTheme.titleSmall!.merge(
                       TextStyle(
                           fontSize: 16,
@@ -76,6 +105,8 @@ class ChangePassword extends StatelessWidget {
             ),
             CustomContainer(
               child: TextField(
+                obscureText: true,
+                controller: confirmPassword,
                 style: Theme.of(context).textTheme.titleSmall!.merge(
                       TextStyle(
                           fontSize: 16,
@@ -100,14 +131,68 @@ class ChangePassword extends StatelessWidget {
                       ),
                       minimumSize: Size(Get.width * 0.6, 50)),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
+                    if (newPassword.text.isEmpty) {
+                      Fluttertoast.showToast(
+                          msg: "Please provide new password");
+                      return;
+                    }
+
+                    if (newPassword.text != confirmPassword.text) {
+                      Fluttertoast.showToast(
+                          msg:
+                              "New Password and confirm passwords are not matching. It should match");
+
+                      return;
+                    }
+
+                    showDialog(
+                        context: context,
+                        barrierDismissible: false,
                         builder: (_) {
-                          return ResetPassword();
-                        },
-                      ),
-                    );
+                          return Dialog(
+                            insetPadding: const EdgeInsets.all(16.0),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(24.0)),
+                            child: FutureBuilder<bool>(
+                              future: ChangePasswordApi.instance.changePassword(
+                                  newPassword: newPassword.text,
+                                  miId: widget.mskoolController
+                                      .universalInsCodeModel!.value.miId,
+                                  userName: widget.userName,
+                                  base: baseUrlFromInsCode(
+                                      "login", widget.mskoolController)),
+                              builder: (_, snapshot) {
+                                if (snapshot.hasData && snapshot.data!) {
+                                  return SuccessWidget(
+                                    title: "Password Changed Successfully",
+                                    message:
+                                        "You can now login using your new password.",
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                    },
+                                  );
+                                }
+                                if (snapshot.hasError) {
+                                  return ErrWidget(
+                                      err: snapshot.error
+                                          as Map<String, dynamic>);
+                                }
+                                return const ProgressWidget();
+                              },
+                            ),
+                          );
+                        });
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (_) {
+                    //       return ResetPassword();
+                    //     },
+                    //   ),
+                    // );
                   },
                   child: Text(
                     "Save Password",

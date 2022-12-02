@@ -250,7 +250,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (_) {
-                                  return ForgotPasswordScreen();
+                                  return ForgotPasswordScreen(
+                                    mskoolController: widget.mskoolController,
+                                  );
                                 },
                               ),
                             );

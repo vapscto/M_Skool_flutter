@@ -82,4 +82,10 @@ class URLS {
   //Time Table
   static String tt = "api/Student_TTFacade/getStudentTT/";
   static String getloaddata = "/api/IVRM_InteractionsFacade/getloaddata/";
+
+  //ForgotPassword
+  static String verifyUser = "api/LoginFacade/VerifyUserName";
+  static String sendOtp = "api/LoginFacade/Mobileappotp";
+  static String changePassword = "api/LoginFacade/forgotpassword";
+  static String resetPassword = "api/changepwdFacade";
 }

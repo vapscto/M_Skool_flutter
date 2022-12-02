@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/attendance/controller/attendance_handler.dart';
-import 'package:m_skool_flutter/attendance/widgets/attendance_area_chart.dart';
 import 'package:m_skool_flutter/attendance/widgets/attendance_column_chart.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';

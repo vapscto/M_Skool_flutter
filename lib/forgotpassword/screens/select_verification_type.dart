@@ -3,12 +3,23 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/otp_verification_screen.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class SelectVerificationType extends StatefulWidget {
-  const SelectVerificationType({super.key});
+  final String mobileNo;
+  final String emailId;
+  final MskoolController mskoolController;
+  final String userName;
+  const SelectVerificationType({
+    super.key,
+    required this.mobileNo,
+    required this.emailId,
+    required this.mskoolController,
+    required this.userName,
+  });
 
   @override
   State<SelectVerificationType> createState() => _SelectVerificationTypeState();
@@ -16,6 +27,17 @@ class SelectVerificationType extends StatefulWidget {
 
 class _SelectVerificationTypeState extends State<SelectVerificationType> {
   String verificationType = "mobile";
+  final TextEditingController controller = TextEditingController();
+  @override
+  void initState() {
+    if (verificationType == "mobile") {
+      controller.text = widget.mobileNo;
+    } else {
+      controller.text = widget.emailId;
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,6 +146,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                                 groupValue: verificationType,
                                 onChanged: (e) {
                                   verificationType = e!;
+                                  controller.text = widget.mobileNo;
                                   setState(() {});
                                 },
                               ),
@@ -153,6 +176,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                                 groupValue: verificationType,
                                 onChanged: (e) {
                                   verificationType = e!;
+                                  controller.text = widget.emailId;
                                   setState(() {});
                                 },
                               ),
@@ -173,6 +197,8 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                     padding: const EdgeInsets.all(24.0),
                     child: CustomContainer(
                       child: TextField(
+                        controller: controller,
+                        readOnly: true,
                         style: Theme.of(context).textTheme.titleSmall!.merge(
                               TextStyle(
                                   fontSize: 16,
@@ -206,7 +232,15 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                             context,
                             MaterialPageRoute(
                               builder: (_) {
-                                return OTPScreen();
+                                return OTPScreen(
+                                  isEmailVerification:
+                                      verificationType == "email"
+                                          ? true
+                                          : false,
+                                  mskoolController: widget.mskoolController,
+                                  otpSendingInfo: controller.text,
+                                  userName: widget.userName,
+                                );
                               },
                             ),
                           );
