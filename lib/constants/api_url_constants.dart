@@ -88,4 +88,11 @@ class URLS {
   static String sendOtp = "api/LoginFacade/Mobileappotp";
   static String changePassword = "api/LoginFacade/forgotpassword";
   static String resetPassword = "api/changepwdFacade";
+
+  //PaymentApi
+
+  static String getFeeDetForCurrentAcademic =
+      "api/FeeOnlinePaymentFacade/getFeetotalamount";
+  static String getInstallmentDetails =
+      "api/FeeOnlinePaymentFacade/getpagedetails";
 }

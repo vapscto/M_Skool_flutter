@@ -1,0 +1,143 @@
+// ignore_for_file: library_prefixes
+
+import 'package:dio/dio.dart' as Diio;
+import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/api_url_constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/fees/controller/pay_online_data_controller.dart';
+import 'package:m_skool_flutter/fees/controller/payment_selection_tracking.dart';
+import 'package:m_skool_flutter/fees/model/custom_grp_list.dart';
+import 'package:m_skool_flutter/fees/model/disable_terms_model.dart';
+import 'package:m_skool_flutter/fees/model/installment_model.dart';
+import 'package:m_skool_flutter/main.dart';
+
+class GetInstallmentDetails {
+  GetInstallmentDetails.init();
+  static final GetInstallmentDetails instance = GetInstallmentDetails.init();
+
+  getInstallmentDetails(
+      {required int miId,
+      required int asmayId,
+      required int amstId,
+      required String configSet,
+      required String base,
+      required PayOnlineDataController payOnlineDataController,
+      required PaymentSelectionTracking tracking}) async {
+    final String api = base + URLS.getInstallmentDetails;
+    final Diio.Dio dio = getGlobalDio();
+    try {
+      final Diio.Response response = await dio.post(api,
+          options: Diio.Options(headers: getSession()),
+          data: {
+            "MI_Id": miId,
+            "AMST_Id": amstId,
+            "ASMAY_Id": asmayId,
+            "configset": "T"
+          });
+
+      final DisableTermsModel disableTermsModel =
+          DisableTermsModel.fromJson(response.data['disableterms']);
+      final CustomgGrplist customgGrplist =
+          CustomgGrplist.fromJson(response.data['customgrplist']);
+      List<InstallmentModel> installments = [];
+
+      for (int i = 0; i < customgGrplist.values!.length; i++) {
+        logger.d(customgGrplist.values!.elementAt(i).fmgGGroupName);
+        List<DisableTermsModelValues> disableTermsModelList = [];
+        for (int j = 0; j < disableTermsModel.values!.length; j++) {
+          if (customgGrplist.values!.elementAt(i).fmgGId ==
+              disableTermsModel.values!.elementAt(j).fMGGId) {
+            disableTermsModelList.add(disableTermsModel.values!.elementAt(j));
+          }
+        }
+        installments.add(InstallmentModel(
+            grplistValues: customgGrplist.values!.elementAt(i),
+            disableTermsModelValues: disableTermsModelList));
+      }
+
+      for (int i = 0; i < installments.length; i++) {
+        logger.d(installments.elementAt(i).grplistValues.toJson());
+        for (int j = 0;
+            j < installments.elementAt(i).disableTermsModelValues.length;
+            j++) {
+          tracking.selectedCheckBox.add(Selections(
+            fmggId: installments
+                .elementAt(i)
+                .disableTermsModelValues
+                .elementAt(j)
+                .fMGGId!,
+            fmtId: installments
+                .elementAt(i)
+                .disableTermsModelValues
+                .elementAt(j)
+                .fmtId!,
+            isDisabled: installments
+                        .elementAt(i)
+                        .disableTermsModelValues
+                        .elementAt(j)
+                        .paid! >=
+                    installments
+                        .elementAt(i)
+                        .disableTermsModelValues
+                        .elementAt(j)
+                        .payable!
+                ? RxBool(true)
+                : RxBool(false),
+            isChecked: installments
+                        .elementAt(i)
+                        .disableTermsModelValues
+                        .elementAt(j)
+                        .paid! >=
+                    installments
+                        .elementAt(i)
+                        .disableTermsModelValues
+                        .elementAt(j)
+                        .payable!
+                ? RxBool(true)
+                : RxBool(false),
+          ));
+          // tracking.selectedCheckBox.add(RxMap({
+          //   "fmggId": installments
+          //       .elementAt(i)
+          //       .disableTermsModelValues
+          //       .elementAt(j)
+          //       .fMGGId,
+          //   "fmttId": installments
+          //       .elementAt(i)
+          //       .disableTermsModelValues
+          //       .elementAt(j)
+          //       .fmtId,
+          //   "disable": installments
+          //               .elementAt(i)
+          //               .disableTermsModelValues
+          //               .elementAt(j)
+          //               .paid! >=
+          //           installments
+          //               .elementAt(i)
+          //               .disableTermsModelValues
+          //               .elementAt(j)
+          //               .payable!
+          //       ? true
+          //       : false,
+          //   "checked": installments
+          //               .elementAt(i)
+          //               .disableTermsModelValues
+          //               .elementAt(j)
+          //               .paid! >=
+          //           installments
+          //               .elementAt(i)
+          //               .disableTermsModelValues
+          //               .elementAt(j)
+          //               .payable!
+          //       ? true
+          //       : false,
+          // }));
+        }
+      }
+      payOnlineDataController.updateInstallment(installments);
+      payOnlineDataController.updateIsInstallmentDetailLoaded(true);
+    } on Exception catch (e) {
+      logger.e(e.toString());
+    }
+  }
+}

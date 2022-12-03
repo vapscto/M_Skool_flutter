@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 
 class CustomDetailWidget extends StatelessWidget {
   final String title;
-  final int amount;
+  final double amount;
   const CustomDetailWidget(
       {super.key, required this.title, required this.amount});
 
