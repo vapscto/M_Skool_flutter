@@ -9,6 +9,7 @@ import '../model/markoverview_model.dart';
 
 class ResultAnalysisItem extends StatelessWidget {
   final ExamWiseReportListValue datamodel;
+
   final Color chipColor;
   final Color containerColor;
   final Color gradeColor;

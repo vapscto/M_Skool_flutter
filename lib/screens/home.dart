@@ -226,6 +226,15 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   final GlobalKey<ScaffoldState> _scaffold = GlobalKey<ScaffoldState>();
   final ValueNotifier<int> carouselNotifier = ValueNotifier<int>(0);
+  List<String> icons = [
+    // "attendance",
+    "compose",
+    "exam_icon",
+    "fee",
+    "information",
+    // "library",
+    // "timetable"
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -382,15 +391,11 @@ class _HomeTabState extends State<HomeTab> {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 4, childAspectRatio: 1),
-                      itemCount: 1, //widget.loginSuccessModel
+                      itemCount: icons.length, //widget.loginSuccessModel
                       //.staffmobileappprivileges!.values!.length,
-                      itemBuilder: (_, index) {
-                        return CircleAvatar(
-                          backgroundColor: const Color(0xffF9E8FF),
-                          child: Center(
-                            child:
-                                SvgPicture.asset("assets/svg/attendance.svg"),
-                          ),
+                      itemBuilder: (_, i) {
+                        return Center(
+                          child: SvgPicture.asset("assets/svg/${icons[i]}.svg"),
                         );
                       }), //:TODO
 
