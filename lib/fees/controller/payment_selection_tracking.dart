@@ -8,8 +8,71 @@ import 'package:m_skool_flutter/fees/model/disable_terms_model.dart';
 
 class PaymentSelectionTracking extends GetxController {
   final RxList<Selections> selectedCheckBox = RxList();
-
+  final RxList<SelectedInstallment> selectedInstallment = RxList();
   final RxList<PaymentInfo> payment = RxList();
+  RxInt totalInstallment = RxInt(-1);
+
+  RxString totalAmount = RxString("0");
+
+  void updateTotalAmount(String newAmt) {
+    totalAmount.value = newAmt;
+  }
+}
+
+class SelectedInstallment {
+  final CustomgGrplistValues groupInfo;
+  final DisableTermsModelValues disableTermsModelValues;
+  SelectedInstallment({
+    required this.groupInfo,
+    required this.disableTermsModelValues,
+  });
+
+  SelectedInstallment copyWith({
+    CustomgGrplistValues? groupInfo,
+    DisableTermsModelValues? disableTermsModelValues,
+  }) {
+    return SelectedInstallment(
+      groupInfo: groupInfo ?? this.groupInfo,
+      disableTermsModelValues:
+          disableTermsModelValues ?? this.disableTermsModelValues,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'groupInfo': groupInfo.toJson(),
+      'disableTermsModelValues': disableTermsModelValues.toJson(),
+    };
+  }
+
+  factory SelectedInstallment.fromMap(Map<String, dynamic> map) {
+    return SelectedInstallment(
+      groupInfo: CustomgGrplistValues.fromJson(
+          map['groupInfo'] as Map<String, dynamic>),
+      disableTermsModelValues: DisableTermsModelValues.fromJson(
+          map['disableTermsModelValues'] as Map<String, dynamic>),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory SelectedInstallment.fromJson(String source) =>
+      SelectedInstallment.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() =>
+      'SelectedInstallment(groupInfo: $groupInfo, disableTermsModelValues: $disableTermsModelValues)';
+
+  @override
+  bool operator ==(covariant SelectedInstallment other) {
+    if (identical(this, other)) return true;
+
+    return other.groupInfo == groupInfo &&
+        other.disableTermsModelValues == disableTermsModelValues;
+  }
+
+  @override
+  int get hashCode => groupInfo.hashCode ^ disableTermsModelValues.hashCode;
 }
 
 class Selections {
@@ -17,11 +80,13 @@ class Selections {
   final int fmtId;
   RxBool isDisabled;
   RxBool isChecked;
+  final int index;
   Selections({
     required this.fmggId,
     required this.fmtId,
     required this.isDisabled,
     required this.isChecked,
+    required this.index,
   });
 
   Selections copyWith({
@@ -29,12 +94,14 @@ class Selections {
     int? fmtId,
     RxBool? isDisabled,
     RxBool? isChecked,
+    int? index,
   }) {
     return Selections(
       fmggId: fmggId ?? this.fmggId,
       fmtId: fmtId ?? this.fmtId,
       isDisabled: isDisabled ?? this.isDisabled,
       isChecked: isChecked ?? this.isChecked,
+      index: index ?? this.index,
     );
   }
 

@@ -95,4 +95,10 @@ class URLS {
       "api/FeeOnlinePaymentFacade/getFeetotalamount";
   static String getInstallmentDetails =
       "api/FeeOnlinePaymentFacade/getpagedetails";
+
+  static String openPaymentGateWay =
+      "api/FeeOnlinePaymentFacade/mobilepayuconnect/";
+
+  static String razorPayResponse =
+      "api/FeeOnlinePaymentFacade/Razorpaypaymentresponse";
 }

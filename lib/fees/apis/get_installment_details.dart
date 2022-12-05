@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/fees/controller/pay_online_data_controller.dart'
 import 'package:m_skool_flutter/fees/controller/payment_selection_tracking.dart';
 import 'package:m_skool_flutter/fees/model/custom_grp_list.dart';
 import 'package:m_skool_flutter/fees/model/disable_terms_model.dart';
+import 'package:m_skool_flutter/fees/model/fill_student_model.dart';
 import 'package:m_skool_flutter/fees/model/installment_model.dart';
 import 'package:m_skool_flutter/main.dart';
 
@@ -39,6 +40,10 @@ class GetInstallmentDetails {
           DisableTermsModel.fromJson(response.data['disableterms']);
       final CustomgGrplist customgGrplist =
           CustomgGrplist.fromJson(response.data['customgrplist']);
+      final FillStudentModel fillStudentModel =
+          FillStudentModel.fromJson(response.data['fillstudent']);
+      payOnlineDataController.updateFillStudent(fillStudentModel.values!);
+
       List<InstallmentModel> installments = [];
 
       for (int i = 0; i < customgGrplist.values!.length; i++) {
@@ -54,84 +59,56 @@ class GetInstallmentDetails {
             grplistValues: customgGrplist.values!.elementAt(i),
             disableTermsModelValues: disableTermsModelList));
       }
-
+      int index = -1;
+      if (tracking.selectedCheckBox.isNotEmpty) {
+        tracking.selectedCheckBox.clear();
+      }
       for (int i = 0; i < installments.length; i++) {
         logger.d(installments.elementAt(i).grplistValues.toJson());
         for (int j = 0;
             j < installments.elementAt(i).disableTermsModelValues.length;
             j++) {
-          tracking.selectedCheckBox.add(Selections(
-            fmggId: installments
-                .elementAt(i)
-                .disableTermsModelValues
-                .elementAt(j)
-                .fMGGId!,
-            fmtId: installments
-                .elementAt(i)
-                .disableTermsModelValues
-                .elementAt(j)
-                .fmtId!,
-            isDisabled: installments
-                        .elementAt(i)
-                        .disableTermsModelValues
-                        .elementAt(j)
-                        .paid! >=
-                    installments
-                        .elementAt(i)
-                        .disableTermsModelValues
-                        .elementAt(j)
-                        .payable!
-                ? RxBool(true)
-                : RxBool(false),
-            isChecked: installments
-                        .elementAt(i)
-                        .disableTermsModelValues
-                        .elementAt(j)
-                        .paid! >=
-                    installments
-                        .elementAt(i)
-                        .disableTermsModelValues
-                        .elementAt(j)
-                        .payable!
-                ? RxBool(true)
-                : RxBool(false),
-          ));
-          // tracking.selectedCheckBox.add(RxMap({
-          //   "fmggId": installments
-          //       .elementAt(i)
-          //       .disableTermsModelValues
-          //       .elementAt(j)
-          //       .fMGGId,
-          //   "fmttId": installments
-          //       .elementAt(i)
-          //       .disableTermsModelValues
-          //       .elementAt(j)
-          //       .fmtId,
-          //   "disable": installments
-          //               .elementAt(i)
-          //               .disableTermsModelValues
-          //               .elementAt(j)
-          //               .paid! >=
-          //           installments
-          //               .elementAt(i)
-          //               .disableTermsModelValues
-          //               .elementAt(j)
-          //               .payable!
-          //       ? true
-          //       : false,
-          //   "checked": installments
-          //               .elementAt(i)
-          //               .disableTermsModelValues
-          //               .elementAt(j)
-          //               .paid! >=
-          //           installments
-          //               .elementAt(i)
-          //               .disableTermsModelValues
-          //               .elementAt(j)
-          //               .payable!
-          //       ? true
-          //       : false,
-          // }));
+          index = index + 1;
+          logger.d(index);
+          tracking.selectedCheckBox.add(
+            Selections(
+              fmggId: installments
+                  .elementAt(i)
+                  .disableTermsModelValues
+                  .elementAt(j)
+                  .fMGGId!,
+              fmtId: installments
+                  .elementAt(i)
+                  .disableTermsModelValues
+                  .elementAt(j)
+                  .fmtId!,
+              isDisabled: installments
+                          .elementAt(i)
+                          .disableTermsModelValues
+                          .elementAt(j)
+                          .paid! >=
+                      installments
+                          .elementAt(i)
+                          .disableTermsModelValues
+                          .elementAt(j)
+                          .payable!
+                  ? RxBool(true)
+                  : RxBool(false),
+              isChecked: installments
+                          .elementAt(i)
+                          .disableTermsModelValues
+                          .elementAt(j)
+                          .paid! >=
+                      installments
+                          .elementAt(i)
+                          .disableTermsModelValues
+                          .elementAt(j)
+                          .payable!
+                  ? RxBool(true)
+                  : RxBool(false),
+              index: index,
+            ),
+          );
         }
       }
       payOnlineDataController.updateInstallment(installments);

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/fees/model/academic_year_fee_detail_model.dart';
+import 'package:m_skool_flutter/fees/model/fill_student_model.dart';
 import 'package:m_skool_flutter/fees/model/installment_model.dart';
 
 class PayOnlineDataController extends GetxController {
@@ -7,9 +8,17 @@ class PayOnlineDataController extends GetxController {
   final RxBool isAcademicFeeDetailLoaded = RxBool(false);
   final RxBool isInstallmentDetailLoaded = RxBool(false);
   final RxBool isPayingStarted = RxBool(false);
+  final RxList<FillStudentModelValues> fillStudent = RxList();
 
   void updateisPageLoading(bool b) {
     isPageLoading.value = b;
+  }
+
+  void updateFillStudent(List<FillStudentModelValues> model) {
+    if (fillStudent.isNotEmpty) {
+      fillStudent.clear();
+    }
+    fillStudent.addAll(model);
   }
 
   void updateIsAcademicFeeDetailLoaded(bool b) {
