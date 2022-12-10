@@ -42,7 +42,7 @@ class GetAcademicFeeDetailBalanceApi {
           AcademicYearFeeDtlModel.fromJson(
               response.data['filonlinepaymentgrid']);
 
-      if (response.data.values == null) {
+      if (response.data.currpaymentdetailsValues == null) {
         //Error
         return;
       }

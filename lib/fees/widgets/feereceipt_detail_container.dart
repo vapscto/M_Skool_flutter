@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:m_skool_flutter/fees/model/fee_receipt_details_model.dart';
 
 class FeeReceiptDetailContainer extends StatefulWidget {
-  final Fillstudentviewdetails dataModel;
+  final FillStudentViewDetails dataModel;
   const FeeReceiptDetailContainer({
     super.key,
     required this.dataModel,
@@ -123,7 +121,7 @@ class _FeeReceiptDetailContainerState extends State<FeeReceiptDetailContainer> {
                     fontWeight: FontWeight.w500),
               ),
               Text(
-                'Type                    : ${widget.dataModel.values!.first.fmccConcessionName}',
+                'Type                    : ${widget.dataModel.values!.first.fMCCConcessionName}',
                 style: const TextStyle(
                     fontSize: 9,
                     color: Colors.black,

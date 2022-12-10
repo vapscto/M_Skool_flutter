@@ -1,10 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
 import 'package:m_skool_flutter/fees/model/fee_receipt_no_model.dart';
-import 'package:m_skool_flutter/main.dart';
 
 class ReceiptNoCard extends StatefulWidget {
   final ReceiptNoList receiptDetail;
@@ -55,7 +50,7 @@ class _ReceiptNoCardState extends State<ReceiptNoCard> {
               );
             },
           ),
-          Text(widget.receiptDetail.receiptNo!),
+          Text(widget.receiptDetail.fyPReceiptNo!),
         ],
       ),
     );

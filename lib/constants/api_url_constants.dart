@@ -69,9 +69,9 @@ class URLS {
 
   // Fee Module Endpoints
   static String getFeeAnalysis = 'api/CumulativeFeeAnalysisFacade/getloaddata/';
-  static String getFeeReceiptYear = 'api/FeeReceiptFacade/getloaddata/';
-  static String getFeeReceiptNo = 'api/FeeReceiptFacade/getrecdetails/';
-  static String getFeeReceiptDetails = 'api/FeeReceiptFacade/printreceipt/';
+  static String getFeeReceiptYear = 'api/FeesCtrl/feereceiptgetloaddata/';
+  static String getFeeReceiptNo = 'api/FeesCtrl/getrecdetails/';
+  static String getFeeReceiptDetails = 'api/FeesCtrl/printreceipt/';
 
   // Exam module
   static String getExamAcademicYear = 'api/ExamReportFacade/getloaddata/';
@@ -80,8 +80,8 @@ class URLS {
   static String getMarksOverview = 'api/ExamReportFacade/StudentExamDetails/';
 
   //Time Table
-  static String tt = "api/Student_TTFacade/getStudentTT/";
-  static String getloaddata = "/api/IVRM_InteractionsFacade/getloaddata/";
+  static String tt = "api/AdmissionCtrl/getStudentTT/";
+  static String getloaddata = "api/AdmissionCtrl/ttgetloaddata/";
 
   //ForgotPassword
   static String verifyUser = "api/LoginFacade/VerifyUserName";

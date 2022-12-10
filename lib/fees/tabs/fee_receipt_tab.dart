@@ -1,15 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_titled_container/flutter_titled_container.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
-import 'package:data_tables/data_tables.dart';
 import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
 import 'package:m_skool_flutter/fees/model/fee_receipt_year_list_model.dart';
 import 'package:m_skool_flutter/fees/widgets/feereceipt_detail_container.dart';
-import 'package:m_skool_flutter/main.dart';
 
 import '../../controller/global_utilities.dart';
 import '../../controller/mskoll_controller.dart';
@@ -34,7 +27,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
   final ScrollController _controller = ScrollController();
   final feeController = Get.put(FeeController());
 
-  YearlistValue? selectedValue;
+  YearlistValues? selectedValue;
 
   Future<void> getFeeYearList() async {
     feeController.isfeeloading(true);
@@ -48,7 +41,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
         .then((value) {
       if (value) {
         selectedValue = feeController.feeReceiptYearList.first;
-        getFeeReceiptList(this.selectedValue!.asmaYId!);
+        getFeeReceiptList(selectedValue!.asmaYId!);
       }
       debugPrint(value.toString());
     });
@@ -118,7 +111,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                           ),
                         ],
                       ),
-                      child: DropdownButtonFormField<YearlistValue>(
+                      child: DropdownButtonFormField<YearlistValues>(
                         value: selectedValue,
                         decoration: InputDecoration(
                           focusedBorder: const OutlineInputBorder(

@@ -8,8 +8,6 @@ import 'package:path_provider/path_provider.dart';
 import 'config/localization/localization_services.dart';
 import 'config/themes/theme_data.dart';
 import 'controller/theme_controller.dart';
-import 'screens/authentication_screen.dart';
-import 'screens/home.dart';
 
 class MyFilter extends LogFilter {
   @override
@@ -76,7 +74,7 @@ class MyApp extends StatelessWidget {
               'en',
               'US',
             ),
-            home: SplashScreen(),
+            home: const SplashScreen(),
             // home: (logInBox!.get("isLoggedIn") == null ||
             //         !logInBox!.get("isLoggedIn"))
             //     ? const Home() //const Authentication()

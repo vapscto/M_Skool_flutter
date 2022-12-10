@@ -13,12 +13,12 @@ class FeeController extends GetxController {
   RxList<HeadwiseAnalysisData> headWiseAnalysisData =
       <HeadwiseAnalysisData>[].obs;
 
-  RxList<YearlistValue> feeReceiptYearList = <YearlistValue>[].obs;
+  RxList<YearlistValues> feeReceiptYearList = <YearlistValues>[].obs;
 
   RxList<ReceiptNoList> feeReceiptNoList = <ReceiptNoList>[].obs;
 
-  RxList<Fillstudentviewdetails> feeReceiptDetailsList =
-      <Fillstudentviewdetails>[].obs;
+  RxList<FillStudentViewDetails> feeReceiptDetailsList =
+      <FillStudentViewDetails>[].obs;
 
   RxBool isLoading = RxBool(false);
   RxBool isFeeLoading = RxBool(false);
@@ -156,9 +156,6 @@ class FeeController extends GetxController {
           feeReceiptDetailsModel.fillstudentviewdetails!.values != null) {
         feeReceiptDetailsList
             .add(feeReceiptDetailsModel.fillstudentviewdetails!);
-
-        logger.d('This one', feeReceiptDetailsList);
-
         return true;
       }
 
