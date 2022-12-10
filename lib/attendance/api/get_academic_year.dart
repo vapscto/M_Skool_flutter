@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/attendance/controller/attendance_handler.dart';
-import 'package:m_skool_flutter/coe/models/academic_year_model.dart';
+import 'package:m_skool_flutter/attendance/model/academic_year_model.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -19,7 +19,7 @@ class GetAttendanceAcademicYear {
     handler.updateErrorHappend(false);
     handler.updateIsLoadingWholeScreen(true);
     final Dio ins = getGlobalDio();
-    String getAcadmeicApiUrl = base + URLS.getAcademicYear;
+    String getAcadmeicApiUrl = base + URLS.getAttAcademicYear;
 
     try {
       Response response = await ins.post(

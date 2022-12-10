@@ -26,8 +26,7 @@ class GetAttendanceDetails {
         "AMST_Id": amstId,
       });
       final AttendanceDetailModel attendanceDetailModel =
-          AttendanceDetailModel.fromJson(
-              response.data['academicyearAttendancedata']);
+          AttendanceDetailModel.fromJson(response.data['attList']);
 
       handler.updateAttendanceData(attendanceDetailModel.values!);
       logger.d(attendanceDetailModel.toJson());

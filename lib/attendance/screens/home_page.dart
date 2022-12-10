@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/attendance/api/get_academic_year.dart';
 import 'package:m_skool_flutter/attendance/api/get_attendance_details.dart';
 import 'package:m_skool_flutter/attendance/controller/attendance_handler.dart';
+import 'package:m_skool_flutter/attendance/model/academic_year_model.dart';
 import 'package:m_skool_flutter/attendance/model/attendance_detail_model.dart';
 import 'package:m_skool_flutter/attendance/screens/attendance_details.dart';
-import 'package:m_skool_flutter/coe/models/academic_year_model.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -109,7 +109,7 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                 // border: OutlineInputBorder(
                                 //   borderRadius: BorderRadius.circular(12.0),
                                 // ),
-                                contentPadding: EdgeInsets.all(16.0),
+                                contentPadding: const EdgeInsets.all(16.0),
                                 focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.transparent,

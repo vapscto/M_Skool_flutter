@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/attendance/model/academic_year_model.dart';
 import 'package:m_skool_flutter/attendance/model/attendance_detail_model.dart';
-import 'package:m_skool_flutter/coe/models/academic_year_model.dart';
 
 class AttendanceHandler extends GetxController {
   RxList<AttyearlistValues> academicYearList = RxList<AttyearlistValues>();

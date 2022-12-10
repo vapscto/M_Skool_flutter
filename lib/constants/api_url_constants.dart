@@ -49,7 +49,8 @@ class URLS {
   static String coeData = "api/COEFacade/getcoedata/";
 
   //Attendance
-  static String getAttendanceDetails = "api/StudentDashboardFacade/Getdetails";
+  static String getAttAcademicYear = "api/AttendanceDetailsFacade/getloaddata/";
+  static String getAttendanceDetails = "api/AdmissionCtrl/attGetdetails/";
 
   //NoticeBoard
   static String getNotice = "api/StudentDashboardFacade/onclick_notice/";
