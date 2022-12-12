@@ -74,3 +74,54 @@ String baseUrlFromInsCode(String pageName, MskoolController mskoolController) {
   }
   return "";
 }
+
+String getDashBoardIconByName(String title) {
+  String returnValue = "assets/images/";
+  switch (title) {
+    case "Student Attendance":
+      returnValue += "Attendance.png";
+      break;
+    case "Fee Details":
+      returnValue += "FeeReceipt.png";
+      break;
+    case "Online Fee Payment":
+      returnValue += "OnlinePayment.png";
+      break;
+    case "Fee Analysis":
+      returnValue += "FeeAnalysis.png";
+      break;
+    case "Classwork":
+      returnValue += "Classwork.png";
+      break;
+    case "Homework":
+      returnValue += "Homework.png";
+      break;
+    case "COE":
+      returnValue += "Coe.png";
+      break;
+    case "Student Notice Board":
+      returnValue += "Noticeboard.png";
+      break;
+    case "Library":
+      returnValue += "Library.png";
+      break;
+    case "Syllabus":
+      returnValue += "Attendance.png";
+      break;
+    case "Exam":
+      returnValue += "Exam.png";
+      break;
+    case "Interaction":
+      returnValue += "Interaction.png";
+      break;
+    case "Apply Certificate":
+      returnValue += "Certificate.png";
+      break;
+    case "Time Table":
+      returnValue += "Timetable.png";
+      break;
+    default:
+      returnValue += "Timetable.png";
+  }
+  return returnValue;
+}

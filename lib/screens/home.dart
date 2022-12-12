@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -13,14 +12,11 @@ import 'package:m_skool_flutter/information/screen/info_home.dart';
 import 'package:m_skool_flutter/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/model/dashboard_item_model.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/tabs/profile_tab.dart';
 import 'package:m_skool_flutter/timetable/screens/time_table_home.dart';
 
 import '../fees/screens/fee_home_screen.dart';
-import '../widget/dashboard_profile.dart';
 
 class Home extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -67,7 +63,7 @@ class _HomeState extends State<Home> {
       ),
     );
     homeViewPage.add(Container(
-      child: Text("Interaction"),
+      child: const Text("Interaction"),
     ));
     homeViewPage.add(
       CoeHome(
@@ -260,122 +256,122 @@ class _HomeTabState extends State<HomeTab> {
           ),
         ],
       ),
-      drawer: Drawer(),
+      drawer: const Drawer(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DashboardProfile(loginSuccessModel: widget.loginSuccessModel),
+            // DashboardProfile(loginSuccessModel: widget.loginSuccessModel),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: Get.height * 0.2,
-                    width: double.infinity,
-                    child: CarouselSlider.builder(
-                      itemCount: 2,
-                      itemBuilder: (_, index, i) {
-                        return Container(
-                          padding: const EdgeInsets.all(20.0),
-                          height: Get.height * 0.2,
-                          width: Get.width,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(16.0),
-                            image: const DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage("assets/images/banner.png"),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 7,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(
-                                      height: 12.0,
-                                    ),
-                                    Text(
-                                      "IT’S SAKSHI’S BIRTHDAY",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium!
-                                          .merge(
-                                            const TextStyle(
-                                              fontSize: 20.0,
-                                            ),
-                                          ),
-                                    ),
-                                    const SizedBox(
-                                      height: 8.0,
-                                    ),
-                                    Text(
-                                      "Wohoo! It’s your friends birthday! Make their day by wishing them on this special day",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .merge(
-                                            const TextStyle(
-                                              fontSize: 15.0,
-                                            ),
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const Expanded(flex: 2, child: SizedBox()),
-                            ],
-                          ),
-                        );
-                      },
-                      options: CarouselOptions(
-                        aspectRatio: 16 / 9,
-                        autoPlay: true,
-                        initialPage: 0,
-                        onPageChanged: (i, _) => carouselNotifier.value = i,
-                        viewportFraction: 1,
-                        enlargeCenterPage: true,
-                        enableInfiniteScroll: true,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  ValueListenableBuilder(
-                      valueListenable: carouselNotifier,
-                      builder: (_, index, c) {
-                        return Center(
-                          child: Stack(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: const Color(0xffDFEFFD),
-                                    borderRadius: BorderRadius.circular(10)),
-                                height: 10,
-                                width: 2 * 21, //itemCount * chuckWidth
-                              ),
-                              AnimatedPositioned(
-                                top: 0,
-                                left: index * 21,
-                                duration: const Duration(microseconds: 500),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xff1E38FC),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  height: 10,
-                                  width: 21,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                  const SizedBox(
-                    height: 36.0,
-                  ),
+                  // SizedBox(
+                  //   height: Get.height * 0.2,
+                  //   width: double.infinity,
+                  //   child: CarouselSlider.builder(
+                  //     itemCount: 2,
+                  //     itemBuilder: (_, index, i) {
+                  //       return Container(
+                  //         padding: const EdgeInsets.all(20.0),
+                  //         height: Get.height * 0.2,
+                  //         width: Get.width,
+                  //         decoration: BoxDecoration(
+                  //           color: Colors.grey.shade100,
+                  //           borderRadius: BorderRadius.circular(16.0),
+                  //           image: const DecorationImage(
+                  //             fit: BoxFit.cover,
+                  //             image: AssetImage("assets/images/banner.png"),
+                  //           ),
+                  //         ),
+                  //         child: Row(
+                  //           children: [
+                  //             Expanded(
+                  //               flex: 7,
+                  //               child: Column(
+                  //                 crossAxisAlignment: CrossAxisAlignment.start,
+                  //                 children: [
+                  //                   const SizedBox(
+                  //                     height: 12.0,
+                  //                   ),
+                  //                   Text(
+                  //                     "IT’S SAKSHI’S BIRTHDAY",
+                  //                     style: Theme.of(context)
+                  //                         .textTheme
+                  //                         .titleMedium!
+                  //                         .merge(
+                  //                           const TextStyle(
+                  //                             fontSize: 20.0,
+                  //                           ),
+                  //                         ),
+                  //                   ),
+                  //                   const SizedBox(
+                  //                     height: 8.0,
+                  //                   ),
+                  //                   Text(
+                  //                     "Wohoo! It’s your friends birthday! Make their day by wishing them on this special day",
+                  //                     style: Theme.of(context)
+                  //                         .textTheme
+                  //                         .labelMedium!
+                  //                         .merge(
+                  //                           const TextStyle(
+                  //                             fontSize: 15.0,
+                  //                           ),
+                  //                         ),
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //             const Expanded(flex: 2, child: SizedBox()),
+                  //           ],
+                  //         ),
+                  //       );
+                  //     },
+                  //     options: CarouselOptions(
+                  //       aspectRatio: 16 / 9,
+                  //       autoPlay: true,
+                  //       initialPage: 0,
+                  //       onPageChanged: (i, _) => carouselNotifier.value = i,
+                  //       viewportFraction: 1,
+                  //       enlargeCenterPage: true,
+                  //       enableInfiniteScroll: true,
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 10),
+                  // ValueListenableBuilder(
+                  //     valueListenable: carouselNotifier,
+                  //     builder: (_, index, c) {
+                  //       return Center(
+                  //         child: Stack(
+                  //           children: [
+                  //             Container(
+                  //               decoration: BoxDecoration(
+                  //                   color: const Color(0xffDFEFFD),
+                  //                   borderRadius: BorderRadius.circular(10)),
+                  //               height: 10,
+                  //               width: 2 * 21, //itemCount * chuckWidth
+                  //             ),
+                  //             AnimatedPositioned(
+                  //               top: 0,
+                  //               left: index * 21,
+                  //               duration: const Duration(microseconds: 500),
+                  //               child: Container(
+                  //                 decoration: BoxDecoration(
+                  //                     color: const Color(0xff1E38FC),
+                  //                     borderRadius: BorderRadius.circular(10)),
+                  //                 height: 10,
+                  //                 width: 21,
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       );
+                  //     }),
+                  // const SizedBox(
+                  //   height: 36.0,
+                  // ),
                   Text(
                     "Dashboard",
                     style: Theme.of(context).textTheme.titleMedium!.merge(
@@ -385,22 +381,138 @@ class _HomeTabState extends State<HomeTab> {
                   const SizedBox(
                     height: 16.0,
                   ),
-                  GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4, childAspectRatio: 1),
-                      itemCount: icons.length, //widget.loginSuccessModel
-                      //.staffmobileappprivileges!.values!.length,
-                      itemBuilder: (_, i) {
-                        return Center(
-                          child: SvgPicture.asset("assets/svg/${icons[i]}.svg"),
-                        );
-                      }), //:TODO
-
+                  Center(
+                    child: Wrap(
+                      alignment: WrapAlignment.spaceAround,
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      children: List.generate(
+                          widget.loginSuccessModel.staffmobileappprivileges!
+                              .values!.length,
+                          (i) => InkWell(
+                                onTap: () {
+                                  switch (widget
+                                      .loginSuccessModel
+                                      .staffmobileappprivileges!
+                                      .values![i]
+                                      .pagename) {
+                                    case "Student Attendance":
+                                      Get.to(() => AttendanceHomeScreen(
+                                          loginSuccessModel:
+                                              widget.loginSuccessModel,
+                                          mskoolController:
+                                              widget.mskoolController));
+                                      break;
+                                    case "Fee Details":
+                                      Get.to(() => FeeHomeScreen(
+                                          loginSuccessModel:
+                                              widget.loginSuccessModel,
+                                          mskoolController:
+                                              widget.mskoolController));
+                                      break;
+                                    case "Online Fee Payment":
+                                      Get.to(() => FeeHomeScreen(
+                                          loginSuccessModel:
+                                              widget.loginSuccessModel,
+                                          mskoolController:
+                                              widget.mskoolController));
+                                      break;
+                                    case "Fee Analysis":
+                                      Get.to(() => FeeHomeScreen(
+                                          loginSuccessModel:
+                                              widget.loginSuccessModel,
+                                          mskoolController:
+                                              widget.mskoolController));
+                                      break;
+                                    case "Classwork":
+                                      Get.to(() => InfoHome(
+                                            loginSuccessModel:
+                                                widget.loginSuccessModel,
+                                            mskoolController:
+                                                widget.mskoolController,
+                                          ));
+                                      break;
+                                    case "Homework":
+                                      Get.to(() => InfoHome(
+                                            loginSuccessModel:
+                                                widget.loginSuccessModel,
+                                            mskoolController:
+                                                widget.mskoolController,
+                                          ));
+                                      break;
+                                    case "COE":
+                                      Get.to(() => CoeHome(
+                                            loginSuccessModel:
+                                                widget.loginSuccessModel,
+                                            mskoolController:
+                                                widget.mskoolController,
+                                          ));
+                                      break;
+                                    case "Student Notice Board":
+                                      break;
+                                    case "Library":
+                                      break;
+                                    case "Syllabus":
+                                      break;
+                                    case "Exam":
+                                      Get.to(() => ExamHome(
+                                            loginSuccessModel:
+                                                widget.loginSuccessModel,
+                                            mskoolController:
+                                                widget.mskoolController,
+                                          ));
+                                      break;
+                                    case "Interaction":
+                                      Get.to(() => InteractionHomeScreen(
+                                            loginSuccessModel:
+                                                widget.loginSuccessModel,
+                                            mskoolController:
+                                                widget.mskoolController,
+                                          ));
+                                      break;
+                                    case "Apply Certificate":
+                                      Get.to(() => CertificateHomeScreen(
+                                            loginSuccessModel:
+                                                widget.loginSuccessModel,
+                                            mskoolController:
+                                                widget.mskoolController,
+                                          ));
+                                      break;
+                                    case "Time Table":
+                                      Get.to(() => const TimeTableHome());
+                                      break;
+                                    default:
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: SizedBox(
+                                    width: 80,
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.asset(
+                                            getDashBoardIconByName(
+                                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}"),
+                                            height: 60,
+                                          ),
+                                        ),
+                                        Text(
+                                          "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                          textAlign: TextAlign.center,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )),
+                    ),
+                  ),
                   ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: widget.loginSuccessModel
                           .staffmobileappprivileges!.values!.length,
                       shrinkWrap: true,

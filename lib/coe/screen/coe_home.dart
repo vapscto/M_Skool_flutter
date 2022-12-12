@@ -21,12 +21,12 @@ import 'package:m_skool_flutter/widget/err_widget.dart';
 class CoeHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  final PageController pageController;
+  final PageController? pageController;
   const CoeHome(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController,
-      required this.pageController});
+      this.pageController});
 
   @override
   State<CoeHome> createState() => _CoeHomeState();
@@ -97,9 +97,13 @@ class _CoeHomeState extends State<CoeHome> {
             size: 34,
           ),
           onPressed: () {
-            widget.pageController.animateToPage(0,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.fastLinearToSlowEaseIn);
+            if (widget.pageController != null) {
+              widget.pageController!.animateToPage(0,
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.fastLinearToSlowEaseIn);
+            } else {
+              Get.back();
+            }
           },
         ),
         leadingWidth: 30,
@@ -321,7 +325,7 @@ class CoeItem extends StatelessWidget {
     return CustomContainer(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
-        color: Color.fromARGB(103, 238, 232, 255),
+        color: const Color.fromARGB(103, 238, 232, 255),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
