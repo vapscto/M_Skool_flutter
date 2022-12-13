@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
@@ -19,13 +17,13 @@ import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
 class NoticeHome extends StatefulWidget {
-  final bool showAppBar;
+  final String? appBarTitle;
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final HwCwNbController hwCwNbController;
   const NoticeHome({
     super.key,
-    required this.showAppBar,
+    this.appBarTitle,
     required this.loginSuccessModel,
     required this.mskoolController,
     required this.hwCwNbController,
@@ -41,8 +39,8 @@ class _NoticeHomeState extends State<NoticeHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.showAppBar
-          ? CustomAppBar(title: "Notice".tr).getAppBar()
+      appBar: widget.appBarTitle != null
+          ? CustomAppBar(title: widget.appBarTitle!).getAppBar()
           : null,
       body: Obx(() {
         return widget.hwCwNbController.filter > 0

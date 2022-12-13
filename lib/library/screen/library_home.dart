@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/library/api/library_data_api.dart';
 import 'package:m_skool_flutter/library/model/library_data_model.dart';
@@ -15,18 +12,21 @@ class LibraryHome extends StatelessWidget {
   final int asmayId;
   final int miId;
   final int asmtId;
+  final String title;
   final String base;
-  const LibraryHome(
-      {super.key,
-      required this.asmayId,
-      required this.miId,
-      required this.asmtId,
-      required this.base});
+  const LibraryHome({
+    super.key,
+    required this.asmayId,
+    required this.miId,
+    required this.asmtId,
+    required this.base,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Library".tr).getAppBar(),
+      appBar: CustomAppBar(title: title).getAppBar(),
       body: FutureBuilder<List<LibraryDetailsValues>>(
           future: LibraryDataApi.instance
               .getLibraryData(miId, asmayId, asmtId, base),

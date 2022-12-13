@@ -52,8 +52,8 @@ class _AttendanceColumnChartState extends State<AttendanceColumnChart> {
       ),
       primaryYAxis: NumericAxis(
           minimum: 0,
-          maximum: 35,
-          interval: 5,
+          // maximum: 35,
+          // interval: 5,
           labelStyle: Theme.of(context)
               .textTheme
               .labelSmall!
@@ -64,14 +64,13 @@ class _AttendanceColumnChartState extends State<AttendanceColumnChart> {
       //zoomPanBehavior: ZoomPanBehavior(enablePinching: true),
       series: <ChartSeries<ChartData, String>>[
         ColumnSeries(
-            name: "Total Class Held",
-            color: Theme.of(context).primaryColor,
+            name: "Class Held",
+            color: const Color(0xFFBEEDFF),
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(12.0),
               topRight: Radius.circular(12.0),
             ),
             dataSource: attendance.value,
-            xAxisName: "Months",
             xValueMapper: (datum, index) {
               return datum.xAxisValues.month;
             },
@@ -80,12 +79,13 @@ class _AttendanceColumnChartState extends State<AttendanceColumnChart> {
             }),
         ColumnSeries(
             name: "Total Present",
-            color: const Color(0xFFDFEFFD),
+            color: const Color(0xFF00A5E3),
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(12.0),
               topRight: Radius.circular(12.0),
             ),
             dataSource: attendance.value,
+            xAxisName: "Months",
             xValueMapper: (datum, index) {
               return datum.xAxisValues.month;
             },

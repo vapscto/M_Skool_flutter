@@ -120,6 +120,9 @@ String getDashBoardIconByName(String title) {
     case "Time Table":
       returnValue += "Timetable.png";
       break;
+    case "Fee Receipt":
+      returnValue += "FeeReceipt.png";
+      break;
     default:
       returnValue += "Timetable.png";
   }

@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:m_skool_flutter/fees/tabs/fee_analysis_tab.dart';
 import 'package:m_skool_flutter/fees/tabs/fee_receipt_tab.dart';
 import 'package:m_skool_flutter/fees/tabs/pay_online_tab.dart';
-import 'package:m_skool_flutter/main.dart';
 
 import '../../controller/mskoll_controller.dart';
 import '../../model/login_success_model.dart';
 import '../../widget/custom_back_btn.dart';
-import 'fee_receipt_home.dart';
 
 class FeeHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;

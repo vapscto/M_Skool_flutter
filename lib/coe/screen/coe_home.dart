@@ -14,9 +14,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
-import 'package:m_skool_flutter/widget/err_widget.dart';
 
 class CoeHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -44,8 +42,9 @@ class _CoeHomeState extends State<CoeHome> {
   // Rx<AttyearlistValues?>? selectedValue =
   //     Rx<AttyearlistValues>(AttyearlistValues());
 
-  Map<String, dynamic> selectedMonth = fullMonthsWithIndex.first;
-  RxInt month = RxInt(1);
+  Map<String, dynamic> selectedMonth =
+      fullMonthsWithIndex[DateTime.now().month - 1];
+  RxInt month = RxInt(DateTime.now().month);
   RxInt asmayId = RxInt(0);
 
   AttyearlistValues? selectedValue;

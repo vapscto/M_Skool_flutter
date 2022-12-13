@@ -1,18 +1,27 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/attendance/screens/home_page.dart';
 import 'package:m_skool_flutter/certificates/screens/cert_home.dart';
+import 'package:m_skool_flutter/classwork/screen/classwork_home_screen.dart';
 import 'package:m_skool_flutter/coe/screen/coe_home.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/exam/screen/exam_home.dart';
 import 'package:m_skool_flutter/feedback/screens/feedback_home.dart';
+import 'package:m_skool_flutter/fees/screens/fee_analysis_screen.dart';
+import 'package:m_skool_flutter/fees/screens/fee_receipt_home.dart';
+import 'package:m_skool_flutter/fees/screens/online_payment_screen.dart';
+import 'package:m_skool_flutter/homework/screen/home_work_screen.dart';
+import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/information/screen/info_home.dart';
 import 'package:m_skool_flutter/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/notice/screen/notice_home.dart';
+import 'package:m_skool_flutter/screens/home_page_drawer.dart';
 import 'package:m_skool_flutter/tabs/profile_tab.dart';
 import 'package:m_skool_flutter/timetable/screens/time_table_home.dart';
 
@@ -37,6 +46,7 @@ class _HomeState extends State<Home> {
   TextEditingController textEditingController = TextEditingController();
   ScrollController scrollController = ScrollController();
   RxList<LoginValues> values = RxList<LoginValues>();
+  final HwCwNbController hwCwNbController = Get.put(HwCwNbController());
 
   // List<DashboardItemModel> dashBoard = [
   //   DashboardItemModel(assetLoc: "assets/svg/task.svg", title: "Attendance"),
@@ -60,6 +70,7 @@ class _HomeState extends State<Home> {
       HomeTab(
         loginSuccessModel: widget.loginSuccessModel,
         mskoolController: widget.mskoolController,
+        hwCwNbController: hwCwNbController,
       ),
     );
     homeViewPage.add(Container(
@@ -208,11 +219,13 @@ class _HomeState extends State<Home> {
 class HomeTab extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final HwCwNbController hwCwNbController;
 
   const HomeTab({
     Key? key,
     required this.loginSuccessModel,
     required this.mskoolController,
+    required this.hwCwNbController,
   }) : super(key: key);
 
   @override
@@ -256,7 +269,11 @@ class _HomeTabState extends State<HomeTab> {
           ),
         ],
       ),
-      drawer: const Drawer(),
+      drawer: HomePageDrawer(
+        loginSuccessModel: widget.loginSuccessModel,
+        hwCwNbController: widget.hwCwNbController,
+        mskoolController: widget.mskoolController,
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -267,111 +284,111 @@ class _HomeTabState extends State<HomeTab> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // SizedBox(
-                  //   height: Get.height * 0.2,
-                  //   width: double.infinity,
-                  //   child: CarouselSlider.builder(
-                  //     itemCount: 2,
-                  //     itemBuilder: (_, index, i) {
-                  //       return Container(
-                  //         padding: const EdgeInsets.all(20.0),
-                  //         height: Get.height * 0.2,
-                  //         width: Get.width,
-                  //         decoration: BoxDecoration(
-                  //           color: Colors.grey.shade100,
-                  //           borderRadius: BorderRadius.circular(16.0),
-                  //           image: const DecorationImage(
-                  //             fit: BoxFit.cover,
-                  //             image: AssetImage("assets/images/banner.png"),
-                  //           ),
-                  //         ),
-                  //         child: Row(
-                  //           children: [
-                  //             Expanded(
-                  //               flex: 7,
-                  //               child: Column(
-                  //                 crossAxisAlignment: CrossAxisAlignment.start,
-                  //                 children: [
-                  //                   const SizedBox(
-                  //                     height: 12.0,
-                  //                   ),
-                  //                   Text(
-                  //                     "IT’S SAKSHI’S BIRTHDAY",
-                  //                     style: Theme.of(context)
-                  //                         .textTheme
-                  //                         .titleMedium!
-                  //                         .merge(
-                  //                           const TextStyle(
-                  //                             fontSize: 20.0,
-                  //                           ),
-                  //                         ),
-                  //                   ),
-                  //                   const SizedBox(
-                  //                     height: 8.0,
-                  //                   ),
-                  //                   Text(
-                  //                     "Wohoo! It’s your friends birthday! Make their day by wishing them on this special day",
-                  //                     style: Theme.of(context)
-                  //                         .textTheme
-                  //                         .labelMedium!
-                  //                         .merge(
-                  //                           const TextStyle(
-                  //                             fontSize: 15.0,
-                  //                           ),
-                  //                         ),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //             const Expanded(flex: 2, child: SizedBox()),
-                  //           ],
-                  //         ),
-                  //       );
-                  //     },
-                  //     options: CarouselOptions(
-                  //       aspectRatio: 16 / 9,
-                  //       autoPlay: true,
-                  //       initialPage: 0,
-                  //       onPageChanged: (i, _) => carouselNotifier.value = i,
-                  //       viewportFraction: 1,
-                  //       enlargeCenterPage: true,
-                  //       enableInfiniteScroll: true,
-                  //     ),
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 10),
-                  // ValueListenableBuilder(
-                  //     valueListenable: carouselNotifier,
-                  //     builder: (_, index, c) {
-                  //       return Center(
-                  //         child: Stack(
-                  //           children: [
-                  //             Container(
-                  //               decoration: BoxDecoration(
-                  //                   color: const Color(0xffDFEFFD),
-                  //                   borderRadius: BorderRadius.circular(10)),
-                  //               height: 10,
-                  //               width: 2 * 21, //itemCount * chuckWidth
-                  //             ),
-                  //             AnimatedPositioned(
-                  //               top: 0,
-                  //               left: index * 21,
-                  //               duration: const Duration(microseconds: 500),
-                  //               child: Container(
-                  //                 decoration: BoxDecoration(
-                  //                     color: const Color(0xff1E38FC),
-                  //                     borderRadius: BorderRadius.circular(10)),
-                  //                 height: 10,
-                  //                 width: 21,
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       );
-                  //     }),
-                  // const SizedBox(
-                  //   height: 36.0,
-                  // ),
+                  SizedBox(
+                    height: Get.height * 0.2,
+                    width: double.infinity,
+                    child: CarouselSlider.builder(
+                      itemCount: 2,
+                      itemBuilder: (_, index, i) {
+                        return Container(
+                          padding: const EdgeInsets.all(20.0),
+                          height: Get.height * 0.2,
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(16.0),
+                            image: const DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage("assets/images/banner.png"),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 7,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      height: 12.0,
+                                    ),
+                                    Text(
+                                      "IT’S SAKSHI’S BIRTHDAY",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .merge(
+                                            const TextStyle(
+                                              fontSize: 20.0,
+                                            ),
+                                          ),
+                                    ),
+                                    const SizedBox(
+                                      height: 8.0,
+                                    ),
+                                    Text(
+                                      "Wohoo! It’s your friends birthday! Make their day by wishing them on this special day",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
+                                          .merge(
+                                            const TextStyle(
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const Expanded(flex: 2, child: SizedBox()),
+                            ],
+                          ),
+                        );
+                      },
+                      options: CarouselOptions(
+                        aspectRatio: 16 / 9,
+                        autoPlay: true,
+                        initialPage: 0,
+                        onPageChanged: (i, _) => carouselNotifier.value = i,
+                        viewportFraction: 1,
+                        enlargeCenterPage: true,
+                        enableInfiniteScroll: true,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  ValueListenableBuilder(
+                      valueListenable: carouselNotifier,
+                      builder: (_, index, c) {
+                        return Center(
+                          child: Stack(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: const Color(0xffDFEFFD),
+                                    borderRadius: BorderRadius.circular(10)),
+                                height: 10,
+                                width: 2 * 21, //itemCount * chuckWidth
+                              ),
+                              AnimatedPositioned(
+                                top: 0,
+                                left: index * 21,
+                                duration: const Duration(microseconds: 500),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xff1E38FC),
+                                      borderRadius: BorderRadius.circular(10)),
+                                  height: 10,
+                                  width: 21,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                  const SizedBox(
+                    height: 36.0,
+                  ),
                   Text(
                     "Dashboard",
                     style: Theme.of(context).textTheme.titleMedium!.merge(
@@ -403,41 +420,58 @@ class _HomeTabState extends State<HomeTab> {
                                               widget.mskoolController));
                                       break;
                                     case "Fee Details":
-                                      Get.to(() => FeeHomeScreen(
-                                          loginSuccessModel:
-                                              widget.loginSuccessModel,
-                                          mskoolController:
-                                              widget.mskoolController));
+                                      // Get.to(() => FeeHomeScreen(
+                                      //     loginSuccessModel:
+                                      //         widget.loginSuccessModel,
+                                      //     mskoolController:
+                                      //         widget.mskoolController));
                                       break;
                                     case "Online Fee Payment":
-                                      Get.to(() => FeeHomeScreen(
+                                      Get.to(
+                                        () => OnlinePaymentScreen(
                                           loginSuccessModel:
                                               widget.loginSuccessModel,
                                           mskoolController:
-                                              widget.mskoolController));
+                                              widget.mskoolController,
+                                          title:
+                                              "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                        ),
+                                      );
                                       break;
                                     case "Fee Analysis":
-                                      Get.to(() => FeeHomeScreen(
+                                      Get.to(() => FeeAnalysisScreen(
+                                            loginSuccessModel:
+                                                widget.loginSuccessModel,
+                                            mskoolController:
+                                                widget.mskoolController,
+                                            title:
+                                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                          ));
+                                      break;
+                                    case "Classwork":
+                                      Get.to(() => ClassWorkHomeScreen(
                                           loginSuccessModel:
                                               widget.loginSuccessModel,
                                           mskoolController:
-                                              widget.mskoolController));
-                                      break;
-                                    case "Classwork":
-                                      Get.to(() => InfoHome(
-                                            loginSuccessModel:
-                                                widget.loginSuccessModel,
-                                            mskoolController:
-                                                widget.mskoolController,
-                                          ));
+                                              widget.mskoolController,
+                                          hwCwNbController:
+                                              widget.hwCwNbController,
+                                          title:
+                                              "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}"));
                                       break;
                                     case "Homework":
-                                      Get.to(() => InfoHome(
-                                            loginSuccessModel:
-                                                widget.loginSuccessModel,
-                                            mskoolController:
-                                                widget.mskoolController,
-                                          ));
+                                      Get.to(
+                                        () => HomeWorkScreen(
+                                          loginSuccessModel:
+                                              widget.loginSuccessModel,
+                                          mskoolController:
+                                              widget.mskoolController,
+                                          hwCwNbController:
+                                              widget.hwCwNbController,
+                                          title:
+                                              "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                        ),
+                                      );
                                       break;
                                     case "COE":
                                       Get.to(() => CoeHome(
@@ -448,8 +482,34 @@ class _HomeTabState extends State<HomeTab> {
                                           ));
                                       break;
                                     case "Student Notice Board":
+                                      Get.to(
+                                        () => NoticeHome(
+                                          loginSuccessModel:
+                                              widget.loginSuccessModel,
+                                          mskoolController:
+                                              widget.mskoolController,
+                                          hwCwNbController:
+                                              widget.hwCwNbController,
+                                          appBarTitle:
+                                              "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                        ),
+                                      );
                                       break;
                                     case "Library":
+                                      String base = baseUrlFromInsCode(
+                                          "portal", widget.mskoolController);
+                                      Get.to(
+                                        () => LibraryHome(
+                                          miId: widget.loginSuccessModel.mIID!,
+                                          asmayId:
+                                              widget.loginSuccessModel.asmaYId!,
+                                          asmtId:
+                                              widget.loginSuccessModel.amsTId!,
+                                          base: base,
+                                          title:
+                                              "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                        ),
+                                      );
                                       break;
                                     case "Syllabus":
                                       break;
@@ -479,6 +539,18 @@ class _HomeTabState extends State<HomeTab> {
                                       break;
                                     case "Time Table":
                                       Get.to(() => const TimeTableHome());
+                                      break;
+                                    case "Fee Receipt":
+                                      Get.to(
+                                        () => FeeReceiptHome(
+                                          loginSuccessModel:
+                                              widget.loginSuccessModel,
+                                          mskoolController:
+                                              widget.mskoolController,
+                                          title:
+                                              "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                        ),
+                                      );
                                       break;
                                     default:
                                   }
@@ -608,6 +680,7 @@ class _HomeTabState extends State<HomeTab> {
                                           widget.loginSuccessModel.asmaYId!,
                                       asmtId: widget.loginSuccessModel.amsTId!,
                                       base: base,
+                                      title: "Library",
                                     );
                                   },
                                 ),

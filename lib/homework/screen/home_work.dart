@@ -14,21 +14,21 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
-class HomeWorkScreen extends StatefulWidget {
+class HomeWork extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final HwCwNbController hwCwNbController;
-  const HomeWorkScreen(
+  const HomeWork(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController,
       required this.hwCwNbController});
 
   @override
-  State<HomeWorkScreen> createState() => _HomeWorkScreenState();
+  State<HomeWork> createState() => _HomeWorkState();
 }
 
-class _HomeWorkScreenState extends State<HomeWorkScreen> {
+class _HomeWorkState extends State<HomeWork> {
   final ScrollController listViewCtrl = ScrollController();
   @override
   void initState() {
