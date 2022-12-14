@@ -245,6 +245,11 @@ class _HomeTabState extends State<HomeTab> {
     // "timetable"
   ];
   @override
+  void initState() {
+    
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffold,

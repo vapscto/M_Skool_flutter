@@ -10,6 +10,7 @@ import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/model/profile_model.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/student_profile_cards.dart';
 
 class ProfileTab extends StatelessWidget {
   final MskoolController mskoolController;
@@ -38,7 +39,7 @@ class ProfileTab extends StatelessWidget {
           },
         ),
         leadingWidth: 30,
-        title: Text("Profile"),
+        title: const Text("Profile"),
         actions: [
           IconButton(
             icon: SvgPicture.asset('assets/svg/bell.svg'),
@@ -171,6 +172,26 @@ class ProfileTab extends StatelessWidget {
                                   )),
                                 ],
                               ),
+                              Row(
+                                children: [
+                                  const Expanded(
+                                      child: Text(
+                                    "Email Id",
+                                    textAlign: TextAlign.end,
+                                  )),
+                                  const SizedBox(
+                                    width: 12.0,
+                                  ),
+                                  const Text(":"),
+                                  const SizedBox(
+                                    width: 12.0,
+                                  ),
+                                  Expanded(
+                                      child: Text(
+                                    "${snapshot.data!.first.amsTEmailId}",
+                                  )),
+                                ],
+                              ),
                             ],
                           ),
                         ),
@@ -200,30 +221,37 @@ class ProfileTab extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 16.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: ListTile(
-                        tileColor: const Color(0xFFDBFDF5).withOpacity(0.5),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
-                        title: Text(
-                          "Email Id",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .merge(const TextStyle(fontSize: 12.0)),
-                        ),
-                        subtitle: Text(
-                          snapshot.data!.first.amsTEmailId!,
-                          style: Theme.of(context).textTheme.titleSmall!.merge(
-                              const TextStyle(fontWeight: FontWeight.w400)),
-                        ),
-                      ),
-                    ),
+                    // const SizedBox(
+                    //   height: 16.0,
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    //   child: ListTile(
+                    //     tileColor: const Color(0xFFDBFDF5).withOpacity(0.5),
+                    //     shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(16.0),
+                    //     ),
+                    //     title: Text(
+                    //       "Email Id",
+                    //       style: Theme.of(context)
+                    //           .textTheme
+                    //           .titleSmall!
+                    //           .merge(const TextStyle(fontSize: 12.0)),
+                    //     ),
+                    //     subtitle: Text(
+                    //       snapshot.data!.first.amsTEmailId!,
+                    //       style: Theme.of(context).textTheme.titleSmall!.merge(
+                    //           const TextStyle(fontWeight: FontWeight.w400)),
+                    //     ),
+                    //   ),
+                    // ),
+
+                    Container(
+                        margin: const EdgeInsets.only(
+                            left: 16.0, right: 16.0, top: 16),
+                        child: getProfileCardByUserType(
+                          loginSuccessModel.roleforlogin!,
+                        ))
                   ],
                 ),
               );
@@ -236,5 +264,18 @@ class ProfileTab extends StatelessWidget {
                 desc: "We are under process to get your details from server.");
           }),
     );
+  }
+
+  Widget getProfileCardByUserType(String userType) {
+    switch (userType) {
+      case "Student":
+        return StudentProfileCards(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        );
+      // break;
+      default:
+        return Container();
+    }
   }
 }

@@ -10,6 +10,8 @@ import 'package:m_skool_flutter/exam/screen/exam_home.dart';
 import 'package:m_skool_flutter/fees/screens/fee_analysis_screen.dart';
 import 'package:m_skool_flutter/fees/screens/fee_receipt_home.dart';
 import 'package:m_skool_flutter/fees/screens/online_payment_screen.dart';
+import 'package:m_skool_flutter/forgotpassword/screens/forgot_password_screen.dart';
+import 'package:m_skool_flutter/forgotpassword/screens/reset_password.dart';
 import 'package:m_skool_flutter/homework/screen/home_work_screen.dart';
 import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/interaction/screen/interaction_home.dart';
@@ -50,7 +52,7 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                       widget.loginSuccessModel.staffmobileappprivileges!.values!
                           .length, (index) {
                     return Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                      padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
                       child: ListTile(
                         title: Text(
                             "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"),
@@ -72,8 +74,8 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                             backgroundImage: AssetImage(
                               getDashBoardIconByName(
                                   "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"),
-                              // height: 60,
                             ),
+                            backgroundColor: Colors.white,
                           ),
                         ),
                         onTap: () {
@@ -202,6 +204,74 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                       ),
                     );
                   }),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                    child: ListTile(
+                      title: const Text("Change Password"),
+                      leading: Container(
+                        // height: 70,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              // color: Theme.of(context).shadowColor,
+                              // spreadRadius: 20,
+                              blurRadius: 5,
+                              blurStyle: BlurStyle.outer,
+                            ),
+                          ],
+                        ),
+                        child: const CircleAvatar(
+                          radius: 25,
+                          backgroundImage: AssetImage(
+                            "assets/images/ChangePassword.png",
+                          ),
+                          backgroundColor: Colors.white,
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Get.to(() => ResetPassword(
+                              mskoolController: widget.mskoolController,
+                              loginSuccessModel: widget.loginSuccessModel,
+                            ));
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                    child: ListTile(
+                      title: const Text("Forgot Password"),
+                      leading: Container(
+                        // height: 70,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              // color: Theme.of(context).shadowColor,
+                              // spreadRadius: 20,
+                              blurRadius: 5,
+                              blurStyle: BlurStyle.outer,
+                            ),
+                          ],
+                        ),
+                        child: const CircleAvatar(
+                          radius: 25,
+                          backgroundImage: AssetImage(
+                            "assets/images/ForgotPassword.png",
+                          ),
+                          backgroundColor: Colors.white,
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Get.to(() => ForgotPasswordScreen(
+                            mskoolController: widget.mskoolController));
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
