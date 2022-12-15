@@ -28,7 +28,11 @@ class URLS {
   // Endpoints for different Categories
 
   static String login = "api/LoginFacade";
+
+  // profile
   static String profile = "api/StudentDashboardFacade/Getdetails";
+  static String studentProfileDetails =
+      "api/StudentDashboardFacade/ViewStudentProfile/";
 
   //Library
   static String lib = "api/AdmissionCtrl/onclick_LIB/";

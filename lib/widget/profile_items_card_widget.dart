@@ -4,13 +4,13 @@ class ProfileItemsCard extends StatelessWidget {
   final Color cardColor;
   final String logoAsset;
   final String title;
-  final Function onTap;
+  final Function? onTap;
   const ProfileItemsCard(
       {super.key,
       required this.cardColor,
       required this.logoAsset,
       required this.title,
-      required this.onTap});
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +29,11 @@ class ProfileItemsCard extends StatelessWidget {
         ],
       ),
       child: InkWell(
-        onTap: () {
-          onTap();
-        },
+        onTap: (onTap != null)
+            ? () {
+                onTap!();
+              }
+            : null,
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),

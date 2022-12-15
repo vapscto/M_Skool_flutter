@@ -476,12 +476,12 @@ class BirthdayList {
     if (json['\$values'] != null) {
       values = [];
       json['\$values'].forEach((v) {
-        values?.add(v);
+        values?.add(BirthdayListValues.fromJson(v));
       });
     }
   }
   String? type;
-  List<dynamic>? values;
+  List<BirthdayListValues>? values;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -489,6 +489,40 @@ class BirthdayList {
     if (values != null) {
       map['\$values'] = values?.map((v) => v.toJson()).toList();
     }
+    return map;
+  }
+}
+
+/// \$type : "System.Dynamic.ExpandoObject, System.Linq.Expressions"
+/// AMST_FirstName : "ADITIR"
+/// AMST_DOB : "2006-12-15T00:00:00"
+/// AMST_Photoname : "https://bdcampusstrg.blob.core.windows.net/files/4/StudentProfilePics/c79c4995-86a7-4d17-a755-168f00fbef24.jpg"
+
+class BirthdayListValues {
+  BirthdayListValues({
+    this.type,
+    this.aMSTFirstName,
+    this.amstdob,
+    this.aMSTPhotoname,
+  });
+
+  BirthdayListValues.fromJson(dynamic json) {
+    type = json['\$type'];
+    aMSTFirstName = json['AMST_FirstName'];
+    amstdob = json['AMST_DOB'];
+    aMSTPhotoname = json['AMST_Photoname'];
+  }
+  String? type;
+  String? aMSTFirstName;
+  String? amstdob;
+  String? aMSTPhotoname;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['\$type'] = type;
+    map['AMST_FirstName'] = aMSTFirstName;
+    map['AMST_DOB'] = amstdob;
+    map['AMST_Photoname'] = aMSTPhotoname;
     return map;
   }
 }

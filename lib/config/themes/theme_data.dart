@@ -10,7 +10,7 @@ class CustomThemeData {
             colorScheme: const ColorScheme(
               brightness: Brightness.light,
               primary: Color(0xFF1E38FC),
-              onPrimary: Colors.black,
+              onPrimary: Colors.white,
               secondary: Color(0xFFDFEFFD),
               onSecondary: Colors.white,
               error: Colors.red,

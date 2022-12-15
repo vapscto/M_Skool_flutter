@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/model/profile_model.dart';
+import 'package:m_skool_flutter/model/student_profile_details_model.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/student_profile_cards.dart';
 
@@ -269,9 +270,29 @@ class ProfileTab extends StatelessWidget {
   Widget getProfileCardByUserType(String userType) {
     switch (userType) {
       case "Student":
-        return StudentProfileCards(
-          loginSuccessModel: loginSuccessModel,
-          mskoolController: mskoolController,
+        return FutureBuilder<StudentProfileDetailsModel>(
+          future: GetProfileDetails.instance.getStudentProfileDetails(
+            miId: loginSuccessModel.mIID!,
+            asmayId: loginSuccessModel.asmaYId!,
+            amstId: loginSuccessModel.amsTId!,
+            userId: loginSuccessModel.userId!,
+            roleId: loginSuccessModel.roleId!,
+            base: baseUrlFromInsCode("portal", mskoolController),
+          ),
+          builder: (BuildContext context,
+              AsyncSnapshot<StudentProfileDetailsModel> snapshot) {
+            if (snapshot.hasData) {
+              return StudentProfileCards(
+                loginSuccessModel: loginSuccessModel,
+                mskoolController: mskoolController,
+                studentProfileDetails: snapshot.data!,
+              );
+            }
+            if (snapshot.hasError) {
+              return ErrWidget(err: snapshot.error as Map<String, dynamic>);
+            }
+            return Container();
+          },
         );
       // break;
       default:
