@@ -246,9 +246,9 @@ class _HomeTabState extends State<HomeTab> {
   ];
   @override
   void initState() {
-    
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -471,8 +471,8 @@ class _HomeTabState extends State<HomeTab> {
                                               widget.loginSuccessModel,
                                           mskoolController:
                                               widget.mskoolController,
-                                          hwCwNbController:
-                                              widget.hwCwNbController,
+                                          // hwCwNbController:
+                                          //     widget.hwCwNbController,
                                           title:
                                               "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
                                         ),

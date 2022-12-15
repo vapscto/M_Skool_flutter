@@ -59,6 +59,7 @@ class _NoticeFilteredWidgetState extends State<NoticeFilteredWidget> {
           : widget.hwCwNbController.noticeList.isEmpty
               ? Center(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "No Notice Found",
@@ -71,6 +72,8 @@ class _NoticeFilteredWidgetState extends State<NoticeFilteredWidget> {
                 )
               : ListView.separated(
                   padding: const EdgeInsets.all(16.0),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: widget.hwCwNbController.noticeList.length,
                   itemBuilder: (_, index) {
                     color += 1;

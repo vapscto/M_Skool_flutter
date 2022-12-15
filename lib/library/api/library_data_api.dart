@@ -8,11 +8,11 @@ class LibraryDataApi {
   LibraryDataApi.init();
   static final LibraryDataApi instance = LibraryDataApi.init();
 
-  Future<List<LibraryDetailsValues>> getLibraryData(
+  Future<LibraryDataModel> getLibraryData(
       int miId, int asmayId, int asmtId, String base) async {
     final Dio ins = getGlobalDio();
     String apiUrl = base + URLS.lib;
-    // logger.d(apiUrl);
+    logger.d(apiUrl);
     // logger.d(getSession());
 
     try {
@@ -25,18 +25,19 @@ class LibraryDataApi {
           "AMST_Id": asmtId,
         },
       );
-      // logger.d(response.data);
+      //logger.d(response.data);
 
       LibraryDataModel libDataModel = LibraryDataModel.fromJson(response.data);
+      //logger.d(libDataModel.toJson());
 
-      return Future.value(libDataModel.librarydetails!.values!);
+      return Future.value(libDataModel);
     } on Exception catch (e) {
       logger.e(e.toString());
       return Future.error(
         {
           "errorTitle": "Unexpected Error Occured",
           "errorMsg":
-              "While fetching your library details we encounterd an error",
+              "While fetching your library details we encounterd an error... Server is not working correctly",
         },
       );
     }

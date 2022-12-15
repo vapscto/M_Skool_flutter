@@ -4,6 +4,7 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/library/api/library_data_api.dart';
 import 'package:m_skool_flutter/library/model/library_data_model.dart';
 import 'package:m_skool_flutter/library/widget/library_item_widget.dart';
+import 'package:m_skool_flutter/library/widget/line_chart_trackball.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
@@ -27,31 +28,44 @@ class LibraryHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: title).getAppBar(),
-      body: FutureBuilder<List<LibraryDetailsValues>>(
+      body: FutureBuilder<LibraryDataModel>(
           future: LibraryDataApi.instance
               .getLibraryData(miId, asmayId, asmtId, base),
           builder: (_, snapshot) {
             if (snapshot.hasData) {
               int colorIndex = -1;
-              return ListView.separated(
-                  padding: const EdgeInsets.all(16.0),
-                  itemBuilder: (_, index) {
-                    colorIndex += 1;
-                    if (index % 6 == 0) {
-                      colorIndex = 0;
-                    }
-                    logger.d(colors.elementAt(colorIndex));
-                    return LibraryItemWidget(
-                      color: colors.elementAt(colorIndex),
-                      bookDetails: snapshot.data!.elementAt(index),
-                    );
-                  },
-                  separatorBuilder: (_, index) {
-                    return const SizedBox(
-                      height: 16.0,
-                    );
-                  },
-                  itemCount: snapshot.data!.length);
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    LineChartLib(
+                      libraryGraph: snapshot.data!.libraryGraphs!,
+                    ),
+                    ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: const EdgeInsets.all(16.0),
+                        itemBuilder: (_, index) {
+                          colorIndex += 1;
+                          if (index % 6 == 0) {
+                            colorIndex = 0;
+                          }
+                          logger.d(colors.elementAt(colorIndex));
+                          return LibraryItemWidget(
+                            color: colors.elementAt(colorIndex),
+                            bookDetails: snapshot.data!.librarydetails!.values!
+                                .elementAt(index),
+                          );
+                        },
+                        separatorBuilder: (_, index) {
+                          return const SizedBox(
+                            height: 16.0,
+                          );
+                        },
+                        itemCount:
+                            snapshot.data!.librarydetails!.values!.length),
+                  ],
+                ),
+              );
             }
 
             if (snapshot.hasError) {

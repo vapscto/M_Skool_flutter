@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
@@ -9,11 +10,13 @@ import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/notice/api/get_datewise_notices.dart';
 import 'package:m_skool_flutter/notice/api/get_notice_api.dart';
 import 'package:m_skool_flutter/notice/model/notice_data_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_detail_screen.dart';
 import 'package:m_skool_flutter/notice/widget/notice_filtered_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
 class NoticeHome extends StatefulWidget {
@@ -36,77 +39,330 @@ class NoticeHome extends StatefulWidget {
 class _NoticeHomeState extends State<NoticeHome> {
   int color = -1;
   List<Color> usedColor = [];
+
+  final HwCwNbController hwCwNbController = Get.put(HwCwNbController());
+
+  @override
+  void dispose() {
+    Get.delete<HwCwNbController>();
+    super.dispose();
+  }
+
+  RxBool showFilter = RxBool(false);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: widget.appBarTitle != null
-          ? CustomAppBar(title: widget.appBarTitle!).getAppBar()
-          : null,
-      body: Obx(() {
-        return widget.hwCwNbController.filter > 0
-            ? NoticeFilteredWidget(
-                loginSuccessModel: widget.loginSuccessModel,
-                mskoolController: widget.mskoolController,
-                hwCwNbController: widget.hwCwNbController)
-            : FutureBuilder<List<NoticeDataModelValues>>(
-                future: GetNoticeApi.instance.getNotice(
-                  miId: widget.loginSuccessModel.mIID!,
-                  asmayId: widget.loginSuccessModel.asmaYId!,
-                  amstId: widget.loginSuccessModel.amsTId!,
-                  baseUrl: baseUrlFromInsCode(
-                    "portal",
-                    widget.mskoolController,
-                  ),
+          ? AppBar(
+              elevation: 0,
+              centerTitle: false,
+              leading: const CustomGoBackButton(),
+              leadingWidth: 30,
+              title: Text(widget.appBarTitle!),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    if (showFilter.value) {
+                      showFilter.value = false;
+                    } else {
+                      showFilter.value = true;
+                    }
+                    setState(() {});
+                  },
+                  icon: SvgPicture.asset('assets/svg/filter.svg'),
                 ),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.separated(
-                      padding: const EdgeInsets.all(16.0),
-                      itemBuilder: (_, index) {
-                        color += 1;
-                        if (index % 6 == 0) {
-                          color = 0;
-                        }
-                        if (color > 6) {
-                          color = 0;
-                        }
+              ],
+            )
+          : null,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Obx(() {
+              return showFilter.value == false
+                  ? const SizedBox()
+                  : Container(
+                      color: Theme.of(context).primaryColor,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 16.0,
+                          right: 16.0,
+                          bottom: 16.0,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Filter",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .merge(const TextStyle(color: Colors.white)),
+                            ),
+                            const SizedBox(
+                              height: 12.0,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () async {
+                                      DateTime firstDate = DateTime(
+                                        DateTime.now().month == 1
+                                            ? DateTime.now().year - 1
+                                            : DateTime.now().year,
+                                        DateTime.now().month == 1
+                                            ? 12
+                                            : DateTime.now().day == 1
+                                                ? DateTime.now().month - 1
+                                                : DateTime.now().month,
+                                      );
+                                      final DateTime? startDate =
+                                          await showDatePicker(
+                                              context: context,
+                                              initialDate: hwCwNbController
+                                                      .dtList.isNotEmpty
+                                                  ? hwCwNbController
+                                                      .dtList.first
+                                                  : DateTime.now(),
+                                              firstDate: firstDate,
+                                              lastDate: DateTime.now());
+                                      if (startDate == null) {
+                                        Fluttertoast.showToast(
+                                            msg: "Please select start date");
+                                        return;
+                                      }
+                                      hwCwNbController
+                                          .updateStartDateProvided(true);
+                                      if (hwCwNbController.dtList.isEmpty) {
+                                        hwCwNbController.updateStartBy(
+                                            "${startDate.year}-${startDate.month}-${startDate.day}");
+                                        hwCwNbController.dtList.add(startDate);
+                                      }
 
-                        usedColor.add(noticeColor.elementAt(color));
+                                      if (hwCwNbController.dtList.length > 1) {
+                                        hwCwNbController.dtList.first =
+                                            startDate;
+                                        hwCwNbController.updateShowFilter(
+                                            hwCwNbController.filter.value + 1);
+                                        showFilter.value = false;
 
-                        return InkWell(
-                          onTap: () {
-                            logger.d(color);
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Filter Applied.. now you will see the filtered result");
+                                        await filter();
+                                      }
+                                      //hwCwNbController.dtList.add(startDate);
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.only(
+                                          left: 12.0, right: 8.0),
+                                      alignment: Alignment.centerLeft,
+                                      width: double.infinity,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).cardColor,
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                      child: Builder(builder: (context) {
+                                        return Obx(() {
+                                          return Text(
+                                            hwCwNbController.startBy.value,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall,
+                                          );
+                                        });
+                                      }),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 16.0,
+                                ),
+                                Expanded(
+                                    child: InkWell(
+                                  onTap: () async {
+                                    if (!hwCwNbController
+                                        .startDateProvided.value) {
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "Please provide start date before selecting end date");
+                                      return;
+                                    }
+                                    DateTime firstDate = DateTime(
+                                      DateTime.now().month == 1
+                                          ? DateTime.now().year - 1
+                                          : DateTime.now().year,
+                                      DateTime.now().month == 1
+                                          ? 12
+                                          : DateTime.now().day == 1
+                                              ? DateTime.now().month - 1
+                                              : DateTime.now().month,
+                                    );
+                                    final DateTime? endDate =
+                                        await showDatePicker(
+                                            context: context,
+                                            initialDate: hwCwNbController
+                                                        .dtList.isNotEmpty &&
+                                                    hwCwNbController
+                                                            .dtList.length >
+                                                        1
+                                                ? hwCwNbController.dtList.last
+                                                : DateTime.now(),
+                                            firstDate: firstDate,
+                                            lastDate: DateTime.now());
 
-                            Get.to(() => NoticeDetailScreen(
-                                  color: usedColor.elementAt(index),
-                                  value: snapshot.data!.elementAt(index),
-                                  isFiltring: false,
-                                ));
-                          },
-                          child: NoticeItem(
-                            color: color,
-                            values: snapshot.data!.elementAt(index),
-                          ),
-                        );
-                      },
-                      separatorBuilder: (_, index) {
-                        return const SizedBox(
-                          height: 16.0,
-                        );
-                      },
-                      itemCount: snapshot.data!.length,
+                                    if (endDate == null) {
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "Please select end date to start filter");
+                                      return;
+                                    }
+
+                                    if (hwCwNbController.dtList.first.day >
+                                            endDate.day &&
+                                        hwCwNbController.dtList.first.month >
+                                            endDate.month) {
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "End Date must not be less than start date");
+                                      return;
+                                    }
+                                    hwCwNbController.updateEndby(
+                                        "${endDate.year}-${endDate.month}-${endDate.day}");
+                                    hwCwNbController.dtList.add(endDate);
+
+                                    // hwCwNbController
+                                    //     .updateStartDateProvided(false);
+                                    // hwCwNbController.updateStartBy("Start Date");
+                                    // hwCwNbController.updateEndby("End Date");
+
+                                    hwCwNbController.dtList.add(endDate);
+                                    hwCwNbController.updateShowFilter(
+                                        hwCwNbController.filter.value + 1);
+                                    showFilter.value = false;
+
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "Filter Applied.. now you will see the filtered result");
+
+                                    await filter();
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    alignment: Alignment.centerLeft,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0,
+                                    ),
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).cardColor,
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    child: Obx(() {
+                                      return Text(
+                                        hwCwNbController.endBy.value,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                      );
+                                    }),
+                                  ),
+                                ))
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     );
-                  }
-                  if (snapshot.hasError) {
-                    return ErrWidget(
-                        err: snapshot.error as Map<String, dynamic>);
-                  }
-                  return const CustomPgrWidget(
-                      title: "Loading Notice's",
-                      desc:
-                          "Don't Worry we are fetching notice's from noticeboard");
-                });
-      }),
+            }),
+            Obx(() {
+              return hwCwNbController.filter > 0
+                  ? NoticeFilteredWidget(
+                      loginSuccessModel: widget.loginSuccessModel,
+                      mskoolController: widget.mskoolController,
+                      hwCwNbController: hwCwNbController)
+                  : FutureBuilder<List<NoticeDataModelValues>>(
+                      future: GetNoticeApi.instance.getNotice(
+                        miId: widget.loginSuccessModel.mIID!,
+                        asmayId: widget.loginSuccessModel.asmaYId!,
+                        amstId: widget.loginSuccessModel.amsTId!,
+                        baseUrl: baseUrlFromInsCode(
+                          "portal",
+                          widget.mskoolController,
+                        ),
+                      ),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.separated(
+                            padding: const EdgeInsets.all(16.0),
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (_, index) {
+                              color += 1;
+                              if (index % 6 == 0) {
+                                color = 0;
+                              }
+                              if (color > 6) {
+                                color = 0;
+                              }
+
+                              usedColor.add(noticeColor.elementAt(color));
+
+                              return InkWell(
+                                onTap: () {
+                                  logger.d(color);
+
+                                  Get.to(() => NoticeDetailScreen(
+                                        color: usedColor.elementAt(index),
+                                        value: snapshot.data!.elementAt(index),
+                                        isFiltring: false,
+                                      ));
+                                },
+                                child: NoticeItem(
+                                  color: color,
+                                  values: snapshot.data!.elementAt(index),
+                                ),
+                              );
+                            },
+                            separatorBuilder: (_, index) {
+                              return const SizedBox(
+                                height: 16.0,
+                              );
+                            },
+                            itemCount: snapshot.data!.length,
+                          );
+                        }
+                        if (snapshot.hasError) {
+                          return ErrWidget(
+                              err: snapshot.error as Map<String, dynamic>);
+                        }
+                        return const CustomPgrWidget(
+                            title: "Loading Notice's",
+                            desc:
+                                "Don't Worry we are fetching notice's from noticeboard");
+                      });
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> filter() async {
+    await GetDateWiseNotice.instance.getNotices(
+      miId: widget.loginSuccessModel.mIID!,
+      asmayId: widget.loginSuccessModel.asmaYId!,
+      amstId: widget.loginSuccessModel.amsTId!,
+      startDate: hwCwNbController.dtList.first.toLocal().toString(),
+      endDate: hwCwNbController.dtList.last.toLocal().toString(),
+      nbController: hwCwNbController,
+      base: baseUrlFromInsCode(
+        "portal",
+        widget.mskoolController,
+      ),
     );
   }
 }

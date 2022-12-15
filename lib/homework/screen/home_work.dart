@@ -102,8 +102,8 @@ class _HomeWorkState extends State<HomeWork> {
     //   endDate: '2022-11-23 00:00:00.000',
     //   startDate: '2022-11-23 00:00:00.000',
     // );
-    return Scaffold(
-      body: Obx(() {
+    return Obx(
+      () {
         return widget.hwCwNbController.filter.value > 0
             ? FiltredHw(
                 hwCwNbController: widget.hwCwNbController,
@@ -125,7 +125,7 @@ class _HomeWorkState extends State<HomeWork> {
                       height: 24.0,
                     ),
                     SizedBox(
-                        height: 100,
+                        height: 120,
                         child: Obx(() {
                           return ListView.separated(
                             controller: listViewCtrl,
@@ -133,105 +133,129 @@ class _HomeWorkState extends State<HomeWork> {
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
                               return Obx(() {
-                                return Container(
-                                  padding: const EdgeInsets.all(12.0),
-                                  decoration: BoxDecoration(
+                                return Column(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 8.0),
+                                      height: 80,
+                                      padding: const EdgeInsets.all(8.0),
+                                      decoration: BoxDecoration(
+                                          color: widget.hwCwNbController
+                                                      .selectedIndex.value ==
+                                                  index
+                                              ? Theme.of(context).primaryColor
+                                              : Theme.of(context)
+                                                  .scaffoldBackgroundColor,
+                                          borderRadius:
+                                              BorderRadius.circular(30.0),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              offset: Offset(0, 1),
+                                              blurRadius: 4,
+                                              color: Colors.black12,
+                                            )
+                                          ]),
+                                      child: SizedBox(
+                                        width: 36.0,
+                                        child: InkWell(
+                                            onTap: () async {
+                                              widget.hwCwNbController
+                                                  .selectedIndex.value = index;
+
+                                              await GetHomeWorkApi.instance
+                                                  .getHomeAssignment(
+                                                miId: widget
+                                                    .loginSuccessModel.mIID!,
+                                                amstId: widget
+                                                    .loginSuccessModel.amsTId!,
+                                                asmayId: widget
+                                                    .loginSuccessModel.asmaYId!,
+                                                baseUrl: baseUrlFromInsCode(
+                                                    "portal",
+                                                    widget.mskoolController),
+                                                endDate: widget.hwCwNbController
+                                                    .dateWiseModelList
+                                                    .elementAt(index)
+                                                    .date,
+                                                startDate: widget
+                                                    .hwCwNbController
+                                                    .dateWiseModelList
+                                                    .elementAt(index)
+                                                    .date,
+                                                hwCwNbController:
+                                                    widget.hwCwNbController,
+                                              );
+                                            },
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  widget.hwCwNbController
+                                                      .dateWiseModelList
+                                                      .elementAt(index)
+                                                      .day
+                                                      .toString(),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .merge(TextStyle(
+                                                          color: widget
+                                                                      .hwCwNbController
+                                                                      .selectedIndex
+                                                                      .value ==
+                                                                  index
+                                                              ? Colors.white
+                                                              : Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleMedium!
+                                                                  .color)),
+                                                ),
+                                                const SizedBox(
+                                                  height: 8.0,
+                                                ),
+                                                Text(
+                                                  widget.hwCwNbController
+                                                      .dateWiseModelList
+                                                      .elementAt(index)
+                                                      .dayName,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .merge(TextStyle(
+                                                          color: widget
+                                                                      .hwCwNbController
+                                                                      .selectedIndex
+                                                                      .value ==
+                                                                  index
+                                                              ? Colors.white
+                                                              : Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .titleMedium!
+                                                                  .color)),
+                                                ),
+                                              ],
+                                            )),
+                                      ),
+                                    ),
+                                    // const SizedBox(
+                                    //   height: 6.0,
+                                    // ),
+                                    Icon(
+                                      Icons.circle,
+                                      size: 8,
                                       color: widget.hwCwNbController
                                                   .selectedIndex.value ==
                                               index
                                           ? Theme.of(context).primaryColor
                                           : Theme.of(context)
                                               .scaffoldBackgroundColor,
-                                      borderRadius: BorderRadius.circular(30.0),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          offset: Offset(0, 1),
-                                          blurRadius: 4,
-                                          color: Colors.black12,
-                                        )
-                                      ]),
-                                  child: SizedBox(
-                                    width: 36.0,
-                                    child: InkWell(
-                                        onTap: () async {
-                                          widget.hwCwNbController.selectedIndex
-                                              .value = index;
-
-                                          await GetHomeWorkApi.instance
-                                              .getHomeAssignment(
-                                            miId:
-                                                widget.loginSuccessModel.mIID!,
-                                            amstId: widget
-                                                .loginSuccessModel.amsTId!,
-                                            asmayId: widget
-                                                .loginSuccessModel.asmaYId!,
-                                            baseUrl: baseUrlFromInsCode(
-                                                "portal",
-                                                widget.mskoolController),
-                                            endDate: widget.hwCwNbController
-                                                .dateWiseModelList
-                                                .elementAt(index)
-                                                .date,
-                                            startDate: widget.hwCwNbController
-                                                .dateWiseModelList
-                                                .elementAt(index)
-                                                .date,
-                                            hwCwNbController:
-                                                widget.hwCwNbController,
-                                          );
-                                        },
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              widget.hwCwNbController
-                                                  .dateWiseModelList
-                                                  .elementAt(index)
-                                                  .day
-                                                  .toString(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleMedium!
-                                                  .merge(TextStyle(
-                                                      color: widget
-                                                                  .hwCwNbController
-                                                                  .selectedIndex
-                                                                  .value ==
-                                                              index
-                                                          ? Colors.white
-                                                          : Theme.of(context)
-                                                              .textTheme
-                                                              .titleMedium!
-                                                              .color)),
-                                            ),
-                                            const SizedBox(
-                                              height: 8.0,
-                                            ),
-                                            Text(
-                                              widget.hwCwNbController
-                                                  .dateWiseModelList
-                                                  .elementAt(index)
-                                                  .dayName,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleMedium!
-                                                  .merge(TextStyle(
-                                                      color: widget
-                                                                  .hwCwNbController
-                                                                  .selectedIndex
-                                                                  .value ==
-                                                              index
-                                                          ? Colors.white
-                                                          : Theme.of(context)
-                                                              .textTheme
-                                                              .titleMedium!
-                                                              .color)),
-                                            ),
-                                          ],
-                                        )),
-                                  ),
+                                    ),
+                                  ],
                                 );
                               });
                             },
@@ -393,7 +417,7 @@ class _HomeWorkState extends State<HomeWork> {
                   ],
                 ),
               );
-      }),
+      },
     );
   }
 

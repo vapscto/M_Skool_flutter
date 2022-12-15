@@ -611,6 +611,7 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                               height: 16.0,
                                             ),
                                             Container(
+                                              width: double.infinity,
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(16.0),

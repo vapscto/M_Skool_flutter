@@ -1,3 +1,5 @@
+import 'package:m_skool_flutter/library/model/library_graph.dart';
+
 class LibraryDataModel {
   int? stdupdate;
   int? stuonlineexam;
@@ -69,6 +71,7 @@ class LibraryDataModel {
   int? paid;
   int? fyPId;
   Librarydetails? librarydetails;
+  LibraryGraph? libraryGraphs;
   int? month;
   int? amsTMobileNo;
   String? amsTDOB;
@@ -194,6 +197,7 @@ class LibraryDataModel {
       this.paid,
       this.fyPId,
       this.librarydetails,
+      this.libraryGraphs,
       this.month,
       this.amsTMobileNo,
       this.amsTDOB,
@@ -320,6 +324,9 @@ class LibraryDataModel {
     fyPId = json['fyP_Id'];
     librarydetails = json['librarydetails'] != null
         ? Librarydetails.fromJson(json['librarydetails'])
+        : null;
+    libraryGraphs = json['librarygraphs'] != null
+        ? LibraryGraph.fromJson(json['librarygraphs'])
         : null;
     month = json['month'];
     amsTMobileNo = json['amsT_MobileNo'];
@@ -449,6 +456,9 @@ class LibraryDataModel {
     data['fyP_Id'] = fyPId;
     if (librarydetails != null) {
       data['librarydetails'] = librarydetails!.toJson();
+    }
+    if (libraryGraphs != null) {
+      data['librarygraphs'] = libraryGraphs!.toJson();
     }
     data['month'] = month;
     data['amsT_MobileNo'] = amsTMobileNo;

@@ -145,7 +145,7 @@ class _SplashScreenState extends State<SplashScreen> {
       return Future.error(
         {
           "errorTitle": "Something went wrong",
-          "erroMsg":
+          "errorMsg":
               "An error occured in server side, may be currently it is down or page is not available."
         },
       );

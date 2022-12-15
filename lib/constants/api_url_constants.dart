@@ -31,7 +31,7 @@ class URLS {
   static String profile = "api/StudentDashboardFacade/Getdetails";
 
   //Library
-  static String lib = "api/StudentDashboardFacade/onclick_LIB/";
+  static String lib = "api/AdmissionCtrl/onclick_LIB/";
 
   // Certificates
   static String getCertitificateType =
