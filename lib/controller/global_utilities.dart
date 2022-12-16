@@ -109,7 +109,7 @@ String getDashBoardIconByName(String title) {
       returnValue += "Attendance.png";
       break;
     case "Exam":
-      returnValue += "exam.png";
+      returnValue += "Exam.png";
       break;
     case "Interaction":
       returnValue += "Interaction.png";

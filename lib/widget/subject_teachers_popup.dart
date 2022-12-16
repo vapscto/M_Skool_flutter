@@ -15,9 +15,11 @@ class SubjectTeachersPopup extends StatelessWidget {
     return AlertDialog(
       scrollable: true,
       contentPadding: const EdgeInsets.all(10),
+      // actionsPadding: const EdgeInsets.all(0),
       // title: const Text("data"),
       content: SizedBox(
         // height: 500,
+        // width: 500,
         width: double.maxFinite,
         child: Column(
           // shrinkWrap: true,
@@ -33,7 +35,7 @@ class SubjectTeachersPopup extends StatelessWidget {
                       Row(
                         children: [
                           const CircleAvatar(
-                            radius: 25,
+                            radius: 22,
                             backgroundImage: AssetImage(
                               "assets/images/SubjectTeacher.png",
                             ),
@@ -53,18 +55,25 @@ class SubjectTeachersPopup extends StatelessWidget {
                                       .textTheme
                                       .titleLarge!
                                       .copyWith(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        //  letterSpacing: 1,
+                                      ),
+                                ),
+                                const SizedBox(
+                                  height: 5,
                                 ),
                                 Text(
                                   "Subject: ${studentProfileDetails.sujectteachers!.values![index].iSMSSubjectName}",
                                   overflow: TextOverflow.fade,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .titleLarge!
+                                      .labelMedium!
                                       .copyWith(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500),
+                                        fontSize: 12,
+                                        // letterSpacing: 1,
+                                        fontWeight: FontWeight.w200,
+                                      ),
                                 ),
                               ],
                             ),
@@ -76,9 +85,10 @@ class SubjectTeachersPopup extends StatelessWidget {
                       // trailing:
                       CustomElevatedButton(
                         borderRadius: BorderRadius.circular(12),
+                        boxShadow: const BoxShadow(),
                         onPressed: () {},
                         child: Padding(
-                          padding: const EdgeInsets.all(5.0),
+                          padding: const EdgeInsets.fromLTRB(10, 5.0, 10, 5),
                           child: Text(
                             "Contact",
                             style: Theme.of(context)

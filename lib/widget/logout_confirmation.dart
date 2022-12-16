@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../controller/auth_controller.dart';
-import '../controller/global_utilities.dart';
-import '../main.dart';
-import '../screens/authentication_screen.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 
 class LogoutConfirmationPopup extends StatefulWidget {
   const LogoutConfirmationPopup({
@@ -20,6 +16,7 @@ class _LogoutConfirmationPopupState extends State<LogoutConfirmationPopup>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<double> scaleAnimation;
+  final MskoolController mskoolController = Get.find<MskoolController>();
 
   @override
   void initState() {
@@ -47,19 +44,13 @@ class _LogoutConfirmationPopupState extends State<LogoutConfirmationPopup>
           TextButton(
             onPressed: () async {
               Get.back();
-              isPageLoading.value = true;
-              bool isLoggedOut = await AuthenticationController().logout();
-              if (isLoggedOut) {
-                // widget.profileController.profileData.clear();
-                // widget.profileController.dispose();
-                await logInBox!.put("isLoggedIn", false);
-                // await cookieBox!.put("session", null);
-                Get.offAll(() => const AuthenticationScreen());
-                isPageLoading.value = false;
-                // exit(0);
-              } else {
-                isPageLoading.value = false;
-              }
+              // institutionalCode!.delete("institutionalCode");
+              // logInBox!.put("isLoggedIn", false);
+              // Get.offAll(
+              //   () => InstitutionalLogin(
+              //     mskoolController: mskoolController,
+              //   ),
+              // );
             },
             child: Text(
               "Yes".tr,

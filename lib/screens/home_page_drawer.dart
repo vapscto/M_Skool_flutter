@@ -19,6 +19,8 @@ import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/timetable/screens/time_table_home.dart';
+import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
+import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
 class HomePageDrawer extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -57,20 +59,11 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                         title: Text(
                             "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"),
                         leading: Container(
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                // color: Theme.of(context).shadowColor,
-                                // spreadRadius: 20,
-                                blurRadius: 5,
-                                blurStyle: BlurStyle.outer,
-                              ),
-                            ],
                           ),
                           child: CircleAvatar(
-                            radius: 22,
+                            radius: 18,
                             backgroundImage: AssetImage(
                               getDashBoardIconByName(
                                   "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"),
@@ -209,21 +202,11 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                     child: ListTile(
                       title: const Text("Change Password"),
                       leading: Container(
-                        // height: 70,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              // color: Theme.of(context).shadowColor,
-                              // spreadRadius: 20,
-                              blurRadius: 5,
-                              blurStyle: BlurStyle.outer,
-                            ),
-                          ],
                         ),
                         child: const CircleAvatar(
-                          radius: 22,
+                          radius: 18,
                           backgroundImage: AssetImage(
                             "assets/images/ChangePassword.png",
                           ),
@@ -244,21 +227,11 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                     child: ListTile(
                       title: const Text("Forgot Password"),
                       leading: Container(
-                        // height: 70,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              // color: Theme.of(context).shadowColor,
-                              // spreadRadius: 20,
-                              blurRadius: 5,
-                              blurStyle: BlurStyle.outer,
-                            ),
-                          ],
                         ),
                         child: const CircleAvatar(
-                          radius: 22,
+                          radius: 18,
                           backgroundImage: AssetImage(
                             "assets/images/ForgotPassword.png",
                           ),
@@ -272,6 +245,37 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                       },
                     ),
                   ),
+                  Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                      child: SizedBox(
+                        width: 180,
+                        height: 40,
+                        child: CustomElevatedButton(
+                            isGradient: false,
+                            boxShadow: const BoxShadow(),
+                            color: const Color(0xFFFFDFD6),
+                            child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: const [
+                                  Icon(
+                                    Icons.logout,
+                                    color: Color(0xffF24E1E),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "Log Out",
+                                    style: TextStyle(
+                                        color: Color(0xffF24E1E),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600),
+                                  )
+                                ]),
+                            onPressed: () {
+                              Get.dialog(const LogoutConfirmationPopup());
+                            }),
+                      )),
                 ],
               ),
             ),

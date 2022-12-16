@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/apis/get_profile_details.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
@@ -26,31 +25,31 @@ class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.chevron_left_rounded,
-            color: Colors.white,
-            size: 34,
-          ),
-          onPressed: () {
-            pageController.animateToPage(0,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.fastLinearToSlowEaseIn);
-          },
-        ),
-        leadingWidth: 30,
-        title: const Text("Profile"),
-        actions: [
-          IconButton(
-            icon: SvgPicture.asset('assets/svg/bell.svg'),
-            onPressed: () {},
-          ),
-          const SizedBox(
-            width: 8.0,
-          ),
-        ],
-      ),
+      // appBar: AppBar(
+      //   leading: IconButton(
+      //     icon: const Icon(
+      //       Icons.chevron_left_rounded,
+      //       color: Colors.white,
+      //       size: 34,
+      //     ),
+      //     onPressed: () {
+      //       pageController.animateToPage(0,
+      //           duration: const Duration(milliseconds: 500),
+      //           curve: Curves.fastLinearToSlowEaseIn);
+      //     },
+      //   ),
+      //   leadingWidth: 30,
+      //   title: const Text("Profile"),
+      //   actions: [
+      //     IconButton(
+      //       icon: SvgPicture.asset('assets/svg/bell.svg'),
+      //       onPressed: () {},
+      //     ),
+      //     const SizedBox(
+      //       width: 8.0,
+      //     ),
+      //   ],
+      // ),
       body: FutureBuilder<List<ProfileDataModelValues>>(
           future: GetProfileDetails.instance.getProfileData(
               miId: loginSuccessModel.mIID!,
@@ -172,6 +171,9 @@ class ProfileTab extends StatelessWidget {
                                     "${snapshot.data!.first.aMSTTpin}",
                                   )),
                                 ],
+                              ),
+                              const SizedBox(
+                                height: 12.0,
                               ),
                               Row(
                                 children: [
