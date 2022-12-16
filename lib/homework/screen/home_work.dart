@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/homework/api/home_work_api.dart';
+import 'package:m_skool_flutter/homework/api/update_hw_seen.dart';
 import 'package:m_skool_flutter/homework/model/date_wise.dart';
 import 'package:m_skool_flutter/homework/screen/hwcw_detail_screen.dart';
 import 'package:m_skool_flutter/homework/widget/filtred_hw.dart';
@@ -293,8 +294,12 @@ class _HomeWorkState extends State<HomeWork> {
                               : widget.hwCwNbController.homeWorkList.isEmpty
                                   ? Column(
                                       children: [
-                                        SizedBox(
-                                          height: Get.height * 0.2,
+                                        // SizedBox(
+                                        //   height: Get.height * 0.2,
+                                        // ),
+                                        Image.asset(
+                                          'assets/images/hw_cw_not.jpg',
+                                          height: Get.height * 0.3,
                                         ),
                                         Text(
                                           "No homework found",
@@ -376,9 +381,48 @@ class _HomeWorkState extends State<HomeWork> {
                                                     widget.mskoolController,
                                                 screenType: 'homework',
                                               );
-                                            }));
+                                            })).then((value) {
+                                              if (value == null) {}
+
+                                              // showHw();
+                                            });
+
+                                            UpdateHwSeenApi.instance.markAsSeen(
+                                                amstId: widget
+                                                    .loginSuccessModel.amsTId!,
+                                                miId: widget
+                                                    .loginSuccessModel.mIID!,
+                                                asmayId: widget
+                                                    .loginSuccessModel.asmaYId!,
+                                                userId: widget
+                                                    .loginSuccessModel.userId!,
+                                                roleId: widget
+                                                    .loginSuccessModel.roleId!,
+                                                flag: "Homework",
+                                                ihwId: widget.hwCwNbController
+                                                    .homeWorkList
+                                                    .elementAt(index)
+                                                    .ihWId!,
+                                                asmclId: widget.hwCwNbController
+                                                    .homeWorkList
+                                                    .elementAt(index)
+                                                    .asmcLId!,
+                                                asmsId: widget.hwCwNbController
+                                                    .homeWorkList
+                                                    .elementAt(index)
+                                                    .asmSId!,
+                                                base: baseUrlFromInsCode(
+                                                    "portal",
+                                                    widget.mskoolController));
                                           },
                                           child: HwCwItem(
+                                            isRead: widget.hwCwNbController
+                                                        .homeWorkList
+                                                        .elementAt(index)
+                                                        .iHWUPLViewedFlg ==
+                                                    1
+                                                ? true
+                                                : false,
                                             sub: widget
                                                 .hwCwNbController.homeWorkList
                                                 .elementAt(index)
@@ -427,12 +471,14 @@ class _HomeWorkState extends State<HomeWork> {
 }
 
 class HwCwItem extends StatelessWidget {
+  final bool isRead;
   final String sub;
   final String topic;
   const HwCwItem({
     Key? key,
     required this.sub,
     required this.topic,
+    required this.isRead,
   }) : super(key: key);
 
   @override
@@ -448,9 +494,9 @@ class HwCwItem extends StatelessWidget {
             Container(
               height: 80,
               width: 10,
-              decoration: const BoxDecoration(
-                color: Colors.green,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: isRead ? Colors.grey.shade600 : Colors.green,
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12.0),
                   bottomLeft: Radius.circular(12.0),
                 ),

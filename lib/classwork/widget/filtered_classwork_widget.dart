@@ -53,28 +53,28 @@ class _FilteredClassWorkState extends State<FilteredClassWork> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return widget.hwCwNbController.isClassWorkDataLoading.value
-          ? const CustomPgrWidget(
-              title: "Loading Fitered Data",
-              desc: "Please wait while we load new data for you")
-          : widget.hwCwNbController.classWorkList.isEmpty
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "No Classwork present",
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      const Text(
-                          "We couldn't find any classwork for these filtration")
-                    ],
-                  ),
-                )
-              : SingleChildScrollView(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Obx(() {
+        return widget.hwCwNbController.isClassWorkDataLoading.value
+            ? const CustomPgrWidget(
+                title: "Loading Fitered Data",
+                desc: "Please wait while we load new data for you")
+            : widget.hwCwNbController.classWorkList.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "No Classwork present",
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const Text(
+                            "We couldn't find any classwork for these filtration")
+                      ],
+                    ),
+                  )
+                : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -122,6 +122,12 @@ class _FilteredClassWorkState extends State<FilteredClassWork> {
                               }));
                             },
                             child: HwCwItem(
+                                isRead: widget.hwCwNbController.classWorkList
+                                            .elementAt(index)
+                                            .iCWUPLViewedFlg ==
+                                        1
+                                    ? true
+                                    : false,
                                 sub: widget.hwCwNbController.classWorkList
                                     .elementAt(index)
                                     .ismSSubjectName!,
@@ -137,8 +143,8 @@ class _FilteredClassWorkState extends State<FilteredClassWork> {
                         },
                       ),
                     ],
-                  ),
-                );
-    });
+                  );
+      }),
+    );
   }
 }

@@ -38,6 +38,7 @@ class HomeWorkDataModelValues {
   String? ismSSubjectName;
   int? asmcLId;
   int? filesCount;
+  int? iHWUPLViewedFlg;
 
   HomeWorkDataModelValues(
       {this.type,
@@ -52,7 +53,8 @@ class HomeWorkDataModelValues {
       this.ismSId,
       this.ismSSubjectName,
       this.asmcLId,
-      this.filesCount});
+      this.filesCount,
+      this.iHWUPLViewedFlg});
 
   HomeWorkDataModelValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
@@ -68,6 +70,7 @@ class HomeWorkDataModelValues {
     ismSSubjectName = json['ismS_SubjectName'];
     asmcLId = json['asmcL_Id'];
     filesCount = json['FilesCount'];
+    iHWUPLViewedFlg = json['IHWUPL_ViewedFlg'];
   }
 
   Map<String, dynamic> toJson() {
@@ -85,6 +88,7 @@ class HomeWorkDataModelValues {
     data['ismS_SubjectName'] = ismSSubjectName;
     data['asmcL_Id'] = asmcLId;
     data['FilesCount'] = filesCount;
+    data['IHWUPL_ViewedFlg'] = iHWUPLViewedFlg;
     return data;
   }
 }

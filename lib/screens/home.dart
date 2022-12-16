@@ -459,8 +459,8 @@ class _HomeTabState extends State<HomeTab> {
                                               widget.loginSuccessModel,
                                           mskoolController:
                                               widget.mskoolController,
-                                          hwCwNbController:
-                                              widget.hwCwNbController,
+                                          // hwCwNbController:
+                                          //     widget.hwCwNbController,
                                           title:
                                               "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}"));
                                       break;

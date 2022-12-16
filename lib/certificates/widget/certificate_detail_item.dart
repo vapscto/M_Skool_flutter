@@ -16,46 +16,64 @@ class CertificateDetailItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.circle,
-                  size: 18.0,
-                  color: values.ascAStatus!.toLowerCase() == "pending"
-                      ? Colors.grey.shade600
-                      : Colors.green,
-                ),
-                const SizedBox(
-                  width: 12.0,
-                ),
-                Text(
-                  values.ascAStatus!,
-                  style: Theme.of(context).textTheme.labelMedium!.merge(
-                        TextStyle(
-                          fontSize: 17.0,
-                          color: values.ascAStatus!.toLowerCase() == "pending"
-                              ? Colors.grey.shade600
-                              : Colors.green,
-                        ),
-                      ),
-                ),
-              ],
-            ),
-          ),
-          const Divider(
-            thickness: 1,
-            height: 1,
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(12.0),
+          //   child: Row(
+          //     children: [
+          //       Icon(
+          //         Icons.circle,
+          //         size: 18.0,
+          //         color: values.ascAStatus!.toLowerCase() == "pending"
+          //             ? Colors.grey.shade600
+          //             : Colors.green,
+          //       ),
+          //       const SizedBox(
+          //         width: 12.0,
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // const Divider(
+          //   thickness: 1,
+          //   height: 1,
+          // ),
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  values.acertapPCertificateName!,
-                  style: Theme.of(context).textTheme.titleMedium,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      values.acertapPCertificateName!,
+                      style: Theme.of(context).textTheme.titleSmall!.merge(
+                          const TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 18.0)),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24.0),
+                        color: values.ascAStatus!.toLowerCase() == "pending"
+                            ? Colors.grey.shade100
+                            : const Color(0xffE7ffE7),
+                      ),
+                      child: Text(
+                        values.ascAStatus!,
+                        style: Theme.of(context).textTheme.labelSmall!.merge(
+                              TextStyle(
+                                fontSize: 15.0,
+                                letterSpacing: 0.2,
+                                color: values.ascAStatus!.toLowerCase() ==
+                                        "pending"
+                                    ? Colors.grey.shade600
+                                    : const Color(0xFF21AA21),
+                              ),
+                            ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 8.0,

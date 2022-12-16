@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/api/send_otp_mobile.dart';
+import 'package:m_skool_flutter/forgotpassword/api/send_otp_to_email.dart';
 import 'package:m_skool_flutter/forgotpassword/controller/opt_sent_controller.dart';
 
 import 'package:m_skool_flutter/forgotpassword/screens/change_password.dart';
@@ -48,11 +49,19 @@ class _OTPScreenState extends State<OTPScreen> {
         otpSentStatusController.remainingTime.value -= 1;
       }
     });
-    SendOtpToMobile.instance.sendOtp(
-        miId: widget.mskoolController.universalInsCodeModel!.value.miId,
-        mobileNo: int.parse(widget.otpSendingInfo.trim()),
-        base: baseUrlFromInsCode("login", widget.mskoolController),
-        statusController: otpSentStatusController);
+    if (widget.isEmailVerification) {
+      SendOtpToEmail.instance.sendOtpNow(
+          miId: widget.mskoolController.universalInsCodeModel!.value.miId,
+          email: widget.otpSendingInfo,
+          base: baseUrlFromInsCode("login", widget.mskoolController),
+          statusController: otpSentStatusController);
+    } else {
+      SendOtpToMobile.instance.sendOtp(
+          miId: widget.mskoolController.universalInsCodeModel!.value.miId,
+          mobileNo: int.parse(widget.otpSendingInfo.trim()),
+          base: baseUrlFromInsCode("login", widget.mskoolController),
+          statusController: otpSentStatusController);
+    }
     super.initState();
   }
 
@@ -220,22 +229,38 @@ class _OTPScreenState extends State<OTPScreen> {
                                         : () async {
                                             otpSentStatusController
                                                 .updateDisableResendBtn(true);
-                                            await SendOtpToMobile.instance
-                                                .sendOtp(
-                                                    miId: widget
-                                                        .mskoolController
-                                                        .universalInsCodeModel!
-                                                        .value
-                                                        .miId,
-                                                    mobileNo: int.parse(widget
-                                                        .otpSendingInfo
-                                                        .trim()),
-                                                    base: baseUrlFromInsCode(
-                                                        "login",
-                                                        widget
-                                                            .mskoolController),
-                                                    statusController:
-                                                        otpSentStatusController);
+                                            if (widget.isEmailVerification) {
+                                              await SendOtpToEmail.instance
+                                                  .sendOtpNow(
+                                                      miId: widget
+                                                          .mskoolController
+                                                          .universalInsCodeModel!
+                                                          .value
+                                                          .miId,
+                                                      email:
+                                                          widget.otpSendingInfo,
+                                                      base: baseUrlFromInsCode(
+                                                          "login",
+                                                          widget
+                                                              .mskoolController),
+                                                      statusController:
+                                                          otpSentStatusController);
+                                            } else {
+                                              await SendOtpToMobile.instance.sendOtp(
+                                                  miId: widget
+                                                      .mskoolController
+                                                      .universalInsCodeModel!
+                                                      .value
+                                                      .miId,
+                                                  mobileNo: int.parse(widget
+                                                      .otpSendingInfo
+                                                      .trim()),
+                                                  base: baseUrlFromInsCode(
+                                                      "login",
+                                                      widget.mskoolController),
+                                                  statusController:
+                                                      otpSentStatusController);
+                                            }
                                             otpSentStatusController
                                                 .updateRemainingTime(59);
                                           },

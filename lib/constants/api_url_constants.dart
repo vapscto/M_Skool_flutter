@@ -109,4 +109,15 @@ class URLS {
 
   // Dashboard
   static String studentDashboard = "AdmissionCtrl/stdDashboardDet/";
+
+  static String paymentCharges = "api/FeesCtrl/paymentGatewayrate/";
+
+  static String emailOtp = "api/LoginFacade/getOTPForEmail";
+
+  static String updateHwSeen =
+      "api/StudentDashboardFacade/onclick_Homework_seen/";
+
+  static String transHistory = "api/FeesCtrl/feeTransactionlog/";
+
+  static String transStatus = "api/FeesCtrl/feeTransactiondetail/";
 }

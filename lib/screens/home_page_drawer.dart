@@ -119,7 +119,7 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                               Get.to(() => ClassWorkHomeScreen(
                                   loginSuccessModel: widget.loginSuccessModel,
                                   mskoolController: widget.mskoolController,
-                                  hwCwNbController: widget.hwCwNbController,
+                                  //hwCwNbController: widget.hwCwNbController,
                                   title:
                                       "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"));
                               break;

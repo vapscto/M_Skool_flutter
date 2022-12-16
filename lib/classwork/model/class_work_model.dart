@@ -42,25 +42,28 @@ class ClassWorkModelValues {
   String? ismSSubjectName;
   double? icwupLMarks;
   int? filesCount;
+  int? iCWUPLViewedFlg;
 
-  ClassWorkModelValues(
-      {this.type,
-      this.asmcLClassName,
-      this.icWContent,
-      this.icWTopic,
-      this.icWSubTopic,
-      this.icWFromDate,
-      this.icWToDate,
-      this.icWAssignment,
-      this.icWActiveFlag,
-      this.icWId,
-      this.icWEvaluation,
-      this.icWAttachment,
-      this.icWFilePath,
-      this.asmcLId,
-      this.ismSSubjectName,
-      this.icwupLMarks,
-      this.filesCount});
+  ClassWorkModelValues({
+    this.type,
+    this.asmcLClassName,
+    this.icWContent,
+    this.icWTopic,
+    this.icWSubTopic,
+    this.icWFromDate,
+    this.icWToDate,
+    this.icWAssignment,
+    this.icWActiveFlag,
+    this.icWId,
+    this.icWEvaluation,
+    this.icWAttachment,
+    this.icWFilePath,
+    this.asmcLId,
+    this.ismSSubjectName,
+    this.icwupLMarks,
+    this.filesCount,
+    this.iCWUPLViewedFlg,
+  });
 
   ClassWorkModelValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
@@ -80,6 +83,7 @@ class ClassWorkModelValues {
     ismSSubjectName = json['ismS_SubjectName'];
     icwupLMarks = json['icwupL_Marks'];
     filesCount = json['FilesCount'];
+    iCWUPLViewedFlg = json['ICWUPL_ViewedFlg'];
   }
 
   Map<String, dynamic> toJson() {
@@ -101,6 +105,7 @@ class ClassWorkModelValues {
     data['ismS_SubjectName'] = ismSSubjectName;
     data['icwupL_Marks'] = icwupLMarks;
     data['FilesCount'] = filesCount;
+    data['ICWUPL_ViewedFlg'] = iCWUPLViewedFlg;
     return data;
   }
 }

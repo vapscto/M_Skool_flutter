@@ -25,8 +25,8 @@ class ClassworkHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Obx(() {
+    return Obx(
+      () {
         return hwCwNbController.errorHappendWhileLoadingClsWrk.value
             ? const Center(
                 child: ErrWidget(err: {
@@ -54,6 +54,8 @@ class ClassworkHome extends StatelessWidget {
                         builder: (_, snapshot) {
                           if (snapshot.hasData) {
                             return ListView.separated(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
                               padding: const EdgeInsets.all(16.0),
                               itemBuilder: (_, index) {
                                 return InkWell(
@@ -88,6 +90,12 @@ class ClassworkHome extends StatelessWidget {
                                       }));
                                     },
                                     child: HwCwItem(
+                                      isRead: snapshot.data!
+                                                  .elementAt(index)
+                                                  .iCWUPLViewedFlg ==
+                                              1
+                                          ? true
+                                          : false,
                                       sub: snapshot.data!
                                           .elementAt(index)
                                           .ismSSubjectName!,
@@ -117,7 +125,7 @@ class ClassworkHome extends StatelessWidget {
                         },
                       );
               });
-      }),
+      },
 
       //  ListView.separated(
       //   padding: const EdgeInsets.all(16.0),

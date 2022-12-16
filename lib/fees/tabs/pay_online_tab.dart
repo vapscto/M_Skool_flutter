@@ -9,13 +9,16 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/fees/apis/get_academic_bal_fee_detail.dart';
 import 'package:m_skool_flutter/fees/apis/get_installment_details.dart';
 import 'package:m_skool_flutter/fees/apis/get_payment_detail.dart';
+import 'package:m_skool_flutter/fees/apis/payment_charges_api.dart';
 import 'package:m_skool_flutter/fees/apis/sucess_payment_call_api.dart';
 import 'package:m_skool_flutter/fees/controller/pay_online_data_controller.dart';
 import 'package:m_skool_flutter/fees/controller/payment_selection_tracking.dart';
 import 'package:m_skool_flutter/fees/model/disable_terms_model.dart';
 
 import 'package:m_skool_flutter/fees/model/installment_model.dart';
+import 'package:m_skool_flutter/fees/model/payment_charges.dart';
 import 'package:m_skool_flutter/fees/model/payment_gateway_detail.dart';
+import 'package:m_skool_flutter/fees/screens/transaction_history.dart';
 import 'package:m_skool_flutter/fees/widgets/custom_detail_widget.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -106,7 +109,10 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                           );
                   }),
                   const SizedBox(height: 15),
-                  PrevTransactionDetails(),
+                  PrevTransactionDetails(
+                    loginSuccessModel: widget.loginSuccessModel,
+                    mskoolController: widget.mskoolController,
+                  ),
                   const SizedBox(
                     height: 16.0,
                   ),
@@ -492,7 +498,141 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                                                           ),
                                                         ),
                                                   ),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    showModalBottomSheet(
+                                                        context: context,
+                                                        shape:
+                                                            const RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          16.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          16.0)),
+                                                        ),
+                                                        builder: (_) {
+                                                          return SingleChildScrollView(
+                                                            child: Column(
+                                                              children: [
+                                                                Container(
+                                                                  padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                      horizontal:
+                                                                          16.0,
+                                                                      vertical:
+                                                                          8.0),
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: Theme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                    borderRadius:
+                                                                        const BorderRadius
+                                                                            .only(
+                                                                      topLeft: Radius
+                                                                          .circular(
+                                                                              16.0),
+                                                                      topRight:
+                                                                          Radius.circular(
+                                                                              16.0),
+                                                                    ),
+                                                                  ),
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Text(
+                                                                        "Payment Charges",
+                                                                        style: Theme.of(context)
+                                                                            .textTheme
+                                                                            .titleMedium!
+                                                                            .merge(const TextStyle(color: Colors.white)),
+                                                                      ),
+                                                                      IconButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                            Navigator.pop(context);
+                                                                          },
+                                                                          icon:
+                                                                              const Icon(
+                                                                            Icons.close,
+                                                                            color:
+                                                                                Colors.white,
+                                                                          ))
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                FutureBuilder<
+                                                                        List<
+                                                                            PaymentChargesValues>>(
+                                                                    future: PaymentChargesApi.instance.loadPaymentCharges(
+                                                                        miId: widget
+                                                                            .loginSuccessModel
+                                                                            .mIID!,
+                                                                        fmotPaymentType:
+                                                                            "Razorpay",
+                                                                        base: baseUrlFromInsCode(
+                                                                            "portal",
+                                                                            widget
+                                                                                .mskoolController)),
+                                                                    builder: (_,
+                                                                        snapshot) {
+                                                                      if (snapshot
+                                                                          .hasData) {
+                                                                        return SingleChildScrollView(
+                                                                          child:
+                                                                              Column(
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.start,
+                                                                            children: [
+                                                                              Padding(
+                                                                                padding: const EdgeInsets.all(16.0),
+                                                                                child: Text(
+                                                                                  "Razorpay",
+                                                                                  style: Theme.of(context).textTheme.titleMedium,
+                                                                                ),
+                                                                              ),
+                                                                              ListView.separated(
+                                                                                  shrinkWrap: true,
+                                                                                  physics: const NeverScrollableScrollPhysics(),
+                                                                                  itemBuilder: (_, index) {
+                                                                                    return ListTile(
+                                                                                      title: Text(snapshot.data!.elementAt(index).fPGRCardType!),
+                                                                                      subtitle: Text("${snapshot.data!.elementAt(index).fPGRCardNetworkType} - ${snapshot.data!.elementAt(index).fPGRRate}%"),
+                                                                                    );
+                                                                                  },
+                                                                                  separatorBuilder: (_, index) {
+                                                                                    return const SizedBox(
+                                                                                      height: 8.0,
+                                                                                    );
+                                                                                  },
+                                                                                  itemCount: snapshot.data!.length),
+                                                                            ],
+                                                                          ),
+                                                                        );
+                                                                      }
+
+                                                                      if (snapshot
+                                                                          .hasError) {
+                                                                        return ErrWidget(
+                                                                            err:
+                                                                                snapshot.error as Map<String, dynamic>);
+                                                                      }
+
+                                                                      return const CustomPgrWidget(
+                                                                          title:
+                                                                              "Loading Payment Charges",
+                                                                          desc:
+                                                                              "We are loading payment charges details... Please wait");
+                                                                    }),
+                                                              ],
+                                                            ),
+                                                          );
+                                                        });
+                                                  },
                                                 ),
                                               ),
                                               const SizedBox(
@@ -888,13 +1028,17 @@ class _InstallmentInfoWidgetState extends State<InstallmentInfoWidget> {
 }
 
 class PrevTransactionDetails extends StatelessWidget {
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
   const PrevTransactionDetails({
     Key? key,
+    required this.loginSuccessModel,
+    required this.mskoolController,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const CustomContainer(
+    return CustomContainer(
       // width: double.infinity,
       // padding: const EdgeInsets.all(10),
       // decoration: BoxDecoration(
@@ -908,7 +1052,20 @@ class PrevTransactionDetails extends StatelessWidget {
       //     ),
       //   ],
       // ),
-      child: ExpansionTile(title: Text("Transactions")),
+      child: ListTile(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return TransactionHistory(
+              loginSuccessModel: loginSuccessModel,
+              mskoolController: mskoolController,
+            );
+          }));
+        },
+        title: const Text("Transactions"),
+        trailing: const Icon(
+          Icons.chevron_right_outlined,
+        ),
+      ),
     );
   }
 }

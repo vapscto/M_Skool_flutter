@@ -53,8 +53,12 @@ class _FiltredHwState extends State<FiltredHw> {
           : widget.hwCwNbController.homeWorkList.isEmpty
               ? Column(
                   children: [
-                    SizedBox(
-                      height: Get.height * 0.2,
+                    // SizedBox(
+                    //   height: Get.height * 0.2,
+                    // ),
+                    Image.asset(
+                      'assets/images/hw_cw_not.jpg',
+                      height: Get.height * 0.3,
                     ),
                     Text(
                       "No homework found",
@@ -137,6 +141,12 @@ class _FiltredHwState extends State<FiltredHw> {
                                 }));
                               },
                               child: HwCwItem(
+                                isRead: widget.hwCwNbController.homeWorkList
+                                            .elementAt(index)
+                                            .iHWUPLViewedFlg ==
+                                        1
+                                    ? true
+                                    : false,
                                 sub: widget.hwCwNbController.homeWorkList
                                     .elementAt(index)
                                     .ismSSubjectName!,
