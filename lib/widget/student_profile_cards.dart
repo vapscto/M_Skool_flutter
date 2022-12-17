@@ -23,317 +23,115 @@ class StudentProfileCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-        shrinkWrap: true,
-        crossAxisCount: 2,
-        mainAxisSpacing: 18,
-        crossAxisSpacing: 12,
-        childAspectRatio: 2.5,
-        children: [
-          ProfileItemsCard(
-            cardColor: const Color(0xFFECF8FF),
-            logoAsset: "assets/images/SubjectTeacher.png",
-            title: "Subject Teacher",
-            onTap: () {
-              Get.dialog(
-                SubjectTeachersPopup(
-                  studentProfileDetails: studentProfileDetails,
-                ),
-              );
-            },
+      shrinkWrap: true,
+      crossAxisCount: 2,
+      mainAxisSpacing: 18,
+      crossAxisSpacing: 12,
+      childAspectRatio: 2.5,
+      children: [
+        ProfileItemsCard(
+          cardColor: const Color(0xFFECF8FF),
+          logoAsset: "assets/images/SubjectTeacher.png",
+          title: "Subject Teacher",
+          onTap: () {
+            Get.dialog(
+              SubjectTeachersPopup(
+                studentProfileDetails: studentProfileDetails,
+              ),
+            );
+          },
+        ),
+        PopupMenuButton(
+          offset: const Offset(0, 50),
+          shape: const TooltipShape(),
+          child: const ProfileItemsCard(
+            cardColor: Color(0xFFFAEFFE),
+            logoAsset: "assets/images/ClassTeacher.png",
+            title: "Class Teacher",
           ),
-          PopupMenuButton(
-            offset: const Offset(0, 50),
-            shape: const TooltipShape(),
-            child: const ProfileItemsCard(
-              cardColor: Color(0xFFFAEFFE),
-              logoAsset: "assets/images/ClassTeacher.png",
-              title: "Class Teacher",
-            ),
-            itemBuilder: (_) => [
-              PopupMenuItem(
-                  padding: const EdgeInsets.all(5),
-                  child: SizedBox(
-                    width: 500,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            const CircleAvatar(
-                              radius: 22,
-                              backgroundImage: AssetImage(
-                                "assets/images/ClassTeacher.png",
-                              ),
-                              backgroundColor: Colors.white,
+          itemBuilder: (_) => [
+            PopupMenuItem(
+                padding: const EdgeInsets.all(5),
+                child: SizedBox(
+                  width: 500,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const CircleAvatar(
+                            radius: 22,
+                            backgroundImage: AssetImage(
+                              "assets/images/ClassTeacher.png",
                             ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  '${studentProfileDetails.classteacher!.values!.first.empName}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .copyWith(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-
-                        // TextButton(onPressed: () {}, child: const Text("data")),
-                        CustomElevatedButton(
-                          borderRadius: BorderRadius.circular(12),
-                          onPressed: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Text(
-                              "Contact",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary),
-                            ),
+                            backgroundColor: Colors.white,
                           ),
-                        )
-                      ],
-                    ),
-                  )),
-            ],
-          ),
-          ProfileItemsCard(
-            cardColor: const Color(0xFFFFEBD4),
-            logoAsset: "assets/images/SchoolDetails.png",
-            title: "School Details",
-            onTap: () {
-              Get.to(() => const SchoolDetailsScreen());
-            },
-          ),
-          ProfileItemsCard(
-            cardColor: const Color(0xFFFFE1E1),
-            logoAsset: "assets/images/WriteTo.png",
-            title: "Write To",
-            onTap: () {
-              Get.to(
-                () => FeedBackHome(
-                  loginSuccessModel: loginSuccessModel,
-                  mskoolController: mskoolController,
-                ),
-              );
-            },
-          )
-        ]);
-    // return Padding(
-    //   padding: const EdgeInsets.all(8.0),
-    //   child: Wrap(
-    //     // crossAxisCount: 2,
-    //     // spacing: 10,
-    //     // runSpacing: 5,
-    //     // alignment: WrapAlignment.spaceBetween,
-    //     // runAlignment: WrapAlignment.spaceBetween,
-    //     // crossAxisAlignment: WrapCrossAlignment.start,
-    //     // // crossAxisCount: 2,
-    //     // childAspectRatio: 0.3,
-    //     children: [
-    //       Padding(
-    //         padding: const EdgeInsets.all(8.0),
-    //         child: Container(
-    //           decoration: BoxDecoration(
-    //             border: const Border.fromBorderSide(BorderSide.none),
-    //             backgroundBlendMode: BlendMode.overlay,
-    //             borderRadius: BorderRadius.circular(15),
-    //             color: Theme.of(context).cardTheme.color,
-    //             boxShadow: [
-    //               BoxShadow(
-    //                 color: Theme.of(context).shadowColor,
-    //                 // offset: const Offset(-5, -5),
-    //                 blurRadius: 5,
-    //                 blurStyle: BlurStyle.normal,
-    //               ),
-    //               // BoxShadow(
-    //               //   color: Theme.of(context).shadowColor,
-    //               //   // offset: const Offset(5, 5),
-    //               //   blurRadius: 5,
-    //               //   blurStyle: BlurStyle.normal,
-    //               // ),
-    //             ],
-    //           ),
-    //           child: Container(
-    //             decoration: BoxDecoration(
-    //               borderRadius: BorderRadius.circular(15),
-    //               color: const Color(0xFFFAEFFE),
-    //             ),
-    //             child: Padding(
-    //               padding: const EdgeInsets.all(8.0),
-    //               child: Row(
-    //                 mainAxisSize: MainAxisSize.min,
-    //                 children: const [
-    //                   CircleAvatar(
-    //                     radius: 25,
-    //                     backgroundImage: AssetImage(
-    //                       "assets/images/ClassTeacher.png",
-    //                     ),
-    //                     backgroundColor: Colors.white,
-    //                   ),
-    //                   Text("dfghbjkn"),
-    //                 ],
-    //               ),
-    //             ),
-    //           ),
-    //         ),
-    //       ),
-    //       Padding(
-    //         padding: const EdgeInsets.all(8.0),
-    //         child: Container(
-    //           decoration: BoxDecoration(
-    //             border: const Border.fromBorderSide(BorderSide.none),
-    //             backgroundBlendMode: BlendMode.overlay,
-    //             borderRadius: BorderRadius.circular(15),
-    //             color: Theme.of(context).cardTheme.color,
-    //             boxShadow: [
-    //               BoxShadow(
-    //                 color: Theme.of(context).shadowColor,
-    //                 // offset: const Offset(-5, -5),
-    //                 blurRadius: 5,
-    //                 blurStyle: BlurStyle.normal,
-    //               ),
-    //               // BoxShadow(
-    //               //   color: Theme.of(context).shadowColor,
-    //               //   // offset: const Offset(5, 5),
-    //               //   blurRadius: 5,
-    //               //   blurStyle: BlurStyle.normal,
-    //               // ),
-    //             ],
-    //           ),
-    //           child: Container(
-    //             decoration: BoxDecoration(
-    //               borderRadius: BorderRadius.circular(15),
-    //               color: const Color(0xFFFAEFFE),
-    //             ),
-    //             child: Padding(
-    //               padding: const EdgeInsets.all(8.0),
-    //               child: Row(
-    //                 mainAxisSize: MainAxisSize.min,
-    //                 children: const [
-    //                   CircleAvatar(
-    //                     radius: 25,
-    //                     backgroundImage: AssetImage(
-    //                       "assets/images/ClassTeacher.png",
-    //                     ),
-    //                     backgroundColor: Colors.white,
-    //                   ),
-    //                   Text("dfghbjkn"),
-    //                 ],
-    //               ),
-    //             ),
-    //           ),
-    //         ),
-    //       ),
-    //       Padding(
-    //         padding: const EdgeInsets.all(8.0),
-    //         child: Container(
-    //           decoration: BoxDecoration(
-    //             border: const Border.fromBorderSide(BorderSide.none),
-    //             backgroundBlendMode: BlendMode.overlay,
-    //             borderRadius: BorderRadius.circular(15),
-    //             color: Theme.of(context).cardTheme.color,
-    //             boxShadow: [
-    //               BoxShadow(
-    //                 color: Theme.of(context).shadowColor,
-    //                 // offset: const Offset(-5, -5),
-    //                 blurRadius: 5,
-    //                 blurStyle: BlurStyle.normal,
-    //               ),
-    //               // BoxShadow(
-    //               //   color: Theme.of(context).shadowColor,
-    //               //   // offset: const Offset(5, 5),
-    //               //   blurRadius: 5,
-    //               //   blurStyle: BlurStyle.normal,
-    //               // ),
-    //             ],
-    //           ),
-    //           child: Container(
-    //             decoration: BoxDecoration(
-    //               borderRadius: BorderRadius.circular(15),
-    //               color: const Color(0xFFFAEFFE),
-    //             ),
-    //             child: Padding(
-    //               padding: const EdgeInsets.all(8.0),
-    //               child: Row(
-    //                 mainAxisSize: MainAxisSize.min,
-    //                 children: const [
-    //                   CircleAvatar(
-    //                     radius: 25,
-    //                     backgroundImage: AssetImage(
-    //                       "assets/images/ClassTeacher.png",
-    //                     ),
-    //                     backgroundColor: Colors.white,
-    //                   ),
-    //                   Text("dfghbjkn"),
-    //                 ],
-    //               ),
-    //             ),
-    //           ),
-    //         ),
-    //       ),
-    //       Padding(
-    //         padding: const EdgeInsets.all(8.0),
-    //         child: Container(
-    //           decoration: BoxDecoration(
-    //             border: const Border.fromBorderSide(BorderSide.none),
-    //             backgroundBlendMode: BlendMode.overlay,
-    //             borderRadius: BorderRadius.circular(15),
-    //             color: Theme.of(context).cardTheme.color,
-    //             boxShadow: [
-    //               BoxShadow(
-    //                 color: Theme.of(context).shadowColor,
-    //                 // offset: const Offset(-5, -5),
-    //                 blurRadius: 5,
-    //                 blurStyle: BlurStyle.normal,
-    //               ),
-    //               // BoxShadow(
-    //               //   color: Theme.of(context).shadowColor,
-    //               //   // offset: const Offset(5, 5),
-    //               //   blurRadius: 5,
-    //               //   blurStyle: BlurStyle.normal,
-    //               // ),
-    //             ],
-    //           ),
-    //           child: Container(
-    //             decoration: BoxDecoration(
-    //               borderRadius: BorderRadius.circular(15),
-    //               color: const Color(0xFFFAEFFE),
-    //             ),
-    //             child: Padding(
-    //               padding: const EdgeInsets.all(8.0),
-    //               child: Row(
-    //                 mainAxisSize: MainAxisSize.min,
-    //                 children: const [
-    //                   CircleAvatar(
-    //                     radius: 25,
-    //                     backgroundImage: AssetImage(
-    //                       "assets/images/ClassTeacher.png",
-    //                     ),
-    //                     backgroundColor: Colors.white,
-    //                   ),
-    //                   Text("dfghbjkn"),
-    //                 ],
-    //               ),
-    //             ),
-    //           ),
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                '${studentProfileDetails.classteacher!.values!.first.empName}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge!
+                                    .copyWith(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      // TextButton(onPressed: () {}, child: const Text("data")),
+                      CustomElevatedButton(
+                        borderRadius: BorderRadius.circular(12),
+                        onPressed: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Text(
+                            "Contact",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                )),
+          ],
+        ),
+        ProfileItemsCard(
+          cardColor: const Color(0xFFFFEBD4),
+          logoAsset: "assets/images/SchoolDetails.png",
+          title: "School Details",
+          onTap: () {
+            Get.to(() => const SchoolDetailsScreen());
+          },
+        ),
+        ProfileItemsCard(
+          cardColor: const Color(0xFFFFE1E1),
+          logoAsset: "assets/images/WriteTo.png",
+          title: "Write To",
+          onTap: () {
+            Get.to(
+              () => FeedBackHome(
+                loginSuccessModel: loginSuccessModel,
+                mskoolController: mskoolController,
+              ),
+            );
+          },
+        )
+      ],
+    );
   }
 }
 

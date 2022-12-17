@@ -1,6 +1,4 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/interaction/screen/all_tab.dart';
@@ -15,10 +13,12 @@ import '../widget/custom_tab_bar.dart';
 class InteractionHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final bool showAppBar;
   const InteractionHomeScreen(
       {required this.loginSuccessModel,
       required this.mskoolController,
-      super.key});
+      super.key,
+      this.showAppBar = true});
 
   @override
   State<InteractionHomeScreen> createState() => _InteractionHomeScreenState();
@@ -47,12 +47,14 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        leadingWidth: 30,
-        title: Text("interaction".tr),
-        leading: const CustomGoBackButton(),
-      ),
+      appBar: (widget.showAppBar)
+          ? AppBar(
+              elevation: 0,
+              leadingWidth: 30,
+              title: Text("interaction".tr),
+              leading: const CustomGoBackButton(),
+            )
+          : null,
       body: Column(children: [
         CustomTabBar(
           tabs: tabs,

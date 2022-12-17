@@ -18,13 +18,15 @@ import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class CoeHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
+  final bool showAppBar;
   final MskoolController mskoolController;
   final PageController? pageController;
   const CoeHome(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController,
-      this.pageController});
+      this.pageController,
+      this.showAppBar = true});
 
   @override
   State<CoeHome> createState() => _CoeHomeState();
@@ -88,35 +90,37 @@ class _CoeHomeState extends State<CoeHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.chevron_left_rounded,
-            color: Colors.white,
-            size: 34,
-          ),
-          onPressed: () {
-            if (widget.pageController != null) {
-              widget.pageController!.animateToPage(0,
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.fastLinearToSlowEaseIn);
-            } else {
-              Get.back();
-            }
-          },
-        ),
-        leadingWidth: 30,
-        title: Text("COE".tr),
-        // actions: [
-        //   // IconButton(
-        //   //   icon: SvgPicture.asset('assets/svg/bell.svg'),
-        //   //   onPressed: () {},
-        //   // ),
-        //   const SizedBox(
-        //     width: 8.0,
-        //   ),
-        // ],
-      ),
+      appBar: (widget.showAppBar)
+          ? AppBar(
+              leading: IconButton(
+                icon: const Icon(
+                  Icons.chevron_left_rounded,
+                  color: Colors.white,
+                  size: 34,
+                ),
+                onPressed: () {
+                  if (widget.pageController != null) {
+                    widget.pageController!.animateToPage(0,
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.fastLinearToSlowEaseIn);
+                  } else {
+                    Get.back();
+                  }
+                },
+              ),
+              leadingWidth: 30,
+              title: Text("COE".tr),
+              // actions: [
+              //   // IconButton(
+              //   //   icon: SvgPicture.asset('assets/svg/bell.svg'),
+              //   //   onPressed: () {},
+              //   // ),
+              //   const SizedBox(
+              //     width: 8.0,
+              //   ),
+              // ],
+            )
+          : null,
       body: SafeArea(
         child: Obx(() {
           return handler.showAllLoadingProgress.value
