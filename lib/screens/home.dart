@@ -543,7 +543,12 @@ class _HomeTabState extends State<HomeTab> {
                                           ));
                                       break;
                                     case "Time Table":
-                                      Get.to(() => const TimeTableHome());
+                                      Get.to(() => TimeTableHome(
+                                            loginSuccessModel:
+                                                widget.loginSuccessModel,
+                                            mskoolController:
+                                                widget.mskoolController,
+                                          ));
                                       break;
                                     case "Fee Receipt":
                                       Get.to(
@@ -713,7 +718,11 @@ class _HomeTabState extends State<HomeTab> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) {
-                                    return const TimeTableHome();
+                                    return TimeTableHome(
+                                      loginSuccessModel:
+                                          widget.loginSuccessModel,
+                                      mskoolController: widget.mskoolController,
+                                    );
                                   },
                                 ),
                               );

@@ -186,7 +186,10 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                                   ));
                               break;
                             case "Time Table":
-                              Get.to(() => const TimeTableHome());
+                              Get.to(() => TimeTableHome(
+                                    loginSuccessModel: widget.loginSuccessModel,
+                                    mskoolController: widget.mskoolController,
+                                  ));
                               break;
                             case "Fee Receipt":
                               Get.to(

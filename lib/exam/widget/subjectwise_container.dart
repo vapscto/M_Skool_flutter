@@ -35,11 +35,36 @@ class SubjectWiseContainer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Chip(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0, vertical: 6.0),
-                  backgroundColor: chipColor,
-                  label: Text(datamodel.emeExamName!),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Chip(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0, vertical: 6.0),
+                      backgroundColor: chipColor,
+                      label: Text(datamodel.emeExamName!),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        // Text(
+                        //   "Grade",
+                        //   style: Theme.of(context).textTheme.labelMedium,
+                        // ),
+                        // const SizedBox(
+                        //   height: 6.0,
+                        // ),
+                        Text(
+                          "${datamodel.estmpsObtainedGrade}  ",
+                          style: Theme.of(context).textTheme.titleMedium!.merge(
+                              TextStyle(fontSize: 20.0, color: gradeColor)),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 12.0,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -47,8 +72,78 @@ class SubjectWiseContainer extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          Text(
+                            "${datamodel.estmpsMaxMarks!.toInt()}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .merge(const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black)),
+                          ),
+                          const SizedBox(
+                            height: 6.0,
+                          ),
+                          Text(
+                            "Maximum Marks",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .merge(const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color.fromRGBO(124, 124, 124, 1))),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${datamodel.estmpsMaxMarks!.toInt()}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .merge(const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    letterSpacing: 0.2,
+                                    color: Colors.black)),
+                          ),
+                          const SizedBox(
+                            height: 6.0,
+                          ),
+                          Text(
+                            "Minimum Marks",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .merge(const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 0.2,
+                                    color: Color.fromRGBO(124, 124, 124, 1))),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${datamodel.estmpsObtainedMarks!.toInt()}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .merge(const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black,
+                                  letterSpacing: 0.2,
+                                )),
+                          ),
+                          const SizedBox(
+                            height: 6.0,
+                          ),
                           Text(
                             "Mark Obtained",
                             style: Theme.of(context)
@@ -58,38 +153,6 @@ class SubjectWiseContainer extends StatelessWidget {
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
                                     color: Color.fromRGBO(124, 124, 124, 1))),
-                          ),
-                          const SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            "     ${datamodel.estmpsObtainedMarks!.toInt()}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .merge(const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black)),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            "Grade",
-                            style: Theme.of(context).textTheme.labelMedium,
-                          ),
-                          const SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            "${datamodel.estmpsObtainedGrade}  ",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .merge(TextStyle(
-                                    fontSize: 20.0, color: gradeColor)),
                           ),
                         ],
                       ),
