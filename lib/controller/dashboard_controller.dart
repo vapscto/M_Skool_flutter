@@ -1,26 +1,42 @@
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-
-import '../apis/authentication_api.dart';
-import 'global_utilities.dart';
+import 'package:m_skool_flutter/apis/dashboard_apis.dart';
+import 'package:m_skool_flutter/model/student_dashboard_model.dart';
 
 class DashboardController extends GetxController {
-  Future<bool> logout() async {
-    if (await checkConnectivity()) {
-      var value = await LoginServices.logout();
-      if (value!.data!.responseCode == 108) {
-        Fluttertoast.showToast(msg: "Couldn't logout".tr);
-        return false;
-      } else if (value.data!.responseCode == 109) {
-        Fluttertoast.showToast(msg: "Logged out successfully".tr);
-        return true;
-      } else {
-        Fluttertoast.showToast(msg: "Couldn't logout".tr);
-        return false;
-      }
-    } else {
-      Fluttertoast.showToast(msg: "Not connected to internet".tr);
-      return false;
+  RxList<AttendanceList> attendance = <AttendanceList>[].obs;
+  RxList<FeesList> feeList = <FeesList>[].obs;
+  RxList<TimeTableList> timeTableList = <TimeTableList>[].obs;
+  RxList<ExamList> examList = <ExamList>[].obs;
+  Future studentDashBoardDetails({
+    required int miId,
+    required int asmayId,
+    required int amstId,
+    required String base,
+    required int asmcLId,
+    required int asmSId,
+  }) async {
+    StudentDashboardModel studentDashboardModel = await getStudentDashboardData(
+      miId: miId,
+      asmayId: asmayId,
+      amstId: amstId,
+      base: base,
+      asmSId: asmSId,
+      asmcLId: asmcLId,
+    );
+    if (studentDashboardModel.attendanceList != null) {
+      attendance.add(studentDashboardModel.attendanceList!);
+    }
+    if (studentDashboardModel.feesList != null) {
+      feeList.add(studentDashboardModel.feesList!);
+    }
+    if (studentDashboardModel.feesList != null) {
+      feeList.add(studentDashboardModel.feesList!);
+    }
+    if (studentDashboardModel.timeTableList != null) {
+      timeTableList.add(studentDashboardModel.timeTableList!);
+    }
+    if (studentDashboardModel.examList != null) {
+      examList.add(studentDashboardModel.examList!);
     }
   }
 }
