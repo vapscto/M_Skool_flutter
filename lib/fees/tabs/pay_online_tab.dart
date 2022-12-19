@@ -348,41 +348,41 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                                                                   ],
                                                                 );
                                                         }),
-                                                        Container(
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .all(16.0),
-                                                          child:
-                                                              CustomContainer(
-                                                                  color: const Color(
-                                                                      0xFFF0F7FE),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: const EdgeInsets
-                                                                            .symmetric(
-                                                                        vertical:
-                                                                            6.0),
-                                                                    child:
-                                                                        ListTile(
-                                                                      title: const Text(
-                                                                          "Total Payable Amount"),
-                                                                      trailing:
-                                                                          Obx(() {
-                                                                        return Text(
-                                                                          "₹${trackSelection.totalAmount.value}",
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .titleSmall!
-                                                                              .merge(
-                                                                                const TextStyle(
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                ),
-                                                                              ),
-                                                                        );
-                                                                      }),
-                                                                    ),
-                                                                  )),
-                                                        )
+                                                        // Container(
+                                                        //   margin:
+                                                        //       const EdgeInsets
+                                                        //           .all(16.0),
+                                                        //   child:
+                                                        //       CustomContainer(
+                                                        //           color: const Color(
+                                                        //               0xFFF0F7FE),
+                                                        //           child:
+                                                        //               Padding(
+                                                        //             padding: const EdgeInsets
+                                                        //                     .symmetric(
+                                                        //                 vertical:
+                                                        //                     6.0),
+                                                        //             child:
+                                                        //                 ListTile(
+                                                        //               title: const Text(
+                                                        //                   "Total Payable Amount"),
+                                                        //               trailing:
+                                                        //                   Obx(() {
+                                                        //                 return Text(
+                                                        //                   "₹${trackSelection.totalAmount.value}",
+                                                        //                   style: Theme.of(context)
+                                                        //                       .textTheme
+                                                        //                       .titleSmall!
+                                                        //                       .merge(
+                                                        //                         const TextStyle(
+                                                        //                           fontWeight: FontWeight.w600,
+                                                        //                         ),
+                                                        //                       ),
+                                                        //                 );
+                                                        //               }),
+                                                        //             ),
+                                                        //           )),
+                                                        // )
                                                       ]),
                                                     ),
                                                   ),
@@ -409,20 +409,20 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                                                           ),
                                                         ),
                                                   ),
-                                                  trailing: Obx(() {
-                                                    return Text(
-                                                      "₹${trackSelection.totalAmount.value}",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .labelMedium!
-                                                          .merge(
-                                                            const TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                          ),
-                                                    );
-                                                  }),
+                                                  // trailing: Obx(() {
+                                                  //   return Text(
+                                                  //     "₹${trackSelection.totalAmount.value}",
+                                                  //     style: Theme.of(context)
+                                                  //         .textTheme
+                                                  //         .labelMedium!
+                                                  //         .merge(
+                                                  //           const TextStyle(
+                                                  //             color:
+                                                  //                 Colors.white,
+                                                  //           ),
+                                                  //         ),
+                                                  //   );
+                                                  // }),
                                                 ),
                                               ),
                                             ],
@@ -432,13 +432,21 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                                           ),
                                           Row(
                                             children: [
-                                              Radio(
-                                                value: "razorpay",
-                                                groupValue: paymentType,
-                                                onChanged: ((value) {
-                                                  paymentType = value!;
-                                                  setState(() {});
-                                                }),
+                                              Theme(
+                                                data: ThemeData(
+                                                    unselectedWidgetColor:
+                                                        Theme.of(context)
+                                                            .primaryColor),
+                                                child: Radio(
+                                                  value: "razorpay",
+                                                  activeColor: Theme.of(context)
+                                                      .primaryColor,
+                                                  groupValue: paymentType,
+                                                  onChanged: ((value) {
+                                                    paymentType = value!;
+                                                    setState(() {});
+                                                  }),
+                                                ),
                                               ),
                                               Image.asset(
                                                 "assets/images/razorpay-icon.png",
@@ -1008,6 +1016,7 @@ class _InstallmentInfoWidgetState extends State<InstallmentInfoWidget> {
           vertical: VisualDensity.minimumDensity),
       leading: Checkbox(
         value: widget.disabled ? true : isSelected,
+        activeColor: Theme.of(context).primaryColor,
         visualDensity: const VisualDensity(
             horizontal: VisualDensity.minimumDensity,
             vertical: VisualDensity.minimumDensity),

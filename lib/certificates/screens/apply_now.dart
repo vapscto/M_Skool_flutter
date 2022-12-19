@@ -94,16 +94,39 @@ class _ApplyNowState extends State<ApplyNow> {
                                     color: Colors.transparent,
                                   ),
                                 ),
-                                label: Text(
-                                  " Certificate Type ".tr,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium!
-                                      .merge(
-                                        const TextStyle(
-                                          fontSize: 20.0,
-                                        ),
+                                // labelStyle: TextStyle(color: Color(0xFF28B6C8)),
+                                label: Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFDFFBFE),
+                                    borderRadius: BorderRadius.circular(24.0),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0, vertical: 8.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/cert.png",
+                                        height: 24.0,
                                       ),
+                                      const SizedBox(
+                                        width: 6.0,
+                                      ),
+                                      Text(
+                                        " Certificate Type ".tr,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
+                                            .merge(
+                                              const TextStyle(
+                                                  backgroundColor:
+                                                      Color(0xFFDFFBFE),
+                                                  fontSize: 20.0,
+                                                  color: Color(0xFF28B6C8)),
+                                            ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 border: const OutlineInputBorder(),
                               ),
@@ -149,23 +172,35 @@ class _ApplyNowState extends State<ApplyNow> {
                               maxLines: 8,
                               decoration: InputDecoration(
                                 border: const OutlineInputBorder(),
-                                label: Row(
-                                  children: [
-                                    const SizedBox(
-                                      width: 12.0,
-                                    ),
-                                    Text(
-                                      " Reason ".tr,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .merge(
-                                            const TextStyle(
-                                              fontSize: 20.0,
+                                label: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0, vertical: 8.0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(24.0),
+                                      color: Color(0xFFFFEBEA)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/reason.png",
+                                        height: 24.0,
+                                      ),
+                                      const SizedBox(
+                                        width: 6.0,
+                                      ),
+                                      Text(
+                                        " Reason ".tr,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
+                                            .merge(
+                                              const TextStyle(
+                                                  fontSize: 20.0,
+                                                  color: Color(0xFFFF6F67)),
                                             ),
-                                          ),
-                                    ),
-                                  ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 hintText: 'Type your reason here.'.tr,
                                 floatingLabelBehavior:
@@ -193,23 +228,35 @@ class _ApplyNowState extends State<ApplyNow> {
                               controller: date,
                               decoration: InputDecoration(
                                 border: const OutlineInputBorder(),
-                                label: Row(
-                                  children: [
-                                    const SizedBox(
-                                      width: 12.0,
-                                    ),
-                                    Text(
-                                      " Date ".tr,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .merge(
-                                            const TextStyle(
-                                              fontSize: 20.0,
+                                label: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0, vertical: 8.0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(24.0),
+                                      color: const Color(0xFFE5FFF3)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/calendar.png",
+                                        height: 24.0,
+                                      ),
+                                      const SizedBox(
+                                        width: 6.0,
+                                      ),
+                                      Text(
+                                        " Date ".tr,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
+                                            .merge(
+                                              const TextStyle(
+                                                  fontSize: 20.0,
+                                                  color: Color(0xFF43C788)),
                                             ),
-                                          ),
-                                    ),
-                                  ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 hintText: 'Select Date'.tr,
                                 floatingLabelBehavior:
@@ -225,28 +272,36 @@ class _ApplyNowState extends State<ApplyNow> {
                                   ),
                                 ),
                                 suffixIcon: InkWell(
-                                  onTap: () async {
-                                    DateTime? selectedDT = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(1998, 10, 12),
-                                      lastDate: DateTime.now(),
-                                    );
+                                    onTap: () async {
+                                      DateTime? selectedDT =
+                                          await showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(1998, 10, 12),
+                                        lastDate: DateTime.now(),
+                                      );
 
-                                    if (selectedDT == null) {
-                                      Fluttertoast.showToast(
-                                          msg: "You didn't selected the date"
-                                              .tr);
-                                      return;
-                                    }
+                                      if (selectedDT == null) {
+                                        Fluttertoast.showToast(
+                                            msg: "You didn't selected the date"
+                                                .tr);
+                                        return;
+                                      }
 
-                                    date.text = getFormatedDate(selectedDT);
-                                  },
-                                  child: Icon(
-                                    Icons.date_range_outlined,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                ),
+                                      date.text = getFormatedDate(selectedDT);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Image.asset(
+                                        "assets/images/calendar.png",
+                                        height: 20.0,
+                                        width: 20.0,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium!
+                                            .color,
+                                      ),
+                                    )),
                               ),
                             ),
                           ),
@@ -331,6 +386,12 @@ class _ApplyNowState extends State<ApplyNow> {
                                       );
                                     });
                               }),
+                          const SizedBox(
+                            height: 36.0,
+                          ),
+                          Center(
+                              child:
+                                  Image.asset("assets/images/cert_illus.png")),
                         ],
                       );
                     }

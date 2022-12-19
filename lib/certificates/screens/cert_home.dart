@@ -94,35 +94,73 @@ class _CertificateHomeScreenState extends State<CertificateHomeScreen>
 
                   tabs: [
                     Tab(
-                      child: Text(
-                        "Apply",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .merge(TextStyle(
-                              color: tabStateController.selectedIndex.value == 0
-                                  ? Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .color
-                                  : Colors.white,
-                            )),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          tabStateController.selectedIndex.value == 0
+                              ? Image.asset(
+                                  "assets/images/cert.png",
+                                  color: Colors.black,
+                                  height: 24.0,
+                                )
+                              : const SizedBox(),
+                          SizedBox(
+                            width: tabStateController.selectedIndex.value == 0
+                                ? 8.0
+                                : 0.0,
+                          ),
+                          Text(
+                            "Apply",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .merge(TextStyle(
+                                  color:
+                                      tabStateController.selectedIndex.value ==
+                                              0
+                                          ? Theme.of(context)
+                                              .textTheme
+                                              .titleMedium!
+                                              .color
+                                          : Colors.white,
+                                )),
+                          ),
+                        ],
                       ),
                     ),
                     Tab(
-                      child: Text(
-                        "View Details",
-                        style: Theme.of(context).textTheme.titleMedium!.merge(
-                              TextStyle(
-                                color:
-                                    tabStateController.selectedIndex.value == 1
-                                        ? Theme.of(context)
-                                            .textTheme
-                                            .titleMedium!
-                                            .color
-                                        : Colors.white,
-                              ),
-                            ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          tabStateController.selectedIndex.value == 1
+                              ? Image.asset(
+                                  "assets/images/eye.png",
+                                  //color: Colors.black,
+                                  height: 24.0,
+                                )
+                              : const SizedBox(),
+                          SizedBox(
+                            width: tabStateController.selectedIndex.value == 1
+                                ? 8.0
+                                : 0.0,
+                          ),
+                          Text(
+                            "View Details",
+                            style:
+                                Theme.of(context).textTheme.titleMedium!.merge(
+                                      TextStyle(
+                                        color: tabStateController
+                                                    .selectedIndex.value ==
+                                                1
+                                            ? Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .color
+                                            : Colors.white,
+                                      ),
+                                    ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

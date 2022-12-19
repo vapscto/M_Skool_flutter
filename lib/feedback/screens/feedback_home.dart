@@ -234,6 +234,8 @@ class _FeedBackHomeState extends State<FeedBackHome> {
                 );
               },
             ),
+
+            Image.asset("assets/images/rafiki.png"),
           ],
         ),
       ),

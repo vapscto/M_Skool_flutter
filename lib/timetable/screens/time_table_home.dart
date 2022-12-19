@@ -9,6 +9,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
@@ -605,8 +606,7 @@ class _WeeklyTTState extends State<WeeklyTT> {
                             topLeft: Radius.circular(16.0)),
                         child: DataTable(
                             headingRowColor: MaterialStateColor.resolveWith(
-                              (states) =>
-                                  Theme.of(context).colorScheme.secondary,
+                              (states) => Theme.of(context).primaryColor,
                             ),
                             border: TableBorder(
                               right: BorderSide(
@@ -628,15 +628,30 @@ class _WeeklyTTState extends State<WeeklyTT> {
                                     .titleSmall!
                                     .merge(const TextStyle(
                                       fontWeight: FontWeight.w600,
+                                      color: Colors.white,
                                     )),
                               ))
                             ],
                             rows: List.generate(
                                 snapshot.data!.periodsList.values!.length,
-                                (index) => DataRow(cells: [
-                                      DataCell(Text(
-                                          "Period ${snapshot.data!.periodsList.values!.elementAt(index).ttmPPeriodName!}")),
-                                    ]))),
+                                (index) => DataRow(
+                                        color: MaterialStateColor.resolveWith(
+                                          (states) => timetablePeriodColor
+                                              .elementAt(index),
+                                        ),
+                                        cells: [
+                                          DataCell(Text(
+                                            "Period ${snapshot.data!.periodsList.values!.elementAt(index).ttmPPeriodName!}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .merge(
+                                                  const TextStyle(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                          )),
+                                        ]))),
                       ),
 
                       Expanded(
@@ -650,8 +665,7 @@ class _WeeklyTTState extends State<WeeklyTT> {
                                 (index) => DataTable(
                                   headingRowColor:
                                       MaterialStateColor.resolveWith(
-                                    (states) =>
-                                        Theme.of(context).colorScheme.secondary,
+                                    (states) => Theme.of(context).primaryColor,
                                   ),
                                   border: TableBorder(
                                     right: BorderSide(
@@ -675,6 +689,7 @@ class _WeeklyTTState extends State<WeeklyTT> {
                                           .titleSmall!
                                           .merge(const TextStyle(
                                             fontWeight: FontWeight.w600,
+                                            color: Colors.white,
                                           )),
                                     ))
                                   ],
@@ -768,7 +783,7 @@ class _WeeklyTTState extends State<WeeklyTT> {
                       await file.writeAsBytes(bytes, flush: true);
                       Fluttertoast.showToast(
                           msg: "File saved at ${file.absolute.path}");
-                      
+
                       Navigator.pop(context);
                       //Open the PDF document in mobile
                       //OpenFile.open('$path/$fileName');

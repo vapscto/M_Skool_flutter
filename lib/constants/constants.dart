@@ -268,3 +268,19 @@ Map<String, dynamic> dayName = {
   "6": "Sat",
   "7": "Sun",
 };
+
+List<Color> timetablePeriodColor = const [
+  Color(0xFF9900F0),
+  Color(0xFF32E1F7),
+  Color(0xFF4ED092),
+  Color(0xFFFFE500),
+  Color(0xFFFF9621),
+  Color(0xFFFF60A8),
+  Color(0xFFA9D252),
+  Color(0xFF09B4BD),
+  Color(0xFFFF6F67),
+  Color.fromARGB(255, 84, 197, 19),
+  Color.fromARGB(255, 12, 126, 146),
+  Color.fromARGB(255, 150, 14, 127),
+  Color.fromARGB(255, 114, 24, 150),
+];

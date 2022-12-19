@@ -12,6 +12,8 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/api/get_datewise_notices.dart';
 import 'package:m_skool_flutter/notice/api/get_notice_api.dart';
+import 'package:m_skool_flutter/notice/api/get_syllabus_api.dart';
+import 'package:m_skool_flutter/notice/api/get_tt_notice_api.dart';
 import 'package:m_skool_flutter/notice/model/notice_data_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_detail_screen.dart';
 import 'package:m_skool_flutter/notice/widget/notice_filtered_widget.dart';
@@ -49,6 +51,7 @@ class _NoticeHomeState extends State<NoticeHome> {
   }
 
   RxBool showFilter = RxBool(false);
+  RxString noticeType = RxString("others");
 
   @override
   Widget build(BuildContext context) {
@@ -278,72 +281,174 @@ class _NoticeHomeState extends State<NoticeHome> {
                       ),
                     );
             }),
+            const SizedBox(
+              height: 12.0,
+            ),
+            Obx(() {
+              return hwCwNbController.filter.value == 0
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Obx(() {
+                                return Theme(
+                                  data: ThemeData(
+                                    unselectedWidgetColor:
+                                        Theme.of(context).primaryColor,
+                                  ),
+                                  child: Radio(
+                                      activeColor:
+                                          Theme.of(context).primaryColor,
+                                      value: "others",
+                                      groupValue: noticeType.value,
+                                      onChanged: (type) {
+                                        noticeType.value = type!;
+                                      }),
+                                );
+                              }),
+                              Text(
+                                "Others",
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Obx(() {
+                                return Theme(
+                                  data: ThemeData(
+                                    unselectedWidgetColor:
+                                        Theme.of(context).primaryColor,
+                                  ),
+                                  child: Radio(
+                                      value: "syllabus",
+                                      activeColor:
+                                          Theme.of(context).primaryColor,
+                                      groupValue: noticeType.value,
+                                      onChanged: (type) {
+                                        noticeType.value = type!;
+                                      }),
+                                );
+                              }),
+                              Text(
+                                "Syllabus",
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Obx(() {
+                                return Theme(
+                                  data: ThemeData(
+                                      unselectedWidgetColor:
+                                          Theme.of(context).primaryColor),
+                                  child: Radio(
+                                      value: "timetable",
+                                      activeColor:
+                                          Theme.of(context).primaryColor,
+                                      groupValue: noticeType.value,
+                                      onChanged: (type) {
+                                        noticeType.value = type!;
+                                      }),
+                                );
+                              }),
+                              Text(
+                                "Timetable",
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  : const SizedBox();
+            }),
             Obx(() {
               return hwCwNbController.filter > 0
                   ? NoticeFilteredWidget(
                       loginSuccessModel: widget.loginSuccessModel,
                       mskoolController: widget.mskoolController,
                       hwCwNbController: hwCwNbController)
-                  : FutureBuilder<List<NoticeDataModelValues>>(
-                      future: GetNoticeApi.instance.getNotice(
-                        miId: widget.loginSuccessModel.mIID!,
-                        asmayId: widget.loginSuccessModel.asmaYId!,
-                        amstId: widget.loginSuccessModel.amsTId!,
-                        baseUrl: baseUrlFromInsCode(
-                          "portal",
-                          widget.mskoolController,
-                        ),
-                      ),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return ListView.separated(
-                            padding: const EdgeInsets.all(16.0),
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (_, index) {
-                              color += 1;
-                              if (index % 6 == 0) {
-                                color = 0;
-                              }
-                              if (color > 6) {
-                                color = 0;
-                              }
-
-                              usedColor.add(noticeColor.elementAt(color));
-
-                              return InkWell(
-                                onTap: () {
-                                  logger.d(color);
-
-                                  Get.to(() => NoticeDetailScreen(
-                                        color: usedColor.elementAt(index),
-                                        value: snapshot.data!.elementAt(index),
-                                        isFiltring: false,
-                                      ));
-                                },
-                                child: NoticeItem(
-                                  color: color,
-                                  values: snapshot.data!.elementAt(index),
+                  : Obx(() {
+                      return noticeType.value == "others"
+                          ? FutureBuilder<List<NoticeDataModelValues>>(
+                              future: GetNoticeApi.instance.getNotice(
+                                miId: widget.loginSuccessModel.mIID!,
+                                asmayId: widget.loginSuccessModel.asmaYId!,
+                                amstId: widget.loginSuccessModel.amsTId!,
+                                baseUrl: baseUrlFromInsCode(
+                                  "portal",
+                                  widget.mskoolController,
                                 ),
-                              );
-                            },
-                            separatorBuilder: (_, index) {
-                              return const SizedBox(
-                                height: 16.0,
-                              );
-                            },
-                            itemCount: snapshot.data!.length,
-                          );
-                        }
-                        if (snapshot.hasError) {
-                          return ErrWidget(
-                              err: snapshot.error as Map<String, dynamic>);
-                        }
-                        return const CustomPgrWidget(
-                            title: "Loading Notice's",
-                            desc:
-                                "Don't Worry we are fetching notice's from noticeboard");
-                      });
+                              ),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return ListView.separated(
+                                    padding: const EdgeInsets.all(16.0),
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemBuilder: (_, index) {
+                                      color += 1;
+                                      if (index % 6 == 0) {
+                                        color = 0;
+                                      }
+                                      if (color > 6) {
+                                        color = 0;
+                                      }
+
+                                      usedColor
+                                          .add(noticeColor.elementAt(color));
+
+                                      return InkWell(
+                                        onTap: () {
+                                          logger.d(color);
+
+                                          Get.to(() => NoticeDetailScreen(
+                                                color:
+                                                    usedColor.elementAt(index),
+                                                value: snapshot.data!
+                                                    .elementAt(index),
+                                                isFiltring: false,
+                                              ));
+                                        },
+                                        child: NoticeItem(
+                                          color: color,
+                                          values:
+                                              snapshot.data!.elementAt(index),
+                                        ),
+                                      );
+                                    },
+                                    separatorBuilder: (_, index) {
+                                      return const SizedBox(
+                                        height: 16.0,
+                                      );
+                                    },
+                                    itemCount: snapshot.data!.length,
+                                  );
+                                }
+                                if (snapshot.hasError) {
+                                  return ErrWidget(
+                                      err: snapshot.error
+                                          as Map<String, dynamic>);
+                                }
+                                return const CustomPgrWidget(
+                                    title: "Loading Notice's",
+                                    desc:
+                                        "Don't Worry we are fetching notice's from noticeboard");
+                              })
+                          : noticeType.value == "syllabus"
+                              ? SyllabusNotices(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                )
+                              : TTNotice(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController);
+                    });
             }),
           ],
         ),
@@ -367,6 +472,150 @@ class _NoticeHomeState extends State<NoticeHome> {
   }
 }
 
+class SyllabusNotices extends StatefulWidget {
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  const SyllabusNotices({
+    Key? key,
+    required this.loginSuccessModel,
+    required this.mskoolController,
+  }) : super(key: key);
+
+  @override
+  State<SyllabusNotices> createState() => _SyllabusNoticesState();
+}
+
+class _SyllabusNoticesState extends State<SyllabusNotices> {
+  int color = -1;
+  List<Color> usedColor = [];
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<NoticeDataModelValues>>(
+        future: GetSyllabusApi.instance.loadSyllabusNotice(
+            amstId: widget.loginSuccessModel.amsTId!,
+            miId: widget.loginSuccessModel.mIID!,
+            asmayId: widget.loginSuccessModel.asmaYId!,
+            userId: widget.loginSuccessModel.userId!,
+            roleId: widget.loginSuccessModel.roleId!,
+            flag: "S",
+            base: baseUrlFromInsCode("portal", widget.mskoolController)),
+        builder: (_, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.separated(
+              padding: const EdgeInsets.all(16.0),
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (_, index) {
+                color += 1;
+                if (index % 6 == 0) {
+                  color = 0;
+                }
+                if (color > 6) {
+                  color = 0;
+                }
+
+                usedColor.add(noticeColor.elementAt(color));
+
+                return InkWell(
+                  onTap: () {
+                    //logger.d(color);
+
+                    Get.to(() => NoticeDetailScreen(
+                          color: usedColor.elementAt(index),
+                          value: snapshot.data!.elementAt(index),
+                          isFiltring: false,
+                        ));
+                  },
+                  child: NoticeItem(
+                    color: color,
+                    values: snapshot.data!.elementAt(index),
+                  ),
+                );
+              },
+              separatorBuilder: (_, index) {
+                return const SizedBox(
+                  height: 16.0,
+                );
+              },
+              itemCount: snapshot.data!.length,
+            );
+          }
+          if (snapshot.hasError) {
+            return ErrWidget(err: snapshot.error as Map<String, dynamic>);
+          }
+          return const CustomPgrWidget(
+              title: "Loading Syllabus",
+              desc: "Don't Worry we are fetching your syllabus");
+        });
+  }
+}
+
+class TTNotice extends StatefulWidget {
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  const TTNotice(
+      {super.key,
+      required this.loginSuccessModel,
+      required this.mskoolController});
+
+  @override
+  State<TTNotice> createState() => _TTNoticeState();
+}
+
+class _TTNoticeState extends State<TTNotice> {
+  int color = -1;
+  List<Color> usedColor = [];
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<NoticeDataModelValues>>(
+        future: GetTTNoticeApi.instance.loadTTNotices(
+            amstId: widget.loginSuccessModel.amsTId!,
+            miId: widget.loginSuccessModel.mIID!,
+            asmayId: widget.loginSuccessModel.asmaYId!,
+            userId: widget.loginSuccessModel.userId!,
+            roleId: widget.loginSuccessModel.roleId!,
+            flag: "S",
+            base: baseUrlFromInsCode("portal", widget.mskoolController)),
+        builder: (_, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.separated(
+              padding: const EdgeInsets.all(16.0),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (_, index) {
+                color += 1;
+                if (index % 6 == 0) {
+                  color = 0;
+                }
+                if (color > 6) {
+                  color = 0;
+                }
+
+                usedColor.add(noticeColor.elementAt(color));
+
+                return TTNoticeItem(
+                  color: color,
+                  values: snapshot.data!.elementAt(index),
+                );
+              },
+              separatorBuilder: (_, index) {
+                return const SizedBox(
+                  height: 16.0,
+                );
+              },
+              itemCount: snapshot.data!.length,
+            );
+          }
+          if (snapshot.hasError) {
+            return ErrWidget(err: snapshot.error as Map<String, dynamic>);
+          }
+          return const CustomPgrWidget(
+              title: "Loading Timetable notice's",
+              desc: "Don't Worry we are fetching your Timetable");
+        });
+  }
+}
+
 class NoticeItem extends StatelessWidget {
   const NoticeItem({
     Key? key,
@@ -380,7 +629,7 @@ class NoticeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 90,
+      height: 80,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.0),
         color: Theme.of(context).scaffoldBackgroundColor,
@@ -477,6 +726,126 @@ class NoticeItem extends StatelessWidget {
                 Icons.chevron_right_rounded,
                 size: 30,
                 color: Theme.of(context).primaryColor,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TTNoticeItem extends StatelessWidget {
+  final int color;
+  final NoticeDataModelValues values;
+  const TTNoticeItem({super.key, required this.color, required this.values});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 80,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12.0),
+        color: Theme.of(context).scaffoldBackgroundColor,
+        boxShadow: CustomThemeData.getShadow(),
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0),
+          //color: colors.elementAt(color).withOpacity(0.1),
+          //boxShadow: CustomThemeData.getShadow(),
+        ),
+        child: Row(
+          children: [
+            Container(
+              height: 90,
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              decoration: BoxDecoration(
+                color: noticeColor.elementAt(color).withOpacity(0.1),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12.0),
+                  bottomLeft: Radius.circular(12.0),
+                ),
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${DateTime.parse(values.intBStartDate!).day}",
+                      style: Theme.of(context).textTheme.titleMedium!.merge(
+                            TextStyle(
+                              color: noticeColor.elementAt(color),
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                    ),
+                    const SizedBox(
+                      height: 6.0,
+                    ),
+                    Text(
+                      shortMonth.elementAt(
+                          (DateTime.parse(values.intBStartDate!).month) - 1),
+                      style: Theme.of(context).textTheme.labelMedium!.merge(
+                          TextStyle(color: noticeColor.elementAt(color))),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      values.intBTitle!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.titleSmall!.merge(
+                          const TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 16)),
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset('assets/svg/calendar.svg'),
+                        const SizedBox(
+                          width: 6.0,
+                        ),
+                        Text(
+                          ''' ${getFormatedDate(DateTime.parse(values.intBStartDate!))} - ${getFormatedDate(DateTime.parse(values.intBEndDate!))} ''',
+                          style: Theme.of(context).textTheme.labelSmall!.merge(
+                                const TextStyle(
+                                    letterSpacing: 0.3, fontSize: 15.0),
+                              ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {},
+              child: Container(
+                margin: const EdgeInsets.only(right: 16.0),
+                padding: const EdgeInsets.all(12.0),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.0),
+                    color: const Color(0xFFD9EDFF)),
+                child: SvgPicture.asset(
+                  "assets/svg/download.svg",
+                  height: 24.0,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
             ),
           ],

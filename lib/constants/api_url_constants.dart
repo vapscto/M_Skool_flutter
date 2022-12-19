@@ -120,4 +120,9 @@ class URLS {
   static String transHistory = "api/FeesCtrl/feeTransactionlog/";
 
   static String transStatus = "api/FeesCtrl/feeTransactiondetail/";
+
+  static String getSyllabusNotice =
+      "api/StudentDashboardFacade/onclick_syllabus/";
+
+  static String getTTNotice = "api/StudentDashboardFacade/onclick_TT/";
 }
