@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/attendance/screens/home_page.dart';
 import 'package:m_skool_flutter/certificates/screens/cert_home.dart';
 import 'package:m_skool_flutter/classwork/screen/classwork_home_screen.dart';
 import 'package:m_skool_flutter/coe/screen/coe_home.dart';
+import 'package:m_skool_flutter/controller/dashboard_controller.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/exam/screen/exam_home.dart';
@@ -45,6 +46,7 @@ class _HomeState extends State<Home> {
   RxInt pageNumber = 0.obs;
   RxString keyWord = "".obs;
   TextEditingController textEditingController = TextEditingController();
+  DashboardController dashboardController = Get.put(DashboardController());
   ScrollController scrollController = ScrollController();
   RxList<LoginValues> values = RxList<LoginValues>();
   final HwCwNbController hwCwNbController = Get.put(HwCwNbController());
@@ -53,6 +55,13 @@ class _HomeState extends State<Home> {
   final PageController pageController = PageController();
   @override
   void initState() {
+    dashboardController.studentDashBoardDetails(
+        miId: widget.loginSuccessModel.mIID!,
+        asmayId: widget.loginSuccessModel.asmaYId!,
+        amstId: widget.loginSuccessModel.amsTId!,
+        base: baseUrlFromInsCode("portal", widget.mskoolController),
+        asmcLId: widget.loginSuccessModel.asmcLId!,
+        asmSId: widget.loginSuccessModel.asmSId!);
     super.initState();
   }
 
@@ -210,6 +219,7 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+  DashboardController dashboardController = Get.find<DashboardController>();
   final ValueNotifier<int> carouselNotifier = ValueNotifier<int>(0);
   List<String> icons = [
     // "attendance",
@@ -227,6 +237,7 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
+    // return Obx(() {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -343,6 +354,19 @@ class _HomeTabState extends State<HomeTab> {
                   const SizedBox(
                     height: 36.0,
                   ),
+                  // const DashBoardExamChart(),
+                  // (dashboardController.attendance.isNotEmpty)
+                  //     ? SizedBox(
+                  //         width: Get.width * 0.4329,
+                  //         height: Get.width * 0.4329,
+                  //         child: SingleChildCardWidget(
+                  //           child: DashBoardAttendance(
+                  //             attendanceValue: dashboardController
+                  //                 .attendance.first.values!.first.score!,
+                  //           ),
+                  //         ),
+                  //       )
+                  //     : Container(),
                   Text(
                     "Dashboard",
                     style: Theme.of(context).textTheme.titleMedium!.merge(
@@ -480,46 +504,6 @@ class _HomeTabState extends State<HomeTab> {
                                         ));
                                     break;
                                   case "Interaction":
-                                    Get.to(
-                                      () => InteractionHomeScreen(
-                                        loginSuccessModel:
-                                            widget.loginSuccessModel,
-                                        mskoolController:
-                                            widget.mskoolController,
-                                        // hwCwNbController:
-                                        //     widget.hwCwNbController,
-                                        // appBarTitle:
-                                        //     "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                      ),
-                                    );
-                                    break;
-                                  case "Library":
-                                    String base = baseUrlFromInsCode(
-                                        "portal", widget.mskoolController);
-                                    Get.to(
-                                      () => LibraryHome(
-                                        miId: widget.loginSuccessModel.mIID!,
-                                        asmayId:
-                                            widget.loginSuccessModel.asmaYId!,
-                                        asmtId:
-                                            widget.loginSuccessModel.amsTId!,
-                                        base: base,
-                                        title:
-                                            "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                      ),
-                                    );
-                                    break;
-                                  case "Syllabus":
-                                    break;
-                                  case "Exam":
-                                    Get.to(() => ExamHome(
-                                          loginSuccessModel:
-                                              widget.loginSuccessModel,
-                                          mskoolController:
-                                              widget.mskoolController,
-                                        ));
-                                    break;
-                                  case "Interaction":
                                     Get.to(() => InteractionHomeScreen(
                                           loginSuccessModel:
                                               widget.loginSuccessModel,
@@ -543,25 +527,6 @@ class _HomeTabState extends State<HomeTab> {
                                               widget.mskoolController,
                                         ));
                                     break;
-                                  // case "Fee Receipt":
-                                  //   Get.to(
-                                  //     () => FeeReceiptHome(
-                                  //     ));
-                                  //break;
-                                  // case "Apply Certificate":
-                                  //   Get.to(() => CertificateHomeScreen(
-                                  //         loginSuccessModel:
-                                  //             widget.loginSuccessModel,
-                                  //         mskoolController:
-                                  //             widget.mskoolController,
-                                  //       ));
-                                  //   break;
-                                  // case "Time Table":
-                                  //   Get.to(() =>  TimeTableHome(
-                                  //     loginSuccessModel: widget.loginSuccessModel,
-                                  //     mskoolController: widget.mskoolController,
-                                  //   ));
-                                  //   break;
                                   case "Fee Receipt":
                                     Get.to(
                                       () => FeeReceiptHome(
@@ -814,6 +779,7 @@ class _HomeTabState extends State<HomeTab> {
         ),
       ),
     );
+    // });
   }
 }
 

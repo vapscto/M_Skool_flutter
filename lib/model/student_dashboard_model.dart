@@ -34,12 +34,21 @@ class StudentDashboardModel {
     asmSId = json['asmS_Id'];
     asmcLId = json['asmcL_Id'];
     status = json['status'];
-    birthdayList = json['birthdayList'];
-    calList = json['calList'];
-    attendanceList = json['attendanceList'];
-    feesList = json['feesList'];
-    timeTableList = json['timeTableList'];
-    examList = json['examList'];
+    birthdayList = json['birthdayList'] == null
+        ? null
+        : BirthdayList.fromJson(json['birthdayList']);
+    calList =
+        json['calList'] == null ? null : CalList.fromJson(json['calList']);
+    attendanceList = json['attendanceList'] == null
+        ? null
+        : AttendanceList.fromJson(json['attendanceList']);
+    feesList =
+        json['feesList'] == null ? null : FeesList.fromJson(json['feesList']);
+    timeTableList = json['timeTableList'] == null
+        ? null
+        : TimeTableList.fromJson(json['timeTableList']);
+    examList =
+        json['examList'] == null ? null : ExamList.fromJson(json['examList']);
   }
   num? mIId;
   num? asmaYId;

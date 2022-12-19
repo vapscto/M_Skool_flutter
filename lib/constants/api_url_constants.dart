@@ -108,7 +108,7 @@ class URLS {
       "api/FeeOnlinePaymentFacade/Razorpaypaymentresponse";
 
   // Dashboard
-  static String studentDashboard = "AdmissionCtrl/stdDashboardDet/";
+  static String studentDashboard = "api/AdmissionCtrl/stdDashboardDet/";
 
   static String paymentCharges = "api/FeesCtrl/paymentGatewayrate/";
 

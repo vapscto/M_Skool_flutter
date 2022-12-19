@@ -64,6 +64,7 @@ dependencies:
   pinput: ^2.2.16
   syncfusion_flutter_pdf: ^20.3.61
   salomon_bottom_bar: ^3.3.1
+  syncfusion_flutter_gauges: ^20.3.61
 
 dev_dependencies:
   flutter_test:
