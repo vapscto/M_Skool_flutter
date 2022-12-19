@@ -54,6 +54,7 @@ class LoginSuccessModel {
   int? almsTId;
   String? mIBackgroundImage;
   String? mILogo;
+  Institutedetails? institutedetails;
 
   LoginSuccessModel(
       {this.amsTId,
@@ -110,7 +111,8 @@ class LoginSuccessModel {
       this.ivrmumalPDeleteFlg,
       this.almsTId,
       this.mIBackgroundImage,
-      this.mILogo});
+      this.mILogo,
+      this.institutedetails});
 
   LoginSuccessModel.fromJson(Map<String, dynamic> json) {
     amsTId = json['amsT_Id'];
@@ -177,6 +179,9 @@ class LoginSuccessModel {
     almsTId = json['almsT_Id'];
     mIBackgroundImage = json['mI_BackgroundImage'];
     mILogo = json['mI_Logo'];
+    institutedetails = json['institutedetails'] != null
+        ? Institutedetails.fromJson(json['institutedetails'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -242,6 +247,9 @@ class LoginSuccessModel {
     data['almsT_Id'] = almsTId;
     data['mI_BackgroundImage'] = mIBackgroundImage;
     data['mI_Logo'] = mILogo;
+    if (institutedetails != null) {
+      data['institutedetails'] = institutedetails!.toJson();
+    }
     return data;
   }
 }
@@ -478,5 +486,292 @@ class LoginValues {
     data['ivrmumalP_DeleteFlg'] = ivrmumalPDeleteFlg;
     data['almsT_Id'] = almsTId;
     return data;
+  }
+}
+
+class Institutedetails {
+  Institutedetails({
+    this.type,
+    this.values,
+  });
+
+  Institutedetails.fromJson(dynamic json) {
+    type = json['\$type'];
+    if (json['\$values'] != null) {
+      values = [];
+      json['\$values'].forEach((v) {
+        values?.add(InstitutedetailsValues.fromJson(v));
+      });
+    }
+  }
+  String? type;
+  List<InstitutedetailsValues>? values;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['\$type'] = type;
+    if (values != null) {
+      map['\$values'] = values?.map((v) => v.toJson()).toList();
+    }
+    return map;
+  }
+}
+
+/// mI_Id : 4
+/// mO_Id : 2
+/// mI_Name : "Vaps Technosoft Pvt LTD"
+/// mI_Type : "Yearly"
+/// mI_Address1 : "No. 90"
+/// mI_Address2 : "KHB Colony , Basaveshwara Nagar"
+/// mI_Address3 : "Bangalore"
+/// ivrmmcT_Name : "Bangalore"
+/// ivrmmS_Id : 17
+/// ivrmmC_Id : 101
+/// mI_Pincode : 560025
+/// mI_BackgroundImage : "https://bdcampusstrg.blob.core.windows.net/files/3/InstitutionLogo/59bf1c56-9f32-4ba3-ad56-3d412cee2ab3.jpg"
+/// mI_FormColor : "#663e3e"
+/// mI_FontColor : "#663a3a"
+/// mI_FontSize : 12
+/// mI_WeekStartDay : "Monday"
+/// mI_DateFormat : "DMY"
+/// mI_DateSeparator : "/"
+/// mI_Logo : "https://bdcampusstrg.blob.core.windows.net/files/3/InstitutionLogo/59bf1c56-9f32-4ba3-ad56-3d412cee2ab3.jpg"
+/// mI_ActiveFlag : 1
+/// mI_FranchiseFlag : 0
+/// mI_Affiliation : "ICSC"
+/// mI_Subdomain : "BGHSRS"
+/// mI_AboutInstitute : "\n\"Vaps Group of Institutions\", a member of the prestigious Vaps group of Institutions,\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n             Keeping alive the vision of our founders, we endeavour to equip our students academically, socially and spiritually to meet the challenges and adapt to a fast moving world with wisdom and fortitude for the general good of the community."
+/// mI_ContactDetails : "If you have queries regarding online application submission or technical issues please contact to above given \r\nemail address or phone number, between 9 am to 3 pm except holidays."
+/// mI_HelpFile : "Welcome to Vaps Tech demo presentation"
+/// mI_SchoolCollegeFlag : "S"
+/// mI_NAAC_InstitutionTypeFlg : "School"
+/// mI_NAAC_SubInstitutionTypeFlg : "Others"
+/// mI_VCStudentFlag : ""
+/// mI_VCOthersFlag : ""
+/// mI_MSTeamsClientId : "1b3429dd-a80d-4434-a399-6f153d0f88c3"
+/// mI_MSTeamsTenentId : "28e2455c-c0be-4145-b1eb-88fb593b5e0a"
+/// mI_MSTemasClinetSecretCode : "9Fl-2SdET44~G~cIxdGk3qbH8.l36zHa33"
+/// mI_MSTeamsAppAccessTockenURL : "https://login.microsoftonline.com/{{TenantID}}/oauth2/v2.0/token"
+/// mI_MSTeamsUserAceessTockenURL : "https://login.microsoftonline.com/TenantID/oauth2/v2.0/token"
+/// mI_MSTeamsMeetingScheduleURL : "https://graph.microsoft.com/beta/me/onlineMeetings"
+/// mI_MSTeamsAdminUsername : "admin@bghsschools.onmicrosoft.com"
+/// mI_MSTeamsAdminPassword : "BGHS@2468"
+/// mI_MSTeamsScope : "https://graph.microsoft.com/.default"
+/// mI_MSTeamsGrantType : "password"
+/// mI_SMSAlertToemailids : ""
+/// mI_WhatsAppTextUrl : "https://digiglitz.in/whatsapi/api/send/text"
+/// mI_WhatsAppImageUrl : "https://digiglitz.in/whatsapi/api/send/image"
+/// mI_WhatsAppPdfUrl : "https://digiglitz.in/whatsapi/api/send/pdf"
+/// mI_WhatsAppVideoUrl : "https://digiglitz.in/whatsapi/api/send/video"
+/// mI_EntityId : "1201159279971179231"
+/// createdDate : "2017-05-19T19:10:18.03"
+/// updatedDate : "2022-11-24T12:39:48.88"
+
+class InstitutedetailsValues {
+  InstitutedetailsValues({
+    this.mIId,
+    this.mOId,
+    this.mIName,
+    this.mIType,
+    this.mIAddress1,
+    this.mIAddress2,
+    this.mIAddress3,
+    this.ivrmmcTName,
+    this.ivrmmSId,
+    this.ivrmmCId,
+    this.mIPincode,
+    this.mIBackgroundImage,
+    this.mIFormColor,
+    this.mIFontColor,
+    this.mIFontSize,
+    this.mIWeekStartDay,
+    this.mIDateFormat,
+    this.mIDateSeparator,
+    this.mILogo,
+    this.mIActiveFlag,
+    this.mIFranchiseFlag,
+    this.mIAffiliation,
+    this.mISubdomain,
+    this.mIAboutInstitute,
+    this.mIContactDetails,
+    this.mIHelpFile,
+    this.mISchoolCollegeFlag,
+    this.mINAACInstitutionTypeFlg,
+    this.mINAACSubInstitutionTypeFlg,
+    this.mIVCStudentFlag,
+    this.mIVCOthersFlag,
+    this.mIMSTeamsClientId,
+    this.mIMSTeamsTenentId,
+    this.mIMSTemasClinetSecretCode,
+    this.mIMSTeamsAppAccessTockenURL,
+    this.mIMSTeamsUserAceessTockenURL,
+    this.mIMSTeamsMeetingScheduleURL,
+    this.mIMSTeamsAdminUsername,
+    this.mIMSTeamsAdminPassword,
+    this.mIMSTeamsScope,
+    this.mIMSTeamsGrantType,
+    this.mISMSAlertToemailids,
+    this.mIWhatsAppTextUrl,
+    this.mIWhatsAppImageUrl,
+    this.mIWhatsAppPdfUrl,
+    this.mIWhatsAppVideoUrl,
+    this.mIEntityId,
+    this.createdDate,
+    this.updatedDate,
+  });
+
+  InstitutedetailsValues.fromJson(dynamic json) {
+    mIId = json['mI_Id'];
+    mOId = json['mO_Id'];
+    mIName = json['mI_Name'];
+    mIType = json['mI_Type'];
+    mIAddress1 = json['mI_Address1'];
+    mIAddress2 = json['mI_Address2'];
+    mIAddress3 = json['mI_Address3'];
+    ivrmmcTName = json['ivrmmcT_Name'];
+    ivrmmSId = json['ivrmmS_Id'];
+    ivrmmCId = json['ivrmmC_Id'];
+    mIPincode = json['mI_Pincode'];
+    mIBackgroundImage = json['mI_BackgroundImage'];
+    mIFormColor = json['mI_FormColor'];
+    mIFontColor = json['mI_FontColor'];
+    mIFontSize = json['mI_FontSize'];
+    mIWeekStartDay = json['mI_WeekStartDay'];
+    mIDateFormat = json['mI_DateFormat'];
+    mIDateSeparator = json['mI_DateSeparator'];
+    mILogo = json['mI_Logo'];
+    mIActiveFlag = json['mI_ActiveFlag'];
+    mIFranchiseFlag = json['mI_FranchiseFlag'];
+    mIAffiliation = json['mI_Affiliation'];
+    mISubdomain = json['mI_Subdomain'];
+    mIAboutInstitute = json['mI_AboutInstitute'];
+    mIContactDetails = json['mI_ContactDetails'];
+    mIHelpFile = json['mI_HelpFile'];
+    mISchoolCollegeFlag = json['mI_SchoolCollegeFlag'];
+    mINAACInstitutionTypeFlg = json['mI_NAAC_InstitutionTypeFlg'];
+    mINAACSubInstitutionTypeFlg = json['mI_NAAC_SubInstitutionTypeFlg'];
+    mIVCStudentFlag = json['mI_VCStudentFlag'];
+    mIVCOthersFlag = json['mI_VCOthersFlag'];
+    mIMSTeamsClientId = json['mI_MSTeamsClientId'];
+    mIMSTeamsTenentId = json['mI_MSTeamsTenentId'];
+    mIMSTemasClinetSecretCode = json['mI_MSTemasClinetSecretCode'];
+    mIMSTeamsAppAccessTockenURL = json['mI_MSTeamsAppAccessTockenURL'];
+    mIMSTeamsUserAceessTockenURL = json['mI_MSTeamsUserAceessTockenURL'];
+    mIMSTeamsMeetingScheduleURL = json['mI_MSTeamsMeetingScheduleURL'];
+    mIMSTeamsAdminUsername = json['mI_MSTeamsAdminUsername'];
+    mIMSTeamsAdminPassword = json['mI_MSTeamsAdminPassword'];
+    mIMSTeamsScope = json['mI_MSTeamsScope'];
+    mIMSTeamsGrantType = json['mI_MSTeamsGrantType'];
+    mISMSAlertToemailids = json['mI_SMSAlertToemailids'];
+    mIWhatsAppTextUrl = json['mI_WhatsAppTextUrl'];
+    mIWhatsAppImageUrl = json['mI_WhatsAppImageUrl'];
+    mIWhatsAppPdfUrl = json['mI_WhatsAppPdfUrl'];
+    mIWhatsAppVideoUrl = json['mI_WhatsAppVideoUrl'];
+    mIEntityId = json['mI_EntityId'];
+    createdDate = json['createdDate'];
+    updatedDate = json['updatedDate'];
+  }
+  num? mIId;
+  num? mOId;
+  String? mIName;
+  String? mIType;
+  String? mIAddress1;
+  String? mIAddress2;
+  String? mIAddress3;
+  String? ivrmmcTName;
+  num? ivrmmSId;
+  num? ivrmmCId;
+  num? mIPincode;
+  String? mIBackgroundImage;
+  String? mIFormColor;
+  String? mIFontColor;
+  num? mIFontSize;
+  String? mIWeekStartDay;
+  String? mIDateFormat;
+  String? mIDateSeparator;
+  String? mILogo;
+  num? mIActiveFlag;
+  num? mIFranchiseFlag;
+  String? mIAffiliation;
+  String? mISubdomain;
+  String? mIAboutInstitute;
+  String? mIContactDetails;
+  String? mIHelpFile;
+  String? mISchoolCollegeFlag;
+  String? mINAACInstitutionTypeFlg;
+  String? mINAACSubInstitutionTypeFlg;
+  String? mIVCStudentFlag;
+  String? mIVCOthersFlag;
+  String? mIMSTeamsClientId;
+  String? mIMSTeamsTenentId;
+  String? mIMSTemasClinetSecretCode;
+  String? mIMSTeamsAppAccessTockenURL;
+  String? mIMSTeamsUserAceessTockenURL;
+  String? mIMSTeamsMeetingScheduleURL;
+  String? mIMSTeamsAdminUsername;
+  String? mIMSTeamsAdminPassword;
+  String? mIMSTeamsScope;
+  String? mIMSTeamsGrantType;
+  String? mISMSAlertToemailids;
+  String? mIWhatsAppTextUrl;
+  String? mIWhatsAppImageUrl;
+  String? mIWhatsAppPdfUrl;
+  String? mIWhatsAppVideoUrl;
+  String? mIEntityId;
+  String? createdDate;
+  String? updatedDate;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['mI_Id'] = mIId;
+    map['mO_Id'] = mOId;
+    map['mI_Name'] = mIName;
+    map['mI_Type'] = mIType;
+    map['mI_Address1'] = mIAddress1;
+    map['mI_Address2'] = mIAddress2;
+    map['mI_Address3'] = mIAddress3;
+    map['ivrmmcT_Name'] = ivrmmcTName;
+    map['ivrmmS_Id'] = ivrmmSId;
+    map['ivrmmC_Id'] = ivrmmCId;
+    map['mI_Pincode'] = mIPincode;
+    map['mI_BackgroundImage'] = mIBackgroundImage;
+    map['mI_FormColor'] = mIFormColor;
+    map['mI_FontColor'] = mIFontColor;
+    map['mI_FontSize'] = mIFontSize;
+    map['mI_WeekStartDay'] = mIWeekStartDay;
+    map['mI_DateFormat'] = mIDateFormat;
+    map['mI_DateSeparator'] = mIDateSeparator;
+    map['mI_Logo'] = mILogo;
+    map['mI_ActiveFlag'] = mIActiveFlag;
+    map['mI_FranchiseFlag'] = mIFranchiseFlag;
+    map['mI_Affiliation'] = mIAffiliation;
+    map['mI_Subdomain'] = mISubdomain;
+    map['mI_AboutInstitute'] = mIAboutInstitute;
+    map['mI_ContactDetails'] = mIContactDetails;
+    map['mI_HelpFile'] = mIHelpFile;
+    map['mI_SchoolCollegeFlag'] = mISchoolCollegeFlag;
+    map['mI_NAAC_InstitutionTypeFlg'] = mINAACInstitutionTypeFlg;
+    map['mI_NAAC_SubInstitutionTypeFlg'] = mINAACSubInstitutionTypeFlg;
+    map['mI_VCStudentFlag'] = mIVCStudentFlag;
+    map['mI_VCOthersFlag'] = mIVCOthersFlag;
+    map['mI_MSTeamsClientId'] = mIMSTeamsClientId;
+    map['mI_MSTeamsTenentId'] = mIMSTeamsTenentId;
+    map['mI_MSTemasClinetSecretCode'] = mIMSTemasClinetSecretCode;
+    map['mI_MSTeamsAppAccessTockenURL'] = mIMSTeamsAppAccessTockenURL;
+    map['mI_MSTeamsUserAceessTockenURL'] = mIMSTeamsUserAceessTockenURL;
+    map['mI_MSTeamsMeetingScheduleURL'] = mIMSTeamsMeetingScheduleURL;
+    map['mI_MSTeamsAdminUsername'] = mIMSTeamsAdminUsername;
+    map['mI_MSTeamsAdminPassword'] = mIMSTeamsAdminPassword;
+    map['mI_MSTeamsScope'] = mIMSTeamsScope;
+    map['mI_MSTeamsGrantType'] = mIMSTeamsGrantType;
+    map['mI_SMSAlertToemailids'] = mISMSAlertToemailids;
+    map['mI_WhatsAppTextUrl'] = mIWhatsAppTextUrl;
+    map['mI_WhatsAppImageUrl'] = mIWhatsAppImageUrl;
+    map['mI_WhatsAppPdfUrl'] = mIWhatsAppPdfUrl;
+    map['mI_WhatsAppVideoUrl'] = mIWhatsAppVideoUrl;
+    map['mI_EntityId'] = mIEntityId;
+    map['createdDate'] = createdDate;
+    map['updatedDate'] = updatedDate;
+    return map;
   }
 }
