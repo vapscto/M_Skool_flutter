@@ -1,5 +1,7 @@
 class LoginSuccessModel {
   int? amsTId;
+  int? asmcLId;
+  int? asmSId;
   int? smscreditalert;
   bool? smsalrtflag;
   int? roleId;
@@ -55,6 +57,8 @@ class LoginSuccessModel {
 
   LoginSuccessModel(
       {this.amsTId,
+      this.asmSId,
+      this.asmcLId,
       this.smscreditalert,
       this.smsalrtflag,
       this.roleId,
@@ -110,6 +114,8 @@ class LoginSuccessModel {
 
   LoginSuccessModel.fromJson(Map<String, dynamic> json) {
     amsTId = json['amsT_Id'];
+    asmcLId = json['asmcL_Id'];
+    asmSId = json['asmS_Id'];
     smscreditalert = json['smscreditalert'];
     smsalrtflag = json['smsalrtflag'];
     roleId = json['roleId'];
@@ -176,6 +182,8 @@ class LoginSuccessModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['amsT_Id'] = amsTId;
+    data['asmcL_Id'] = asmcLId;
+    data['asmS_Id'] = asmSId;
     data['smscreditalert'] = smscreditalert;
     data['smsalrtflag'] = smsalrtflag;
     data['roleId'] = roleId;
