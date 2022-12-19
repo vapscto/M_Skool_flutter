@@ -273,12 +273,14 @@ class SubjectWiseReportListValue {
     this.emeExamOrder,
     this.eycesMarksGradeEntryFlg,
     this.amstId,
+    this.eycesMinMarks,
   });
 
   String? type;
   int? ismsId;
   String? emeExamName;
   int? emeId;
+  double? eycesMinMarks;
   double? estmpsMaxMarks;
   double? estmpsObtainedMarks;
   String? estmpsObtainedGrade;
@@ -314,6 +316,7 @@ class SubjectWiseReportListValue {
         emeExamOrder: json["EME_ExamOrder"],
         eycesMarksGradeEntryFlg: json["EYCES_MarksGradeEntryFlg"],
         amstId: json["AMST_Id"],
+        eycesMinMarks: json['EYCES_MinMarks'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -335,6 +338,7 @@ class SubjectWiseReportListValue {
         "EME_ExamOrder": emeExamOrder,
         "EYCES_MarksGradeEntryFlg": eycesMarksGradeEntryFlg,
         "AMST_Id": amstId,
+        "EYCES_MinMarks": eycesMinMarks,
       };
 }
 

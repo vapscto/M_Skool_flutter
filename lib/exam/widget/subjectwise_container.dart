@@ -102,7 +102,7 @@ class SubjectWiseContainer extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "${datamodel.estmpsMaxMarks!.toInt()}",
+                            "${datamodel.eycesMinMarks!.toInt()}",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelMedium!

@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/homework/api/home_work_api.dart';
+import 'package:m_skool_flutter/homework/api/update_hw_seen.dart';
 import 'package:m_skool_flutter/homework/screen/home_work.dart';
 import 'package:m_skool_flutter/homework/screen/hwcw_detail_screen.dart';
 import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
@@ -138,7 +139,43 @@ class _FiltredHwState extends State<FiltredHw> {
                                     mskoolController: widget.mskoolController,
                                     screenType: 'homework',
                                   );
-                                }));
+                                })).then((value) {
+                                  if (value == null) {}
+                                  if (widget.hwCwNbController.homeWorkList
+                                          .elementAt(index)
+                                          .iHWUPLViewedFlg ==
+                                      1) {
+                                    return;
+                                  }
+                                  getHw();
+                                });
+
+                                if (widget.hwCwNbController.homeWorkList
+                                        .elementAt(index)
+                                        .iHWUPLViewedFlg ==
+                                    1) {
+                                  return;
+                                }
+
+                                UpdateHwSeenApi.instance.markAsSeen(
+                                    amstId: widget.loginSuccessModel.amsTId!,
+                                    miId: widget.loginSuccessModel.mIID!,
+                                    asmayId: widget.loginSuccessModel.asmaYId!,
+                                    userId: widget.loginSuccessModel.userId!,
+                                    roleId: widget.loginSuccessModel.roleId!,
+                                    flag: "Homework",
+                                    ihwId: widget.hwCwNbController.homeWorkList
+                                        .elementAt(index)
+                                        .ihWId!,
+                                    asmclId: widget
+                                        .hwCwNbController.homeWorkList
+                                        .elementAt(index)
+                                        .asmcLId!,
+                                    asmsId: widget.hwCwNbController.homeWorkList
+                                        .elementAt(index)
+                                        .asmSId!,
+                                    base: baseUrlFromInsCode(
+                                        "portal", widget.mskoolController));
                               },
                               child: HwCwItem(
                                 isRead: widget.hwCwNbController.homeWorkList

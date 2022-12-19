@@ -125,4 +125,6 @@ class URLS {
       "api/StudentDashboardFacade/onclick_syllabus/";
 
   static String getTTNotice = "api/StudentDashboardFacade/onclick_TT/";
+
+  static String stdFeeDue = "api/AdmissionCtrl/stdFeeDue/";
 }

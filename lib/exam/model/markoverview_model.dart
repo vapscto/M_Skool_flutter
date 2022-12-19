@@ -262,6 +262,7 @@ class ExamWiseReportListValue {
     this.type,
     this.ismsSubjectName,
     this.estmpsMaxMarks,
+    this.eycesMinMarks,
     this.estmpsObtainedMarks,
     this.estmpsObtainedGrade,
     this.estmpsClassAverage,
@@ -281,6 +282,7 @@ class ExamWiseReportListValue {
   String? type;
   String? ismsSubjectName;
   double? estmpsMaxMarks;
+  double? eycesMinMarks;
   double? estmpsObtainedMarks;
   String? estmpsObtainedGrade;
   double? estmpsClassAverage;
@@ -301,6 +303,7 @@ class ExamWiseReportListValue {
         type: json["\$type"],
         ismsSubjectName: json["ISMS_SubjectName"],
         estmpsMaxMarks: json["ESTMPS_MaxMarks"],
+        eycesMinMarks: json['EYCES_MinMarks'],
         estmpsObtainedMarks: json["ESTMPS_ObtainedMarks"],
         estmpsObtainedGrade: json["ESTMPS_ObtainedGrade"],
         estmpsClassAverage: json["ESTMPS_ClassAverage"].toDouble(),
@@ -321,6 +324,7 @@ class ExamWiseReportListValue {
         "\$type": type,
         "ISMS_SubjectName": ismsSubjectName,
         "ESTMPS_MaxMarks": estmpsMaxMarks,
+        "EYCES_MinMarks": eycesMinMarks,
         "ESTMPS_ObtainedMarks": estmpsObtainedMarks,
         "ESTMPS_ObtainedGrade": estmpsObtainedGrade,
         "ESTMPS_ClassAverage": estmpsClassAverage,

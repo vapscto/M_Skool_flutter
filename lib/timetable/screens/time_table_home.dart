@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'dart:typed_data';
 
@@ -70,8 +71,9 @@ class _TimeTableHomeState extends State<TimeTableHome> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24.0),
-                  ),
+                      borderRadius: BorderRadius.circular(24.0),
+                      border: Border.all(
+                          color: Theme.of(context).primaryColor, width: 1.5)),
                   child: Row(
                     children: [
                       Obx(() {
@@ -90,7 +92,7 @@ class _TimeTableHomeState extends State<TimeTableHome> {
                                 bottomLeft: Radius.circular(24.0),
                               ),
                               color: showWeekly.value
-                                  ? Colors.grey.shade200
+                                  ? Colors.transparent
                                   : Theme.of(context).primaryColor,
                             ),
                             child: Text(
@@ -126,7 +128,7 @@ class _TimeTableHomeState extends State<TimeTableHome> {
                               ),
                               color: showWeekly.value
                                   ? Theme.of(context).primaryColor
-                                  : Colors.grey.shade200,
+                                  : Colors.transparent,
                             ),
                             child: Text(
                               "Week",
@@ -598,111 +600,148 @@ class _WeeklyTTState extends State<WeeklyTT> {
           if (snapshot.hasData) {
             return Column(
               children: [
-                CustomContainer(
-                  child: Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(16.0)),
-                        child: DataTable(
-                            headingRowColor: MaterialStateColor.resolveWith(
-                              (states) => Theme.of(context).primaryColor,
-                            ),
-                            border: TableBorder(
-                              right: BorderSide(
-                                color: Colors.grey.shade300,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16.0),
+                  child: CustomContainer(
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(16.0)),
+                          child: DataTable(
+                              headingRowColor: MaterialStateColor.resolveWith(
+                                (states) => Theme.of(context).primaryColor,
                               ),
-                              horizontalInside: BorderSide(
-                                color: Colors.grey.shade300,
+                              border: TableBorder(
+                                right: BorderSide(
+                                  color: Colors.grey.shade300,
+                                ),
+                                horizontalInside: BorderSide(
+                                  color: Colors.grey.shade300,
+                                ),
+                                verticalInside: BorderSide(
+                                  color: Colors.grey.shade300,
+                                ),
                               ),
-                              verticalInside: BorderSide(
-                                color: Colors.grey.shade300,
-                              ),
-                            ),
-                            columns: [
-                              DataColumn(
-                                  label: Text(
-                                "Periods",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .merge(const TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
-                                    )),
-                              ))
-                            ],
-                            rows: List.generate(
-                                snapshot.data!.periodsList.values!.length,
-                                (index) => DataRow(
-                                        color: MaterialStateColor.resolveWith(
-                                          (states) => timetablePeriodColor
-                                              .elementAt(index),
-                                        ),
-                                        cells: [
-                                          DataCell(Text(
-                                            "Period ${snapshot.data!.periodsList.values!.elementAt(index).ttmPPeriodName!}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .merge(
-                                                  const TextStyle(
-                                                    color: Colors.white,
+                              columns: [
+                                DataColumn(
+                                    label: Text(
+                                  "Periods",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .merge(const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                      )),
+                                ))
+                              ],
+                              rows: List.generate(
+                                  snapshot.data!.periodsList.values!.length,
+                                  (index) => DataRow(
+                                          color: MaterialStateColor.resolveWith(
+                                            (states) => timetablePeriodColor
+                                                .elementAt(index),
+                                          ),
+                                          cells: [
+                                            DataCell(Text(
+                                              "Period ${snapshot.data!.periodsList.values!.elementAt(index).ttmPPeriodName!}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(
+                                                    const TextStyle(
+                                                      color: Colors.white,
+                                                    ),
                                                   ),
-                                                ),
-                                          )),
-                                        ]))),
-                      ),
+                                            )),
+                                          ]))),
+                        ),
 
-                      Expanded(
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: RepaintBoundary(
-                            key: _globalKey,
-                            child: Row(
-                              children: List.generate(
-                                snapshot.data!.dayWise.length,
-                                (index) => DataTable(
-                                  headingRowColor:
-                                      MaterialStateColor.resolveWith(
-                                    (states) => Theme.of(context).primaryColor,
-                                  ),
-                                  border: TableBorder(
-                                    right: BorderSide(
-                                      color: Colors.grey.shade300,
+                        Expanded(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: RepaintBoundary(
+                              key: _globalKey,
+                              child: Row(
+                                children: List.generate(
+                                  snapshot.data!.dayWise.length,
+                                  (index) => DataTable(
+                                    headingRowColor:
+                                        MaterialStateColor.resolveWith(
+                                      (states) =>
+                                          Theme.of(context).primaryColor,
                                     ),
-                                    horizontalInside: BorderSide(
-                                      color: Colors.grey.shade300,
+                                    border: TableBorder(
+                                      right: BorderSide(
+                                        color: Colors.grey.shade300,
+                                      ),
+                                      horizontalInside: BorderSide(
+                                        color: Colors.grey.shade300,
+                                      ),
+                                      verticalInside: BorderSide(
+                                        color: Colors.grey.shade300,
+                                      ),
                                     ),
-                                    verticalInside: BorderSide(
-                                      color: Colors.grey.shade300,
-                                    ),
-                                  ),
-                                  columns: [
-                                    DataColumn(
-                                        label: Text(
+                                    columns: [
+                                      DataColumn(
+                                          label: Text(
+                                        snapshot.data!.dayWise
+                                            .elementAt(index)
+                                            .dayName,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .merge(const TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white,
+                                            )),
+                                      ))
+                                    ],
+                                    rows: List.generate(
                                       snapshot.data!.dayWise
                                           .elementAt(index)
-                                          .dayName,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .merge(const TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
-                                          )),
-                                    ))
-                                  ],
-                                  rows: List.generate(
-                                    snapshot.data!.dayWise
-                                        .elementAt(index)
-                                        .value
-                                        .length,
-                                    (index2) => DataRow(
-                                      cells: [
-                                        DataCell(Text(
-                                            '''${snapshot.data!.dayWise.elementAt(index).value.elementAt(index2).subjectName}\n${snapshot.data!.dayWise.elementAt(index).value.elementAt(index2).teacher}'''))
-                                      ],
+                                          .value
+                                          .length,
+                                      (index2) => DataRow(
+                                        color: MaterialStateColor.resolveWith(
+                                          (states) => timetablePeriodColor
+                                              .elementAt(Random().nextInt(12))
+                                              .withOpacity(0.1),
+                                        ),
+                                        cells: [
+                                          DataCell(Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                snapshot.data!.dayWise
+                                                    .elementAt(index)
+                                                    .value
+                                                    .elementAt(index2)
+                                                    .subjectName,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .merge(
+                                                      const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                    ),
+                                              ),
+                                              const SizedBox(
+                                                height: 2.0,
+                                              ),
+                                              Text(snapshot.data!.dayWise
+                                                  .elementAt(index)
+                                                  .value
+                                                  .elementAt(index2)
+                                                  .teacher)
+                                            ],
+                                          ))
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -710,35 +749,38 @@ class _WeeklyTTState extends State<WeeklyTT> {
                             ),
                           ),
                         ),
-                      ),
 
-                      // DataTable(columns: columns, rows: rows);
-                      // SingleChildScrollView(
-                      //   scrollDirection: Axis.horizontal,
-                      //   child: DataTable(
-                      //     columns: List.generate(
-                      //       snapshot.data!.gridWeeks.values!.length,
-                      //       (index) => DataColumn(
-                      //         label: Text(snapshot.data!.gridWeeks.values!
-                      //             .elementAt(index)
-                      //             .ttmDDayCode!),
-                      //       ),
-                      //     ),
-                      //     rows: List.generate(
-                      //         1,
-                      //         (index) =>
-                      //             DataRow(cells: [DataCell(Text("KAN\nAPP"))])),
-                      //   ),
-                      // ),
-                    ],
+                        // DataTable(columns: columns, rows: rows);
+                        // SingleChildScrollView(
+                        //   scrollDirection: Axis.horizontal,
+                        //   child: DataTable(
+                        //     columns: List.generate(
+                        //       snapshot.data!.gridWeeks.values!.length,
+                        //       (index) => DataColumn(
+                        //         label: Text(snapshot.data!.gridWeeks.values!
+                        //             .elementAt(index)
+                        //             .ttmDDayCode!),
+                        //       ),
+                        //     ),
+                        //     rows: List.generate(
+                        //         1,
+                        //         (index) =>
+                        //             DataRow(cells: [DataCell(Text("KAN\nAPP"))])),
+                        //   ),
+                        // ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(
                   height: 36.0,
                 ),
-                MSkollBtn(
-                  title: "Generate PDF",
-                  onPress: () async {
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(24.0)),
+                      minimumSize: Size(Get.width * 0.5, 50)),
+                  onPressed: () async {
                     try {
                       showDialog(
                           barrierDismissible: false,
@@ -793,6 +835,7 @@ class _WeeklyTTState extends State<WeeklyTT> {
                       logger.e(e.toString());
                     }
                   },
+                  child: const Text("Generate PDF"),
                 ),
               ],
             );

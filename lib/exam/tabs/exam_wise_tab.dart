@@ -627,7 +627,7 @@ class _GraphResultAnalysisItemState extends State<GraphResultAnalysisItem> {
                             height: 6.0,
                           ),
                           Text(
-                            "${widget.datamodel.estmpsMaxMarks!.toInt()}",
+                            "${widget.datamodel.eycesMinMarks!.toInt()}",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelMedium!

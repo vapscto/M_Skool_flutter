@@ -169,7 +169,7 @@ class _ApplyNowState extends State<ApplyNow> {
                             child: TextField(
                               style: Theme.of(context).textTheme.titleSmall,
                               controller: reason,
-                              maxLines: 8,
+                              maxLines: 4,
                               decoration: InputDecoration(
                                 border: const OutlineInputBorder(),
                                 label: Container(

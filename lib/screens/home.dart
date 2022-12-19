@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/apis/fee_reminder_api.dart';
 import 'package:m_skool_flutter/attendance/screens/home_page.dart';
 import 'package:m_skool_flutter/certificates/screens/cert_home.dart';
 import 'package:m_skool_flutter/classwork/screen/classwork_home_screen.dart';
@@ -62,6 +63,16 @@ class _HomeState extends State<Home> {
         base: baseUrlFromInsCode("portal", widget.mskoolController),
         asmcLId: widget.loginSuccessModel.asmcLId!,
         asmSId: widget.loginSuccessModel.asmSId!);
+    FeeReminderApi.instance.showFeeReminder(
+        miId: widget.loginSuccessModel.mIID!,
+        asmayId: widget.loginSuccessModel.asmaYId!,
+        amstId: widget.loginSuccessModel.amsTId!,
+        asmclId: widget.loginSuccessModel.asmcLId!,
+        asmsId: widget.loginSuccessModel.asmSId!,
+        base: baseUrlFromInsCode("portal", widget.mskoolController),
+        context: context,
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController);
     super.initState();
   }
 

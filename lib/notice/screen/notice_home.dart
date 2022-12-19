@@ -20,6 +20,7 @@ import 'package:m_skool_flutter/notice/widget/notice_filtered_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NoticeHome extends StatefulWidget {
   final String? appBarTitle;
@@ -834,7 +835,20 @@ class TTNoticeItem extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: () {},
+              onTap: () async {
+                if (values.iNTBFLFileName == null ||
+                    values.intBFilePath == null) {
+                  return;
+                }
+
+                if (await canLaunchUrl(Uri.parse(values.intBFilePath!))) {
+                  await launchUrl(Uri.parse(values.intBFilePath!),
+                      mode: LaunchMode.externalApplication);
+                } else {
+                  Fluttertoast.showToast(
+                      msg: "No External Application to handle this request");
+                }
+              },
               child: Container(
                 margin: const EdgeInsets.only(right: 16.0),
                 padding: const EdgeInsets.all(12.0),

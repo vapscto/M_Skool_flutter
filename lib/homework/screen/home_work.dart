@@ -76,19 +76,24 @@ class _HomeWorkState extends State<HomeWork> {
     );
 
     if (widget.hwCwNbController.filter.value == 0) {
-      showHw();
+      showHw(
+        DateTime.now(),
+        DateTime.now(),
+      );
     }
     super.initState();
   }
 
-  void showHw() async {
+  DateTime startDt = DateTime.now();
+  DateTime endDt = DateTime.now();
+  void showHw(DateTime startDate, DateTime endDate) async {
     await GetHomeWorkApi.instance.getHomeAssignment(
       miId: widget.loginSuccessModel.mIID!,
       amstId: widget.loginSuccessModel.amsTId!,
       asmayId: widget.loginSuccessModel.asmaYId!,
       baseUrl: baseUrlFromInsCode("portal", widget.mskoolController),
-      endDate: DateTime.now().toLocal().toString(),
-      startDate: DateTime.now().toLocal().toString(),
+      endDate: endDate.toLocal().toString(),
+      startDate: startDate.toLocal().toString(),
       hwCwNbController: widget.hwCwNbController,
     );
   }
@@ -163,7 +168,16 @@ class _HomeWorkState extends State<HomeWork> {
                                             onTap: () async {
                                               widget.hwCwNbController
                                                   .selectedIndex.value = index;
-
+                                              startDt = DateTime.parse(widget
+                                                  .hwCwNbController
+                                                  .dateWiseModelList
+                                                  .elementAt(index)
+                                                  .date);
+                                              endDt = DateTime.parse(widget
+                                                  .hwCwNbController
+                                                  .dateWiseModelList
+                                                  .elementAt(index)
+                                                  .date);
                                               await GetHomeWorkApi.instance
                                                   .getHomeAssignment(
                                                 miId: widget
@@ -383,9 +397,22 @@ class _HomeWorkState extends State<HomeWork> {
                                               );
                                             })).then((value) {
                                               if (value == null) {}
-
-                                              // showHw();
+                                              if (widget.hwCwNbController
+                                                      .homeWorkList
+                                                      .elementAt(index)
+                                                      .iHWUPLViewedFlg ==
+                                                  1) {
+                                                return;
+                                              }
+                                              showHw(startDt, endDt);
                                             });
+                                            if (widget.hwCwNbController
+                                                    .homeWorkList
+                                                    .elementAt(index)
+                                                    .iHWUPLViewedFlg ==
+                                                1) {
+                                              return;
+                                            }
 
                                             UpdateHwSeenApi.instance.markAsSeen(
                                                 amstId: widget
