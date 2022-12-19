@@ -402,7 +402,7 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                     (dashboardController.timeTableList.isNotEmpty)
                         ? Padding(
-                            padding: const EdgeInsets.only(top: 15),
+                            padding: const EdgeInsets.only(top: 15, bottom: 15),
                             child: DashboardTimetable(
                               timeTableList:
                                   dashboardController.timeTableList.last,
