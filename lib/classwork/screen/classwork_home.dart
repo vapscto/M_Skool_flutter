@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/classwork/api/get_class_work.dart';
+import 'package:m_skool_flutter/classwork/api/update_seen_classwork_api.dart';
 import 'package:m_skool_flutter/classwork/model/class_work_model.dart';
 import 'package:m_skool_flutter/classwork/widget/filtered_classwork_widget.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -13,7 +14,7 @@ import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
-class ClassworkHome extends StatelessWidget {
+class ClassworkHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final HwCwNbController hwCwNbController;
@@ -24,10 +25,15 @@ class ClassworkHome extends StatelessWidget {
       required this.hwCwNbController});
 
   @override
+  State<ClassworkHome> createState() => _ClassworkHomeState();
+}
+
+class _ClassworkHomeState extends State<ClassworkHome> {
+  @override
   Widget build(BuildContext context) {
     return Obx(
       () {
-        return hwCwNbController.errorHappendWhileLoadingClsWrk.value
+        return widget.hwCwNbController.errorHappendWhileLoadingClsWrk.value
             ? const Center(
                 child: ErrWidget(err: {
                   "errorTitle": "Unable to connect to server.",
@@ -36,20 +42,22 @@ class ClassworkHome extends StatelessWidget {
                 }),
               )
             : Obx(() {
-                return hwCwNbController.filter.value > 0
+                return widget.hwCwNbController.filter.value > 0
                     ? FilteredClassWork(
-                        loginSuccessModel: loginSuccessModel,
-                        mskoolController: mskoolController,
-                        hwCwNbController: hwCwNbController)
+                        loginSuccessModel: widget.loginSuccessModel,
+                        mskoolController: widget.mskoolController,
+                        hwCwNbController: widget.hwCwNbController)
                     : FutureBuilder<List<ClassWorkModelValues>>(
                         future: GetClassWorkApi.instance.getClassWorks(
-                          miId: loginSuccessModel.mIID!,
-                          asmayId: loginSuccessModel.asmaYId!,
-                          amstId: loginSuccessModel.amsTId!,
+                          miId: widget.loginSuccessModel.mIID!,
+                          asmayId: widget.loginSuccessModel.asmaYId!,
+                          amstId: widget.loginSuccessModel.amsTId!,
                           base: baseUrlFromInsCode(
                             "portal",
-                            mskoolController,
+                            widget.mskoolController,
                           ),
+                          roleId: widget.loginSuccessModel.roleId!,
+                          userId: widget.loginSuccessModel.userId!,
                         ),
                         builder: (_, snapshot) {
                           if (snapshot.hasData) {
@@ -63,8 +71,10 @@ class ClassworkHome extends StatelessWidget {
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (_) {
                                         return HwCwDetailScreen(
-                                          loginSuccessModel: loginSuccessModel,
-                                          mskoolController: mskoolController,
+                                          loginSuccessModel:
+                                              widget.loginSuccessModel,
+                                          mskoolController:
+                                              widget.mskoolController,
                                           ihcId: snapshot.data!
                                               .elementAt(index)
                                               .icWId!,
@@ -87,7 +97,42 @@ class ClassworkHome extends StatelessWidget {
                                               .icWFromDate!,
                                           screenType: 'classwork',
                                         );
-                                      }));
+                                      })).then((value) {
+                                        if (snapshot.data!
+                                                .elementAt(index)
+                                                .iCWUPLViewedFlg ==
+                                            1) {
+                                          return;
+                                        }
+                                        setState(() {});
+                                      });
+                                      if (snapshot.data!
+                                              .elementAt(index)
+                                              .iCWUPLViewedFlg ==
+                                          1) {
+                                        return;
+                                      }
+                                      UpdateClassworkSeenApi.instance
+                                          .updateSeen(
+                                              amstId: widget
+                                                  .loginSuccessModel.amsTId!,
+                                              miId: widget
+                                                  .loginSuccessModel.mIID!,
+                                              asmayId: widget
+                                                  .loginSuccessModel.asmaYId!,
+                                              userId: widget
+                                                  .loginSuccessModel.userId!,
+                                              roleId: widget
+                                                  .loginSuccessModel.roleId!,
+                                              icwId: snapshot.data!
+                                                  .elementAt(index)
+                                                  .icWId!,
+                                              asmclId: widget
+                                                  .loginSuccessModel.asmcLId!,
+                                              asmsId: widget
+                                                  .loginSuccessModel.asmSId!,
+                                              base: baseUrlFromInsCode("portal",
+                                                  widget.mskoolController));
                                     },
                                     child: HwCwItem(
                                       isRead: snapshot.data!

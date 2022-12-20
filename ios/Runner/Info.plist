@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription </key>
+	<string>Mskoll uses this permission to save images in your gallery</string>
+	<key>NSCameraUsageDescription </key>
+	<string>Mskoll uses camera permission in order to capture photo for assignments</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Mskoll uses microphone permission in order to use camera</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

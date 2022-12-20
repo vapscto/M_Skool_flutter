@@ -185,6 +185,7 @@ class _FeedBackHomeState extends State<FeedBackHome> {
 
             MSkollBtn(
               title: "Submit",
+              size: Size(Get.width * 0.5, 50),
               onPress: () {
                 if (feedBackCtrl.text.isEmpty) {
                   Fluttertoast.showToast(

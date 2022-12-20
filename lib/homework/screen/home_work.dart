@@ -140,12 +140,21 @@ class _HomeWorkState extends State<HomeWork> {
                             itemBuilder: (BuildContext context, int index) {
                               return Obx(() {
                                 return Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Container(
                                       margin: const EdgeInsets.symmetric(
                                           vertical: 8.0),
-                                      height: 80,
-                                      padding: const EdgeInsets.all(8.0),
+                                      height: widget.hwCwNbController
+                                                  .selectedIndex.value ==
+                                              index
+                                          ? 90
+                                          : 80,
+                                      padding: widget.hwCwNbController
+                                                  .selectedIndex.value ==
+                                              index
+                                          ? const EdgeInsets.all(12.0)
+                                          : const EdgeInsets.all(8.0),
                                       decoration: BoxDecoration(
                                           color: widget.hwCwNbController
                                                       .selectedIndex.value ==

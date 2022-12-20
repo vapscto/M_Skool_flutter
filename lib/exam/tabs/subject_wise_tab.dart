@@ -315,9 +315,12 @@ class _SubjectWiseTabState extends State<SubjectWiseTab> {
                                       ),
                                       Container(
                                         decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(24.0),
-                                        ),
+                                            borderRadius:
+                                                BorderRadius.circular(24.0),
+                                            border: Border.all(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                width: 1.5)),
                                         child: Row(
                                           children: [
                                             Obx(() {
@@ -340,7 +343,7 @@ class _SubjectWiseTabState extends State<SubjectWiseTab> {
                                                           Radius.circular(24.0),
                                                     ),
                                                     color: showGraph.value
-                                                        ? Colors.grey.shade200
+                                                        ? Colors.transparent
                                                         : Theme.of(context)
                                                             .primaryColor,
                                                   ),
@@ -385,7 +388,7 @@ class _SubjectWiseTabState extends State<SubjectWiseTab> {
                                                     color: showGraph.value
                                                         ? Theme.of(context)
                                                             .primaryColor
-                                                        : Colors.grey.shade200,
+                                                        : Colors.transparent,
                                                   ),
                                                   child: Text(
                                                     "Graph",

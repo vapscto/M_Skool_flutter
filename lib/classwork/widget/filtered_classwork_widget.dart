@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/classwork/api/get_class_work.dart';
 import 'package:m_skool_flutter/classwork/api/get_filtered_classwork.dart';
+import 'package:m_skool_flutter/classwork/api/update_seen_classwork_api.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -119,7 +120,35 @@ class _FilteredClassWorkState extends State<FilteredClassWork> {
                                   mskoolController: widget.mskoolController,
                                   screenType: 'classwork',
                                 );
-                              }));
+                              })).then((value) {
+                                if (widget.hwCwNbController.classWorkList
+                                        .elementAt(index)
+                                        .iCWUPLViewedFlg ==
+                                    1) {
+                                  return;
+                                }
+                                getAssignment();
+                              });
+
+                              if (widget.hwCwNbController.classWorkList
+                                      .elementAt(index)
+                                      .iCWUPLViewedFlg ==
+                                  1) {
+                                return;
+                              }
+                              UpdateClassworkSeenApi.instance.updateSeen(
+                                  amstId: widget.loginSuccessModel.amsTId!,
+                                  miId: widget.loginSuccessModel.mIID!,
+                                  asmayId: widget.loginSuccessModel.asmaYId!,
+                                  userId: widget.loginSuccessModel.userId!,
+                                  roleId: widget.loginSuccessModel.roleId!,
+                                  icwId: widget.hwCwNbController.classWorkList
+                                      .elementAt(index)
+                                      .icWId!,
+                                  asmclId: widget.loginSuccessModel.asmcLId!,
+                                  asmsId: widget.loginSuccessModel.asmSId!,
+                                  base: baseUrlFromInsCode(
+                                      "portal", widget.mskoolController));
                             },
                             child: HwCwItem(
                                 isRead: widget.hwCwNbController.classWorkList

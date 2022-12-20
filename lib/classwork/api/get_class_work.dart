@@ -12,6 +12,8 @@ class GetClassWorkApi {
     required int miId,
     required int asmayId,
     required int amstId,
+    required int roleId,
+    required int userId,
     required String base,
     String? startDate,
     String? endDate,
@@ -28,6 +30,9 @@ class GetClassWorkApi {
         "mI_ID": miId,
         "ASMAY_Id": asmayId,
         "AMST_Id": amstId,
+        "User_Id": 54352,
+        "roleid": 7,
+        "flag": "classwork"
       });
       if (startDate != null && endDate != null) {
         data.addAll({

@@ -15,6 +15,7 @@ import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class CoeHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -53,6 +54,8 @@ class _CoeHomeState extends State<CoeHome> {
   //final DateTime selected = DateTime.now();
   final CoeDataHandler handler = Get.put(CoeDataHandler());
 
+  int color = -1;
+
   @override
   void initState() {
     loadData();
@@ -90,6 +93,7 @@ class _CoeHomeState extends State<CoeHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: const HomeFab(),
       appBar: (widget.showAppBar)
           ? AppBar(
               leading: IconButton(
@@ -171,13 +175,33 @@ class _CoeHomeState extends State<CoeHome> {
                                       ),
                                     ),
 
-                                    label: Text(
-                                      "Academic Year".tr,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelLarge!
-                                          .merge(TextStyle(
-                                              color: Colors.grey.shade600)),
+                                    label: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16.0, vertical: 5),
+                                      decoration: BoxDecoration(
+                                          color: const Color(0xFFDFFBFE),
+                                          borderRadius:
+                                              BorderRadius.circular(24.0)),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Image.asset(
+                                            "assets/images/cap.png",
+                                            height: 28.0,
+                                          ),
+                                          const SizedBox(
+                                            width: 12.0,
+                                          ),
+                                          Text(
+                                            "Academic Year".tr,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge!
+                                                .merge(const TextStyle(
+                                                    color: Color(0xFF28B6C8))),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   icon: const Icon(
@@ -218,7 +242,7 @@ class _CoeHomeState extends State<CoeHome> {
                               );
                       }),
                       const SizedBox(
-                        height: 24.0,
+                        height: 36.0,
                       ),
                       CustomContainer(
                         child: DropdownButtonFormField<Map<String, dynamic>>(
@@ -241,13 +265,33 @@ class _CoeHomeState extends State<CoeHome> {
                               ),
                             ),
 
-                            label: Text(
-                              "Select Month".tr,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge!
-                                  .merge(
-                                      TextStyle(color: Colors.grey.shade600)),
+                            label: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 8.0),
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFFFFEBEA),
+                                  borderRadius: BorderRadius.circular(24.0)),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Image.asset(
+                                    "assets/images/calendar.png",
+                                    color: const Color(0xFFFF6F67),
+                                    height: 22.0,
+                                  ),
+                                  const SizedBox(
+                                    width: 12.0,
+                                  ),
+                                  Text(
+                                    "Select Month".tr,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!
+                                        .merge(const TextStyle(
+                                            color: Color(0xFFFF6F67))),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           icon: const Icon(
@@ -297,17 +341,43 @@ class _CoeHomeState extends State<CoeHome> {
                                           .titleMedium,
                                     ),
                                   )
-                                : ListView.separated(
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return CoeItem(
-                                          values: handler.coeReport
-                                              .elementAt(index));
-                                    },
-                                    separatorBuilder: (_, index) {
-                                      return const SizedBox(height: 16.0);
-                                    },
-                                    itemCount: handler.coeReport.length,
+                                : Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Result",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium,
+                                      ),
+                                      const SizedBox(
+                                        height: 16.0,
+                                      ),
+                                      ListView.separated(
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemBuilder: (context, index) {
+                                          color += 1;
+                                          if (index % 6 == 0) {
+                                            color = 0;
+                                          }
+                                          if (color > 6) {
+                                            color = 0;
+                                          }
+                                          return CoeItem(
+                                              color:
+                                                  noticeColor.elementAt(color),
+                                              values: handler.coeReport
+                                                  .elementAt(index));
+                                        },
+                                        separatorBuilder: (_, index) {
+                                          return const SizedBox(height: 16.0);
+                                        },
+                                        itemCount: handler.coeReport.length,
+                                      ),
+                                    ],
                                   );
                       })
                     ],
@@ -321,241 +391,329 @@ class _CoeHomeState extends State<CoeHome> {
 
 class CoeItem extends StatelessWidget {
   final CoereportlistValues values;
-  const CoeItem({Key? key, required this.values}) : super(key: key);
+  final Color color;
+  const CoeItem({Key? key, required this.values, required this.color})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
+      //color: Colors.red,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        color: const Color.fromARGB(103, 238, 232, 255),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        //padding: const EdgeInsets.symmetric(vertical: 8.0),
+        height: Get.width * 0.28,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+          color: Theme.of(context).scaffoldBackgroundColor,
+        ),
+        child: Row(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Text(
-                      values.coemEEventName!,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ),
+            Container(
+              height: Get.width * 0.28,
+              width: 60,
+              decoration: BoxDecoration(
+                color: color.withOpacity(0.15),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(16.0),
+                  bottomLeft: Radius.circular(16.0),
                 ),
-                PopupMenuButton(
-                  splashRadius: 10,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(9.0)),
-                  itemBuilder: (_) {
-                    // List<PopupMenuEntry<dynamic>> popupItem =
-                    //     (values.coeeVVideos == null ||
-                    //                 values.coeeVVideos!.isEmpty) &&
-                    //             (values.coeeIImages == null ||
-                    //                 values.coeeIImages!.isEmpty)
-                    //         ? []
-                    //         : (values.coeeVVideos == null ||
-                    //                     values.coeeVVideos!.isEmpty) &&
-                    //                 (values.coeeIImages != null &&
-                    //                     values.coeeIImages!.isNotEmpty)
-                    //             ? [
-                    //                 PopupMenuItem(
-                    //                   value: "file",
-                    //                   // onTap: () {
-
-                    //                   //   // Get.to(() =>
-                    //                   //   //     VideoScreen(videoUrl: values.coeeVVideos!));
-
-                    //                   // },
-                    //                   child: ListTile(
-                    //                     onTap: () {
-                    //                       logger.d(values.coeeVVideos);
-                    //                       Navigator.push(
-                    //                           context,
-                    //                           MaterialPageRoute(
-                    //                               builder: (_) => VideoScreen(
-                    //                                   videoUrl: values
-                    //                                       .coeeVVideos!)));
-                    //                     },
-                    //                     title: Text(
-                    //                       "View File".tr,
-                    //                       style: Theme.of(context)
-                    //                           .textTheme
-                    //                           .titleSmall,
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               ]
-                    //             :  [
-                    //                 PopupMenuItem(
-                    //                   value: "Video",
-                    //                   // onTap: () {
-
-                    //                   //   // Get.to(() =>
-                    //                   //   //     VideoScreen(videoUrl: values.coeeVVideos!));
-
-                    //                   // },
-                    //                   child: ListTile(
-                    //                     onTap: () {
-                    //                       logger.d(values.coeeVVideos);
-                    //                       Navigator.push(
-                    //                           context,
-                    //                           MaterialPageRoute(
-                    //                               builder: (_) => VideoScreen(
-                    //                                   videoUrl: values
-                    //                                       .coeeVVideos!)));
-                    //                     },
-                    //                     title: Text(
-                    //                       "View Video".tr,
-                    //                       style: Theme.of(context)
-                    //                           .textTheme
-                    //                           .titleSmall,
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               ];
-
-                    List<PopupMenuEntry<dynamic>> popupItem = [];
-                    PopupMenuItem video = PopupMenuItem(
-                      value: "Video",
-                      // onTap: () {
-
-                      //   // Get.to(() =>
-                      //   //     VideoScreen(videoUrl: values.coeeVVideos!));
-
-                      // },
-                      child: ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        onTap: () {
-                          logger.d(values.coeeVVideos);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => VideoScreen(
-                                      videoUrl: values.coeeVVideos!)));
-                        },
-                        title: Text(
-                          "View Video".tr,
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                      ),
-                    );
-                    PopupMenuItem image = PopupMenuItem(
-                      value: "Video",
-                      // onTap: () {
-
-                      //   // Get.to(() =>
-                      //   //     VideoScreen(videoUrl: values.coeeVVideos!));
-
-                      // },
-                      child: ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        onTap: () {
-                          logger.d(values.coeeVVideos);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) =>
-                                      ViewImage(image: values.coeeIImages!)));
-                        },
-                        title: Text(
-                          "View File".tr,
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                      ),
-                    );
-                    if (values.coeeVVideos == null &&
-                        values.coeeIImages == null) {
-                      popupItem = [];
-                    }
-                    if (values.coeeVVideos!.isNotEmpty) {
-                      popupItem.add(video);
-                    }
-                    if (values.coeeIImages!.isNotEmpty) {
-                      popupItem.add(image);
-                    }
-
-                    return popupItem;
-                    // return [
-                    //   PopupMenuItem(
-                    //     onTap: () {},
-                    //     child: Text(
-                    //       "View File".tr,
-                    //       style: Theme.of(context).textTheme.titleSmall,
-                    //     ),
-                    //   ),
-                    //   PopupMenuItem(
-                    //     onTap: () {},
-                    //     child: Text(
-                    //       "View Video".tr,
-                    //       style: Theme.of(context).textTheme.titleSmall,
-                    //     ),
-                    //   ),
-                    // ];
-                  },
-                )
-              ],
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-              child: Row(
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.date_range_outlined,
-                    color: Theme.of(context).primaryColor,
+                  Text(
+                    "${DateTime.parse(values.coeEEStartDate!).day}",
+                    style: Theme.of(context).textTheme.titleMedium!.merge(
+                          TextStyle(
+                            color: color,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                   ),
                   const SizedBox(
-                    width: 8.0,
+                    height: 6.0,
                   ),
                   Text(
-                    getFormatedDate(DateTime.parse(values.coeEEStartDate!)),
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.watch_later_outlined,
-                    color: Theme.of(context).primaryColor,
+                    shortMonth.elementAt(
+                        (DateTime.parse(values.coeEEStartDate!).month) - 1),
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelMedium!
+                        .merge(TextStyle(color: color)),
                   ),
                   const SizedBox(
-                    width: 8.0,
+                    height: 12.0,
                   ),
-                  Text(
-                    "${values.coeEEStartTime} - ${values.coeEEEndTime}",
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                ],
-              ),
-            ),
-            values.coeeIImages == null || values.coeeIImages!.isEmpty
-                ? const SizedBox(
-                    height: 16.0,
+                  Container(
+                    width: 30.0,
+                    height: 30.0,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                    child: PopupMenuButton(
+                      padding: EdgeInsets.zero,
+                      icon: const Icon(Icons.more_horiz),
+                      splashRadius: 10,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(9.0)),
+                      itemBuilder: (_) {
+                        // List<PopupMenuEntry<dynamic>> popupItem =
+                        //     (values.coeeVVideos == null ||
+                        //                 values.coeeVVideos!.isEmpty) &&
+                        //             (values.coeeIImages == null ||
+                        //                 values.coeeIImages!.isEmpty)
+                        //         ? []
+                        //         : (values.coeeVVideos == null ||
+                        //                     values.coeeVVideos!.isEmpty) &&
+                        //                 (values.coeeIImages != null &&
+                        //                     values.coeeIImages!.isNotEmpty)
+                        //             ? [
+                        //                 PopupMenuItem(
+                        //                   value: "file",
+                        //                   // onTap: () {
+
+                        //                   //   // Get.to(() =>
+                        //                   //   //     VideoScreen(videoUrl: values.coeeVVideos!));
+
+                        //                   // },
+                        //                   child: ListTile(
+                        //                     onTap: () {
+                        //                       logger.d(values.coeeVVideos);
+                        //                       Navigator.push(
+                        //                           context,
+                        //                           MaterialPageRoute(
+                        //                               builder: (_) => VideoScreen(
+                        //                                   videoUrl: values
+                        //                                       .coeeVVideos!)));
+                        //                     },
+                        //                     title: Text(
+                        //                       "View File".tr,
+                        //                       style: Theme.of(context)
+                        //                           .textTheme
+                        //                           .titleSmall,
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               ]
+                        //             :  [
+                        //                 PopupMenuItem(
+                        //                   value: "Video",
+                        //                   // onTap: () {
+
+                        //                   //   // Get.to(() =>
+                        //                   //   //     VideoScreen(videoUrl: values.coeeVVideos!));
+
+                        //                   // },
+                        //                   child: ListTile(
+                        //                     onTap: () {
+                        //                       logger.d(values.coeeVVideos);
+                        //                       Navigator.push(
+                        //                           context,
+                        //                           MaterialPageRoute(
+                        //                               builder: (_) => VideoScreen(
+                        //                                   videoUrl: values
+                        //                                       .coeeVVideos!)));
+                        //                     },
+                        //                     title: Text(
+                        //                       "View Video".tr,
+                        //                       style: Theme.of(context)
+                        //                           .textTheme
+                        //                           .titleSmall,
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               ];
+
+                        List<PopupMenuEntry<dynamic>> popupItem = [];
+                        PopupMenuItem video = PopupMenuItem(
+                          value: "Video",
+                          // onTap: () {
+
+                          //   // Get.to(() =>
+                          //   //     VideoScreen(videoUrl: values.coeeVVideos!));
+
+                          // },
+                          child: ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            onTap: () {
+                              logger.d(values.coeeVVideos);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => VideoScreen(
+                                          videoUrl: values.coeeVVideos!)));
+                            },
+                            title: Text(
+                              "View Video".tr,
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                          ),
+                        );
+                        PopupMenuItem image = PopupMenuItem(
+                          value: "Video",
+                          // onTap: () {
+
+                          //   // Get.to(() =>
+                          //   //     VideoScreen(videoUrl: values.coeeVVideos!));
+
+                          // },
+                          child: ListTile(
+                            contentPadding: EdgeInsets.zero,
+                            onTap: () {
+                              logger.d(values.coeeVVideos);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => ViewImage(
+                                          image: values.coeeIImages!)));
+                            },
+                            title: Text(
+                              "View File".tr,
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                          ),
+                        );
+                        if (values.coeeVVideos == null &&
+                            values.coeeIImages == null) {
+                          popupItem = [];
+                        }
+                        if (values.coeeVVideos!.isNotEmpty) {
+                          popupItem.add(video);
+                        }
+                        if (values.coeeIImages!.isNotEmpty) {
+                          popupItem.add(image);
+                        }
+
+                        return popupItem;
+                        // return [
+                        //   PopupMenuItem(
+                        //     onTap: () {},
+                        //     child: Text(
+                        //       "View File".tr,
+                        //       style: Theme.of(context).textTheme.titleSmall,
+                        //     ),
+                        //   ),
+                        //   PopupMenuItem(
+                        //     onTap: () {},
+                        //     child: Text(
+                        //       "View Video".tr,
+                        //       style: Theme.of(context).textTheme.titleSmall,
+                        //     ),
+                        //   ),
+                        // ];
+                      },
+                    ),
                   )
-                : Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 12.0,
-                    ),
-                    height: 180,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(values.coeeIImages!)),
-                      borderRadius: BorderRadius.circular(
-                        16.0,
+                ],
+              ),
+            ),
+            Expanded(
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Text(
+                          values.coemEEventName!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
                       ),
-                      color: Colors.blueAccent.shade100.withOpacity(0.2),
-                    ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12.0, vertical: 4.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.date_range_outlined,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .color,
+                            ),
+                            const SizedBox(
+                              width: 8.0,
+                            ),
+                            Text(
+                              getFormatedDate(
+                                  DateTime.parse(values.coeEEStartDate!)),
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12.0, vertical: 4.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.watch_later_outlined,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .color,
+                            ),
+                            const SizedBox(
+                              width: 8.0,
+                            ),
+                            Text(
+                              "${values.coeEEStartTime} - ${values.coeEEEndTime}",
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
+                  values.coeeIImages == null || values.coeeIImages!.isEmpty
+                      ? const SizedBox(
+                          width: 16.0,
+                        )
+                      : Expanded(
+                          child: InkWell(
+                            onTap: () {
+                              logger.d(values.coeeVVideos);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => ViewImage(
+                                          image: values.coeeIImages!)));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CustomContainer(
+                                child: Container(
+                                  height: Get.width * 0.28,
+                                  width: Get.width * 0.20,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image:
+                                            NetworkImage(values.coeeIImages!)),
+                                    borderRadius: BorderRadius.circular(
+                                      16.0,
+                                    ),
+                                    color: Colors.blueAccent.shade100
+                                        .withOpacity(0.2),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
