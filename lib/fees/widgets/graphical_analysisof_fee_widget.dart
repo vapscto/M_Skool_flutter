@@ -43,7 +43,7 @@ class _GraphicalAnalysisFeeWidgetState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Graphical Analysis of Fees for Different\n Academic Year',
+              'Academic Year Fee Analysis',
               style: Theme.of(context).textTheme.titleSmall!.merge(
                     const TextStyle(
                       fontWeight: FontWeight.w600,
@@ -53,157 +53,65 @@ class _GraphicalAnalysisFeeWidgetState
                   ),
             ),
             const SizedBox(height: 20),
-            SfCartesianChart(
-              primaryYAxis: NumericAxis(
-                labelStyle: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                ),
-                majorGridLines: const MajorGridLines(width: 0),
-              ),
-              primaryXAxis: CategoryAxis(
-                labelStyle: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                ),
-                majorGridLines: const MajorGridLines(width: 0),
-              ),
-              series: <CartesianSeries>[
-                ColumnSeries<ChartData, String>(
-                  animationDuration: 2500,
-                  dataSource: [
-                    ChartData(
-                      'Rec',
-                      widget.receivable,
-                      const Color(0xff59cdff),
-                    ),
-                    ChartData(
-                      'Col',
-                      widget.collection,
-                      const Color(0xff8e5aff),
-                    ),
-                    ChartData(
-                      'Bal',
-                      widget.balance,
-                      const Color(0xff6ecfbd),
-                    ),
-                    ChartData(
-                      'Adj',
-                      widget.adjustment,
-                      const Color(0xfff9623e),
-                    ),
-                    ChartData(
-                      'Con',
-                      widget.concession,
-                      const Color(0xffff8728),
-                    ),
-                  ],
-                  xValueMapper: (ChartData data, _) => data.x,
-                  yValueMapper: (ChartData data, _) => data.y,
-                  pointColorMapper: (ChartData data, _) => data.color,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(4),
-                    topRight: Radius.circular(4),
+            Container(
+              height: MediaQuery.of(context).size.height / 2.2,
+              child: SfCartesianChart(
+                primaryYAxis: NumericAxis(
+                  labelStyle: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
                   ),
+                  majorGridLines: const MajorGridLines(width: 0),
                 ),
-              ],
-            ),
-            const SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(
-                  children: const [
-                    Icon(
-                      Icons.circle,
-                      size: 12,
-                      color: const Color(0xff59cdff),
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      'Receivable',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                primaryXAxis: CategoryAxis(
+                  labelStyle: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  majorGridLines: const MajorGridLines(width: 0),
+                ),
+                series: <CartesianSeries>[
+                  ColumnSeries<ChartData, String>(
+                    width: 0.6,
+                    spacing: 0.2,
+                    animationDuration: 2500,
+                    dataSource: [
+                      ChartData(
+                        'Total\nCharges',
+                        widget.receivable,
+                        const Color(0xff59cdff),
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: const [
-                    Icon(
-                      Icons.circle,
-                      size: 12,
-                      color: const Color(0xff8e5aff),
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      'Collection',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                      ChartData(
+                        'Total Paid',
+                        widget.collection,
+                        const Color(0xff8e5aff),
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: const [
-                    Icon(
-                      Icons.circle,
-                      size: 12,
-                      color: const Color(0xff6ecfbd),
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      'Balance',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                      ChartData(
+                        'Total\nConcession',
+                        widget.concession,
+                        const Color(0xff6ecfbd),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(
-                  children: const [
-                    Icon(
-                      Icons.circle,
-                      size: 12,
-                      color: Color(0xfff9623e),
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      'Adjustment',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                      ChartData(
+                        'Now\nPayable',
+                        widget.balance,
+                        const Color(0xfff9623e),
                       ),
+                      // ChartData(
+                      //   'Con',
+                      //   widget.concession,
+                      //   const Color(0xffff8728),
+                      // ),
+                    ],
+                    xValueMapper: (ChartData data, _) => data.x,
+                    yValueMapper: (ChartData data, _) => data.y,
+                    pointColorMapper: (ChartData data, _) => data.color,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(4),
+                      topRight: Radius.circular(4),
                     ),
-                  ],
-                ),
-                Row(
-                  children: const [
-                    Icon(
-                      Icons.circle,
-                      size: 12,
-                      color: Color(0xffff8728),
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      'Concession',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 20),
           ],

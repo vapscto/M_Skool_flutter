@@ -34,6 +34,16 @@ class _FeeAnalysisScreenState extends State<FeeAnalysisScreen> {
         loginSuccessModel: widget.loginSuccessModel,
         mskoolController: widget.mskoolController,
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+        onPressed: () {
+          print('sdsdfd');
+        },
+        child: Icon(
+          Icons.home,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
+import 'package:m_skool_flutter/fees/model/fee_receipt_no_model.dart';
 import 'package:m_skool_flutter/fees/model/fee_receipt_year_list_model.dart';
 import 'package:m_skool_flutter/fees/widgets/feereceipt_detail_container.dart';
 
@@ -28,6 +29,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
   final feeController = Get.put(FeeController());
 
   YearlistValues? selectedValue;
+  ReceiptNoList? receiptNoSelectedValue;
 
   Future<void> getFeeYearList() async {
     feeController.isfeeloading(true);
@@ -53,16 +55,26 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
     feeController.feeReceiptDetailsList.clear();
     feeController.isreceipt(true);
 
-    await feeController.getFeeReceiptNoListData(
+    await feeController
+        .getFeeReceiptNoListData(
       miId: widget.loginSuccessModel.mIID!,
       asmayId: asmayId,
       amstId: widget.loginSuccessModel.amsTId!,
       base: baseUrlFromInsCode('portal', widget.mskoolController),
-    );
+    )
+        .then((value) {
+      if (value) {
+        if (feeController.feeReceiptNoList.isNotEmpty) {
+          receiptNoSelectedValue = feeController.feeReceiptNoList.first;
+          getFeesReceiptDetail(this.receiptNoSelectedValue!.fyPId!);
+        }
+      }
+    });
     feeController.isreceipt(false);
   }
 
   Future<void> getFeesReceiptDetail(int fypId) async {
+    feeController.feeReceiptDetailsList.clear();
     feeController.isfeeDetail(true);
     await feeController.getFeeReceiptDetail(
       miId: widget.loginSuccessModel.mIID!,
@@ -77,9 +89,9 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
     feeController.isfeeDetail(false);
   }
 
-  void removeFeeDetailsContainer(int index) {
-    feeController.feeReceiptDetailsList.removeAt(index);
-  }
+  // void removeFeeDetailsContainer(int index) {
+  //   feeController.feeReceiptDetailsList.removeAt(index);
+  // }
 
   @override
   void initState() {
@@ -125,12 +137,35 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                             ),
                           ),
                           isDense: true,
-                          label: Text(
-                            "Select Year",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge!
-                                .merge(TextStyle(color: Colors.grey.shade600)),
+                          label: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 7),
+                            decoration: const BoxDecoration(
+                              color: Color.fromRGBO(223, 251, 254, 1),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(12),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset('assets/images/hat.png'),
+                                const SizedBox(width: 5),
+                                Text(
+                                  'Academic Year',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .merge(
+                                        const TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14.0,
+                                            color: Color.fromRGBO(
+                                                40, 182, 200, 1)),
+                                      ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         icon: const Icon(
@@ -164,73 +199,200 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                       ),
                     ),
                     const SizedBox(height: 35),
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          height: 106,
-                          padding: const EdgeInsets.only(
-                              left: 15, top: 10, bottom: 10),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            borderRadius: BorderRadius.circular(16.0),
-                            boxShadow: const [
-                              BoxShadow(
-                                offset: Offset(0, 1),
-                                blurRadius: 4,
-                                color: Colors.black12,
-                              ),
-                            ],
-                          ),
-                          child: feeController.isReceipt.value
-                              ? const Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              : feeController.feeReceiptNoList.isEmpty
-                                  ? const Center(
-                                      child: Text(
-                                          'No Receipt available for selected year!!'),
-                                    )
-                                  : RawScrollbar(
-                                      thumbColor: const Color(0xFF1E38FC),
-                                      trackColor: const Color.fromRGBO(
-                                          223, 239, 253, 1),
-                                      trackRadius: const Radius.circular(10),
-                                      trackVisibility: true,
-                                      radius: const Radius.circular(10),
-                                      thickness: 6,
-                                      thumbVisibility: true,
-                                      controller: _controller,
-                                      child: ListView.builder(
-                                        controller: _controller,
-                                        itemCount: feeController
-                                            .feeReceiptNoList.length,
-                                        itemBuilder: (context, index) {
-                                          return ReceiptNoCard(
-                                            receiptDetail: feeController
-                                                .feeReceiptNoList
-                                                .elementAt(index),
-                                            index: index,
-                                            asmayId: selectedValue!.asmaYId!,
-                                            function: getFeesReceiptDetail,
-                                            function1:
-                                                removeFeeDetailsContainer,
-                                          );
-                                        },
+                    feeController.isReceipt.value
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : feeController.feeReceiptNoList.isEmpty
+                            ? const Center(
+                                child: Text(
+                                    'No Receipts available for selected year!!'),
+                              )
+                            : Container(
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      offset: Offset(0, 1),
+                                      blurRadius: 8,
+                                      color: Colors.black12,
+                                    ),
+                                  ],
+                                ),
+                                child: DropdownButtonFormField<ReceiptNoList>(
+                                  value: receiptNoSelectedValue,
+                                  decoration: InputDecoration(
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
                                       ),
                                     ),
-                        ),
-                        const Positioned(
-                          top: -10,
-                          left: 17,
-                          child: Text(
-                            'Receipt No.',
-                            style: TextStyle(
-                                color: Color.fromRGBO(137, 137, 137, 1)),
-                          ),
-                        ),
-                      ],
-                    ),
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                    isDense: true,
+                                    label: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 7),
+                                      decoration: const BoxDecoration(
+                                        color: Color.fromRGBO(255, 235, 234, 1),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(12),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Image.asset(
+                                              'assets/images/receipt.png'),
+                                          const SizedBox(width: 5),
+                                          Text(
+                                            'Receipt No.',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .merge(
+                                                  const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 14.0,
+                                                      color: Color.fromARGB(
+                                                          255, 111, 103, 1)),
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.keyboard_arrow_down_rounded,
+                                    size: 30,
+                                  ),
+                                  iconSize: 30,
+                                  items: List.generate(
+                                      feeController.feeReceiptNoList.length,
+                                      (index) {
+                                    return DropdownMenuItem(
+                                      value: feeController.feeReceiptNoList
+                                          .elementAt(index),
+                                      child: Text(
+                                        feeController.feeReceiptNoList
+                                            .elementAt(index)
+                                            .fyPReceiptNo!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .merge(const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 16.0,
+                                                letterSpacing: 0.3)),
+                                      ),
+                                    );
+                                  }),
+                                  onChanged: (s) {
+                                    receiptNoSelectedValue = s;
+                                    getFeesReceiptDetail(s!.fyPId!);
+                                  },
+                                ),
+                              ),
+
+                    // ///////////
+                    // Stack(
+                    //   clipBehavior: Clip.none,
+                    //   children: [
+                    //     Container(
+                    //       height: 106,
+                    //       padding: const EdgeInsets.only(
+                    //           left: 15, top: 10, bottom: 10),
+                    //       decoration: BoxDecoration(
+                    //         color: Theme.of(context).scaffoldBackgroundColor,
+                    //         borderRadius: BorderRadius.circular(16.0),
+                    //         boxShadow: const [
+                    //           BoxShadow(
+                    //             offset: Offset(0, 1),
+                    //             blurRadius: 4,
+                    //             color: Colors.black12,
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       child: feeController.isReceipt.value
+                    //           ? const Center(
+                    //               child: CircularProgressIndicator(),
+                    //             )
+                    //           : feeController.feeReceiptNoList.isEmpty
+                    //               ? const Center(
+                    //                   child: Text(
+                    //                       'No Receipt available for selected year!!'),
+                    //                 )
+                    //               : RawScrollbar(
+                    //                   thumbColor: const Color(0xFF1E38FC),
+                    //                   trackColor: const Color.fromRGBO(
+                    //                       223, 239, 253, 1),
+                    //                   trackRadius: const Radius.circular(10),
+                    //                   trackVisibility: true,
+                    //                   radius: const Radius.circular(10),
+                    //                   thickness: 6,
+                    //                   thumbVisibility: true,
+                    //                   controller: _controller,
+                    //                   child: ListView.builder(
+                    //                     controller: _controller,
+                    //                     itemCount: feeController
+                    //                         .feeReceiptNoList.length,
+                    //                     itemBuilder: (context, index) {
+                    //                       return ReceiptNoCard(
+                    //                         receiptDetail: feeController
+                    //                             .feeReceiptNoList
+                    //                             .elementAt(index),
+                    //                         index: index,
+                    //                         asmayId: selectedValue!.asmaYId!,
+                    //                         function: getFeesReceiptDetail,
+                    //                         function1:
+                    //                             removeFeeDetailsContainer,
+                    //                       );
+                    //                     },
+                    //                   ),
+                    //                 ),
+                    //     ),
+                    //     Positioned(
+                    //       top: -10,
+                    //       left: 14,
+                    //       child: Container(
+                    //         padding: const EdgeInsets.symmetric(
+                    //             horizontal: 16, vertical: 7),
+                    //         decoration: const BoxDecoration(
+                    //           color: Color.fromRGBO(255, 235, 234, 1),
+                    //           borderRadius: BorderRadius.all(
+                    //             Radius.circular(12),
+                    //           ),
+                    //         ),
+                    //         child: Row(
+                    //           mainAxisSize: MainAxisSize.min,
+                    //           children: [
+                    //             Image.asset('assets/images/receipt.png'),
+                    //             const SizedBox(width: 5),
+                    //             Text(
+                    //               'Receipt No.',
+                    //               style: Theme.of(context)
+                    //                   .textTheme
+                    //                   .titleSmall!
+                    //                   .merge(
+                    //                     const TextStyle(
+                    //                         fontWeight: FontWeight.w400,
+                    //                         fontSize: 14.0,
+                    //                         color: Color.fromARGB(
+                    //                             255, 111, 103, 1)),
+                    //                   ),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     const SizedBox(height: 25),
                     Obx(
                       () => feeController.isFeeDetail.value

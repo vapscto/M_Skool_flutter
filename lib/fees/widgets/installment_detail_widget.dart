@@ -61,7 +61,7 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
                     style: Theme.of(context).textTheme.titleSmall!.merge(
                           const TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 14.0,
+                            fontSize: 12.0,
                             letterSpacing: 0.2,
                           ),
                         ),
@@ -120,46 +120,14 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
                                       ),
                                     ),
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 25),
                           Text(
-                            ' Net',
+                            '  Total\nCharges',
                             style:
                                 Theme.of(context).textTheme.titleSmall!.merge(
                                       const TextStyle(
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 14.0,
-                                          color: Color.fromRGBO(0, 0, 0, 0.5)),
-                                    ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const VerticalDivider(
-                      color: Color.fromRGBO(0, 0, 0, 0.15),
-                      thickness: 1,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            '₹${widget.concessionAmount}',
-                            style:
-                                Theme.of(context).textTheme.titleSmall!.merge(
-                                      const TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 14.0,
-                                      ),
-                                    ),
-                          ),
-                          const SizedBox(height: 12),
-                          Text(
-                            " Concession",
-                            style:
-                                Theme.of(context).textTheme.titleSmall!.merge(
-                                      const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14.0,
+                                          fontSize: 12.0,
                                           color: Color.fromRGBO(0, 0, 0, 0.5)),
                                     ),
                           ),
@@ -184,14 +152,46 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
                                       ),
                                     ),
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 20),
                           Text(
-                            ' Paid',
+                            " \nTotal Paid",
                             style:
                                 Theme.of(context).textTheme.titleSmall!.merge(
                                       const TextStyle(
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 14.0,
+                                          fontSize: 12.0,
+                                          color: Color.fromRGBO(0, 0, 0, 0.5)),
+                                    ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const VerticalDivider(
+                      color: Color.fromRGBO(0, 0, 0, 0.15),
+                      thickness: 1,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            '₹${widget.concessionAmount}',
+                            style:
+                                Theme.of(context).textTheme.titleSmall!.merge(
+                                      const TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 14.0,
+                                      ),
+                                    ),
+                          ),
+                          const SizedBox(height: 20),
+                          Text(
+                            '      Total\nConcession',
+                            style:
+                                Theme.of(context).textTheme.titleSmall!.merge(
+                                      const TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12.0,
                                           color: Color.fromRGBO(0, 0, 0, 0.5)),
                                     ),
                           ),
@@ -216,14 +216,14 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
                                       ),
                                     ),
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 20),
                           Text(
-                            ' Balance',
+                            '   Now\nPayable',
                             style:
                                 Theme.of(context).textTheme.titleSmall!.merge(
                                       const TextStyle(
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 14.0,
+                                          fontSize: 12.0,
                                           color: Color.fromRGBO(0, 0, 0, 0.5)),
                                     ),
                           ),
