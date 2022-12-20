@@ -148,49 +148,50 @@ class _FeeReceiptDetailContainerState extends State<FeeReceiptDetailContainer> {
             width: double.infinity,
             child: DataTable(
               dataTextStyle: const TextStyle(
-                  fontSize: 9,
+                  fontSize: 8,
                   color: Colors.black,
                   fontWeight: FontWeight.w500),
               dataRowHeight: 24,
-              headingRowHeight: 20,
+              headingRowHeight: 24,
               horizontalMargin: 2,
               columnSpacing: 20,
               dividerThickness: 1,
               headingTextStyle: const TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.w600),
+                  color: Colors.black, fontWeight: FontWeight.w700),
               border: TableBorder.all(width: 1, color: Colors.black),
               showBottomBorder: true,
-              headingRowColor: MaterialStateProperty.all(Colors.blue.shade400),
+              headingRowColor:
+                  MaterialStateProperty.all(Color.fromRGBO(229, 244, 255, 1)),
               columns: const [
                 DataColumn(
                   numeric: true,
                   label: Text(
-                    ' S.No',
-                    style: TextStyle(fontSize: 10),
+                    'S.No',
+                    style: TextStyle(fontSize: 9),
                   ),
                 ),
                 DataColumn(
                   label: Text(
-                    'Particular',
-                    style: TextStyle(fontSize: 10),
+                    'Particulars',
+                    style: TextStyle(fontSize: 9),
                   ),
                 ),
                 DataColumn(
                   label: Text(
-                    'Installment',
-                    style: TextStyle(fontSize: 10),
+                    'Installments',
+                    style: TextStyle(fontSize: 9),
                   ),
                 ),
                 DataColumn(
                   label: Text(
                     'Concession',
-                    style: TextStyle(fontSize: 10),
+                    style: TextStyle(fontSize: 9),
                   ),
                 ),
                 DataColumn(
                   label: Text(
-                    'Paid Amount',
-                    style: TextStyle(fontSize: 10),
+                    '  Paid\nAmount',
+                    style: TextStyle(fontSize: 9),
                   ),
                 ),
               ],
@@ -198,7 +199,9 @@ class _FeeReceiptDetailContainerState extends State<FeeReceiptDetailContainer> {
                 var i = index + 1;
                 return DataRow(
                   cells: [
-                    DataCell(Text('$i')),
+                    DataCell(
+                      Text('$i'),
+                    ),
                     DataCell(Text(
                         widget.dataModel.values!.elementAt(index).fmHFeeName!)),
                     DataCell(Text(
@@ -208,11 +211,10 @@ class _FeeReceiptDetailContainerState extends State<FeeReceiptDetailContainer> {
                             .elementAt(index)
                             .ftPConcessionAmt
                             .toString()))),
-                    DataCell(Center(
-                        child: Text(widget.dataModel.values!
-                            .elementAt(index)
-                            .ftPPaidAmt
-                            .toString()))),
+                    DataCell(Text(widget.dataModel.values!
+                        .elementAt(index)
+                        .ftPPaidAmt
+                        .toString())),
                   ],
                 );
               }),

@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/instance_manager.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/card_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 
 import '../main.dart';
 
 class SchoolDetailsScreen extends StatefulWidget {
-  const SchoolDetailsScreen({super.key});
+  final LoginSuccessModel loginSuccessModel;
+  const SchoolDetailsScreen({super.key, required this.loginSuccessModel});
 
   @override
   State<SchoolDetailsScreen> createState() => _SchoolDetailsScreenState();
@@ -35,7 +37,7 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
               padding: const EdgeInsets.all(10),
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(
                       width: 120,
@@ -44,8 +46,7 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                     const Text(":  "),
                     Flexible(
                       child: Text(
-                        mskoolController
-                            .universalInsCodeModel!.value.institutioNNAME,
+                        "${widget.loginSuccessModel.institutedetails!.values!.first.mIName}",
                       ),
                     ),
                   ],
@@ -62,8 +63,9 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                       const Text(":  "),
                       Flexible(
                         child: Text(
-                          mskoolController
-                              .universalInsCodeModel!.value.institutioNNAME,
+                          "${widget.loginSuccessModel.institutedetails!.values!.first.mIAddress1}"
+                          " ${widget.loginSuccessModel.institutedetails!.values!.first.mIAddress2},"
+                          " ${widget.loginSuccessModel.institutedetails!.values!.first.mIAddress3}.",
                         ),
                       ),
                     ],
@@ -81,9 +83,7 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                       const Text(":  "),
                       Flexible(
                         child: Text(
-                          mskoolController
-                              .universalInsCodeModel!.value.institutioNNAME,
-                        ),
+                            "${widget.loginSuccessModel.institutedetails!.values!.first}"),
                       ),
                     ],
                   ),
@@ -100,9 +100,7 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                       const Text(":  "),
                       Flexible(
                         child: Text(
-                          mskoolController
-                              .universalInsCodeModel!.value.institutioNNAME,
-                        ),
+                            "${widget.loginSuccessModel.institutedetails!.values!.first}"),
                       ),
                     ],
                   ),
@@ -119,9 +117,7 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                       const Text(":  "),
                       Flexible(
                         child: Text(
-                          mskoolController
-                              .universalInsCodeModel!.value.institutioNNAME,
-                        ),
+                            "${widget.loginSuccessModel.institutedetails!.values!.first}"),
                       ),
                     ],
                   ),

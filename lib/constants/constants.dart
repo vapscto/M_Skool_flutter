@@ -284,3 +284,31 @@ List<Color> timetablePeriodColor = const [
   Color.fromARGB(255, 150, 14, 127),
   Color.fromARGB(255, 114, 24, 150),
 ];
+Color getDashBoardIconByName(String title) {
+  switch (title) {
+    case "english":
+      return const Color(0xFF9900F0);
+    case "kannada":
+      return const Color(0xFF32E1F7);
+    case "physics":
+      return const Color(0xff4ED092);
+    case "chemistry":
+      return const Color(0xffFFE81E);
+    case "mathematics":
+      return const Color(0xFFFF9621);
+    case "computer science":
+      return const Color(0xFFFF60A8);
+    case "biology":
+      return const Color(0xffFF6F67);
+    case "social science":
+      return const Color(0xff09B4BD);
+    case "library":
+      return const Color(0xffA9D252);
+    case "science":
+      return Colors.greenAccent[700]!;
+    case "hindi":
+      return Colors.purpleAccent[400]!;
+    default:
+      return Colors.grey;
+  }
+}

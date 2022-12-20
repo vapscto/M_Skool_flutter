@@ -66,14 +66,14 @@ class _OverallAnalysisTabState extends State<OverallAnalysisTab> {
                                     horizontal: 16, vertical: 7),
                                 height: 35,
                                 decoration: const BoxDecoration(
-                                  color: Color.fromRGBO(81, 169, 100, 1),
+                                  color: Color.fromRGBO(255, 211, 211, 1),
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(12),
                                   ),
                                 ),
                                 child: Center(
                                   child: Text(
-                                    'Balance : ₹ ${feeController.overAllAnalysisData.first.balance}',
+                                    '${feeController.overAllAnalysisData.first.asmayYear}',
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleSmall!
@@ -81,8 +81,7 @@ class _OverallAnalysisTabState extends State<OverallAnalysisTab> {
                                           const TextStyle(
                                               fontWeight: FontWeight.w700,
                                               fontSize: 14.0,
-                                              color: Color.fromRGBO(
-                                                  255, 255, 255, 1)),
+                                              color: Colors.black),
                                         ),
                                   ),
                                 ),
@@ -102,7 +101,7 @@ class _OverallAnalysisTabState extends State<OverallAnalysisTab> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomAnalysisContainer(
-                                    title: ' Receivable',
+                                    title: '  Total\nCharges',
                                     amount: feeController
                                         .overAllAnalysisData.first.receivable!
                                         .toInt()),
@@ -111,7 +110,7 @@ class _OverallAnalysisTabState extends State<OverallAnalysisTab> {
                                   thickness: 1,
                                 ),
                                 CustomAnalysisContainer(
-                                    title: ' Collection',
+                                    title: ' Total Paid',
                                     amount: feeController
                                         .overAllAnalysisData.first.collection!
                                         .toInt()),
@@ -120,7 +119,7 @@ class _OverallAnalysisTabState extends State<OverallAnalysisTab> {
                                   thickness: 1,
                                 ),
                                 CustomAnalysisContainer(
-                                    title: ' Concession',
+                                    title: '     Total\nConcession',
                                     amount: feeController
                                         .overAllAnalysisData.first.concession!
                                         .toInt()),
@@ -129,9 +128,9 @@ class _OverallAnalysisTabState extends State<OverallAnalysisTab> {
                                   thickness: 1,
                                 ),
                                 CustomAnalysisContainer(
-                                    title: ' Adjustment',
+                                    title: '   Now\nPayable',
                                     amount: feeController
-                                        .overAllAnalysisData.first.adjusted!
+                                        .overAllAnalysisData.first.balance!
                                         .toInt()),
                               ],
                             ),

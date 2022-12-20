@@ -114,7 +114,11 @@ class StudentProfileCards extends StatelessWidget {
           logoAsset: "assets/images/SchoolDetails.png",
           title: "School Details",
           onTap: () {
-            Get.to(() => const SchoolDetailsScreen());
+            Get.to(
+              () => SchoolDetailsScreen(
+                loginSuccessModel: loginSuccessModel,
+              ),
+            );
           },
         ),
         ProfileItemsCard(

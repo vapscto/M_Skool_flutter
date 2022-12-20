@@ -14,6 +14,7 @@ class CustomAnalysisContainer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+        
           Text(
             '₹$amount',
             style: Theme.of(context).textTheme.titleSmall!.merge(
@@ -23,15 +24,17 @@ class CustomAnalysisContainer extends StatelessWidget {
                   ),
                 ),
           ),
-          const SizedBox(height: 12),
-          Text(
-            title,
-            style: Theme.of(context).textTheme.titleSmall!.merge(
-                  const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12.0,
-                      color: Color.fromRGBO(0, 0, 0, 0.5)),
-                ),
+          const SizedBox(height: 20),
+          Center(
+            child: Text(
+              title,
+              style: Theme.of(context).textTheme.titleSmall!.merge(
+                    const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12.0,
+                        color: Color.fromRGBO(0, 0, 0, 0.5)),
+                  ),
+            ),
           ),
         ],
       ),
