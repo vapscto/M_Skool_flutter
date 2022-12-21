@@ -91,7 +91,7 @@ class StudentProfileCards extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         onPressed: () {},
                         child: Padding(
-                          padding: const EdgeInsets.all(5.0),
+                          padding: const EdgeInsets.fromLTRB(10, 5.0, 10, 5),
                           child: Text(
                             "Contact",
                             style: Theme.of(context)
