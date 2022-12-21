@@ -3,6 +3,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -48,6 +49,8 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
       Get.put<PayOnlineDataController>(PayOnlineDataController());
   final PaymentSelectionTracking trackSelection =
       Get.put(PaymentSelectionTracking());
+
+  int color = -1;
 
   @override
   void initState() {
@@ -133,6 +136,13 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                                     final InstallmentModel model =
                                         payOnlineDataController.installment
                                             .elementAt(index);
+                                    color += 1;
+                                    if (index % 6 == 0) {
+                                      color = 0;
+                                    }
+                                    if (color > 6) {
+                                      color = 0;
+                                    }
 
                                     return CustomContainer(
                                       child: Padding(
@@ -141,12 +151,34 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                                           children: [
                                             Row(
                                               children: [
-                                                Text(
-                                                  model.grplistValues
-                                                      .fmgGGroupName!,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .titleMedium,
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 12.0,
+                                                      vertical: 6.0),
+                                                  decoration: BoxDecoration(
+                                                    color: noticeColor
+                                                        .elementAt(color)
+                                                        .withOpacity(0.2),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            24.0),
+                                                  ),
+                                                  child: Text(
+                                                    model.grplistValues
+                                                        .fmgGGroupName!,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall!
+                                                        .merge(TextStyle(
+                                                            fontSize: 16.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: noticeColor
+                                                                .elementAt(
+                                                              color,
+                                                            ))),
+                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -1014,24 +1046,62 @@ class _InstallmentInfoWidgetState extends State<InstallmentInfoWidget> {
       visualDensity: const VisualDensity(
           horizontal: VisualDensity.minimumDensity,
           vertical: VisualDensity.minimumDensity),
-      leading: Checkbox(
-        value: widget.disabled ? true : isSelected,
-        activeColor: Theme.of(context).primaryColor,
-        visualDensity: const VisualDensity(
-            horizontal: VisualDensity.minimumDensity,
-            vertical: VisualDensity.minimumDensity),
-        onChanged: widget.disabled
-            ? null
-            : (v) {
-                isSelected = v!;
-                setState(() {});
-                widget.onChecked();
-              },
+      // leading: Checkbox(
+      //   value: widget.disabled ? true : isSelected,
+      //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
+      //   activeColor: Theme.of(context).primaryColor,
+      //   visualDensity: const VisualDensity(
+      //       horizontal: VisualDensity.minimumDensity,
+      //       vertical: VisualDensity.minimumDensity),
+      //   onChanged: widget.disabled
+      //       ? null
+      //       : (v) {
+      //           isSelected = v!;
+      //           setState(() {});
+      //           widget.onChecked();
+      //         },
+      // ),
+      leading: GestureDetector(
+        onTap: () {
+          if (widget.disabled) {
+            return;
+          }
+          isSelected = !isSelected;
+          setState(() {});
+          widget.onChecked();
+        },
+        child: AnimatedContainer(
+            height: 22,
+            width: 22,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.fastLinearToSlowEaseIn,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6.0),
+                border: widget.disabled
+                    ? null
+                    : isSelected
+                        ? null
+                        : Border.all(color: Colors.grey, width: 2.0)),
+            child: widget.disabled
+                ? Image.asset(
+                    "assets/images/checkbox.png",
+                    color: Colors.grey,
+                  )
+                : isSelected
+                    ? Image.asset("assets/images/checkbox.png")
+                    : null),
       ),
       title: Text(
         widget.model.fMTName!,
+        style: Theme.of(context)
+            .textTheme
+            .titleSmall!
+            .merge(const TextStyle(fontSize: 18.0)),
       ),
-      trailing: Text("₹${widget.model.payable!.toString()}"),
+      trailing: Text(
+        "₹${widget.model.payable!.toString()}",
+        style: const TextStyle(fontSize: 18.0),
+      ),
     );
   }
 }
@@ -1070,6 +1140,11 @@ class PrevTransactionDetails extends StatelessWidget {
             );
           }));
         },
+        leading: Image.asset(
+          "assets/images/transaction.png",
+          height: 36.0,
+        ),
+        minLeadingWidth: 10,
         title: const Text("Transactions"),
         trailing: const Icon(
           Icons.chevron_right_outlined,
@@ -1115,12 +1190,12 @@ class AcademicYearFeeDetail extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .titleSmall!
-                      .copyWith(fontWeight: FontWeight.w600),
+                      .copyWith(fontWeight: FontWeight.w500, fontSize: 16.0),
                 ),
-                Image.asset(
-                  'assets/images/info_icon.png',
-                  color: Colors.black,
-                )
+                // Image.asset(
+                //   'assets/images/info_icon.png',
+                //   color: Colors.black,
+                // )
               ],
             ),
           ),
@@ -1135,21 +1210,22 @@ class AcademicYearFeeDetail extends StatelessWidget {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CustomDetailWidget(
-                      title: 'Net Amount',
+                      title: 'Total Charges',
                       amount: payOnlineDataController
                           .academicYearFeeDet.first.fSSNetAmount!),
                   CustomDetailWidget(
-                      title: 'Paid Amount',
+                      title: 'Total Paid',
                       amount: payOnlineDataController
                           .academicYearFeeDet.first.fSSPaidAmount!),
                   CustomDetailWidget(
-                      title: 'Concession',
+                      title: 'Total Concession',
                       amount: payOnlineDataController
                           .academicYearFeeDet.first.fSSConcessionAmount!),
                   CustomDetailWidget(
-                      title: 'Balance',
+                      title: 'Now Payable',
                       amount: payOnlineDataController
                           .academicYearFeeDet.first.fSSToBePaid!),
                 ],

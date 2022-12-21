@@ -130,4 +130,6 @@ class URLS {
 
   static String updateCwSeen =
       "api/StudentDashboardFacade/onclick_classwork_seen/";
+
+  static String dailyTT = "api/AdmissionCtrl/daywiseTimetable";
 }

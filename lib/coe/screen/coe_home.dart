@@ -196,8 +196,9 @@ class _CoeHomeState extends State<CoeHome> {
                                             "Academic Year".tr,
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .labelLarge!
+                                                .labelMedium!
                                                 .merge(const TextStyle(
+                                                    fontSize: 20,
                                                     color: Color(0xFF28B6C8))),
                                           ),
                                         ],
@@ -286,8 +287,9 @@ class _CoeHomeState extends State<CoeHome> {
                                     "Select Month".tr,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .labelLarge!
+                                        .labelMedium!
                                         .merge(const TextStyle(
+                                            fontSize: 20,
                                             color: Color(0xFFFF6F67))),
                                   ),
                                 ],
@@ -633,8 +635,9 @@ class CoeItem extends StatelessWidget {
                             horizontal: 12.0, vertical: 4.0),
                         child: Row(
                           children: [
-                            Icon(
-                              Icons.date_range_outlined,
+                            Image.asset(
+                              'assets/images/calendar_coe.png',
+                              height: 22.0,
                               color: Theme.of(context)
                                   .textTheme
                                   .labelMedium!
@@ -656,8 +659,16 @@ class CoeItem extends StatelessWidget {
                             horizontal: 12.0, vertical: 4.0),
                         child: Row(
                           children: [
-                            Icon(
-                              Icons.watch_later_outlined,
+                            // Icon(
+                            //   Icons.watch_later_outlined,
+                            //   color: Theme.of(context)
+                            //       .textTheme
+                            //       .labelMedium!
+                            //       .color,
+                            // ),
+                            Image.asset(
+                              'assets/images/clock_coe.png',
+                              height: 22.0,
                               color: Theme.of(context)
                                   .textTheme
                                   .labelMedium!

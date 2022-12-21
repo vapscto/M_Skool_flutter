@@ -244,6 +244,35 @@ List<Color> noticeColor = const [
   Color(0xFF7D5CDB)
 ];
 
+List<Color> examCardColor = const [
+  Color.fromARGB(255, 252, 205, 255),
+  Color.fromARGB(255, 243, 238, 178),
+  Color.fromARGB(255, 184, 173, 233),
+  Color.fromARGB(255, 161, 216, 216),
+  Color.fromARGB(255, 210, 167, 223),
+];
+List<Color> chipColor = const [
+  Color(0xFFFBCFFF),
+  Color(0xFFFBF6C4),
+  Color(0xFFDBC3FE),
+  Color(0xFFACEFDF)
+];
+List<Color> textColor = const [
+  Color(0xFFF000FF),
+  Color(0xFFBCAE29),
+  Color.fromARGB(255, 146, 73, 255),
+  Color.fromARGB(255, 38, 117, 99),
+  Color(0xFFE077FF),
+];
+
+List<Color> pieColor = const [
+  Color(0xFFF000FF),
+  Color.fromARGB(255, 255, 230, 0),
+  Color.fromARGB(255, 146, 73, 255),
+  Color.fromARGB(255, 38, 117, 99),
+  Color(0xFFE077FF),
+];
+
 Map<String, dynamic> getMonthWithCount = {
   "1": 31,
   "3": 31,

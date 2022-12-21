@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/exam/controller/exam_controller.dart';
 import 'package:m_skool_flutter/exam/model/pie_data_model.dart';
 import 'package:m_skool_flutter/exam/model/subjectoverview_model.dart';
+import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../controller/global_utilities.dart';
 import '../../controller/mskoll_controller.dart';
@@ -98,6 +101,8 @@ class _SubjectWiseTabState extends State<SubjectWiseTab> {
     getAcademicYear();
   }
 
+  int color = -1;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -122,165 +127,212 @@ class _SubjectWiseTabState extends State<SubjectWiseTab> {
                   )
                 : Column(
                     children: [
-                      Row(
+                      const SizedBox(
+                        height: 16.0,
+                      ),
+                      Column(
                         children: [
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                borderRadius: BorderRadius.circular(16.0),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    offset: Offset(0, 1),
-                                    blurRadius: 8,
-                                    color: Colors.black12,
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              borderRadius: BorderRadius.circular(16.0),
+                              boxShadow: const [
+                                BoxShadow(
+                                  offset: Offset(0, 1),
+                                  blurRadius: 8,
+                                  color: Colors.black12,
+                                ),
+                              ],
+                            ),
+                            child: DropdownButtonFormField<AcademicYearValues>(
+                              isExpanded: true,
+                              value: examController.selectedYear,
+                              decoration: InputDecoration(
+                                // border: OutlineInputBorder(
+                                //   borderRadius: BorderRadius.circular(12.0),
+                                // ),
+                                // contentPadding: const EdgeInsets.symmetric(
+                                //     vertical: 12.0, horizontal: 12.0),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 18.0, horizontal: 12.0),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
                                   ),
-                                ],
-                              ),
-                              child:
-                                  DropdownButtonFormField<AcademicYearValues>(
-                                isExpanded: true,
-                                value: examController.selectedYear,
-                                decoration: InputDecoration(
-                                  // border: OutlineInputBorder(
-                                  //   borderRadius: BorderRadius.circular(12.0),
-                                  // ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 12.0, horizontal: 12.0),
-                                  focusedBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                    ),
+                                ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
                                   ),
-                                  enabledBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                    ),
-                                  ),
+                                ),
 
-                                  label: Text(
-                                    "Academic Year",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge!
-                                        .merge(TextStyle(
-                                          color: Colors.grey.shade600,
-                                          fontSize: 19.0,
-                                        )),
-                                  ),
-                                ),
-                                icon: const Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  size: 30,
-                                ),
-                                iconSize: 30,
-                                items: List.generate(
-                                  examController.academicYearList.length,
-                                  (index) {
-                                    return DropdownMenuItem<AcademicYearValues>(
-                                      value: examController.academicYearList
-                                          .elementAt(index),
-                                      child: Text(
-                                        examController.academicYearList
-                                            .elementAt(index)
-                                            .asmaYYear!,
+                                label: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0, vertical: 6.0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(24.0),
+                                      color: const Color(0xFFDFFBFE)),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/cap.png",
+                                        height: 28.0,
+                                      ),
+                                      const SizedBox(
+                                        width: 6.0,
+                                      ),
+                                      Text(
+                                        "Academic Year".tr,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .labelSmall!
+                                            .labelMedium!
                                             .merge(const TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 16.0,
-                                              letterSpacing: 0.3,
-                                            )),
+                                                fontSize: 20,
+                                                color: Color(0xFF28B6C8))),
                                       ),
-                                    );
-                                  },
+                                    ],
+                                  ),
                                 ),
-                                onChanged: (s) {
-                                  examController.selectedYear = s;
-                                  getsubList(s!.asmaYId!);
-                                },
                               ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 12.0,
-                          ),
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                borderRadius: BorderRadius.circular(16.0),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    offset: Offset(0, 1),
-                                    blurRadius: 8,
-                                    color: Colors.black12,
-                                  ),
-                                ],
+                              icon: const Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                size: 30,
                               ),
-                              child: DropdownButtonFormField<SubjectListValue>(
-                                isExpanded: true,
-                                value: selectedSubject,
-                                decoration: InputDecoration(
-                                  // border: OutlineInputBorder(
-                                  //   borderRadius: BorderRadius.circular(12.0),
-                                  // ),
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 12.0, horizontal: 12.0),
-
-                                  focusedBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                    ),
-                                  ),
-                                  enabledBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                    ),
-                                  ),
-
-                                  label: Text(
-                                    'Select Subject',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge!
-                                        .merge(TextStyle(
-                                          color: Colors.grey.shade600,
-                                        )),
-                                  ),
-                                ),
-                                icon: const Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  size: 30,
-                                ),
-                                iconSize: 30,
-                                items: List.generate(
-                                    examController.subjectList.length, (index) {
-                                  return DropdownMenuItem<SubjectListValue>(
-                                    value: examController.subjectList
+                              iconSize: 30,
+                              items: List.generate(
+                                examController.academicYearList.length,
+                                (index) {
+                                  return DropdownMenuItem<AcademicYearValues>(
+                                    value: examController.academicYearList
                                         .elementAt(index),
                                     child: Text(
-                                      examController.subjectList
+                                      examController.academicYearList
                                           .elementAt(index)
-                                          .ismSSubjectName!,
+                                          .asmaYYear!,
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelSmall!
                                           .merge(const TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 16.0,
-                                              letterSpacing: 0.3)),
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.3,
+                                          )),
                                     ),
                                   );
-                                }),
-                                onChanged: (s) {
-                                  selectedSubject = s;
-                                  getsubjecData(s!.ismSId!);
                                 },
                               ),
+                              onChanged: (s) {
+                                examController.selectedYear = s;
+                                getsubList(s!.asmaYId!);
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 24.0,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              borderRadius: BorderRadius.circular(16.0),
+                              boxShadow: const [
+                                BoxShadow(
+                                  offset: Offset(0, 1),
+                                  blurRadius: 8,
+                                  color: Colors.black12,
+                                ),
+                              ],
+                            ),
+                            child: DropdownButtonFormField<SubjectListValue>(
+                              isExpanded: true,
+                              value: selectedSubject,
+                              decoration: InputDecoration(
+                                  // border: OutlineInputBorder(
+                                  //   borderRadius: BorderRadius.circular(12.0),
+                                  // ),
+                                  // contentPadding: const EdgeInsets.symmetric(
+                                  //     vertical: 12.0, horizontal: 12.0),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 18.0, horizontal: 12.0),
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                    ),
+                                  ),
+
+                                  // label: Text(
+                                  //   'Select Subject',
+                                  //   style: Theme.of(context)
+                                  //       .textTheme
+                                  //       .labelLarge!
+                                  //       .merge(TextStyle(
+                                  //         color: Colors.grey.shade600,
+                                  //       )),
+                                  // ),
+                                  label: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0, vertical: 8.0),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(24.0),
+                                        color: const Color(0xFFFFEBEA)),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/svg/exam_icon_.svg',
+                                          height: 24.0,
+                                        ),
+                                        const SizedBox(
+                                          width: 8.0,
+                                        ),
+                                        Text(
+                                          'Select Subject',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium!
+                                              .merge(const TextStyle(
+                                                  color: Color(0xFFFF6F67),
+                                                  fontSize: 20.0)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.always),
+                              icon: const Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                size: 30,
+                              ),
+                              iconSize: 30,
+                              items: List.generate(
+                                  examController.subjectList.length, (index) {
+                                return DropdownMenuItem<SubjectListValue>(
+                                  value: examController.subjectList
+                                      .elementAt(index),
+                                  child: Text(
+                                    examController.subjectList
+                                        .elementAt(index)
+                                        .ismSSubjectName!,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall!
+                                        .merge(const TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 16.0,
+                                            letterSpacing: 0.3)),
+                                  ),
+                                );
+                              }),
+                              onChanged: (s) {
+                                selectedSubject = s;
+                                getsubjecData(s!.ismSId!);
+                              },
                             ),
                           )
                         ],
@@ -413,11 +465,15 @@ class _SubjectWiseTabState extends State<SubjectWiseTab> {
                                       ),
                                     ],
                                   ),
+                                  const SizedBox(
+                                    height: 16.0,
+                                  ),
                                   examController
                                           .subjectwiseMarkOverview.isNotEmpty
                                       ? Obx(() {
+                                          color = -1;
                                           return showGraph.value
-                                              ? ListView.builder(
+                                              ? ListView.separated(
                                                   shrinkWrap: true,
                                                   physics:
                                                       const NeverScrollableScrollPhysics(),
@@ -425,22 +481,44 @@ class _SubjectWiseTabState extends State<SubjectWiseTab> {
                                                       .subjectwiseMarkOverview
                                                       .length,
                                                   itemBuilder: (_, index) {
-                                                    return GraphSubjectWiseResultItem(
-                                                      datamodel: examController
-                                                          .subjectwiseMarkOverview
-                                                          .elementAt(index),
-                                                      chipColor: examController
-                                                          .chipColor
-                                                          .elementAt(index),
-                                                      containerColor:
-                                                          examController
-                                                              .containerColor
-                                                              .elementAt(index),
-                                                      gradeColor: examController
-                                                          .gradeColor
-                                                          .elementAt(index),
+                                                    color += 1;
+                                                    if (index % 4 == 0) {
+                                                      color = 0;
+                                                    }
+                                                    if (color > 4) {
+                                                      color = 0;
+                                                    }
+                                                    return CustomContainer(
+                                                      child:
+                                                          GraphSubjectWiseResultItem(
+                                                        datamodel: examController
+                                                            .subjectwiseMarkOverview
+                                                            .elementAt(index),
+                                                        chipColor: chipColor
+                                                            .elementAt(color),
+                                                        textColor: textColor
+                                                            .elementAt(color),
+                                                        gradeColor: pieColor
+                                                            .elementAt(color),
+                                                        containerColor:
+                                                            examCardColor
+                                                                .elementAt(
+                                                                    color),
+                                                        obtainedColor: pieColor
+                                                            .elementAt(color),
+                                                        pieColor: examCardColor
+                                                            .elementAt(color),
+                                                      ),
                                                     );
-                                                  })
+                                                  },
+                                                  separatorBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    return const SizedBox(
+                                                      height: 16.0,
+                                                    );
+                                                  },
+                                                )
                                               : ListView.builder(
                                                   physics:
                                                       const NeverScrollableScrollPhysics(),
@@ -450,20 +528,27 @@ class _SubjectWiseTabState extends State<SubjectWiseTab> {
                                                       .length,
                                                   itemBuilder:
                                                       (context, index) {
+                                                    color += 1;
+                                                    if (index % 4 == 0) {
+                                                      color = 0;
+                                                    }
+                                                    if (color > 4) {
+                                                      color = 0;
+                                                    }
                                                     return SubjectWiseContainer(
                                                       datamodel: examController
                                                           .subjectwiseMarkOverview
                                                           .elementAt(index),
                                                       chipColor: examController
                                                           .chipColor
-                                                          .elementAt(index),
+                                                          .elementAt(color),
                                                       containerColor:
                                                           examController
                                                               .containerColor
-                                                              .elementAt(index),
+                                                              .elementAt(color),
                                                       gradeColor: examController
                                                           .gradeColor
-                                                          .elementAt(index),
+                                                          .elementAt(color),
                                                     );
                                                   },
                                                 );
@@ -504,12 +589,18 @@ class GraphSubjectWiseResultItem extends StatefulWidget {
   final Color chipColor;
   final Color containerColor;
   final Color gradeColor;
+  final Color textColor;
+  final Color obtainedColor;
+  final Color pieColor;
   const GraphSubjectWiseResultItem(
       {super.key,
       required this.datamodel,
       required this.chipColor,
       required this.containerColor,
-      required this.gradeColor});
+      required this.gradeColor,
+      required this.textColor,
+      required this.obtainedColor,
+      required this.pieColor});
 
   @override
   State<GraphSubjectWiseResultItem> createState() =>
@@ -527,35 +618,37 @@ class _GraphSubjectWiseResultItemState
     pie.add(PieDataModel(
         marks: widget.datamodel.estmpsMaxMarks!.toInt(),
         name: "Max Marks",
-        color: Colors.grey.shade100));
+        color: widget.pieColor));
     pie.add(PieDataModel(
         marks: widget.datamodel.estmpsObtainedMarks!.toInt(),
         name: "Mark Obtained",
-        color: widget.chipColor));
+        color: widget.obtainedColor));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 16),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: widget.containerColor,
+        color: widget.containerColor.withOpacity(0.2),
         borderRadius: BorderRadius.circular(16.0),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-            Row(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Chip(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 8.0, vertical: 6.0),
                   backgroundColor: widget.chipColor,
-                  label: Text(widget.datamodel.emeExamName!),
+                  label: Text(
+                    widget.datamodel.emeExamName!,
+                    style: TextStyle(color: widget.textColor),
+                  ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -577,246 +670,433 @@ class _GraphSubjectWiseResultItemState
                 ),
               ],
             ),
-            const SizedBox(
-              height: 12.0,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: Get.width * 0.4,
-                  height: Get.width * 0.4,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      SfCircularChart(
-                        series: <CircularSeries>[
-                          PieSeries<PieDataModel, String>(
-                              dataLabelSettings:
-                                  DataLabelSettings(isVisible: true),
-                              dataSource: pie,
-                              pointColorMapper: ((datum, index) => datum.color),
-                              xValueMapper: ((datum, index) => datum.name),
-                              yValueMapper: ((datum, index) => datum.marks)),
-                          PieSeries<PieDataModel, String>(
-                              dataSource: pie,
-                              dataLabelSettings:
-                                  DataLabelSettings(isVisible: true),
-                              pointColorMapper: ((datum, index) => datum.color),
-                              xValueMapper: ((datum, index) => datum.name),
-                              yValueMapper: ((datum, index) => datum.marks)),
-                        ],
-                      ),
-                      // Column(
-                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-                      //     Text(
-                      //       "${widget.datamodel.estmpsObtainedMarks!.toInt()}",
-                      //       style: Theme.of(context)
-                      //           .textTheme
-                      //           .labelMedium!
-                      //           .merge(const TextStyle(
-                      //               fontWeight: FontWeight.w700,
-                      //               color: Colors.black)),
-                      //     ),
-                      //     const SizedBox(
-                      //       height: 6.0,
-                      //     ),
-                      //     Text(
-                      //       "Marks Obtained",
-                      //       style: Theme.of(context)
-                      //           .textTheme
-                      //           .labelSmall!
-                      //           .merge(const TextStyle(
-                      //               fontSize: 13,
-                      //               fontWeight: FontWeight.w400,
-                      //               letterSpacing: 0.2,
-                      //               color: Color.fromRGBO(124, 124, 124, 1))),
-                      //     ),
-                      //   ],
-                      // ),
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: Get.width * 0.4,
+                height: Get.width * 0.4,
+                child: Transform.translate(
+                  offset: const Offset(-5, 0),
+                  child: SfCircularChart(
+                    series: <CircularSeries>[
+                      PieSeries<PieDataModel, String>(
+                          dataLabelSettings: DataLabelSettings(isVisible: true),
+                          dataSource: pie,
+                          pointColorMapper: ((datum, index) => datum.color),
+                          xValueMapper: ((datum, index) => datum.name),
+                          yValueMapper: ((datum, index) => datum.marks)),
+                      PieSeries<PieDataModel, String>(
+                          dataSource: pie,
+                          dataLabelSettings: DataLabelSettings(isVisible: true),
+                          pointColorMapper: ((datum, index) => datum.color),
+                          xValueMapper: ((datum, index) => datum.name),
+                          yValueMapper: ((datum, index) => datum.marks)),
                     ],
                   ),
                 ),
-                Expanded(
-                  child: Wrap(
-                    runSpacing: 12.0,
-                    spacing: 10.0,
+              ),
+
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 12.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Maximum Marks",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall!
-                                .merge(const TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 0.2,
-                                    color: Color.fromRGBO(124, 124, 124, 1))),
-                          ),
-                          const SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            "${widget.datamodel.estmpsMaxMarks!.toInt()}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .merge(const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black)),
-                          ),
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Maximum Marks",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall!
+                                      .merge(const TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                          letterSpacing: 0.2,
+                                          color: Color.fromRGBO(
+                                              124, 124, 124, 1))),
+                                ),
+                                const SizedBox(
+                                  height: 6.0,
+                                ),
+                                Text(
+                                  "${widget.datamodel.estmpsMaxMarks!.toInt()}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .merge(const TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black)),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 12.0,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Class Highest",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall!
+                                      .merge(const TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                          letterSpacing: 0.2,
+                                          color: Color.fromRGBO(
+                                              124, 124, 124, 1))),
+                                ),
+                                const SizedBox(
+                                  height: 6.0,
+                                ),
+                                Text(
+                                  "${widget.datamodel.estmpsClassHighest!.toInt()}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .merge(const TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black)),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 12.0,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Section Highest",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall!
+                                      .merge(const TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                          letterSpacing: 0.2,
+                                          color: Color.fromRGBO(
+                                              124, 124, 124, 1))),
+                                ),
+                                const SizedBox(
+                                  height: 6.0,
+                                ),
+                                Text(
+                                  "${widget.datamodel.estmpsSectionHighest!.toInt()}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .merge(const TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black)),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Minimum Marks",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall!
-                                .merge(const TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 0.2,
-                                    color: Color.fromRGBO(124, 124, 124, 1))),
-                          ),
-                          const SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            "${widget.datamodel.eycesMinMarks!.toInt()}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .merge(const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black)),
-                          ),
-                        ],
+                      const SizedBox(
+                        width: 12.0,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Class Highest",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall!
-                                .merge(const TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 0.2,
-                                    color: Color.fromRGBO(124, 124, 124, 1))),
-                          ),
-                          const SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            "${widget.datamodel.estmpsClassHighest!.toInt()}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .merge(const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black)),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Section Highest",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall!
-                                .merge(const TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 0.2,
-                                    color: Color.fromRGBO(124, 124, 124, 1))),
-                          ),
-                          const SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            "${widget.datamodel.estmpsSectionHighest!.toInt()}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .merge(const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black)),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Section Avg",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall!
-                                .merge(const TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 0.2,
-                                    color: Color.fromRGBO(124, 124, 124, 1))),
-                          ),
-                          const SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            "${widget.datamodel.estmpsSectionAverage!.toInt()}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .merge(const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black)),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Class avg",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall!
-                                .merge(const TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 0.2,
-                                    color: Color.fromRGBO(124, 124, 124, 1))),
-                          ),
-                          const SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            "${widget.datamodel.estmpsClassAverage!.toInt()}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .merge(const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black)),
-                          ),
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Minimum Marks",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall!
+                                      .merge(const TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                          letterSpacing: 0.2,
+                                          color: Color.fromRGBO(
+                                              124, 124, 124, 1))),
+                                ),
+                                const SizedBox(
+                                  height: 6.0,
+                                ),
+                                Text(
+                                  "${widget.datamodel.eycesMinMarks!.toInt()}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .merge(const TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black)),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 12.0,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Class avg",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall!
+                                      .merge(const TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                          letterSpacing: 0.2,
+                                          color: Color.fromRGBO(
+                                              124, 124, 124, 1))),
+                                ),
+                                const SizedBox(
+                                  height: 6.0,
+                                ),
+                                Text(
+                                  "${widget.datamodel.estmpsClassAverage!.toInt()}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .merge(const TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black)),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 12.0,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Section Avg",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall!
+                                      .merge(const TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                          letterSpacing: 0.2,
+                                          color: Color.fromRGBO(
+                                              124, 124, 124, 1))),
+                                ),
+                                const SizedBox(
+                                  height: 6.0,
+                                ),
+                                Text(
+                                  "${widget.datamodel.estmpsSectionAverage!.toInt()}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .merge(const TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black)),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+              // Expanded(
+              //   child: Wrap(
+              //     runSpacing: 12.0,
+              //     spacing: 12.0,
+              //     alignment: WrapAlignment.center,
+              //     children: [
+              //       Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Text(
+              //             "Maximum Marks",
+              //             style: Theme.of(context).textTheme.labelSmall!.merge(
+              //                 const TextStyle(
+              //                     fontSize: 13,
+              //                     fontWeight: FontWeight.w400,
+              //                     letterSpacing: 0.2,
+              //                     color: Color.fromRGBO(124, 124, 124, 1))),
+              //           ),
+              //           const SizedBox(
+              //             height: 6.0,
+              //           ),
+              //           Text(
+              //             "${widget.datamodel.estmpsMaxMarks!.toInt()}",
+              //             style: Theme.of(context).textTheme.labelMedium!.merge(
+              //                 const TextStyle(
+              //                     fontWeight: FontWeight.w700,
+              //                     color: Colors.black)),
+              //           ),
+              //         ],
+              //       ),
+              //       Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Text(
+              //             "Minimum",
+              //             style: Theme.of(context).textTheme.labelSmall!.merge(
+              //                 const TextStyle(
+              //                     fontSize: 13,
+              //                     fontWeight: FontWeight.w400,
+              //                     letterSpacing: 0.2,
+              //                     color: Color.fromRGBO(124, 124, 124, 1))),
+              //           ),
+              //           const SizedBox(
+              //             height: 6.0,
+              //           ),
+              //           Text(
+              //             "${widget.datamodel.eycesMinMarks!.toInt()}",
+              //             style: Theme.of(context).textTheme.labelMedium!.merge(
+              //                 const TextStyle(
+              //                     fontWeight: FontWeight.w700,
+              //                     color: Colors.black)),
+              //           ),
+              //         ],
+              //       ),
+              //       Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Text(
+              //             "Class Highest",
+              //             style: Theme.of(context).textTheme.labelSmall!.merge(
+              //                 const TextStyle(
+              //                     fontSize: 13,
+              //                     fontWeight: FontWeight.w400,
+              //                     letterSpacing: 0.2,
+              //                     color: Color.fromRGBO(124, 124, 124, 1))),
+              //           ),
+              //           const SizedBox(
+              //             height: 6.0,
+              //           ),
+              //           Text(
+              //             "${widget.datamodel.estmpsClassHighest!.toInt()}",
+              //             style: Theme.of(context).textTheme.labelMedium!.merge(
+              //                 const TextStyle(
+              //                     fontWeight: FontWeight.w700,
+              //                     color: Colors.black)),
+              //           ),
+              //         ],
+              //       ),
+              //       Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Text(
+              //             "Class avg",
+              //             style: Theme.of(context).textTheme.labelSmall!.merge(
+              //                 const TextStyle(
+              //                     fontSize: 13,
+              //                     fontWeight: FontWeight.w400,
+              //                     letterSpacing: 0.2,
+              //                     color: Color.fromRGBO(124, 124, 124, 1))),
+              //           ),
+              //           const SizedBox(
+              //             height: 6.0,
+              //           ),
+              //           Text(
+              //             "${widget.datamodel.estmpsClassAverage!.toInt()}",
+              //             style: Theme.of(context).textTheme.labelMedium!.merge(
+              //                 const TextStyle(
+              //                     fontWeight: FontWeight.w700,
+              //                     color: Colors.black)),
+              //           ),
+              //         ],
+              //       ),
+              //       Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Text(
+              //             "Section Highest",
+              //             style: Theme.of(context).textTheme.labelSmall!.merge(
+              //                 const TextStyle(
+              //                     fontSize: 13,
+              //                     fontWeight: FontWeight.w400,
+              //                     letterSpacing: 0.2,
+              //                     color: Color.fromRGBO(124, 124, 124, 1))),
+              //           ),
+              //           const SizedBox(
+              //             height: 6.0,
+              //           ),
+              //           Text(
+              //             "${widget.datamodel.estmpsSectionHighest!.toInt()}",
+              //             style: Theme.of(context).textTheme.labelMedium!.merge(
+              //                 const TextStyle(
+              //                     fontWeight: FontWeight.w700,
+              //                     color: Colors.black)),
+              //           ),
+              //         ],
+              //       ),
+              //       Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Text(
+              //             "Section Avg",
+              //             style: Theme.of(context).textTheme.labelSmall!.merge(
+              //                 const TextStyle(
+              //                     fontSize: 13,
+              //                     fontWeight: FontWeight.w400,
+              //                     letterSpacing: 0.2,
+              //                     color: Color.fromRGBO(124, 124, 124, 1))),
+              //           ),
+              //           const SizedBox(
+              //             height: 6.0,
+              //           ),
+              //           Text(
+              //             "${widget.datamodel.estmpsSectionAverage!.toInt()}",
+              //             style: Theme.of(context).textTheme.labelMedium!.merge(
+              //                 const TextStyle(
+              //                     fontWeight: FontWeight.w700,
+              //                     color: Colors.black)),
+              //           ),
+              //         ],
+              //       ),
+              //       // Column(
+              //       //   crossAxisAlignment: CrossAxisAlignment.start,
+              //       //   children: [
+              //       //     Text(
+              //       //       "Class avg",
+              //       //       style: Theme.of(context)
+              //       //           .textTheme
+              //       //           .labelSmall!
+              //       //           .merge(const TextStyle(
+              //       //               fontSize: 13,
+              //       //               fontWeight: FontWeight.w400,
+              //       //               letterSpacing: 0.2,
+              //       //               color: Color.fromRGBO(124, 124, 124, 1))),
+              //       //     ),
+              //       //     const SizedBox(
+              //       //       height: 6.0,
+              //       //     ),
+              //       //     Text(
+              //       //       "${widget.datamodel.estmpsClassAverage!.toInt()}",
+              //       //       style: Theme.of(context)
+              //       //           .textTheme
+              //       //           .labelMedium!
+              //       //           .merge(const TextStyle(
+              //       //               fontWeight: FontWeight.w700,
+              //       //               color: Colors.black)),
+              //       //     ),
+              //       //   ],
+              //       // ),
+              //     ],
+              //   ),
+              // ),
+            ],
+          ),
+          const SizedBox(
+            height: 12.0,
+          ),
+        ],
       ),
     );
   }

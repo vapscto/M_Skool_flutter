@@ -16,6 +16,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class AttendanceHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -74,6 +75,7 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
         leadingWidth: 30,
         title: Text("Attendance".tr),
       ),
+      floatingActionButton: const HomeFab(),
       body: Obx(
         () {
           return handler.errorHappend.value
@@ -113,7 +115,7 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                   // border: OutlineInputBorder(
                                   //   borderRadius: BorderRadius.circular(12.0),
                                   // ),
-                                  contentPadding: const EdgeInsets.all(16.0),
+                                  contentPadding: const EdgeInsets.all(20.0),
                                   focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Colors.transparent,
@@ -125,13 +127,33 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                     ),
                                   ),
 
-                                  label: Text(
-                                    "Academic Year".tr,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge!
-                                        .merge(TextStyle(
-                                            color: Colors.grey.shade600)),
+                                  label: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16.0, vertical: 6.0),
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(24.0),
+                                        color: const Color(0xFFDFFBFE)),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/cap.png",
+                                          height: 28.0,
+                                        ),
+                                        const SizedBox(
+                                          width: 6.0,
+                                        ),
+                                        Text(
+                                          "Academic Year".tr,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge!
+                                              .merge(const TextStyle(
+                                                  color: Color(0xFF28B6C8))),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 icon: const Icon(
@@ -560,6 +582,9 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                                                               .all(
                                                                           8.0),
                                                                   child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
                                                                     children: [
                                                                       Row(
                                                                         children: const [
@@ -578,7 +603,7 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                                                       ),
                                                                       const SizedBox(
                                                                         width:
-                                                                            16.0,
+                                                                            24.0,
                                                                       ),
                                                                       Row(
                                                                         children: const [
@@ -631,8 +656,7 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                                       MaterialStateColor
                                                           .resolveWith((states) =>
                                                               Theme.of(context)
-                                                                  .colorScheme
-                                                                  .secondary),
+                                                                  .primaryColor),
                                                   border: const TableBorder(
                                                     horizontalInside:
                                                         BorderSide.none,
@@ -658,6 +682,8 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                                                           16.0,
                                                                       letterSpacing:
                                                                           0.3,
+                                                                      color: Colors
+                                                                          .white,
                                                                     ),
                                                                   ),
                                                         ),
@@ -685,6 +711,8 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                                                         16.0,
                                                                     letterSpacing:
                                                                         0.3,
+                                                                    color: Colors
+                                                                        .white,
                                                                   ),
                                                                 ),
                                                           ),
@@ -713,6 +741,8 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                                                         16.0,
                                                                     letterSpacing:
                                                                         0.3,
+                                                                    color: Colors
+                                                                        .white,
                                                                   ),
                                                                 ),
                                                           ),

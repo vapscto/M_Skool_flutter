@@ -16,6 +16,15 @@ class PaymentSuccessfullApi {
     final String apiUrl = base + URLS.razorPayResponse;
 
     try {
+      final Response response2 = await dio.post(
+        "https://jnujaipur.vapssmartecampus.com:61005/api/FeeOnlinePaymentFacade/razorresponse",
+        options: Options(headers: getSession()),
+        data: {
+          "IVRMOP_MIID": miId,
+          "razorpay_payment_id": paymentId,
+        },
+      );
+
       final Response response = await dio
           .post(apiUrl, options: Options(headers: getSession()), data: {
         "IVRMOP_MIID": miId,
