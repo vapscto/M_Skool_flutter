@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/interaction/screen/all_tab.dart';
-import 'package:m_skool_flutter/interaction/screen/compose_tab.dart';
+// import 'package:m_skool_flutter/interaction/screen/all_tab.dart';
+import 'package:m_skool_flutter/interaction/screen/composetab.dart';
 import 'package:m_skool_flutter/interaction/screen/inbox_tab.dart';
 import 'package:m_skool_flutter/interaction/screen/unread_tab.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
@@ -31,7 +31,7 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
   void initState() {
     _tabController = TabController(
         initialIndex: 0,
-        length: 4,
+        length: 3,
         vsync: this,
         animationDuration: const Duration(milliseconds: 300));
     super.initState();
@@ -40,7 +40,7 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
   List<CustomTab> tabs = const [
     CustomTab(name: "Compose", asset: "edit.svg"),
     CustomTab(name: "Inbox", asset: "inbox.svg"),
-    CustomTab(name: "All", asset: "layersall.svg"),
+    // CustomTab(name: "All", asset: "layersall.svg"),
     CustomTab(name: "Unread", asset: "unread.svg"),
   ];
 
@@ -64,7 +64,7 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
           child: TabBarView(controller: _tabController, children: const [
             ComposeTabScreen(),
             InboxTabScreen(),
-            AllTabScreen(),
+            // AllTabScreen(),
             UnReadTabScreen()
           ]),
         )

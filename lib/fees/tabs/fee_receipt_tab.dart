@@ -157,7 +157,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                     'assets/images/hat.png',
                                   ),
                                 ),
-                                const SizedBox(width: 6),
+                                const SizedBox(width: 10),
                                 Text(
                                   'Academic Year',
                                   style: Theme.of(context)
@@ -165,7 +165,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                       .titleSmall!
                                       .merge(
                                         const TextStyle(
-                                            fontWeight: FontWeight.w500,
+                                            fontWeight: FontWeight.w600,
                                             fontSize: 20.0,
                                             color: Color.fromRGBO(
                                                 40, 182, 200, 1)),
@@ -175,9 +175,12 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                             ),
                           ),
                         ),
-                        icon: const Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          size: 30,
+                        icon: const Padding(
+                          padding: EdgeInsets.only(top: 3),
+                          child: Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            size: 30,
+                          ),
                         ),
                         iconSize: 30,
                         items: List.generate(
@@ -185,17 +188,20 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                           return DropdownMenuItem(
                             value: feeController.feeReceiptYearList
                                 .elementAt(index),
-                            child: Text(
-                              feeController.feeReceiptYearList
-                                  .elementAt(index)
-                                  .asmaYYear!,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall!
-                                  .merge(const TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.3)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 13, left: 5),
+                              child: Text(
+                                feeController.feeReceiptYearList
+                                    .elementAt(index)
+                                    .asmaYYear!,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .merge(const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 16.0,
+                                        letterSpacing: 0.3)),
+                              ),
                             ),
                           );
                         }),
@@ -259,7 +265,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                       decoration: const BoxDecoration(
                                         color: Color.fromRGBO(255, 235, 234, 1),
                                         borderRadius: BorderRadius.all(
-                                          Radius.circular(12),
+                                          Radius.circular(24),
                                         ),
                                       ),
                                       child: Row(
@@ -270,7 +276,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                             child: Image.asset(
                                                 'assets/images/receipt.png'),
                                           ),
-                                          const SizedBox(width: 6),
+                                          const SizedBox(width: 10),
                                           Text(
                                             'Receipt No.',
                                             style: Theme.of(context)
@@ -279,7 +285,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                                 .merge(
                                                   const TextStyle(
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                          FontWeight.w600,
                                                       fontSize: 20.0,
                                                       color: Color.fromRGBO(
                                                           255, 111, 103, 1)),
@@ -289,9 +295,12 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                       ),
                                     ),
                                   ),
-                                  icon: const Icon(
-                                    Icons.keyboard_arrow_down_rounded,
-                                    size: 30,
+                                  icon: const Padding(
+                                    padding: EdgeInsets.only(top: 3.0),
+                                    child: Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      size: 30,
+                                    ),
                                   ),
                                   iconSize: 30,
                                   items: List.generate(
@@ -300,17 +309,21 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                     return DropdownMenuItem(
                                       value: feeController.feeReceiptNoList
                                           .elementAt(index),
-                                      child: Text(
-                                        feeController.feeReceiptNoList
-                                            .elementAt(index)
-                                            .fyPReceiptNo!,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall!
-                                            .merge(const TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 16.0,
-                                                letterSpacing: 0.3)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 13, left: 5),
+                                        child: Text(
+                                          feeController.feeReceiptNoList
+                                              .elementAt(index)
+                                              .fyPReceiptNo!,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall!
+                                              .merge(const TextStyle(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 16.0,
+                                                  letterSpacing: 0.3)),
+                                        ),
                                       ),
                                     );
                                   }),

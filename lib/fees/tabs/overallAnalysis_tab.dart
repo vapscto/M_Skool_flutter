@@ -49,14 +49,14 @@ class _OverallAnalysisTabState extends State<OverallAnalysisTab> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "${feeController.overAllAnalysisData.first.asmayYear}",
+                                "Academic Year",
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleSmall!
                                     .merge(
                                       const TextStyle(
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 14.0,
+                                        fontSize: 16.0,
                                         letterSpacing: 0.2,
                                       ),
                                     ),
@@ -80,7 +80,7 @@ class _OverallAnalysisTabState extends State<OverallAnalysisTab> {
                                         .merge(
                                           const TextStyle(
                                               fontWeight: FontWeight.w700,
-                                              fontSize: 14.0,
+                                              fontSize: 16.0,
                                               color: Colors.black),
                                         ),
                                   ),

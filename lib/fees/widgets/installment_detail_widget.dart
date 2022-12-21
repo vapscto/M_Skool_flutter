@@ -61,7 +61,7 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
                     style: Theme.of(context).textTheme.titleSmall!.merge(
                           const TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 12.0,
+                            fontSize: 16.0,
                             letterSpacing: 0.2,
                           ),
                         ),
@@ -86,7 +86,7 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
                         style: Theme.of(context).textTheme.titleSmall!.merge(
                               const TextStyle(
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 14.0,
+                                  fontSize: 16.0,
                                   color: Color.fromRGBO(26, 26, 26, 1)),
                             ),
                       ),
@@ -116,20 +116,24 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
                                 Theme.of(context).textTheme.titleSmall!.merge(
                                       const TextStyle(
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 14.0,
+                                        fontSize: 16.0,
                                       ),
                                     ),
                           ),
                           const SizedBox(height: 25),
-                          Text(
-                            '  Total\nCharges',
-                            style:
-                                Theme.of(context).textTheme.titleSmall!.merge(
-                                      const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12.0,
-                                          color: Color.fromRGBO(0, 0, 0, 0.5)),
-                                    ),
+                          FittedBox(
+                            child: Text(
+                              '  Total\nCharges',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .merge(
+                                    const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 16.0,
+                                        color: Color.fromRGBO(0, 0, 0, 0.5)),
+                                  ),
+                            ),
                           ),
                         ],
                       ),
@@ -148,20 +152,24 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
                                 Theme.of(context).textTheme.titleSmall!.merge(
                                       const TextStyle(
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 14.0,
+                                        fontSize: 16.0,
                                       ),
                                     ),
                           ),
-                          const SizedBox(height: 20),
-                          Text(
-                            " \nTotal Paid",
-                            style:
-                                Theme.of(context).textTheme.titleSmall!.merge(
-                                      const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12.0,
-                                          color: Color.fromRGBO(0, 0, 0, 0.5)),
-                                    ),
+                          const SizedBox(height: 12),
+                          FittedBox(
+                            child: Text(
+                              " \nTotal Paid",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .merge(
+                                    const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 16.0,
+                                        color: Color.fromRGBO(0, 0, 0, 0.5)),
+                                  ),
+                            ),
                           ),
                         ],
                       ),
@@ -180,20 +188,24 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
                                 Theme.of(context).textTheme.titleSmall!.merge(
                                       const TextStyle(
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 14.0,
+                                        fontSize: 16.0,
                                       ),
                                     ),
                           ),
                           const SizedBox(height: 20),
-                          Text(
-                            '      Total\nConcession',
-                            style:
-                                Theme.of(context).textTheme.titleSmall!.merge(
-                                      const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12.0,
-                                          color: Color.fromRGBO(0, 0, 0, 0.5)),
-                                    ),
+                          FittedBox(
+                            child: Text(
+                              '     Total\nConcession',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .merge(
+                                    const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 16.0,
+                                        color: Color.fromRGBO(0, 0, 0, 0.5)),
+                                  ),
+                            ),
                           ),
                         ],
                       ),
@@ -212,20 +224,24 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
                                 Theme.of(context).textTheme.titleSmall!.merge(
                                       const TextStyle(
                                         fontWeight: FontWeight.w700,
-                                        fontSize: 14.0,
+                                        fontSize: 16.0,
                                       ),
                                     ),
                           ),
                           const SizedBox(height: 20),
-                          Text(
-                            '   Now\nPayable',
-                            style:
-                                Theme.of(context).textTheme.titleSmall!.merge(
-                                      const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12.0,
-                                          color: Color.fromRGBO(0, 0, 0, 0.5)),
-                                    ),
+                          FittedBox(
+                            child: Text(
+                              '   Now\nPayable',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .merge(
+                                    const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 16.0,
+                                        color: Color.fromRGBO(0, 0, 0, 0.5)),
+                                  ),
+                            ),
                           ),
                         ],
                       ),

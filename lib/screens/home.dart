@@ -15,6 +15,7 @@ import 'package:m_skool_flutter/feedback/screens/feedback_home.dart';
 import 'package:m_skool_flutter/fees/screens/fee_analysis_screen.dart';
 import 'package:m_skool_flutter/fees/screens/fee_receipt_home.dart';
 import 'package:m_skool_flutter/fees/screens/online_payment_screen.dart';
+import 'package:m_skool_flutter/fees/tabs/pay_online_tab.dart';
 import 'package:m_skool_flutter/homework/screen/home_work_screen.dart';
 import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/information/screen/info_home.dart';
@@ -95,8 +96,9 @@ class _HomeState extends State<Home> {
           mskoolController: widget.mskoolController,
           hwCwNbController: hwCwNbController,
         ),
-        "icon": SvgPicture.asset(
-          'assets/svg/home.svg',
+        "icon": Image.asset(
+          'assets/images/floatingicon.png',
+          height: 30,
           color:
               (pageNumber.value == 0) ? const Color(0xFF9900F0) : Colors.grey,
         ),
@@ -112,23 +114,34 @@ class _HomeState extends State<Home> {
           mskoolController: widget.mskoolController,
           showAppBar: false,
         ),
-        "icon": const Icon(
-          Icons.message_outlined,
+        "icon": Image.asset(
+          'assets/images/tabinteraction.png',
+          height: 30,
+          color:
+              (pageNumber.value == 1) ? const Color(0xFFFF008C) : Colors.grey,
         ),
       });
       homeViewPage.add({
-        "title": const Text("COE"),
+        "title": const Text("Pay Online"),
         "color": const Color(0xFFFFA901),
         "navTitle": const Text(
-          "COE",
+          "Pay Online",
         ),
-        "page": CoeHome(
-          loginSuccessModel: widget.loginSuccessModel,
-          mskoolController: widget.mskoolController,
-          pageController: pageController,
-          showAppBar: false,
+        "page": PayOnlineTab(
+            loginSuccessModel: widget.loginSuccessModel,
+            mskoolController: widget.mskoolController),
+        //  CoeHome(
+        //   loginSuccessModel: widget.loginSuccessModel,
+        //   mskoolController: widget.mskoolController,
+        //   pageController: pageController,
+        //   showAppBar: false,
+        // ),
+        "icon": Image.asset(
+          'assets/images/payonlinetabicon.png',
+          height: 30,
+          color:
+              (pageNumber.value == 2) ? const Color(0xFFFFA901) : Colors.grey,
         ),
-        "icon": const Icon(Icons.calendar_today_outlined),
       });
       homeViewPage.add({
         "title": const Text("Profile"),
@@ -141,8 +154,9 @@ class _HomeState extends State<Home> {
           mskoolController: widget.mskoolController,
           pageController: pageController,
         ),
-        "icon": SvgPicture.asset(
-          'assets/svg/profile.svg',
+        "icon": Image.asset(
+          'assets/images/tabprofile.png',
+          height: 30,
           color:
               (pageNumber.value == 3) ? const Color(0xFF3D9292) : Colors.grey,
         ),

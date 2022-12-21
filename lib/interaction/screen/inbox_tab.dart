@@ -2,9 +2,21 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/interaction/widget/chat_profile_tile.dart';
+import 'package:m_skool_flutter/main.dart';
 
-class InboxTabScreen extends StatelessWidget {
+class InboxTabScreen extends StatefulWidget {
   const InboxTabScreen({super.key});
+
+  @override
+  State<InboxTabScreen> createState() => _InboxTabScreenState();
+}
+
+class _InboxTabScreenState extends State<InboxTabScreen> {
+  @override
+  void initState() {
+    logger.d('inbox');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

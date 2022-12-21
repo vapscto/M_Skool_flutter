@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/interaction/widget/attach_file_field.dart';
 import 'package:m_skool_flutter/interaction/widget/custom_dropdown.dart';
 import 'package:m_skool_flutter/interaction/widget/custom_radio_button.dart';
 import 'package:m_skool_flutter/interaction/widget/custom_text_file.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class ComposeTabScreen extends StatefulWidget {
@@ -28,6 +29,12 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
     RadioBox(name: "Academic Supervisor", value: "supervisor"),
     RadioBox(name: "Exam Coordinator", value: "coordinator"),
   ];
+  @override
+  void initState() {
+    logger.d('compose');
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

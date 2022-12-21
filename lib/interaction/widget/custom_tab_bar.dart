@@ -70,7 +70,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
                           left: index == (i - 1),
                           right: index == (i + 1)),
                       child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 400),
+                        duration: const Duration(milliseconds: 1),
                         decoration: BoxDecoration(
                             color:
                                 index == i ? Colors.white : Colors.transparent,
