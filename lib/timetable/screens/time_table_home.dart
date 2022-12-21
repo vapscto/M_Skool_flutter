@@ -161,7 +161,7 @@ class _TimeTableHomeState extends State<TimeTableHome> {
             ),
             Obx(() {
               return SizedBox(
-                height: showWeekly.value ? 24.0 : 8.0,
+                height: showWeekly.value ? 0.0 : 8.0,
               );
             }),
             Obx(() {

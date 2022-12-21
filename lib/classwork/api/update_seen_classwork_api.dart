@@ -34,8 +34,8 @@ class UpdateClassworkSeenApi {
         "ASMCL_Id": asmclId,
         "ASMS_Id": asmsId,
       });
-
-      logger.d(response.data['classworklist_byid']['\$values']);
+      logger.d(response.data);
+      //logger.d(response.data['classworklist_byid']['\$values']);
     } catch (e) {
       logger.e(e.toString());
       Fluttertoast.showToast(msg: "Error Occurred while updating seen flag");

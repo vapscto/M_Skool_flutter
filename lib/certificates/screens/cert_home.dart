@@ -100,7 +100,7 @@ class _CertificateHomeScreenState extends State<CertificateHomeScreen>
                           tabStateController.selectedIndex.value == 0
                               ? Image.asset(
                                   "assets/images/cert.png",
-                                  color: Colors.black,
+                                  color: Theme.of(context).primaryColor,
                                   height: 24.0,
                                 )
                               : const SizedBox(),
@@ -134,7 +134,7 @@ class _CertificateHomeScreenState extends State<CertificateHomeScreen>
                         children: [
                           tabStateController.selectedIndex.value == 1
                               ? Image.asset(
-                                  "assets/images/eye.png",
+                                  "assets/images/blueeye.png",
                                   //color: Colors.black,
                                   height: 24.0,
                                 )

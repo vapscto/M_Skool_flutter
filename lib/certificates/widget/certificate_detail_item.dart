@@ -49,7 +49,7 @@ class CertificateDetailItem extends StatelessWidget {
                       values.acertapPCertificateName!,
                       style: Theme.of(context).textTheme.titleSmall!.merge(
                           const TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 18.0)),
+                              fontWeight: FontWeight.w600, fontSize: 18.0)),
                     ),
                     Container(
                       padding: const EdgeInsets.all(8.0),
