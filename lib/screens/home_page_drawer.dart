@@ -63,7 +63,7 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                           shape: BoxShape.circle,
                         ),
                         child: CircleAvatar(
-                          radius: 18,
+                          // radius: 18,
                           backgroundImage: AssetImage(
                             getDashBoardIconByName(
                                 "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"),
@@ -206,7 +206,7 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                         shape: BoxShape.circle,
                       ),
                       child: const CircleAvatar(
-                        radius: 18,
+                        // radius: 18,
                         backgroundImage: AssetImage(
                           "assets/images/ChangePassword.png",
                         ),
@@ -228,7 +228,7 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                         shape: BoxShape.circle,
                       ),
                       child: const CircleAvatar(
-                        radius: 18,
+                        // radius: 18,
                         backgroundImage: AssetImage(
                           "assets/images/ForgotPassword.png",
                         ),
