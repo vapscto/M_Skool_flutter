@@ -12,7 +12,11 @@ class HomeFab extends StatelessWidget {
       onPressed: () {
         Navigator.pop(context);
       },
-      child: const Icon(Icons.home),
+      child: Image.asset(
+        'assets/images/floatingicon.png',
+        height: 30,
+        color: Colors.white,
+      ),
     );
   }
 }

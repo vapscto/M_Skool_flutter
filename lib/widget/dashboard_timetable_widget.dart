@@ -79,7 +79,7 @@ class _DashboardTimetableState extends State<DashboardTimetable> {
                                           .values![index]
                                           .iSMSSubjectName!
                                           .toLowerCase())
-                                      .withOpacity(0.8),
+                                      .withOpacity(0.1),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.only(
@@ -104,7 +104,7 @@ class _DashboardTimetableState extends State<DashboardTimetable> {
                               ),
                             ),
                             Container(
-                              // width: 80,
+                              width: 80,
                               height: 10,
                               color: getDashBoardIconByName(widget
                                   .timeTableList.values![index].iSMSSubjectName!

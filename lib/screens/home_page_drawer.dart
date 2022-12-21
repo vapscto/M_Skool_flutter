@@ -53,200 +53,193 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                   ...List.generate(
                       widget.loginSuccessModel.staffmobileappprivileges!.values!
                           .length, (index) {
-                    return Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-                      child: ListTile(
-                        title: Text(
-                            "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"),
-                        leading: Container(
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: CircleAvatar(
-                            radius: 18,
-                            backgroundImage: AssetImage(
-                              getDashBoardIconByName(
-                                  "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"),
-                            ),
-                            backgroundColor: Colors.white,
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                          switch (widget
-                              .loginSuccessModel
-                              .staffmobileappprivileges!
-                              .values![index]
-                              .pagename) {
-                            case "Student Attendance":
-                              Get.to(() => AttendanceHomeScreen(
-                                  loginSuccessModel: widget.loginSuccessModel,
-                                  mskoolController: widget.mskoolController));
-                              break;
-                            case "Fee Details":
-                              // Get.to(() => FeeHomeScreen(
-                              //     loginSuccessModel:
-                              //         widget.loginSuccessModel,
-                              //     mskoolController:
-                              //         widget.mskoolController));
-                              break;
-                            case "Online Fee Payment":
-                              Get.to(
-                                () => OnlinePaymentScreen(
-                                  loginSuccessModel: widget.loginSuccessModel,
-                                  mskoolController: widget.mskoolController,
-                                  title:
-                                      "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
-                                ),
-                              );
-                              break;
-                            case "Fee Analysis":
-                              Get.to(() => FeeAnalysisScreen(
-                                    loginSuccessModel: widget.loginSuccessModel,
-                                    mskoolController: widget.mskoolController,
-                                    title:
-                                        "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
-                                  ));
-                              break;
-                            case "Classwork":
-                              Get.to(() => ClassWorkHomeScreen(
-                                  loginSuccessModel: widget.loginSuccessModel,
-                                  mskoolController: widget.mskoolController,
-                                  //hwCwNbController: widget.hwCwNbController,
-                                  title:
-                                      "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"));
-                              break;
-                            case "Homework":
-                              Get.to(
-                                () => HomeWorkScreen(
-                                  loginSuccessModel: widget.loginSuccessModel,
-                                  mskoolController: widget.mskoolController,
-                                  //hwCwNbController: widget.hwCwNbController,
-                                  title:
-                                      "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
-                                ),
-                              );
-                              break;
-                            case "COE":
-                              Get.to(() => CoeHome(
-                                    loginSuccessModel: widget.loginSuccessModel,
-                                    mskoolController: widget.mskoolController,
-                                  ));
-                              break;
-                            case "Student Notice Board":
-                              Get.to(
-                                () => NoticeHome(
-                                  loginSuccessModel: widget.loginSuccessModel,
-                                  mskoolController: widget.mskoolController,
-                                  hwCwNbController: widget.hwCwNbController,
-                                  appBarTitle:
-                                      "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
-                                ),
-                              );
-                              break;
-                            case "Library":
-                              String base = baseUrlFromInsCode(
-                                  "portal", widget.mskoolController);
-                              Get.to(
-                                () => LibraryHome(
-                                  miId: widget.loginSuccessModel.mIID!,
-                                  asmayId: widget.loginSuccessModel.asmaYId!,
-                                  asmtId: widget.loginSuccessModel.amsTId!,
-                                  base: base,
-                                  title:
-                                      "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
-                                ),
-                              );
-                              break;
-                            case "Syllabus":
-                              break;
-                            case "Exam":
-                              Get.to(() => ExamHome(
-                                    loginSuccessModel: widget.loginSuccessModel,
-                                    mskoolController: widget.mskoolController,
-                                  ));
-                              break;
-                            case "Interaction":
-                              Get.to(() => InteractionHomeScreen(
-                                    loginSuccessModel: widget.loginSuccessModel,
-                                    mskoolController: widget.mskoolController,
-                                  ));
-                              break;
-                            case "Apply Certificate":
-                              Get.to(() => CertificateHomeScreen(
-                                    loginSuccessModel: widget.loginSuccessModel,
-                                    mskoolController: widget.mskoolController,
-                                  ));
-                              break;
-                            case "Time Table":
-                              Get.to(() => TimeTableHome(
-                                    loginSuccessModel: widget.loginSuccessModel,
-                                    mskoolController: widget.mskoolController,
-                                  ));
-                              break;
-                            case "Fee Receipt":
-                              Get.to(
-                                () => FeeReceiptHome(
-                                  loginSuccessModel: widget.loginSuccessModel,
-                                  mskoolController: widget.mskoolController,
-                                  title:
-                                      "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
-                                ),
-                              );
-                              break;
-                            default:
-                          }
-                        },
+                    return ListTile(
+                      title: Text(
+                        "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
+                        // style: const TextStyle(fontWeight: FontWeight.w500),
                       ),
+                      leading: Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: CircleAvatar(
+                          // radius: 18,
+                          backgroundImage: AssetImage(
+                            getDashBoardIconByName(
+                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"),
+                          ),
+                          backgroundColor: Colors.white,
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        switch (widget
+                            .loginSuccessModel
+                            .staffmobileappprivileges!
+                            .values![index]
+                            .pagename) {
+                          case "Student Attendance":
+                            Get.to(() => AttendanceHomeScreen(
+                                loginSuccessModel: widget.loginSuccessModel,
+                                mskoolController: widget.mskoolController));
+                            break;
+                          case "Fee Details":
+                            // Get.to(() => FeeHomeScreen(
+                            //     loginSuccessModel:
+                            //         widget.loginSuccessModel,
+                            //     mskoolController:
+                            //         widget.mskoolController));
+                            break;
+                          case "Online Fee Payment":
+                            Get.to(
+                              () => OnlinePaymentScreen(
+                                loginSuccessModel: widget.loginSuccessModel,
+                                mskoolController: widget.mskoolController,
+                                title:
+                                    "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
+                              ),
+                            );
+                            break;
+                          case "Fee Analysis":
+                            Get.to(() => FeeAnalysisScreen(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                  title:
+                                      "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
+                                ));
+                            break;
+                          case "Classwork":
+                            Get.to(() => ClassWorkHomeScreen(
+                                loginSuccessModel: widget.loginSuccessModel,
+                                mskoolController: widget.mskoolController,
+                                //hwCwNbController: widget.hwCwNbController,
+                                title:
+                                    "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"));
+                            break;
+                          case "Homework":
+                            Get.to(
+                              () => HomeWorkScreen(
+                                loginSuccessModel: widget.loginSuccessModel,
+                                mskoolController: widget.mskoolController,
+                                //hwCwNbController: widget.hwCwNbController,
+                                title:
+                                    "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
+                              ),
+                            );
+                            break;
+                          case "COE":
+                            Get.to(() => CoeHome(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                ));
+                            break;
+                          case "Student Notice Board":
+                            Get.to(
+                              () => NoticeHome(
+                                loginSuccessModel: widget.loginSuccessModel,
+                                mskoolController: widget.mskoolController,
+                                hwCwNbController: widget.hwCwNbController,
+                                appBarTitle:
+                                    "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
+                              ),
+                            );
+                            break;
+                          case "Library":
+                            String base = baseUrlFromInsCode(
+                                "portal", widget.mskoolController);
+                            Get.to(
+                              () => LibraryHome(
+                                miId: widget.loginSuccessModel.mIID!,
+                                asmayId: widget.loginSuccessModel.asmaYId!,
+                                asmtId: widget.loginSuccessModel.amsTId!,
+                                base: base,
+                                title:
+                                    "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
+                              ),
+                            );
+                            break;
+                          case "Syllabus":
+                            break;
+                          case "Exam":
+                            Get.to(() => ExamHome(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                ));
+                            break;
+                          case "Interaction":
+                            Get.to(() => InteractionHomeScreen(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                ));
+                            break;
+                          case "Apply Certificate":
+                            Get.to(() => CertificateHomeScreen(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                ));
+                            break;
+                          case "Time Table":
+                            Get.to(() => TimeTableHome(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                ));
+                            break;
+                          case "Fee Receipt":
+                            Get.to(
+                              () => FeeReceiptHome(
+                                loginSuccessModel: widget.loginSuccessModel,
+                                mskoolController: widget.mskoolController,
+                                title:
+                                    "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
+                              ),
+                            );
+                            break;
+                          default:
+                        }
+                      },
                     );
                   }),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-                    child: ListTile(
-                      title: const Text("Change Password"),
-                      leading: Container(
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: const CircleAvatar(
-                          radius: 18,
-                          backgroundImage: AssetImage(
-                            "assets/images/ChangePassword.png",
-                          ),
-                          backgroundColor: Colors.white,
-                        ),
+                  ListTile(
+                    title: const Text("Change Password"),
+                    leading: Container(
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
                       ),
-                      onTap: () {
-                        Navigator.pop(context);
-                        Get.to(() => ResetPassword(
-                              mskoolController: widget.mskoolController,
-                              loginSuccessModel: widget.loginSuccessModel,
-                            ));
-                      },
+                      child: const CircleAvatar(
+                        // radius: 18,
+                        backgroundImage: AssetImage(
+                          "assets/images/ChangePassword.png",
+                        ),
+                        backgroundColor: Colors.white,
+                      ),
                     ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Get.to(() => ResetPassword(
+                            mskoolController: widget.mskoolController,
+                            loginSuccessModel: widget.loginSuccessModel,
+                          ));
+                    },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-                    child: ListTile(
-                      title: const Text("Forgot Password"),
-                      leading: Container(
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: const CircleAvatar(
-                          radius: 18,
-                          backgroundImage: AssetImage(
-                            "assets/images/ForgotPassword.png",
-                          ),
-                          backgroundColor: Colors.white,
-                        ),
+                  ListTile(
+                    title: const Text("Forgot Password"),
+                    leading: Container(
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
                       ),
-                      onTap: () {
-                        Navigator.pop(context);
-                        Get.to(() => ForgotPasswordScreen(
-                            mskoolController: widget.mskoolController));
-                      },
+                      child: const CircleAvatar(
+                        // radius: 18,
+                        backgroundImage: AssetImage(
+                          "assets/images/ForgotPassword.png",
+                        ),
+                        backgroundColor: Colors.white,
+                      ),
                     ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Get.to(() => ForgotPasswordScreen(
+                          mskoolController: widget.mskoolController));
+                    },
                   ),
                   Padding(
                       padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
