@@ -138,8 +138,10 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                           ),
                           isDense: true,
                           label: Container(
+                            // height: 40,
+                            // width: 250,
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 7),
+                                horizontal: 12, vertical: 8),
                             decoration: const BoxDecoration(
                               color: Color.fromRGBO(223, 251, 254, 1),
                               borderRadius: BorderRadius.all(
@@ -149,8 +151,11 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Image.asset('assets/images/hat.png'),
-                                const SizedBox(width: 5),
+                                Image.asset(
+                                  'assets/images/hat.png',
+                                  height: 30,
+                                ),
+                                const SizedBox(width: 6),
                                 Text(
                                   'Academic Year',
                                   style: Theme.of(context)
@@ -159,7 +164,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                       .merge(
                                         const TextStyle(
                                             fontWeight: FontWeight.w400,
-                                            fontSize: 14.0,
+                                            fontSize: 16.0,
                                             color: Color.fromRGBO(
                                                 40, 182, 200, 1)),
                                       ),
@@ -204,9 +209,20 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                             child: CircularProgressIndicator(),
                           )
                         : feeController.feeReceiptNoList.isEmpty
-                            ? const Center(
-                                child: Text(
-                                    'No Receipts available for selected year!!'),
+                            ? Center(
+                                child: Column(
+                                  children: [
+                                    const Text(
+                                        'No Receipts available for selected year!!'),
+                                    const SizedBox(
+                                      height: 30,
+                                    ),
+                                    SizedBox(
+                                      child:
+                                          Image.asset('assets/images/pana.png'),
+                                    )
+                                  ],
+                                ),
                               )
                             : Container(
                                 decoration: BoxDecoration(
@@ -237,7 +253,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                     isDense: true,
                                     label: Container(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 16, vertical: 7),
+                                          horizontal: 12, vertical: 8),
                                       decoration: const BoxDecoration(
                                         color: Color.fromRGBO(255, 235, 234, 1),
                                         borderRadius: BorderRadius.all(
@@ -248,8 +264,10 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           Image.asset(
-                                              'assets/images/receipt.png'),
-                                          const SizedBox(width: 5),
+                                            'assets/images/receipt.png',
+                                            height: 24,
+                                          ),
+                                          const SizedBox(width: 6),
                                           Text(
                                             'Receipt No.',
                                             style: Theme.of(context)
