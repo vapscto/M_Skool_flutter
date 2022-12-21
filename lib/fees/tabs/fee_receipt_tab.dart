@@ -141,19 +141,21 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                             // height: 40,
                             // width: 250,
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 8),
+                                horizontal: 20, vertical: 6),
                             decoration: const BoxDecoration(
                               color: Color.fromRGBO(223, 251, 254, 1),
                               borderRadius: BorderRadius.all(
-                                Radius.circular(12),
+                                Radius.circular(24),
                               ),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Image.asset(
-                                  'assets/images/hat.png',
-                                  height: 30,
+                                SizedBox(
+                                  height: 33,
+                                  child: Image.asset(
+                                    'assets/images/hat.png',
+                                  ),
                                 ),
                                 const SizedBox(width: 6),
                                 Text(
@@ -163,8 +165,8 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                       .titleSmall!
                                       .merge(
                                         const TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 20.0,
                                             color: Color.fromRGBO(
                                                 40, 182, 200, 1)),
                                       ),
@@ -253,7 +255,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                     isDense: true,
                                     label: Container(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 12, vertical: 8),
+                                          horizontal: 20, vertical: 10),
                                       decoration: const BoxDecoration(
                                         color: Color.fromRGBO(255, 235, 234, 1),
                                         borderRadius: BorderRadius.all(
@@ -263,9 +265,10 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Image.asset(
-                                            'assets/images/receipt.png',
-                                            height: 24,
+                                          SizedBox(
+                                            height: 25,
+                                            child: Image.asset(
+                                                'assets/images/receipt.png'),
                                           ),
                                           const SizedBox(width: 6),
                                           Text(
@@ -276,9 +279,9 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                                 .merge(
                                                   const TextStyle(
                                                       fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 14.0,
-                                                      color: Color.fromARGB(
+                                                          FontWeight.w500,
+                                                      fontSize: 20.0,
+                                                      color: Color.fromRGBO(
                                                           255, 111, 103, 1)),
                                                 ),
                                           ),
