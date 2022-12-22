@@ -132,4 +132,7 @@ class URLS {
       "api/StudentDashboardFacade/onclick_classwork_seen/";
 
   static String dailyTT = "api/AdmissionCtrl/daywiseTimetable";
+
+  /////   Interaction
+  static String getStaffList = 'api/IVRM_InteractionsFacade/getdetails/';
 }

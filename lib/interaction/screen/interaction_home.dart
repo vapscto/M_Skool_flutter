@@ -61,8 +61,11 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
           tabController: _tabController,
         ),
         Expanded(
-          child: TabBarView(controller: _tabController, children: const [
-            ComposeTabScreen(),
+          child: TabBarView(controller: _tabController, children: [
+            ComposeTabScreen(
+              loginSuccessModel: widget.loginSuccessModel,
+              mskoolController: widget.mskoolController,
+            ),
             InboxTabScreen(),
             // AllTabScreen(),
             UnReadTabScreen()
