@@ -31,6 +31,8 @@ class HomeWork extends StatefulWidget {
 
 class _HomeWorkState extends State<HomeWork> {
   final ScrollController listViewCtrl = ScrollController();
+
+  int color = -1;
   @override
   void initState() {
     DateTime endDate = DateTime.now();
@@ -121,14 +123,14 @@ class _HomeWorkState extends State<HomeWork> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 16.0,
+                      height: 8.0,
                     ),
                     Text(
                       getCurrentMonth(DateTime.now()),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(
-                      height: 24.0,
+                      height: 8.0,
                     ),
                     SizedBox(
                         height: 120,
@@ -328,9 +330,9 @@ class _HomeWorkState extends State<HomeWork> {
                                           "No homework found",
                                           style: Theme.of(context)
                                               .textTheme
-                                              .titleMedium!
+                                              .titleSmall!
                                               .merge(const TextStyle(
-                                                  fontSize: 20.0)),
+                                                  fontSize: 22.0)),
                                         ),
                                         const SizedBox(
                                           height: 8.0,
@@ -340,7 +342,10 @@ class _HomeWorkState extends State<HomeWork> {
                                             textAlign: TextAlign.center,
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .labelMedium!),
+                                                .labelSmall!
+                                                .merge(const TextStyle(
+                                                    letterSpacing: 0.2,
+                                                    fontSize: 16))),
                                       ],
                                     )
                                   : ListView.separated(
@@ -348,6 +353,14 @@ class _HomeWorkState extends State<HomeWork> {
                                       physics:
                                           const NeverScrollableScrollPhysics(),
                                       itemBuilder: (_, index) {
+                                        color += 1;
+                                        if (index % 6 == 0) {
+                                          color = 0;
+                                        }
+                                        if (color > 6) {
+                                          color = 0;
+                                        }
+
                                         return InkWell(
                                           onTap: () {
                                             Navigator.push(context,
@@ -467,6 +480,7 @@ class _HomeWorkState extends State<HomeWork> {
                                                 .hwCwNbController.homeWorkList
                                                 .elementAt(index)
                                                 .ihWAssignment!,
+                                            color: noticeColor.elementAt(color),
                                           ),
                                         );
                                       },
@@ -510,58 +524,107 @@ class HwCwItem extends StatelessWidget {
   final bool isRead;
   final String sub;
   final String topic;
+  final Color color;
   const HwCwItem({
     Key? key,
     required this.sub,
     required this.topic,
     required this.isRead,
+    required this.color,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
       child: Container(
+        height: 90,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          color: colors.elementAt(2).withOpacity(0.05),
+          //color: colors.elementAt(2).withOpacity(0.05),
         ),
         child: Row(
           children: [
-            Container(
-              height: 80,
-              width: 10,
-              decoration: BoxDecoration(
-                color: isRead ? Colors.grey.shade600 : Colors.green,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12.0),
-                  bottomLeft: Radius.circular(12.0),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 12.0,
-            ),
+            // Container(
+            //   height: 80,
+            //   width: 10,
+            //   decoration: BoxDecoration(
+            //     color: isRead ? Colors.grey.shade600 : Colors.green,
+            //     borderRadius: const BorderRadius.only(
+            //       topLeft: Radius.circular(12.0),
+            //       bottomLeft: Radius.circular(12.0),
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(
+            //   width: 12.0,
+            // ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      sub,
-                      style: Theme.of(context).textTheme.titleSmall!.merge(
-                            const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17,
-                            ),
+                    // Chip(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    //   backgroundColor: color.withOpacity(0.3),
+                    //   avatar: Image.asset(
+                    //     getIconFromSubject(sub.trim().toLowerCase()),
+                    //     color: color,
+                    //     height: 24.0,
+                    //   ),
+                    //   label: Text(
+                    //     sub.capitalizeFirst!,
+                    //     style: Theme.of(context).textTheme.titleSmall!.merge(
+                    //           TextStyle(
+                    //             fontWeight: FontWeight.w500,
+                    //             fontSize: 15,
+                    //             color: color,
+                    //           ),
+                    //         ),
+                    //   ),
+                    // ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 6.0),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(24.0),
+                          color: getIconFromSubject(
+                              sub.trim().toLowerCase())['chipBgColor']),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            getIconFromSubject(
+                                sub.trim().toLowerCase())['icon'],
+                            color: getIconFromSubject(
+                                sub.trim().toLowerCase())['chipColor'],
+                            height: 24.0,
                           ),
+                          const SizedBox(
+                            width: 6.0,
+                          ),
+                          Text(
+                            sub.capitalizeFirst!,
+                            style:
+                                Theme.of(context).textTheme.labelMedium!.merge(
+                                      TextStyle(
+                                          fontSize: 14.0,
+                                          color: getIconFromSubject(sub
+                                              .trim()
+                                              .toLowerCase())['chipColor']),
+                                    ),
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(
-                      height: 8.0,
-                    ),
+                    // const SizedBox(
+                    //   height: .0,
+                    // ),
                     Text(
                       topic,
-                      maxLines: 2,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.labelSmall!.merge(
                             TextStyle(
@@ -581,13 +644,38 @@ class HwCwItem extends StatelessWidget {
             const SizedBox(
               width: 12.0,
             ),
-            Icon(
-              Icons.chevron_right_outlined,
-              color: Theme.of(context).primaryColor,
+            // Icon(
+            //   Icons.chevron_right_outlined,
+            //   color: Theme.of(context).primaryColor,
+            // ),
+            // const SizedBox(
+            //   width: 12.0,
+            // )
+
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  // width: 48.0,
+                  // height: 24.0,
+                  padding: const EdgeInsets.all(6.0),
+                  decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(16.0),
+                        bottomLeft: Radius.circular(12.0),
+                      ),
+                      color: Theme.of(context).primaryColor),
+                  child: const Icon(
+                    Icons.chevron_right_outlined,
+                    color: Colors.white,
+                  ),
+                ),
+                Icon(
+                  Icons.done_all,
+                  color: isRead ? Colors.green : Colors.grey.shade600,
+                )
+              ],
             ),
-            const SizedBox(
-              width: 12.0,
-            )
           ],
         ),
       ),

@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/library/widget/line_chart_trackball.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class LibraryHome extends StatelessWidget {
   final int asmayId;
@@ -27,6 +28,7 @@ class LibraryHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: const HomeFab(),
       appBar: CustomAppBar(title: title).getAppBar(),
       body: FutureBuilder<LibraryDataModel>(
           future: LibraryDataApi.instance

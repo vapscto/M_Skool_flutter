@@ -70,6 +70,8 @@ class GetPayablePaymentDetailApi {
       "FYP_PayModeType": "MOBILE"
     });
 
+    logger.d(responseBody);
+
     try {
       final Response response = await ins.post(apiUrl,
           options: Options(headers: getSession()), data: responseBody);

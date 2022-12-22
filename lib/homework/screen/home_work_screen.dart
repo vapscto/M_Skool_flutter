@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/homework/screen/home_work.dart';
 import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class HomeWorkScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -29,6 +30,7 @@ class HomeWorkScreen extends StatefulWidget {
 class _HomeWorkScreenState extends State<HomeWorkScreen> {
   RxBool showFilter = RxBool(false);
   final HwCwNbController hwCwNbController = Get.put(HwCwNbController());
+  final ScrollController scrollController = ScrollController();
   @override
   void dispose() {
     Get.delete<HwCwNbController>();
@@ -38,6 +40,7 @@ class _HomeWorkScreenState extends State<HomeWorkScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: const HomeFab(),
       appBar: AppBar(
         elevation: 0,
         centerTitle: false,
@@ -47,18 +50,28 @@ class _HomeWorkScreenState extends State<HomeWorkScreen> {
         actions: [
           IconButton(
             onPressed: () {
+              if (scrollController.offset > 0 && showFilter.value) {
+                scrollController.animateTo(0,
+                    duration: const Duration(milliseconds: 800),
+                    curve: Curves.fastOutSlowIn);
+                return;
+              }
               if (showFilter.value) {
                 showFilter.value = false;
               } else {
                 showFilter.value = true;
               }
-              setState(() {});
+              //setState(() {});
+              scrollController.animateTo(0,
+                  duration: const Duration(milliseconds: 800),
+                  curve: Curves.fastOutSlowIn);
             },
             icon: SvgPicture.asset('assets/svg/filter.svg'),
           ),
         ],
       ),
       body: SingleChildScrollView(
+        controller: scrollController,
         child: Column(
           children: [
             Obx(() {

@@ -148,8 +148,9 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                           "Academic Year".tr,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .labelLarge!
+                                              .labelMedium!
                                               .merge(const TextStyle(
+                                                  fontSize: 20.0,
                                                   color: Color(0xFF28B6C8))),
                                         ),
                                       ],

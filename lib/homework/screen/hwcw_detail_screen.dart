@@ -13,6 +13,7 @@ import 'package:m_skool_flutter/homework/api/upload_assignment.dart';
 import 'package:m_skool_flutter/information/controller/upload_assignment_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -23,6 +24,7 @@ class HwCwDetailScreen extends StatefulWidget {
   final String topic;
   final String assignment;
   final String date;
+  final String? endDate;
   final String? url;
   final String? attachmentType;
   final String? attachmentName;
@@ -43,7 +45,8 @@ class HwCwDetailScreen extends StatefulWidget {
       required this.loginSuccessModel,
       required this.mskoolController,
       required this.ihcId,
-      required this.screenType});
+      required this.screenType,
+      this.endDate});
 
   @override
   State<HwCwDetailScreen> createState() => _HwCwDetailScreenState();
@@ -57,12 +60,28 @@ class _HwCwDetailScreenState extends State<HwCwDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final DateTime dateTime = DateTime.parse(widget.date);
+    DateTime? endDateTime;
+    if (widget.endDate != null) {
+      endDateTime = DateTime.parse(widget.endDate!);
+    }
     return Scaffold(
       appBar: CustomAppBar(title: widget.subject).getAppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            widget.screenType == "homework"
+                ? Image.asset(
+                    "assets/images/hwbanner.png",
+                    width: double.infinity,
+                  )
+                : Image.asset(
+                    "assets/images/cwbanner.png",
+                    width: double.infinity,
+                  ),
+            const SizedBox(
+              height: 16.0,
+            ),
             Row(
               children: [
                 Expanded(
@@ -156,32 +175,70 @@ class _HwCwDetailScreenState extends State<HwCwDetailScreen> {
             const SizedBox(
               height: 8.0,
             ),
-            Row(
+            Column(
               children: [
-                Expanded(
-                  flex: 3,
-                  child: Text(
-                    "Date",
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Text(
+                        widget.endDate != null ? "Start Date" : "Date",
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                    ),
+                    const Text(":"),
+                    const SizedBox(
+                      width: 24.0,
+                    ),
+                    Expanded(
+                      flex: 7,
+                      child: Text(
+                        "${dateTime.day}-${dateTime.month}-${dateTime.year}",
+                        style: Theme.of(context).textTheme.titleSmall!.merge(
+                              const TextStyle(
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                              ),
+                            ),
+                      ),
+                    ),
+                  ],
                 ),
-                const Text(":"),
                 const SizedBox(
-                  width: 24.0,
+                  height: 8.0,
                 ),
-                Expanded(
-                  flex: 7,
-                  child: Text(
-                    "${dateTime.day}-${dateTime.month}-${dateTime.year}",
-                    style: Theme.of(context).textTheme.titleSmall!.merge(
-                          const TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black,
+                widget.endDate == null
+                    ? const SizedBox()
+                    : Row(
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: Text(
+                              "End Date",
+                              style: Theme.of(context).textTheme.labelMedium,
+                            ),
                           ),
-                        ),
-                  ),
-                ),
+                          const Text(":"),
+                          const SizedBox(
+                            width: 24.0,
+                          ),
+                          Expanded(
+                            flex: 7,
+                            child: Text(
+                              "${endDateTime!.day}-${endDateTime.month}-${endDateTime.year}",
+                              style:
+                                  Theme.of(context).textTheme.titleSmall!.merge(
+                                        const TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                            ),
+                          ),
+                        ],
+                      ),
               ],
             ),
             const SizedBox(
@@ -279,13 +336,13 @@ class _HwCwDetailScreenState extends State<HwCwDetailScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey.shade300,
-                            ),
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
+                        child: CustomContainer(
+                          // decoration: BoxDecoration(
+                          //   border: Border.all(
+                          //     color: Colors.grey.shade300,
+                          //   ),
+                          //   borderRadius: BorderRadius.circular(16.0),
+                          // ),
                           child: ListTile(
                             leading: Icon(
                               Icons.image_outlined,
@@ -295,7 +352,10 @@ class _HwCwDetailScreenState extends State<HwCwDetailScreen> {
                               horizontal: VisualDensity.minimumDensity,
                             ),
                             minLeadingWidth: 24,
-                            title: Text(widget.attachmentName!),
+                            title: Text(
+                              widget.attachmentName!,
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
                           ),
                         ),
                       ),
@@ -357,6 +417,7 @@ class _HwCwDetailScreenState extends State<HwCwDetailScreen> {
             ),
             MSkollBtn(
               title: "Upload",
+              size: Size(Get.width * 0.4, 50),
               onPress: () {
                 images.clear();
                 showModalBottomSheet(

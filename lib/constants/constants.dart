@@ -341,3 +341,137 @@ Color getDashBoardIconByName(String title) {
       return Colors.grey;
   }
 }
+
+List<Map<String, dynamic>> subjectIcons = [
+  {
+    "title": "mathematics",
+    "icon": "assets/images/MATHS.png",
+  },
+  {
+    "title": "chemistry",
+    "icon": "assets/images/SCI.png",
+  },
+  {
+    "title": "physics",
+    "icon": "assets/images/SCI.png",
+  },
+  {
+    "title": "science",
+    "icon": "assets/images/SCI.png",
+  },
+  {
+    "title": "biology",
+    "icon": "assets/images/SCI.png",
+  },
+  {
+    "title": "social science",
+    "icon": "assets/images/SOCIAL.png",
+  },
+  {
+    "title": "english",
+    "icon": "assets/images/ENGLISH.png",
+  },
+  {
+    "title": "hindi",
+    "icon": "assets/images/HINDI.png",
+  },
+  {
+    "title": "kannada",
+    "icon": "assets/images/KANNADA.png",
+  },
+  {
+    "title": "other",
+    "icon": "assets/images/NOSUB.png",
+  }
+];
+
+Map<String, dynamic> getIconFromSubject(String subName) {
+  if (subName.contains("mathematics") ||
+      subName == "mathematics" ||
+      subName.contains("math")) {
+    return {
+      "icon": "assets/images/MATHS.png",
+      "chipBgColor": const Color.fromARGB(255, 234, 245, 255),
+      "chipColor": const Color(0xFF015DAF)
+    };
+  }
+  if (subName.contains("social") || subName == "social science") {
+    return {
+      "icon": "assets/images/SOCIAL.png",
+      "chipBgColor": Color.fromARGB(255, 255, 231, 231),
+      "chipColor": const Color(0xFFFF4A4A)
+    };
+  }
+
+  if (subName.contains("hindi") ||
+      subName == "hindi" ||
+      subName.contains("hin")) {
+    return {
+      "icon": "assets/images/HINDI.png",
+      "chipBgColor": Color.fromARGB(255, 232, 243, 255),
+      "chipColor": const Color(0xFF143F6B)
+    };
+  }
+
+  if (subName.contains("kannada") ||
+      subName == "kannada" ||
+      subName.contains("kan")) {
+    return {
+      "icon": "assets/images/KANNADA.png",
+      "chipBgColor": Color.fromARGB(255, 245, 237, 255),
+      "chipColor": const Color(0xFF824CC3)
+    };
+  }
+
+  if (subName.contains("english") ||
+      subName == "english" ||
+      subName.contains("eng")) {
+    return {
+      "icon": "assets/images/ENGLISH.png",
+      "chipBgColor": Color.fromARGB(255, 223, 255, 250),
+      "chipColor": const Color(0xFF1EAE98)
+    };
+  }
+  if (subName.contains("chemistry") ||
+      subName == "chemistry" ||
+      subName.contains("chem")) {
+    return {
+      "icon": "assets/images/SCI.png",
+      "chipBgColor": const Color.fromARGB(52, 255, 0, 119),
+      "chipColor": const Color(0xFFFF0075)
+    };
+  }
+  if (subName.contains("physics") ||
+      subName == "physics" ||
+      subName.contains("phy")) {
+    return {
+      "icon": "assets/images/SCI.png",
+      "chipBgColor": const Color.fromARGB(52, 255, 0, 119),
+      "chipColor": const Color(0xFFFF0075)
+    };
+  }
+  if (subName.contains("biology") ||
+      subName == "biology" ||
+      subName.contains("bio")) {
+    return {
+      "icon": "assets/images/SCI.png",
+      "chipBgColor": const Color.fromARGB(52, 255, 0, 119),
+      "chipColor": const Color(0xFFFF0075)
+    };
+  }
+  if (subName.contains("science") ||
+      subName == "science" ||
+      subName.contains("sci")) {
+    return {
+      "icon": "assets/images/SCI.png",
+      "chipBgColor": const Color.fromARGB(255, 255, 234, 243),
+      "chipColor": const Color(0xFFFF0075)
+    };
+  }
+
+  return {
+    "icon": "assets/images/NOSUB.png",
+    "chipBgColor": const Color.fromARGB(255, 255, 242, 239),
+    "chipColor": const Color(0xFFAF6152)
+  };
+}

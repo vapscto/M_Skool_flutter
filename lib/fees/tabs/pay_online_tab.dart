@@ -1185,13 +1185,26 @@ class AcademicYearFeeDetail extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Academic Year : 2022-2023',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall!
-                      .copyWith(fontWeight: FontWeight.w500, fontSize: 16.0),
+                RichText(
+                  text: TextSpan(
+                      text: 'Academic Year : ',
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          fontWeight: FontWeight.w500, fontSize: 16.0),
+                      children: [
+                        TextSpan(
+                            text: "2022-2023",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16.0))
+                      ]),
                 ),
+                // Text(
+                //   ,
+
+                // ),
                 // Image.asset(
                 //   'assets/images/info_icon.png',
                 //   color: Colors.black,

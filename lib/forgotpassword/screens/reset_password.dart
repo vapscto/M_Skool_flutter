@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/api/reset_password.dart';
+import 'package:m_skool_flutter/main.dart';
 
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
@@ -203,6 +204,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                                       "login", widget.mskoolController)),
                               builder: (_, snapshot) {
                                 if (snapshot.hasData && snapshot.data!) {
+                                  logInBox!.put("password", newPassword.text);
                                   return SuccessWidget(
                                     title: "Password Changed Successfully",
                                     message:

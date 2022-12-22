@@ -67,6 +67,8 @@ class GetProfileDetails {
 
       final StudentProfileDetailsModel studentProfileDetailsModel =
           StudentProfileDetailsModel.fromJson(response.data);
+
+      logger.d(studentProfileDetailsModel.toJson());
       return Future.value(studentProfileDetailsModel);
     } on Exception catch (e) {
       logger.e(e.toString());

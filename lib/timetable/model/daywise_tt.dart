@@ -37,15 +37,18 @@ class DailyTTModelValues {
   String? tTMSUABAbbreviation;
   String? tTMDPTStartTime;
   String? tTMDPTEndTime;
+  String? tTMSABAbbreviation;
 
-  DailyTTModelValues(
-      {this.type,
-      this.tTMDDayName,
-      this.tTMDDayCode,
-      this.iSMSSubjectName,
-      this.tTMSUABAbbreviation,
-      this.tTMDPTStartTime,
-      this.tTMDPTEndTime});
+  DailyTTModelValues({
+    this.type,
+    this.tTMDDayName,
+    this.tTMDDayCode,
+    this.iSMSSubjectName,
+    this.tTMSUABAbbreviation,
+    this.tTMDPTStartTime,
+    this.tTMDPTEndTime,
+    this.tTMSABAbbreviation,
+  });
 
   DailyTTModelValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
@@ -55,6 +58,7 @@ class DailyTTModelValues {
     tTMSUABAbbreviation = json['TTMSUAB_Abbreviation'];
     tTMDPTStartTime = json['TTMDPT_StartTime'];
     tTMDPTEndTime = json['TTMDPT_EndTime'];
+    tTMSABAbbreviation = json['TTMSAB_Abbreviation'];
   }
 
   Map<String, dynamic> toJson() {
@@ -66,6 +70,7 @@ class DailyTTModelValues {
     data['TTMSUAB_Abbreviation'] = tTMSUABAbbreviation;
     data['TTMDPT_StartTime'] = tTMDPTStartTime;
     data['TTMDPT_EndTime'] = tTMDPTEndTime;
+    data['TTMSAB_Abbreviation'] = tTMSABAbbreviation;
     return data;
   }
 }
