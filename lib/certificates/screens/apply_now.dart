@@ -101,7 +101,7 @@ class _ApplyNowState extends State<ApplyNow> {
                                     borderRadius: BorderRadius.circular(24.0),
                                   ),
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 12.0, vertical: 8.0),
+                                      horizontal: 12.0, vertical: 6.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -130,9 +130,12 @@ class _ApplyNowState extends State<ApplyNow> {
                                 ),
                                 border: const OutlineInputBorder(),
                               ),
-                              icon: const Icon(
-                                Icons.keyboard_arrow_down_outlined,
-                                size: 30,
+                              icon: const Padding(
+                                padding: EdgeInsets.only(top: 4.5),
+                                child: Icon(
+                                  Icons.keyboard_arrow_down_outlined,
+                                  size: 30,
+                                ),
                               ),
                               items: List.generate(
                                 snapshot.data!.certificateList.values!.length,
@@ -144,14 +147,18 @@ class _ApplyNowState extends State<ApplyNow> {
                                   return DropdownMenuItem<
                                       CertificateListValues>(
                                     value: certificateDropDownValues,
-                                    child: Text(
-                                      certificateDropDownValues
-                                          .acertapPCertificateName!,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .merge(
-                                              const TextStyle(fontSize: 16.0)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 8, left: 5),
+                                      child: Text(
+                                        certificateDropDownValues
+                                            .acertapPCertificateName!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .merge(const TextStyle(
+                                                fontSize: 16.0)),
+                                      ),
                                     ),
                                   );
                                 },
@@ -163,7 +170,7 @@ class _ApplyNowState extends State<ApplyNow> {
                             ),
                           ),
                           const SizedBox(
-                            height: 24.0,
+                            height: 28.0,
                           ),
                           CustomContainer(
                             child: TextField(
@@ -171,8 +178,11 @@ class _ApplyNowState extends State<ApplyNow> {
                               controller: reason,
                               maxLines: 4,
                               decoration: InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.only(top: 48.0, left: 12),
                                 border: const OutlineInputBorder(),
                                 label: Container(
+                                  margin: EdgeInsets.only(bottom: 5),
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 12.0, vertical: 8.0),
                                   decoration: BoxDecoration(
@@ -227,6 +237,8 @@ class _ApplyNowState extends State<ApplyNow> {
                               style: Theme.of(context).textTheme.titleSmall,
                               controller: date,
                               decoration: InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.only(top: 48.0, left: 12),
                                 border: const OutlineInputBorder(),
                                 label: Container(
                                   padding: const EdgeInsets.symmetric(

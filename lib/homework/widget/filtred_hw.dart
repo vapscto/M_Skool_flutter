@@ -27,6 +27,8 @@ class FiltredHw extends StatefulWidget {
 }
 
 class _FiltredHwState extends State<FiltredHw> {
+  int color = -1;
+
   @override
   void initState() {
     getHw();
@@ -93,6 +95,13 @@ class _FiltredHwState extends State<FiltredHw> {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (_, index) {
+                            color += 1;
+                            if (index % 6 == 0) {
+                              color = 0;
+                            }
+                            if (color > 6) {
+                              color = 0;
+                            }
                             return InkWell(
                               onTap: () {
                                 Navigator.push(context,
@@ -190,6 +199,7 @@ class _FiltredHwState extends State<FiltredHw> {
                                 topic: widget.hwCwNbController.homeWorkList
                                     .elementAt(index)
                                     .ihWAssignment!,
+                                color: noticeColor.elementAt(color),
                               ),
                             );
                           },

@@ -746,7 +746,9 @@ class _WeeklyTTState extends State<WeeklyTT> {
                                                         .elementAt(index)
                                                         .value
                                                         .elementAt(index2)
-                                                        .subjectName,
+                                                        .subjectName
+                                                        .trim(),
+                                                    textAlign: TextAlign.center,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .titleSmall!
@@ -760,11 +762,14 @@ class _WeeklyTTState extends State<WeeklyTT> {
                                                   const SizedBox(
                                                     height: 2.0,
                                                   ),
-                                                  Text(snapshot.data!.dayWise
-                                                      .elementAt(index)
-                                                      .value
-                                                      .elementAt(index2)
-                                                      .teacher)
+                                                  Text(
+                                                    snapshot.data!.dayWise
+                                                        .elementAt(index)
+                                                        .value
+                                                        .elementAt(index2)
+                                                        .teacher,
+                                                    textAlign: TextAlign.center,
+                                                  )
                                                 ],
                                               ))
                                             ],

@@ -20,6 +20,7 @@ import 'package:m_skool_flutter/notice/widget/notice_filtered_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NoticeHome extends StatefulWidget {
@@ -44,6 +45,7 @@ class _NoticeHomeState extends State<NoticeHome> {
   List<Color> usedColor = [];
 
   final HwCwNbController hwCwNbController = Get.put(HwCwNbController());
+  final ScrollController scrollController = ScrollController();
 
   @override
   void dispose() {
@@ -55,8 +57,14 @@ class _NoticeHomeState extends State<NoticeHome> {
   RxString noticeType = RxString("others");
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: const HomeFab(),
       appBar: widget.appBarTitle != null
           ? AppBar(
               elevation: 0,
@@ -67,12 +75,24 @@ class _NoticeHomeState extends State<NoticeHome> {
               actions: [
                 IconButton(
                   onPressed: () {
+                    if (scrollController.offset > 0 && showFilter.value) {
+                      scrollController.animateTo(0,
+                          duration: const Duration(milliseconds: 800),
+                          curve: Curves.fastOutSlowIn);
+                      return;
+                    }
+
                     if (showFilter.value) {
                       showFilter.value = false;
                     } else {
                       showFilter.value = true;
                     }
-                    setState(() {});
+
+                    // setState(() {});
+
+                    scrollController.animateTo(0,
+                        duration: const Duration(milliseconds: 800),
+                        curve: Curves.fastOutSlowIn);
                   },
                   icon: SvgPicture.asset('assets/svg/filter.svg'),
                 ),
@@ -80,6 +100,7 @@ class _NoticeHomeState extends State<NoticeHome> {
             )
           : null,
       body: SingleChildScrollView(
+        controller: scrollController,
         child: Column(
           children: [
             Obx(() {
@@ -391,7 +412,8 @@ class _NoticeHomeState extends State<NoticeHome> {
                                   return ListView.separated(
                                     padding: const EdgeInsets.all(16.0),
                                     shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     itemBuilder: (_, index) {
                                       color += 1;
                                       if (index % 6 == 0) {

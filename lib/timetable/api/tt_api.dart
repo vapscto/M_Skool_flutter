@@ -89,6 +89,18 @@ class TTApi {
               value: dayWiseVal));
         }
 
+        if (dayWiseTT.last.value.length != periodsListModel.values!.length) {
+          for (int i = 0;
+              i <
+                  (periodsListModel.values!.length -
+                          dayWiseTT.last.value.length) +
+                      1;
+              i++) {
+            dayWiseTT.last.value
+                .add(DayWisettValue(subjectName: "", teacher: "", period: 0));
+          }
+        }
+
         logger.d(dayWiseTT);
         final TT tt = TT(
           tt: ttModel,

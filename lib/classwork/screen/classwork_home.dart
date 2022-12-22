@@ -4,6 +4,7 @@ import 'package:m_skool_flutter/classwork/api/get_class_work.dart';
 import 'package:m_skool_flutter/classwork/api/update_seen_classwork_api.dart';
 import 'package:m_skool_flutter/classwork/model/class_work_model.dart';
 import 'package:m_skool_flutter/classwork/widget/filtered_classwork_widget.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 
@@ -29,6 +30,8 @@ class ClassworkHome extends StatefulWidget {
 }
 
 class _ClassworkHomeState extends State<ClassworkHome> {
+  int color = -1;
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -66,6 +69,13 @@ class _ClassworkHomeState extends State<ClassworkHome> {
                               physics: const NeverScrollableScrollPhysics(),
                               padding: const EdgeInsets.all(16.0),
                               itemBuilder: (_, index) {
+                                color += 1;
+                                if (index % 6 == 0) {
+                                  color = 0;
+                                }
+                                if (color > 6) {
+                                  color = 0;
+                                }
                                 return InkWell(
                                     onTap: () {
                                       Navigator.push(context,
@@ -84,14 +94,56 @@ class _ClassworkHomeState extends State<ClassworkHome> {
                                           topic: snapshot.data!
                                               .elementAt(index)
                                               .icWTopic!,
-                                          assignment: snapshot.data!
+                                          endDate: snapshot.data!
+                                              .elementAt(index)
+                                              .icWToDate,
+                                          attachmentName: snapshot.data!
+                                                          .elementAt(index)
+                                                          .icWFilePath ==
+                                                      null ||
+                                                  snapshot.data!
                                                       .elementAt(index)
-                                                      .icWAssignment ==
+                                                      .icWFilePath!
+                                                      .isEmpty
+                                              ? null
+                                              : snapshot.data!
+                                                  .elementAt(index)
+                                                  .icWFilePath,
+                                          attachmentType: snapshot.data!
+                                                      .elementAt(index)
+                                                      .icWFilePath ==
                                                   null
+                                              ? null
+                                              : snapshot.data!
+                                                      .elementAt(index)
+                                                      .icWFilePath!
+                                                      .endsWith(".pdf")
+                                                  ? "PDF"
+                                                  : "OTHERS",
+                                          attachmentUrl: snapshot.data!
+                                                          .elementAt(index)
+                                                          .icWAssignment ==
+                                                      null ||
+                                                  snapshot.data!
+                                                      .elementAt(index)
+                                                      .icWAssignment!
+                                                      .isEmpty
+                                              ? null
+                                              : snapshot.data!
+                                                  .elementAt(index)
+                                                  .icWAssignment,
+                                          assignment: snapshot.data!
+                                                          .elementAt(index)
+                                                          .icWSubTopic ==
+                                                      null ||
+                                                  snapshot.data!
+                                                      .elementAt(index)
+                                                      .icWSubTopic!
+                                                      .isEmpty
                                               ? "N/A"
                                               : snapshot.data!
                                                   .elementAt(index)
-                                                  .icWAssignment!,
+                                                  .icWSubTopic!,
                                           date: snapshot.data!
                                               .elementAt(index)
                                               .icWFromDate!,
@@ -147,6 +199,7 @@ class _ClassworkHomeState extends State<ClassworkHome> {
                                       topic: snapshot.data!
                                           .elementAt(index)
                                           .icWContent!,
+                                      color: noticeColor.elementAt(color),
                                     ));
                               },
                               itemCount: snapshot.data!.length,

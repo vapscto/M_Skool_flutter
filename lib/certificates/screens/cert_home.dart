@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/controller/tab_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class CertificateHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -69,14 +70,15 @@ class _CertificateHomeScreenState extends State<CertificateHomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: const HomeFab(),
       appBar: const CustomAppBar(title: "Certificate").getAppBar(),
       body: Column(
         children: [
           SizedBox(
-            height: 60,
+            height: 50,
             child: Obx(() {
               return Container(
-                height: 60,
+                //height: 50,
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 width: double.infinity,
                 color: Theme.of(context).primaryColor,

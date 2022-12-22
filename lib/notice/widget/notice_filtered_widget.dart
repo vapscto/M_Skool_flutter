@@ -85,22 +85,33 @@ class _NoticeFilteredWidgetState extends State<NoticeFilteredWidget> {
                     }
 
                     usedColor.add(noticeColor.elementAt(color));
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return NoticeDetailScreen(
-                            color: noticeColor.elementAt(color),
-                            value: widget.hwCwNbController.noticeList
-                                .elementAt(index),
-                            isFiltring: true,
+                    return widget.hwCwNbController.noticeList
+                                .elementAt(index)
+                                .ntBTTSylabusFlg!
+                                .trim()
+                                .toLowerCase() ==
+                            "tt"
+                        ? TTNoticeItem(
+                            color: color,
+                            values: widget.hwCwNbController.noticeList
+                                .elementAt(index))
+                        : InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (_) {
+                                return NoticeDetailScreen(
+                                  color: noticeColor.elementAt(color),
+                                  value: widget.hwCwNbController.noticeList
+                                      .elementAt(index),
+                                  isFiltring: true,
+                                );
+                              }));
+                            },
+                            child: NoticeItem(
+                                color: color,
+                                values: widget.hwCwNbController.noticeList
+                                    .elementAt(index)),
                           );
-                        }));
-                      },
-                      child: NoticeItem(
-                          color: color,
-                          values: widget.hwCwNbController.noticeList
-                              .elementAt(index)),
-                    );
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return const SizedBox(

@@ -211,7 +211,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                         },
                       ),
                     ),
-                    const SizedBox(height: 35),
+                    const SizedBox(height: 30),
                     feeController.isReceipt.value
                         ? const Center(
                             child: CircularProgressIndicator(),
@@ -427,7 +427,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                     //     ),
                     //   ],
                     // ),
-                    const SizedBox(height: 25),
+                    const SizedBox(height: 16),
                     Obx(
                       () => feeController.isFeeDetail.value
                           ? const Center(

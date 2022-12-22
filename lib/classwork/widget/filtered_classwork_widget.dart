@@ -29,6 +29,8 @@ class FilteredClassWork extends StatefulWidget {
 }
 
 class _FilteredClassWorkState extends State<FilteredClassWork> {
+  int color = -1;
+
   @override
   void initState() {
     getAssignment();
@@ -90,6 +92,13 @@ class _FilteredClassWorkState extends State<FilteredClassWork> {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: widget.hwCwNbController.classWorkList.length,
                         itemBuilder: (_, index) {
+                          color += 1;
+                          if (index % 6 == 0) {
+                            color = 0;
+                          }
+                          if (color > 6) {
+                            color = 0;
+                          }
                           return InkWell(
                             onTap: () {
                               Navigator.push(context,
@@ -151,18 +160,20 @@ class _FilteredClassWorkState extends State<FilteredClassWork> {
                                       "portal", widget.mskoolController));
                             },
                             child: HwCwItem(
-                                isRead: widget.hwCwNbController.classWorkList
-                                            .elementAt(index)
-                                            .iCWUPLViewedFlg ==
-                                        1
-                                    ? true
-                                    : false,
-                                sub: widget.hwCwNbController.classWorkList
-                                    .elementAt(index)
-                                    .ismSSubjectName!,
-                                topic: widget.hwCwNbController.classWorkList
-                                    .elementAt(index)
-                                    .icWContent!),
+                              isRead: widget.hwCwNbController.classWorkList
+                                          .elementAt(index)
+                                          .iCWUPLViewedFlg ==
+                                      1
+                                  ? true
+                                  : false,
+                              sub: widget.hwCwNbController.classWorkList
+                                  .elementAt(index)
+                                  .ismSSubjectName!,
+                              topic: widget.hwCwNbController.classWorkList
+                                  .elementAt(index)
+                                  .icWContent!,
+                              color: noticeColor.elementAt(color),
+                            ),
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) {

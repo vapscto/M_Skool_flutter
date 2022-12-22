@@ -226,10 +226,8 @@ class MarksAnalysisItem extends StatelessWidget {
     return Column(children: [
       Text(
         marks,
-        style: Theme.of(context)
-            .textTheme
-            .labelMedium!
-            .merge(const TextStyle(color: Colors.black)),
+        style: Theme.of(context).textTheme.labelMedium!.merge(
+            const TextStyle(color: Colors.black, fontWeight: FontWeight.w700)),
       ),
       const SizedBox(
         height: 6.0,

@@ -195,9 +195,12 @@ class _SubjectWiseTabState extends State<SubjectWiseTab> {
                                   ),
                                 ),
                               ),
-                              icon: const Icon(
-                                Icons.keyboard_arrow_down_rounded,
-                                size: 30,
+                              icon: const Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  size: 30,
+                                ),
                               ),
                               iconSize: 30,
                               items: List.generate(
@@ -206,18 +209,22 @@ class _SubjectWiseTabState extends State<SubjectWiseTab> {
                                   return DropdownMenuItem<AcademicYearValues>(
                                     value: examController.academicYearList
                                         .elementAt(index),
-                                    child: Text(
-                                      examController.academicYearList
-                                          .elementAt(index)
-                                          .asmaYYear!,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelSmall!
-                                          .merge(const TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.3,
-                                          )),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 13, left: 5),
+                                      child: Text(
+                                        examController.academicYearList
+                                            .elementAt(index)
+                                            .asmaYYear!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .merge(const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 16.0,
+                                              letterSpacing: 0.3,
+                                            )),
+                                      ),
                                     ),
                                   );
                                 },
@@ -315,17 +322,21 @@ class _SubjectWiseTabState extends State<SubjectWiseTab> {
                                 return DropdownMenuItem<SubjectListValue>(
                                   value: examController.subjectList
                                       .elementAt(index),
-                                  child: Text(
-                                    examController.subjectList
-                                        .elementAt(index)
-                                        .ismSSubjectName!,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall!
-                                        .merge(const TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.3)),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.only(top: 13, left: 5),
+                                    child: Text(
+                                      examController.subjectList
+                                          .elementAt(index)
+                                          .ismSSubjectName!,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall!
+                                          .merge(const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 16.0,
+                                              letterSpacing: 0.3)),
+                                    ),
                                   ),
                                 );
                               }),

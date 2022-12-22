@@ -187,7 +187,9 @@ class _ShowTTState extends State<ShowTT> {
                       ),
                       Text(
                         "It's Holiday.. Enjoy more..",
-                        style: Theme.of(context).textTheme.labelMedium,
+                        style: Theme.of(context).textTheme.labelSmall!.merge(
+                            const TextStyle(
+                                fontSize: 16.0, letterSpacing: 0.2)),
                       )
                     ],
                   )
@@ -201,7 +203,7 @@ class _ShowTTState extends State<ShowTT> {
                             color: Colors.white,
                             child: Column(
                               children: List.generate(
-                                  7,
+                                  snapshot.data!.length,
                                   (index) => Column(
                                         children: [
                                           Material(
@@ -214,13 +216,18 @@ class _ShowTTState extends State<ShowTT> {
                                               tileColor: timetablePeriodColor
                                                   .elementAt(index)
                                                   .withOpacity(0.15),
-                                              title: Text(
-                                                "${snapshot.data!.elementAt(index).iSMSSubjectName} | ${snapshot.data!.elementAt(index).iSMSSubjectName} | ${snapshot.data!.elementAt(index).tTMDPTStartTime}",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleSmall!
-                                                    .merge(const TextStyle(
-                                                        fontSize: 16.0)),
+                                              title: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 16.0),
+                                                child: Text(
+                                                  "${snapshot.data!.elementAt(index).iSMSSubjectName} | ${snapshot.data!.elementAt(index).tTMSABAbbreviation} | ${snapshot.data!.elementAt(index).tTMDPTStartTime}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .merge(const TextStyle(
+                                                          fontSize: 16.0,
+                                                          height: 1.5)),
+                                                ),
                                               ),
                                               leading: Container(
                                                 alignment: Alignment.center,
