@@ -45,7 +45,7 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
               ? const Color.fromRGBO(255, 235, 212, 0.4)
               : widget.leadText == 'Term Fees'
                   ? const Color.fromRGBO(238, 232, 255, 0.4)
-                  : const Color.fromRGBO(25, 2552, 255, 1),
+                  : const Color.fromRGBO(232, 255, 255, 0.4),
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: Column(
@@ -75,7 +75,7 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
                           ? const Color.fromRGBO(251, 213, 170, 1)
                           : widget.leadText == 'Term Fees'
                               ? const Color.fromRGBO(209, 193, 255, 1)
-                              : const Color.fromRGBO(25, 2552, 25, 1),
+                              : const Color.fromRGBO(75, 234, 234, 1),
                       borderRadius: const BorderRadius.all(
                         Radius.circular(12),
                       ),

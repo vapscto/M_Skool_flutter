@@ -220,15 +220,22 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                             ? Center(
                                 child: Column(
                                   children: [
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      child:
+                                          Image.asset('assets/images/pana.png'),
+                                    ),
+                                    const SizedBox(height: 15),
                                     const Text(
-                                        'No Receipts available for selected year!!'),
+                                      'No Receipts available for selected year!!',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600),
+                                    ),
                                     const SizedBox(
                                       height: 30,
                                     ),
-                                    SizedBox(
-                                      child:
-                                          Image.asset('assets/images/pana.png'),
-                                    )
                                   ],
                                 ),
                               )
@@ -436,9 +443,24 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                           : feeController.feeReceiptDetailsList.isEmpty
                               ? feeController.feeReceiptNoList.isEmpty
                                   ? const SizedBox()
-                                  : const Center(
-                                      child: Text(
-                                          'No Receipt Details available for selected receipt No.!!'),
+                                  : Center(
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 16, vertical: 10),
+                                            child: Image.asset(
+                                                'assets/images/pana.png'),
+                                          ),
+                                          const SizedBox(height: 15),
+                                          const Text(
+                                            'No Receipt Details available for selected receipt No.!!',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ],
+                                      ),
                                     )
                               : ListView.builder(
                                   physics: const NeverScrollableScrollPhysics(),
