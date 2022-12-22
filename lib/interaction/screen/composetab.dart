@@ -127,15 +127,15 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
                   border: const OutlineInputBorder(),
                   label: Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 6.0),
+                        horizontal: 20.0, vertical: 4.0),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24.0),
-                        color: Color(0xFFDBFDF5)),
+                        color: const Color(0xFFDBFDF5)),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         SizedBox(
-                          height: 20.0,
+                          height: 30.0,
                           child: Image.asset(
                             "assets/images/abouticon.png",
                             fit: BoxFit.cover,
@@ -170,15 +170,19 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
               ),
             ),
           ),
-          // const SizedBox(height: 30),
+          const SizedBox(height: 10),
           RadioListTile(
             dense: true,
             activeColor: Colors.blue,
             contentPadding: const EdgeInsets.symmetric(horizontal: 8),
             visualDensity: const VisualDensity(horizontal: -4.0),
-            title: const Text(
+            title: Text(
               "Teachers",
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+              style: Theme.of(context).textTheme.labelSmall!.merge(
+                  const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16.0,
+                      letterSpacing: 0.3)),
             ),
             value: "ClassTeacher",
             groupValue: selectedradio,
@@ -194,9 +198,13 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
             activeColor: Colors.blue,
             contentPadding: const EdgeInsets.symmetric(horizontal: 8),
             visualDensity: const VisualDensity(horizontal: -4.0),
-            title: const Text(
+            title: Text(
               "HOD",
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+              style: Theme.of(context).textTheme.labelSmall!.merge(
+                  const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16.0,
+                      letterSpacing: 0.3)),
             ),
             value: "HOD",
             groupValue: selectedradio,
@@ -212,11 +220,15 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
             activeColor: Colors.blue,
             contentPadding: const EdgeInsets.symmetric(horizontal: 8),
             visualDensity: const VisualDensity(horizontal: -4.0),
-            title: const Text(
+            title: Text(
               "Principal",
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+              style: Theme.of(context).textTheme.labelSmall!.merge(
+                  const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16.0,
+                      letterSpacing: 0.3)),
             ),
-            value: "",
+            value: "Principal",
             groupValue: selectedradio,
             onChanged: (value) {
               setState(() {
@@ -230,9 +242,13 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
             activeColor: Colors.blue,
             contentPadding: const EdgeInsets.symmetric(horizontal: 8),
             visualDensity: const VisualDensity(horizontal: -4.0),
-            title: const Text(
+            title: Text(
               "Academic Supervisor",
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+              style: Theme.of(context).textTheme.labelSmall!.merge(
+                  const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16.0,
+                      letterSpacing: 0.3)),
             ),
             value: "AS",
             groupValue: selectedradio,
@@ -248,9 +264,13 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
             activeColor: Colors.blue,
             contentPadding: const EdgeInsets.symmetric(horizontal: 8),
             visualDensity: const VisualDensity(horizontal: -4.0),
-            title: const Text(
+            title: Text(
               "Exam Co-ordinator",
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+              style: Theme.of(context).textTheme.labelSmall!.merge(
+                  const TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16.0,
+                      letterSpacing: 0.3)),
             ),
             value: "EC",
             groupValue: selectedradio,
@@ -374,7 +394,7 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).primaryColor,
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 14.0),
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 14.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
