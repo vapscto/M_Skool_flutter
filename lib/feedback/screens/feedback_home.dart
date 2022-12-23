@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -235,8 +236,11 @@ class _FeedBackHomeState extends State<FeedBackHome> {
                 );
               },
             ),
+            const SizedBox(
+              height: 36.00,
+            ),
 
-            Image.asset("assets/images/rafiki.png"),
+            LottieBuilder.asset("assets/json/feedback.json"),
           ],
         ),
       ),

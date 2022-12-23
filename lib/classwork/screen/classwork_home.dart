@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:m_skool_flutter/classwork/api/get_class_work.dart';
 import 'package:m_skool_flutter/classwork/api/update_seen_classwork_api.dart';
 import 'package:m_skool_flutter/classwork/model/class_work_model.dart';
@@ -13,6 +14,7 @@ import 'package:m_skool_flutter/homework/screen/hwcw_detail_screen.dart';
 import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
 class ClassworkHome extends StatefulWidget {
@@ -216,10 +218,18 @@ class _ClassworkHomeState extends State<ClassworkHome> {
                             return ErrWidget(
                                 err: snapshot.error as Map<String, dynamic>);
                           }
-                          return const CustomPgrWidget(
-                              title: "Getting Your Assignments",
-                              desc:
-                                  "We are fetching your classwork form whiteboard, it will be shown here");
+                          return Column(
+                            children: [
+                              SizedBox(
+                                height: Get.height * 0.25,
+                              ),
+                              const AnimatedProgressWidget(
+                                  title: "Getting Your Assignments",
+                                  desc:
+                                      "We are fetching your classwork form whiteboard, it will be shown here",
+                                  animationPath: "assets/json/classwork.json"),
+                            ],
+                          );
                         },
                       );
               });

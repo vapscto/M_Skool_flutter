@@ -14,6 +14,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 
@@ -128,21 +129,26 @@ class _CoeHomeState extends State<CoeHome> {
       body: SafeArea(
         child: Obx(() {
           return handler.showAllLoadingProgress.value
-              ? Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const CircularProgressIndicator(),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-                      Text(
-                        "Getting Academic Year and events",
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ],
-                  ),
+              ? const Center(
+                  // child: Column(
+                  //   mainAxisSize: MainAxisSize.min,
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     const CircularProgressIndicator(),
+                  //     const SizedBox(
+                  //       height: 16.0,
+                  //     ),
+                  //     Text(
+                  //       "Getting Academic Year and events",
+                  //       style: Theme.of(context).textTheme.titleMedium,
+                  //     ),
+                  //   ],
+                  // ),
+                  child: AnimatedProgressWidget(
+                      title: "Getting Academic Year and events",
+                      desc:
+                          "We are loading academic data and event... Please wait ",
+                      animationPath: "assets/json/COE.json"),
                 )
               : SingleChildScrollView(
                   padding: const EdgeInsets.all(16.0),
@@ -205,9 +211,12 @@ class _CoeHomeState extends State<CoeHome> {
                                       ),
                                     ),
                                   ),
-                                  icon: const Icon(
-                                    Icons.keyboard_arrow_down_rounded,
-                                    size: 30,
+                                  icon: const Padding(
+                                    padding: EdgeInsets.only(top: 8.0),
+                                    child: Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      size: 30,
+                                    ),
                                   ),
                                   iconSize: 30,
                                   items: List.generate(
@@ -216,17 +225,21 @@ class _CoeHomeState extends State<CoeHome> {
                                         DropdownMenuItem<AttyearlistValues>(
                                       value: handler.academicYearList
                                           .elementAt(index),
-                                      child: Text(
-                                        handler.academicYearList
-                                            .elementAt(index)
-                                            .asmaYYear!,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall!
-                                            .merge(const TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 16.0,
-                                                letterSpacing: 0.3)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 12.0, left: 8, right: 8),
+                                        child: Text(
+                                          handler.academicYearList
+                                              .elementAt(index)
+                                              .asmaYYear!,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall!
+                                              .merge(const TextStyle(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 16.0,
+                                                  letterSpacing: 0.3)),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -296,24 +309,31 @@ class _CoeHomeState extends State<CoeHome> {
                               ),
                             ),
                           ),
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            size: 30,
+                          icon: const Padding(
+                            padding: EdgeInsets.only(top: 8.0),
+                            child: Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              size: 30,
+                            ),
                           ),
                           iconSize: 30,
                           items: List.generate(
                             fullMonthsWithIndex.length,
                             (index) => DropdownMenuItem<Map<String, dynamic>>(
                               value: fullMonthsWithIndex.elementAt(index),
-                              child: Text(
-                                fullMonthsWithIndex.elementAt(index)['month'],
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .merge(const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16.0,
-                                        letterSpacing: 0.3)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 12.0, left: 8, right: 8),
+                                child: Text(
+                                  fullMonthsWithIndex.elementAt(index)['month'],
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall!
+                                      .merge(const TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 16.0,
+                                          letterSpacing: 0.3)),
+                                ),
                               ),
                             ),
                           ),
@@ -330,19 +350,30 @@ class _CoeHomeState extends State<CoeHome> {
                       ),
                       Obx(() {
                         return handler.showEventLoading.value
-                            ? const CustomPgrWidget(
+                            ? const AnimatedProgressWidget(
                                 title: "Your events are comming.",
                                 desc:
-                                    "All your event will appear here for a particular academic year. you can use dropdown to see different events.")
+                                    "All your event will appear here for a particular academic year. you can use dropdown to see different events.",
+                                animationPath: "assets/json/COE.json")
+                            // ? const CustomPgrWidget(
+                            //     title: "Your events are comming.",
+                            //     desc:
+                            //         "All your event will appear here for a particular academic year. you can use dropdown to see different events.")
                             : handler.coeReport.isEmpty
-                                ? Center(
-                                    child: Text(
-                                      "No Event found",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium,
-                                    ),
-                                  )
+                                ? const AnimatedProgressWidget(
+                                    animatorHeight: 250,
+                                    title: "No event found",
+                                    desc:
+                                        "We coudn't find any event with selected month/academic year, you can use dropdown to see different events.",
+                                    animationPath: "assets/json/nodata.json")
+                                // ? Center(
+                                //     child: Text(
+                                //       "No Event found",
+                                //       style: Theme.of(context)
+                                //           .textTheme
+                                //           .titleMedium,
+                                //     ),
+                                //   )
                                 : Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,

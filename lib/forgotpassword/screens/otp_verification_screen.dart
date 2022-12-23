@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/forgotpassword/api/send_otp_to_email.dart';
 import 'package:m_skool_flutter/forgotpassword/controller/opt_sent_controller.dart';
 
 import 'package:m_skool_flutter/forgotpassword/screens/change_password.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
 import 'package:pinput/pinput.dart';
@@ -139,29 +140,33 @@ class _OTPScreenState extends State<OTPScreen> {
               ),
               child: Obx(() {
                 return !otpSentStatusController.isOtpSent.value
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Sending Otp",
-                            style:
-                                Theme.of(context).textTheme.titleMedium!.merge(
-                                      const TextStyle(fontSize: 20.0),
-                                    ),
-                          ),
-                          const SizedBox(
-                            height: 12.0,
-                          ),
-                          Text(
-                            "We are sending otp on ${widget.otpSendingInfo}.",
-                            style: const TextStyle(fontSize: 16),
-                          ),
-                          const SizedBox(
-                            height: 12.0,
-                          ),
-                          const CircularProgressIndicator(),
-                        ],
-                      )
+                    ? AnimatedProgressWidget(
+                        title: "Sending Otp",
+                        desc: "We are sending otp on ${widget.otpSendingInfo}.",
+                        animationPath: "assets/json/forgot.json")
+                    // ? Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Text(
+                    //         "Sending Otp",
+                    //         style:
+                    //             Theme.of(context).textTheme.titleMedium!.merge(
+                    //                   const TextStyle(fontSize: 20.0),
+                    //                 ),
+                    //       ),
+                    //       const SizedBox(
+                    //         height: 12.0,
+                    //       ),
+                    //       Text(
+                    //         "We are sending otp on ${widget.otpSendingInfo}.",
+                    //         style: const TextStyle(fontSize: 16),
+                    //       ),
+                    //       const SizedBox(
+                    //         height: 12.0,
+                    //       ),
+                    //       const CircularProgressIndicator(),
+                    //     ],
+                    //   )
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

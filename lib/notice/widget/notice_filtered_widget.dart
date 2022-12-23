@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/notice/api/get_datewise_notices.dart';
 import 'package:m_skool_flutter/notice/api/get_notice_api.dart';
 import 'package:m_skool_flutter/notice/screen/notice_detail_screen.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 
 class NoticeFilteredWidget extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -53,9 +54,18 @@ class _NoticeFilteredWidgetState extends State<NoticeFilteredWidget> {
   Widget build(BuildContext context) {
     return Obx(() {
       return widget.hwCwNbController.isNoticeDataLoading.value
-          ? const CustomPgrWidget(
-              title: "Loading Fitered Data",
-              desc: "Please wait while we load new data for you")
+          ? Column(
+              children: [
+                SizedBox(
+                  height: Get.height * 0.25,
+                ),
+                const AnimatedProgressWidget(
+                  title: "Loading Fitered Data",
+                  desc: "Please wait while we load new data for you",
+                  animationPath: "assets/json/Noticeboard.json",
+                ),
+              ],
+            )
           : widget.hwCwNbController.noticeList.isEmpty
               ? Center(
                   child: Column(

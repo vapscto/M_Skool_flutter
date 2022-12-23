@@ -13,6 +13,7 @@ import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/api/get_notice_api.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 
 class FilteredClassWork extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -60,9 +61,19 @@ class _FilteredClassWorkState extends State<FilteredClassWork> {
       padding: const EdgeInsets.all(16.0),
       child: Obx(() {
         return widget.hwCwNbController.isClassWorkDataLoading.value
-            ? const CustomPgrWidget(
-                title: "Loading Fitered Data",
-                desc: "Please wait while we load new data for you")
+            ? Column(
+                children: [
+                  SizedBox(
+                    height: Get.height * 0.25,
+                  ),
+                  const AnimatedProgressWidget(
+                    title: "Loading Filtered Assignments",
+                    desc:
+                        "We are filtering your classwork form whiteboard, it will be shown here",
+                    animationPath: "assets/json/classwork.json",
+                  ),
+                ],
+              )
             : widget.hwCwNbController.classWorkList.isEmpty
                 ? Center(
                     child: Column(

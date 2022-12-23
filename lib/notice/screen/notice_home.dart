@@ -17,6 +17,7 @@ import 'package:m_skool_flutter/notice/api/get_tt_notice_api.dart';
 import 'package:m_skool_flutter/notice/model/notice_data_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_detail_screen.dart';
 import 'package:m_skool_flutter/notice/widget/notice_filtered_widget.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
@@ -458,10 +459,23 @@ class _NoticeHomeState extends State<NoticeHome> {
                                       err: snapshot.error
                                           as Map<String, dynamic>);
                                 }
-                                return const CustomPgrWidget(
-                                    title: "Loading Notice's",
-                                    desc:
-                                        "Don't Worry we are fetching notice's from noticeboard");
+                                return Column(
+                                  children: [
+                                    SizedBox(
+                                      height: Get.height * 0.25,
+                                    ),
+                                    const AnimatedProgressWidget(
+                                        title: "Loading Notice's",
+                                        desc:
+                                            "Don't Worry we are fetching notice's from noticeboard",
+                                        animationPath:
+                                            "assets/json/Noticeboard.json"),
+                                  ],
+                                );
+                                // return const CustomPgrWidget(
+                                //     title: "",
+                                //     desc:
+                                //         "");
                               })
                           : noticeType.value == "syllabus"
                               ? SyllabusNotices(
@@ -566,9 +580,18 @@ class _SyllabusNoticesState extends State<SyllabusNotices> {
           if (snapshot.hasError) {
             return ErrWidget(err: snapshot.error as Map<String, dynamic>);
           }
-          return const CustomPgrWidget(
-              title: "Loading Syllabus",
-              desc: "Don't Worry we are fetching your syllabus");
+          return Column(
+            children: [
+              SizedBox(
+                height: Get.height * 0.25,
+              ),
+              const AnimatedProgressWidget(
+                  title: "Loading Syllabus Notice",
+                  desc:
+                      "Don't Worry we are fetching syllabus notice's from noticeboard",
+                  animationPath: "assets/json/Noticeboard.json"),
+            ],
+          );
         });
   }
 }
@@ -632,9 +655,19 @@ class _TTNoticeState extends State<TTNotice> {
           if (snapshot.hasError) {
             return ErrWidget(err: snapshot.error as Map<String, dynamic>);
           }
-          return const CustomPgrWidget(
-              title: "Loading Timetable notice's",
-              desc: "Don't Worry we are fetching your Timetable");
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: Get.height * 0.25,
+              ),
+              const AnimatedProgressWidget(
+                  title: "Loading Timetable Notice",
+                  desc:
+                      "Don't Worry we are fetching timetable notice's from noticeboard",
+                  animationPath: "assets/json/Noticeboard.json"),
+            ],
+          );
         });
   }
 }

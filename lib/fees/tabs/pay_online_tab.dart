@@ -24,6 +24,7 @@ import 'package:m_skool_flutter/fees/widgets/custom_detail_widget.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/pgr_widget.dart';
@@ -94,19 +95,35 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Obx(() {
         return payOnlineDataController.isPageLoading.value == true
-            ? const CustomPgrWidget(
-                title: "Loading Payment Details",
-                desc: "We are fetching your fee details, please wait")
+            ? Column(
+                children: [
+                  SizedBox(
+                    height: Get.height * 0.25,
+                  ),
+                  const AnimatedProgressWidget(
+                      title: "Loading Payment Details",
+                      desc: "We are fetching your fee details, please wait",
+                      animationPath: "assets/json/fee.json"),
+                ],
+              )
+            // ? const CustomPgrWidget(
+            //     title: "Loading Payment Details",
+            //     desc: "We are fetching your fee details, please wait")
             : Column(
                 children: [
                   Obx(() {
                     return payOnlineDataController
                                 .isAcademicFeeDetailLoaded.value ==
                             false
-                        ? const CustomPgrWidget(
+                        ? const AnimatedProgressWidget(
                             title: "Loading Paid Details & Balances",
                             desc:
-                                "We are loading fee details for current academics")
+                                "We are loading fee details for current academics",
+                            animationPath: "assets/json/fee.json")
+                        // ? const CustomPgrWidget(
+                        //     title: "Loading Paid Details & Balances",
+                        //     desc:
+                        //         "We are loading fee details for current academics")
                         : AcademicYearFeeDetail(
                             payOnlineDataController: payOnlineDataController,
                           );
@@ -123,10 +140,15 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                     return payOnlineDataController
                                 .isInstallmentDetailLoaded.value ==
                             false
-                        ? const CustomPgrWidget(
+                        ? const AnimatedProgressWidget(
                             title: "Loading Installment Details",
                             desc:
-                                "We are loading installment details ... Please wait")
+                                "We are loading installment details ... Please wait",
+                            animationPath: "assets/json/fee.json")
+                        // ? const CustomPgrWidget(
+                        //     title: "Loading Installment Details",
+                        //     desc:
+                        //         "We are loading installment details ... Please wait")
                         : Column(
                             children: [
                               ListView.separated(
@@ -661,12 +683,18 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                                                                             err:
                                                                                 snapshot.error as Map<String, dynamic>);
                                                                       }
-
-                                                                      return const CustomPgrWidget(
+                                                                      return const AnimatedProgressWidget(
                                                                           title:
                                                                               "Loading Payment Charges",
                                                                           desc:
-                                                                              "We are loading payment charges details... Please wait");
+                                                                              "We are loading payment charges details... Please wait",
+                                                                          animationPath:
+                                                                              "assets/json/fee.json");
+                                                                      // return const CustomPgrWidget(
+                                                                      //     title:
+                                                                      //         "Loading Payment Charges",
+                                                                      //     desc:
+                                                                      //         "We are loading payment charges details... Please wait");
                                                                     }),
                                                               ],
                                                             ),
@@ -1222,7 +1250,7 @@ class AcademicYearFeeDetail extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16.0),
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CustomDetailWidget(

@@ -72,11 +72,11 @@ class _HwCwDetailScreenState extends State<HwCwDetailScreen> {
           children: [
             widget.screenType == "homework"
                 ? Image.asset(
-                    "assets/images/hwbanner.png",
+                    "assets/images/hwnewbanner.png",
                     width: double.infinity,
                   )
                 : Image.asset(
-                    "assets/images/cwbanner.png",
+                    "assets/images/cwnewbanner.png",
                     width: double.infinity,
                   ),
             const SizedBox(

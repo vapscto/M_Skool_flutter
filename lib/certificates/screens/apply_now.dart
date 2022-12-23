@@ -11,6 +11,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
@@ -407,30 +408,48 @@ class _ApplyNowState extends State<ApplyNow> {
                         ],
                       );
                     }
-                    return Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Row(
-                        children: [
-                          const SizedBox(
-                            width: 6.0,
-                          ),
-                          const SizedBox(
-                            height: 24.0,
-                            width: 24.0,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.0,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 16.0,
-                          ),
-                          Text(
-                            "Getting Certificates",
-                            style: Theme.of(context).textTheme.titleMedium,
-                          )
-                        ],
-                      ),
+
+                    if (snapshot.hasError) {
+                      return ErrWidget(
+                          err: snapshot.error as Map<String, dynamic>);
+                    }
+
+                    return Column(
+                      children: [
+                        SizedBox(
+                          height: Get.height * 0.25,
+                        ),
+                        const AnimatedProgressWidget(
+                            title: "Getting Certificates",
+                            desc:
+                                "Please wait while we load certificate's details",
+                            animationPath: "assets/json/Certificate.json"),
+                      ],
                     );
+                    // return Padding(
+                    //   padding: const EdgeInsets.all(20.0),
+                    //   child: Row(
+                    //     children: [
+                    //       const SizedBox(
+                    //         width: 6.0,
+                    //       ),
+                    //       const SizedBox(
+                    //         height: 24.0,
+                    //         width: 24.0,
+                    //         child: CircularProgressIndicator(
+                    //           strokeWidth: 2.0,
+                    //         ),
+                    //       ),
+                    //       const SizedBox(
+                    //         width: 16.0,
+                    //       ),
+                    //       Text(
+                    //         "Getting Certificates",
+                    //         style: Theme.of(context).textTheme.titleMedium,
+                    //       )
+                    //     ],
+                    //   ),
+                    // );
                   }),
             ],
           ),

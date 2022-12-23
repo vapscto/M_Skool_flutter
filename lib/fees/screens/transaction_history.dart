@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/fees/model/trans_status_model.dart';
 import 'package:m_skool_flutter/fees/model/transaction_his_model.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
@@ -54,10 +55,12 @@ class TransactionHistory extends StatelessWidget {
             if (snapshot.hasError) {
               return ErrWidget(err: snapshot.error as Map<String, dynamic>);
             }
-            return const CustomPgrWidget(
-                title: "Loading Transaction's",
-                desc:
-                    "We are loading your previous transaction's.... Please wait");
+            return const AnimatedProgressWidget(
+              title: "Loading Transaction's",
+              desc:
+                  "We are loading your previous transaction's.... Please wait",
+              animationPath: "assets/json/fee.json",
+            );
           },
         ));
   }

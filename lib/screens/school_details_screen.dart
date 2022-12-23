@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/card_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
 
@@ -32,102 +33,211 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CardWidget(
-              backgroundColor: const Color(0xFFFFF4E9),
-              padding: const EdgeInsets.all(10),
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      width: 120,
-                      child: Text("Name"),
-                    ),
-                    const Text(":  "),
-                    Flexible(
-                      child: Text(
-                        "${widget.loginSuccessModel.institutedetails!.values!.first.mIName}",
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            SvgPicture.asset(
+              "assets/svg/ShoolDetails.svg",
+              fit: BoxFit.cover,
+              // color: Colors.red,
+            ),
+            Transform.translate(
+              offset: const Offset(0, -36),
+              child: CardWidget(
+                backgroundColor: const Color(0xFFF2FEFF),
+                padding: const EdgeInsets.all(10),
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const SizedBox(
+                      SizedBox(
                         width: 120,
-                        child: Text("Address"),
+                        child: Text(
+                          "Name",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .merge(const TextStyle(fontSize: 16.0)),
+                        ),
                       ),
                       const Text(":  "),
                       Flexible(
                         child: Text(
-                          "${widget.loginSuccessModel.institutedetails!.values!.first.mIAddress1}"
-                          " ${widget.loginSuccessModel.institutedetails!.values!.first.mIAddress2},"
-                          " ${widget.loginSuccessModel.institutedetails!.values!.first.mIAddress3}.",
+                          "${widget.loginSuccessModel.institutedetails!.values!.first.mIName}",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .merge(const TextStyle(fontSize: 16.0)),
                         ),
                       ),
                     ],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const SizedBox(
-                        width: 120,
-                        child: Text("E-mail Id"),
-                      ),
-                      const Text(":  "),
-                      Flexible(
-                        child: Text(
-                            "${widget.loginSuccessModel.institutedetails!.values!.first}"),
-                      ),
-                    ],
+                  const SizedBox(
+                    height: 8.0,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const SizedBox(
-                        width: 120,
-                        child: Text("Contact Number"),
-                      ),
-                      const Text(":  "),
-                      Flexible(
-                        child: Text(
-                            "${widget.loginSuccessModel.institutedetails!.values!.first}"),
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 120,
+                          child: Text(
+                            "Address",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .merge(const TextStyle(fontSize: 16.0)),
+                          ),
+                        ),
+                        const Text(":  "),
+                        Flexible(
+                          child: Text(
+                            "${widget.loginSuccessModel.institutedetails!.values!.first.mIAddress1}"
+                            " ${widget.loginSuccessModel.institutedetails!.values!.first.mIAddress2},"
+                            " ${widget.loginSuccessModel.institutedetails!.values!.first.mIAddress3}.",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .merge(const TextStyle(fontSize: 16.0)),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const SizedBox(
-                        width: 120,
-                        child: Text("Website"),
-                      ),
-                      const Text(":  "),
-                      Flexible(
-                        child: Text(
-                            "${widget.loginSuccessModel.institutedetails!.values!.first}"),
-                      ),
-                    ],
+                  const SizedBox(
+                    height: 8.0,
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 120,
+                          child: Text(
+                            "E-mail Id",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .merge(const TextStyle(fontSize: 16.0)),
+                          ),
+                        ),
+                        const Text(":  "),
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${widget.loginSuccessModel.institutedetails!.values!.first.mIEEmailId}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .merge(const TextStyle(fontSize: 16.0)),
+                                textAlign: TextAlign.left,
+                              ),
+                              InkWell(
+                                  onTap: () async {
+                                    if (await canLaunchUrl(Uri.parse(
+                                        "mailto:${widget.loginSuccessModel.institutedetails!.values!.first.mIEEmailId}"))) {
+                                      await launchUrl(Uri.parse(
+                                          "mailto:${widget.loginSuccessModel.institutedetails!.values!.first.mIEEmailId}"));
+                                    }
+                                  },
+                                  child:
+                                      SvgPicture.asset('assets/svg/mail.svg')),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 120,
+                          child: Text(
+                            "Contact Number",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .merge(const TextStyle(fontSize: 16.0)),
+                          ),
+                        ),
+                        const Text(":  "),
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${widget.loginSuccessModel.institutedetails!.values!.first.mIMNMobileNo} / ${widget.loginSuccessModel.institutedetails!.values!.first.mIPNPhoneNo}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .merge(const TextStyle(fontSize: 16.0)),
+                              ),
+                              InkWell(
+                                  onTap: () async {
+                                    if (await canLaunchUrl(Uri.parse(
+                                        "tel:${widget.loginSuccessModel.institutedetails!.values!.first.mIMNMobileNo}"))) {
+                                      await launchUrl(Uri.parse(
+                                          "tel:${widget.loginSuccessModel.institutedetails!.values!.first.mIMNMobileNo}"));
+                                    }
+                                  },
+                                  child:
+                                      SvgPicture.asset('assets/svg/phone.svg')),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 120,
+                          child: Expanded(
+                            child: Text(
+                              "Website",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .merge(const TextStyle(fontSize: 16.0)),
+                            ),
+                          ),
+                        ),
+                        const Text(":  "),
+                        Flexible(
+                          fit: FlexFit.tight,
+                          child: Text(
+                            "${widget.loginSuccessModel.institutedetails!.values!.first}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .merge(const TextStyle(fontSize: 16.0)),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-            SvgPicture.asset(
-              "assets/svg/ShoolDetails.svg",
-              // color: Colors.red,
-            ),
+            // SvgPicture.asset(
+            //   "assets/svg/ShoolDetails.svg",
+            //   // color: Colors.red,
+            // ),
             const SizedBox()
           ],
         ),

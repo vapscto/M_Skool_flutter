@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/api/verify_username.dart';
 import 'package:m_skool_flutter/forgotpassword/model/verify_user_model.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/select_verification_type.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -231,7 +232,17 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                             err: snapshot.error
                                                 as Map<String, dynamic>);
                                       }
-                                      return const ProgressWidget();
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: const [
+                                          AnimatedProgressWidget(
+                                              title: "Please wait",
+                                              desc:
+                                                  "We are searching for your account",
+                                              animationPath:
+                                                  "assets/json/default.json"),
+                                        ],
+                                      );
                                     },
                                   ),
                                 );

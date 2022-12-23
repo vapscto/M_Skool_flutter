@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/exam/controller/exam_controller.dart';
 import 'package:m_skool_flutter/exam/model/pie_data_model.dart';
 import 'package:m_skool_flutter/exam/model/subjectoverview_model.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../controller/global_utilities.dart';
@@ -109,9 +110,21 @@ class _SubjectWiseTabState extends State<SubjectWiseTab> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Obx(
         () => examController.isSubjectWiseLoading.value
-            ? const Center(
-                child: CircularProgressIndicator(),
+            ? Column(
+                children: [
+                  SizedBox(
+                    height: Get.height * 0.25,
+                  ),
+                  const AnimatedProgressWidget(
+                      title: "Loading Subjectwise Details",
+                      desc:
+                          "Please wait while we gather exam data form examination department.",
+                      animationPath: "assets/json/exam.json"),
+                ],
               )
+            // ? const Center(
+            //     child: CircularProgressIndicator(),
+            //   )
             : examController.academicYearList.isEmpty
                 ? Center(
                     child: Text(
@@ -351,9 +364,14 @@ class _SubjectWiseTabState extends State<SubjectWiseTab> {
                       const SizedBox(height: 16),
                       // const CircularProgressIndicator(),
                       examController.issubjectdata.value
-                          ? const Center(
-                              child: CircularProgressIndicator(),
-                            )
+                          ? const AnimatedProgressWidget(
+                              title: "Loading Subjectwise Details",
+                              desc:
+                                  "Please wait while we gather exam data form examination department.",
+                              animationPath: "assets/json/exam.json")
+                          // ? const Center(
+                          //     child: CircularProgressIndicator(),
+                          //   )
                           : SizedBox(
                               width: double.infinity,
                               child: Column(
@@ -564,27 +582,34 @@ class _SubjectWiseTabState extends State<SubjectWiseTab> {
                                                   },
                                                 );
                                         })
-                                      : Center(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 20.0),
-                                            child: Text(
-                                              'No data for selected subject....',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .labelMedium!
-                                                  .merge(
-                                                    TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: Colors.black
-                                                          .withOpacity(0.5),
-                                                    ),
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
+                                      : const AnimatedProgressWidget(
+                                          animatorHeight: 250,
+                                          title: "No Result found",
+                                          desc:
+                                              "We couldn't find any data regarding selected subject, choose different subject",
+                                          animationPath:
+                                              "assets/json/nodata.json"),
+                                  // : Center(
+                                  //     child: Padding(
+                                  //       padding: const EdgeInsets.symmetric(
+                                  //           vertical: 20.0),
+                                  //       child: Text(
+                                  //         'No data for selected subject....',
+                                  //         style: Theme.of(context)
+                                  //             .textTheme
+                                  //             .labelMedium!
+                                  //             .merge(
+                                  //               TextStyle(
+                                  //                 fontSize: 14,
+                                  //                 fontWeight:
+                                  //                     FontWeight.w400,
+                                  //                 color: Colors.black
+                                  //                     .withOpacity(0.5),
+                                  //               ),
+                                  //             ),
+                                  //       ),
+                                  //     ),
+                                  //   ),
                                 ],
                               ),
                             )

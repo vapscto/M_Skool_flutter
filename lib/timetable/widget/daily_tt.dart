@@ -14,6 +14,7 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/timetable/api/daily_tt_api.dart';
 import 'package:m_skool_flutter/timetable/model/daywise_tt.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/pgr_widget.dart';
 import 'package:path_provider/path_provider.dart';
@@ -169,30 +170,35 @@ class _ShowTTState extends State<ShowTT> {
         builder: (_, snapshot) {
           if (snapshot.hasData) {
             return snapshot.data!.isEmpty
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "No timetable found",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .merge(const TextStyle(
-                              //fontWeight: FontWeight.w500,
-                              fontSize: 26.0,
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 8.0,
-                      ),
-                      Text(
-                        "It's Holiday.. Enjoy more..",
-                        style: Theme.of(context).textTheme.labelSmall!.merge(
-                            const TextStyle(
-                                fontSize: 16.0, letterSpacing: 0.2)),
-                      )
-                    ],
-                  )
+                ? const AnimatedProgressWidget(
+                    animatorHeight: 250,
+                    title: "No Timetable found",
+                    desc: "Seem's like today timetable is not yet uploaded",
+                    animationPath: "assets/json/nodata.json")
+                // ? Column(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Text(
+                //         "No timetable found",
+                //         style: Theme.of(context)
+                //             .textTheme
+                //             .titleSmall!
+                //             .merge(const TextStyle(
+                //               //fontWeight: FontWeight.w500,
+                //               fontSize: 26.0,
+                //             )),
+                //       ),
+                //       const SizedBox(
+                //         height: 8.0,
+                //       ),
+                //       Text(
+                //         "It's Holiday.. Enjoy more..",
+                //         style: Theme.of(context).textTheme.labelSmall!.merge(
+                //             const TextStyle(
+                //                 fontSize: 16.0, letterSpacing: 0.2)),
+                //       )
+                //     ],
+                //   )
                 : Column(
                     children: [
                       Padding(
@@ -384,7 +390,8 @@ class _ShowTTState extends State<ShowTT> {
             return ErrWidget(err: snapshot.error as Map<String, dynamic>);
           }
 
-          return CustomPgrWidget(
+          return AnimatedProgressWidget(
+            animationPath: "assets/json/tt.json",
             title: "Loading ${widget.day}'s timetable",
             desc: "Please wait while we load timetable for you",
           );

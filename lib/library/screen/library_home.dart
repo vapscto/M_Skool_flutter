@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/library/model/library_data_model.dart';
 import 'package:m_skool_flutter/library/widget/library_item_widget.dart';
 import 'package:m_skool_flutter/library/widget/line_chart_trackball.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
@@ -74,10 +75,11 @@ class LibraryHome extends StatelessWidget {
               return ErrWidget(err: snapshot.error as Map<String, dynamic>);
             }
 
-            return const CustomPgrWidget(
+            return const AnimatedProgressWidget(
               title: "Getting your library ready",
               desc:
                   "We are getting your library details, please wait while we fetch it for you.",
+              animationPath: "assets/json/lib.json",
             );
           }),
     );

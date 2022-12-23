@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/forgotpassword/api/reset_password.dart';
 import 'package:m_skool_flutter/main.dart';
 
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
@@ -220,7 +221,17 @@ class _ResetPasswordState extends State<ResetPassword> {
                                       err: snapshot.error
                                           as Map<String, dynamic>);
                                 }
-                                return const ProgressWidget();
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: const [
+                                    AnimatedProgressWidget(
+                                        title: "Please wait",
+                                        desc:
+                                            "We are changing your password, just a sec",
+                                        animationPath:
+                                            "assets/json/changepass.json"),
+                                  ],
+                                );
                               },
                             ),
                           );

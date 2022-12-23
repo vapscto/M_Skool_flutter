@@ -14,6 +14,7 @@ import 'package:m_skool_flutter/exam/model/markoverview_model.dart';
 import 'package:m_skool_flutter/exam/model/pie_data_model.dart';
 import 'package:m_skool_flutter/exam/widget/result_analysis_item.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -83,9 +84,21 @@ class _ExamWiseTabState extends State<ExamWiseTab> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Obx(
         () => examController.isLoading.value
-            ? const Center(
-                child: CircularProgressIndicator(),
+            ? Column(
+                children: [
+                  SizedBox(
+                    height: Get.height * 0.25,
+                  ),
+                  const AnimatedProgressWidget(
+                      title: "Loading Examwise Details",
+                      desc:
+                          "Please wait while we gather exam data form examination department.",
+                      animationPath: "assets/json/exam.json"),
+                ],
               )
+            // ? const Center(
+            //     child: CircularProgressIndicator(),
+            //   )
             : Column(
                 children: [
                   const SizedBox(

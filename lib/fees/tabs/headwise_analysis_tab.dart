@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
 import 'package:m_skool_flutter/fees/widgets/installment_detail_widget.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 
 import '../../widget/pgr_widget.dart';
 
@@ -24,7 +25,13 @@ class _HeadwiseAnalysisTabState extends State<HeadwiseAnalysisTab> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Obx(
         () => feeController.isLoading.value
-            ? const Center(child: ProgressWidget())
+            ? const Center(
+                child: AnimatedProgressWidget(
+                  title: "Loading Headwise Analysis",
+                  desc: "Gathering data to show headwise fee detail's",
+                  animationPath: "assets/json/fee.json",
+                ),
+              )
             : Column(
                 children: [
                   ListView.builder(

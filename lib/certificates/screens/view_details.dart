@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/certificates/api/get_applied_certificates_api.dart';
 import 'package:m_skool_flutter/certificates/model/stud_list.dart';
 import 'package:m_skool_flutter/certificates/widget/certificate_detail_item.dart';
@@ -6,6 +7,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
 class ViewDetails extends StatelessWidget {
@@ -46,10 +48,21 @@ class ViewDetails extends StatelessWidget {
           if (snapshot.hasError) {
             return ErrWidget(err: snapshot.error as Map<String, dynamic>);
           }
-          return const CustomPgrWidget(
-            title: "Getting all your applied certificates",
-            desc: "We are getting your applied certificate from heaven",
+          return Column(
+            children: [
+              SizedBox(
+                height: Get.height * 0.25,
+              ),
+              const AnimatedProgressWidget(
+                  title: "Getting all your applied certificates",
+                  desc: "We are getting your applied certificate from heaven",
+                  animationPath: "assets/json/Certificate.json"),
+            ],
           );
+          // return const CustomPgrWidget(
+          //   title: "Getting all your applied certificates",
+          //   desc: "We are getting your applied certificate from heaven",
+          // );
         });
   }
 }

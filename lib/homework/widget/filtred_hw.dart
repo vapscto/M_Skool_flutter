@@ -11,6 +11,7 @@ import 'package:m_skool_flutter/homework/screen/hwcw_detail_screen.dart';
 import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 
 class FiltredHw extends StatefulWidget {
   final HwCwNbController hwCwNbController;
@@ -50,34 +51,47 @@ class _FiltredHwState extends State<FiltredHw> {
   Widget build(BuildContext context) {
     return Obx(() {
       return widget.hwCwNbController.isHomeWorkLoading.value
-          ? const CustomPgrWidget(
-              title: "Loading Filtred Homework",
-              desc: "Please wait! We are loading your homework...")
+          ? Column(
+              children: [
+                SizedBox(
+                  height: Get.height * 0.25,
+                ),
+                const AnimatedProgressWidget(
+                    animationPath: "assets/json/hwanim.json",
+                    title: "Loading Filter Homework",
+                    desc:
+                        "We are getting your homework, please wait while we do it for you"),
+              ],
+            )
           : widget.hwCwNbController.homeWorkList.isEmpty
-              ? Column(
-                  children: [
-                    // SizedBox(
-                    //   height: Get.height * 0.2,
-                    // ),
-                    Image.asset(
-                      'assets/images/hw_cw_not.jpg',
-                      height: Get.height * 0.3,
-                    ),
-                    Text(
-                      "No homework found",
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
-                          .merge(const TextStyle(fontSize: 20.0)),
-                    ),
-                    const SizedBox(
-                      height: 8.0,
-                    ),
-                    Text(
-                        "Hurray! We couldn't find any homework for this particular date. So Enjoy",
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.labelMedium!),
-                  ],
+              ? Padding(
+                  padding: EdgeInsets.only(
+                      top: Get.height * 0.25, left: 24.0, right: 24.0),
+                  child: Column(
+                    children: [
+                      // SizedBox(
+                      //   height: Get.height * 0.2,
+                      // ),
+                      Image.asset(
+                        'assets/images/hw_cw_not.jpg',
+                        height: Get.height * 0.3,
+                      ),
+                      Text(
+                        "No homework found",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .merge(const TextStyle(fontSize: 20.0)),
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      Text(
+                          "Hurray! We couldn't find any homework for this particular date. So Enjoy",
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.labelMedium!),
+                    ],
+                  ),
                 )
               : SingleChildScrollView(
                   padding: const EdgeInsets.all(16.0),

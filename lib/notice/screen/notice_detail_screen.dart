@@ -73,7 +73,7 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomContainer(
-                child: Image.asset('assets/images/noticebanner.png')),
+                child: Image.asset('assets/images/noticenewbanner.png')),
             const SizedBox(
               height: 16.0,
             ),

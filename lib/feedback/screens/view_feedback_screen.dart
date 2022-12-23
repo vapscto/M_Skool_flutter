@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -7,6 +8,7 @@ import 'package:m_skool_flutter/feedback/model/get_feed_model.dart';
 import 'package:m_skool_flutter/feedback/widget/feedback_item.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
@@ -77,9 +79,19 @@ class _ViewFeedBackScreenState extends State<ViewFeedBackScreen> {
               if (snapshot.hasError) {
                 return ErrWidget(err: snapshot.error as Map<String, dynamic>);
               }
-              return const CustomPgrWidget(
-                  title: "Getting your feedback's",
-                  desc: "Just a moment, we are there to get your feedback's");
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: Get.height * 0.25,
+                  ),
+                  const AnimatedProgressWidget(
+                    title: "Getting your feedback's",
+                    desc: "Just a moment, we are there to get your feedback's",
+                    animationPath: "assets/json/feedback.json",
+                  ),
+                ],
+              );
             }),
       ),
     );

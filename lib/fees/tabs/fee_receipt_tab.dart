@@ -4,6 +4,7 @@ import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
 import 'package:m_skool_flutter/fees/model/fee_receipt_no_model.dart';
 import 'package:m_skool_flutter/fees/model/fee_receipt_year_list_model.dart';
 import 'package:m_skool_flutter/fees/widgets/feereceipt_detail_container.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 
 import '../../controller/global_utilities.dart';
 import '../../controller/mskoll_controller.dart';
@@ -104,7 +105,13 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
     return Scaffold(
       body: Obx(
         () => feeController.isFeeLoading.value
-            ? const Center(child: ProgressWidget())
+            ? const Center(
+                child: AnimatedProgressWidget(
+                  title: "Loading Fee Receipt",
+                  desc: "Please wait while we load previous paid receipt.",
+                  animationPath: "assets/json/fee.json",
+                ),
+              )
             : SingleChildScrollView(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
@@ -214,31 +221,45 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                     const SizedBox(height: 30),
                     feeController.isReceipt.value
                         ? const Center(
-                            child: CircularProgressIndicator(),
+                            child: AnimatedProgressWidget(
+                              title: "Getting Fee Receipt",
+                              desc:
+                                  "Loading fee receipt for the selected academic year.",
+                              animationPath: "assets/json/fee.json",
+                            ),
                           )
                         : feeController.feeReceiptNoList.isEmpty
-                            ? Center(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16),
-                                      child:
-                                          Image.asset('assets/images/pana.png'),
-                                    ),
-                                    const SizedBox(height: 15),
-                                    const Text(
-                                      'No Receipts available for selected year!!',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    const SizedBox(
-                                      height: 30,
-                                    ),
-                                  ],
+                            ? const Center(
+                                child: AnimatedProgressWidget(
+                                  animatorHeight: 250,
+                                  animationPath: 'assets/json/nodata.json',
+                                  title: "No Receipt Found",
+                                  desc:
+                                      "For this academic year, we couldn't find any receipt.",
                                 ),
                               )
+                            // ? Center(
+                            //     child: Column(
+                            //       children: [
+                            //         Container(
+                            //           padding: const EdgeInsets.symmetric(
+                            //               horizontal: 16),
+                            //           child:
+                            //               Image.asset('assets/images/pana.png'),
+                            //         ),
+                            //         const SizedBox(height: 15),
+                            //         const Text(
+                            //           'No Receipts available for selected year!!',
+                            //           style: TextStyle(
+                            //               fontSize: 20,
+                            //               fontWeight: FontWeight.w600),
+                            //         ),
+                            //         const SizedBox(
+                            //           height: 30,
+                            //         ),
+                            //       ],
+                            //     ),
+                            //   )
                             : Container(
                                 decoration: BoxDecoration(
                                   color:
@@ -438,7 +459,11 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                     Obx(
                       () => feeController.isFeeDetail.value
                           ? const Center(
-                              child: CircularProgressIndicator(),
+                              child: AnimatedProgressWidget(
+                                title: "Opening Receipt..",
+                                desc: "Please wait while open receipt for you",
+                                animationPath: "assets/json/fee.json",
+                              ),
                             )
                           : feeController.feeReceiptDetailsList.isEmpty
                               ? feeController.feeReceiptNoList.isEmpty

@@ -36,7 +36,7 @@ class CustomDetailWidget extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleSmall!.merge(
                       const TextStyle(
                           fontWeight: FontWeight.w700,
-                          fontSize: 16.0,
+                          fontSize: 14.0,
                           color: Colors.black),
                     ),
               ),

@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/homework/widget/filtred_hw.dart';
 import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
@@ -312,7 +313,8 @@ class _HomeWorkState extends State<HomeWork> {
                                   "Sorry! but we are unable to connect to server right now, Try again later",
                             })
                           : widget.hwCwNbController.isHomeWorkLoading.value
-                              ? const CustomPgrWidget(
+                              ? const AnimatedProgressWidget(
+                                  animationPath: "assets/json/hwanim.json",
                                   title: "Please wait",
                                   desc:
                                       "We are getting your homework, please wait while we do it for you")

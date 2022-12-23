@@ -13,6 +13,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
@@ -85,10 +86,12 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                       "Sorry! but we are unable to connect to server right now, Try again later."
                 })
               : handler.isLoadingWholeScreen.value
-                  ? const CustomPgrWidget(
+                  ? const AnimatedProgressWidget(
                       title: "Getting your detail's",
                       desc:
-                          "We are fetching your attendance directly from attendance register.")
+                          "We are fetching your attendance directly from attendance register.",
+                      animationPath: 'assets/json/attendance.json',
+                    )
                   : SingleChildScrollView(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
@@ -115,7 +118,7 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                   // border: OutlineInputBorder(
                                   //   borderRadius: BorderRadius.circular(12.0),
                                   // ),
-                                  contentPadding: const EdgeInsets.all(20.0),
+                                  contentPadding: const EdgeInsets.all(16.0),
                                   focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Colors.transparent,
@@ -157,9 +160,12 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                     ),
                                   ),
                                 ),
-                                icon: const Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  size: 30,
+                                icon: const Padding(
+                                  padding: EdgeInsets.only(top: 8.0),
+                                  child: Icon(
+                                    Icons.keyboard_arrow_down_rounded,
+                                    size: 30,
+                                  ),
                                 ),
                                 iconSize: 30,
                                 items: List.generate(
@@ -168,17 +174,21 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                       DropdownMenuItem<AttyearlistValues>(
                                     value: handler.academicYearList
                                         .elementAt(index),
-                                    child: Text(
-                                      handler.academicYearList
-                                          .elementAt(index)
-                                          .asmaYYear!,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelSmall!
-                                          .merge(const TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 16.0,
-                                              letterSpacing: 0.3)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 12.0, left: 8.0, right: 8.0),
+                                      child: Text(
+                                        handler.academicYearList
+                                            .elementAt(index)
+                                            .asmaYYear!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .merge(const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 16.0,
+                                                letterSpacing: 0.3)),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -328,10 +338,13 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                           Obx(
                             () {
                               return handler.isLoadingAttendanceDetails.value
-                                  ? const CustomPgrWidget(
+                                  ? const AnimatedProgressWidget(
                                       title: "Getting Details",
                                       desc:
-                                          "We found your attendance register now we will see your presence.")
+                                          "We found your attendance register now we will see your presence.",
+                                      animationPath:
+                                          "assets/json/attendance.json",
+                                    )
                                   : handler.attendanceData.isEmpty
                                       ? Column(
                                           children: [

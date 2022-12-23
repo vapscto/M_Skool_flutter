@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
 import 'package:m_skool_flutter/fees/widgets/custom_analysis_container.dart';
 import 'package:m_skool_flutter/fees/widgets/graphical_analysisof_fee_widget.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 
 import '../../widget/pgr_widget.dart';
 
@@ -23,7 +24,13 @@ class _OverallAnalysisTabState extends State<OverallAnalysisTab> {
   Widget build(BuildContext context) {
     return Obx(
       () => feeController.isLoading.value
-          ? const Center(child: ProgressWidget())
+          ? const Center(
+              child: AnimatedProgressWidget(
+                title: "Loading Fee Analysis",
+                desc: "Please wait while we generate a view for you..",
+                animationPath: "assets/json/fee.json",
+              ),
+            )
           : SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: Column(

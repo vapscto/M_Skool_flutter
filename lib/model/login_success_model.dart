@@ -54,7 +54,7 @@ class LoginSuccessModel {
   int? almsTId;
   String? mIBackgroundImage;
   String? mILogo;
-  Institutedetails? institutedetails;
+  InstituteDetails? institutedetails;
 
   LoginSuccessModel(
       {this.amsTId,
@@ -180,7 +180,7 @@ class LoginSuccessModel {
     mIBackgroundImage = json['mI_BackgroundImage'];
     mILogo = json['mI_Logo'];
     institutedetails = json['institutedetails'] != null
-        ? Institutedetails.fromJson(json['institutedetails'])
+        ? InstituteDetails.fromJson(json['institutedetails'])
         : null;
   }
 
@@ -773,5 +773,340 @@ class InstitutedetailsValues {
     map['createdDate'] = createdDate;
     map['updatedDate'] = updatedDate;
     return map;
+  }
+}
+
+class InstituteDetails {
+  String? type;
+  List<InstituteDetailsValues>? values;
+
+  InstituteDetails({this.type, this.values});
+
+  InstituteDetails.fromJson(Map<String, dynamic> json) {
+    type = json['\$type'];
+    if (json['\$values'] != null) {
+      values = <InstituteDetailsValues>[];
+      json['\$values'].forEach((v) {
+        values!.add(InstituteDetailsValues.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['\$type'] = type;
+    if (values != null) {
+      data['\$values'] = values!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class InstituteDetailsValues {
+  String? type;
+  int? mIId;
+  int? mOId;
+  String? mIName;
+  String? mIType;
+  String? mIAddress1;
+  String? mIAddress2;
+  String? mIAddress3;
+  dynamic mIAddressArea;
+  String? iVRMMCTName;
+  int? iVRMMSId;
+  int? iVRMMCId;
+  int? mIPincode;
+  dynamic mIFaxNo;
+  String? mIBackgroundImage;
+  String? mIFormColor;
+  String? mIFontColor;
+  int? mIFontSize;
+  String? mIWeekStartDay;
+  String? mIDateFormat;
+  String? mIDateSeparator;
+  String? mILogo;
+  dynamic mIPrecision;
+  dynamic mIGradingSystem;
+  dynamic mIPasswordFlag;
+  int? mIActiveFlag;
+  String? mIAffiliation;
+  String? mISubdomain;
+  int? mIFranchiseFlag;
+  String? mIAboutInstitute;
+  String? mIContactDetails;
+  String? mIHelpFile;
+  String? mISchoolCollegeFlag;
+  dynamic mIPAN;
+  dynamic mITAN;
+  dynamic mIGPSUserName;
+  dynamic mIIVRSVirtualNo;
+  dynamic mIIVRSOutboundNo;
+  String? mINAACInstitutionTypeFlg;
+  dynamic mIPGDisplayName;
+  dynamic mIPGDisplayLogo;
+  String? mINAACSubInstitutionTypeFlg;
+  dynamic mIPaymentReminderAPI;
+  String? mIVCStudentFlag;
+  String? mIVCOthersFlag;
+  dynamic mICode;
+  String? mIMSTeamsClientId;
+  String? mIMSTeamsTenentId;
+  String? mIMSTemasClinetSecretCode;
+  String? mIMSTeamsAppAccessTockenURL;
+  String? mIMSTeamsUserAceessTockenURL;
+  String? mIMSTeamsMeetingScheduleURL;
+  String? mIMSTeamsAdminUsername;
+  String? mIMSTeamsAdminPassword;
+  String? mIMSTeamsScope;
+  String? mIMSTeamsGrantType;
+  dynamic mI80GRegNo;
+  dynamic mISMSCountAlert;
+  String? mISMSAlertToemailids;
+  dynamic mIGSTNO;
+  dynamic mICINNo;
+  dynamic mIWhatsAppAudioUrl;
+  String? mIWhatsAppImageUrl;
+  String? mIWhatsAppPdfUrl;
+  String? mIWhatsAppTextUrl;
+  String? mIWhatsAppVideoUrl;
+  String? mIEntityId;
+  dynamic mICreatedBy;
+  dynamic mIUpdatedBy;
+  dynamic mIFilePath;
+  dynamic mIPGRegisteredEmailId;
+  int? mIMNMobileNo;
+  int? mIPNPhoneNo;
+  String? mIEEmailId;
+
+  InstituteDetailsValues(
+      {this.type,
+      this.mIId,
+      this.mOId,
+      this.mIName,
+      this.mIType,
+      this.mIAddress1,
+      this.mIAddress2,
+      this.mIAddress3,
+      this.mIAddressArea,
+      this.iVRMMCTName,
+      this.iVRMMSId,
+      this.iVRMMCId,
+      this.mIPincode,
+      this.mIFaxNo,
+      this.mIBackgroundImage,
+      this.mIFormColor,
+      this.mIFontColor,
+      this.mIFontSize,
+      this.mIWeekStartDay,
+      this.mIDateFormat,
+      this.mIDateSeparator,
+      this.mILogo,
+      this.mIPrecision,
+      this.mIGradingSystem,
+      this.mIPasswordFlag,
+      this.mIActiveFlag,
+      this.mIAffiliation,
+      this.mISubdomain,
+      this.mIFranchiseFlag,
+      this.mIAboutInstitute,
+      this.mIContactDetails,
+      this.mIHelpFile,
+      this.mISchoolCollegeFlag,
+      this.mIPAN,
+      this.mITAN,
+      this.mIGPSUserName,
+      this.mIIVRSVirtualNo,
+      this.mIIVRSOutboundNo,
+      this.mINAACInstitutionTypeFlg,
+      this.mIPGDisplayName,
+      this.mIPGDisplayLogo,
+      this.mINAACSubInstitutionTypeFlg,
+      this.mIPaymentReminderAPI,
+      this.mIVCStudentFlag,
+      this.mIVCOthersFlag,
+      this.mICode,
+      this.mIMSTeamsClientId,
+      this.mIMSTeamsTenentId,
+      this.mIMSTemasClinetSecretCode,
+      this.mIMSTeamsAppAccessTockenURL,
+      this.mIMSTeamsUserAceessTockenURL,
+      this.mIMSTeamsMeetingScheduleURL,
+      this.mIMSTeamsAdminUsername,
+      this.mIMSTeamsAdminPassword,
+      this.mIMSTeamsScope,
+      this.mIMSTeamsGrantType,
+      this.mI80GRegNo,
+      this.mISMSCountAlert,
+      this.mISMSAlertToemailids,
+      this.mIGSTNO,
+      this.mICINNo,
+      this.mIWhatsAppAudioUrl,
+      this.mIWhatsAppImageUrl,
+      this.mIWhatsAppPdfUrl,
+      this.mIWhatsAppTextUrl,
+      this.mIWhatsAppVideoUrl,
+      this.mIEntityId,
+      this.mICreatedBy,
+      this.mIUpdatedBy,
+      this.mIFilePath,
+      this.mIPGRegisteredEmailId,
+      this.mIMNMobileNo,
+      this.mIPNPhoneNo,
+      this.mIEEmailId});
+
+  InstituteDetailsValues.fromJson(Map<String, dynamic> json) {
+    type = json['$type'];
+    mIId = json['MI_Id'];
+    mOId = json['MO_Id'];
+    mIName = json['MI_Name'];
+    mIType = json['MI_Type'];
+    mIAddress1 = json['MI_Address1'];
+    mIAddress2 = json['MI_Address2'];
+    mIAddress3 = json['MI_Address3'];
+    mIAddressArea = json['MI_AddressArea'];
+    iVRMMCTName = json['IVRMMCT_Name'];
+    iVRMMSId = json['IVRMMS_Id'];
+    iVRMMCId = json['IVRMMC_Id'];
+    mIPincode = json['MI_Pincode'];
+    mIFaxNo = json['MI_FaxNo'];
+    mIBackgroundImage = json['MI_BackgroundImage'];
+    mIFormColor = json['MI_FormColor'];
+    mIFontColor = json['MI_FontColor'];
+    mIFontSize = json['MI_FontSize'];
+    mIWeekStartDay = json['MI_WeekStartDay'];
+    mIDateFormat = json['MI_DateFormat'];
+    mIDateSeparator = json['MI_DateSeparator'];
+    mILogo = json['MI_Logo'];
+    mIPrecision = json['MI_Precision'];
+    mIGradingSystem = json['MI_GradingSystem'];
+    mIPasswordFlag = json['MI_PasswordFlag'];
+    mIActiveFlag = json['MI_ActiveFlag'];
+    mIAffiliation = json['MI_Affiliation'];
+    mISubdomain = json['MI_Subdomain'];
+    mIFranchiseFlag = json['MI_FranchiseFlag'];
+    mIAboutInstitute = json['MI_AboutInstitute'];
+    mIContactDetails = json['MI_ContactDetails'];
+    mIHelpFile = json['MI_HelpFile'];
+    mISchoolCollegeFlag = json['MI_SchoolCollegeFlag'];
+    mIPAN = json['MI_PAN'];
+    mITAN = json['MI_TAN'];
+    mIGPSUserName = json['MI_GPSUserName'];
+    mIIVRSVirtualNo = json['MI_IVRSVirtualNo'];
+    mIIVRSOutboundNo = json['MI_IVRSOutboundNo'];
+    mINAACInstitutionTypeFlg = json['MI_NAAC_InstitutionTypeFlg'];
+    mIPGDisplayName = json['MI_PGDisplayName'];
+    mIPGDisplayLogo = json['MI_PGDisplayLogo'];
+    mINAACSubInstitutionTypeFlg = json['MI_NAAC_SubInstitutionTypeFlg'];
+    mIPaymentReminderAPI = json['MI_PaymentReminderAPI'];
+    mIVCStudentFlag = json['MI_VCStudentFlag'];
+    mIVCOthersFlag = json['MI_VCOthersFlag'];
+    mICode = json['MI_Code'];
+    mIMSTeamsClientId = json['MI_MSTeamsClientId'];
+    mIMSTeamsTenentId = json['MI_MSTeamsTenentId'];
+    mIMSTemasClinetSecretCode = json['MI_MSTemasClinetSecretCode'];
+    mIMSTeamsAppAccessTockenURL = json['MI_MSTeamsAppAccessTockenURL'];
+    mIMSTeamsUserAceessTockenURL = json['MI_MSTeamsUserAceessTockenURL'];
+    mIMSTeamsMeetingScheduleURL = json['MI_MSTeamsMeetingScheduleURL'];
+    mIMSTeamsAdminUsername = json['MI_MSTeamsAdminUsername'];
+    mIMSTeamsAdminPassword = json['MI_MSTeamsAdminPassword'];
+    mIMSTeamsScope = json['MI_MSTeamsScope'];
+    mIMSTeamsGrantType = json['MI_MSTeamsGrantType'];
+    mI80GRegNo = json['MI_80GRegNo'];
+    mISMSCountAlert = json['MI_SMSCountAlert'];
+    mISMSAlertToemailids = json['MI_SMSAlertToemailids'];
+    mIGSTNO = json['MI_GSTNO'];
+    mICINNo = json['MI_CINNo'];
+    mIWhatsAppAudioUrl = json['MI_WhatsAppAudioUrl'];
+    mIWhatsAppImageUrl = json['MI_WhatsAppImageUrl'];
+    mIWhatsAppPdfUrl = json['MI_WhatsAppPdfUrl'];
+    mIWhatsAppTextUrl = json['MI_WhatsAppTextUrl'];
+    mIWhatsAppVideoUrl = json['MI_WhatsAppVideoUrl'];
+    mIEntityId = json['MI_EntityId'];
+    mICreatedBy = json['MI_CreatedBy'];
+    mIUpdatedBy = json['MI_UpdatedBy'];
+    mIFilePath = json['MI_FilePath'];
+    mIPGRegisteredEmailId = json['MI_PGRegisteredEmailId'];
+    mIMNMobileNo = json['MIMN_MobileNo'];
+    mIPNPhoneNo = json['MIPN_PhoneNo'];
+    mIEEmailId = json['MIE_EmailId'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['$type'] = type;
+    data['MI_Id'] = mIId;
+    data['MO_Id'] = mOId;
+    data['MI_Name'] = mIName;
+    data['MI_Type'] = mIType;
+    data['MI_Address1'] = mIAddress1;
+    data['MI_Address2'] = mIAddress2;
+    data['MI_Address3'] = mIAddress3;
+    data['MI_AddressArea'] = mIAddressArea;
+    data['IVRMMCT_Name'] = iVRMMCTName;
+    data['IVRMMS_Id'] = iVRMMSId;
+    data['IVRMMC_Id'] = iVRMMCId;
+    data['MI_Pincode'] = mIPincode;
+    data['MI_FaxNo'] = mIFaxNo;
+    data['MI_BackgroundImage'] = mIBackgroundImage;
+    data['MI_FormColor'] = mIFormColor;
+    data['MI_FontColor'] = mIFontColor;
+    data['MI_FontSize'] = mIFontSize;
+    data['MI_WeekStartDay'] = mIWeekStartDay;
+    data['MI_DateFormat'] = mIDateFormat;
+    data['MI_DateSeparator'] = mIDateSeparator;
+    data['MI_Logo'] = mILogo;
+    data['MI_Precision'] = mIPrecision;
+    data['MI_GradingSystem'] = mIGradingSystem;
+    data['MI_PasswordFlag'] = mIPasswordFlag;
+    data['MI_ActiveFlag'] = mIActiveFlag;
+    data['MI_Affiliation'] = mIAffiliation;
+    data['MI_Subdomain'] = mISubdomain;
+    data['MI_FranchiseFlag'] = mIFranchiseFlag;
+    data['MI_AboutInstitute'] = mIAboutInstitute;
+    data['MI_ContactDetails'] = mIContactDetails;
+    data['MI_HelpFile'] = mIHelpFile;
+    data['MI_SchoolCollegeFlag'] = mISchoolCollegeFlag;
+    data['MI_PAN'] = mIPAN;
+    data['MI_TAN'] = mITAN;
+    data['MI_GPSUserName'] = mIGPSUserName;
+    data['MI_IVRSVirtualNo'] = mIIVRSVirtualNo;
+    data['MI_IVRSOutboundNo'] = mIIVRSOutboundNo;
+    data['MI_NAAC_InstitutionTypeFlg'] = mINAACInstitutionTypeFlg;
+    data['MI_PGDisplayName'] = mIPGDisplayName;
+    data['MI_PGDisplayLogo'] = mIPGDisplayLogo;
+    data['MI_NAAC_SubInstitutionTypeFlg'] = mINAACSubInstitutionTypeFlg;
+    data['MI_PaymentReminderAPI'] = mIPaymentReminderAPI;
+    data['MI_VCStudentFlag'] = mIVCStudentFlag;
+    data['MI_VCOthersFlag'] = mIVCOthersFlag;
+    data['MI_Code'] = mICode;
+    data['MI_MSTeamsClientId'] = mIMSTeamsClientId;
+    data['MI_MSTeamsTenentId'] = mIMSTeamsTenentId;
+    data['MI_MSTemasClinetSecretCode'] = mIMSTemasClinetSecretCode;
+    data['MI_MSTeamsAppAccessTockenURL'] = mIMSTeamsAppAccessTockenURL;
+    data['MI_MSTeamsUserAceessTockenURL'] = mIMSTeamsUserAceessTockenURL;
+    data['MI_MSTeamsMeetingScheduleURL'] = mIMSTeamsMeetingScheduleURL;
+    data['MI_MSTeamsAdminUsername'] = mIMSTeamsAdminUsername;
+    data['MI_MSTeamsAdminPassword'] = mIMSTeamsAdminPassword;
+    data['MI_MSTeamsScope'] = mIMSTeamsScope;
+    data['MI_MSTeamsGrantType'] = mIMSTeamsGrantType;
+    data['MI_80GRegNo'] = mI80GRegNo;
+    data['MI_SMSCountAlert'] = mISMSCountAlert;
+    data['MI_SMSAlertToemailids'] = mISMSAlertToemailids;
+    data['MI_GSTNO'] = mIGSTNO;
+    data['MI_CINNo'] = mICINNo;
+    data['MI_WhatsAppAudioUrl'] = mIWhatsAppAudioUrl;
+    data['MI_WhatsAppImageUrl'] = mIWhatsAppImageUrl;
+    data['MI_WhatsAppPdfUrl'] = mIWhatsAppPdfUrl;
+    data['MI_WhatsAppTextUrl'] = mIWhatsAppTextUrl;
+    data['MI_WhatsAppVideoUrl'] = mIWhatsAppVideoUrl;
+    data['MI_EntityId'] = mIEntityId;
+    data['MI_CreatedBy'] = mICreatedBy;
+    data['MI_UpdatedBy'] = mIUpdatedBy;
+    data['MI_FilePath'] = mIFilePath;
+    data['MI_PGRegisteredEmailId'] = mIPGRegisteredEmailId;
+    data['MIMN_MobileNo'] = mIMNMobileNo;
+    data['MIPN_PhoneNo'] = mIPNPhoneNo;
+    data['MIE_EmailId'] = mIEEmailId;
+    return data;
   }
 }

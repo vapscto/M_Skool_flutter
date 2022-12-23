@@ -41,14 +41,20 @@ class _DashBoardAttendanceState extends State<DashBoardAttendance> {
               positionFactor: 0.1,
               widget: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     '${widget.attendanceValue}%',
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .merge(const TextStyle(fontSize: 25.0)),
                   ),
                   Text(
                     "Present",
-                    style: Theme.of(context).textTheme.bodySmall,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleSmall,
                   )
                 ],
               ),

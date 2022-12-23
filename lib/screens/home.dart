@@ -28,9 +28,12 @@ import 'package:m_skool_flutter/screens/home_page_drawer.dart';
 import 'package:m_skool_flutter/tabs/profile_tab.dart';
 import 'package:m_skool_flutter/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/widget/card_widget.dart';
+import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/dashbaord_fee_widget.dart';
 import 'package:m_skool_flutter/widget/dashboard_attendance.dart';
 import 'package:m_skool_flutter/widget/dashboard_timetable_widget.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../fees/screens/fee_home_screen.dart';
 
@@ -389,44 +392,60 @@ class _HomeTabState extends State<HomeTab> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         (dashboardController.attendance.isNotEmpty)
-                            ? SizedBox(
-                                width: Get.width * 0.4329,
+                            ? Expanded(
+                                flex: 1,
                                 child: CardWidget(
-                                  padding: const EdgeInsets.all(8),
+                                  padding: const EdgeInsets.all(0),
                                   children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Attendance",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            Get.to(() => AttendanceHomeScreen(
-                                                loginSuccessModel:
-                                                    widget.loginSuccessModel,
-                                                mskoolController:
-                                                    widget.mskoolController));
-                                          },
-                                          child: Text(
-                                            "Know more",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelMedium!
-                                                .copyWith(
-                                                    decoration: TextDecoration
-                                                        .underline,
-                                                    fontSize: 14),
-                                          ),
-                                        )
-                                      ],
+                                    // Row(
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.spaceBetween,
+                                    //   children: [
+                                    //     Text(
+                                    //       "Attendance",
+                                    //       style: Theme.of(context)
+                                    //           .textTheme
+                                    //           .titleSmall!
+                                    //           .copyWith(
+                                    //             fontWeight: FontWeight.w600,
+                                    //           ),
+                                    //     ),
+                                    //     InkWell(
+                                    //       onTap: () {
+                                    //         Get.to(() => AttendanceHomeScreen(
+                                    //             loginSuccessModel:
+                                    //                 widget.loginSuccessModel,
+                                    //             mskoolController:
+                                    //                 widget.mskoolController));
+                                    //       },
+                                    //       child: Text(
+                                    //         "Know more",
+                                    //         style: Theme.of(context)
+                                    //             .textTheme
+                                    //             .labelMedium!
+                                    //             .copyWith(
+                                    //                 decoration: TextDecoration
+                                    //                     .underline,
+                                    //                 fontSize: 14),
+                                    //       ),
+                                    //     )
+                                    //   ],
+                                    // ),
+
+                                    SizedBox(
+                                      height: 55,
+                                      child: ListTile(
+                                        onTap: () {
+                                          Get.to(() => AttendanceHomeScreen(
+                                              loginSuccessModel:
+                                                  widget.loginSuccessModel,
+                                              mskoolController:
+                                                  widget.mskoolController));
+                                        },
+                                        title: const Text("Attendance"),
+                                        trailing: const Icon(
+                                            Icons.chevron_right_rounded),
+                                      ),
                                     ),
                                     SizedBox(
                                       height: Get.width * 0.4329,
@@ -443,18 +462,20 @@ class _HomeTabState extends State<HomeTab> {
                                 ),
                               )
                             : Container(),
-                        // (dashboardController.attendance.isNotEmpty)
-                        //     ? SizedBox(
-                        //         width: Get.width * 0.4329,
-                        //         height: Get.width * 0.4329,
-                        //         child: SingleChildCardWidget(
-                        //           child: DashBoardAttendance(
-                        //             attendanceValue: dashboardController
-                        //                 .attendance.first.values!.first.score!,
-                        //           ),
-                        //         ),
-                        //       )
-                        //     : Container(),
+                        const SizedBox(
+                          width: 12.0,
+                        ),
+                        (dashboardController.feeList.isNotEmpty)
+                            ? Expanded(
+                                flex: 1,
+                                child: DashboardFeeGraph(
+                                  feeDet:
+                                      dashboardController.feeList.first.values!,
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                ),
+                              )
+                            : Container(),
                       ],
                     ),
                     (dashboardController.timeTableList.isNotEmpty)
