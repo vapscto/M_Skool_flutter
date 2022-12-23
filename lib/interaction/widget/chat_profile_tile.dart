@@ -22,8 +22,8 @@ class ChatProfileTile extends StatelessWidget {
         radius: 30,
         backgroundColor: color,
         child: Center(
-            child: SvgPicture.asset(
-          "assets/svg/${isGroup ? "group_profile.svg" : "profile_image.svg"}",
+            child: Image.asset(
+          "assets/images/${isGroup ? "profile1.png" : "profile2.png"}",
         )),
       ),
       title: Text.rich(TextSpan(
@@ -37,24 +37,37 @@ class ChatProfileTile extends StatelessWidget {
                     .displaySmall
                     ?.copyWith(fontSize: 18))
           ])),
-      subtitle: Text("Hi",
-          style:
-              Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 17)),
+      subtitle: Row(
+        children: [
+          Text(
+            "Hi",
+            style: Theme.of(context)
+                .textTheme
+                .displaySmall
+                ?.copyWith(fontSize: 17),
+          ),
+          SvgPicture.asset(
+              "assets/svg/${isSeen ? "blue_double_check.svg" : "double_check.svg"}")
+        ],
+      ),
       trailing: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text("22 min ago",
-              style: Theme.of(context)
-                  .textTheme
-                  .displaySmall
-                  ?.copyWith(fontSize: 15)),
+          Padding(
+            padding: const EdgeInsets.only(top: 12.0),
+            child: Text("22 min ago",
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall
+                    ?.copyWith(fontSize: 15)),
+          ),
           const SizedBox(height: 15),
 
           //double_check.svg
           //blue_double_check.svg
           //single_check.svg
-          SvgPicture.asset(
-              "assets/svg/${isSeen ? "blue_double_check.svg" : "double_check.svg"}")
+          // SvgPicture.asset(
+          //     "assets/svg/${isSeen ? "blue_double_check.svg" : "double_check.svg"}")
         ],
       ),
     );

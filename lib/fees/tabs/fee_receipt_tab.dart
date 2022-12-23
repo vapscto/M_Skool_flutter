@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/fees/model/fee_receipt_no_model.dart';
 import 'package:m_skool_flutter/fees/model/fee_receipt_year_list_model.dart';
 import 'package:m_skool_flutter/fees/widgets/feereceipt_detail_container.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 import '../../controller/global_utilities.dart';
 import '../../controller/mskoll_controller.dart';
@@ -218,7 +219,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                         },
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 40),
                     feeController.isReceipt.value
                         ? const Center(
                             child: AnimatedProgressWidget(
@@ -477,12 +478,12 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                             child: Image.asset(
                                                 'assets/images/pana.png'),
                                           ),
-                                          const SizedBox(height: 15),
+                                          const SizedBox(height: 25),
                                           const Text(
                                             'No Receipt Details available for selected receipt No.!!',
                                             style: TextStyle(
                                                 fontSize: 20,
-                                                fontWeight: FontWeight.w600),
+                                                fontWeight: FontWeight.w500),
                                           ),
                                         ],
                                       ),
@@ -507,27 +508,31 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 60),
-        child: ElevatedButton(
-          style: ButtonStyle(
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-            ),
-          ),
-          onPressed: () {},
-          child: const Padding(
-            padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 40),
-            child: Text(
-              'Generate PDF',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white),
-            ),
-          ),
-        ),
+        child: MSkollBtn(title: 'Generate PDF', onPress: () {}),
       ),
+      //  Padding(
+      //   padding: const EdgeInsets.only(bottom: 60),
+      //   child: ElevatedButton(
+      //     style: ButtonStyle(
+      //       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      //         RoundedRectangleBorder(
+      //           borderRadius: BorderRadius.circular(30.0),
+      //         ),
+      //       ),
+      //     ),
+      //     onPressed: () {},
+      //     child: const Padding(
+      //       padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 40),
+      //       child: Text(
+      //         'Generate PDF',
+      //         style: TextStyle(
+      //             fontSize: 16,
+      //             fontWeight: FontWeight.w700,
+      //             color: Colors.white),
+      //       ),
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

@@ -87,12 +87,12 @@ class _CustomTabBarState extends State<CustomTabBar> {
                                 ? SvgPicture.asset(
                                     "assets/svg/${widget.tabs[i].asset}")
                                 : const SizedBox.shrink(),
-                            const SizedBox(width: 6),
+                            const SizedBox(width: 8),
                             Text(widget.tabs[i].name,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     letterSpacing: 0.1,
-                                    fontSize: 13.5,
+                                    fontSize: 16,
                                     color: index == i
                                         ? Colors.black
                                         : Colors.white)),
