@@ -1,12 +1,34 @@
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/apis/dashboard_apis.dart';
+import 'package:m_skool_flutter/model/exam_graph_model.dart';
+import 'package:m_skool_flutter/model/exam_list.dart';
 import 'package:m_skool_flutter/model/student_dashboard_model.dart';
 
 class DashboardController extends GetxController {
   RxList<AttendanceList> attendance = <AttendanceList>[].obs;
   RxList<FeesList> feeList = <FeesList>[].obs;
   RxList<TimeTableList> timeTableList = <TimeTableList>[].obs;
-  RxList<ExamList> examList = <ExamList>[].obs;
+  RxList<ExamListNew> examList = <ExamListNew>[].obs;
+
+  RxList<ExamGraphListValues> values = RxList();
+
+  void addToValues(List<ExamGraphListValues> val) {
+    if (values.isNotEmpty) {
+      values.clear();
+    }
+    values.addAll(val);
+  }
+
+  RxBool isLoadingGraphData = RxBool(false);
+
+  void updateIsLoadingGraphData(bool val) {
+    isLoadingGraphData.value = val;
+  }
+
+  Rx<ExamListNewValues> selectedOption =
+      Rx<ExamListNewValues>(ExamListNewValues());
+
+  RxList<CalListValues> calList = RxList<CalListValues>();
   Future studentDashBoardDetails({
     required int miId,
     required int asmayId,
@@ -23,6 +45,11 @@ class DashboardController extends GetxController {
       asmSId: asmSId,
       asmcLId: asmcLId,
     );
+
+    if (studentDashboardModel.calList != null) {
+      calList.addAll(studentDashboardModel.calList!.values!);
+    }
+
     if (studentDashboardModel.attendanceList != null) {
       attendance.add(studentDashboardModel.attendanceList!);
     }
@@ -38,5 +65,6 @@ class DashboardController extends GetxController {
     if (studentDashboardModel.examList != null) {
       examList.add(studentDashboardModel.examList!);
     }
+    selectedOption.value = studentDashboardModel.examList!.values!.first;
   }
 }

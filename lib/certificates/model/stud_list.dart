@@ -130,7 +130,7 @@ class StudListValues {
     returnval = json['returnval'];
     hrmEId = json['hrmE_Id'];
     duplicate = json['duplicate'];
-    ascaReason = json['asca_reason'];
+    ascaReason = json['ascA_Reason'];
   }
 
   Map<String, dynamic> toJson() {
@@ -168,7 +168,7 @@ class StudListValues {
     data['returnval'] = returnval;
     data['hrmE_Id'] = hrmEId;
     data['duplicate'] = duplicate;
-    data['asca_reason'] = ascaReason;
+    data['ascA_Reason'] = ascaReason;
     return data;
   }
 }

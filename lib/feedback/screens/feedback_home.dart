@@ -240,7 +240,7 @@ class _FeedBackHomeState extends State<FeedBackHome> {
               height: 36.00,
             ),
 
-            LottieBuilder.asset("assets/json/feedback.json"),
+            LottieBuilder.asset("assets/json/feed.json"),
           ],
         ),
       ),

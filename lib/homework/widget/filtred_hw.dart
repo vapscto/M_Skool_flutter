@@ -64,35 +64,42 @@ class _FiltredHwState extends State<FiltredHw> {
               ],
             )
           : widget.hwCwNbController.homeWorkList.isEmpty
-              ? Padding(
-                  padding: EdgeInsets.only(
-                      top: Get.height * 0.25, left: 24.0, right: 24.0),
-                  child: Column(
-                    children: [
-                      // SizedBox(
-                      //   height: Get.height * 0.2,
-                      // ),
-                      Image.asset(
-                        'assets/images/hw_cw_not.jpg',
-                        height: Get.height * 0.3,
-                      ),
-                      Text(
-                        "No homework found",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .merge(const TextStyle(fontSize: 20.0)),
-                      ),
-                      const SizedBox(
-                        height: 8.0,
-                      ),
-                      Text(
-                          "Hurray! We couldn't find any homework for this particular date. So Enjoy",
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.labelMedium!),
-                    ],
-                  ),
+              ? const AnimatedProgressWidget(
+                  title: "No Homework Found",
+                  desc:
+                      "Hurray! We couldn't find any homework for this particular date, So enjoy",
+                  animationPath: "assets/json/nodata.json",
+                  animatorHeight: 250,
                 )
+              // ? Padding(
+              //     padding: EdgeInsets.only(
+              //         top: Get.height * 0.25, left: 24.0, right: 24.0),
+              //     child: Column(
+              //       children: [
+              //         // SizedBox(
+              //         //   height: Get.height * 0.2,
+              //         // ),
+              //         Image.asset(
+              //           'assets/images/hw_cw_not.jpg',
+              //           height: Get.height * 0.3,
+              //         ),
+              //         Text(
+              //           "No homework found",
+              //           style: Theme.of(context)
+              //               .textTheme
+              //               .titleMedium!
+              //               .merge(const TextStyle(fontSize: 20.0)),
+              //         ),
+              //         const SizedBox(
+              //           height: 8.0,
+              //         ),
+              //         Text(
+              //             "Hurray! We couldn't find any homework for this particular date. So Enjoy",
+              //             textAlign: TextAlign.center,
+              //             style: Theme.of(context).textTheme.labelMedium!),
+              //       ],
+              //     ),
+              //   )
               : SingleChildScrollView(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(

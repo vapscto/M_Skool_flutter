@@ -1,17 +1,26 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
 import 'package:m_skool_flutter/fees/model/fee_receipt_no_model.dart';
 import 'package:m_skool_flutter/fees/model/fee_receipt_year_list_model.dart';
 import 'package:m_skool_flutter/fees/widgets/feereceipt_detail_container.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../controller/global_utilities.dart';
 import '../../controller/mskoll_controller.dart';
 import '../../model/login_success_model.dart';
 import '../../widget/pgr_widget.dart';
 import '../widgets/receiptno_card.dart';
+import 'dart:ui' as ui;
 
 class FeeReceiptTab extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -32,6 +41,8 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
 
   YearlistValues? selectedValue;
   ReceiptNoList? receiptNoSelectedValue;
+
+  final GlobalKey _receiptKey = GlobalKey();
 
   Future<void> getFeeYearList() async {
     feeController.isfeeloading(true);
@@ -488,17 +499,94 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                         ],
                                       ),
                                     )
-                              : ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: feeController
-                                      .feeReceiptDetailsList.length,
-                                  itemBuilder: (context, receiptIndex) {
-                                    return FeeReceiptDetailContainer(
-                                        dataModel: feeController
-                                            .feeReceiptDetailsList
-                                            .elementAt(receiptIndex));
-                                  }),
+                              : Column(
+                                  children: [
+                                    ListView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: feeController
+                                            .feeReceiptDetailsList.length,
+                                        itemBuilder: (context, receiptIndex) {
+                                          return RepaintBoundary(
+                                            key: _receiptKey,
+                                            child: FeeReceiptDetailContainer(
+                                                dataModel: feeController
+                                                    .feeReceiptDetailsList
+                                                    .elementAt(receiptIndex)),
+                                          );
+                                        }),
+                                    const SizedBox(
+                                      height: 24.0,
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 60),
+                                      child: MSkollBtn(
+                                          title: 'Generate PDF',
+                                          onPress: () async {
+                                            try {
+                                              showDialog(
+                                                  barrierDismissible: false,
+                                                  context: context,
+                                                  builder: (_) {
+                                                    return Dialog(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          24.0)),
+                                                      child:
+                                                          const ProgressWidget(),
+                                                    );
+                                                  });
+
+                                              RenderRepaintBoundary boundary =
+                                                  _receiptKey.currentContext!
+                                                          .findRenderObject()
+                                                      as RenderRepaintBoundary;
+
+                                              ui.Image image = await boundary
+                                                  .toImage(pixelRatio: 2.0);
+                                              ByteData? byteData =
+                                                  await image.toByteData(
+                                                      format: ui
+                                                          .ImageByteFormat.png);
+                                              var pngBytes = byteData!.buffer
+                                                  .asUint8List();
+
+                                              List<Directory>? directory =
+                                                  await getExternalStorageDirectories(
+                                                      type: StorageDirectory
+                                                          .pictures);
+
+                                              String path =
+                                                  directory!.first.path;
+
+                                              String fileName =
+                                                  "FR-${DateTime.now().microsecondsSinceEpoch}.png";
+                                              File file =
+                                                  File('$path/$fileName');
+
+                                              await file.writeAsBytes(pngBytes,
+                                                  flush: true);
+
+                                              await GallerySaver.saveImage(
+                                                  file.path);
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "Receipt saved to Gallery");
+
+                                              Navigator.pop(context);
+                                            } catch (e) {
+                                              logger.e(e.toString());
+                                              Navigator.pop(context);
+                                            }
+                                          }),
+                                    ),
+                                  ],
+                                ),
                     ),
                     const SizedBox(height: 200),
                   ],
@@ -506,10 +594,12 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
               ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 60),
-        child: MSkollBtn(title: 'Generate PDF', onPress: () {}),
-      ),
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.only(bottom: 60),
+      //   child: MSkollBtn(title: 'Generate PDF', onPress: () {
+
+      //   }),
+      // ),
       //  Padding(
       //   padding: const EdgeInsets.only(bottom: 60),
       //   child: ElevatedButton(

@@ -75,19 +75,25 @@ class _FilteredClassWorkState extends State<FilteredClassWork> {
                 ],
               )
             : widget.hwCwNbController.classWorkList.isEmpty
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "No Classwork present",
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        const Text(
-                            "We couldn't find any classwork for these filtration")
-                      ],
-                    ),
+                ? const AnimatedProgressWidget(
+                    title: "No Classwork Found",
+                    desc: "We couldn't find any classwork for these filtration",
+                    animationPath: "assets/json/nodata.json",
+                    animatorHeight: 250,
                   )
+                // ? Center(
+                //     child: Column(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         Text(
+                //           "No Classwork present",
+                //           style: Theme.of(context).textTheme.titleMedium,
+                //         ),
+                //         const Text(
+                //             "We couldn't find any classwork for these filtration")
+                //       ],
+                //     ),
+                //   )
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

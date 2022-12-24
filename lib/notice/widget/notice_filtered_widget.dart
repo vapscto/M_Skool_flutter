@@ -114,6 +114,15 @@ class _NoticeFilteredWidgetState extends State<NoticeFilteredWidget> {
                                   value: widget.hwCwNbController.noticeList
                                       .elementAt(index),
                                   isFiltring: true,
+                                  forSyllabus: widget
+                                              .hwCwNbController.noticeList
+                                              .elementAt(index)
+                                              .ntBTTSylabusFlg!
+                                              .trim()
+                                              .toLowerCase() ==
+                                          "s"
+                                      ? true
+                                      : false,
                                 );
                               }));
                             },
