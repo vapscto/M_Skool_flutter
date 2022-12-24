@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/config/themes/theme_data.dart';
 
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -10,10 +11,8 @@ import 'package:m_skool_flutter/homework/model/date_wise.dart';
 import 'package:m_skool_flutter/homework/screen/hwcw_detail_screen.dart';
 import 'package:m_skool_flutter/homework/widget/filtred_hw.dart';
 import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
-import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
-import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
 class HomeWork extends StatefulWidget {
@@ -544,149 +543,145 @@ class HwCwItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomContainer(
-      child: Container(
-        height: 90,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
-          //color: colors.elementAt(2).withOpacity(0.05),
-        ),
-        child: Row(
-          children: [
-            // Container(
-            //   height: 80,
-            //   width: 10,
-            //   decoration: BoxDecoration(
-            //     color: isRead ? Colors.grey.shade600 : Colors.green,
-            //     borderRadius: const BorderRadius.only(
-            //       topLeft: Radius.circular(12.0),
-            //       bottomLeft: Radius.circular(12.0),
-            //     ),
-            //   ),
-            // ),
-            // const SizedBox(
-            //   width: 12.0,
-            // ),
-            Expanded(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Chip(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    //   backgroundColor: color.withOpacity(0.3),
-                    //   avatar: Image.asset(
-                    //     getIconFromSubject(sub.trim().toLowerCase()),
-                    //     color: color,
-                    //     height: 24.0,
-                    //   ),
-                    //   label: Text(
-                    //     sub.capitalizeFirst!,
-                    //     style: Theme.of(context).textTheme.titleSmall!.merge(
-                    //           TextStyle(
-                    //             fontWeight: FontWeight.w500,
-                    //             fontSize: 15,
-                    //             color: color,
-                    //           ),
-                    //         ),
-                    //   ),
-                    // ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 6.0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24.0),
+    return Container(
+      height: 90,
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: CustomThemeData.getShadow(),
+      ),
+      child: Row(
+        children: [
+          // Container(
+          //   height: 80,
+          //   width: 10,
+          //   decoration: BoxDecoration(
+          //     color: isRead ? Colors.grey.shade600 : Colors.green,
+          //     borderRadius: const BorderRadius.only(
+          //       topLeft: Radius.circular(12.0),
+          //       bottomLeft: Radius.circular(12.0),
+          //     ),
+          //   ),
+          // ),
+          // const SizedBox(
+          //   width: 12.0,
+          // ),
+          Expanded(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Chip(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  //   backgroundColor: color.withOpacity(0.3),
+                  //   avatar: Image.asset(
+                  //     getIconFromSubject(sub.trim().toLowerCase()),
+                  //     color: color,
+                  //     height: 24.0,
+                  //   ),
+                  //   label: Text(
+                  //     sub.capitalizeFirst!,
+                  //     style: Theme.of(context).textTheme.titleSmall!.merge(
+                  //           TextStyle(
+                  //             fontWeight: FontWeight.w500,
+                  //             fontSize: 15,
+                  //             color: color,
+                  //           ),
+                  //         ),
+                  //   ),
+                  // ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 6.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24.0),
+                        color: getIconFromSubject(
+                            sub.trim().toLowerCase())['chipBgColor']),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          getIconFromSubject(sub.trim().toLowerCase())['icon'],
                           color: getIconFromSubject(
-                              sub.trim().toLowerCase())['chipBgColor']),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset(
-                            getIconFromSubject(
-                                sub.trim().toLowerCase())['icon'],
-                            color: getIconFromSubject(
-                                sub.trim().toLowerCase())['chipColor'],
-                            height: 24.0,
-                          ),
-                          const SizedBox(
-                            width: 6.0,
-                          ),
-                          Text(
-                            sub.capitalizeFirst!,
-                            style:
-                                Theme.of(context).textTheme.labelMedium!.merge(
-                                      TextStyle(
-                                          fontSize: 14.0,
-                                          color: getIconFromSubject(sub
-                                              .trim()
-                                              .toLowerCase())['chipColor']),
-                                    ),
-                          ),
-                        ],
-                      ),
+                              sub.trim().toLowerCase())['chipColor'],
+                          height: 24.0,
+                        ),
+                        const SizedBox(
+                          width: 6.0,
+                        ),
+                        Text(
+                          sub.capitalizeFirst!,
+                          style: Theme.of(context).textTheme.labelMedium!.merge(
+                                TextStyle(
+                                    fontSize: 14.0,
+                                    color: getIconFromSubject(
+                                        sub.trim().toLowerCase())['chipColor']),
+                              ),
+                        ),
+                      ],
                     ),
-                    // const SizedBox(
-                    //   height: .0,
-                    // ),
-                    Text(
-                      topic,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.labelSmall!.merge(
-                            TextStyle(
-                                fontWeight: FontWeight.w400,
-                                letterSpacing: 0.2,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium!
-                                    .color,
-                                fontSize: 16),
-                          ),
-                    ),
-                  ],
-                ),
+                  ),
+                  // const SizedBox(
+                  //   height: .0,
+                  // ),
+                  Text(
+                    topic,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.labelSmall!.merge(
+                          const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: 0.2,
+                              color: Color(0xFF1a1a1a),
+                              fontSize: 16),
+                        ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(
-              width: 12.0,
-            ),
-            // Icon(
-            //   Icons.chevron_right_outlined,
-            //   color: Theme.of(context).primaryColor,
-            // ),
-            // const SizedBox(
-            //   width: 12.0,
-            // )
+          ),
+          const SizedBox(
+            width: 12.0,
+          ),
+          // Icon(
+          //   Icons.chevron_right_outlined,
+          //   color: Theme.of(context).primaryColor,
+          // ),
+          // const SizedBox(
+          //   width: 12.0,
+          // )
 
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  // width: 48.0,
-                  // height: 24.0,
-                  padding: const EdgeInsets.all(6.0),
-                  decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(16.0),
-                        bottomLeft: Radius.circular(12.0),
-                      ),
-                      color: Theme.of(context).primaryColor),
-                  child: const Icon(
-                    Icons.chevron_right_outlined,
-                    color: Colors.white,
-                  ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                // width: 48.0,
+                // height: 24.0,
+                padding: const EdgeInsets.all(6.0),
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      topRight: Radius.circular(8.0),
+                      bottomLeft: Radius.circular(8.0),
+                    ),
+                    color: Theme.of(context).primaryColor),
+                child: const Icon(
+                  Icons.chevron_right_outlined,
+                  color: Colors.white,
                 ),
-                Icon(
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12.0),
+                child: Icon(
                   Icons.done_all,
                   color: isRead ? Colors.green : Colors.grey.shade600,
-                )
-              ],
-            ),
-          ],
-        ),
+                ),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }

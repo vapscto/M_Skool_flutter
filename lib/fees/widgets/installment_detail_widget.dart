@@ -1,10 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:m_skool_flutter/fees/widgets/custom_analysis_container.dart';
 import 'package:m_skool_flutter/main.dart';
-
-import 'custom_analysis_container.dart';
 
 class InstallmentDetailWidget extends StatefulWidget {
   String leadText;
@@ -34,19 +30,15 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
   Widget build(BuildContext context) {
     logger.d(widget.leadText);
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 12),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       elevation: 6,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: widget.leadText == 'Tution Fees'
-              ? const Color.fromRGBO(255, 235, 212, 0.4)
-              : widget.leadText == 'Term Fees'
-                  ? const Color.fromRGBO(238, 232, 255, 0.4)
-                  : const Color.fromRGBO(232, 255, 255, 0.4),
-          borderRadius: BorderRadius.circular(16.0),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8.0),
         ),
         child: Column(
           children: [
@@ -72,10 +64,10 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
                     height: 30,
                     decoration: BoxDecoration(
                       color: widget.leadText == 'Tution Fees'
-                          ? const Color.fromRGBO(251, 213, 170, 1)
+                          ? const Color(0xFFDFEFFD)
                           : widget.leadText == 'Term Fees'
-                              ? const Color.fromRGBO(209, 193, 255, 1)
-                              : const Color.fromRGBO(75, 234, 234, 1),
+                              ? const Color(0xFFF1E5FF)
+                              : const Color(0xFFFFEEFF),
                       borderRadius: const BorderRadius.all(
                         Radius.circular(12),
                       ),
@@ -84,10 +76,15 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
                       child: Text(
                         widget.instalText,
                         style: Theme.of(context).textTheme.titleSmall!.merge(
-                              const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16.0,
-                                  color: Color.fromRGBO(26, 26, 26, 1)),
+                              TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16.0,
+                                color: widget.leadText == 'Tution Fees'
+                                    ? const Color(0xFF015DAF)
+                                    : widget.leadText == 'Term Fees'
+                                        ? const Color(0xFF824CC3)
+                                        : const Color(0xFFEC16F0),
+                              ),
                             ),
                       ),
                     ),
@@ -106,145 +103,33 @@ class _InstallmentDetailWidgetState extends State<InstallmentDetailWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            '₹${widget.netAmount}',
-                            style:
-                                Theme.of(context).textTheme.titleSmall!.merge(
-                                      const TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16.0,
-                                      ),
-                                    ),
-                          ),
-                          const SizedBox(height: 25),
-                          FittedBox(
-                            child: Text(
-                              '  Total\nCharges',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .merge(
-                                    const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16.0,
-                                        color: Color.fromRGBO(0, 0, 0, 0.5)),
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    CustomAnalysisContainer(
+                      title: "  Total\nCharges",
+                      amount: widget.netAmount.toInt(),
                     ),
                     const VerticalDivider(
                       color: Color.fromRGBO(0, 0, 0, 0.15),
                       thickness: 1,
                     ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            '₹${widget.paidAmount}',
-                            style:
-                                Theme.of(context).textTheme.titleSmall!.merge(
-                                      const TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16.0,
-                                      ),
-                                    ),
-                          ),
-                          const SizedBox(height: 12),
-                          FittedBox(
-                            child: Text(
-                              " \nTotal Paid",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .merge(
-                                    const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16.0,
-                                        color: Color.fromRGBO(0, 0, 0, 0.5)),
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    CustomAnalysisContainer(
+                      title: " Total Paid",
+                      amount: widget.paidAmount.toInt(),
                     ),
                     const VerticalDivider(
                       color: Color.fromRGBO(0, 0, 0, 0.15),
                       thickness: 1,
                     ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            '₹${widget.concessionAmount}',
-                            style:
-                                Theme.of(context).textTheme.titleSmall!.merge(
-                                      const TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16.0,
-                                      ),
-                                    ),
-                          ),
-                          const SizedBox(height: 20),
-                          FittedBox(
-                            child: Text(
-                              '     Total\nConcession',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .merge(
-                                    const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16.0,
-                                        color: Color.fromRGBO(0, 0, 0, 0.5)),
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    CustomAnalysisContainer(
+                      title: "     Total\nConcession",
+                      amount: widget.concessionAmount.toInt(),
                     ),
                     const VerticalDivider(
                       color: Color.fromRGBO(0, 0, 0, 0.15),
                       thickness: 1,
                     ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            '₹${widget.balanceAmount}',
-                            style:
-                                Theme.of(context).textTheme.titleSmall!.merge(
-                                      const TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16.0,
-                                      ),
-                                    ),
-                          ),
-                          const SizedBox(height: 20),
-                          FittedBox(
-                            child: Text(
-                              '   Now\nPayable',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .merge(
-                                    const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16.0,
-                                        color: Color.fromRGBO(0, 0, 0, 0.5)),
-                                  ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    CustomAnalysisContainer(
+                      title: "   Now\nPayable",
+                      amount: widget.balanceAmount.toInt(),
                     ),
                   ],
                 ),

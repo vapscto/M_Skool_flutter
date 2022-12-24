@@ -47,18 +47,27 @@ class _DashboardFeeGraphState extends State<DashboardFeeGraph> {
         children: [
           SizedBox(
             height: 55,
-            child: ListTile(
+            child: InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return FeeAnalysisScreen(
-                    loginSuccessModel: widget.loginSuccessModel,
-                    mskoolController: widget.mskoolController,
-                    title: 'Fee Analysis',
-                  );
-                }));
+                Get.to(() => FeeAnalysisScreen(
+                      loginSuccessModel: widget.loginSuccessModel,
+                      mskoolController: widget.mskoolController,
+                      title: 'Fee Analysis',
+                    ));
               },
-              title: const Text("Fee"),
-              trailing: const Icon(Icons.chevron_right_rounded),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Fee",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const Icon(Icons.chevron_right_rounded),
+                  ],
+                ),
+              ),
             ),
           ),
           // SizedBox(

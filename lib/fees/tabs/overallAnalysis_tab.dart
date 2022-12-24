@@ -1,15 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
 import 'package:m_skool_flutter/fees/widgets/custom_analysis_container.dart';
 import 'package:m_skool_flutter/fees/widgets/graphical_analysisof_fee_widget.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
-
-import '../../widget/pgr_widget.dart';
 
 class OverallAnalysisTab extends StatefulWidget {
   const OverallAnalysisTab({super.key});
@@ -38,7 +32,7 @@ class _OverallAnalysisTabState extends State<OverallAnalysisTab> {
                   Container(
                     decoration: BoxDecoration(
                       color: Theme.of(context).scaffoldBackgroundColor,
-                      borderRadius: BorderRadius.circular(16.0),
+                      borderRadius: BorderRadius.circular(8.0),
                       boxShadow: const [
                         BoxShadow(
                           offset: Offset(0, 1),
@@ -73,7 +67,7 @@ class _OverallAnalysisTabState extends State<OverallAnalysisTab> {
                                     horizontal: 16, vertical: 7),
                                 height: 35,
                                 decoration: const BoxDecoration(
-                                  color: Color.fromRGBO(255, 211, 211, 1),
+                                  color: Color(0xFFFFEEFF),
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(12),
                                   ),
@@ -88,7 +82,7 @@ class _OverallAnalysisTabState extends State<OverallAnalysisTab> {
                                           const TextStyle(
                                               fontWeight: FontWeight.w700,
                                               fontSize: 16.0,
-                                              color: Colors.black),
+                                              color: Color(0xffec16f0)),
                                         ),
                                   ),
                                 ),
