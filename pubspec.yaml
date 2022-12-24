@@ -69,6 +69,7 @@ dependencies:
   widget_mask: ^1.0.0+0
   gallery_saver: ^2.3.2
   lottie: ^2.1.0
+  timeago: ^3.3.0
 
 dev_dependencies:
   flutter_test:
