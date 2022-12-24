@@ -475,3 +475,19 @@ Map<String, dynamic> getIconFromSubject(String subName) {
     "chipColor": const Color(0xFFAF6152)
   };
 }
+
+String convertToAgo(DateTime input) {
+  Duration diff = DateTime.now().difference(input);
+
+  if (diff.inDays >= 1) {
+    return '${diff.inDays} day ago';
+  } else if (diff.inHours >= 1) {
+    return '${diff.inHours} hour ago';
+  } else if (diff.inMinutes >= 1) {
+    return '${diff.inMinutes} minute ago';
+  } else if (diff.inSeconds >= 1) {
+    return '${diff.inSeconds} second ago';
+  } else {
+    return 'just now';
+  }
+}

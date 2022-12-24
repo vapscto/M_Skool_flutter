@@ -12,6 +12,13 @@ class ComposeController extends GetxController {
     isLoading.value = loading;
   }
 
+  RxBool isInteractionLoading = RxBool(true);
+
+  void isInteractionloading(bool loading) async {
+    isInteractionLoading.value = loading;
+    await Future.delayed(Duration(milliseconds: 3));
+  }
+
   Future<bool> getStafflist({
     required int miId,
     required int amstId,

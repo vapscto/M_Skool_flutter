@@ -47,8 +47,13 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
       ),
     )
         .then((value) {
+      logger.d(value.toString());
       if (value) {
-        selectedStaff = composeController.staffList.first;
+        if (composeController.staffList.isNotEmpty) {
+          selectedStaff = composeController.staffList.first;
+        } else {
+          composeController.isloading(false);
+        }
       }
     });
     composeController.isloading(false);
@@ -259,28 +264,28 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
               });
             },
           ),
-          RadioListTile(
-            dense: true,
-            activeColor: Colors.blue,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-            visualDensity: const VisualDensity(horizontal: -4.0),
-            title: Text(
-              "Exam Co-ordinator",
-              style: Theme.of(context).textTheme.labelSmall!.merge(
-                  const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16.0,
-                      letterSpacing: 0.3)),
-            ),
-            value: "EC",
-            groupValue: selectedradio,
-            onChanged: (value) {
-              setState(() {
-                selectedradio = value.toString();
-                getStafflistData();
-              });
-            },
-          ),
+          // RadioListTile(
+          //   dense: true,
+          //   activeColor: Colors.blue,
+          //   contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+          //   visualDensity: const VisualDensity(horizontal: -4.0),
+          //   title: Text(
+          //     "Exam Co-ordinator",
+          //     style: Theme.of(context).textTheme.labelSmall!.merge(
+          //         const TextStyle(
+          //             fontWeight: FontWeight.w400,
+          //             fontSize: 16.0,
+          //             letterSpacing: 0.3)),
+          //   ),
+          //   value: "EC",
+          //   groupValue: selectedradio,
+          //   onChanged: (value) {
+          //     setState(() {
+          //       selectedradio = value.toString();
+          //       getStafflistData();
+          //     });
+          //   },
+          // ),
 
           // const SizedBox(height: 30),
           Obx(

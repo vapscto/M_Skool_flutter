@@ -135,4 +135,6 @@ class URLS {
 
   /////   Interaction
   static String getStaffList = 'api/IVRM_InteractionsFacade/getdetails/';
+  static String getInboxData = 'api/IVRM_InteractionsFacade/getloaddata/';
+  static String getUnreadData = 'api/IVRM_InteractionsFacade/reply/';
 }
