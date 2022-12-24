@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/card_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:video_player/video_player.dart';
 
 import '../main.dart';
 
@@ -19,6 +20,20 @@ class SchoolDetailsScreen extends StatefulWidget {
 
 class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
   MskoolController mskoolController = Get.find<MskoolController>();
+
+  final VideoPlayerController controller =
+      VideoPlayerController.asset("assets/video/highschool.mp4");
+
+  @override
+  void initState() {
+    controller.initialize().then((value) {
+      controller.play();
+      controller.setLooping(true);
+      setState(() {});
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     logger.d(mskoolController.universalInsCodeModel!.toJson());
@@ -33,11 +48,14 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SvgPicture.asset(
-              "assets/svg/ShoolDetails.svg",
-              fit: BoxFit.cover,
-              // color: Colors.red,
-            ),
+            // SvgPicture.asset(
+            //   "assets/svg/ShoolDetails.svg",
+            //   fit: BoxFit.cover,
+            //   // color: Colors.red,
+            // ),
+            AspectRatio(
+                aspectRatio: controller.value.aspectRatio,
+                child: VideoPlayer(controller)),
             Transform.translate(
               offset: const Offset(0, -36),
               child: CardWidget(

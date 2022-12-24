@@ -1220,7 +1220,8 @@ class AcademicYearFeeDetail extends StatelessWidget {
                           fontWeight: FontWeight.w500, fontSize: 16.0),
                       children: [
                         TextSpan(
-                            text: "2022-2023",
+                            text: payOnlineDataController
+                                .academicYearFeeDet.first.aSMAYYear,
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!

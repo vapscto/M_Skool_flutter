@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/controller/tab_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
+import 'package:video_player/video_player.dart';
 
 class CertificateHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -30,19 +31,25 @@ class _CertificateHomeScreenState extends State<CertificateHomeScreen>
   final List<Widget> tabsChildren = [];
 
   final PageController pageViewController = PageController();
+  VideoPlayerController? controller;
 
   @override
   void initState() {
+    controller = VideoPlayerController.asset(
+      'assets/video/certification.mp4',
+    );
     tabsChildren.addAll([
       ApplyNow(
         loginSuccessModel: widget.loginSuccessModel,
         mskoolController: widget.mskoolController,
+        controller: controller!,
       ),
       ViewDetails(
         loginSuccessModel: widget.loginSuccessModel,
         mskoolController: widget.mskoolController,
       ),
     ]);
+
     tabController = TabController(length: 2, vsync: this);
     tabController!.addListener(() {
       tabStateController.updateSelectedIndex(tabController!.index);

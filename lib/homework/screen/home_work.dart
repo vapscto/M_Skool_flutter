@@ -319,37 +319,44 @@ class _HomeWorkState extends State<HomeWork> {
                                   desc:
                                       "We are getting your homework, please wait while we do it for you")
                               : widget.hwCwNbController.homeWorkList.isEmpty
-                                  ? Column(
-                                      children: [
-                                        // SizedBox(
-                                        //   height: Get.height * 0.2,
-                                        // ),
-                                        Image.asset(
-                                          'assets/images/hw_cw_not.jpg',
-                                          height: Get.height * 0.3,
-                                        ),
-                                        Text(
-                                          "No homework found",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .merge(const TextStyle(
-                                                  fontSize: 22.0)),
-                                        ),
-                                        const SizedBox(
-                                          height: 8.0,
-                                        ),
-                                        Text(
-                                            "Hurray! We couldn't find any homework for this particular date. So Enjoy",
-                                            textAlign: TextAlign.center,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelSmall!
-                                                .merge(const TextStyle(
-                                                    letterSpacing: 0.2,
-                                                    fontSize: 16))),
-                                      ],
+                                  ? const AnimatedProgressWidget(
+                                      title: "No Homework Found",
+                                      desc:
+                                          "Hurray! We couldn't find any homework for this particular date, So enjoy",
+                                      animationPath: "assets/json/nodata.json",
+                                      animatorHeight: 250,
                                     )
+                                  // ? Column(
+                                  //     children: [
+                                  //       // SizedBox(
+                                  //       //   height: Get.height * 0.2,
+                                  //       // ),
+                                  //       Image.asset(
+                                  //         'assets/images/hw_cw_not.jpg',
+                                  //         height: Get.height * 0.3,
+                                  //       ),
+                                  //       Text(
+                                  //         "No homework found",
+                                  //         style: Theme.of(context)
+                                  //             .textTheme
+                                  //             .titleSmall!
+                                  //             .merge(const TextStyle(
+                                  //                 fontSize: 22.0)),
+                                  //       ),
+                                  //       const SizedBox(
+                                  //         height: 8.0,
+                                  //       ),
+                                  //       Text(
+                                  //           "Hurray! We couldn't find any homework for this particular date. So Enjoy",
+                                  //           textAlign: TextAlign.center,
+                                  //           style: Theme.of(context)
+                                  //               .textTheme
+                                  //               .labelSmall!
+                                  //               .merge(const TextStyle(
+                                  //                   letterSpacing: 0.2,
+                                  //                   fontSize: 16))),
+                                  //     ],
+                                  //   )
                                   : ListView.separated(
                                       shrinkWrap: true,
                                       physics:

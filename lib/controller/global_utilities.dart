@@ -78,13 +78,13 @@ String baseUrlFromInsCode(String pageName, MskoolController mskoolController) {
 String getDashBoardIconByName(String title) {
   String returnValue = "assets/images/";
   switch (title) {
-    case "Student Attendance":
+    case "Attendance":
       returnValue += "Attendance.png";
       break;
     case "Fee Details":
       returnValue += "FeeReceipt.png";
       break;
-    case "Online Fee Payment":
+    case "Fee Payment":
       returnValue += "OnlinePayment.png";
       break;
     case "Fee Analysis":
@@ -99,7 +99,7 @@ String getDashBoardIconByName(String title) {
     case "COE":
       returnValue += "Coe.png";
       break;
-    case "Student Notice Board":
+    case "Notice Board":
       returnValue += "Noticeboard.png";
       break;
     case "Library":
@@ -114,7 +114,7 @@ String getDashBoardIconByName(String title) {
     case "Interaction":
       returnValue += "Interaction.png";
       break;
-    case "Apply Certificate":
+    case "Certificate":
       returnValue += "Certificate.png";
       break;
     case "Time Table":

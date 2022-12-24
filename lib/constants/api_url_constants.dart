@@ -135,4 +135,6 @@ class URLS {
 
   /////   Interaction
   static String getStaffList = 'api/IVRM_InteractionsFacade/getdetails/';
+
+  static String examGraph = "api/AdmissionCtrl/stdDashboardExam";
 }

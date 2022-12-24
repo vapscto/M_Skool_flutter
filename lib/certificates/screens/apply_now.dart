@@ -17,14 +17,17 @@ import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:m_skool_flutter/widget/pgr_widget.dart';
 import 'package:m_skool_flutter/widget/success_widget.dart';
+import 'package:video_player/video_player.dart';
 
 class ApplyNow extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final VideoPlayerController controller;
   const ApplyNow(
       {super.key,
       required this.loginSuccessModel,
-      required this.mskoolController});
+      required this.mskoolController,
+      required this.controller});
 
   @override
   State<ApplyNow> createState() => _ApplyNowState();
@@ -42,6 +45,16 @@ class _ApplyNowState extends State<ApplyNow> {
   CertificateListValues? selectedValue;
   final TextEditingController reason = TextEditingController();
   final TextEditingController date = TextEditingController();
+
+  @override
+  void initState() {
+    widget.controller.initialize().then((value) {
+      widget.controller.play();
+      widget.controller.setLooping(true);
+      setState(() {});
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -402,9 +415,13 @@ class _ApplyNowState extends State<ApplyNow> {
                           const SizedBox(
                             height: 36.0,
                           ),
-                          Center(
-                              child:
-                                  Image.asset("assets/images/cert_illus.png")),
+
+                          AspectRatio(
+                              aspectRatio: widget.controller.value.aspectRatio,
+                              child: VideoPlayer(widget.controller)),
+                          // Center(
+                          //     child:
+                          //         Image.asset("assets/images/cert_illus.png")),
                         ],
                       );
                     }

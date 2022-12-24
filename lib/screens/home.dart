@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:m_skool_flutter/apis/dashboard_exam_api.dart';
 import 'package:m_skool_flutter/apis/fee_reminder_api.dart';
 import 'package:m_skool_flutter/attendance/screens/home_page.dart';
 import 'package:m_skool_flutter/certificates/screens/cert_home.dart';
@@ -22,15 +24,18 @@ import 'package:m_skool_flutter/information/screen/info_home.dart';
 import 'package:m_skool_flutter/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/model/exam_list.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/screens/home_page_drawer.dart';
 import 'package:m_skool_flutter/tabs/profile_tab.dart';
 import 'package:m_skool_flutter/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/widget/card_widget.dart';
+import 'package:m_skool_flutter/widget/coe_slider_item.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/dashbaord_fee_widget.dart';
 import 'package:m_skool_flutter/widget/dashboard_attendance.dart';
+import 'package:m_skool_flutter/widget/dashboard_line_chart.dart';
 import 'package:m_skool_flutter/widget/dashboard_timetable_widget.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -261,6 +266,8 @@ class _HomeTabState extends State<HomeTab> {
     // "library",
     // "timetable"
   ];
+
+  //ExamListValues? selectedOption;
   @override
   void initState() {
     super.initState();
@@ -286,61 +293,62 @@ class _HomeTabState extends State<HomeTab> {
                       child: CarouselSlider.builder(
                         itemCount: 2,
                         itemBuilder: (_, index, i) {
-                          return Container(
-                            padding: const EdgeInsets.all(20.0),
-                            height: Get.height * 0.2,
-                            width: Get.width,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
-                              borderRadius: BorderRadius.circular(16.0),
-                              image: const DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage("assets/images/banner.png"),
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 7,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(
-                                        height: 12.0,
-                                      ),
-                                      Text(
-                                        "IT’S SAKSHI’S BIRTHDAY",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium!
-                                            .merge(
-                                              const TextStyle(
-                                                fontSize: 20.0,
-                                              ),
-                                            ),
-                                      ),
-                                      const SizedBox(
-                                        height: 8.0,
-                                      ),
-                                      Text(
-                                        "Wohoo! It’s your friends birthday! Make their day by wishing them on this special day",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelMedium!
-                                            .merge(
-                                              const TextStyle(
-                                                fontSize: 15.0,
-                                              ),
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const Expanded(flex: 2, child: SizedBox()),
-                              ],
-                            ),
-                          );
+                          return CoeSliderItem();
+                          // return Container(
+                          //   padding: const EdgeInsets.all(20.0),
+                          //   height: Get.height * 0.2,
+                          //   width: Get.width,
+                          //   decoration: BoxDecoration(
+                          //     color: Colors.grey.shade100,
+                          //     borderRadius: BorderRadius.circular(16.0),
+                          //     image: const DecorationImage(
+                          //       fit: BoxFit.cover,
+                          //       image: AssetImage("assets/images/banner.png"),
+                          //     ),
+                          //   ),
+                          //   child: Row(
+                          //     children: [
+                          //       Expanded(
+                          //         flex: 7,
+                          //         child: Column(
+                          //           crossAxisAlignment:
+                          //               CrossAxisAlignment.start,
+                          //           children: [
+                          //             const SizedBox(
+                          //               height: 12.0,
+                          //             ),
+                          //             Text(
+                          //               "IT’S SAKSHI’S BIRTHDAY",
+                          //               style: Theme.of(context)
+                          //                   .textTheme
+                          //                   .titleMedium!
+                          //                   .merge(
+                          //                     const TextStyle(
+                          //                       fontSize: 20.0,
+                          //                     ),
+                          //                   ),
+                          //             ),
+                          //             const SizedBox(
+                          //               height: 8.0,
+                          //             ),
+                          //             Text(
+                          //               "Wohoo! It’s your friends birthday! Make their day by wishing them on this special day",
+                          //               style: Theme.of(context)
+                          //                   .textTheme
+                          //                   .labelMedium!
+                          //                   .merge(
+                          //                     const TextStyle(
+                          //                       fontSize: 15.0,
+                          //                     ),
+                          //                   ),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //       const Expanded(flex: 2, child: SizedBox()),
+                          //     ],
+                          //   ),
+                          // );
                         },
                         options: CarouselOptions(
                           aspectRatio: 16 / 9,
@@ -489,6 +497,113 @@ class _HomeTabState extends State<HomeTab> {
                             ),
                           )
                         : Container(),
+                    // const SizedBox(
+                    //   height: 6.0,
+                    // ),
+                    (dashboardController.timeTableList.isNotEmpty)
+                        ? CustomContainer(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 6.0,
+                                ),
+                                ListTile(
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (_) {
+                                      return ExamHome(
+                                          loginSuccessModel:
+                                              widget.loginSuccessModel,
+                                          mskoolController:
+                                              widget.mskoolController);
+                                    }));
+                                  },
+                                  visualDensity: const VisualDensity(
+                                    vertical: VisualDensity.minimumDensity,
+                                  ),
+                                  // contentPadding:
+                                  //     EdgeInsets.symmetric(horizontal: 16.0),
+                                  title: const Text("Exam"),
+                                  trailing:
+                                      const Icon(Icons.chevron_right_rounded),
+                                ),
+                                Transform.translate(
+                                  offset: const Offset(0, -4.0),
+                                  child: Obx(() {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16.0),
+                                      child: DropdownButton<ExamListNewValues>(
+                                        value: dashboardController
+                                            .selectedOption.value,
+                                        isDense: true,
+                                        underline: const SizedBox(),
+                                        isExpanded: false,
+                                        icon: const Icon(
+                                            Icons.keyboard_arrow_down),
+                                        style: const TextStyle(
+                                            fontSize: 14.0,
+                                            color: Colors.black),
+                                        items: List.generate(
+                                            dashboardController
+                                                .examList.first.values!.length,
+                                            (index) => DropdownMenuItem(
+                                                value: dashboardController
+                                                    .examList.first.values!
+                                                    .elementAt(index),
+                                                child: Text(dashboardController
+                                                    .examList.first.values!
+                                                    .elementAt(index)
+                                                    .eMEExamName!))),
+                                        onChanged: (value) async {
+                                          dashboardController
+                                              .selectedOption.value = value!;
+                                          await DashboardExamApi.instance.loadExamData(
+                                              miId: widget
+                                                  .loginSuccessModel.mIID!,
+                                              asmayId: widget
+                                                  .loginSuccessModel.asmaYId!,
+                                              asmclId: widget
+                                                  .loginSuccessModel.asmcLId!,
+                                              asmsId: widget
+                                                  .loginSuccessModel.asmSId!,
+                                              amstId: widget
+                                                  .loginSuccessModel.amsTId!,
+                                              emeId: dashboardController
+                                                  .selectedOption.value.eMEId!,
+                                              base: baseUrlFromInsCode("portal",
+                                                  widget.mskoolController),
+                                              dashboardController:
+                                                  dashboardController);
+                                        },
+                                      ),
+                                    );
+                                  }),
+                                ),
+                                const SizedBox(
+                                  height: 12.0,
+                                ),
+                                Obx(() {
+                                  //logger.d("Updating here");
+                                  return DashboardLineChart(
+                                    selectedExam: dashboardController
+                                        .selectedOption.value,
+                                    loginSuccessModel: widget.loginSuccessModel,
+                                    mskoolController: widget.mskoolController,
+                                    dashboardController: dashboardController,
+                                  );
+                                }),
+                                const SizedBox(
+                                  height: 12.0,
+                                ),
+                              ],
+                            ),
+                          )
+                        : Container(),
+                    const SizedBox(
+                      height: 16.0,
+                    ),
                     Text(
                       "Dashboard",
                       style: Theme.of(context).textTheme.titleMedium!.merge(
@@ -498,411 +613,421 @@ class _HomeTabState extends State<HomeTab> {
                     const SizedBox(
                       height: 16.0,
                     ),
-                    Wrap(
-                      alignment: WrapAlignment.spaceAround,
-                      spacing: 3,
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      children: List.generate(
-                          widget.loginSuccessModel.staffmobileappprivileges!
-                              .values!.length,
-                          (i) => InkWell(
-                                onTap: () {
-                                  switch (widget
-                                      .loginSuccessModel
-                                      .staffmobileappprivileges!
-                                      .values![i]
-                                      .pagename) {
-                                    case "Student Attendance":
-                                      Get.to(() => AttendanceHomeScreen(
-                                          loginSuccessModel:
-                                              widget.loginSuccessModel,
-                                          mskoolController:
-                                              widget.mskoolController));
-                                      break;
-                                    case "Fee Details":
-                                      // Get.to(() => FeeHomeScreen(
-                                      //     loginSuccessModel:
-                                      //         widget.loginSuccessModel,
-                                      //     mskoolController:
-                                      //         widget.mskoolController));
-                                      break;
-                                    case "Online Fee Payment":
-                                      Get.to(
-                                        () => OnlinePaymentScreen(
-                                          loginSuccessModel:
-                                              widget.loginSuccessModel,
-                                          mskoolController:
-                                              widget.mskoolController,
-                                          title:
-                                              "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                        ),
-                                      );
-                                      break;
-                                    case "Fee Analysis":
-                                      Get.to(() => FeeAnalysisScreen(
+                    Center(
+                      child: Wrap(
+                        alignment: WrapAlignment.start,
+                        spacing: 10.0,
+                        runSpacing: 10.0,
+
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        //runAlignment: WrapAlignment,
+                        children: List.generate(
+                            widget.loginSuccessModel.staffmobileappprivileges!
+                                .values!.length,
+                            (i) => InkWell(
+                                  onTap: () {
+                                    logger.d(Get.width);
+                                    switch (widget
+                                        .loginSuccessModel
+                                        .staffmobileappprivileges!
+                                        .values![i]
+                                        .pagename) {
+                                      case "Attendance":
+                                        Get.to(() => AttendanceHomeScreen(
+                                            loginSuccessModel:
+                                                widget.loginSuccessModel,
+                                            mskoolController:
+                                                widget.mskoolController));
+                                        break;
+                                      case "Fee Details":
+                                        // Get.to(() => FeeHomeScreen(
+                                        //     loginSuccessModel:
+                                        //         widget.loginSuccessModel,
+                                        //     mskoolController:
+                                        //         widget.mskoolController));
+                                        break;
+                                      case "Fee Payment":
+                                        Get.to(
+                                          () => OnlinePaymentScreen(
                                             loginSuccessModel:
                                                 widget.loginSuccessModel,
                                             mskoolController:
                                                 widget.mskoolController,
                                             title:
                                                 "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                          ));
-                                      break;
-                                    case "Classwork":
-                                      Get.to(() => ClassWorkHomeScreen(
-                                          loginSuccessModel:
-                                              widget.loginSuccessModel,
-                                          mskoolController:
-                                              widget.mskoolController,
-                                          // hwCwNbController:
-                                          //     widget.hwCwNbController,
-                                          title:
-                                              "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}"));
-                                      break;
-                                    case "Homework":
-                                      Get.to(
-                                        () => HomeWorkScreen(
-                                          loginSuccessModel:
-                                              widget.loginSuccessModel,
-                                          mskoolController:
-                                              widget.mskoolController,
-                                          // hwCwNbController:
-                                          //     widget.hwCwNbController,
-                                          title:
-                                              "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                        ),
-                                      );
-                                      break;
-                                    case "COE":
-                                      Get.to(() => CoeHome(
+                                          ),
+                                        );
+                                        break;
+                                      case "Fee Analysis":
+                                        Get.to(() => FeeAnalysisScreen(
+                                              loginSuccessModel:
+                                                  widget.loginSuccessModel,
+                                              mskoolController:
+                                                  widget.mskoolController,
+                                              title:
+                                                  "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                            ));
+                                        break;
+                                      case "Classwork":
+                                        Get.to(() => ClassWorkHomeScreen(
                                             loginSuccessModel:
                                                 widget.loginSuccessModel,
                                             mskoolController:
                                                 widget.mskoolController,
                                             // hwCwNbController:
                                             //     widget.hwCwNbController,
-                                            // title:
-                                            //     "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}"
-                                          ));
-                                      break;
-                                    case "Student Notice Board":
-                                      Get.to(
-                                        () => NoticeHome(
-                                          loginSuccessModel:
-                                              widget.loginSuccessModel,
-                                          mskoolController:
-                                              widget.mskoolController,
-                                          hwCwNbController:
-                                              widget.hwCwNbController,
-                                          appBarTitle:
-                                              "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                        ),
-                                      );
-                                      break;
-                                    case "Library":
-                                      String base = baseUrlFromInsCode(
-                                          "portal", widget.mskoolController);
-                                      Get.to(
-                                        () => LibraryHome(
-                                          miId: widget.loginSuccessModel.mIID!,
-                                          asmayId:
-                                              widget.loginSuccessModel.asmaYId!,
-                                          asmtId:
-                                              widget.loginSuccessModel.amsTId!,
-                                          base: base,
-                                          title:
-                                              "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                        ),
-                                      );
-                                      break;
-                                    case "Syllabus":
-                                      break;
-                                    case "Exam":
-                                      Get.to(() => ExamHome(
+                                            title:
+                                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}"));
+                                        break;
+                                      case "Homework":
+                                        Get.to(
+                                          () => HomeWorkScreen(
                                             loginSuccessModel:
                                                 widget.loginSuccessModel,
                                             mskoolController:
                                                 widget.mskoolController,
-                                          ));
-                                      break;
-                                    case "Interaction":
-                                      Get.to(() => InteractionHomeScreen(
-                                            loginSuccessModel:
-                                                widget.loginSuccessModel,
-                                            mskoolController:
-                                                widget.mskoolController,
-                                          ));
-                                      break;
-                                    case "Apply Certificate":
-                                      Get.to(() => CertificateHomeScreen(
-                                            loginSuccessModel:
-                                                widget.loginSuccessModel,
-                                            mskoolController:
-                                                widget.mskoolController,
-                                          ));
-                                      break;
-                                    case "Time Table":
-                                      Get.to(() => TimeTableHome(
-                                            loginSuccessModel:
-                                                widget.loginSuccessModel,
-                                            mskoolController:
-                                                widget.mskoolController,
-                                          ));
-                                      break;
-                                    case "Fee Receipt":
-                                      Get.to(
-                                        () => FeeReceiptHome(
-                                          loginSuccessModel:
-                                              widget.loginSuccessModel,
-                                          mskoolController:
-                                              widget.mskoolController,
-                                          title:
-                                              "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                        ),
-                                      );
-                                      break;
-                                    default:
-                                  }
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(3.0),
-                                  child: SizedBox(
-                                    width: 80,
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Image.asset(
-                                            getDashBoardIconByName(
-                                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}"),
-                                            height: 60,
+                                            // hwCwNbController:
+                                            //     widget.hwCwNbController,
+                                            title:
+                                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
                                           ),
-                                        ),
-                                        Text(
-                                          "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                          textAlign: TextAlign.center,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall,
-                                        )
-                                      ],
+                                        );
+                                        break;
+                                      case "COE":
+                                        Get.to(() => CoeHome(
+                                              loginSuccessModel:
+                                                  widget.loginSuccessModel,
+                                              mskoolController:
+                                                  widget.mskoolController,
+                                              // hwCwNbController:
+                                              //     widget.hwCwNbController,
+                                              // title:
+                                              //     "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}"
+                                            ));
+                                        break;
+                                      case "Notice Board":
+                                        Get.to(
+                                          () => NoticeHome(
+                                            loginSuccessModel:
+                                                widget.loginSuccessModel,
+                                            mskoolController:
+                                                widget.mskoolController,
+                                            hwCwNbController:
+                                                widget.hwCwNbController,
+                                            appBarTitle:
+                                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                          ),
+                                        );
+                                        break;
+                                      case "Library":
+                                        String base = baseUrlFromInsCode(
+                                            "portal", widget.mskoolController);
+                                        Get.to(
+                                          () => LibraryHome(
+                                            miId:
+                                                widget.loginSuccessModel.mIID!,
+                                            asmayId: widget
+                                                .loginSuccessModel.asmaYId!,
+                                            asmtId: widget
+                                                .loginSuccessModel.amsTId!,
+                                            base: base,
+                                            title:
+                                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                          ),
+                                        );
+                                        break;
+                                      case "Syllabus":
+                                        break;
+                                      case "Exam":
+                                        Get.to(() => ExamHome(
+                                              loginSuccessModel:
+                                                  widget.loginSuccessModel,
+                                              mskoolController:
+                                                  widget.mskoolController,
+                                            ));
+                                        break;
+                                      case "Interaction":
+                                        Get.to(() => InteractionHomeScreen(
+                                              loginSuccessModel:
+                                                  widget.loginSuccessModel,
+                                              mskoolController:
+                                                  widget.mskoolController,
+                                            ));
+                                        break;
+                                      case "Certificate":
+                                        Get.to(() => CertificateHomeScreen(
+                                              loginSuccessModel:
+                                                  widget.loginSuccessModel,
+                                              mskoolController:
+                                                  widget.mskoolController,
+                                            ));
+                                        break;
+                                      case "Time Table":
+                                        Get.to(() => TimeTableHome(
+                                              loginSuccessModel:
+                                                  widget.loginSuccessModel,
+                                              mskoolController:
+                                                  widget.mskoolController,
+                                            ));
+                                        break;
+                                      case "Fee Receipt":
+                                        Get.to(
+                                          () => FeeReceiptHome(
+                                            loginSuccessModel:
+                                                widget.loginSuccessModel,
+                                            mskoolController:
+                                                widget.mskoolController,
+                                            title:
+                                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                          ),
+                                        );
+                                        break;
+                                      default:
+                                    }
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: SizedBox(
+                                      width: 80,
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Image.asset(
+                                              getDashBoardIconByName(
+                                                  "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}"),
+                                              height: 60,
+                                            ),
+                                          ),
+                                          Text(
+                                            "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                            //maxLines: 1,
+                                            textAlign: TextAlign.center,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .merge(const TextStyle(
+                                                    fontSize: 13.0)),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              )),
+                                )),
+                      ),
                     ),
-                    ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: widget.loginSuccessModel
-                            .staffmobileappprivileges!.values!.length,
-                        shrinkWrap: true,
-                        itemBuilder: (_, index) {
-                          final LoginValues values = widget.loginSuccessModel
-                              .staffmobileappprivileges!.values!
-                              .elementAt(index);
-                          final String category = values.pageurl!.toLowerCase();
-                          return ListTile(
-                            onTap: () {
-                              if (category == "attendance") {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return AttendanceHomeScreen(
-                                        loginSuccessModel:
-                                            widget.loginSuccessModel,
-                                        mskoolController:
-                                            widget.mskoolController,
-                                      );
-                                    },
-                                  ),
-                                );
-                                return;
-                              }
-                              if (category == 'fees') {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (_) {
-                                    return FeeHomeScreen(
-                                      loginSuccessModel:
-                                          widget.loginSuccessModel,
-                                      mskoolController: widget.mskoolController,
-                                    );
-                                  }),
-                                );
-                              }
+                    // ListView.builder(
+                    //     physics: const NeverScrollableScrollPhysics(),
+                    //     itemCount: widget.loginSuccessModel
+                    //         .staffmobileappprivileges!.values!.length,
+                    //     shrinkWrap: true,
+                    //     itemBuilder: (_, index) {
+                    //       final LoginValues values = widget.loginSuccessModel
+                    //           .staffmobileappprivileges!.values!
+                    //           .elementAt(index);
+                    //       final String category = values.pageurl!.toLowerCase();
+                    //       return ListTile(
+                    //         onTap: () {
+                    //           if (category == "attendance") {
+                    //             Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                 builder: (_) {
+                    //                   return AttendanceHomeScreen(
+                    //                     loginSuccessModel:
+                    //                         widget.loginSuccessModel,
+                    //                     mskoolController:
+                    //                         widget.mskoolController,
+                    //                   );
+                    //                 },
+                    //               ),
+                    //             );
+                    //             return;
+                    //           }
+                    //           if (category == 'fees') {
+                    //             Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(builder: (_) {
+                    //                 return FeeHomeScreen(
+                    //                   loginSuccessModel:
+                    //                       widget.loginSuccessModel,
+                    //                   mskoolController: widget.mskoolController,
+                    //                 );
+                    //               }),
+                    //             );
+                    //           }
 
-                              if (category == "exam") {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return ExamHome(
-                                        loginSuccessModel:
-                                            widget.loginSuccessModel,
-                                        mskoolController:
-                                            widget.mskoolController,
-                                      );
-                                    },
-                                  ),
-                                );
-                                return;
-                              }
+                    //           if (category == "exam") {
+                    //             Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                 builder: (_) {
+                    //                   return ExamHome(
+                    //                     loginSuccessModel:
+                    //                         widget.loginSuccessModel,
+                    //                     mskoolController:
+                    //                         widget.mskoolController,
+                    //                   );
+                    //                 },
+                    //               ),
+                    //             );
+                    //             return;
+                    //           }
 
-                              if (category == "task") {
-                                return;
-                              }
+                    //           if (category == "task") {
+                    //             return;
+                    //           }
 
-                              // if (category == "events") {
-                              //   Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (_) {
-                              //         return CoeHome(
-                              //           pageController: ,
-                              //           loginSuccessModel: widget.loginSuccessModel,
-                              //           mskoolController: widget.mskoolController,
-                              //         );
-                              //       },
-                              //     ),
-                              //   );
-                              //   return;
-                              // }
+                    //           // if (category == "events") {
+                    //           //   Navigator.push(
+                    //           //     context,
+                    //           //     MaterialPageRoute(
+                    //           //       builder: (_) {
+                    //           //         return CoeHome(
+                    //           //           pageController: ,
+                    //           //           loginSuccessModel: widget.loginSuccessModel,
+                    //           //           mskoolController: widget.mskoolController,
+                    //           //         );
+                    //           //       },
+                    //           //     ),
+                    //           //   );
+                    //           //   return;
+                    //           // }
 
-                              if (category == "library") {
-                                String base = baseUrlFromInsCode(
-                                    "portal", widget.mskoolController);
-                                // debugPrint(base);
-                                // debugPrint("Miid -> ${widget.loginSuccessModel.mIID}");
-                                // debugPrint(
-                                //     "asmayId -> ${widget.loginSuccessModel.asmaYId}");
-                                // debugPrint(
-                                //     "amstId -> ${widget.loginSuccessModel.amsTId}");
-                                if (base.isEmpty) {
-                                  return;
-                                }
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return LibraryHome(
-                                        miId: widget.loginSuccessModel.mIID!,
-                                        asmayId:
-                                            widget.loginSuccessModel.asmaYId!,
-                                        asmtId:
-                                            widget.loginSuccessModel.amsTId!,
-                                        base: base,
-                                        title: "Library",
-                                      );
-                                    },
-                                  ),
-                                );
-                                return;
-                              }
+                    //           if (category == "library") {
+                    //             String base = baseUrlFromInsCode(
+                    //                 "portal", widget.mskoolController);
+                    //             // debugPrint(base);
+                    //             // debugPrint("Miid -> ${widget.loginSuccessModel.mIID}");
+                    //             // debugPrint(
+                    //             //     "asmayId -> ${widget.loginSuccessModel.asmaYId}");
+                    //             // debugPrint(
+                    //             //     "amstId -> ${widget.loginSuccessModel.amsTId}");
+                    //             if (base.isEmpty) {
+                    //               return;
+                    //             }
+                    //             Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                 builder: (_) {
+                    //                   return LibraryHome(
+                    //                     miId: widget.loginSuccessModel.mIID!,
+                    //                     asmayId:
+                    //                         widget.loginSuccessModel.asmaYId!,
+                    //                     asmtId:
+                    //                         widget.loginSuccessModel.amsTId!,
+                    //                     base: base,
+                    //                     title: "Library",
+                    //                   );
+                    //                 },
+                    //               ),
+                    //             );
+                    //             return;
+                    //           }
 
-                              if (category == "classwork") {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return InfoHome(
-                                        loginSuccessModel:
-                                            widget.loginSuccessModel,
-                                        mskoolController:
-                                            widget.mskoolController,
-                                      );
-                                    },
-                                  ),
-                                );
-                                return;
-                              }
-                              if (category == "homework") {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return TimeTableHome(
-                                        loginSuccessModel:
-                                            widget.loginSuccessModel,
-                                        mskoolController:
-                                            widget.mskoolController,
-                                      );
-                                    },
-                                  ),
-                                );
-                                return;
-                              }
-                              if (category == "notice") {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (_) {
-                                //       return NoticeHome(
-                                //         showAppBar: true,
-                                //         loginSuccessModel: widget.loginSuccessModel,
-                                //         mskoolController: widget.mskoolController,
-                                //       );
-                                //     },
-                                //   ),
-                                // );
-                                return;
-                              }
-                              if (category == "certificate") {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return CertificateHomeScreen(
-                                        loginSuccessModel:
-                                            widget.loginSuccessModel,
-                                        mskoolController:
-                                            widget.mskoolController,
-                                      );
-                                    },
-                                  ),
-                                );
-                                return;
-                              }
+                    //           if (category == "classwork") {
+                    //             Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                 builder: (_) {
+                    //                   return InfoHome(
+                    //                     loginSuccessModel:
+                    //                         widget.loginSuccessModel,
+                    //                     mskoolController:
+                    //                         widget.mskoolController,
+                    //                   );
+                    //                 },
+                    //               ),
+                    //             );
+                    //             return;
+                    //           }
+                    //           if (category == "homework") {
+                    //             Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                 builder: (_) {
+                    //                   return TimeTableHome(
+                    //                     loginSuccessModel:
+                    //                         widget.loginSuccessModel,
+                    //                     mskoolController:
+                    //                         widget.mskoolController,
+                    //                   );
+                    //                 },
+                    //               ),
+                    //             );
+                    //             return;
+                    //           }
+                    //           if (category == "notice") {
+                    //             // Navigator.push(
+                    //             //   context,
+                    //             //   MaterialPageRoute(
+                    //             //     builder: (_) {
+                    //             //       return NoticeHome(
+                    //             //         showAppBar: true,
+                    //             //         loginSuccessModel: widget.loginSuccessModel,
+                    //             //         mskoolController: widget.mskoolController,
+                    //             //       );
+                    //             //     },
+                    //             //   ),
+                    //             // );
+                    //             return;
+                    //           }
+                    //           if (category == "certificate") {
+                    //             Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                 builder: (_) {
+                    //                   return CertificateHomeScreen(
+                    //                     loginSuccessModel:
+                    //                         widget.loginSuccessModel,
+                    //                     mskoolController:
+                    //                         widget.mskoolController,
+                    //                   );
+                    //                 },
+                    //               ),
+                    //             );
+                    //             return;
+                    //           }
 
-                              if (category == "syllabus") {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return FeedBackHome(
-                                        loginSuccessModel:
-                                            widget.loginSuccessModel,
-                                        mskoolController:
-                                            widget.mskoolController,
-                                      );
-                                    },
-                                  ),
-                                );
-                                return;
-                              }
-                              if (category == "interaction") {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return InteractionHomeScreen(
-                                        loginSuccessModel:
-                                            widget.loginSuccessModel,
-                                        mskoolController:
-                                            widget.mskoolController,
-                                      );
-                                    },
-                                  ),
-                                );
-                                return;
-                              }
-                            },
-                            title: Text(widget.loginSuccessModel
-                                .staffmobileappprivileges!.values!
-                                .elementAt(index)
-                                .pagename!),
-                          );
-                        }),
+                    //           if (category == "syllabus") {
+                    //             Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                 builder: (_) {
+                    //                   return FeedBackHome(
+                    //                     loginSuccessModel:
+                    //                         widget.loginSuccessModel,
+                    //                     mskoolController:
+                    //                         widget.mskoolController,
+                    //                   );
+                    //                 },
+                    //               ),
+                    //             );
+                    //             return;
+                    //           }
+                    //           if (category == "interaction") {
+                    //             Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                 builder: (_) {
+                    //                   return InteractionHomeScreen(
+                    //                     loginSuccessModel:
+                    //                         widget.loginSuccessModel,
+                    //                     mskoolController:
+                    //                         widget.mskoolController,
+                    //                   );
+                    //                 },
+                    //               ),
+                    //             );
+                    //             return;
+                    //           }
+                    //         },
+                    //         title: Text(widget.loginSuccessModel
+                    //             .staffmobileappprivileges!.values!
+                    //             .elementAt(index)
+                    //             .pagename!),
+                    //       );
+                    //     }),
                   ],
                 ),
               ),

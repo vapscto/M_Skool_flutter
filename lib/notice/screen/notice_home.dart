@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -437,6 +438,7 @@ class _NoticeHomeState extends State<NoticeHome> {
                                                 value: snapshot.data!
                                                     .elementAt(index),
                                                 isFiltring: false,
+                                                forSyllabus: false,
                                               ));
                                         },
                                         child: NoticeItem(
@@ -561,6 +563,7 @@ class _SyllabusNoticesState extends State<SyllabusNotices> {
                           color: usedColor.elementAt(index),
                           value: snapshot.data!.elementAt(index),
                           isFiltring: false,
+                          forSyllabus: true,
                         ));
                   },
                   child: NoticeItem(
@@ -620,7 +623,7 @@ class _TTNoticeState extends State<TTNotice> {
             asmayId: widget.loginSuccessModel.asmaYId!,
             userId: widget.loginSuccessModel.userId!,
             roleId: widget.loginSuccessModel.roleId!,
-            flag: "S",
+            flag: "TT",
             base: baseUrlFromInsCode("portal", widget.mskoolController)),
         builder: (_, snapshot) {
           if (snapshot.hasData) {
@@ -892,12 +895,15 @@ class TTNoticeItem extends StatelessWidget {
             InkWell(
               onTap: () async {
                 if (values.iNTBFLFileName == null ||
-                    values.intBFilePath == null) {
+                    values.iNTBFLFilePath == null) {
+                  // logger.d(values.iNTBFLFileName);
+                  // logger.d(values.iNTBFLFilePath);
+                  Fluttertoast.showToast(msg: "No File to download");
                   return;
                 }
 
-                if (await canLaunchUrl(Uri.parse(values.intBFilePath!))) {
-                  await launchUrl(Uri.parse(values.intBFilePath!),
+                if (await canLaunchUrl(Uri.parse(values.iNTBFLFilePath!))) {
+                  await launchUrl(Uri.parse(values.iNTBFLFilePath!),
                       mode: LaunchMode.externalApplication);
                 } else {
                   Fluttertoast.showToast(

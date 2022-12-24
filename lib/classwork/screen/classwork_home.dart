@@ -66,6 +66,16 @@ class _ClassworkHomeState extends State<ClassworkHome> {
                         ),
                         builder: (_, snapshot) {
                           if (snapshot.hasData) {
+                            if (snapshot.data!.isEmpty) {
+                              return const AnimatedProgressWidget(
+                                title: "No Classwork Found",
+                                desc:
+                                    "Hurray! We couldn't find any classwork for this particular date, So enjoy",
+                                animationPath: "assets/json/nodata.json",
+                                animatorHeight: 250,
+                              );
+                            }
+
                             return ListView.separated(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),

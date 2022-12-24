@@ -26,6 +26,8 @@ class AcademicYearFeeDtlModel {
 
 class AcademicYearFeeDtlModelValues {
   String? type;
+  int? aSMAYId;
+  String? aSMAYYear;
   double? fSSNetAmount;
   double? fSSConcessionAmount;
   double? fSSFineAmount;
@@ -34,6 +36,8 @@ class AcademicYearFeeDtlModelValues {
 
   AcademicYearFeeDtlModelValues(
       {this.type,
+      this.aSMAYId,
+      this.aSMAYYear,
       this.fSSNetAmount,
       this.fSSConcessionAmount,
       this.fSSFineAmount,
@@ -42,6 +46,8 @@ class AcademicYearFeeDtlModelValues {
 
   AcademicYearFeeDtlModelValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
+    aSMAYId = json['ASMAY_Id'];
+    aSMAYYear = json['ASMAY_Year'];
     fSSNetAmount = json['FSS_NetAmount'] + 0.0;
     fSSConcessionAmount = json['FSS_ConcessionAmount'] + 0.0;
     fSSFineAmount = json['FSS_FineAmount'] + 0.0;
@@ -52,6 +58,8 @@ class AcademicYearFeeDtlModelValues {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['\$type'] = type;
+    data['ASMAY_Id'] = aSMAYId;
+    data['ASMAY_Year'] = aSMAYYear;
     data['FSS_NetAmount'] = fSSNetAmount;
     data['FSS_ConcessionAmount'] = fSSConcessionAmount;
     data['FSS_FineAmount'] = fSSFineAmount;

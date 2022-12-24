@@ -13,11 +13,13 @@ class NoticeDetailScreen extends StatefulWidget {
   final Color color;
   final NoticeDataModelValues value;
   final bool isFiltring;
+  final bool forSyllabus;
   const NoticeDetailScreen(
       {super.key,
       required this.color,
       required this.value,
-      required this.isFiltring});
+      required this.isFiltring,
+      required this.forSyllabus});
 
   @override
   State<NoticeDetailScreen> createState() => _NoticeDetailScreenState();
@@ -42,14 +44,27 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
 
         showPng = true;
       }
-    } else {
-      if (widget.value.intBAttachment != null &&
-          widget.value.intBAttachment!.endsWith("pdf") &&
-          widget.value.intBAttachment!.isNotEmpty) {
+    } else if (widget.forSyllabus) {
+      if (widget.value.iNTBFLFileName != null &&
+          widget.value.iNTBFLFileName!.endsWith(".pdf") &&
+          widget.value.iNTBFLFileName!.isNotEmpty) {
         showPdf = true;
       } else {
-        if (widget.value.intBAttachment == null ||
-            widget.value.intBAttachment!.isEmpty) {
+        if (widget.value.iNTBFLFileName == null ||
+            widget.value.iNTBFLFilePath!.isEmpty) {
+          return;
+        }
+
+        showPng = true;
+      }
+    } else {
+      if (widget.value.iNTBFLFilePath != null &&
+          widget.value.iNTBFLFilePath!.endsWith("pdf") &&
+          widget.value.iNTBFLFilePath!.isNotEmpty) {
+        showPdf = true;
+      } else {
+        if (widget.value.iNTBFLFilePath == null ||
+            widget.value.iNTBFLFilePath!.isEmpty) {
           return;
         }
 
@@ -264,19 +279,37 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
                                 color: Color(0xFFD9EDFF)),
                             child: IconButton(
                                 onPressed: () async {
-                                  if (widget.value.intBFilePath == null ||
-                                      widget.value.intBFilePath!.isEmpty) {
-                                    return;
+                                  if (widget.isFiltring) {
+                                    if (widget.value.iNTBFLFilePath == null ||
+                                        widget.value.iNTBFLFilePath!.isEmpty) {
+                                      return;
+                                    }
+                                  } else if (widget.forSyllabus) {
+                                    if (widget.value.iNTBFLFilePath == null ||
+                                        widget.value.iNTBFLFilePath!.isEmpty) {
+                                      return;
+                                    }
+                                  } else {
+                                    if (widget.value.iNTBFLFilePath == null ||
+                                        widget.value.iNTBFLFilePath!.isEmpty) {
+                                      return;
+                                    }
                                   }
 
+                                  // if (widget.value.intBFilePath == null ||
+                                  //     widget.value.intBFilePath!.isEmpty) {
+                                  //   return;
+                                  // }
+
                                   if (await canLaunchUrl(Uri.parse(
-                                      widget.isFiltring
+                                      widget.isFiltring || widget.forSyllabus
                                           ? widget.value.iNTBFLFilePath!
-                                          : widget.value.intBFilePath!))) {
+                                          : widget.value.iNTBFLFilePath!))) {
                                     await launchUrl(
-                                        Uri.parse(widget.isFiltring
+                                        Uri.parse(widget.isFiltring ||
+                                                widget.forSyllabus
                                             ? widget.value.iNTBFLFilePath!
-                                            : widget.value.intBFilePath!),
+                                            : widget.value.iNTBFLFilePath!),
                                         mode: LaunchMode.externalApplication);
                                   }
                                 },
@@ -343,7 +376,9 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
                                 title: Text(
                                   widget.isFiltring
                                       ? widget.value.iNTBFLFileName!
-                                      : widget.value.intBAttachment!,
+                                      : widget.forSyllabus
+                                          ? widget.value.iNTBFLFileName!
+                                          : widget.value.iNTBFLFileName!,
                                   style: Theme.of(context).textTheme.titleSmall,
                                 ),
                               ),
@@ -358,26 +393,28 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
                                 color: Color(0xFFD9EDFF)),
                             child: IconButton(
                                 onPressed: () async {
-                                  if (widget.isFiltring) {
-                                    if (widget.value.iNTBFLFilePath == null ||
-                                        widget.value.iNTBFLFilePath!.isEmpty) {
-                                      return;
-                                    }
-                                  } else {
-                                    if (widget.value.intBFilePath == null ||
-                                        widget.value.intBFilePath!.isEmpty) {
-                                      return;
-                                    }
+                                  if (widget.value.iNTBFLFilePath == null ||
+                                      widget.value.iNTBFLFilePath!.isEmpty) {
+                                    return;
                                   }
+                                  // } else if (widget.forSyllabus) {
+                                  //   if (widget.value.iNTBFLFilePath == null ||
+                                  //       widget.value.iNTBFLFilePath!.isEmpty) {
+                                  //     return;
+                                  //   }
+                                  // } else {
+                                  //   if (widget.value.intBFilePath == null ||
+                                  //       widget.value.intBFilePath!.isEmpty) {
+                                  //     return;
+                                  //   }
+                                  // }
 
                                   if (await canLaunchUrl(Uri.parse(
-                                      widget.isFiltring
-                                          ? widget.value.iNTBFLFilePath!
-                                          : widget.value.intBFilePath!))) {
+                                      // widget.isFiltring || widget.forSyllabus
+                                      widget.value
+                                          .iNTBFLFilePath! /*  : widget.value.intBFilePath!*/))) {
                                     await launchUrl(
-                                        Uri.parse(widget.isFiltring
-                                            ? widget.value.iNTBFLFilePath!
-                                            : widget.value.intBFilePath!),
+                                        Uri.parse(widget.value.iNTBFLFilePath!),
                                         mode: LaunchMode.externalApplication);
                                   }
                                 },

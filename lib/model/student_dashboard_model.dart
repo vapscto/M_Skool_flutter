@@ -1,3 +1,5 @@
+import 'package:m_skool_flutter/model/exam_list.dart';
+
 /// mI_Id : 4
 /// asmaY_Id : 82
 /// amsT_Id : 19580
@@ -47,8 +49,9 @@ class StudentDashboardModel {
     timeTableList = json['timeTableList'] == null
         ? null
         : TimeTableList.fromJson(json['timeTableList']);
-    examList =
-        json['examList'] == null ? null : ExamList.fromJson(json['examList']);
+    examList = json['examList'] == null
+        ? null
+        : ExamListNew.fromJson(json['examList']);
   }
   num? mIId;
   num? asmaYId;
@@ -61,7 +64,7 @@ class StudentDashboardModel {
   AttendanceList? attendanceList;
   FeesList? feesList;
   TimeTableList? timeTableList;
-  ExamList? examList;
+  ExamListNew? examList;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
