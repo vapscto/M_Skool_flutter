@@ -33,7 +33,8 @@ class AnimatedProgressWidget extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleSmall!.merge(
-                    const TextStyle(fontSize: 24.0),
+                    const TextStyle(
+                        fontSize: 24.0, fontWeight: FontWeight.w600),
                   ),
             ),
             const SizedBox(
@@ -42,10 +43,13 @@ class AnimatedProgressWidget extends StatelessWidget {
             Text(
               desc,
               textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .labelSmall!
-                  .merge(const TextStyle(letterSpacing: 0.2, fontSize: 15)),
+              style: Theme.of(context).textTheme.labelSmall!.merge(
+                    const TextStyle(
+                      letterSpacing: 0.2,
+                      fontSize: 18,
+                      color: Colors.grey,
+                    ),
+                  ),
             ),
           ],
         ),

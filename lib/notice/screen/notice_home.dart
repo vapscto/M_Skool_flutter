@@ -8,7 +8,6 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
-import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/api/get_datewise_notices.dart';
@@ -19,7 +18,6 @@ import 'package:m_skool_flutter/notice/model/notice_data_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_detail_screen.dart';
 import 'package:m_skool_flutter/notice/widget/notice_filtered_widget.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
-import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
@@ -543,7 +541,7 @@ class _SyllabusNoticesState extends State<SyllabusNotices> {
             return ListView.separated(
               padding: const EdgeInsets.all(16.0),
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (_, index) {
                 color += 1;
                 if (index % 6 == 0) {
@@ -706,7 +704,7 @@ class NoticeItem extends StatelessWidget {
               height: 90,
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               decoration: BoxDecoration(
-                color: noticeColor.elementAt(color).withOpacity(0.1),
+                color: noticeBackgroundColor.elementAt(color),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12.0),
                   bottomLeft: Radius.circular(12.0),

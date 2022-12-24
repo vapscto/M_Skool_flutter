@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
@@ -30,6 +31,7 @@ Logger logger =
     Logger(printer: PrettyPrinter(methodCount: 0), filter: MyFilter());
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // debugPaintSizeEnabled = true;
   // SystemChrome.setPreferredOrientations(
   //     [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   var dir = await getApplicationDocumentsDirectory();

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
 
 class CustomContainer extends StatelessWidget {
@@ -20,7 +18,7 @@ class CustomContainer extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: color ?? Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(8.0),
         boxShadow: CustomThemeData.getShadow(),
         gradient: gradient,
       ),

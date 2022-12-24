@@ -235,13 +235,22 @@ List<Color> colors = [
   Colors.deepOrange.shade100,
 ];
 List<Color> noticeColor = const [
-  Color(0xFFAD65C7),
-  Color(0xFFD05954),
-  Color(0xFF0B8FD9),
-  Color(0xFF3DBA9C),
-  Color(0xFF63A06B),
-  Color(0xFFB99E56),
-  Color(0xFF7D5CDB)
+  Color(0xFFF54c4c),
+  Color(0xFF015DAF),
+  Color(0xFF824CC3),
+  Color(0xFFEC16F0),
+  Color(0xFF28B6C8),
+  Color(0xFFAF6152),
+  Color(0xFF3FCF52),
+];
+List<Color> noticeBackgroundColor = const [
+  Color(0xFFFFd8d8),
+  Color(0xFFDFEFFD),
+  Color(0xFFF1E5FF),
+  Color(0xFFFFEEFF),
+  Color(0xFFEEFDFF),
+  Color(0xFFFFEBE7),
+  Color(0xFFEFFFF1),
 ];
 
 List<Color> examCardColor = const [
@@ -322,7 +331,7 @@ Color getDashBoardIconByName(String title) {
     case "physics":
       return const Color(0xff4ED092);
     case "chemistry":
-      return const Color(0xffFFE81E);
+      return const Color(0XFF00b1bb);
     case "mathematics":
       return const Color(0xFFFF9621);
     case "computer science":
@@ -336,7 +345,13 @@ Color getDashBoardIconByName(String title) {
     case "science":
       return Colors.greenAccent[700]!;
     case "hindi":
-      return Colors.purpleAccent[400]!;
+      return const Color(0xFF015DAF);
+    case "chemistry lab":
+      return const Color(0xFF824CC3);
+    case "commercial studies":
+      return const Color(0xFFEC16F0);
+    case "colouring..":
+      return const Color(0xFFF54C4C);
     default:
       return Colors.grey;
   }
@@ -398,7 +413,7 @@ Map<String, dynamic> getIconFromSubject(String subName) {
   if (subName.contains("social") || subName == "social science") {
     return {
       "icon": "assets/images/SOCIAL.png",
-      "chipBgColor": Color.fromARGB(255, 255, 231, 231),
+      "chipBgColor": const Color.fromARGB(255, 255, 231, 231),
       "chipColor": const Color(0xFFFF4A4A)
     };
   }
@@ -408,7 +423,7 @@ Map<String, dynamic> getIconFromSubject(String subName) {
       subName.contains("hin")) {
     return {
       "icon": "assets/images/HINDI.png",
-      "chipBgColor": Color.fromARGB(255, 232, 243, 255),
+      "chipBgColor": const Color.fromARGB(255, 232, 243, 255),
       "chipColor": const Color(0xFF143F6B)
     };
   }
@@ -418,7 +433,7 @@ Map<String, dynamic> getIconFromSubject(String subName) {
       subName.contains("kan")) {
     return {
       "icon": "assets/images/KANNADA.png",
-      "chipBgColor": Color.fromARGB(255, 245, 237, 255),
+      "chipBgColor": const Color.fromARGB(255, 245, 237, 255),
       "chipColor": const Color(0xFF824CC3)
     };
   }
@@ -428,7 +443,7 @@ Map<String, dynamic> getIconFromSubject(String subName) {
       subName.contains("eng")) {
     return {
       "icon": "assets/images/ENGLISH.png",
-      "chipBgColor": Color.fromARGB(255, 223, 255, 250),
+      "chipBgColor": const Color.fromARGB(255, 223, 255, 250),
       "chipColor": const Color(0xFF1EAE98)
     };
   }

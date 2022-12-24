@@ -44,7 +44,9 @@ class GetHomeWorkApi {
           HomeWorkDataModel.fromJson(response.data['homeworklist']);
       //logger.d(homeWorkDataModel.toJson());
       hwCwNbController.updateHomeWorkDataModel(homeWorkDataModel.values!);
-      hwCwNbController.updateIsHomeWorkLoading(false);
+      Future.delayed(const Duration(seconds: 3), () {
+        hwCwNbController.updateIsHomeWorkLoading(false);
+      });
     } on Exception catch (e) {
       logger.e(e.toString());
       hwCwNbController.updateIsErrorHappendInHomeWorkLoading(true);

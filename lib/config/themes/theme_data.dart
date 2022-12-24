@@ -31,7 +31,7 @@ class CustomThemeData {
               ),
               titleMedium: GoogleFonts.roboto(
                 fontSize: 17,
-                //color: Colors.white,
+                color: const Color(0xFF1A1A1A),
                 fontWeight: FontWeight.w700,
               ),
               titleLarge: GoogleFonts.roboto(
