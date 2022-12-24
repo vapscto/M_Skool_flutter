@@ -60,6 +60,8 @@ class _InboxTabScreenState extends State<InboxTabScreen> {
           : ListView.separated(
               itemBuilder: (_, index) {
                 return ChatProfileTile(
+                  loginSuccessModel: widget.loginSuccessModel,
+                  mskoolController: widget.mskoolController,
                   data: inboxController.inboxList[index],
                   // isGroup: Random().nextBool(),
                   isSeen: Random().nextBool(),

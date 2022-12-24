@@ -140,4 +140,6 @@ class URLS {
   static String getInboxData = 'api/IVRM_InteractionsFacade/getloaddata/';
   static String getUnreadData = 'api/IVRM_InteractionsFacade/reply/';
   static String composeInteraction = 'api/IVRM_InteractionsFacade/savedetails/';
+  static String getMessages = 'api/IVRM_InteractionsFacade/reply/';
+  static String sendMessage = 'api/IVRM_InteractionsFacade/savereply/';
 }

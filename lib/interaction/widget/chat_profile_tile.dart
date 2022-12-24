@@ -5,14 +5,19 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/interaction/model/inbox_model.dart';
 import 'package:m_skool_flutter/interaction/screen/messaging_section.dart';
 
+import '../../controller/mskoll_controller.dart';
+import '../../model/login_success_model.dart';
+
 class ChatProfileTile extends StatelessWidget {
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
   // final bool isGroup;
   final bool isSeen;
   final Color color;
   final GetinboxmsgValue data;
   const ChatProfileTile(
-      {
-
+      {required this.loginSuccessModel,
+      required this.mskoolController,
       // required this.isGroup,
       required this.isSeen,
       required this.color,
@@ -23,8 +28,11 @@ class ChatProfileTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () => Get.to(
-        () => const MessagingScreen(),
-        
+        () => MessagingScreen(
+          data: data,
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ),
       ),
       contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
       leading: data.senderSenderFilePath!.isNotEmpty
@@ -55,7 +63,7 @@ class ChatProfileTile extends StatelessWidget {
         children: [
           Flexible(
             child: Text(
-              data.ismintInteraction.toString(),
+              data.ismintSubject.toString(),
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context)
                   .textTheme
