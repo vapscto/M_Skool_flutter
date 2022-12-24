@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/interaction/model/inbox_model.dart';
 import 'package:m_skool_flutter/interaction/screen/messaging_section.dart';
@@ -21,8 +22,10 @@ class ChatProfileTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const MessagingScreen())),
+      onTap: () => Get.to(
+        () => const MessagingScreen(),
+        
+      ),
       contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
       leading: data.senderSenderFilePath!.isNotEmpty
           ? CircleAvatar(
@@ -61,7 +64,9 @@ class ChatProfileTile extends StatelessWidget {
             ),
           ),
           SvgPicture.asset(
-              "assets/svg/${isSeen ? "blue_double_check.svg" : "double_check.svg"}")
+            "assets/svg/${isSeen ? "blue_double_check.svg" : "double_check.svg"}",
+            color: isSeen ? Colors.blue : Colors.grey,
+          )
         ],
       ),
       trailing: Column(

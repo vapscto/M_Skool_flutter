@@ -137,4 +137,5 @@ class URLS {
   static String getStaffList = 'api/IVRM_InteractionsFacade/getdetails/';
   static String getInboxData = 'api/IVRM_InteractionsFacade/getloaddata/';
   static String getUnreadData = 'api/IVRM_InteractionsFacade/reply/';
+  static String composeInteraction = 'api/IVRM_InteractionsFacade/savedetails/';
 }

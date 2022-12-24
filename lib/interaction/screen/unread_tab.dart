@@ -42,7 +42,7 @@ class _UnReadTabScreenState extends State<UnReadTabScreen> {
           : ListView.separated(
               itemBuilder: (_, index) {
                 return ChatProfileTile(
-                  data: inboxController.inboxList[index],
+                  data:  inboxController.inboxList[index],
                   // isGroup: Random().nextBool(),
                   isSeen: Random().nextBool(),
                   color: Color.fromRGBO(Random().nextInt(255),

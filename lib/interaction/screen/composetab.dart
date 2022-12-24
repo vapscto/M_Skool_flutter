@@ -2,8 +2,10 @@ import "package:flutter/material.dart";
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:m_skool_flutter/interaction/apis/compose_tab_related_api.dart';
 import 'package:m_skool_flutter/interaction/controller/compose_tab_controller.dart';
 import 'package:m_skool_flutter/interaction/model/staff_detail_model.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -47,7 +49,6 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
       ),
     )
         .then((value) {
-      logger.d(value.toString());
       if (value) {
         if (composeController.staffList.isNotEmpty) {
           selectedStaff = composeController.staffList.first;
@@ -404,17 +405,56 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
                   borderRadius: BorderRadius.circular(30.0),
                 ),
               ),
-              onPressed: () {},
-              child: Text(
-                'Send',
-                style: Theme.of(context).textTheme.labelSmall!.merge(
-                      const TextStyle(
-                        color: Colors.white,
-                        letterSpacing: 0.3,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
+              onPressed: () async {
+                if (subject.text.isEmpty) {
+                  Fluttertoast.showToast(msg: 'Enter subject!!');
+                } else if (about.text.isEmpty) {
+                  Fluttertoast.showToast(msg: 'Enter about!!');
+                } else if (composeController.isButton.value) {
+                  composeController.issend(true);
+                  composeController.isbutton(false);
+                  await saveDetail(
+                    miId: widget.loginSuccessModel.mIID!,
+                    asmayId: widget.loginSuccessModel.asmaYId!,
+                    amstId: widget.loginSuccessModel.amsTId!,
+                    userId: widget.loginSuccessModel.userId!,
+                    userFlg: selectedradio,
+                    subject: subject.text,
+                    message: about.text,
+                    hrmeId: selectedStaff!.hrmEId!,
+                    base: baseUrlFromInsCode('portal', widget.mskoolController),
+                  ).then((value) {
+                    if (value) {
+                      FocusScope.of(context).unfocus();
+                      subject.text = '';
+                      about.text = '';
+                    }
+                  });
+                  composeController.issend(false);
+                  composeController.isbutton(true);
+                }
+              },
+              child: Obx(
+                () => composeController.isSend.value
+                    ? const SizedBox(
+                        height: 18,
+                        width: 18,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 3,
+                        ),
+                      )
+                    : Text(
+                        'Send',
+                        style: Theme.of(context).textTheme.labelSmall!.merge(
+                              const TextStyle(
+                                color: Colors.white,
+                                letterSpacing: 0.3,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
                       ),
-                    ),
               ),
             ),
           ),

@@ -13,6 +13,7 @@ class MessagingScreen extends StatefulWidget {
 }
 
 class _MessagingScreenState extends State<MessagingScreen> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,22 +27,22 @@ class _MessagingScreenState extends State<MessagingScreen> {
                 .headline6
                 ?.copyWith(color: Colors.white.withOpacity(0.8))),
         leading: const CustomGoBackButton(),
-        actions: [
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              width: 43,
-              height: 48,
-              margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-              decoration: BoxDecoration(
-                  color: const Color(0xffD9EDFF),
-                  borderRadius: BorderRadius.circular(10)),
-              child: Center(
-                child: SvgPicture.asset("assets/svg/download.svg"),
-              ),
-            ),
-          )
-        ],
+        // actions: [
+        //   GestureDetector(
+        //     onTap: () {},
+        //     child: Container(
+        //       width: 43,
+        //       height: 48,
+        //       margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+        //       decoration: BoxDecoration(
+        //           color: const Color(0xffD9EDFF),
+        //           borderRadius: BorderRadius.circular(10)),
+        //       child: Center(
+        //         child: SvgPicture.asset("assets/svg/download.svg"),
+        //       ),
+        //     ),
+        //   )
+        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
