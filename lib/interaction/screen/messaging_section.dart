@@ -5,13 +5,11 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/interaction/apis/messaging_api.dart';
 import 'package:m_skool_flutter/interaction/controller/interaction_controller.dart';
 import 'package:m_skool_flutter/interaction/widget/custom_text_file.dart';
-import 'package:m_skool_flutter/main.dart';
 
 import '../../controller/mskoll_controller.dart';
 import '../../model/login_success_model.dart';
 import '../../widget/custom_back_btn.dart';
 import '../model/inbox_model.dart';
-import '../widget/chat_box.dart';
 
 class MessagingScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;

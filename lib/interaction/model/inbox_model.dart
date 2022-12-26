@@ -625,8 +625,9 @@ class GetinboxmsgValue {
     this.sender,
     this.senderSenderFilePath,
     this.receiver,
-    this.ismintDateTime,
+    this.receiverfilepath,
     this.ismintActiveFlag,
+    this.ismintDateTime,
   });
 
   String? type;
@@ -643,6 +644,7 @@ class GetinboxmsgValue {
   String? sender;
   String? senderSenderFilePath;
   String? receiver;
+  String? receiverfilepath;
   DateTime? ismintDateTime;
   bool? ismintActiveFlag;
 
@@ -653,9 +655,7 @@ class GetinboxmsgValue {
         istintAttachment: json["ISTINT_Attachment"],
         ismintId: json["ISMINT_Id"],
         istintId: json["ISTINT_Id"],
-        ismintInteractionId: json["ISMINT_InteractionId"] == null
-            ? null
-            : json["ISMINT_InteractionId"],
+        ismintInteractionId: json["ISMINT_InteractionId"],
         ismintSubject: json["ISMINT_Subject"],
         ismintInteraction: json["ISMINT_Interaction"],
         ismintGroupOrIndFlg: json["ISMINT_GroupOrIndFlg"],
@@ -664,6 +664,7 @@ class GetinboxmsgValue {
         sender: json["Sender"],
         senderSenderFilePath: json['sender_sender_filepath'],
         receiver: json["Receiver"],
+        receiverfilepath: json['Receiver_filepath'],
         ismintDateTime: DateTime.parse(json["ISMINT_DateTime"]),
         ismintActiveFlag: json["ISMINT_ActiveFlag"],
       );
@@ -674,8 +675,7 @@ class GetinboxmsgValue {
         "ISTINT_Attachment": istintAttachment,
         "ISMINT_Id": ismintId,
         "ISTINT_Id": istintId,
-        "ISMINT_InteractionId":
-            ismintInteractionId == null ? null : ismintInteractionId,
+        "ISMINT_InteractionId": ismintInteractionId,
         "ISMINT_Subject": ismintSubject,
         "ISMINT_Interaction": ismintInteraction,
         "ISMINT_GroupOrIndFlg": ismintGroupOrIndFlg,
@@ -684,6 +684,7 @@ class GetinboxmsgValue {
         "Sender": sender,
         'sender_sender_filepath': senderSenderFilePath,
         "Receiver": receiver,
+        'Receiver_filepath': receiverfilepath,
         "ISMINT_DateTime": ismintDateTime!.toIso8601String(),
         "ISMINT_ActiveFlag": ismintActiveFlag,
       };

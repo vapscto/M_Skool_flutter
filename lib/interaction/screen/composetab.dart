@@ -80,11 +80,12 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   label: Container(
+                    margin: const EdgeInsets.only(bottom: 12),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20.0, vertical: 6.0),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24.0),
-                        color: Color(0xFFFFEBEA)),
+                        color: const Color(0xFFFFEBEA)),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -121,7 +122,7 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16),
             child: CustomContainer(
@@ -132,6 +133,7 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   label: Container(
+                    margin: const EdgeInsets.only(bottom: 12),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20.0, vertical: 4.0),
                     decoration: BoxDecoration(
@@ -177,118 +179,133 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          RadioListTile(
-            dense: true,
-            activeColor: Colors.blue,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-            visualDensity: const VisualDensity(horizontal: -4.0),
-            title: Text(
-              "Teachers",
-              style: Theme.of(context).textTheme.labelSmall!.merge(
-                  const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16.0,
-                      letterSpacing: 0.3)),
+          SizedBox(
+            height: 33,
+            child: RadioListTile(
+              dense: true,
+              activeColor: Theme.of(context).primaryColor,
+              
+              contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+              visualDensity: const VisualDensity(horizontal: -4.0),
+              title: Text(
+                "Teachers",
+                style: Theme.of(context).textTheme.labelSmall!.merge(
+                    const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16.0,
+                        letterSpacing: 0.3)),
+              ),
+              value: "ClassTeacher",
+              groupValue: selectedradio,
+              onChanged: (value) {
+                setState(() {
+                  selectedradio = value.toString();
+                  getStafflistData();
+                });
+              },
             ),
-            value: "ClassTeacher",
-            groupValue: selectedradio,
-            onChanged: (value) {
-              setState(() {
-                selectedradio = value.toString();
-                getStafflistData();
-              });
-            },
           ),
-          RadioListTile(
-            dense: true,
-            activeColor: Colors.blue,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-            visualDensity: const VisualDensity(horizontal: -4.0),
-            title: Text(
-              "HOD",
-              style: Theme.of(context).textTheme.labelSmall!.merge(
-                  const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16.0,
-                      letterSpacing: 0.3)),
+          SizedBox(
+            height: 33,
+            child: RadioListTile(
+              dense: true,
+              activeColor: Theme.of(context).primaryColor,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+              visualDensity: const VisualDensity(horizontal: -4.0),
+              title: Text(
+                "HOD",
+                style: Theme.of(context).textTheme.labelSmall!.merge(
+                    const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16.0,
+                        letterSpacing: 0.3)),
+              ),
+              value: "HOD",
+              groupValue: selectedradio,
+              onChanged: (value) {
+                setState(() {
+                  selectedradio = value.toString();
+                  getStafflistData();
+                });
+              },
             ),
-            value: "HOD",
-            groupValue: selectedradio,
-            onChanged: (value) {
-              setState(() {
-                selectedradio = value.toString();
-                getStafflistData();
-              });
-            },
           ),
-          RadioListTile(
-            dense: true,
-            activeColor: Colors.blue,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-            visualDensity: const VisualDensity(horizontal: -4.0),
-            title: Text(
-              "Principal",
-              style: Theme.of(context).textTheme.labelSmall!.merge(
-                  const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16.0,
-                      letterSpacing: 0.3)),
+          SizedBox(
+            height: 33,
+            child: RadioListTile(
+              dense: true,
+              activeColor: Theme.of(context).primaryColor,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+              visualDensity: const VisualDensity(horizontal: -4.0),
+              title: Text(
+                "Principal",
+                style: Theme.of(context).textTheme.labelSmall!.merge(
+                    const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16.0,
+                        letterSpacing: 0.3)),
+              ),
+              value: "Principal",
+              groupValue: selectedradio,
+              onChanged: (value) {
+                setState(() {
+                  selectedradio = value.toString();
+                  getStafflistData();
+                });
+              },
             ),
-            value: "Principal",
-            groupValue: selectedradio,
-            onChanged: (value) {
-              setState(() {
-                selectedradio = value.toString();
-                getStafflistData();
-              });
-            },
           ),
-          RadioListTile(
-            dense: true,
-            activeColor: Colors.blue,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-            visualDensity: const VisualDensity(horizontal: -4.0),
-            title: Text(
-              "Academic Supervisor",
-              style: Theme.of(context).textTheme.labelSmall!.merge(
-                  const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16.0,
-                      letterSpacing: 0.3)),
+          SizedBox(
+            height: 33,
+            child: RadioListTile(
+              dense: true,
+              activeColor: Theme.of(context).primaryColor,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+              visualDensity: const VisualDensity(horizontal: -4.0),
+              title: Text(
+                "Academic Supervisor",
+                style: Theme.of(context).textTheme.labelSmall!.merge(
+                    const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16.0,
+                        letterSpacing: 0.3)),
+              ),
+              value: "AS",
+              groupValue: selectedradio,
+              onChanged: (value) {
+                setState(() {
+                  selectedradio = value.toString();
+                  getStafflistData();
+                });
+              },
             ),
-            value: "AS",
-            groupValue: selectedradio,
-            onChanged: (value) {
-              setState(() {
-                selectedradio = value.toString();
-                getStafflistData();
-              });
-            },
           ),
-          // RadioListTile(
-          //   dense: true,
-          //   activeColor: Colors.blue,
-          //   contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-          //   visualDensity: const VisualDensity(horizontal: -4.0),
-          //   title: Text(
-          //     "Exam Co-ordinator",
-          //     style: Theme.of(context).textTheme.labelSmall!.merge(
-          //         const TextStyle(
-          //             fontWeight: FontWeight.w400,
-          //             fontSize: 16.0,
-          //             letterSpacing: 0.3)),
+          // SizedBox(
+          //   height: 30,
+          //   child: RadioListTile(
+          //     dense: true,
+          //     activeColor: Colors.blue,
+          //     contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+          //     visualDensity: const VisualDensity(horizontal: -4.0),
+          //     title: Text(
+          //       "Exam Co-ordinator",
+          //       style: Theme.of(context).textTheme.labelSmall!.merge(
+          //           const TextStyle(
+          //               fontWeight: FontWeight.w400,
+          //               fontSize: 16.0,
+          //               letterSpacing: 0.3)),
+          //     ),
+          //     value: "EC",
+          //     groupValue: selectedradio,
+          //     onChanged: (value) {
+          //       setState(() {
+          //         selectedradio = value.toString();
+          //         getStafflistData();
+          //       });
+          //     },
           //   ),
-          //   value: "EC",
-          //   groupValue: selectedradio,
-          //   onChanged: (value) {
-          //     setState(() {
-          //       selectedradio = value.toString();
-          //       getStafflistData();
-          //     });
-          //   },
           // ),
-
-          // const SizedBox(height: 30),
+          const SizedBox(height: 20),
           Obx(
             () => composeController.isLoading.value
                 ? const Center(

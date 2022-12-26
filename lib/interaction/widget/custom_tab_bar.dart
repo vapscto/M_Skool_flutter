@@ -85,7 +85,9 @@ class _CustomTabBarState extends State<CustomTabBar> {
                           children: [
                             index == i
                                 ? SvgPicture.asset(
-                                    "assets/svg/${widget.tabs[i].asset}")
+                                    "assets/svg/${widget.tabs[i].asset}",
+                                    color: Theme.of(context).primaryColor,
+                                  )
                                 : const SizedBox.shrink(),
                             const SizedBox(width: 8),
                             Text(widget.tabs[i].name,
@@ -94,7 +96,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
                                     letterSpacing: 0.1,
                                     fontSize: 16,
                                     color: index == i
-                                        ? Colors.black
+                                        ? Theme.of(context).primaryColor
                                         : Colors.white)),
                           ],
                         ),
