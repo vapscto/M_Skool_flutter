@@ -123,7 +123,8 @@ class TabBarPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     canvas.drawRRect(
-        RRect.fromRectAndCorners(Rect.fromLTWH(0, 0, size.width, size.height),
+        RRect.fromRectAndCorners(
+            Rect.fromLTWH(0, 0, size.width, size.height - 1),
             bottomLeft: left ? const Radius.circular(15) : Radius.zero,
             bottomRight: right ? const Radius.circular(15) : Radius.zero),
         paint);
