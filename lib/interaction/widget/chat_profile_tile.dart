@@ -27,6 +27,7 @@ class ChatProfileTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      dense: true,
       onTap: () => Get.to(
         () => MessagingScreen(
           data: data,
@@ -35,19 +36,18 @@ class ChatProfileTile extends StatelessWidget {
         ),
       ),
       contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
-      leading: data.senderSenderFilePath!.isNotEmpty
+      leading: data.receiverfilepath!.isNotEmpty
           ? CircleAvatar(
               radius: 30,
               backgroundColor: color,
-              backgroundImage:
-                  NetworkImage(data.senderSenderFilePath.toString()),
+              backgroundImage: NetworkImage(data.receiverfilepath.toString()),
             )
           : const CircleAvatar(
               radius: 30,
               backgroundImage: AssetImage("assets/images/profile2.png"),
             ),
       title: Text.rich(TextSpan(
-          text: "${data.sender}  |",
+          text: "${data.receiver}  |",
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 18),
           children: [
             TextSpan(

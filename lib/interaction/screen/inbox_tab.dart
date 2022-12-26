@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/interaction/controller/inbox_tab_controller.dart';
 import 'package:m_skool_flutter/interaction/widget/chat_profile_tile.dart';
-import 'package:m_skool_flutter/main.dart';
 
 import '../../controller/global_utilities.dart';
 import '../../controller/mskoll_controller.dart';
@@ -69,7 +68,7 @@ class _InboxTabScreenState extends State<InboxTabScreen> {
                       Random().nextInt(255), Random().nextInt(255), 1),
                 );
               },
-              separatorBuilder: (_, index) => const Divider(thickness: 1.5),
+              separatorBuilder: (_, index) => const Divider(),
               itemCount: inboxController.inboxList.length),
     );
   }

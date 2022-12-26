@@ -166,6 +166,7 @@ class _HomeState extends State<Home> {
         key: _scaffold,
         appBar: AppBar(
           centerTitle: true,
+          elevation: 0,
           leading: IconButton(
             icon: SvgPicture.asset('assets/svg/menu.svg'),
             onPressed: () {

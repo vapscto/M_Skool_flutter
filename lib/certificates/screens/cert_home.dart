@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/certificates/screens/apply_now.dart';
 import 'package:m_skool_flutter/certificates/screens/view_details.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/controller/tab_controller.dart';
+import 'package:m_skool_flutter/interaction/widget/custom_tab_bar.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
@@ -81,95 +82,18 @@ class _CertificateHomeScreenState extends State<CertificateHomeScreen>
       appBar: const CustomAppBar(title: "Certificate").getAppBar(),
       body: Column(
         children: [
-          SizedBox(
-            height: 50,
-            child: Obx(() {
-              return Container(
-                //height: 50,
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                width: double.infinity,
-                color: Theme.of(context).primaryColor,
-                child: TabBar(
-                  controller: tabController,
-                  //indicatorColor: Get.theme.primaryColor,
-
-                  indicator: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(12.0),
-                      topRight: Radius.circular(12.0),
-                    ),
-                  ),
-
-                  tabs: [
-                    Tab(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          tabStateController.selectedIndex.value == 0
-                              ? Image.asset(
-                                  "assets/images/cert.png",
-                                  color: Theme.of(context).primaryColor,
-                                  height: 24.0,
-                                )
-                              : const SizedBox(),
-                          SizedBox(
-                            width: tabStateController.selectedIndex.value == 0
-                                ? 8.0
-                                : 0.0,
-                          ),
-                          Text(
-                            "Apply",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .merge(TextStyle(
-                                  color:
-                                      tabStateController.selectedIndex.value ==
-                                              0
-                                          ? Theme.of(context).primaryColor
-                                          : Colors.white,
-                                )),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Tab(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          tabStateController.selectedIndex.value == 1
-                              ? Image.asset(
-                                  "assets/images/blueeye.png",
-                                  //color: Colors.black,
-                                  height: 24.0,
-                                )
-                              : const SizedBox(),
-                          SizedBox(
-                            width: tabStateController.selectedIndex.value == 1
-                                ? 8.0
-                                : 0.0,
-                          ),
-                          Text(
-                            "View Details",
-                            style:
-                                Theme.of(context).textTheme.titleMedium!.merge(
-                                      TextStyle(
-                                        color: tabStateController
-                                                    .selectedIndex.value ==
-                                                1
-                                            ? Theme.of(context).primaryColor
-                                            : Colors.white,
-                                      ),
-                                    ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }),
+          CustomTabBar(
+            tabs: const [
+              CustomTab(
+                name: "Apply",
+                asset: "assets/images/cert.png",
+              ),
+              CustomTab(
+                name: "View Details",
+                asset: "assets/images/blueeye.png",
+              )
+            ],
+            tabController: tabController!,
           ),
           const SizedBox(
             height: 12.0,
