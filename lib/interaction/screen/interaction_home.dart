@@ -49,10 +49,10 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
   }
 
   List<CustomTab> tabs = const [
-    CustomTab(name: "Compose", asset: "edit.svg"),
-    CustomTab(name: "Inbox", asset: "inbox.svg"),
+    CustomTab(name: "Compose", asset: "assets/svg/edit.svg"),
+    CustomTab(name: "Inbox", asset: "assets/svg/inbox.svg"),
     // CustomTab(name: "All", asset: "layersall.svg"),
-    CustomTab(name: "Unread", asset: "unread.svg"),
+    CustomTab(name: "Unread", asset: "assets/svg/unread.svg"),
   ];
 
   @override
@@ -91,8 +91,10 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
                       mskoolController: widget.mskoolController,
                     ),
                     // AllTabScreen(),
-                    UnReadTabScreen(    loginSuccessModel: widget.loginSuccessModel,
-                      mskoolController: widget.mskoolController,)
+                    UnReadTabScreen(
+                      loginSuccessModel: widget.loginSuccessModel,
+                      mskoolController: widget.mskoolController,
+                    )
                   ]),
                 )
               ]),

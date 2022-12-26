@@ -85,7 +85,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
                           children: [
                             index == i
                                 ? SvgPicture.asset(
-                                    "assets/svg/${widget.tabs[i].asset}",
+                                    widget.tabs[i].asset,
                                     color: Theme.of(context).primaryColor,
                                   )
                                 : const SizedBox.shrink(),
