@@ -91,7 +91,8 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
                       mskoolController: widget.mskoolController,
                     ),
                     // AllTabScreen(),
-                    UnReadTabScreen()
+                    UnReadTabScreen(    loginSuccessModel: widget.loginSuccessModel,
+                      mskoolController: widget.mskoolController,)
                   ]),
                 )
               ]),

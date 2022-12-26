@@ -37,7 +37,7 @@ class _CardWidgetState extends State<CardWidget> {
             ? const Border.fromBorderSide(BorderSide.none)
             : widget.border,
         borderRadius: (widget.borderRadius == null)
-            ? BorderRadius.circular(15)
+            ? BorderRadius.circular(8)
             : widget.borderRadius,
         color: (widget.backgroundColor == null)
             ? Colors.white

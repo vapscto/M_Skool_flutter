@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/interaction/model/inbox_model.dart';
 import 'package:m_skool_flutter/interaction/screen/messaging_section.dart';
 
+import '../../controller/mskoll_controller.dart';
+import '../../model/login_success_model.dart';
+
 class ChatProfileTile extends StatelessWidget {
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
   // final bool isGroup;
   final bool isSeen;
   final Color color;
   final GetinboxmsgValue data;
   const ChatProfileTile(
-      {
-
+      {required this.loginSuccessModel,
+      required this.mskoolController,
       // required this.isGroup,
       required this.isSeen,
       required this.color,
@@ -21,8 +27,13 @@ class ChatProfileTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => Navigator.push(
-          context, MaterialPageRoute(builder: (_) => const MessagingScreen())),
+      onTap: () => Get.to(
+        () => MessagingScreen(
+          data: data,
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ),
+      ),
       contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
       leading: data.senderSenderFilePath!.isNotEmpty
           ? CircleAvatar(
@@ -52,7 +63,7 @@ class ChatProfileTile extends StatelessWidget {
         children: [
           Flexible(
             child: Text(
-              data.ismintInteraction.toString(),
+              data.ismintSubject.toString(),
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context)
                   .textTheme
@@ -61,7 +72,9 @@ class ChatProfileTile extends StatelessWidget {
             ),
           ),
           SvgPicture.asset(
-              "assets/svg/${isSeen ? "blue_double_check.svg" : "double_check.svg"}")
+            "assets/svg/${isSeen ? "blue_double_check.svg" : "double_check.svg"}",
+            color: isSeen ? Colors.blue : Colors.grey,
+          )
         ],
       ),
       trailing: Column(

@@ -1,17 +1,16 @@
 // To parse this JSON data, do
 //
-//     final unreadDataModel = unreadDataModelFromJson(jsonString);
+//     final messageModel = messageModelFromJson(jsonString);
 
 import 'dart:convert';
 
-UnreadDataModel unreadDataModelFromJson(String str) =>
-    UnreadDataModel.fromJson(json.decode(str));
+MessageModel messageModelFromJson(String str) =>
+    MessageModel.fromJson(json.decode(str));
 
-String unreadDataModelToJson(UnreadDataModel data) =>
-    json.encode(data.toJson());
+String messageModelToJson(MessageModel data) => json.encode(data.toJson());
 
-class UnreadDataModel {
-  UnreadDataModel({
+class MessageModel {
+  MessageModel({
     this.returnval,
     this.alreadyCnt,
     this.composeedto,
@@ -133,8 +132,7 @@ class UnreadDataModel {
   int? acmSId;
   int? acmSOrder;
 
-  factory UnreadDataModel.fromJson(Map<String, dynamic> json) =>
-      UnreadDataModel(
+  factory MessageModel.fromJson(Map<String, dynamic> json) => MessageModel(
         returnval: json["returnval"],
         alreadyCnt: json["already_cnt"],
         composeedto: json["composeedto"],
@@ -407,12 +405,12 @@ class ViewMessage {
   });
 
   String? type;
-  List<Value>? values;
+  List<ViewMessageValue>? values;
 
   factory ViewMessage.fromJson(Map<String, dynamic> json) => ViewMessage(
         type: json["\$type"],
-        values:
-            List<Value>.from(json["\$values"].map((x) => Value.fromJson(x))),
+        values: List<ViewMessageValue>.from(
+            json["\$values"].map((x) => ViewMessageValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

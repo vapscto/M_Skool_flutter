@@ -168,7 +168,8 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
 
                                     return CustomContainer(
                                       child: Padding(
-                                        padding: const EdgeInsets.all(16.0),
+                                        padding: const EdgeInsets.fromLTRB(
+                                            10.0, 10, 10, 10),
                                         child: Column(
                                           children: [
                                             Row(
@@ -181,7 +182,7 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                                                   decoration: BoxDecoration(
                                                     color: noticeColor
                                                         .elementAt(color)
-                                                        .withOpacity(0.2),
+                                                        .withOpacity(0.1),
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             24.0),
@@ -193,7 +194,7 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                                                         .textTheme
                                                         .titleSmall!
                                                         .merge(TextStyle(
-                                                            fontSize: 16.0,
+                                                            fontSize: 14.0,
                                                             fontWeight:
                                                                 FontWeight.w600,
                                                             color: noticeColor
@@ -205,7 +206,7 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                                               ],
                                             ),
                                             const SizedBox(
-                                              height: 16.0,
+                                              height: 10.0,
                                             ),
                                             ListView.builder(
                                                 shrinkWrap: true,
@@ -1068,67 +1069,79 @@ class _InstallmentInfoWidgetState extends State<InstallmentInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      minLeadingWidth: 10,
-      visualDensity: const VisualDensity(
-          horizontal: VisualDensity.minimumDensity,
-          vertical: VisualDensity.minimumDensity),
-      // leading: Checkbox(
-      //   value: widget.disabled ? true : isSelected,
-      //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
-      //   activeColor: Theme.of(context).primaryColor,
-      //   visualDensity: const VisualDensity(
-      //       horizontal: VisualDensity.minimumDensity,
-      //       vertical: VisualDensity.minimumDensity),
-      //   onChanged: widget.disabled
-      //       ? null
-      //       : (v) {
-      //           isSelected = v!;
-      //           setState(() {});
-      //           widget.onChecked();
-      //         },
-      // ),
-      leading: GestureDetector(
-        onTap: () {
-          if (widget.disabled) {
-            return;
-          }
-          isSelected = !isSelected;
-          setState(() {});
-          widget.onChecked();
-        },
-        child: AnimatedContainer(
-            height: 22,
-            width: 22,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.fastLinearToSlowEaseIn,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6.0),
-                border: widget.disabled
-                    ? null
-                    : isSelected
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Row(
+        // contentPadding: EdgeInsets.zero,
+        // minLeadingWidth: 10,
+        // visualDensity: const VisualDensity(
+        //     horizontal: VisualDensity.minimumDensity,
+        //     vertical: VisualDensity.minimumDensity),
+        // leading: Checkbox(
+        //   value: widget.disabled ? true : isSelected,
+        //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3.0)),
+        //   activeColor: Theme.of(context).primaryColor,
+        //   visualDensity: const VisualDensity(
+        //       horizontal: VisualDensity.minimumDensity,
+        //       vertical: VisualDensity.minimumDensity),
+        //   onChanged: widget.disabled
+        //       ? null
+        //       : (v) {
+        //           isSelected = v!;
+        //           setState(() {});
+        //           widget.onChecked();
+        //         },
+        // ),
+        children: [
+          // leading:
+          GestureDetector(
+            onTap: () {
+              if (widget.disabled) {
+                return;
+              }
+              isSelected = !isSelected;
+              setState(() {});
+              widget.onChecked();
+            },
+            child: AnimatedContainer(
+                height: 18,
+                width: 18,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.fastLinearToSlowEaseIn,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(3.0),
+                    border: widget.disabled
                         ? null
-                        : Border.all(color: Colors.grey, width: 2.0)),
-            child: widget.disabled
-                ? Image.asset(
-                    "assets/images/checkbox.png",
-                    color: Colors.grey,
-                  )
-                : isSelected
-                    ? Image.asset("assets/images/checkbox.png")
-                    : null),
-      ),
-      title: Text(
-        widget.model.fMTName!,
-        style: Theme.of(context)
-            .textTheme
-            .titleSmall!
-            .merge(const TextStyle(fontSize: 18.0)),
-      ),
-      trailing: Text(
-        "₹${widget.model.payable!.toString()}",
-        style: const TextStyle(fontSize: 18.0),
+                        : isSelected
+                            ? null
+                            : Border.all(color: Colors.grey, width: 2.0)),
+                child: widget.disabled
+                    ? Image.asset(
+                        "assets/images/checkbox.png",
+                        color: Colors.grey,
+                      )
+                    : isSelected
+                        ? Image.asset("assets/images/checkbox.png")
+                        : null),
+          ),
+          // title:
+          const SizedBox(
+            width: 8,
+          ),
+          Text(
+            widget.model.fMTName!,
+            style: Theme.of(context)
+                .textTheme
+                .titleSmall!
+                .merge(const TextStyle(fontSize: 14.0)),
+          ),
+          // trailing:
+          const Spacer(),
+          Text(
+            "₹${widget.model.payable!.toString()}",
+            style: const TextStyle(fontSize: 14.0),
+          ),
+        ],
       ),
     );
   }
@@ -1176,6 +1189,7 @@ class PrevTransactionDetails extends StatelessWidget {
         title: const Text("Transactions"),
         trailing: const Icon(
           Icons.chevron_right_outlined,
+          color: Colors.black,
         ),
       ),
     );

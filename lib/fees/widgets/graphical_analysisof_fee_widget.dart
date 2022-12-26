@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class GraphicalAnalysisFeeWidget extends StatefulWidget {
@@ -30,14 +28,14 @@ class _GraphicalAnalysisFeeWidgetState
     return Card(
       elevation: 7,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Container(
         padding: const EdgeInsets.all(10),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: const Color.fromRGBO(211, 239, 255, 0.3),
-          borderRadius: BorderRadius.circular(16.0),
+          color: const Color.fromARGB(75, 231, 241, 247),
+          borderRadius: BorderRadius.circular(8.0),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,28 +43,30 @@ class _GraphicalAnalysisFeeWidgetState
             Text(
               'Academic Year Fee Analysis',
               style: Theme.of(context).textTheme.titleSmall!.merge(
-                    const TextStyle(
+                    TextStyle(
                       fontWeight: FontWeight.w600,
-                      fontSize: 16.0,
-                      color: Color.fromRGBO(30, 56, 252, 1),
+                      fontSize: 18.0,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
             ),
             const SizedBox(height: 20),
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height / 2.2,
               child: SfCartesianChart(
                 primaryYAxis: NumericAxis(
                   labelStyle: const TextStyle(
                     fontSize: 12,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
                   ),
                   majorGridLines: const MajorGridLines(width: 0),
                 ),
                 primaryXAxis: CategoryAxis(
                   labelStyle: const TextStyle(
                     fontSize: 12,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
                   ),
                   majorGridLines: const MajorGridLines(width: 0),
                 ),

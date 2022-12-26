@@ -3,12 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/interaction/widget/chat_profile_tile.dart';
 
+import '../../controller/mskoll_controller.dart';
 import '../../main.dart';
+import '../../model/login_success_model.dart';
 import '../../widget/animated_progress_widget.dart';
 import '../controller/inbox_tab_controller.dart';
 
 class UnReadTabScreen extends StatefulWidget {
-  const UnReadTabScreen({super.key});
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  const UnReadTabScreen(
+      {super.key,
+      required this.loginSuccessModel,
+      required this.mskoolController});
 
   @override
   State<UnReadTabScreen> createState() => _UnReadTabScreenState();
@@ -42,6 +49,8 @@ class _UnReadTabScreenState extends State<UnReadTabScreen> {
           : ListView.separated(
               itemBuilder: (_, index) {
                 return ChatProfileTile(
+                  loginSuccessModel: widget.loginSuccessModel,
+                  mskoolController: widget.mskoolController,
                   data: inboxController.inboxList[index],
                   // isGroup: Random().nextBool(),
                   isSeen: Random().nextBool(),

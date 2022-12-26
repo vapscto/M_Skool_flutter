@@ -7,12 +7,21 @@ import '../../main.dart';
 class ComposeController extends GetxController {
   RxList<GetdetailsValue> staffList = <GetdetailsValue>[].obs;
   RxBool isLoading = RxBool(false);
+  RxBool isInteractionLoading = RxBool(true);
+  RxBool isSend = RxBool(false);
+  RxBool isButton = RxBool(true);
+
+  void isbutton(bool loading) {
+    isButton.value = loading;
+  }
 
   void isloading(bool loading) {
     isLoading.value = loading;
   }
 
-  RxBool isInteractionLoading = RxBool(true);
+  void issend(bool loading) {
+    isSend.value = loading;
+  }
 
   void isInteractionloading(bool loading) async {
     isInteractionLoading.value = loading;

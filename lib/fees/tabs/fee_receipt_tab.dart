@@ -19,7 +19,6 @@ import '../../controller/global_utilities.dart';
 import '../../controller/mskoll_controller.dart';
 import '../../model/login_success_model.dart';
 import '../../widget/pgr_widget.dart';
-import '../widgets/receiptno_card.dart';
 import 'dart:ui' as ui;
 
 class FeeReceiptTab extends StatefulWidget {
@@ -79,7 +78,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
       if (value) {
         if (feeController.feeReceiptNoList.isNotEmpty) {
           receiptNoSelectedValue = feeController.feeReceiptNoList.first;
-          getFeesReceiptDetail(this.receiptNoSelectedValue!.fyPId!);
+          getFeesReceiptDetail(receiptNoSelectedValue!.fyPId!);
         }
       }
     });
@@ -243,7 +242,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                         : feeController.feeReceiptNoList.isEmpty
                             ? const Center(
                                 child: AnimatedProgressWidget(
-                                  animatorHeight: 250,
+                                  animatorHeight: 300,
                                   animationPath: 'assets/json/nodata.json',
                                   title: "No Receipt Found",
                                   desc:
