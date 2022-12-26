@@ -10,7 +10,6 @@ import 'package:m_skool_flutter/attendance/widgets/attendance_column_chart.dart'
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
@@ -211,127 +210,6 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                               ),
                             );
                           }),
-                          // const SizedBox(
-                          //   height: 8.0,
-                          // ),
-                          // Container(
-                          //   decoration: BoxDecoration(
-                          //     color: Theme.of(context).scaffoldBackgroundColor,
-                          //     borderRadius: BorderRadius.circular(16.0),
-                          //     boxShadow: const [
-                          //       BoxShadow(
-                          //         offset: Offset(0, 1),
-                          //         blurRadius: 4,
-                          //         color: Colors.black12,
-                          //       ),
-                          //     ],
-                          //   ),
-                          //   child: Column(
-                          //     children: [
-                          //       Container(
-                          //         padding: const EdgeInsets.all(12.0),
-                          //         decoration: BoxDecoration(
-                          //           color: Theme.of(context).colorScheme.secondary,
-                          //           borderRadius: const BorderRadius.only(
-                          //             topLeft: Radius.circular(16.0),
-                          //             topRight: Radius.circular(16.0),
-                          //           ),
-                          //         ),
-                          //         child: Row(
-                          //           crossAxisAlignment: CrossAxisAlignment.center,
-                          //           children: [
-                          //             Image.asset(
-                          //               'assets/images/vpslogo.png',
-                          //               height: 36,
-                          //             ),
-                          //             const SizedBox(
-                          //               width: 12.0,
-                          //             ),
-                          //             Text(
-                          //               "VAPS International School".tr,
-                          //               style: Theme.of(context)
-                          //                   .textTheme
-                          //                   .titleMedium!
-                          //                   .merge(const TextStyle(color: Color(0xFF35658F))),
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //       const SizedBox(
-                          //         height: 8.0,
-                          //       ),
-                          //       Padding(
-                          //         padding: const EdgeInsets.all(12.0),
-                          //         child: Container(
-                          //           //padding: const EdgeInsets.all(12.0),
-                          //           decoration: BoxDecoration(
-                          //             color: Theme.of(context).scaffoldBackgroundColor,
-                          //             borderRadius: BorderRadius.circular(16.0),
-                          //             boxShadow: const [
-                          //               BoxShadow(
-                          //                 offset: Offset(0, 1),
-                          //                 blurRadius: 8,
-                          //                 color: Colors.black12,
-                          //               ),
-                          //             ],
-                          //           ),
-                          //           child: DropdownButtonFormField<String>(
-                          //             value: selectedValue,
-                          //             decoration: InputDecoration(
-                          //               // border: OutlineInputBorder(
-                          //               //   borderRadius: BorderRadius.circular(12.0),
-                          //               // ),
-
-                          //               focusedBorder: const OutlineInputBorder(
-                          //                 borderSide: BorderSide(
-                          //                   color: Colors.transparent,
-                          //                 ),
-                          //               ),
-                          //               enabledBorder: const OutlineInputBorder(
-                          //                 borderSide: BorderSide(
-                          //                   color: Colors.transparent,
-                          //                 ),
-                          //               ),
-
-                          //               label: Text(
-                          //                 "Academic Year".tr,
-                          //                 style: Theme.of(context)
-                          //                     .textTheme
-                          //                     .labelLarge!
-                          //                     .merge(TextStyle(color: Colors.grey.shade600)),
-                          //               ),
-                          //             ),
-                          //             icon: const Icon(
-                          //               Icons.keyboard_arrow_down_rounded,
-                          //               size: 30,
-                          //             ),
-                          //             iconSize: 30,
-                          //             items: List.generate(
-                          //               dummySession.length,
-                          //               (index) => DropdownMenuItem(
-                          //                 value: dummySession.elementAt(index),
-                          //                 child: Text(
-                          //                   dummySession.elementAt(index),
-                          //                   style: Theme.of(context)
-                          //                       .textTheme
-                          //                       .labelSmall!
-                          //                       .merge(const TextStyle(
-                          //                           fontWeight: FontWeight.w400,
-                          //                           fontSize: 16.0,
-                          //                           letterSpacing: 0.3)),
-                          //                 ),
-                          //               ),
-                          //             ),
-                          //             onChanged: (s) {},
-                          //           ),
-                          //         ),
-                          //       ),
-                          //       const SizedBox(
-                          //         height: 8.0,
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
                           const SizedBox(
                             height: 16.0,
                           ),
@@ -373,13 +251,6 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                                     CustomThemeData.getShadow(),
                                               ),
                                               child: CustomContainer(
-                                                // decoration: BoxDecoration(
-                                                //   color: const Color.fromARGB(
-                                                //       100, 238, 232, 255),
-                                                //   borderRadius:
-                                                //       BorderRadius.circular(16.0),
-                                                //   //boxShadow: CustomThemeData.getShadow(),
-                                                // ),
                                                 child: Column(
                                                   children: [
                                                     Row(
@@ -520,16 +391,6 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                                                           .value =
                                                                       !showGraph
                                                                           .value;
-                                                                  // Get.to(
-                                                                  //   () =>
-                                                                  //       AttendanceDetails(
-                                                                  //     details:
-                                                                  //         attendanceDetails(
-                                                                  //             handler
-                                                                  //                 .attendanceData),
-                                                                  //     handler: handler,
-                                                                  //   ),
-                                                                  // );
                                                                 },
                                                                 borderRadius:
                                                                     const BorderRadius
@@ -557,22 +418,6 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                                                                 TextDecoration.underline)),
                                                                   ),
                                                                 ),
-
-                                                                // child: Container(
-                                                                //   height: 100,
-                                                                //   padding: const EdgeInsets.all(16.0),
-                                                                //   decoration: BoxDecoration(
-                                                                //     color: Theme.of(context).colorScheme.secondary,
-                                                                //     borderRadius: const BorderRadius.only(
-                                                                //       topRight: Radius.circular(16.0),
-                                                                //       bottomRight: Radius.circular(16.0),
-                                                                //     ),
-                                                                //   ),
-                                                                //   child: const Icon(
-                                                                //     Icons.remove_red_eye_outlined,
-                                                                //     color: Color(0xFF35658F),
-                                                                //   ),
-                                                                // ),
                                                               )
                                                             : Container(),
                                                       ],

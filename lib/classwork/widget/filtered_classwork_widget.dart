@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/classwork/api/get_class_work.dart';
 import 'package:m_skool_flutter/classwork/api/get_filtered_classwork.dart';
 import 'package:m_skool_flutter/classwork/api/update_seen_classwork_api.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
@@ -9,10 +8,8 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/homework/screen/home_work.dart';
 import 'package:m_skool_flutter/homework/screen/hwcw_detail_screen.dart';
 import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
-import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/notice/api/get_notice_api.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 
 class FilteredClassWork extends StatefulWidget {
@@ -81,19 +78,6 @@ class _FilteredClassWorkState extends State<FilteredClassWork> {
                     animationPath: "assets/json/nodata.json",
                     animatorHeight: 250,
                   )
-                // ? Center(
-                //     child: Column(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: [
-                //         Text(
-                //           "No Classwork present",
-                //           style: Theme.of(context).textTheme.titleMedium,
-                //         ),
-                //         const Text(
-                //             "We couldn't find any classwork for these filtration")
-                //       ],
-                //     ),
-                //   )
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -106,7 +90,7 @@ class _FilteredClassWorkState extends State<FilteredClassWork> {
                       ),
                       ListView.separated(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: widget.hwCwNbController.classWorkList.length,
                         itemBuilder: (_, index) {
                           color += 1;

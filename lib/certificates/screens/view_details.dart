@@ -5,7 +5,6 @@ import 'package:m_skool_flutter/certificates/model/stud_list.dart';
 import 'package:m_skool_flutter/certificates/widget/certificate_detail_item.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
@@ -59,10 +58,6 @@ class ViewDetails extends StatelessWidget {
                   animationPath: "assets/json/Certificate.json"),
             ],
           );
-          // return const CustomPgrWidget(
-          //   title: "Getting all your applied certificates",
-          //   desc: "We are getting your applied certificate from heaven",
-          // );
         });
   }
 }
