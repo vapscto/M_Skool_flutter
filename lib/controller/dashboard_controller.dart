@@ -29,6 +29,7 @@ class DashboardController extends GetxController {
       Rx<ExamListNewValues>(ExamListNewValues());
 
   RxList<CalListValues> calList = RxList<CalListValues>();
+  RxList<BirthdayListValues> birthday = RxList<BirthdayListValues>();
   Future studentDashBoardDetails({
     required int miId,
     required int asmayId,
@@ -45,6 +46,14 @@ class DashboardController extends GetxController {
       asmSId: asmSId,
       asmcLId: asmcLId,
     );
+
+    if (studentDashboardModel.birthdayList != null) {
+      if (birthday.isNotEmpty) {
+        birthday.clear();
+      }
+
+      birthday.addAll(studentDashboardModel.birthdayList!.values!);
+    }
 
     if (studentDashboardModel.calList != null) {
       calList.addAll(studentDashboardModel.calList!.values!);

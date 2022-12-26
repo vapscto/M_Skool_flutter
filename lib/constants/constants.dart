@@ -224,6 +224,15 @@ List<String> shortMonth = [
   "Dec",
 ];
 
+List<String> profileImg = [
+  "assets/images/prof1.png",
+  "assets/images/prof2.png",
+  "assets/images/prof3.png",
+  "assets/images/prof4.png",
+  "assets/images/prof5.png",
+  "assets/images/prof6.png",
+];
+
 List<Color> colors = [
   Colors.green.shade100,
   Colors.redAccent.shade100,

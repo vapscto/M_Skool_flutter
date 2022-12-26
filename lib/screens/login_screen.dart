@@ -1,4 +1,3 @@
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,8 +10,8 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/home.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
-import 'package:m_skool_flutter/widget/pgr_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   final MskoolController mskoolController;
@@ -26,6 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController userName = TextEditingController();
   final TextEditingController password = TextEditingController();
   RxBool showPassword = RxBool(false);
+
+  bool policyAccepted = false;
 
   @override
   Widget build(BuildContext context) {
@@ -135,12 +136,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         hintText: 'User Id',
                         //label: Text("Institutional Code"),
                         prefixIcon: Container(
-                          margin: EdgeInsets.only(bottom: 2.0),
+                          margin: const EdgeInsets.only(bottom: 2.0),
                           child: Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: SvgPicture.asset(
                               'assets/svg/profile.svg',
-                              color: Color.fromARGB(188, 30, 60, 194),
+                              color: const Color.fromARGB(188, 30, 60, 194),
                               height: 24.0,
                               width: 24.0,
                             ),
@@ -205,13 +206,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                   showPassword.value = !showPassword.value;
                                 },
                                 child: showPassword.value
-                                    ? const Icon(
+                                    ? Icon(
                                         Icons.visibility_off_outlined,
                                         size: 24.0,
+                                        color: Theme.of(context).primaryColor,
                                       )
-                                    : const Icon(
+                                    : Icon(
                                         Icons.visibility,
                                         size: 24.0,
+                                        color: Theme.of(context).primaryColor,
                                       ))),
                       );
                     }),
@@ -240,10 +243,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     // const SizedBox(
                     //   height: 16.0,
                     // ),
-                    const SizedBox(
-                      height: 18.0,
-                    ),
-                    Center(
+                    // const SizedBox(
+                    //   height: 18.0,
+                    // ),
+                    Align(
+                      alignment: Alignment.topRight,
                       child: TextButton(
                           onPressed: () {
                             Navigator.push(
@@ -268,6 +272,38 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                           )),
                     ),
+                    Row(
+                      children: [
+                        Checkbox(
+                            visualDensity: const VisualDensity(
+                                horizontal: VisualDensity.minimumDensity),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4.0),
+                            ),
+                            activeColor: Theme.of(context).primaryColor,
+                            value: policyAccepted,
+                            onChanged: (v) {
+                              policyAccepted = v!;
+                              setState(() {});
+                            }),
+                        RichText(
+                            text: TextSpan(
+                                text: 'I agree to all your ',
+                                style: Theme.of(context).textTheme.titleSmall,
+                                children: [
+                              TextSpan(
+                                  text: "T&C",
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium),
+                              const TextSpan(text: " and "),
+                              TextSpan(
+                                  text: "Privacy Policy",
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium)
+                            ]))
+                        //  Text("I agree to all your T&C and Privacy Policy")
+                      ],
+                    ),
                     const SizedBox(
                       height: 36.0,
                     ),
@@ -282,6 +318,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (password.text.isEmpty) {
                             Fluttertoast.showToast(
                                 msg: "Please provide a valid password");
+                            return;
+                          }
+
+                          if (!policyAccepted) {
+                            Fluttertoast.showToast(
+                                msg: "Please accept T&C and Privacy Policy");
+                            return;
                           }
 
                           // AndroidDeviceInfo info = await DeviceInfoPlugin().androidInfo;
@@ -346,10 +389,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   textAlign: TextAlign.center,
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .titleMedium!
+                                                      .titleSmall!
                                                       .merge(
                                                         const TextStyle(
-                                                            fontSize: 20.0),
+                                                          fontSize: 20.0,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
                                                       ),
                                                 ),
                                                 const SizedBox(
@@ -360,7 +406,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   textAlign: TextAlign.center,
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .labelMedium!,
+                                                      .labelSmall!
+                                                      .merge(TextStyle(
+                                                          letterSpacing: 0.2,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .labelMedium!
+                                                                  .color)),
                                                 ),
                                                 const SizedBox(
                                                   height: 16.0,
@@ -368,8 +421,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 ElevatedButton(
                                                   style:
                                                       ElevatedButton.styleFrom(
-                                                    minimumSize: const Size(
-                                                      double.infinity,
+                                                    minimumSize: Size(
+                                                      Get.width * 0.5,
                                                       50,
                                                     ),
                                                     shape:
@@ -423,7 +476,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                             err: err,
                                           );
                                         }
-                                        return const ProgressWidget();
+                                        return Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: const [
+                                            AnimatedProgressWidget(
+                                                title: "Please Wait",
+                                                desc:
+                                                    "We are trying to loging you in.",
+                                                animationPath:
+                                                    "assets/json/default.json")
+                                          ],
+                                        );
                                       }),
                                 );
                               });
@@ -432,14 +495,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
                             ),
-                            minimumSize: Size(Get.width * 0.6, 50)),
+                            minimumSize: Size(Get.width * 0.5, 50)),
                         child: Text(
-                          "Continue",
+                          "Login",
                           style: Theme.of(context).textTheme.titleSmall!.merge(
                                 const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16),
                               ),
                         ),
                       ),

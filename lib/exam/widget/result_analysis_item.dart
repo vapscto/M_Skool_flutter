@@ -1,9 +1,4 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
-import 'package:m_skool_flutter/widget/custom_container.dart';
 
 import '../model/markoverview_model.dart';
 
@@ -28,7 +23,7 @@ class ResultAnalysisItem extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: containerColor,
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(8.0),
       ),
       child: Column(
         children: [

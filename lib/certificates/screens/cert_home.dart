@@ -127,10 +127,7 @@ class _CertificateHomeScreenState extends State<CertificateHomeScreen>
                                   color:
                                       tabStateController.selectedIndex.value ==
                                               0
-                                          ? Theme.of(context)
-                                              .textTheme
-                                              .titleMedium!
-                                              .color
+                                          ? Theme.of(context).primaryColor
                                           : Colors.white,
                                 )),
                           ),
@@ -161,10 +158,7 @@ class _CertificateHomeScreenState extends State<CertificateHomeScreen>
                                         color: tabStateController
                                                     .selectedIndex.value ==
                                                 1
-                                            ? Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .color
+                                            ? Theme.of(context).primaryColor
                                             : Colors.white,
                                       ),
                                     ),

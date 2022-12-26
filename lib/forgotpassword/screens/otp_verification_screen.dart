@@ -144,29 +144,6 @@ class _OTPScreenState extends State<OTPScreen> {
                         title: "Sending Otp",
                         desc: "We are sending otp on ${widget.otpSendingInfo}.",
                         animationPath: "assets/json/forgot.json")
-                    // ? Column(
-                    //     crossAxisAlignment: CrossAxisAlignment.start,
-                    //     children: [
-                    //       Text(
-                    //         "Sending Otp",
-                    //         style:
-                    //             Theme.of(context).textTheme.titleMedium!.merge(
-                    //                   const TextStyle(fontSize: 20.0),
-                    //                 ),
-                    //       ),
-                    //       const SizedBox(
-                    //         height: 12.0,
-                    //       ),
-                    //       Text(
-                    //         "We are sending otp on ${widget.otpSendingInfo}.",
-                    //         style: const TextStyle(fontSize: 16),
-                    //       ),
-                    //       const SizedBox(
-                    //         height: 12.0,
-                    //       ),
-                    //       const CircularProgressIndicator(),
-                    //     ],
-                    //   )
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -187,18 +164,6 @@ class _OTPScreenState extends State<OTPScreen> {
                           const SizedBox(
                             height: 12.0,
                           ),
-                          // PinCodeTextField(
-                          //   appContext: context,
-                          //   boxShadows: CustomThemeData.getShadow(),
-                          //   length: 6,
-                          //   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                          //   onChanged: (e) {},
-                          //   pinTheme: PinTheme(
-                          //     shape: PinCodeFieldShape.box,
-                          //     borderRadius: BorderRadius.circular(12.0),
-                          //   ),
-                          // ),
-
                           const SizedBox(
                             height: 16.0,
                           ),

@@ -84,20 +84,6 @@ class _FeedBackHomeState extends State<FeedBackHome> {
           children: [
             Column(
               children: [
-                // Image.asset(
-                //   'assets/images/vpslogo.png',
-                //   height: 36,
-                // ),
-                // const SizedBox(
-                //   width: 12.0,
-                // ),
-                // Text(
-                //   "VAPS International School".tr,
-                //   style: Theme.of(context)
-                //       .textTheme
-                //       .titleMedium!
-                //       .merge(const TextStyle(color: Color(0xFF35658F))),
-                // ),
                 const SizedBox(
                   height: 16.0,
                 ),
@@ -159,31 +145,6 @@ class _FeedBackHomeState extends State<FeedBackHome> {
             const SizedBox(
               height: 36.0,
             ),
-            // Center(
-            //   child: ElevatedButton(
-            //     style: ElevatedButton.styleFrom(
-            //       backgroundColor: Theme.of(context).colorScheme.secondary,
-            //       padding: const EdgeInsets.symmetric(
-            //           horizontal: 36, vertical: 12.0),
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(30.0),
-            //       ),
-            //     ),
-            //     onPressed: () {},
-            //     child: Text(
-            //       "Submit",
-            //       style: Theme.of(context).textTheme.labelSmall!.merge(
-            //             const TextStyle(
-            //               color: Color(0xFF35658F),
-            //               letterSpacing: 0.3,
-            //               fontSize: 16,
-            //               fontWeight: FontWeight.w700,
-            //             ),
-            //           ),
-            //     ),
-            //   ),
-            // )
-
             MSkollBtn(
               title: "Submit",
               size: Size(Get.width * 0.5, 50),
@@ -239,7 +200,6 @@ class _FeedBackHomeState extends State<FeedBackHome> {
             const SizedBox(
               height: 36.00,
             ),
-
             LottieBuilder.asset("assets/json/feed.json"),
           ],
         ),

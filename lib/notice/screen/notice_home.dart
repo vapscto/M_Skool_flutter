@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -688,13 +687,13 @@ class NoticeItem extends StatelessWidget {
     return Container(
       height: 80,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(8.0),
         color: Theme.of(context).scaffoldBackgroundColor,
         boxShadow: CustomThemeData.getShadow(),
       ),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(8.0),
           //color: colors.elementAt(color).withOpacity(0.1),
           //boxShadow: CustomThemeData.getShadow(),
         ),
@@ -706,8 +705,8 @@ class NoticeItem extends StatelessWidget {
               decoration: BoxDecoration(
                 color: noticeBackgroundColor.elementAt(color),
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12.0),
-                  bottomLeft: Radius.circular(12.0),
+                  topLeft: Radius.circular(8.0),
+                  bottomLeft: Radius.circular(8.0),
                 ),
               ),
               child: Center(
@@ -759,7 +758,10 @@ class NoticeItem extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SvgPicture.asset('assets/svg/calendar.svg'),
+                        SvgPicture.asset(
+                          'assets/svg/calendar.svg',
+                          color: Theme.of(context).textTheme.titleMedium!.color,
+                        ),
                         const SizedBox(
                           width: 6.0,
                         ),
@@ -802,13 +804,13 @@ class TTNoticeItem extends StatelessWidget {
     return Container(
       height: 80,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(8.0),
         color: Theme.of(context).scaffoldBackgroundColor,
         boxShadow: CustomThemeData.getShadow(),
       ),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(8.0),
           //color: colors.elementAt(color).withOpacity(0.1),
           //boxShadow: CustomThemeData.getShadow(),
         ),
@@ -820,8 +822,8 @@ class TTNoticeItem extends StatelessWidget {
               decoration: BoxDecoration(
                 color: noticeColor.elementAt(color).withOpacity(0.1),
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12.0),
-                  bottomLeft: Radius.circular(12.0),
+                  topLeft: Radius.circular(8.0),
+                  bottomLeft: Radius.circular(8.0),
                 ),
               ),
               child: Center(
@@ -873,7 +875,10 @@ class TTNoticeItem extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SvgPicture.asset('assets/svg/calendar.svg'),
+                        SvgPicture.asset(
+                          'assets/svg/calendar.svg',
+                          color: Theme.of(context).textTheme.titleMedium!.color,
+                        ),
                         const SizedBox(
                           width: 6.0,
                         ),

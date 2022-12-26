@@ -397,9 +397,9 @@ class _ApplyNowState extends State<ApplyNow> {
                                       );
                                     });
                               }),
-                          const SizedBox(
-                            height: 36.0,
-                          ),
+                          // const SizedBox(
+                          //   height: 36.0,
+                          // ),
                           AspectRatio(
                               aspectRatio: widget.controller.value.aspectRatio,
                               child: VideoPlayer(widget.controller)),

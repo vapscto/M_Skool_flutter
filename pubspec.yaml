@@ -66,10 +66,11 @@ dependencies:
   salomon_bottom_bar: ^3.3.1
   syncfusion_flutter_gauges: ^20.3.61
   dotted_line: ^3.1.0
-  widget_mask: ^1.0.0+0
+
   gallery_saver: ^2.3.2
   lottie: ^2.1.0
   timeago: ^3.3.0
+
 
 dev_dependencies:
   flutter_test:

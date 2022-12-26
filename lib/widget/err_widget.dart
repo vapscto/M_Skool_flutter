@@ -30,7 +30,7 @@ class ErrWidget extends StatelessWidget {
           Text(
             err['errorTitle'],
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.titleMedium!.merge(
+            style: Theme.of(context).textTheme.titleSmall!.merge(
                   const TextStyle(fontSize: 20.0),
                 ),
           ),
@@ -40,7 +40,10 @@ class ErrWidget extends StatelessWidget {
           Text(
             err['errorMsg'],
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.labelMedium!,
+            style: Theme.of(context)
+                .textTheme
+                .labelSmall!
+                .merge(const TextStyle(letterSpacing: 0.2)),
           ),
           const SizedBox(
             height: 16.0,

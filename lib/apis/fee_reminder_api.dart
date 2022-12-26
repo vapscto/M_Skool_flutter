@@ -1,11 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/fees/screens/online_payment_screen.dart';
-import 'package:m_skool_flutter/fees/tabs/pay_online_tab.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/fee_reminder_model.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
@@ -79,14 +77,14 @@ class FeeReminderApi {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12.0, vertical: 8.0),
                       decoration: BoxDecoration(
-                          color: const Color(0xFFFFE3E3),
+                          color: const Color(0xFFFFF1F0),
                           borderRadius: BorderRadius.circular(24.0)),
                       child: Text(
                         "₹${feeReminderModel.values!.first.fINE}/Day",
                         style: Theme.of(context)
                             .textTheme
                             .titleSmall!
-                            .merge(const TextStyle(color: Color(0xFFA83232))),
+                            .merge(const TextStyle(color: Color(0xFFF5483E))),
                       ),
                     ),
                   ],

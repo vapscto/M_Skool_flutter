@@ -13,7 +13,6 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
-import 'package:m_skool_flutter/widget/pgr_widget.dart';
 import 'package:m_skool_flutter/widget/success_widget.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -251,8 +250,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         child: Text(
                           "Continue",
                           style: Theme.of(context).textTheme.titleSmall!.merge(
-                              const TextStyle(
-                                  color: Colors.white, fontSize: 18.0)),
+                                const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                ),
+                              ),
                         )),
                   ),
                 ],

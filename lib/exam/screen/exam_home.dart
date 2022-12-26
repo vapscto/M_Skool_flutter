@@ -118,7 +118,10 @@ class _ExamHomeState extends State<ExamHome> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         selectedTab == 0
-                            ? SvgPicture.asset('assets/svg/exam_ic.svg')
+                            ? SvgPicture.asset(
+                                'assets/svg/exam_ic.svg',
+                                color: Theme.of(context).primaryColor,
+                              )
                             : const SizedBox(),
                         const SizedBox(
                           width: 6.0,
@@ -131,7 +134,7 @@ class _ExamHomeState extends State<ExamHome> {
                                     letterSpacing: 0.1,
                                     color: selectedTab != 0
                                         ? Colors.white
-                                        : Colors.black),
+                                        : Theme.of(context).primaryColor),
                               ),
                         ),
                       ],
@@ -142,7 +145,10 @@ class _ExamHomeState extends State<ExamHome> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         selectedTab == 1
-                            ? SvgPicture.asset('assets/svg/exam_ic.svg')
+                            ? SvgPicture.asset(
+                                'assets/svg/exam_ic.svg',
+                                color: Theme.of(context).primaryColor,
+                              )
                             : const SizedBox(),
                         const SizedBox(
                           width: 6.0,
@@ -155,7 +161,7 @@ class _ExamHomeState extends State<ExamHome> {
                                     letterSpacing: 0.1,
                                     color: selectedTab != 1
                                         ? Colors.white
-                                        : Colors.black),
+                                        : Theme.of(context).primaryColor),
                               ),
                         ),
                       ],
@@ -184,80 +190,3 @@ class _ExamHomeState extends State<ExamHome> {
     );
   }
 }
-
-// class OldRow extends StatelessWidget {
-//   const OldRow({
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       children: [
-//         Expanded(
-//           child: InkWell(
-//             onTap: () {
-//               Get.to(() => ResultDetail(resultType: 0));
-//             },
-//             child: CustomContainer(
-//               gradient: const LinearGradient(
-//                   colors: [Color(0xFF147278), Color(0xFFB7F1E7)]),
-//               child: Padding(
-//                 padding: const EdgeInsets.all(12.0),
-//                 child: Column(
-//                   children: [
-//                     Image.asset(
-//                       "assets/images/exam.png",
-//                       width: 100,
-//                       height: 100,
-//                     ),
-//                     const SizedBox(
-//                       height: 6.0,
-//                     ),
-//                     Text(
-//                       "Exam Wise".tr,
-//                       style: Theme.of(context).textTheme.titleMedium,
-//                     )
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ),
-//         const SizedBox(
-//           width: 12.0,
-//         ),
-//         Expanded(
-//           child: InkWell(
-//             onTap: () {
-//               Get.to(() => ResultDetail(resultType: 1));
-//             },
-//             child: CustomContainer(
-//               gradient: const LinearGradient(
-//                   colors: [Color(0xFFBe6D84), Color(0xFFFFD5c5)]),
-//               child: Padding(
-//                 padding: const EdgeInsets.all(12.0),
-//                 child: Column(
-//                   children: [
-//                     Image.asset(
-//                       "assets/images/book.png",
-//                       width: 100,
-//                       height: 100,
-//                     ),
-//                     const SizedBox(
-//                       height: 6.0,
-//                     ),
-//                     Text(
-//                       "Subject Wise".tr,
-//                       style: Theme.of(context).textTheme.titleMedium,
-//                     )
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }

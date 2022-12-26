@@ -46,7 +46,7 @@ class _DashboardFeeGraphState extends State<DashboardFeeGraph> {
       child: Column(
         children: [
           SizedBox(
-            height: 55,
+            height: 36,
             child: InkWell(
               onTap: () {
                 Get.to(() => FeeAnalysisScreen(

@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
@@ -80,7 +77,7 @@ class _FeeAnalysisTabState extends State<FeeAnalysisTab>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
+        SizedBox(
           width: double.infinity,
           child: Obx(() {
             return Container(
@@ -140,11 +137,16 @@ class _FeeAnalysisTabState extends State<FeeAnalysisTab>
                                 height: 20.0,
                               )
                             : const SizedBox(),
-                        SizedBox(
-                          width: currentPage.value == 1 ? 5.0 : 0.0,
+                        Expanded(
+                          flex: 1,
+                          child: SizedBox(
+                            width: currentPage.value == 1 ? 5.0 : 0.0,
+                          ),
                         ),
                         Text(
                           "Headwise Analysis",
+                          //maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.titleMedium!.merge(
                                 TextStyle(
                                   fontSize: 16,

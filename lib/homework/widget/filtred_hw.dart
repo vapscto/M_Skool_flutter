@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/homework/api/home_work_api.dart';
 import 'package:m_skool_flutter/homework/api/update_hw_seen.dart';
 import 'package:m_skool_flutter/homework/screen/home_work.dart';
 import 'package:m_skool_flutter/homework/screen/hwcw_detail_screen.dart';
+import 'package:m_skool_flutter/homework/widget/hw_cw_item.dart';
 import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
@@ -71,35 +72,6 @@ class _FiltredHwState extends State<FiltredHw> {
                   animationPath: "assets/json/nodata.json",
                   animatorHeight: 250,
                 )
-              // ? Padding(
-              //     padding: EdgeInsets.only(
-              //         top: Get.height * 0.25, left: 24.0, right: 24.0),
-              //     child: Column(
-              //       children: [
-              //         // SizedBox(
-              //         //   height: Get.height * 0.2,
-              //         // ),
-              //         Image.asset(
-              //           'assets/images/hw_cw_not.jpg',
-              //           height: Get.height * 0.3,
-              //         ),
-              //         Text(
-              //           "No homework found",
-              //           style: Theme.of(context)
-              //               .textTheme
-              //               .titleMedium!
-              //               .merge(const TextStyle(fontSize: 20.0)),
-              //         ),
-              //         const SizedBox(
-              //           height: 8.0,
-              //         ),
-              //         Text(
-              //             "Hurray! We couldn't find any homework for this particular date. So Enjoy",
-              //             textAlign: TextAlign.center,
-              //             style: Theme.of(context).textTheme.labelMedium!),
-              //       ],
-              //     ),
-              //   )
               : SingleChildScrollView(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(

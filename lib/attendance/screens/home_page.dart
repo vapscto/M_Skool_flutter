@@ -159,11 +159,15 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                     ),
                                   ),
                                 ),
-                                icon: const Padding(
-                                  padding: EdgeInsets.only(top: 8.0),
+                                icon: Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
                                   child: Icon(
                                     Icons.keyboard_arrow_down_rounded,
                                     size: 30,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .color,
                                   ),
                                 ),
                                 iconSize: 30,
@@ -498,7 +502,7 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                               width: double.infinity,
                                               decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(16.0),
+                                                    BorderRadius.circular(8.0),
                                                 boxShadow:
                                                     CustomThemeData.getShadow(),
                                                 color: Theme.of(context)
@@ -506,7 +510,7 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                               ),
                                               child: ClipRRect(
                                                 borderRadius:
-                                                    BorderRadius.circular(16.0),
+                                                    BorderRadius.circular(8.0),
                                                 child: DataTable(
                                                   columnSpacing: 15,
                                                   // horizontalMargin: 5,

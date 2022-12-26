@@ -20,7 +20,7 @@ class LibraryItemWidget extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             color: color.withOpacity(0.10),
-            borderRadius: BorderRadius.circular(10.0)),
+            borderRadius: BorderRadius.circular(8.0)),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

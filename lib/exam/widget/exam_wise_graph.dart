@@ -53,7 +53,7 @@ class _GraphResultAnalysisItemState extends State<GraphResultAnalysisItem> {
       width: double.infinity,
       decoration: BoxDecoration(
         color: widget.containerColor.withOpacity(0.2),
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(8.0),
       ),
       child: Column(
         children: [

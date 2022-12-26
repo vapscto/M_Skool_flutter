@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/home.dart';
 import 'package:m_skool_flutter/screens/institutional_login.dart';
 import 'package:m_skool_flutter/screens/login_screen.dart';
+import 'package:m_skool_flutter/screens/on_board.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -32,6 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
     //InstitutionalCodeApi.instance.loginWithInsCode("DEMOBGH");
     CustomThemeData.changeStatusBarColor(context);
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColor,
       body: FutureBuilder<Widget>(
           future: handleAuth(),
           builder: (context, snapshot) {
@@ -75,12 +77,12 @@ class _SplashScreenState extends State<SplashScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CircleAvatar(
-                    backgroundColor: Theme.of(context).primaryColor,
+                    backgroundColor: Colors.white,
                     radius: 36,
-                    child: const Icon(
+                    child: Icon(
                       Icons.school_outlined,
                       size: 46,
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                   const SizedBox(
@@ -88,10 +90,8 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                   Text(
                     "M Skool",
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium!
-                        .merge(const TextStyle(fontSize: 30.0)),
+                    style: Theme.of(context).textTheme.titleMedium!.merge(
+                        const TextStyle(fontSize: 30.0, color: Colors.white)),
                   ),
                 ],
               ),
@@ -102,6 +102,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<Widget> handleAuth() async {
     try {
+      if (logInBox!.get("firstOpened") == null ||
+          logInBox!.get("firstOpened") == true) {
+        logInBox!.put("firstOpened", false);
+        return OnBoardScreen(
+          mskoolController: mskoolController,
+        );
+      }
+
       if (institutionalCode!.get("institutionalCode") == null) {
         return Future.value(
           InstitutionalLogin(

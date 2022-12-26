@@ -21,7 +21,7 @@ class CoeItem extends StatelessWidget {
         //padding: const EdgeInsets.symmetric(vertical: 8.0),
         height: Get.width * 0.28,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.0),
+          borderRadius: BorderRadius.circular(8.0),
           color: Theme.of(context).scaffoldBackgroundColor,
         ),
         child: Row(
@@ -32,8 +32,8 @@ class CoeItem extends StatelessWidget {
               decoration: BoxDecoration(
                 color: color.withOpacity(0.15),
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(16.0),
-                  bottomLeft: Radius.circular(16.0),
+                  topLeft: Radius.circular(8.0),
+                  bottomLeft: Radius.circular(8.0),
                 ),
               ),
               child: Column(
@@ -167,7 +167,7 @@ class CoeItem extends StatelessWidget {
                               height: 22.0,
                               color: Theme.of(context)
                                   .textTheme
-                                  .labelMedium!
+                                  .titleMedium!
                                   .color,
                             ),
                             const SizedBox(
@@ -198,7 +198,7 @@ class CoeItem extends StatelessWidget {
                               height: 22.0,
                               color: Theme.of(context)
                                   .textTheme
-                                  .labelMedium!
+                                  .titleMedium!
                                   .color,
                             ),
                             const SizedBox(
@@ -239,7 +239,7 @@ class CoeItem extends StatelessWidget {
                                         image:
                                             NetworkImage(values.coeeIImages!)),
                                     borderRadius: BorderRadius.circular(
-                                      16.0,
+                                      8.0,
                                     ),
                                     color: Colors.blueAccent.shade100
                                         .withOpacity(0.2),

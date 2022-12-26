@@ -1210,7 +1210,7 @@ class AcademicYearFeeDetail extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(8.0),
         boxShadow: const [
           BoxShadow(
             offset: Offset(0, 1),

@@ -1,15 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/interaction/screen/interaction_home.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/model/student_profile_details_model.dart';
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 
-class SubjectTeachersPopup extends StatelessWidget {
+class SubjectTeachersPopup extends StatefulWidget {
   final StudentProfileDetailsModel studentProfileDetails;
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
   const SubjectTeachersPopup({
     super.key,
     required this.studentProfileDetails,
+    required this.loginSuccessModel,
+    required this.mskoolController,
   });
 
+  @override
+  State<SubjectTeachersPopup> createState() => _SubjectTeachersPopupState();
+}
+
+class _SubjectTeachersPopupState extends State<SubjectTeachersPopup> {
+  int profile = -1;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -25,7 +39,16 @@ class SubjectTeachersPopup extends StatelessWidget {
           // shrinkWrap: true,
           children: [
             ...List.generate(
-                studentProfileDetails.sujectteachers!.values!.length, (index) {
+                widget.studentProfileDetails.sujectteachers!.values!.length,
+                (index) {
+              profile += 1;
+              if (index % 5 == 0) {
+                profile = 0;
+              }
+              if (profile > 5) {
+                profile = 0;
+              }
+
               return Column(
                 children: [
                   Row(
@@ -34,10 +57,10 @@ class SubjectTeachersPopup extends StatelessWidget {
                       // leading:
                       Row(
                         children: [
-                          const CircleAvatar(
+                          CircleAvatar(
                             radius: 22,
                             backgroundImage: AssetImage(
-                              "assets/images/SubjectTeacher.png",
+                              profileImg.elementAt(profile),
                             ),
                             backgroundColor: Colors.white,
                           ),
@@ -50,7 +73,7 @@ class SubjectTeachersPopup extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "${studentProfileDetails.sujectteachers!.values![index].empName}",
+                                  "${widget.studentProfileDetails.sujectteachers!.values![index].empName}",
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge!
@@ -64,7 +87,7 @@ class SubjectTeachersPopup extends StatelessWidget {
                                   height: 5,
                                 ),
                                 Text(
-                                  "Subject: ${studentProfileDetails.sujectteachers!.values![index].iSMSSubjectName}",
+                                  "Subject: ${widget.studentProfileDetails.sujectteachers!.values![index].iSMSSubjectName}",
                                   overflow: TextOverflow.fade,
                                   style: Theme.of(context)
                                       .textTheme
@@ -86,7 +109,14 @@ class SubjectTeachersPopup extends StatelessWidget {
                       CustomElevatedButton(
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: const BoxShadow(),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) {
+                            return InteractionHomeScreen(
+                                loginSuccessModel: widget.loginSuccessModel,
+                                mskoolController: widget.mskoolController);
+                          }));
+                        },
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(10, 5.0, 10, 5),
                           child: Text(
@@ -104,7 +134,8 @@ class SubjectTeachersPopup extends StatelessWidget {
                     ],
                   ),
                   (index !=
-                          studentProfileDetails.sujectteachers!.values!.length -
+                          widget.studentProfileDetails.sujectteachers!.values!
+                                  .length -
                               1)
                       ? const Divider()
                       : Container()

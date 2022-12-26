@@ -10,6 +10,7 @@ import 'package:m_skool_flutter/homework/api/update_hw_seen.dart';
 import 'package:m_skool_flutter/homework/model/date_wise.dart';
 import 'package:m_skool_flutter/homework/screen/hwcw_detail_screen.dart';
 import 'package:m_skool_flutter/homework/widget/filtred_hw.dart';
+import 'package:m_skool_flutter/homework/widget/hw_cw_item.dart';
 import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
@@ -137,7 +138,6 @@ class _HomeWorkState extends State<HomeWork> {
                         child: Obx(() {
                           return ListView.separated(
                             controller: listViewCtrl,
-
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
                               return Obx(() {
@@ -285,10 +285,6 @@ class _HomeWorkState extends State<HomeWork> {
                                 );
                               });
                             },
-                            // itemCount: DateTime.now()
-                            //     .difference(DateTime(
-                            //         DateTime.now().year, DateTime.now().month + 1, 1))
-                            //     .inDays,
                             itemCount: widget
                                 .hwCwNbController.dateWiseModelList.length,
                             separatorBuilder:
@@ -302,7 +298,6 @@ class _HomeWorkState extends State<HomeWork> {
                     const SizedBox(
                       height: 24.0,
                     ),
-
                     Obx(() {
                       return widget.hwCwNbController
                               .isErrorHappendInHomeWorkLoading.value
@@ -325,37 +320,6 @@ class _HomeWorkState extends State<HomeWork> {
                                       animationPath: "assets/json/nodata.json",
                                       animatorHeight: 250,
                                     )
-                                  // ? Column(
-                                  //     children: [
-                                  //       // SizedBox(
-                                  //       //   height: Get.height * 0.2,
-                                  //       // ),
-                                  //       Image.asset(
-                                  //         'assets/images/hw_cw_not.jpg',
-                                  //         height: Get.height * 0.3,
-                                  //       ),
-                                  //       Text(
-                                  //         "No homework found",
-                                  //         style: Theme.of(context)
-                                  //             .textTheme
-                                  //             .titleSmall!
-                                  //             .merge(const TextStyle(
-                                  //                 fontSize: 22.0)),
-                                  //       ),
-                                  //       const SizedBox(
-                                  //         height: 8.0,
-                                  //       ),
-                                  //       Text(
-                                  //           "Hurray! We couldn't find any homework for this particular date. So Enjoy",
-                                  //           textAlign: TextAlign.center,
-                                  //           style: Theme.of(context)
-                                  //               .textTheme
-                                  //               .labelSmall!
-                                  //               .merge(const TextStyle(
-                                  //                   letterSpacing: 0.2,
-                                  //                   fontSize: 16))),
-                                  //     ],
-                                  //   )
                                   : ListView.separated(
                                       shrinkWrap: true,
                                       physics:
@@ -500,22 +464,6 @@ class _HomeWorkState extends State<HomeWork> {
                                       itemCount: widget.hwCwNbController
                                           .homeWorkList.length);
                     }),
-                    // InkWell(
-                    //   onTap: () {
-                    //     Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    //       return const HwCwDetailScreen(
-                    //         topic: '',
-                    //         assignment: '',
-                    //         date: '',
-                    //         subject: '',
-                    //       );
-                    //     }));
-                    //   },
-                    //   child: const HwCwItem(
-                    //     sub: "",
-                    //     topic: "",
-                    //   ),
-                    // ),
                   ],
                 ),
               );
@@ -525,164 +473,5 @@ class _HomeWorkState extends State<HomeWork> {
 
   String getCurrentMonth(DateTime dateTime) {
     return "${fullMonths.elementAt(dateTime.month - 1)}, ${dateTime.year}";
-  }
-}
-
-class HwCwItem extends StatelessWidget {
-  final bool isRead;
-  final String sub;
-  final String topic;
-  final Color color;
-  const HwCwItem({
-    Key? key,
-    required this.sub,
-    required this.topic,
-    required this.isRead,
-    required this.color,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 90,
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: BorderRadius.circular(8.0),
-        boxShadow: CustomThemeData.getShadow(),
-      ),
-      child: Row(
-        children: [
-          // Container(
-          //   height: 80,
-          //   width: 10,
-          //   decoration: BoxDecoration(
-          //     color: isRead ? Colors.grey.shade600 : Colors.green,
-          //     borderRadius: const BorderRadius.only(
-          //       topLeft: Radius.circular(12.0),
-          //       bottomLeft: Radius.circular(12.0),
-          //     ),
-          //   ),
-          // ),
-          // const SizedBox(
-          //   width: 12.0,
-          // ),
-          Expanded(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Chip(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  //   backgroundColor: color.withOpacity(0.3),
-                  //   avatar: Image.asset(
-                  //     getIconFromSubject(sub.trim().toLowerCase()),
-                  //     color: color,
-                  //     height: 24.0,
-                  //   ),
-                  //   label: Text(
-                  //     sub.capitalizeFirst!,
-                  //     style: Theme.of(context).textTheme.titleSmall!.merge(
-                  //           TextStyle(
-                  //             fontWeight: FontWeight.w500,
-                  //             fontSize: 15,
-                  //             color: color,
-                  //           ),
-                  //         ),
-                  //   ),
-                  // ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0, vertical: 6.0),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24.0),
-                        color: getIconFromSubject(
-                            sub.trim().toLowerCase())['chipBgColor']),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset(
-                          getIconFromSubject(sub.trim().toLowerCase())['icon'],
-                          color: getIconFromSubject(
-                              sub.trim().toLowerCase())['chipColor'],
-                          height: 24.0,
-                        ),
-                        const SizedBox(
-                          width: 6.0,
-                        ),
-                        Text(
-                          sub.capitalizeFirst!,
-                          style: Theme.of(context).textTheme.labelMedium!.merge(
-                                TextStyle(
-                                    fontSize: 14.0,
-                                    color: getIconFromSubject(
-                                        sub.trim().toLowerCase())['chipColor']),
-                              ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // const SizedBox(
-                  //   height: .0,
-                  // ),
-                  Text(
-                    topic,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelSmall!.merge(
-                          const TextStyle(
-                              fontWeight: FontWeight.w400,
-                              letterSpacing: 0.2,
-                              color: Color(0xFF1a1a1a),
-                              fontSize: 16),
-                        ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(
-            width: 12.0,
-          ),
-          // Icon(
-          //   Icons.chevron_right_outlined,
-          //   color: Theme.of(context).primaryColor,
-          // ),
-          // const SizedBox(
-          //   width: 12.0,
-          // )
-
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                // width: 48.0,
-                // height: 24.0,
-                padding: const EdgeInsets.all(6.0),
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(8.0),
-                      bottomLeft: Radius.circular(8.0),
-                    ),
-                    color: Theme.of(context).primaryColor),
-                child: const Icon(
-                  Icons.chevron_right_outlined,
-                  color: Colors.white,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 12.0),
-                child: Icon(
-                  Icons.done_all,
-                  color: isRead ? Colors.green : Colors.grey.shade600,
-                ),
-              )
-            ],
-          ),
-        ],
-      ),
-    );
   }
 }

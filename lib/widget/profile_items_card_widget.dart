@@ -18,7 +18,7 @@ class ProfileItemsCard extends StatelessWidget {
       decoration: BoxDecoration(
         border: const Border.fromBorderSide(BorderSide.none),
         backgroundBlendMode: BlendMode.overlay,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(8),
         color: Theme.of(context).cardTheme.color,
         boxShadow: [
           BoxShadow(
@@ -36,7 +36,7 @@ class ProfileItemsCard extends StatelessWidget {
             : null,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(8),
             color: cardColor,
           ),
           child: Padding(

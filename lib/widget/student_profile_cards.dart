@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/feedback/screens/feedback_home.dart';
+import 'package:m_skool_flutter/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/model/student_profile_details_model.dart';
 import 'package:m_skool_flutter/screens/school_details_screen.dart';
@@ -37,6 +38,8 @@ class StudentProfileCards extends StatelessWidget {
             Get.dialog(
               SubjectTeachersPopup(
                 studentProfileDetails: studentProfileDetails,
+                loginSuccessModel: loginSuccessModel,
+                mskoolController: mskoolController,
               ),
             );
           },
@@ -62,7 +65,7 @@ class StudentProfileCards extends StatelessWidget {
                           const CircleAvatar(
                             radius: 22,
                             backgroundImage: AssetImage(
-                              "assets/images/ClassTeacher.png",
+                              "assets/images/prof1.png",
                             ),
                             backgroundColor: Colors.white,
                           ),
@@ -86,10 +89,27 @@ class StudentProfileCards extends StatelessWidget {
                         ],
                       ),
 
+                      // ElevatedButton(
+                      //     style: ElevatedButton.styleFrom(
+                      //       shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(30.0),
+                      //       ),
+                      //     ),
+                      //     onPressed: () {},
+                      //     child: const Text("Contact"))
+
                       // TextButton(onPressed: () {}, child: const Text("data")),
                       CustomElevatedButton(
                         borderRadius: BorderRadius.circular(12),
-                        onPressed: () {},
+                        boxShadow: const BoxShadow(),
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) {
+                            return InteractionHomeScreen(
+                                loginSuccessModel: loginSuccessModel,
+                                mskoolController: mskoolController);
+                          }));
+                        },
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(10, 5.0, 10, 5),
                           child: Text(
@@ -103,7 +123,7 @@ class StudentProfileCards extends StatelessWidget {
                                         .onPrimary),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 )),

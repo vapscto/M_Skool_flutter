@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/timetable/api/daily_tt_api.dart';
@@ -127,7 +126,7 @@ class _DailyTTState extends State<DailyTT> with SingleTickerProviderStateMixin {
             )
           ]),
         ),
-        Divider(
+        const Divider(
           height: 1.0,
           thickness: 1.0,
         )
@@ -170,11 +169,14 @@ class _ShowTTState extends State<ShowTT> {
         builder: (_, snapshot) {
           if (snapshot.hasData) {
             return snapshot.data!.isEmpty
-                ? const AnimatedProgressWidget(
-                    animatorHeight: 250,
-                    title: "No Timetable found",
-                    desc: "Seem's like today timetable is not yet uploaded",
-                    animationPath: "assets/json/nodata.json")
+                ? Container(
+                    margin: EdgeInsets.only(bottom: Get.height * 0.3),
+                    child: const AnimatedProgressWidget(
+                        animatorHeight: 250,
+                        title: "No Timetable found",
+                        desc: "Seem's like today timetable is not yet uploaded",
+                        animationPath: "assets/json/nodata.json"),
+                  )
                 // ? Column(
                 //     mainAxisAlignment: MainAxisAlignment.center,
                 //     children: [
@@ -333,73 +335,23 @@ class _ShowTTState extends State<ShowTT> {
                   );
           }
 
-          // if (snapshot.hasData) {
-          //   return Column(
-          //     children: [
-          //       ListView.separated(
-          //           shrinkWrap: true,
-          //           padding: const EdgeInsets.all(16.0),
-          //           itemBuilder: (_, index) {
-          //             return ListTile(
-          //               shape: RoundedRectangleBorder(
-          //                   borderRadius: BorderRadius.circular(8.0)),
-          //               contentPadding: EdgeInsets.zero,
-          //               tileColor: timetablePeriodColor
-          //                   .elementAt(index)
-          //                   .withOpacity(0.1),
-          //               title: Text(
-          //                 "English | Ramesh | 9:00 am",
-          //                 style: Theme.of(context)
-          //                     .textTheme
-          //                     .titleSmall!
-          //                     .merge(const TextStyle(fontSize: 16.0)),
-          //               ),
-          //               leading: Container(
-          //                 alignment: Alignment.center,
-          //                 height: double.infinity,
-          //                 width: 80,
-          //                 decoration: BoxDecoration(
-          //                   borderRadius: BorderRadius.circular(8.0),
-          //                   color: timetablePeriodColor.elementAt(index),
-          //                 ),
-          //                 child: Text(
-          //                   "P${index + 1}",
-          //                   style:
-          //                       Theme.of(context).textTheme.titleMedium!.merge(
-          //                             const TextStyle(
-          //                               color: Colors.white,
-          //                             ),
-          //                           ),
-          //                 ),
-          //               ),
-          //             );
-          //           },
-          //           separatorBuilder: (_, index) {
-          //             return const SizedBox(
-          //               height: 4.0,
-          //             );
-          //           },
-          //           itemCount: 8),
-          //       const SizedBox(
-          //         height: 16.0,
-          //       ),
-          //     ],
-          //   );
-          // }
           if (snapshot.hasError) {
             return ErrWidget(err: snapshot.error as Map<String, dynamic>);
           }
 
-          return AnimatedProgressWidget(
-            animationPath: "assets/json/tt.json",
-            title: "Loading ${widget.day}'s timetable",
-            desc: "Please wait while we load timetable for you",
+          return Container(
+            margin: EdgeInsets.only(bottom: Get.height * 0.4),
+            child: AnimatedProgressWidget(
+              animationPath: "assets/json/tt.json",
+              title: "Loading ${widget.day}'s timetable",
+              desc: "Please wait while we load timetable for you",
+            ),
           );
         });
   }
 
   Future<bool> showT() async {
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 5));
     return Future.value(true);
   }
 }

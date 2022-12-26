@@ -8,9 +8,8 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/institutional_code_model.dart';
 import 'package:m_skool_flutter/screens/login_screen.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
-import 'package:m_skool_flutter/widget/mskoll_btn.dart';
-import 'package:m_skool_flutter/widget/pgr_widget.dart';
 
 class InstitutionalLogin extends StatefulWidget {
   final MskoolController mskoolController;
@@ -186,10 +185,12 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                                                 textAlign: TextAlign.center,
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .titleMedium!
+                                                    .titleSmall!
                                                     .merge(
                                                       const TextStyle(
-                                                          fontSize: 20.0),
+                                                          fontSize: 20.0,
+                                                          fontWeight:
+                                                              FontWeight.w600),
                                                     ),
                                               ),
                                               const SizedBox(
@@ -200,7 +201,13 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                                                 textAlign: TextAlign.center,
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .labelMedium!,
+                                                    .labelSmall!
+                                                    .merge(TextStyle(
+                                                        letterSpacing: 0.2,
+                                                        color: Theme.of(context)
+                                                            .textTheme
+                                                            .labelMedium!
+                                                            .color)),
                                               ),
                                               const SizedBox(
                                                 height: 16.0,
@@ -290,7 +297,17 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                                         return ErrWidget(err: err);
                                       }
 
-                                      return const ProgressWidget();
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: const [
+                                          AnimatedProgressWidget(
+                                              title: "Please Wait",
+                                              desc:
+                                                  "We are getting into your institutional detail's",
+                                              animationPath:
+                                                  "assets/json/default.json"),
+                                        ],
+                                      );
                                     }),
                               );
                             },

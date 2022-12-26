@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/instance_manager.dart';
+import 'package:lottie/lottie.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/card_widget.dart';
@@ -53,9 +54,11 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
             //   fit: BoxFit.cover,
             //   // color: Colors.red,
             // ),
-            AspectRatio(
-                aspectRatio: controller.value.aspectRatio,
-                child: VideoPlayer(controller)),
+            // AspectRatio(
+            //     aspectRatio: controller.value.aspectRatio,
+            //     child: VideoPlayer(controller)),
+
+            LottieBuilder.asset('assets/json/school_det.json'),
             Transform.translate(
               offset: const Offset(0, -36),
               child: CardWidget(
@@ -72,7 +75,7 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                           style: Theme.of(context)
                               .textTheme
                               .titleSmall!
-                              .merge(const TextStyle(fontSize: 16.0)),
+                              .merge(const TextStyle(fontSize: 14.0)),
                         ),
                       ),
                       const Text(":  "),
@@ -82,7 +85,7 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                           style: Theme.of(context)
                               .textTheme
                               .titleSmall!
-                              .merge(const TextStyle(fontSize: 16.0)),
+                              .merge(const TextStyle(fontSize: 14.0)),
                         ),
                       ),
                     ],
@@ -102,7 +105,7 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
-                                .merge(const TextStyle(fontSize: 16.0)),
+                                .merge(const TextStyle(fontSize: 14.0)),
                           ),
                         ),
                         const Text(":  "),
@@ -114,7 +117,7 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
-                                .merge(const TextStyle(fontSize: 16.0)),
+                                .merge(const TextStyle(fontSize: 14.0)),
                           ),
                         ),
                       ],
@@ -135,7 +138,7 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
-                                .merge(const TextStyle(fontSize: 16.0)),
+                                .merge(const TextStyle(fontSize: 14.0)),
                           ),
                         ),
                         const Text(":  "),
@@ -149,7 +152,7 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleSmall!
-                                    .merge(const TextStyle(fontSize: 16.0)),
+                                    .merge(const TextStyle(fontSize: 14.0)),
                                 textAlign: TextAlign.left,
                               ),
                               InkWell(
@@ -183,7 +186,7 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
-                                .merge(const TextStyle(fontSize: 16.0)),
+                                .merge(const TextStyle(fontSize: 14.0)),
                           ),
                         ),
                         const Text(":  "),
@@ -197,7 +200,7 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleSmall!
-                                    .merge(const TextStyle(fontSize: 16.0)),
+                                    .merge(const TextStyle(fontSize: 14.0)),
                               ),
                               InkWell(
                                   onTap: () async {
@@ -231,7 +234,7 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .titleSmall!
-                                  .merge(const TextStyle(fontSize: 16.0)),
+                                  .merge(const TextStyle(fontSize: 14.0)),
                             ),
                           ),
                         ),
@@ -243,7 +246,7 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
-                                .merge(const TextStyle(fontSize: 16.0)),
+                                .merge(const TextStyle(fontSize: 14.0)),
                           ),
                         ),
                       ],

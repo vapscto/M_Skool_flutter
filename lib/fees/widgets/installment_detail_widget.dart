@@ -3,14 +3,14 @@ import 'package:m_skool_flutter/fees/widgets/custom_analysis_container.dart';
 import 'package:m_skool_flutter/main.dart';
 
 class InstallmentDetailWidget extends StatefulWidget {
-  String leadText;
+  final String leadText;
   final String instalText;
   final double netAmount;
   final double concessionAmount;
   final double paidAmount;
   final double balanceAmount;
 
-  InstallmentDetailWidget({
+  const InstallmentDetailWidget({
     super.key,
     required this.leadText,
     required this.instalText,

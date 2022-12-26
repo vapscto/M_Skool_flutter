@@ -454,6 +454,8 @@ class CalListValues {
     cOEEEStartDate = json['COEE_EStartDate'];
     cOEEEEndDate = json['COEE_EEndDate'];
     cOEEIImages = json['COEEI_Images'];
+    cOEEEEndTime = json['COEE_EEndTime'];
+    cOEEEStartTime = json['COEE_EStartTime'];
   }
   String? type;
   String? cOEMEEventName;
@@ -461,6 +463,8 @@ class CalListValues {
   String? cOEEEStartDate;
   String? cOEEEEndDate;
   dynamic cOEEIImages;
+  String? cOEEEEndTime;
+  String? cOEEEStartTime;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -470,6 +474,8 @@ class CalListValues {
     map['COEE_EStartDate'] = cOEEEStartDate;
     map['COEE_EEndDate'] = cOEEEEndDate;
     map['COEEI_Images'] = cOEEIImages;
+    map['COEE_EEndTime'] = cOEEEEndTime;
+    map['COEE_EStartTime'] = cOEEEStartTime;
     return map;
   }
 }
