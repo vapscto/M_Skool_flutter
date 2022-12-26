@@ -9,7 +9,6 @@ import 'package:m_skool_flutter/certificates/model/certlist_asca_model.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -34,14 +33,6 @@ class ApplyNow extends StatefulWidget {
 }
 
 class _ApplyNowState extends State<ApplyNow> {
-  // List<String> certificates = [
-  //   "SLC Certificate",
-  //   "Marksheet",
-  //   "Transfer Certificate",
-  //   "Leave Grant Certificate",
-  //   "Passing Certificate",
-  // ];
-
   CertificateListValues? selectedValue;
   final TextEditingController reason = TextEditingController();
   final TextEditingController date = TextEditingController();
@@ -58,12 +49,6 @@ class _ApplyNowState extends State<ApplyNow> {
 
   @override
   Widget build(BuildContext context) {
-    // GetCertificateType.instance.getCertificateType(
-    //     amstId: widget.loginSuccessModel.amsTId!,
-    //     asmayId: widget.loginSuccessModel.asmaYId!,
-    //     baseUrl: baseUrlFromInsCode("portal", widget.mskoolController),
-    //     ivrmrtId: widget.loginSuccessModel.roleId!,
-    //     miId: widget.loginSuccessModel.mIID!);
     return SingleChildScrollView(
       padding: const EdgeInsets.all(
         16.0,
@@ -193,15 +178,15 @@ class _ApplyNowState extends State<ApplyNow> {
                               maxLines: 4,
                               decoration: InputDecoration(
                                 contentPadding:
-                                    EdgeInsets.only(top: 48.0, left: 12),
+                                    const EdgeInsets.only(top: 48.0, left: 12),
                                 border: const OutlineInputBorder(),
                                 label: Container(
-                                  margin: EdgeInsets.only(bottom: 5),
+                                  margin: const EdgeInsets.only(bottom: 5),
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 12.0, vertical: 8.0),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(24.0),
-                                      color: Color(0xFFFFEBEA)),
+                                      color: const Color(0xFFFFEBEA)),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -252,7 +237,7 @@ class _ApplyNowState extends State<ApplyNow> {
                               controller: date,
                               decoration: InputDecoration(
                                 contentPadding:
-                                    EdgeInsets.only(top: 48.0, left: 12),
+                                    const EdgeInsets.only(top: 48.0, left: 12),
                                 border: const OutlineInputBorder(),
                                 label: Container(
                                   padding: const EdgeInsets.symmetric(
@@ -415,13 +400,9 @@ class _ApplyNowState extends State<ApplyNow> {
                           const SizedBox(
                             height: 36.0,
                           ),
-
                           AspectRatio(
                               aspectRatio: widget.controller.value.aspectRatio,
                               child: VideoPlayer(widget.controller)),
-                          // Center(
-                          //     child:
-                          //         Image.asset("assets/images/cert_illus.png")),
                         ],
                       );
                     }
@@ -443,30 +424,6 @@ class _ApplyNowState extends State<ApplyNow> {
                             animationPath: "assets/json/Certificate.json"),
                       ],
                     );
-                    // return Padding(
-                    //   padding: const EdgeInsets.all(20.0),
-                    //   child: Row(
-                    //     children: [
-                    //       const SizedBox(
-                    //         width: 6.0,
-                    //       ),
-                    //       const SizedBox(
-                    //         height: 24.0,
-                    //         width: 24.0,
-                    //         child: CircularProgressIndicator(
-                    //           strokeWidth: 2.0,
-                    //         ),
-                    //       ),
-                    //       const SizedBox(
-                    //         width: 16.0,
-                    //       ),
-                    //       Text(
-                    //         "Getting Certificates",
-                    //         style: Theme.of(context).textTheme.titleMedium,
-                    //       )
-                    //     ],
-                    //   ),
-                    // );
                   }),
             ],
           ),

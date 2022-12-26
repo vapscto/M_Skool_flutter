@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/exam/model/result_model.dart';
-import 'package:m_skool_flutter/exam/widget/result_analysis_item.dart';
-import 'package:m_skool_flutter/exam/widget/result_container.dart';
-import 'package:m_skool_flutter/widget/custom_app_bar.dart';
-import 'package:m_skool_flutter/widget/custom_container.dart';
-import 'package:m_skool_flutter/widget/vaps_container.dart';
 
 class ResultDetail extends StatefulWidget {
   final int resultType;

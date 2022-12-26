@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 import 'package:m_skool_flutter/classwork/api/get_class_work.dart';
 import 'package:m_skool_flutter/classwork/api/update_seen_classwork_api.dart';
 import 'package:m_skool_flutter/classwork/model/class_work_model.dart';
@@ -12,7 +11,6 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/homework/screen/home_work.dart';
 import 'package:m_skool_flutter/homework/screen/hwcw_detail_screen.dart';
 import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
-import 'package:m_skool_flutter/library/screen/library_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
@@ -244,25 +242,6 @@ class _ClassworkHomeState extends State<ClassworkHome> {
                       );
               });
       },
-
-      //  ListView.separated(
-      //   padding: const EdgeInsets.all(16.0),
-      //   itemBuilder: (_, index) {
-      //     return InkWell(
-      //         onTap: () {
-      //           Navigator.push(context, MaterialPageRoute(builder: (_) {
-      //             return HwCwDetailScreen();
-      //           }));
-      //         },
-      //         child: HwCwItem());
-      //   },
-      //   itemCount: 5,
-      //   separatorBuilder: (BuildContext context, int index) {
-      //     return const SizedBox(
-      //       height: 12.0,
-      //     );
-      //   },
-      // ),
     );
   }
 }

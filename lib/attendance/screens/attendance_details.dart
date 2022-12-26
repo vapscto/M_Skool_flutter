@@ -109,21 +109,6 @@ class _AttendanceDetailsState extends State<AttendanceDetails> {
             const SizedBox(
               height: 16.0,
             ),
-            // LineChart(
-            //   LineChartData(
-            //       minX: 0,
-            //       maxX: 80000,
-            //       minY: 0,
-            //       maxY: 6,
-            //       lineBarsData: [
-            //         LineChartBarData(spots: [
-            //           FlSpot(
-            //             67000,
-            //             0,
-            //           ),
-            //         ])
-            //       ]),
-            // ),
             CustomContainer(
                 child: Padding(
               padding: const EdgeInsets.all(12.0),

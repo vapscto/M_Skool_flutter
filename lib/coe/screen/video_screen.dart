@@ -26,13 +26,13 @@ class _VideoScreenState extends State<VideoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Video").getAppBar(),
+      appBar: const CustomAppBar(title: "Video").getAppBar(),
       body: Center(
         child: controller!.value.isInitialized
             ? AspectRatio(
                 aspectRatio: controller!.value.aspectRatio,
                 child: VideoPlayer(controller!))
-            : CircularProgressIndicator(),
+            : const CircularProgressIndicator(),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).primaryColor,
@@ -46,8 +46,8 @@ class _VideoScreenState extends State<VideoScreen> {
           setState(() {});
         },
         child: controller!.value.isPlaying
-            ? Icon(Icons.pause)
-            : Icon(Icons.play_arrow),
+            ? const Icon(Icons.pause)
+            : const Icon(Icons.play_arrow),
       ),
     );
   }
