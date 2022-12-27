@@ -86,11 +86,11 @@ class _CertificateHomeScreenState extends State<CertificateHomeScreen>
             tabs: const [
               CustomTab(
                 name: "Apply",
-                asset: "assets/images/cert.png",
+                asset: "assets/svg/file-text.svg",
               ),
               CustomTab(
                 name: "View Details",
-                asset: "assets/images/blueeye.png",
+                asset: "assets/svg/eye_svg.svg",
               )
             ],
             tabController: tabController!,

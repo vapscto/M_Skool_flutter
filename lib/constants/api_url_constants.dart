@@ -142,4 +142,8 @@ class URLS {
   static String composeInteraction = 'api/IVRM_InteractionsFacade/savedetails/';
   static String getMessages = 'api/IVRM_InteractionsFacade/reply/';
   static String sendMessage = 'api/IVRM_InteractionsFacade/savereply/';
+
+  // Role Constant's
+
+  static int student = 7;
 }

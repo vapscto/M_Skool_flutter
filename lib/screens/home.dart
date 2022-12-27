@@ -282,7 +282,8 @@ class _HomeTabState extends State<HomeTab> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Obx(() {
-                      return dashboardController.calList.isNotEmpty
+                      return dashboardController.calList.isNotEmpty ||
+                              dashboardController.birthday.isNotEmpty
                           ? HomePageCarasouel(
                               coeList: dashboardController.calList.value,
                               bdayList: dashboardController.birthday.value,
@@ -291,114 +292,7 @@ class _HomeTabState extends State<HomeTab> {
                             )
                           : const SizedBox();
                     }),
-                    // HomePageCarasouel(
-                    //   coeList: dashboardController.calList.value,
-                    // ),
-                    // SizedBox(
-                    //   height: Get.height * 0.2,
-                    //   width: double.infinity,
-                    //   child: CarouselSlider.builder(
-                    //     itemCount: 2,
-                    //     itemBuilder: (_, index, i) {
-                    //       return const CoeSliderItem();
-                    //       // return Container(
-                    //       //   padding: const EdgeInsets.all(20.0),
-                    //       //   height: Get.height * 0.2,
-                    //       //   width: Get.width,
-                    //       //   decoration: BoxDecoration(
-                    //       //     color: Colors.grey.shade100,
-                    //       //     borderRadius: BorderRadius.circular(16.0),
-                    //       //     image: const DecorationImage(
-                    //       //       fit: BoxFit.cover,
-                    //       //       image: AssetImage("assets/images/banner.png"),
-                    //       //     ),
-                    //       //   ),
-                    //       //   child: Row(
-                    //       //     children: [
-                    //       //       Expanded(
-                    //       //         flex: 7,
-                    //       //         child: Column(
-                    //       //           crossAxisAlignment:
-                    //       //               CrossAxisAlignment.start,
-                    //       //           children: [
-                    //       //             const SizedBox(
-                    //       //               height: 12.0,
-                    //       //             ),
-                    //       //             Text(
-                    //       //               "IT’S SAKSHI’S BIRTHDAY",
-                    //       //               style: Theme.of(context)
-                    //       //                   .textTheme
-                    //       //                   .titleMedium!
-                    //       //                   .merge(
-                    //       //                     const TextStyle(
-                    //       //                       fontSize: 20.0,
-                    //       //                     ),
-                    //       //                   ),
-                    //       //             ),
-                    //       //             const SizedBox(
-                    //       //               height: 8.0,
-                    //       //             ),
-                    //       //             Text(
-                    //       //               "Wohoo! It’s your friends birthday! Make their day by wishing them on this special day",
-                    //       //               style: Theme.of(context)
-                    //       //                   .textTheme
-                    //       //                   .labelMedium!
-                    //       //                   .merge(
-                    //       //                     const TextStyle(
-                    //       //                       fontSize: 15.0,
-                    //       //                     ),
-                    //       //                   ),
-                    //       //             ),
-                    //       //           ],
-                    //       //         ),
-                    //       //       ),
-                    //       //       const Expanded(flex: 2, child: SizedBox()),
-                    //       //     ],
-                    //       //   ),
-                    //       // );
-                    //     },
-                    //     options: CarouselOptions(
-                    //       aspectRatio: 16 / 9,
-                    //       autoPlay: true,
-                    //       initialPage: 0,
-                    //       onPageChanged: (i, _) => carouselNotifier.value = i,
-                    //       viewportFraction: 1,
-                    //       enlargeCenterPage: true,
-                    //       enableInfiniteScroll: true,
-                    //     ),
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 10),
-                    // ValueListenableBuilder(
-                    //     valueListenable: carouselNotifier,
-                    //     builder: (_, index, c) {
-                    //       return Center(
-                    //         child: Stack(
-                    //           children: [
-                    //             Container(
-                    //               decoration: BoxDecoration(
-                    //                   color: const Color(0xffDFEFFD),
-                    //                   borderRadius: BorderRadius.circular(10)),
-                    //               height: 10,
-                    //               width: 2 * 21, //itemCount * chuckWidth
-                    //             ),
-                    //             AnimatedPositioned(
-                    //               top: 0,
-                    //               left: index * 21,
-                    //               duration: const Duration(microseconds: 500),
-                    //               child: Container(
-                    //                 decoration: BoxDecoration(
-                    //                     color: const Color(0xff1E38FC),
-                    //                     borderRadius:
-                    //                         BorderRadius.circular(10)),
-                    //                 height: 10,
-                    //                 width: 21,
-                    //               ),
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       );
-                    //     }),
+
                     const SizedBox(
                       height: 20.0,
                     ),
