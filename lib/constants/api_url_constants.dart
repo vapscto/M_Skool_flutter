@@ -146,4 +146,8 @@ class URLS {
   // Role Constant's
 
   static int student = 7;
+  static int hod = 26;
+  static int staff = 18;
+  static int principal = 23;
+  static int chairman = 22;
 }

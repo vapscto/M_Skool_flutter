@@ -4,12 +4,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/apis/authenticate_user_api.dart';
+import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/forgot_password_screen.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/home.dart';
+import 'package:m_skool_flutter/staffs/screens/home_screen.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
@@ -441,12 +443,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       context,
                                                       MaterialPageRoute(
                                                         builder: (_) {
-                                                          return Home(
-                                                            loginSuccessModel:
-                                                                snapshot.data!,
-                                                            mskoolController: widget
-                                                                .mskoolController,
-                                                          );
+                                                          return snapshot.data!
+                                                                      .roleId! ==
+                                                                  URLS.student
+                                                              ? Home(
+                                                                  loginSuccessModel:
+                                                                      snapshot
+                                                                          .data!,
+                                                                  mskoolController:
+                                                                      widget
+                                                                          .mskoolController,
+                                                                )
+                                                              : snapshot.data!
+                                                                          .roleId! ==
+                                                                      URLS.staff
+                                                                  ? StaffHomeScreen(
+                                                                      loginSuccessModel:
+                                                                          snapshot
+                                                                              .data!,
+                                                                      mskoolController:
+                                                                          widget
+                                                                              .mskoolController)
+                                                                  : Container();
                                                         },
                                                       ),
                                                     );

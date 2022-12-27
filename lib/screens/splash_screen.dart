@@ -13,6 +13,7 @@ import 'package:m_skool_flutter/screens/home.dart';
 import 'package:m_skool_flutter/screens/institutional_login.dart';
 import 'package:m_skool_flutter/screens/login_screen.dart';
 import 'package:m_skool_flutter/screens/on_board.dart';
+import 'package:m_skool_flutter/staffs/screens/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -143,6 +144,12 @@ class _SplashScreenState extends State<SplashScreen> {
       final LoginSuccessModel loginSuccessModel = await AuthenticateUserApi
           .instance
           .authenticateNow(userName, password, miId, loginBaseUrl);
+
+      if (loginSuccessModel.roleId == URLS.staff) {
+        return Future.value(StaffHomeScreen(
+            loginSuccessModel: loginSuccessModel,
+            mskoolController: mskoolController));
+      }
 
       return Future.value(Home(
         loginSuccessModel: loginSuccessModel,

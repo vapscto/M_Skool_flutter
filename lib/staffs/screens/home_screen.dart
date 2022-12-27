@@ -31,6 +31,25 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
         ),
       ),
       drawer: const Drawer(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: widget
+                    .loginSuccessModel.staffmobileappprivileges!.values!.length,
+                itemBuilder: (_, index) {
+                  return ListTile(
+                    title: Text(widget
+                        .loginSuccessModel.staffmobileappprivileges!.values!
+                        .elementAt(index)
+                        .pagename!),
+                  );
+                })
+          ],
+        ),
+      ),
     );
   }
 }
