@@ -6,9 +6,10 @@ import 'package:lottie/lottie.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/feedback/api/save_feedback_api.dart';
-import 'package:m_skool_flutter/feedback/screens/view_feedback_screen.dart';
+
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/feedback/api/save_feedback_api.dart';
+import 'package:m_skool_flutter/student/feedback/screens/view_feedback_screen.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 

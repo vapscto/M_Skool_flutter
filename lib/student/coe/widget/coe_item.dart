@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/coe/models/coe_data_model.dart';
-import 'package:m_skool_flutter/coe/screen/video_screen.dart';
-import 'package:m_skool_flutter/coe/screen/view_image.dart';
+
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/student/coe/models/coe_data_model.dart';
+import 'package:m_skool_flutter/student/coe/screen/video_screen.dart';
+import 'package:m_skool_flutter/student/coe/screen/view_image.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class CoeItem extends StatelessWidget {

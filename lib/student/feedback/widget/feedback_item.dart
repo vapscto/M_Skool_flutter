@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
-import 'package:m_skool_flutter/feedback/model/get_feed_model.dart';
+import 'package:m_skool_flutter/student/feedback/model/get_feed_model.dart';
 
 class FeedBackItem extends StatelessWidget {
   final Color color;

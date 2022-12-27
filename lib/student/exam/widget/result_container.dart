@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:m_skool_flutter/exam/model/result_model.dart';
+import 'package:m_skool_flutter/student/exam/model/result_model.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class ResultContainerWidget extends StatelessWidget {

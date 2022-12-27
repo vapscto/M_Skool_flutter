@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/exam/model/markoverview_model.dart';
-import 'package:m_skool_flutter/exam/model/pie_data_model.dart';
+import 'package:m_skool_flutter/student/exam/model/markoverview_model.dart';
+import 'package:m_skool_flutter/student/exam/model/pie_data_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class GraphResultAnalysisItem extends StatefulWidget {

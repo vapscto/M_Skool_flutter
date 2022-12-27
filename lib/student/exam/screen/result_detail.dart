@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/exam/model/result_model.dart';
+import 'package:m_skool_flutter/student/exam/model/result_model.dart';
 
 class ResultDetail extends StatefulWidget {
   final int resultType;
