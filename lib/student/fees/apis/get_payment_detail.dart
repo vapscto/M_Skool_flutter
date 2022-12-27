@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
-import 'package:m_skool_flutter/fees/controller/payment_selection_tracking.dart';
-import 'package:m_skool_flutter/fees/model/custom_grp_list.dart';
-import 'package:m_skool_flutter/fees/model/disable_terms_model.dart';
-import 'package:m_skool_flutter/fees/model/payment_gateway_detail.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/student/fees/controller/payment_selection_tracking.dart';
+import 'package:m_skool_flutter/student/fees/model/custom_grp_list.dart';
+import 'package:m_skool_flutter/student/fees/model/disable_terms_model.dart';
+import 'package:m_skool_flutter/student/fees/model/payment_gateway_detail.dart';
 
 class GetPayablePaymentDetailApi {
   GetPayablePaymentDetailApi.init();

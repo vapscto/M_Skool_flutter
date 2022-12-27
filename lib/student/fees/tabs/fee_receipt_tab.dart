@@ -6,19 +6,18 @@ import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
-import 'package:m_skool_flutter/fees/model/fee_receipt_no_model.dart';
-import 'package:m_skool_flutter/fees/model/fee_receipt_year_list_model.dart';
-import 'package:m_skool_flutter/fees/widgets/feereceipt_detail_container.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/fees/controller/fee_related_controller.dart';
+import 'package:m_skool_flutter/student/fees/model/fee_receipt_no_model.dart';
+import 'package:m_skool_flutter/student/fees/model/fee_receipt_year_list_model.dart';
+import 'package:m_skool_flutter/student/fees/widgets/feereceipt_detail_container.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
+import 'package:m_skool_flutter/widget/pgr_widget.dart';
 import 'package:path_provider/path_provider.dart';
-
-import '../../controller/global_utilities.dart';
-import '../../controller/mskoll_controller.dart';
-import '../../model/login_success_model.dart';
-import '../../widget/pgr_widget.dart';
 import 'dart:ui' as ui;
 
 class FeeReceiptTab extends StatefulWidget {

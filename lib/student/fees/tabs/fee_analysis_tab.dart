@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
-import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
-import 'package:m_skool_flutter/interaction/widget/custom_tab_bar.dart';
-
-import '../../controller/mskoll_controller.dart';
-import '../../model/login_success_model.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/fees/controller/fee_related_controller.dart';
+import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
 import 'headwise_analysis_tab.dart';
 import 'overallAnalysis_tab.dart';
 

@@ -1,8 +1,7 @@
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/interaction/apis/compose_tab_related_api.dart';
-import 'package:m_skool_flutter/interaction/model/staff_detail_model.dart';
-
-import '../../main.dart';
+import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/student/interaction/apis/compose_tab_related_api.dart';
+import 'package:m_skool_flutter/student/interaction/model/staff_detail_model.dart';
 
 class ComposeController extends GetxController {
   RxList<GetdetailsValue> staffList = <GetdetailsValue>[].obs;
@@ -25,7 +24,7 @@ class ComposeController extends GetxController {
 
   void isInteractionloading(bool loading) async {
     isInteractionLoading.value = loading;
-    await Future.delayed(Duration(milliseconds: 3));
+    await Future.delayed(const Duration(milliseconds: 3));
   }
 
   Future<bool> getStafflist({

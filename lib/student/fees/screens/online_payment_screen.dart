@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/fees/tabs/pay_online_tab.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/fees/tabs/pay_online_tab.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
-import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 
 class OnlinePaymentScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;

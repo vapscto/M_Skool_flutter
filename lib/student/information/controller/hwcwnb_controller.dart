@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:m_skool_flutter/classwork/model/class_work_model.dart';
-import 'package:m_skool_flutter/homework/model/date_wise.dart';
-import 'package:m_skool_flutter/homework/model/homework_data_model_values.dart';
 import 'package:m_skool_flutter/notice/model/notice_data_model.dart';
+import 'package:m_skool_flutter/student/classwork/model/class_work_model.dart';
+import 'package:m_skool_flutter/student/homework/model/date_wise.dart';
+import 'package:m_skool_flutter/student/homework/model/homework_data_model_values.dart';
 
 class HwCwNbController extends GetxController {
   final RxInt filter = RxInt(0);

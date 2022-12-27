@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
-import 'package:m_skool_flutter/fees/controller/pay_online_data_controller.dart';
-import 'package:m_skool_flutter/fees/model/academic_year_fee_detail_model.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/student/fees/controller/pay_online_data_controller.dart';
+import 'package:m_skool_flutter/student/fees/model/academic_year_fee_detail_model.dart';
 
 class GetAcademicFeeDetailBalanceApi {
   GetAcademicFeeDetailBalanceApi.init();

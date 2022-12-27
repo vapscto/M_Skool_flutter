@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
-import 'package:m_skool_flutter/interaction/apis/messaging_api.dart';
-import 'package:m_skool_flutter/interaction/controller/interaction_controller.dart';
-import 'package:m_skool_flutter/interaction/widget/custom_text_file.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
-
-import '../../controller/mskoll_controller.dart';
-import '../../model/login_success_model.dart';
-import '../../widget/custom_back_btn.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/interaction/apis/messaging_api.dart';
+import 'package:m_skool_flutter/student/interaction/controller/interaction_controller.dart';
+import 'package:m_skool_flutter/student/interaction/widget/custom_text_file.dart';
+import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import '../model/inbox_model.dart';
 
 class MessagingScreen extends StatefulWidget {

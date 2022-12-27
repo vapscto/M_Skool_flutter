@@ -1,8 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../config/themes/theme_data.dart';
+import 'package:m_skool_flutter/config/themes/theme_data.dart';
 
 class AttachFileField extends StatelessWidget {
   final String label;

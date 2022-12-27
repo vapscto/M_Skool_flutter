@@ -2,9 +2,8 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-
-import 'package:m_skool_flutter/fees/model/custom_grp_list.dart';
-import 'package:m_skool_flutter/fees/model/disable_terms_model.dart';
+import 'package:m_skool_flutter/student/fees/model/custom_grp_list.dart';
+import 'package:m_skool_flutter/student/fees/model/disable_terms_model.dart';
 
 class PaymentSelectionTracking extends GetxController {
   final RxList<Selections> selectedCheckBox = RxList();

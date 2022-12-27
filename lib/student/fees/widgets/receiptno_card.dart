@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:m_skool_flutter/fees/model/fee_receipt_no_model.dart';
+import 'package:m_skool_flutter/student/fees/model/fee_receipt_no_model.dart';
 
 class ReceiptNoCard extends StatefulWidget {
   final ReceiptNoList receiptDetail;

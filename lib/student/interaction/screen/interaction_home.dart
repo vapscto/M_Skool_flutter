@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-// import 'package:m_skool_flutter/interaction/screen/all_tab.dart';
-import 'package:m_skool_flutter/interaction/screen/composetab.dart';
-import 'package:m_skool_flutter/interaction/screen/inbox_tab.dart';
-import 'package:m_skool_flutter/interaction/screen/unread_tab.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-
-import '../../widget/animated_progress_widget.dart';
-import '../../widget/custom_back_btn.dart';
+import 'package:m_skool_flutter/student/interaction/screen/composetab.dart';
+import 'package:m_skool_flutter/student/interaction/screen/inbox_tab.dart';
+import 'package:m_skool_flutter/student/interaction/screen/unread_tab.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
+import 'package:m_skool_flutter/widget/custom_back_btn.dart';
+// import 'package:m_skool_flutter/interaction/screen/all_tab.dart';
 import '../controller/compose_tab_controller.dart';
 import '../widget/custom_tab_bar.dart';
 

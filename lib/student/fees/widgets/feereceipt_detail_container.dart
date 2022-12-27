@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:m_skool_flutter/fees/model/fee_receipt_details_model.dart';
+import 'package:m_skool_flutter/student/fees/model/fee_receipt_details_model.dart';
 
 class FeeReceiptDetailContainer extends StatefulWidget {
   final FillStudentViewDetails dataModel;
@@ -160,8 +160,8 @@ class _FeeReceiptDetailContainerState extends State<FeeReceiptDetailContainer> {
                   color: Colors.black, fontWeight: FontWeight.w700),
               border: TableBorder.all(width: 1, color: Colors.black),
               showBottomBorder: true,
-              headingRowColor:
-                  MaterialStateProperty.all(Color.fromRGBO(229, 244, 255, 1)),
+              headingRowColor: MaterialStateProperty.all(
+                  const Color.fromRGBO(229, 244, 255, 1)),
               columns: const [
                 DataColumn(
                   numeric: true,

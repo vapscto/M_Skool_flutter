@@ -1,12 +1,10 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/interaction/widget/chat_profile_tile.dart';
-
-import '../../controller/mskoll_controller.dart';
-import '../../main.dart';
-import '../../model/login_success_model.dart';
-import '../../widget/animated_progress_widget.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/interaction/widget/chat_profile_tile.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import '../controller/inbox_tab_controller.dart';
 
 class UnReadTabScreen extends StatefulWidget {

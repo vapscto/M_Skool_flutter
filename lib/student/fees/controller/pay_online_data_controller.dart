@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/fees/model/academic_year_fee_detail_model.dart';
-import 'package:m_skool_flutter/fees/model/fill_student_model.dart';
-import 'package:m_skool_flutter/fees/model/installment_model.dart';
+import 'package:m_skool_flutter/student/fees/model/academic_year_fee_detail_model.dart';
+import 'package:m_skool_flutter/student/fees/model/fill_student_model.dart';
+import 'package:m_skool_flutter/student/fees/model/installment_model.dart';
 
 class PayOnlineDataController extends GetxController {
   final RxBool isPageLoading = RxBool(false);

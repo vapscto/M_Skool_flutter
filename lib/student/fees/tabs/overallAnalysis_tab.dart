@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
-import 'package:m_skool_flutter/fees/widgets/custom_analysis_container.dart';
-import 'package:m_skool_flutter/fees/widgets/graphical_analysisof_fee_widget.dart';
+import 'package:m_skool_flutter/student/fees/controller/fee_related_controller.dart';
+import 'package:m_skool_flutter/student/fees/widgets/custom_analysis_container.dart';
+import 'package:m_skool_flutter/student/fees/widgets/graphical_analysisof_fee_widget.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 
 class OverallAnalysisTab extends StatefulWidget {

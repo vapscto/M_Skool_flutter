@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:m_skool_flutter/fees/widgets/custom_analysis_container.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/student/fees/widgets/custom_analysis_container.dart';
 
 class InstallmentDetailWidget extends StatefulWidget {
   final String leadText;

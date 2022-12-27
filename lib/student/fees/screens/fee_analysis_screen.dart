@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/fees/tabs/fee_analysis_tab.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/fees/tabs/fee_analysis_tab.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
-
-import '../../widget/home_fab.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class FeeAnalysisScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;

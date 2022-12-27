@@ -1,7 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-
-import '../../config/themes/theme_data.dart';
+import 'package:m_skool_flutter/config/themes/theme_data.dart';
 
 class CustomDropdown extends StatelessWidget {
   final String label;

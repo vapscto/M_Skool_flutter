@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/interaction/controller/interaction_controller.dart';
-import 'package:m_skool_flutter/interaction/widget/attach_file_field.dart';
-import 'package:m_skool_flutter/interaction/widget/custom_dropdown.dart';
-import 'package:m_skool_flutter/interaction/widget/custom_radio_button.dart';
-import 'package:m_skool_flutter/interaction/widget/custom_text_file.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/student/interaction/controller/interaction_controller.dart';
+import 'package:m_skool_flutter/student/interaction/widget/attach_file_field.dart';
+import 'package:m_skool_flutter/student/interaction/widget/custom_dropdown.dart';
+import 'package:m_skool_flutter/student/interaction/widget/custom_radio_button.dart';
+import 'package:m_skool_flutter/student/interaction/widget/custom_text_file.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class ComposeTabScreen extends StatefulWidget {

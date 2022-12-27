@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/interaction/apis/messaging_api.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/student/interaction/apis/messaging_api.dart';
 
 import '../model/message_model.dart';
 

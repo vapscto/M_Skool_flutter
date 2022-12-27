@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
-import 'package:m_skool_flutter/interaction/model/inbox_model.dart';
-import 'package:m_skool_flutter/interaction/screen/messaging_section.dart';
-
-import '../../controller/mskoll_controller.dart';
-import '../../model/login_success_model.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/interaction/model/inbox_model.dart';
+import 'package:m_skool_flutter/student/interaction/screen/messaging_section.dart';
 
 class ChatProfileTile extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;

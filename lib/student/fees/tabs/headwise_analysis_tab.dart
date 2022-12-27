@@ -1,13 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/fees/controller/fee_related_controller.dart';
-import 'package:m_skool_flutter/fees/widgets/installment_detail_widget.dart';
+import 'package:m_skool_flutter/student/fees/controller/fee_related_controller.dart';
+import 'package:m_skool_flutter/student/fees/widgets/installment_detail_widget.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
-
-import '../../widget/pgr_widget.dart';
 
 class HeadwiseAnalysisTab extends StatefulWidget {
   const HeadwiseAnalysisTab({super.key});

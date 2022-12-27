@@ -1,8 +1,7 @@
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/interaction/apis/inbox_tab_related_api.dart';
-import 'package:m_skool_flutter/interaction/model/inbox_model.dart';
-
-import '../../main.dart';
+import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/student/interaction/apis/inbox_tab_related_api.dart';
+import 'package:m_skool_flutter/student/interaction/model/inbox_model.dart';
 
 class InboxController extends GetxController {
   RxList<GetinboxmsgValue> inboxList = <GetinboxmsgValue>[].obs;

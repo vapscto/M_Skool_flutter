@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/fees/tabs/fee_receipt_tab.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/fees/tabs/fee_receipt_tab.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
 class FeeReceiptHome extends StatefulWidget {

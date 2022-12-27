@@ -1,19 +1,14 @@
 import "package:flutter/material.dart";
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
-import 'package:m_skool_flutter/interaction/apis/compose_tab_related_api.dart';
-import 'package:m_skool_flutter/interaction/controller/compose_tab_controller.dart';
-import 'package:m_skool_flutter/interaction/model/staff_detail_model.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
-
-import '../../controller/global_utilities.dart';
-import '../../controller/mskoll_controller.dart';
-import '../../model/login_success_model.dart';
-import '../../widget/custom_container.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/interaction/apis/compose_tab_related_api.dart';
+import 'package:m_skool_flutter/student/interaction/controller/compose_tab_controller.dart';
+import 'package:m_skool_flutter/student/interaction/model/staff_detail_model.dart';
+import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class ComposeTabScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -184,7 +179,6 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
             child: RadioListTile(
               dense: true,
               activeColor: Theme.of(context).primaryColor,
-              
               contentPadding: const EdgeInsets.symmetric(horizontal: 8),
               visualDensity: const VisualDensity(horizontal: -4.0),
               title: Text(

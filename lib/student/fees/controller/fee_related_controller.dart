@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/fees/apis/fee_related_api.dart';
-import 'package:m_skool_flutter/fees/model/fee_receipt_details_model.dart';
-import 'package:m_skool_flutter/fees/model/fee_receipt_year_list_model.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/student/fees/apis/fee_related_api.dart';
+import 'package:m_skool_flutter/student/fees/model/fee_receipt_details_model.dart';
+import 'package:m_skool_flutter/student/fees/model/fee_receipt_year_list_model.dart';
 import '../model/feeModel.dart';
 import '../model/fee_receipt_no_model.dart';
 
