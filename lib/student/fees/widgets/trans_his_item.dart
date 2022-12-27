@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/student/fees/model/trans_status_model.dart';
 import 'package:m_skool_flutter/student/fees/model/transaction_his_model.dart';
 
 class TransHisItem extends StatefulWidget {
+  
   final TransDetailHisModelValues value;
   final LoginSuccessModel loginSuccessMode;
   final MskoolController mskoolController;
