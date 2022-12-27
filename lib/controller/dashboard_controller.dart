@@ -56,6 +56,9 @@ class DashboardController extends GetxController {
     }
 
     if (studentDashboardModel.calList != null) {
+      if (calList.isNotEmpty) {
+        calList.clear();
+      }
       calList.addAll(studentDashboardModel.calList!.values!);
     }
 
