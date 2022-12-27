@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
+import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 
 import '../marksEntry/screen/marks_entry_home.dart';
 
@@ -24,6 +26,7 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffold,
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
@@ -62,6 +65,33 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                               .pagename ==
                           "Mark Entry") {
                         Get.to(() => const MarksEntryHome());
+                      }
+
+                      if (widget.loginSuccessModel.staffmobileappprivileges!
+                              .values!
+                              .elementAt(index)
+                              .pagename ==
+                          "Salary Details") {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
+                          return SalaryDetails(
+                            loginSuccessModel: widget.loginSuccessModel,
+                            mskoolController: widget.mskoolController,
+                          );
+                        }));
+                        return;
+                      }
+                      if (widget.loginSuccessModel.staffmobileappprivileges!
+                              .values!
+                              .elementAt(index)
+                              .pagename ==
+                          "Staff Birth Day Report") {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
+                          return StudentBdayHome(
+                            loginSuccessModel: widget.loginSuccessModel,
+                            mskoolController: widget.mskoolController,
+                          );
+                        }));
+                        return;
                       }
                     },
                     title: Text(widget

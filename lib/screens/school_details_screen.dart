@@ -229,14 +229,12 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                         children: [
                           SizedBox(
                             width: 120,
-                            child: Expanded(
-                              child: Text(
-                                "Website",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .merge(const TextStyle(fontSize: 14.0)),
-                              ),
+                            child: Text(
+                              "Website",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .merge(const TextStyle(fontSize: 14.0)),
                             ),
                           ),
                           const Text(":  "),
