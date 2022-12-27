@@ -439,35 +439,35 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                                     logInBox!.put(
                                                         "isLoggedIn", true);
-                                                    Navigator.pushReplacement(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (_) {
-                                                          return snapshot.data!
-                                                                      .roleId! ==
-                                                                  URLS.student
-                                                              ? Home(
-                                                                  loginSuccessModel:
-                                                                      snapshot
-                                                                          .data!,
-                                                                  mskoolController:
-                                                                      widget
-                                                                          .mskoolController,
-                                                                )
-                                                              : snapshot.data!
-                                                                          .roleId! ==
-                                                                      URLS.staff
-                                                                  ? StaffHomeScreen(
-                                                                      loginSuccessModel:
-                                                                          snapshot
-                                                                              .data!,
-                                                                      mskoolController:
-                                                                          widget
-                                                                              .mskoolController)
-                                                                  : Container();
-                                                        },
-                                                      ),
-                                                    );
+
+                                                    Get.offAll(snapshot.data!
+                                                                .roleId! ==
+                                                            URLS.student
+                                                        ? Home(
+                                                            loginSuccessModel:
+                                                                snapshot.data!,
+                                                            mskoolController: widget
+                                                                .mskoolController,
+                                                          )
+                                                        : snapshot.data!
+                                                                    .roleId! ==
+                                                                URLS.staff
+                                                            ? StaffHomeScreen(
+                                                                loginSuccessModel:
+                                                                    snapshot
+                                                                        .data!,
+                                                                mskoolController:
+                                                                    widget
+                                                                        .mskoolController)
+                                                            : Container());
+                                                    // Navigator.pushReplacement(
+                                                    //   context,
+                                                    //   MaterialPageRoute(
+                                                    //     builder: (_) {
+                                                    //       return
+                                                    //     },
+                                                    //   ),
+                                                    // );
                                                   },
                                                   child: Text(
                                                     "Continue",
