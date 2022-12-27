@@ -36,11 +36,11 @@ class ChatProfileTile extends StatelessWidget {
         ),
       ),
       contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
-      leading: data.receiverfilepath!.isNotEmpty
+      leading: data.receiverFilepath!.isNotEmpty
           ? CircleAvatar(
               radius: 30,
               backgroundColor: color,
-              backgroundImage: NetworkImage(data.receiverfilepath.toString()),
+              backgroundImage: NetworkImage(data.receiverFilepath.toString()),
             )
           : const CircleAvatar(
               radius: 30,

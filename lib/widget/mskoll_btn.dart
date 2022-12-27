@@ -13,7 +13,7 @@ class MSkollBtn extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         fixedSize: size,
         backgroundColor: Theme.of(context).primaryColor,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 14.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),

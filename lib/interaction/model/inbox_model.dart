@@ -623,11 +623,11 @@ class GetinboxmsgValue {
     this.ismintComposedByFlg,
     this.ismintComposedById,
     this.sender,
-    this.senderSenderFilePath,
+    this.senderSenderFilepath,
     this.receiver,
-    this.receiverfilepath,
-    this.ismintActiveFlag,
+    this.receiverFilepath,
     this.ismintDateTime,
+    this.ismintActiveFlag,
   });
 
   String? type;
@@ -642,9 +642,9 @@ class GetinboxmsgValue {
   String? ismintComposedByFlg;
   int? ismintComposedById;
   String? sender;
-  String? senderSenderFilePath;
+  String? senderSenderFilepath;
   String? receiver;
-  String? receiverfilepath;
+  String? receiverFilepath;
   DateTime? ismintDateTime;
   bool? ismintActiveFlag;
 
@@ -662,9 +662,10 @@ class GetinboxmsgValue {
         ismintComposedByFlg: json["ISMINT_ComposedByFlg"],
         ismintComposedById: json["ISMINT_ComposedById"],
         sender: json["Sender"],
-        senderSenderFilePath: json['sender_sender_filepath'],
+        senderSenderFilepath: json["sender_sender_filepath"],
         receiver: json["Receiver"],
-        receiverfilepath: json['Receiver_filepath'],
+        receiverFilepath: json["Receiver_filepath"] ??
+            "https://img.icons8.com/fluency/48/null/user-male-circle.png",
         ismintDateTime: DateTime.parse(json["ISMINT_DateTime"]),
         ismintActiveFlag: json["ISMINT_ActiveFlag"],
       );
@@ -682,9 +683,9 @@ class GetinboxmsgValue {
         "ISMINT_ComposedByFlg": ismintComposedByFlg,
         "ISMINT_ComposedById": ismintComposedById,
         "Sender": sender,
-        'sender_sender_filepath': senderSenderFilePath,
+        "sender_sender_filepath": senderSenderFilepath,
         "Receiver": receiver,
-        'Receiver_filepath': receiverfilepath,
+        "Receiver_filepath": receiverFilepath,
         "ISMINT_DateTime": ismintDateTime!.toIso8601String(),
         "ISMINT_ActiveFlag": ismintActiveFlag,
       };

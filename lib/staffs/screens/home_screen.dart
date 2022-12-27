@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+
+import '../marksEntry/screen/marks_entry_home.dart';
 
 class StaffHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -42,12 +46,22 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                 itemBuilder: (_, index) {
                   return ListTile(
                     onTap: () {
+                      logger.d(widget
+                          .loginSuccessModel.staffmobileappprivileges!.values!
+                          .elementAt(index)
+                          .pagename);
                       if (widget.loginSuccessModel.staffmobileappprivileges!
                               .values!
                               .elementAt(index)
                               .pagename ==
                           "Attendance Entry") {
                         return;
+                      } else if (widget.loginSuccessModel
+                              .staffmobileappprivileges!.values!
+                              .elementAt(index)
+                              .pagename ==
+                          "Mark Entry") {
+                        Get.to(() => const MarksEntryHome());
                       }
                     },
                     title: Text(widget

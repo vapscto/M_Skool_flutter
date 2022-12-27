@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 
+import '../main.dart';
+import '../screens/institutional_login.dart';
+
 class LogoutConfirmationPopup extends StatefulWidget {
   const LogoutConfirmationPopup({
     Key? key,
@@ -44,13 +47,13 @@ class _LogoutConfirmationPopupState extends State<LogoutConfirmationPopup>
           TextButton(
             onPressed: () async {
               Get.back();
-              // institutionalCode!.delete("institutionalCode");
-              // logInBox!.put("isLoggedIn", false);
-              // Get.offAll(
-              //   () => InstitutionalLogin(
-              //     mskoolController: mskoolController,
-              //   ),
-              // );
+              institutionalCode!.delete("institutionalCode");
+              logInBox!.put("isLoggedIn", false);
+              Get.offAll(
+                () => InstitutionalLogin(
+                  mskoolController: mskoolController,
+                ),
+              );
             },
             child: Text(
               "Yes".tr,

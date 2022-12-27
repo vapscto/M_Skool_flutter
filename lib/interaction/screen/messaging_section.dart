@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/interaction/apis/messaging_api.dart';
 import 'package:m_skool_flutter/interaction/controller/interaction_controller.dart';
 import 'package:m_skool_flutter/interaction/widget/custom_text_file.dart';
+import 'package:m_skool_flutter/main.dart';
 
 import '../../controller/mskoll_controller.dart';
 import '../../model/login_success_model.dart';
@@ -47,6 +48,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   @override
   void initState() {
     getMessageData();
+    logger.d(widget.data.receiver, widget.loginSuccessModel.studname);
     super.initState();
   }
 
@@ -95,10 +97,19 @@ class _MessagingScreenState extends State<MessagingScreen> {
                         // reverse: true,
                         itemCount: interactionController.messageList.length,
                         itemBuilder: (context, index) {
-                          return Text(
-                            interactionController.messageList
-                                .elementAt(index)
-                                .istintInteraction!,
+                          return Expanded(
+                            child: Row(
+                              mainAxisAlignment: index == 2
+                                  ? MainAxisAlignment.end
+                                  : MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  interactionController.messageList
+                                      .elementAt(index)
+                                      .istintInteraction!,
+                                ),
+                              ],
+                            ),
                           );
                         },
                         // children: const [
