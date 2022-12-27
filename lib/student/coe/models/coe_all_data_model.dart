@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:m_skool_flutter/coe/models/academic_year_model.dart';
-import 'package:m_skool_flutter/coe/models/coe_data_model.dart';
+import 'package:m_skool_flutter/student/coe/models/academic_year_model.dart';
+import 'package:m_skool_flutter/student/coe/models/coe_data_model.dart';
 
 class AllCoeDataModelBind {
   final List<AttyearlistValues> academicYear;

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/exam/model/pie_data_model.dart';
-import 'package:m_skool_flutter/exam/model/subjectoverview_model.dart';
+
+import 'package:m_skool_flutter/student/exam/model/pie_data_model.dart';
+import 'package:m_skool_flutter/student/exam/model/subjectoverview_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class GraphSubjectWiseResultItem extends StatefulWidget {

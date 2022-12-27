@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
-import 'package:m_skool_flutter/exam/model/markoverview_model.dart';
-import 'package:m_skool_flutter/exam/model/subject_list_model.dart';
-import 'package:m_skool_flutter/exam/model/subjectoverview_model.dart';
+
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/student/exam/model/markoverview_model.dart';
+import 'package:m_skool_flutter/student/exam/model/subject_list_model.dart';
+import 'package:m_skool_flutter/student/exam/model/subjectoverview_model.dart';
 
 import '../model/academic_year_model.dart';
 import '../model/exam_list_model.dart';

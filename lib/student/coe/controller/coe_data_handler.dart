@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/coe/models/academic_year_model.dart';
-import 'package:m_skool_flutter/coe/models/coe_data_model.dart';
+import 'package:m_skool_flutter/student/coe/models/academic_year_model.dart';
+import 'package:m_skool_flutter/student/coe/models/coe_data_model.dart';
 
 class CoeDataHandler extends GetxController {
   RxBool showAllLoadingProgress = RxBool(true);

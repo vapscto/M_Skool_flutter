@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:m_skool_flutter/exam/model/subjectoverview_model.dart';
-import 'package:m_skool_flutter/exam/widget/result_analysis_item.dart';
+import 'package:m_skool_flutter/student/exam/model/subjectoverview_model.dart';
+import 'package:m_skool_flutter/student/exam/widget/result_analysis_item.dart';
 
 class SubjectWiseContainer extends StatelessWidget {
   final SubjectWiseReportListValue datamodel;

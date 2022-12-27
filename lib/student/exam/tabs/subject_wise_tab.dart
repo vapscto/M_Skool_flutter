@@ -3,16 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
-import 'package:m_skool_flutter/exam/controller/exam_controller.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/exam/controller/exam_controller.dart';
+import 'package:m_skool_flutter/student/exam/widget/subject_wise_graph.dart';
 
-import 'package:m_skool_flutter/exam/widget/subject_wise_graph.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
-
-import '../../controller/global_utilities.dart';
-import '../../controller/mskoll_controller.dart';
-
-import '../../model/login_success_model.dart';
 
 import '../model/academic_year_model.dart';
 import '../model/subject_list_model.dart';
@@ -34,6 +32,7 @@ class SubjectWiseTab extends StatefulWidget {
 
 class _SubjectWiseTabState extends State<SubjectWiseTab> {
   final examController = Get.put(ExamController());
+
   AcademicYearValues? selectedYear;
 
   SubjectListValue? selectedSubject;
@@ -87,7 +86,7 @@ class _SubjectWiseTabState extends State<SubjectWiseTab> {
         .then((value) async {
       if (value) {
         selectedYear = examController.academicYearList.first;
-        getsubList(this.selectedYear!.asmaYId!);
+        getsubList(selectedYear!.asmaYId!);
       }
     });
     examController.issubjectwiseloading(false);

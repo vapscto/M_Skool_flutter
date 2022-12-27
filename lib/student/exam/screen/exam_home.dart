@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
-import 'package:m_skool_flutter/interaction/widget/custom_tab_bar.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/exam/controller/exam_controller.dart';
+import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
-import '../../controller/mskoll_controller.dart';
-import '../../model/login_success_model.dart';
-import '../controller/exam_controller.dart';
 import '../tabs/exam_wise_tab.dart';
 import '../tabs/subject_wise_tab.dart';
 

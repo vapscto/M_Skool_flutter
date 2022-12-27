@@ -1,5 +1,5 @@
-import 'package:m_skool_flutter/feedback/model/get_feed_model.dart';
-import 'package:m_skool_flutter/feedback/model/ins_detail_model.dart';
+import 'package:m_skool_flutter/student/feedback/model/get_feed_model.dart';
+import 'package:m_skool_flutter/student/feedback/model/ins_detail_model.dart';
 
 class FeedbackDetailsModel {
   bool? returnval;
