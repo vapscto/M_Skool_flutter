@@ -41,6 +41,15 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                     .loginSuccessModel.staffmobileappprivileges!.values!.length,
                 itemBuilder: (_, index) {
                   return ListTile(
+                    onTap: () {
+                      if (widget.loginSuccessModel.staffmobileappprivileges!
+                              .values!
+                              .elementAt(index)
+                              .pagename ==
+                          "Attendance Entry") {
+                        return;
+                      }
+                    },
                     title: Text(widget
                         .loginSuccessModel.staffmobileappprivileges!.values!
                         .elementAt(index)
