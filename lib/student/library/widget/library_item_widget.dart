@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
-import 'package:m_skool_flutter/library/model/library_data_model.dart';
-import 'package:m_skool_flutter/library/widget/library_dt_status.dart';
-import 'package:m_skool_flutter/library/widget/library_sub_item.dart';
+import 'package:m_skool_flutter/student/library/model/library_data_model.dart';
+import 'package:m_skool_flutter/student/library/widget/library_dt_status.dart';
+import 'package:m_skool_flutter/student/library/widget/library_sub_item.dart';
+
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class LibraryItemWidget extends StatelessWidget {

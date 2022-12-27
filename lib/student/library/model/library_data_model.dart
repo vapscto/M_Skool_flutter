@@ -1,4 +1,4 @@
-import 'package:m_skool_flutter/library/model/library_graph.dart';
+import 'package:m_skool_flutter/student/library/model/library_graph.dart';
 
 class LibraryDataModel {
   int? stdupdate;

@@ -5,7 +5,7 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/model/student_dashboard_model.dart';
-import 'package:m_skool_flutter/timetable/screens/time_table_home.dart';
+import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/widget/card_widget.dart';
 
 class DashboardTimetable extends StatefulWidget {

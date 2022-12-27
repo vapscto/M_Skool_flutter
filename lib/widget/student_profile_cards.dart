@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/feedback/screens/feedback_home.dart';
-import 'package:m_skool_flutter/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/model/student_profile_details_model.dart';
 import 'package:m_skool_flutter/screens/school_details_screen.dart';
+import 'package:m_skool_flutter/student/feedback/screens/feedback_home.dart';
+import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 import 'package:m_skool_flutter/widget/profile_items_card_widget.dart';
 import 'package:m_skool_flutter/widget/subject_teachers_popup.dart';

@@ -11,8 +11,9 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/timetable/api/daily_tt_api.dart';
-import 'package:m_skool_flutter/timetable/model/daywise_tt.dart';
+import 'package:m_skool_flutter/student/timetable/api/daily_tt_api.dart';
+import 'package:m_skool_flutter/student/timetable/model/daywise_tt.dart';
+
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/pgr_widget.dart';

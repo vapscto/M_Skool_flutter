@@ -4,10 +4,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/homework/api/home_work_api.dart';
-import 'package:m_skool_flutter/homework/screen/home_work.dart';
-import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/homework/api/home_work_api.dart';
+import 'package:m_skool_flutter/student/homework/screen/home_work.dart';
+import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 

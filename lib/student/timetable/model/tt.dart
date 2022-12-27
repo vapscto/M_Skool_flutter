@@ -2,11 +2,10 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-
-import 'package:m_skool_flutter/timetable/model/daywise_tt.dart';
-import 'package:m_skool_flutter/timetable/model/grid_week_model.dart';
-import 'package:m_skool_flutter/timetable/model/periods_lst_model.dart';
-import 'package:m_skool_flutter/timetable/model/tt_model.dart';
+import 'package:m_skool_flutter/student/timetable/model/daywise_tt.dart';
+import 'package:m_skool_flutter/student/timetable/model/grid_week_model.dart';
+import 'package:m_skool_flutter/student/timetable/model/periods_lst_model.dart';
+import 'package:m_skool_flutter/student/timetable/model/tt_model.dart';
 
 class TT {
   final TTModel tt;

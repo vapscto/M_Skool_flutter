@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:m_skool_flutter/constants/constants.dart';
-import 'package:m_skool_flutter/library/api/library_data_api.dart';
-import 'package:m_skool_flutter/library/model/library_data_model.dart';
-import 'package:m_skool_flutter/library/widget/library_item_widget.dart';
-import 'package:m_skool_flutter/library/widget/line_chart_trackball.dart';
+
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/student/library/api/library_data_api.dart';
+import 'package:m_skool_flutter/student/library/model/library_data_model.dart';
+import 'package:m_skool_flutter/student/library/widget/library_item_widget.dart';
+import 'package:m_skool_flutter/student/library/widget/line_chart_trackball.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';

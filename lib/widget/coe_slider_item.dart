@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:m_skool_flutter/coe/screen/coe_home.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/model/student_dashboard_model.dart';
+import 'package:m_skool_flutter/student/coe/screen/coe_home.dart';
 
 import 'package:m_skool_flutter/widget/coe_shape.dart';
 

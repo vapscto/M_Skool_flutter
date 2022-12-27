@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
-import 'package:m_skool_flutter/library/model/library_graph.dart';
-import 'package:m_skool_flutter/library/model/library_graph_data.dart';
+import 'package:m_skool_flutter/student/library/model/library_graph.dart';
+import 'package:m_skool_flutter/student/library/model/library_graph_data.dart';
 
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -157,13 +157,13 @@ class _LineChartLibState extends State<LineChartLib> {
                   dataSource: source,
                   xValueMapper: (datum, index) => datum.issuedData.month,
                   yValueMapper: ((datum, index) => datum.issuedData.issued),
-                  markerSettings: MarkerSettings(isVisible: true)),
+                  markerSettings: const MarkerSettings(isVisible: true)),
               LineSeries(
                   dataSource: source,
                   color: const Color(0xFF0165A3),
                   xValueMapper: (datum, index) => datum.returnedData.month,
                   yValueMapper: ((datum, index) => datum.returnedData.returned),
-                  markerSettings: MarkerSettings(isVisible: true))
+                  markerSettings: const MarkerSettings(isVisible: true))
             ],
           ),
         ],

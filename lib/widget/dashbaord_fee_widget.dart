@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/fees/screens/fee_analysis_screen.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/fees/screens/fee_analysis_screen.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:m_skool_flutter/model/student_dashboard_model.dart';

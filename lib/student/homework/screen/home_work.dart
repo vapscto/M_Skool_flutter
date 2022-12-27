@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/config/themes/theme_data.dart';
 
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/homework/api/home_work_api.dart';
-import 'package:m_skool_flutter/homework/api/update_hw_seen.dart';
-import 'package:m_skool_flutter/homework/model/date_wise.dart';
-import 'package:m_skool_flutter/homework/screen/hwcw_detail_screen.dart';
-import 'package:m_skool_flutter/homework/widget/filtred_hw.dart';
-import 'package:m_skool_flutter/homework/widget/hw_cw_item.dart';
-import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/homework/api/home_work_api.dart';
+import 'package:m_skool_flutter/student/homework/api/update_hw_seen.dart';
+import 'package:m_skool_flutter/student/homework/model/date_wise.dart';
+import 'package:m_skool_flutter/student/homework/screen/hwcw_detail_screen.dart';
+import 'package:m_skool_flutter/student/homework/widget/filtred_hw.dart';
+import 'package:m_skool_flutter/student/homework/widget/hw_cw_item.dart';
+import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 

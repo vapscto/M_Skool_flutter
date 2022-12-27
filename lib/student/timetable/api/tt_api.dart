@@ -3,13 +3,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/timetable/model/daywise_tt.dart';
-import 'package:m_skool_flutter/timetable/model/grid_week_model.dart';
-import 'package:m_skool_flutter/timetable/model/periods_lst_model.dart';
-import 'package:m_skool_flutter/timetable/model/student_time_table_model.dart';
-import 'package:m_skool_flutter/timetable/model/time_table_load_data_model.dart';
-import 'package:m_skool_flutter/timetable/model/tt.dart';
-import 'package:m_skool_flutter/timetable/model/tt_model.dart';
+import 'package:m_skool_flutter/student/timetable/model/daywise_tt.dart';
+import 'package:m_skool_flutter/student/timetable/model/grid_week_model.dart';
+import 'package:m_skool_flutter/student/timetable/model/periods_lst_model.dart';
+import 'package:m_skool_flutter/student/timetable/model/time_table_load_data_model.dart';
+import 'package:m_skool_flutter/student/timetable/model/tt.dart';
+import 'package:m_skool_flutter/student/timetable/model/tt_model.dart';
 
 class TTApi {
   TTApi.init();

@@ -5,9 +5,8 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 
 import 'package:m_skool_flutter/model/login_success_model.dart';
-
-import 'package:m_skool_flutter/timetable/widget/daily_tt.dart';
-import 'package:m_skool_flutter/timetable/widget/weekly_tt.dart';
+import 'package:m_skool_flutter/student/timetable/widget/daily_tt.dart';
+import 'package:m_skool_flutter/student/timetable/widget/weekly_tt.dart';
 
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
