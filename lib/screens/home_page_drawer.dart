@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/attendance/screens/home_page.dart';
-import 'package:m_skool_flutter/certificates/screens/cert_home.dart';
-import 'package:m_skool_flutter/classwork/screen/classwork_home_screen.dart';
-import 'package:m_skool_flutter/coe/screen/coe_home.dart';
+
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/exam/screen/exam_home.dart';
-import 'package:m_skool_flutter/fees/screens/fee_analysis_screen.dart';
-import 'package:m_skool_flutter/fees/screens/fee_receipt_home.dart';
-import 'package:m_skool_flutter/fees/screens/online_payment_screen.dart';
+
 import 'package:m_skool_flutter/forgotpassword/screens/forgot_password_screen.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/reset_password.dart';
-import 'package:m_skool_flutter/homework/screen/home_work_screen.dart';
-import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
-import 'package:m_skool_flutter/interaction/screen/interaction_home.dart';
-import 'package:m_skool_flutter/library/screen/library_home.dart';
+
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
-import 'package:m_skool_flutter/timetable/screens/time_table_home.dart';
+import 'package:m_skool_flutter/student/attendance/screens/home_page.dart';
+import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
+import 'package:m_skool_flutter/student/classwork/screen/classwork_home_screen.dart';
+import 'package:m_skool_flutter/student/coe/screen/coe_home.dart';
+import 'package:m_skool_flutter/student/exam/screen/exam_home.dart';
+import 'package:m_skool_flutter/student/fees/screens/fee_analysis_screen.dart';
+import 'package:m_skool_flutter/student/fees/screens/fee_receipt_home.dart';
+import 'package:m_skool_flutter/student/fees/screens/online_payment_screen.dart';
+import 'package:m_skool_flutter/student/homework/screen/home_work_screen.dart';
+import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
+import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
+import 'package:m_skool_flutter/student/library/screen/library_home.dart';
+import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
+
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 

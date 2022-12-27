@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/certificates/api/get_applied_certificates_api.dart';
-import 'package:m_skool_flutter/certificates/model/stud_list.dart';
-import 'package:m_skool_flutter/certificates/widget/certificate_detail_item.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/certificates/api/get_applied_certificates_api.dart';
+import 'package:m_skool_flutter/student/certificates/model/stud_list.dart';
+import 'package:m_skool_flutter/student/certificates/widget/certificate_detail_item.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 

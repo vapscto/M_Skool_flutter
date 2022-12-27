@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/certificates/api/get_certificate_type.dart';
-import 'package:m_skool_flutter/certificates/api/submit_cert_request_api.dart';
-import 'package:m_skool_flutter/certificates/model/cert_list_model.dart';
-import 'package:m_skool_flutter/certificates/model/certlist_asca_model.dart';
 
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/certificates/api/get_certificate_type.dart';
+import 'package:m_skool_flutter/student/certificates/api/submit_cert_request_api.dart';
+import 'package:m_skool_flutter/student/certificates/model/cert_list_model.dart';
+import 'package:m_skool_flutter/student/certificates/model/certlist_asca_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';

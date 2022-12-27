@@ -3,15 +3,13 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/homework/screen/home_work.dart';
-import 'package:m_skool_flutter/homework/screen/hwcw_detail_screen.dart';
-import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
-import 'package:m_skool_flutter/library/screen/library_home.dart';
+
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/api/get_datewise_notices.dart';
 import 'package:m_skool_flutter/notice/api/get_notice_api.dart';
 import 'package:m_skool_flutter/notice/screen/notice_detail_screen.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
+import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 
 class NoticeFilteredWidget extends StatefulWidget {

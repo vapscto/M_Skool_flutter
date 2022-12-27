@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:m_skool_flutter/certificates/model/stud_list.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/student/certificates/model/stud_list.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class CertificateDetailItem extends StatelessWidget {

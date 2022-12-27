@@ -6,7 +6,7 @@ import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/information/controller/hwcwnb_controller.dart';
+
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/api/get_datewise_notices.dart';
@@ -16,6 +16,7 @@ import 'package:m_skool_flutter/notice/api/get_tt_notice_api.dart';
 import 'package:m_skool_flutter/notice/model/notice_data_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_detail_screen.dart';
 import 'package:m_skool_flutter/notice/widget/notice_filtered_widget.dart';
+import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';

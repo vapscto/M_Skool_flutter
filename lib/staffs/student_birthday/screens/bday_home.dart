@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/interaction/widget/custom_tab_bar.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/tabs/between_day.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/tabs/month_wise.dart';
+import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 

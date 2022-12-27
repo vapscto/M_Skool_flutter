@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/fees/screens/online_payment_screen.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/fee_reminder_model.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/fees/screens/online_payment_screen.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class FeeReminderApi {

@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:m_skool_flutter/attendance/controller/attendance_handler.dart';
-import 'package:m_skool_flutter/attendance/model/attendance_detail_model.dart';
+
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/student/attendance/controller/attendance_handler.dart';
+import 'package:m_skool_flutter/student/attendance/model/attendance_detail_model.dart';
 
 class GetAttendanceDetails {
   GetAttendanceDetails.init();

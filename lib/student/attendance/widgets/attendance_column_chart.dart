@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/attendance/controller/attendance_handler.dart';
+import 'package:m_skool_flutter/student/attendance/controller/attendance_handler.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class AttendanceColumnChart extends StatefulWidget {

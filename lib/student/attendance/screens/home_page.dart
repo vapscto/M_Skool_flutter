@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/attendance/api/get_academic_year.dart';
-import 'package:m_skool_flutter/attendance/api/get_attendance_details.dart';
-import 'package:m_skool_flutter/attendance/controller/attendance_handler.dart';
-import 'package:m_skool_flutter/attendance/model/academic_year_model.dart';
-import 'package:m_skool_flutter/attendance/model/attendance_detail_model.dart';
-import 'package:m_skool_flutter/attendance/widgets/attendance_column_chart.dart';
+
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/student/attendance/api/get_academic_year.dart';
+import 'package:m_skool_flutter/student/attendance/api/get_attendance_details.dart';
+import 'package:m_skool_flutter/student/attendance/controller/attendance_handler.dart';
+import 'package:m_skool_flutter/student/attendance/model/academic_year_model.dart';
+import 'package:m_skool_flutter/student/attendance/model/attendance_detail_model.dart';
+import 'package:m_skool_flutter/student/attendance/widgets/attendance_column_chart.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';

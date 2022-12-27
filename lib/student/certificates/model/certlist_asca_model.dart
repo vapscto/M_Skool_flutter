@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:m_skool_flutter/certificates/model/cert_list_model.dart';
+import 'package:m_skool_flutter/student/certificates/model/cert_list_model.dart';
 
 class CertListAsca {
   final int ascaId;

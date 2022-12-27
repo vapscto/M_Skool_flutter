@@ -1,8 +1,8 @@
-import 'package:m_skool_flutter/certificates/model/cert_list_model.dart';
-import 'package:m_skool_flutter/certificates/model/certificate_drop_down.dart';
-import 'package:m_skool_flutter/certificates/model/get_cert_model.dart';
-import 'package:m_skool_flutter/certificates/model/stud_list.dart';
-import 'package:m_skool_flutter/certificates/model/student_details_model.dart';
+import 'package:m_skool_flutter/student/certificates/model/cert_list_model.dart';
+import 'package:m_skool_flutter/student/certificates/model/certificate_drop_down.dart';
+import 'package:m_skool_flutter/student/certificates/model/get_cert_model.dart';
+import 'package:m_skool_flutter/student/certificates/model/stud_list.dart';
+import 'package:m_skool_flutter/student/certificates/model/student_details_model.dart';
 
 class GetCertificateDataModel {
   int? ascAId;
