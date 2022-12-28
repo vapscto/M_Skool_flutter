@@ -81,11 +81,11 @@ class _FeeAnalysisTabState extends State<FeeAnalysisTab>
           tabs: const [
             CustomTab(
               name: "Overall Analysis",
-              asset: "assets/images/tabicon.png",
+              asset: "assets/svg/fee_analysis.svg",
             ),
             CustomTab(
               name: "Headwise Analysis",
-              asset: "assets/images/tabicon.png",
+              asset: "assets/svg/fee_analysis.svg",
             )
           ],
           tabController: tabController!,

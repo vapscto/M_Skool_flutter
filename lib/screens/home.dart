@@ -571,6 +571,7 @@ class _HomeTabState extends State<HomeTab> {
                         // mainAxisSpacing: 10,
                         childAspectRatio: 0.9,
                         shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
                         crossAxisCount: 4,
                         children: List.generate(
                             widget.loginSuccessModel.staffmobileappprivileges!
@@ -751,15 +752,17 @@ class _HomeTabState extends State<HomeTab> {
                                               height: 60,
                                             ),
                                           ),
-                                          Text(
-                                            "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                            //maxLines: 1,
-                                            textAlign: TextAlign.center,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .merge(const TextStyle(
-                                                    fontSize: 13.0)),
+                                          Expanded(
+                                            child: Text(
+                                              "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                              //maxLines: 1,
+                                              textAlign: TextAlign.center,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(const TextStyle(
+                                                      fontSize: 13.0)),
+                                            ),
                                           )
                                         ],
                                       ),
