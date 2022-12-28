@@ -55,6 +55,7 @@ Future<bool> saveDetail({
   required String message,
   required int hrmeId,
   required String base,
+  required String roleflg,
 }) async {
   var url = base + URLS.composeInteraction;
   try {
@@ -64,14 +65,14 @@ Future<bool> saveDetail({
         headers: getSession(),
       ),
       data: {
-        "mI_ID": 4,
-        "ASMAY_Id": 82,
-        "AMST_Id": 19311,
-        "roleflg": "student",
+        "mI_ID": miId,
+        "ASMAY_Id": asmayId,
+        "AMST_Id": amstId,
+        "roleflg": roleflg,
         "UserId": userId,
         "userflag": userFlg,
-        "ISTINT_ToId": 28,
-        "ISMINT_ComposedByFlg": "Staff",
+        "ISTINT_ToId": hrmeId,
+        "ISMINT_ComposedByFlg": roleflg,
         "ISMINT_GroupOrIndFlg": "Individual",
         "ISMINT_Subject": subject,
         "ISMINT_Interaction": message,

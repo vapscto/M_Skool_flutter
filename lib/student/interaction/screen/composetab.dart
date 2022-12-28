@@ -58,6 +58,7 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
   @override
   void initState() {
     getStafflistData();
+
     super.initState();
   }
 
@@ -433,7 +434,11 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
                     subject: subject.text,
                     message: about.text,
                     hrmeId: selectedStaff!.hrmEId!,
-                    base: baseUrlFromInsCode('portal', widget.mskoolController),
+                    base: baseUrlFromInsCode(
+                      'portal',
+                      widget.mskoolController,
+                    ),
+                    roleflg: widget.loginSuccessModel.roleforlogin!,
                   ).then((value) {
                     if (value) {
                       FocusScope.of(context).unfocus();

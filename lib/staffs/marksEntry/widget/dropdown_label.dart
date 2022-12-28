@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class DropDownLabel extends StatelessWidget {
+class CustomDropDownLabel extends StatelessWidget {
   final String icon;
   final String text;
   final Color containerColor;
   final Color textColor;
-  const DropDownLabel(
+  const CustomDropDownLabel(
       {super.key,
       required this.icon,
       required this.text,
@@ -15,7 +15,7 @@ class DropDownLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
       decoration: BoxDecoration(
         color: containerColor,
         borderRadius: const BorderRadius.all(
@@ -26,9 +26,12 @@ class DropDownLabel extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
-            height: 33,
-            child: Image.asset(
-              icon,
+            height: 25,
+            child: FittedBox(
+              fit: BoxFit.cover,
+              child: Image.asset(
+                icon,
+              ),
             ),
           ),
           const SizedBox(width: 10),
