@@ -7,28 +7,31 @@ class PaymentSuccessfullApi {
   PaymentSuccessfullApi.init();
   static final PaymentSuccessfullApi instance = PaymentSuccessfullApi.init();
 
-  Future<bool> doAfterPaymentMade(
-      {required int miId,
-      required String paymentId,
-      required String base}) async {
+  Future<bool> doAfterPaymentMade({
+    required int miId,
+    required String paymentId,
+    required String orderId,
+    required String base,
+  }) async {
     final Dio dio = getGlobalDio();
 
     final String apiUrl = base + URLS.razorPayResponse;
 
     try {
-      final Response response2 = await dio.post(
-        "https://jnujaipur.vapssmartecampus.com:61005/api/FeeOnlinePaymentFacade/razorresponse",
-        options: Options(headers: getSession()),
-        data: {
-          "IVRMOP_MIID": miId,
-          "razorpay_payment_id": paymentId,
-        },
-      );
+      // final Response response2 = await dio.post(
+      //   "https://jnujaipur.vapssmartecampus.com:61005/api/FeeOnlinePaymentFacade/razorresponse",
+      //   options: Options(headers: getSession()),
+      //   data: {
+      //     "IVRMOP_MIID": miId,
+      //     "razorpay_payment_id": paymentId,
+      //   },
+      // );
 
       final Response response = await dio
           .post(apiUrl, options: Options(headers: getSession()), data: {
         "IVRMOP_MIID": miId,
         "razorpay_payment_id": paymentId,
+        "order_id": orderId,
       });
 
       if (response.statusCode != 200) {

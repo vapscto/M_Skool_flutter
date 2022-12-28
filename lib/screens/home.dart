@@ -457,59 +457,78 @@ class _HomeTabState extends State<HomeTab> {
                                 Transform.translate(
                                   offset: const Offset(0, -4.0),
                                   child: Obx(() {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      child: DropdownButton<ExamListNewValues>(
-                                        value: dashboardController
-                                            .selectedOption.value,
-                                        isDense: true,
-                                        underline: const SizedBox(),
-                                        isExpanded: false,
-                                        icon: Icon(
-                                          Icons.keyboard_arrow_down,
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium!
-                                              .color,
-                                        ),
-                                        style: const TextStyle(
-                                            fontSize: 14.0,
-                                            color: Colors.black),
-                                        items: List.generate(
-                                            dashboardController
-                                                .examList.first.values!.length,
-                                            (index) => DropdownMenuItem(
-                                                value: dashboardController
-                                                    .examList.first.values!
-                                                    .elementAt(index),
-                                                child: Text(dashboardController
-                                                    .examList.first.values!
-                                                    .elementAt(index)
-                                                    .eMEExamName!))),
-                                        onChanged: (value) async {
-                                          dashboardController
-                                              .selectedOption.value = value!;
-                                          await DashboardExamApi.instance.loadExamData(
-                                              miId: widget
-                                                  .loginSuccessModel.mIID!,
-                                              asmayId: widget
-                                                  .loginSuccessModel.asmaYId!,
-                                              asmclId: widget
-                                                  .loginSuccessModel.asmcLId!,
-                                              asmsId: widget
-                                                  .loginSuccessModel.asmSId!,
-                                              amstId: widget
-                                                  .loginSuccessModel.amsTId!,
-                                              emeId: dashboardController
-                                                  .selectedOption.value.eMEId!,
-                                              base: baseUrlFromInsCode("portal",
-                                                  widget.mskoolController),
-                                              dashboardController:
-                                                  dashboardController);
-                                        },
-                                      ),
-                                    );
+                                    return dashboardController
+                                            .examList.first.values!.isEmpty
+                                        ? const SizedBox()
+                                        : Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: DropdownButton<
+                                                ExamListNewValues>(
+                                              value: dashboardController
+                                                  .selectedOption.value,
+                                              isDense: true,
+                                              underline: const SizedBox(),
+                                              isExpanded: false,
+                                              icon: Icon(
+                                                Icons.keyboard_arrow_down,
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .titleMedium!
+                                                    .color,
+                                              ),
+                                              style: const TextStyle(
+                                                  fontSize: 14.0,
+                                                  color: Colors.black),
+                                              items: List.generate(
+                                                  dashboardController.examList
+                                                      .first.values!.length,
+                                                  (index) => DropdownMenuItem(
+                                                      value: dashboardController
+                                                          .examList
+                                                          .first
+                                                          .values!
+                                                          .elementAt(index),
+                                                      child: Text(
+                                                          dashboardController
+                                                              .examList
+                                                              .first
+                                                              .values!
+                                                              .elementAt(index)
+                                                              .eMEExamName!))),
+                                              onChanged: (value) async {
+                                                dashboardController
+                                                    .selectedOption
+                                                    .value = value!;
+                                                await DashboardExamApi.instance.loadExamData(
+                                                    miId: widget
+                                                        .loginSuccessModel
+                                                        .mIID!,
+                                                    asmayId: widget
+                                                        .loginSuccessModel
+                                                        .asmaYId!,
+                                                    asmclId: widget
+                                                        .loginSuccessModel
+                                                        .asmcLId!,
+                                                    asmsId: widget
+                                                        .loginSuccessModel
+                                                        .asmSId!,
+                                                    amstId: widget
+                                                        .loginSuccessModel
+                                                        .amsTId!,
+                                                    emeId: dashboardController
+                                                        .selectedOption
+                                                        .value
+                                                        .eMEId!,
+                                                    base: baseUrlFromInsCode(
+                                                        "portal",
+                                                        widget
+                                                            .mskoolController),
+                                                    dashboardController:
+                                                        dashboardController);
+                                              },
+                                            ),
+                                          );
                                   }),
                                 ),
                                 const SizedBox(

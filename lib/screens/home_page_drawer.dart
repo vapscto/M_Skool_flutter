@@ -82,7 +82,7 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                             .staffmobileappprivileges!
                             .values![index]
                             .pagename) {
-                          case "Student Attendance":
+                          case "Attendance":
                             Get.to(() => AttendanceHomeScreen(
                                 loginSuccessModel: widget.loginSuccessModel,
                                 mskoolController: widget.mskoolController));
@@ -94,7 +94,7 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                             //     mskoolController:
                             //         widget.mskoolController));
                             break;
-                          case "Online Fee Payment":
+                          case "Fee Payment":
                             Get.to(
                               () => OnlinePaymentScreen(
                                 loginSuccessModel: widget.loginSuccessModel,
@@ -137,7 +137,7 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                                   mskoolController: widget.mskoolController,
                                 ));
                             break;
-                          case "Student Notice Board":
+                          case "Notice Board":
                             Get.to(
                               () => NoticeHome(
                                 loginSuccessModel: widget.loginSuccessModel,
@@ -176,7 +176,7 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                                   mskoolController: widget.mskoolController,
                                 ));
                             break;
-                          case "Apply Certificate":
+                          case "Certificate":
                             Get.to(() => CertificateHomeScreen(
                                   loginSuccessModel: widget.loginSuccessModel,
                                   mskoolController: widget.mskoolController,

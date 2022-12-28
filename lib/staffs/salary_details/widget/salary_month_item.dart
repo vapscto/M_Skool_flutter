@@ -15,7 +15,7 @@ class SalaryMonthItem extends StatelessWidget {
     return CustomContainer(
       child: Container(
         decoration: BoxDecoration(
-          color: noticeColor.elementAt(color).withOpacity(0.15),
+          color: noticeBackgroundColor.elementAt(color).withOpacity(0.3),
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Column(

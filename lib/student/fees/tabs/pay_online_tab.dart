@@ -881,7 +881,7 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                                                                             },
                                                                             'send_sms_hash':
                                                                                 true,
-                                                                            'orderId':
+                                                                            'order_id':
                                                                                 snapshot.data!.transId!,
                                                                             'prefill':
                                                                                 {
@@ -975,6 +975,7 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                   miId: widget.loginSuccessModel.mIID!,
                   paymentId: e.paymentId!,
                   base: baseUrlFromInsCode("fee", widget.mskoolController),
+                  orderId: e.orderId!,
                 ),
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data!) {
@@ -1261,7 +1262,7 @@ class AcademicYearFeeDetail extends StatelessWidget {
               // margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: const Color.fromRGBO(202, 244, 244, 0.3),
-                borderRadius: BorderRadius.circular(16.0),
+                borderRadius: BorderRadius.circular(8.0),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
