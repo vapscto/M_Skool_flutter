@@ -545,10 +545,14 @@ class _HomeTabState extends State<HomeTab> {
                       height: 16.0,
                     ),
                     Center(
-                      child: Wrap(
+                      child: GridView.count(
                         // alignment: WrapAlignment.spaceBetween,
-                        spacing: 3,
-                        crossAxisAlignment: WrapCrossAlignment.center,
+                        // spacing: 3,
+                        // crossAxisAlignment: WrapCrossAlignment.center,
+                        // mainAxisSpacing: 10,
+                        childAspectRatio: 0.9,
+                        shrinkWrap: true,
+                        crossAxisCount: 4,
                         children: List.generate(
                             widget.loginSuccessModel.staffmobileappprivileges!
                                 .values!.length,
