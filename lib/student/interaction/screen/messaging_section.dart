@@ -47,7 +47,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
   @override
   void initState() {
     getMessageData();
-    logger.d(widget.data.receiver, widget.loginSuccessModel.studname);
+    logger.d(widget.loginSuccessModel.studname);
+    logger.d(widget.data.receiver);
+    logger.d(widget.data.sender);
     super.initState();
   }
 
@@ -96,19 +98,15 @@ class _MessagingScreenState extends State<MessagingScreen> {
                         // reverse: true,
                         itemCount: interactionController.messageList.length,
                         itemBuilder: (context, index) {
-                          return Expanded(
-                            child: Row(
-                              mainAxisAlignment: index == 2
-                                  ? MainAxisAlignment.end
-                                  : MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  interactionController.messageList
-                                      .elementAt(index)
-                                      .istintInteraction!,
-                                ),
-                              ],
-                            ),
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                interactionController.messageList
+                                    .elementAt(index)
+                                    .istintInteraction!,
+                              ),
+                            ],
                           );
                         },
                         // children: const [

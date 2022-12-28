@@ -422,9 +422,9 @@ class FeeDetails {
         amaYRollNo: json["amaY_RollNo"],
         acdlist:
             json["acdlist"] == null ? null : Acdlist.fromJson(json["acdlist"]),
-        asmaYYear: json["asmaY_Year"] ?? null,
-        fmHFeeName: json["fmH_FeeName"] ?? null,
-        ftIName: json["ftI_Name"] ?? null,
+        asmaYYear: json["asmaY_Year"],
+        fmHFeeName: json["fmH_FeeName"],
+        ftIName: json["ftI_Name"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -555,9 +555,9 @@ class FeeDetails {
         "estsU_ElecetiveFlag": estsUElecetiveFlag,
         "amaY_RollNo": amaYRollNo,
         "acdlist": acdlist == null ? null : acdlist!.toJson(),
-        "asmaY_Year": asmaYYear ?? null,
-        "fmH_FeeName": fmHFeeName ?? null,
-        "ftI_Name": ftIName ?? null,
+        "asmaY_Year": asmaYYear,
+        "fmH_FeeName": fmHFeeName,
+        "ftI_Name": ftIName,
       };
 }
 
@@ -591,28 +591,28 @@ class HeadwiseAnalysisData {
   });
   String? fmhFeeName;
   String? ftiName;
-  double? netAmount;
-  double? concessionAmount;
-  double? paidAmount;
+  int? netAmount;
+  int? concessionAmount;
+  int? paidAmount;
   int? balanceAmount;
 
   factory HeadwiseAnalysisData.fromJson(Map<String, dynamic> json) =>
       HeadwiseAnalysisData(
         fmhFeeName: json["fmH_FeeName"],
         ftiName: json["ftI_Name"],
-        netAmount: json["fyP_Tot_Amount"],
-        concessionAmount: json["ftP_Concession_Amt"],
-        paidAmount: json["ftP_Paid_Amt"],
-        balanceAmount: json["dueamount"],
+        netAmount: json["fsS_CurrentYrCharges"],
+        concessionAmount: json["fsS_ConcessionAmount"],
+        paidAmount: json["fsS_PaidAmount"],
+        balanceAmount: json["fsS_ToBePaid"],
       );
 
   Map<String, dynamic> toJson() => {
         "fmH_FeeName": fmhFeeName,
         "ftI_Name": ftiName,
-        "fyP_Tot_Amount": netAmount,
-        "ftP_Concession_Amt": concessionAmount,
-        "ftP_Paid_Amt": paidAmount,
-        "dueamount": balanceAmount,
+        "fsS_CurrentYrCharges": netAmount,
+        "fsS_ConcessionAmount": concessionAmount,
+        "fsS_PaidAmount": paidAmount,
+        "fsS_ToBePaid": balanceAmount,
       };
 }
 

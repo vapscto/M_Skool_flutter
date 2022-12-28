@@ -5,10 +5,10 @@ import 'package:m_skool_flutter/student/fees/widgets/custom_analysis_container.d
 class InstallmentDetailWidget extends StatefulWidget {
   final String leadText;
   final String instalText;
-  final double netAmount;
-  final double concessionAmount;
-  final double paidAmount;
-  final double balanceAmount;
+  final int netAmount;
+  final int concessionAmount;
+  final int paidAmount;
+  final int balanceAmount;
 
   const InstallmentDetailWidget({
     super.key,

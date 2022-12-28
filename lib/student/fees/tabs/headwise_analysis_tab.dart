@@ -36,20 +36,18 @@ class _HeadwiseAnalysisTabState extends State<HeadwiseAnalysisTab> {
                     itemCount: feeController.headWiseAnalysisData.length,
                     itemBuilder: (context, index) {
                       return InstallmentDetailWidget(
-                        leadText: feeController
-                            .headWiseAnalysisData[index].fmhFeeName!,
-                        instalText:
-                            feeController.headWiseAnalysisData[index].ftiName!,
-                        netAmount: feeController
-                            .headWiseAnalysisData[index].netAmount!,
-                        concessionAmount: feeController
-                            .headWiseAnalysisData[index].concessionAmount!,
-                        paidAmount: feeController
-                            .headWiseAnalysisData[index].paidAmount!,
-                        balanceAmount: feeController
-                            .headWiseAnalysisData[index].balanceAmount!
-                            .toDouble(),
-                      );
+                          leadText: feeController
+                              .headWiseAnalysisData[index].fmhFeeName!,
+                          instalText: feeController
+                              .headWiseAnalysisData[index].ftiName!,
+                          netAmount: feeController
+                              .headWiseAnalysisData[index].netAmount!,
+                          concessionAmount: feeController
+                              .headWiseAnalysisData[index].concessionAmount!,
+                          paidAmount: feeController
+                              .headWiseAnalysisData[index].paidAmount!,
+                          balanceAmount: feeController
+                              .headWiseAnalysisData[index].balanceAmount!);
                     },
                   ),
                 ],

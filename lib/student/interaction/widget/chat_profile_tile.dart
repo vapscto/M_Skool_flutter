@@ -35,16 +35,18 @@ class ChatProfileTile extends StatelessWidget {
         ),
       ),
       contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
-      leading: data.receiverFilepath!.isNotEmpty
-          ? CircleAvatar(
-              radius: 30,
-              backgroundColor: color,
-              backgroundImage: NetworkImage(data.receiverFilepath.toString()),
-            )
-          : const CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage("assets/images/profile2.png"),
-            ),
+      leading:
+          // data.receiverFilepath!.isNotEmpty
+          //     ?
+          CircleAvatar(
+        radius: 30,
+        backgroundColor: color,
+        backgroundImage: NetworkImage(data.receiverFilepath.toString()),
+      ),
+      // : const CircleAvatar(
+      //     radius: 30,
+      //     backgroundImage: AssetImage("assets/images/profile2.png"),
+      //   ),
       title: Text.rich(TextSpan(
           text: "${data.receiver}  |",
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 18),
