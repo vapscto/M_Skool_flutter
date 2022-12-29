@@ -152,7 +152,9 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
                           " About ".tr,
                           style: Theme.of(context).textTheme.labelMedium!.merge(
                                 const TextStyle(
-                                    fontSize: 20.0, color: Color(0xFF47BA9E)),
+                                  fontSize: 20.0,
+                                  color: Color(0xFF47BA9E),
+                                ),
                               ),
                         ),
                       ],
@@ -183,7 +185,7 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
               contentPadding: const EdgeInsets.symmetric(horizontal: 8),
               visualDensity: const VisualDensity(horizontal: -4.0),
               title: Text(
-                "Teachers",
+                "Class Teachers",
                 style: Theme.of(context).textTheme.labelSmall!.merge(
                     const TextStyle(
                         fontWeight: FontWeight.w400,
@@ -200,6 +202,31 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
               },
             ),
           ),
+          // SizedBox(
+          //   height: 33,
+          //   child: RadioListTile(
+          //     dense: true,
+          //     activeColor: Theme.of(context).primaryColor,
+          //     contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+          //     visualDensity: const VisualDensity(horizontal: -4.0),
+          //     title: Text(
+          //       "Subject Teachers",
+          //       style: Theme.of(context).textTheme.labelSmall!.merge(
+          //           const TextStyle(
+          //               fontWeight: FontWeight.w400,
+          //               fontSize: 16.0,
+          //               letterSpacing: 0.3)),
+          //     ),
+          //     value: "SubjectTeacher",
+          //     groupValue: selectedradio,
+          //     onChanged: (value) {
+          //       setState(() {
+          //         selectedradio = value.toString();
+          //         getStafflistData();
+          //       });
+          //     },
+          //   ),
+          // ),
           SizedBox(
             height: 33,
             child: RadioListTile(

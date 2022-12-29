@@ -30,7 +30,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
       Get.put(InteractionController());
 
   final TextEditingController textMessage = TextEditingController();
-  String image = '';
+  String image =
+      'https://docs.flutter.dev/assets/images/dash/dash-fainting.gif';
 
   Future<void> getMessageData() async {
     interactionController.isMessageloading(true);

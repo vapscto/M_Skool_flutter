@@ -53,7 +53,7 @@ class ChatProfileTile extends StatelessWidget {
           children: [
             TextSpan(
               text:
-                  "  ${data.ismintComposedByFlg![0].toUpperCase()}${data.ismintComposedByFlg!.substring(1).toLowerCase()}",
+                  "  ${data.istintToFlg![0].toUpperCase()}${data.istintToFlg!.substring(1).toLowerCase()}",
               style: Theme.of(context)
                   .textTheme
                   .displaySmall

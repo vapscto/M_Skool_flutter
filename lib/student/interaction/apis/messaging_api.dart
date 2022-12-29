@@ -13,6 +13,11 @@ Future<MessageModel?> getMessages({
   required int userId,
   required String base,
 }) async {
+  logger.d(ismintId);
+  logger.d(miId);
+  logger.d(asmayId);
+  logger.d(userId);
+
   var url = base + URLS.getMessages;
   try {
     var response = await dio.post(
@@ -68,7 +73,7 @@ Future<bool> sendMessage({
         "ISMINT_Id": ismintId,
         "UserId": userId,
         "IVRMRT_Id": 7,
-        "images_paths": image
+        "images_paths": image,
       },
     );
     if (response.statusCode == 200) {

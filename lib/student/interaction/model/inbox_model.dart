@@ -621,6 +621,7 @@ class GetinboxmsgValue {
     this.ismintInteraction,
     this.ismintGroupOrIndFlg,
     this.ismintComposedByFlg,
+    this.istintToFlg,
     this.ismintComposedById,
     this.sender,
     this.senderSenderFilepath,
@@ -640,6 +641,7 @@ class GetinboxmsgValue {
   String? ismintInteraction;
   String? ismintGroupOrIndFlg;
   String? ismintComposedByFlg;
+  String? istintToFlg;
   int? ismintComposedById;
   String? sender;
   String? senderSenderFilepath;
@@ -660,6 +662,7 @@ class GetinboxmsgValue {
         ismintInteraction: json["ISMINT_Interaction"],
         ismintGroupOrIndFlg: json["ISMINT_GroupOrIndFlg"],
         ismintComposedByFlg: json["ISMINT_ComposedByFlg"],
+        istintToFlg: json['ISTINT_ToFlg'],
         ismintComposedById: json["ISMINT_ComposedById"],
         sender: json["Sender"],
         senderSenderFilepath: json["sender_sender_filepath"],
@@ -681,6 +684,7 @@ class GetinboxmsgValue {
         "ISMINT_Interaction": ismintInteraction,
         "ISMINT_GroupOrIndFlg": ismintGroupOrIndFlg,
         "ISMINT_ComposedByFlg": ismintComposedByFlg,
+        "ISTINT_ToFlg": istintToFlg,
         "ISMINT_ComposedById": ismintComposedById,
         "Sender": sender,
         "sender_sender_filepath": senderSenderFilepath,
