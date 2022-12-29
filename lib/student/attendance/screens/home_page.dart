@@ -424,7 +424,30 @@ class _AttendanceHomeScreenState extends State<AttendanceHomeScreen> {
                                                                   ),
                                                                 ),
                                                               )
-                                                            : Container(),
+                                                            : InkWell(
+                                                                onTap: () {
+                                                                  showGraph
+                                                                          .value =
+                                                                      !showGraph
+                                                                          .value;
+                                                                },
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .all(
+                                                                          12.0),
+                                                                  child: Text(
+                                                                    "Hide",
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .titleSmall!
+                                                                        .merge(const TextStyle(
+                                                                            decoration:
+                                                                                TextDecoration.underline)),
+                                                                  ),
+                                                                ),
+                                                              ),
                                                       ],
                                                     ),
                                                     // CustomContainer(

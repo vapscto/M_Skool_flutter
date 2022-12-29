@@ -12,6 +12,7 @@ class DashboardTimetable extends StatefulWidget {
   final TimeTableList timeTableList;
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+
   const DashboardTimetable({
     super.key,
     required this.timeTableList,
@@ -39,9 +40,13 @@ class _DashboardTimetableState extends State<DashboardTimetable> {
                   ),
                   InkWell(
                       onTap: () {
+                        //widget.timeTableList.values.first.tTMDDayName!;
                         Get.to(() => TimeTableHome(
-                            loginSuccessModel: widget.loginSuccessModel,
-                            mskoolController: widget.mskoolController));
+                              loginSuccessModel: widget.loginSuccessModel,
+                              mskoolController: widget.mskoolController,
+                              month: widget
+                                  .timeTableList.values!.first.tTMDDayName,
+                            ));
                       },
                       child: const Icon(Icons.navigate_next_outlined))
                 ],
@@ -57,7 +62,7 @@ class _DashboardTimetableState extends State<DashboardTimetable> {
                     ...List.generate(widget.timeTableList.values!.length,
                         (index) {
                       return SizedBox(
-                        width: 170,
+                        width: 120,
                         child: Padding(
                           padding: const EdgeInsets.only(right: 5.0),
                           child: Column(
@@ -81,14 +86,19 @@ class _DashboardTimetableState extends State<DashboardTimetable> {
                                       top: 4,
                                       bottom: 4,
                                     ),
-                                    child: Text(
-                                      "${widget.timeTableList.values![index].iSMSSubjectName}",
-                                      style: TextStyle(
-                                          color: getDashBoardIconByName(widget
-                                              .timeTableList
-                                              .values![index]
-                                              .iSMSSubjectName!
-                                              .toLowerCase())),
+                                    child: SizedBox(
+                                      width: 70,
+                                      child: Text(
+                                        "${widget.timeTableList.values![index].iSMSSubjectName}",
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                            color: getDashBoardIconByName(widget
+                                                .timeTableList
+                                                .values![index]
+                                                .iSMSSubjectName!
+                                                .toLowerCase())),
+                                      ),
                                     ),
                                   )),
                               SizedBox(
@@ -104,7 +114,7 @@ class _DashboardTimetableState extends State<DashboardTimetable> {
                                 ),
                               ),
                               Container(
-                                width: 170,
+                                width: 120,
                                 height: 10,
                                 color: getDashBoardIconByName(widget
                                     .timeTableList

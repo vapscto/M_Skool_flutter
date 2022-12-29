@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/screens/login_screen.dart';
 
 import '../main.dart';
-import '../screens/institutional_login.dart';
 
 class LogoutConfirmationPopup extends StatefulWidget {
   const LogoutConfirmationPopup({
@@ -47,10 +47,10 @@ class _LogoutConfirmationPopupState extends State<LogoutConfirmationPopup>
           TextButton(
             onPressed: () async {
               Get.back();
-              institutionalCode!.delete("institutionalCode");
+              //institutionalCode!.delete("institutionalCode");
               logInBox!.put("isLoggedIn", false);
               Get.offAll(
-                () => InstitutionalLogin(
+                () => LoginScreen(
                   mskoolController: mskoolController,
                 ),
               );

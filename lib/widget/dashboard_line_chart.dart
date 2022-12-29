@@ -1,10 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/dashboard_controller.dart';
@@ -126,33 +123,71 @@ class _ChartState extends State<Chart> {
 
   @override
   Widget build(BuildContext context) {
-    return SfCartesianChart(
-      //legend: Legend(isVisible: true),
-      primaryYAxis: NumericAxis(
-        labelFormat: "{value}%",
-        majorGridLines: const MajorGridLines(width: 0.0),
-      ),
-      primaryXAxis: CategoryAxis(
-        name: 'Subjects',
-        labelStyle: Theme.of(context)
-            .textTheme
-            .labelSmall!
-            .merge(const TextStyle(letterSpacing: 0.2, fontSize: 12.0)),
-        majorGridLines: const MajorGridLines(width: 1.0, dashArray: [
-          10.0,
-        ]),
-      ),
-      tooltipBehavior: TooltipBehavior(enable: true),
-      series: <LineSeries>[
-        LineSeries<ExamGraphModel, String>(
-            name: "Result",
-            isVisible: true,
-            isVisibleInLegend: true,
-            dataSource: source,
-            markerSettings: MarkerSettings(isVisible: true),
-            pointColorMapper: (datum, index) => datum.color,
-            xValueMapper: ((datum, index) => datum.subjectName),
-            yValueMapper: ((datum, index) => datum.percentage))
+    return Column(
+      children: [
+        SfCartesianChart(
+          //legend: Legend(isVisible: true),
+          primaryYAxis: NumericAxis(
+            labelFormat: "{value}%",
+            majorGridLines: const MajorGridLines(width: 0.0),
+          ),
+          primaryXAxis: CategoryAxis(
+            name: 'Subjects',
+            maximumLabelWidth: 60,
+            //edgeLabelPlacement: EdgeLabelPlacement.shift,
+            labelRotation: 45,
+            labelStyle: Theme.of(context)
+                .textTheme
+                .labelSmall!
+                .merge(const TextStyle(letterSpacing: 0.2, fontSize: 12.0)),
+            majorGridLines: const MajorGridLines(width: 1.0, dashArray: [
+              10.0,
+            ]),
+          ),
+          tooltipBehavior: TooltipBehavior(enable: true),
+          series: <LineSeries>[
+            LineSeries<ExamGraphModel, String>(
+                name: "Result",
+                isVisible: true,
+                isVisibleInLegend: true,
+                dataSource: source,
+                markerSettings: const MarkerSettings(isVisible: true),
+                pointColorMapper: (datum, index) => datum.color,
+                xValueMapper: ((datum, index) => datum.subjectName),
+                yValueMapper: ((datum, index) => datum.percentage))
+          ],
+        ),
+        const SizedBox(
+          height: 12.0,
+        ),
+        Wrap(
+            alignment: WrapAlignment.center,
+            runSpacing: 8.0,
+            spacing: 8.0,
+            children: List.generate(
+                source.length,
+                (index) => SizedBox(
+                      width: 80,
+                      // margin: const EdgeInsets.only(right: 6.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.circle,
+                            color: source.elementAt(index).color,
+                            size: 14.0,
+                          ),
+                          const SizedBox(
+                            width: 6.0,
+                          ),
+                          Expanded(
+                              child: Text(
+                            source.elementAt(index).subjectName,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          )),
+                        ],
+                      ),
+                    )))
       ],
     );
   }

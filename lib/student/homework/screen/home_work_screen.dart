@@ -113,6 +113,12 @@ class _HomeWorkScreenState extends State<HomeWorkScreen> {
                                                 ? DateTime.now().month - 1
                                                 : DateTime.now().month,
                                       );
+
+                                      DateTime endDate = DateTime.now();
+                                      if (hwCwNbController.dtList.length > 1) {
+                                        endDate = hwCwNbController.dtList.last;
+                                      }
+
                                       final DateTime? startDate =
                                           await showDatePicker(
                                               context: context,
@@ -122,7 +128,7 @@ class _HomeWorkScreenState extends State<HomeWorkScreen> {
                                                       .dtList.first
                                                   : DateTime.now(),
                                               firstDate: firstDate,
-                                              lastDate: DateTime.now());
+                                              lastDate: endDate);
                                       if (startDate == null) {
                                         Fluttertoast.showToast(
                                             msg: "Please select start date");
@@ -132,13 +138,22 @@ class _HomeWorkScreenState extends State<HomeWorkScreen> {
                                           .updateStartDateProvided(true);
                                       if (hwCwNbController.dtList.isEmpty) {
                                         hwCwNbController.updateStartBy(
-                                            "${startDate.year}-${startDate.month}-${startDate.day}");
+                                            "${startDate.day}-${startDate.month}-${startDate.year}");
                                         hwCwNbController.dtList.add(startDate);
+                                      }
+
+                                      if (hwCwNbController.dtList.length == 1) {
+                                        hwCwNbController.dtList.first =
+                                            startDate;
+                                        hwCwNbController.updateStartBy(
+                                            "${startDate.day}-${startDate.month}-${startDate.year}");
                                       }
 
                                       if (hwCwNbController.dtList.length > 1) {
                                         hwCwNbController.dtList.first =
                                             startDate;
+                                        hwCwNbController.updateStartBy(
+                                            "${startDate.day}-${startDate.month}-${startDate.year}");
                                         hwCwNbController.updateShowFilter(
                                             hwCwNbController.filter.value + 1);
                                         showFilter.value = false;
@@ -197,6 +212,7 @@ class _HomeWorkScreenState extends State<HomeWorkScreen> {
                                               ? DateTime.now().month - 1
                                               : DateTime.now().month,
                                     );
+                                    firstDate = hwCwNbController.dtList.first;
                                     final DateTime? endDate =
                                         await showDatePicker(
                                             context: context,
@@ -227,7 +243,7 @@ class _HomeWorkScreenState extends State<HomeWorkScreen> {
                                       return;
                                     }
                                     hwCwNbController.updateEndby(
-                                        "${endDate.year}-${endDate.month}-${endDate.day}");
+                                        "${endDate.day}-${endDate.month}-${endDate.year}");
                                     hwCwNbController.dtList.add(endDate);
 
                                     // hwCwNbController

@@ -20,10 +20,12 @@ import 'package:m_skool_flutter/widget/home_fab.dart';
 class TimeTableHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final String? month;
   const TimeTableHome(
       {super.key,
       required this.loginSuccessModel,
-      required this.mskoolController});
+      required this.mskoolController,
+      this.month});
 
   @override
   State<TimeTableHome> createState() => _TimeTableHomeState();
@@ -149,6 +151,7 @@ class _TimeTableHomeState extends State<TimeTableHome> {
                   : DailyTT(
                       loginSuccessModel: widget.loginSuccessModel,
                       mskoolController: widget.mskoolController,
+                      month: widget.month,
                     );
             }),
           ],

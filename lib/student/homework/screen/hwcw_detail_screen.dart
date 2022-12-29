@@ -70,13 +70,19 @@ class _HwCwDetailScreenState extends State<HwCwDetailScreen> {
         child: Column(
           children: [
             widget.screenType == "homework"
-                ? Image.asset(
-                    "assets/images/hwnewbanner.png",
-                    width: double.infinity,
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.asset(
+                      "assets/images/hwnewbanner.png",
+                      width: double.infinity,
+                    ),
                   )
-                : Image.asset(
-                    "assets/images/cwnewbanner.png",
-                    width: double.infinity,
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.asset(
+                      "assets/images/cwnewbanner.png",
+                      width: double.infinity,
+                    ),
                   ),
             const SizedBox(
               height: 16.0,

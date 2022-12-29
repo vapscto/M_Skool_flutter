@@ -63,7 +63,7 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
               Transform.translate(
                 offset: const Offset(0, 0),
                 child: CardWidget(
-                  backgroundColor: const Color(0xFFF2FEFF),
+                  backgroundColor: Theme.of(context).primaryColor,
                   padding: const EdgeInsets.all(10),
                   children: [
                     Row(
@@ -76,17 +76,20 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
-                                .merge(const TextStyle(fontSize: 14.0)),
+                                .merge(const TextStyle(
+                                    fontSize: 14.0, color: Colors.white)),
                           ),
                         ),
-                        const Text(":  "),
+                        const Text(":  ",
+                            style: TextStyle(color: Colors.white)),
                         Expanded(
                           child: Text(
                             "${widget.loginSuccessModel.institutedetails!.values!.first.mIName}",
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
-                                .merge(const TextStyle(fontSize: 14.0)),
+                                .merge(const TextStyle(
+                                    fontSize: 14.0, color: Colors.white)),
                           ),
                         ),
                       ],
@@ -106,10 +109,12 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .titleSmall!
-                                  .merge(const TextStyle(fontSize: 14.0)),
+                                  .merge(const TextStyle(
+                                      fontSize: 14.0, color: Colors.white)),
                             ),
                           ),
-                          const Text(":  "),
+                          const Text(":  ",
+                              style: TextStyle(color: Colors.white)),
                           Expanded(
                             child: Text(
                               "${widget.loginSuccessModel.institutedetails!.values!.first.mIAddress1}"
@@ -118,7 +123,8 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .titleSmall!
-                                  .merge(const TextStyle(fontSize: 14.0)),
+                                  .merge(const TextStyle(
+                                      fontSize: 14.0, color: Colors.white)),
                             ),
                           ),
                         ],
@@ -139,10 +145,12 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .titleSmall!
-                                  .merge(const TextStyle(fontSize: 14.0)),
+                                  .merge(const TextStyle(
+                                      fontSize: 14.0, color: Colors.white)),
                             ),
                           ),
-                          const Text(":  "),
+                          const Text(":  ",
+                              style: TextStyle(color: Colors.white)),
                           Expanded(
                             //fit: FlexFit.tight,
                             child: Row(
@@ -153,7 +161,8 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleSmall!
-                                      .merge(const TextStyle(fontSize: 14.0)),
+                                      .merge(const TextStyle(
+                                          fontSize: 14.0, color: Colors.white)),
                                   textAlign: TextAlign.left,
                                 ),
                                 InkWell(
@@ -165,7 +174,9 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                                       }
                                     },
                                     child: SvgPicture.asset(
-                                        'assets/svg/mail.svg')),
+                                      'assets/svg/mail.svg',
+                                      color: Colors.white,
+                                    )),
                               ],
                             ),
                           ),
@@ -187,10 +198,12 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .titleSmall!
-                                  .merge(const TextStyle(fontSize: 14.0)),
+                                  .merge(const TextStyle(
+                                      fontSize: 14.0, color: Colors.white)),
                             ),
                           ),
-                          const Text(":  "),
+                          const Text(":  ",
+                              style: TextStyle(color: Colors.white)),
                           Expanded(
                             //fit: FlexFit.tight,
                             child: Row(
@@ -201,7 +214,8 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleSmall!
-                                      .merge(const TextStyle(fontSize: 14.0)),
+                                      .merge(const TextStyle(
+                                          fontSize: 14.0, color: Colors.white)),
                                 ),
                                 InkWell(
                                     onTap: () async {
@@ -212,7 +226,8 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                                       }
                                     },
                                     child: SvgPicture.asset(
-                                        'assets/svg/phone.svg')),
+                                        'assets/svg/phone.svg',
+                                        color: Colors.white)),
                               ],
                             ),
                           ),
@@ -234,10 +249,12 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .titleSmall!
-                                  .merge(const TextStyle(fontSize: 14.0)),
+                                  .merge(const TextStyle(
+                                      fontSize: 14.0, color: Colors.white)),
                             ),
                           ),
-                          const Text(":  "),
+                          const Text(":  ",
+                              style: TextStyle(color: Colors.white)),
                           Expanded(
                             //fit: FlexFit.tight,
                             child: Text(
@@ -245,7 +262,8 @@ class _SchoolDetailsScreenState extends State<SchoolDetailsScreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .titleSmall!
-                                  .merge(const TextStyle(fontSize: 14.0)),
+                                  .merge(const TextStyle(
+                                      fontSize: 14.0, color: Colors.white)),
                             ),
                           ),
                         ],
