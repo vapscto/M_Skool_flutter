@@ -4,6 +4,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/online_leave/widget/all_applied_leave.dart';
 import 'package:m_skool_flutter/staffs/online_leave/widget/leaves.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class OnlineLeaveApply extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -24,6 +25,7 @@ class _OnlineLeaveApplyState extends State<OnlineLeaveApply> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: const HomeFab(),
       appBar: CustomAppBar(title: widget.title).getAppBar(),
       body: SingleChildScrollView(
         //padding: const EdgeInsets.all(16.0),

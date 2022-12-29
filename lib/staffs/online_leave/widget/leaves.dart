@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/staffs/online_leave/screen/apply_leave.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class Leaves extends StatefulWidget {
@@ -35,51 +36,58 @@ class _LeavesState extends State<Leaves> {
             }
             return SizedBox(
               width: Get.width * 0.38,
-              child: CustomContainer(
-                  child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  children: [
-                    Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        CircularProgressIndicator(
-                          value: 0.5,
-                          backgroundColor: noticeBackgroundColor
-                              .elementAt(backgroundColor)
-                              .withOpacity(0.8),
-                          color: noticeColor.elementAt(backgroundColor),
-                        ),
-                        Align(
-                            alignment: Alignment.center,
-                            child: SvgPicture.asset(
-                              "assets/svg/medication.svg",
-                              color: noticeColor.elementAt(backgroundColor),
-                            )),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 12.0,
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) {
+                    return const ApplyForLeave();
+                  }));
+                },
+                child: CustomContainer(
+                    child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    children: [
+                      Stack(
+                        alignment: Alignment.center,
                         children: [
-                          Text(
-                            "08",
-                            style: Theme.of(context).textTheme.titleMedium,
+                          CircularProgressIndicator(
+                            value: 0.5,
+                            backgroundColor: noticeBackgroundColor
+                                .elementAt(backgroundColor)
+                                .withOpacity(0.8),
+                            color: noticeColor.elementAt(backgroundColor),
                           ),
-                          Text(
-                            "Sick Leave",
-                            style: Theme.of(context).textTheme.titleSmall,
-                          ),
+                          Align(
+                              alignment: Alignment.center,
+                              child: SvgPicture.asset(
+                                "assets/svg/medication.svg",
+                                color: noticeColor.elementAt(backgroundColor),
+                              )),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-              )),
+                      const SizedBox(
+                        width: 12.0,
+                      ),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "08",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            Text(
+                              "Sick Leave",
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
+              ),
             );
           },
           itemCount: 5,

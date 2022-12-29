@@ -27,6 +27,13 @@ class HomePageCarasouel extends StatefulWidget {
 class _HomePageCarasouelState extends State<HomePageCarasouel> {
   final List<Map<String, dynamic>> carasouelList = [];
 
+  final List<String> coeBanners = [
+    "assets/images/new_coe_banner.png",
+    "assets/images/new_coe_without.png"
+  ];
+
+  int coeIndex = -1;
+
   @override
   void initState() {
     for (int i = 0; i < widget.bdayList.length; i++) {
@@ -53,12 +60,28 @@ class _HomePageCarasouelState extends State<HomePageCarasouel> {
       child: CarouselSlider.builder(
         itemCount: carasouelList.length,
         itemBuilder: (_, index, pos) {
+          Map<String, dynamic> coeBannerType = {};
+
+          // if (carasouelList.elementAt(index)['type'] == 0) {
+          //   coeIndex += 1;
+          //   if (coeIndex % 2 == 0) {
+          //     coeIndex = 0;
+          //   }
+          //   if (coeIndex == 0) {
+          //     coeBannerType
+          //         .addAll({"BT": 0, "BA": coeBanners.elementAt(coeIndex)});
+          //   } else {
+          //     coeBannerType
+          //         .addAll({"BT": 1, "BA": coeBanners.elementAt(coeIndex)});
+          //   }
+          // }
           return carasouelList.elementAt(index)['type'] == 0
               ? CoeSliderItem(
                   coeValue:
                       carasouelList.elementAt(index)['data'] as CalListValues,
                   loginSuccessModel: widget.loginSuccessModel,
                   mskoolController: widget.mskoolController,
+                  bannerAsset: coeBannerType,
                 )
               : BdaySliderItem(
                   value: carasouelList.elementAt(index)['data'],

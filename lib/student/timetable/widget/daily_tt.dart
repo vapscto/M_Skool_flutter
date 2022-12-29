@@ -23,10 +23,12 @@ import 'dart:ui' as ui;
 class DailyTT extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final String? month;
   const DailyTT({
     super.key,
     required this.loginSuccessModel,
     required this.mskoolController,
+    this.month,
   });
 
   @override
@@ -38,7 +40,36 @@ class _DailyTTState extends State<DailyTT> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    controller = TabController(length: 7, vsync: this);
+    if (widget.month == null) {
+      controller = TabController(length: 7, vsync: this);
+    } else {
+      int index = 0;
+      switch (widget.month!.toLowerCase().trim()) {
+        case "monday":
+          index = 0;
+          break;
+        case "tuesday":
+          index = 1;
+          break;
+        case "wednesday":
+          index = 2;
+          break;
+        case "thursday":
+          index = 3;
+          break;
+        case "friday":
+          index = 4;
+          break;
+        case "saturday":
+          index = 5;
+          break;
+        default:
+          index = 6;
+          break;
+      }
+      controller = TabController(length: 7, vsync: this, initialIndex: index);
+    }
+
     super.initState();
   }
 

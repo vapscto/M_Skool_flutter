@@ -88,7 +88,9 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomContainer(
-                child: Image.asset('assets/images/noticenewbanner.png')),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.asset('assets/images/noticenewbanner.png'))),
             const SizedBox(
               height: 16.0,
             ),
@@ -265,7 +267,7 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
                           ),
                         ],
                       )
-                    : Text(""),
+                    : const Text(""),
                 showPdf
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -276,7 +278,7 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
                           Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12.0),
-                                color: Color(0xFFD9EDFF)),
+                                color: const Color(0xFFD9EDFF)),
                             child: IconButton(
                                 onPressed: () async {
                                   if (widget.isFiltring) {
@@ -390,7 +392,7 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
                           Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12.0),
-                                color: Color(0xFFD9EDFF)),
+                                color: const Color(0xFFD9EDFF)),
                             child: IconButton(
                                 onPressed: () async {
                                   if (widget.value.iNTBFLFilePath == null ||

@@ -394,7 +394,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       .titleSmall!
                                                       .merge(
                                                         const TextStyle(
-                                                          fontSize: 20.0,
+                                                          fontSize: 16.0,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
@@ -415,7 +415,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                               Theme.of(context)
                                                                   .textTheme
                                                                   .labelMedium!
-                                                                  .color)),
+                                                                  .color,
+                                                          fontSize: 14)),
                                                 ),
                                                 const SizedBox(
                                                   height: 16.0,

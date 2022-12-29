@@ -22,6 +22,8 @@ class CustomDetailWidget extends StatelessWidget {
             children: [
               Text(
                 title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleSmall!.merge(
                       const TextStyle(

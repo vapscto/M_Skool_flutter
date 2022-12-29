@@ -188,7 +188,7 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                                                     .titleSmall!
                                                     .merge(
                                                       const TextStyle(
-                                                          fontSize: 20.0,
+                                                          fontSize: 16.0,
                                                           fontWeight:
                                                               FontWeight.w600),
                                                     ),
@@ -207,7 +207,8 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                                                         color: Theme.of(context)
                                                             .textTheme
                                                             .labelMedium!
-                                                            .color)),
+                                                            .color,
+                                                        fontSize: 14)),
                                               ),
                                               const SizedBox(
                                                 height: 16.0,

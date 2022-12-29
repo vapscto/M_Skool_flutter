@@ -22,8 +22,6 @@ import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller
 import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart';
 import 'package:m_skool_flutter/student/library/screen/library_home.dart';
 import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
-
-import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
 class HomePageDrawer extends StatefulWidget {
@@ -250,31 +248,59 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                       child: SizedBox(
                         width: 180,
                         height: 40,
-                        child: CustomElevatedButton(
-                            isGradient: false,
-                            boxShadow: const BoxShadow(),
-                            color: const Color(0xFFFFDFD6),
-                            child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: const [
-                                  Icon(
-                                    Icons.logout,
-                                    color: Color(0xffF24E1E),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    "Log Out",
-                                    style: TextStyle(
-                                        color: Color(0xffF24E1E),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600),
-                                  )
-                                ]),
+                        child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                                elevation: 10,
+                                backgroundColor: const Color(0xFFFFDFD6),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                )),
                             onPressed: () {
                               Get.dialog(const LogoutConfirmationPopup());
-                            }),
+                            },
+                            icon: const Icon(
+                              Icons.logout,
+                              color: Color(0xffF24E1E),
+                            ),
+                            label: Text(
+                              "Log Out",
+                              style:
+                                  Theme.of(context).textTheme.titleSmall!.merge(
+                                        const TextStyle(
+                                          color: Color(0xffF24E1E),
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                            )),
+                        // child: CustomElevatedButton(
+                        //     isGradient: false,
+                        //     boxShadow: const BoxShadow(
+                        //         offset: Offset(0, 1),
+                        //         color: Color.fromARGB(55, 242, 79, 30),
+                        //         blurRadius: 6.0,
+                        //         spreadRadius: 6.0),
+                        //     color: const Color(0xFFFFDFD6),
+                        //     child: Row(
+                        //         mainAxisSize: MainAxisSize.min,
+                        //         children: const [
+                        //           Icon(
+                        //             Icons.logout,
+                        //             color: Color.fromARGB(255, 255, 193, 174),
+                        //           ),
+                        //           SizedBox(
+                        //             width: 10,
+                        //           ),
+                        //           Text(
+                        //             "Log Out",
+                        //             style: TextStyle(
+                        //                 color: Color(0xffF24E1E),
+                        //                 fontSize: 16,
+                        //                 fontWeight: FontWeight.w600),
+                        //           )
+                        //         ]),
+                        //     onPressed: () {
+                        //       Get.dialog(const LogoutConfirmationPopup());
+                        //     }),
                       )),
                 ],
               ),
