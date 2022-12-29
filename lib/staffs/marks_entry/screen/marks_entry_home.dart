@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/staffs/marksEntry/screen/marks_entry_detail_screen.dart';
+import 'package:m_skool_flutter/staffs/marks_entry/screen/marks_entry_detail_screen.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../../widget/custom_back_btn.dart';
 
@@ -22,8 +23,8 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
   ];
   String slected = 'Demo';
 
-  // final VideoPlayerController controller =
-  //     VideoPlayerController.asset("assets/video/marksentry_illustration.mp4");
+  final VideoPlayerController controller =
+      VideoPlayerController.asset("assets/video/marksentry_illustration.mp4");
 
   // @override
   // void initState() {
@@ -34,6 +35,12 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
   //   });
   //   super.initState();
   // }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +85,7 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
               //       ),
               //       isDense: true,
               //       label: CustomDropDownLabel(
-              //         icon: 'assets/images/hat.png',
+              //         icon: 'assets/images/hat1.png',
               //         containerColor: Color.fromRGBO(223, 251, 254, 1),
               //         text: 'Academic Year',
               //         textColor: Color.fromRGBO(40, 182, 200, 1),
@@ -444,6 +451,7 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
                   title: 'View Details',
                   onPress: () {
                     Get.to(() => const MarksEntryDetailScreen());
+                    // Get.to(() => const SalarySlipHome());
                   }),
               const SizedBox(height: 20),
               // Center(

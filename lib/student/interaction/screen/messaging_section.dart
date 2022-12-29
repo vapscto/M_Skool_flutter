@@ -3,10 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/student/interaction/apis/messaging_api.dart';
 import 'package:m_skool_flutter/student/interaction/controller/interaction_controller.dart';
+import 'package:m_skool_flutter/student/interaction/widget/chat_box.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_text_file.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import '../model/inbox_model.dart';
@@ -47,9 +47,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   @override
   void initState() {
     getMessageData();
-    logger.d(widget.loginSuccessModel.studname);
-    logger.d(widget.data.receiver);
-    logger.d(widget.data.sender);
+
     super.initState();
   }
 
@@ -98,33 +96,31 @@ class _MessagingScreenState extends State<MessagingScreen> {
                         // reverse: true,
                         itemCount: interactionController.messageList.length,
                         itemBuilder: (context, index) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                interactionController.messageList
+                          return ChatBox(
+                            name: widget.loginSuccessModel.studname ==
+                                    interactionController.messageList
+                                        .elementAt(index)
+                                        .receiver
+                                ? interactionController.messageList
                                     .elementAt(index)
-                                    .istintInteraction!,
-                              ),
-                            ],
+                                    .receiver!
+                                : interactionController.messageList
+                                    .elementAt(index)
+                                    .sender!,
+                            isFromMe: interactionController.messageList
+                                        .elementAt(index)
+                                        .istintComposedByFlg ==
+                                    'Student'
+                                ? true
+                                : false,
+                            messages: interactionController.messageList
+                                .elementAt(index)
+                                .istintInteraction!,
+                            istintDateTime: interactionController.messageList
+                                .elementAt(index)
+                                .istintDateTime!,
                           );
                         },
-                        // children: const [
-                        //   ChatBox(
-                        //     name: "Amar",
-                        //     isFromMe: false,
-                        //     messages: [
-                        //       "Hii",
-                        //       "Good Morning",
-                        //       "How are you? asdasd asd asdsaasdasda ",
-                        //       "Where are u going"
-                        //     ],
-                        //   ),
-                        //   ChatBox(
-                        //       name: "Udhay",
-                        //       isFromMe: true,
-                        //       messages: ["Hii", "Good Morning", "I’m Good"])
-                        // ],
                       ),
               ),
             ),
@@ -168,39 +164,49 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           ],
                         ))),
                 const SizedBox(width: 12),
-                FloatingActionButton(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  child: SvgPicture.asset("assets/svg/send_arrow.svg"),
-                  onPressed: () async {
-                    if (textMessage.text.isEmpty) {
-                      return;
-                    } else {
-                      await sendMessage(
-                        miId: widget.loginSuccessModel.mIID!,
-                        amstId: widget.loginSuccessModel.amsTId!,
-                        asmayId: widget.loginSuccessModel.asmaYId!,
-                        message: textMessage.text,
-                        istintComposedByFlg: widget.data.istintId!,
-                        ismintId: widget.data.ismintId!,
-                        userId: widget.loginSuccessModel.userId!,
-                        image: image,
-                        base: baseUrlFromInsCode(
-                            'portal', widget.mskoolController),
-                      ).then((value) async {
-                        if (value) {
-                          await interactionController.getMessage(
-                            ismintId: widget.data.ismintId!,
-                            miId: widget.loginSuccessModel.mIID!,
-                            asmayId: widget.loginSuccessModel.asmaYId!,
-                            userId: widget.loginSuccessModel.userId!,
-                            base: baseUrlFromInsCode(
-                                'portal', widget.mskoolController),
-                          );
-                          textMessage.text = '';
-                        }
-                      });
-                    }
-                  },
+                Obx(
+                  () => FloatingActionButton(
+                    backgroundColor: Theme.of(context).primaryColor,
+                    child: interactionController.isSending.value
+                        ? const CircularProgressIndicator(
+                            backgroundColor: Colors.white,
+                          )
+                        : SvgPicture.asset("assets/svg/send_arrow.svg"),
+                    onPressed: () async {
+                      if (textMessage.text.isEmpty) {
+                        return;
+                      } else {
+                        interactionController.isMessageSending(true);
+                        await sendMessage(
+                          miId: widget.loginSuccessModel.mIID!,
+                          amstId: widget.loginSuccessModel.amsTId!,
+                          asmayId: widget.loginSuccessModel.asmaYId!,
+                          message: textMessage.text,
+                          istintComposedByFlg: widget.data.istintId!,
+                          ismintId: widget.data.ismintId!,
+                          userId: widget.loginSuccessModel.userId!,
+                          image: image,
+                          base: baseUrlFromInsCode(
+                              'portal', widget.mskoolController),
+                        ).then(
+                          (value) async {
+                            if (value) {
+                              await interactionController.getMessage(
+                                ismintId: widget.data.ismintId!,
+                                miId: widget.loginSuccessModel.mIID!,
+                                asmayId: widget.loginSuccessModel.asmaYId!,
+                                userId: widget.loginSuccessModel.userId!,
+                                base: baseUrlFromInsCode(
+                                    'portal', widget.mskoolController),
+                              );
+                              textMessage.text = '';
+                            }
+                          },
+                        );
+                        interactionController.isMessageSending(false);
+                      }
+                    },
+                  ),
                 ),
               ],
             ),

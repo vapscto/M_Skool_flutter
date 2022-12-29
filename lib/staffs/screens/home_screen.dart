@@ -9,7 +9,7 @@ import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
-import '../marksEntry/screen/marks_entry_home.dart';
+import '../marks_entry/screen/marks_entry_home.dart';
 
 class StaffHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
