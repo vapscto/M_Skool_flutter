@@ -38,6 +38,14 @@ class LibraryHome extends StatelessWidget {
           builder: (_, snapshot) {
             if (snapshot.hasData) {
               int colorIndex = -1;
+
+              if (snapshot.data!.librarydetails!.values!.isEmpty) {
+                return const AnimatedProgressWidget(
+                    title: "No Book Found",
+                    animatorHeight: 250,
+                    desc: "I think you haven't issued any book's",
+                    animationPath: "assets/json/nodata.json");
+              }
               return SingleChildScrollView(
                 child: Column(
                   children: [

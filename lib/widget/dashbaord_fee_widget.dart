@@ -70,72 +70,72 @@ class _DashboardFeeGraphState extends State<DashboardFeeGraph> {
               ),
             ),
           ),
-          // SizedBox(
-          //   height: ((Get.width * 0.4329)),
-          //   child: SfCartesianChart(
-          //     primaryXAxis: CategoryAxis(
-          //       majorGridLines: const MajorGridLines(width: 0.0),
-          //       name: "Installment Name",
-          //     ),
-          //     primaryYAxis: NumericAxis(
-          //         majorGridLines: const MajorGridLines(width: 0.0),
-          //         name: "Amount",
-          //         labelFormat: "{value}K",
-          //         rangePadding: ChartRangePadding.round),
-          //     tooltipBehavior: TooltipBehavior(enable: true),
-          //     series: <ChartSeries>[
-          //       LineSeries<FeeDetModel, String>(
-          //           name: "Fee's Paid",
-          //           dataSource: feeDetails,
-          //           dataLabelSettings: DataLabelSettings(isVisible: true),
-          //           xValueMapper: ((datum, index) =>
-          //               datum.instName.split(" ").first),
-          //           yValueMapper: (((datum, index) => datum.amt))),
-          //     ],
-          //   ),
-          // ),
-
           SizedBox(
-              height: ((Get.width * 0.4329)),
-              child: SfCircularChart(
-                //title: ChartTitle(text: 'Fee Details'),
-
-                margin: EdgeInsets.zero,
-                palette: const [
-                  Color(0xFFD09CFA),
-                  Color(0xFF72FFFF),
-                  Color(0xFFF2FA5A),
-                  Color(0xFF93FFD8),
-                  Color(0xFFFB7AFC),
-                  Color(0xFFA9F1DF),
-                  Color(0xFF52734D),
-                  Color(0xFF91C788),
-                  Color(0xFFDDFFBC),
-                  Color(0xFFFEFFDE),
-                  // Color.fromARGB(255, 135, 234, 245),
-                  // Color.fromARGB(255, 125, 241, 187),
-                  // Color.fromARGB(255, 240, 228, 119),
-                  // Color.fromARGB(255, 238, 180, 118),
-                  // Color.fromARGB(255, 204, 121, 235),
-                  // Color.fromARGB(255, 114, 192, 238),
-                  // Color.fromARGB(255, 238, 118, 170),
-                  // Color.fromARGB(255, 109, 231, 203)
-                ],
-                tooltipBehavior: TooltipBehavior(enable: true),
-                series: <CircularSeries>[
-                  PieSeries<FeeDetModel, String>(
-                    enableTooltip: true,
-                    dataLabelSettings: const DataLabelSettings(
-                        isVisible: true,
-                        labelPosition: ChartDataLabelPosition.inside,
-                        textStyle: TextStyle(fontSize: 16.0)),
+            height: ((Get.width * 0.4329)),
+            child: SfCartesianChart(
+              primaryXAxis: CategoryAxis(
+                majorGridLines: const MajorGridLines(width: 0.0),
+                name: "Installment Name",
+              ),
+              primaryYAxis: NumericAxis(
+                  majorGridLines: const MajorGridLines(width: 0.0),
+                  name: "Amount",
+                  labelFormat: "{value}K",
+                  rangePadding: ChartRangePadding.round),
+              tooltipBehavior: TooltipBehavior(enable: true),
+              series: <ChartSeries>[
+                LineSeries<FeeDetModel, String>(
+                    name: "Fee's Paid",
                     dataSource: feeDetails,
-                    xValueMapper: (datum, index) => datum.instName,
-                    yValueMapper: (datum, index) => datum.amt,
-                    dataLabelMapper: (datum, index) => datum.amtInK,
-                  ),
-                ],
-              )),
+                    dataLabelSettings: const DataLabelSettings(isVisible: true),
+                    xValueMapper: ((datum, index) =>
+                        datum.instName.split(" ").first),
+                    yValueMapper: (((datum, index) => datum.amt))),
+              ],
+            ),
+          ),
+
+          // SizedBox(
+          //     height: ((Get.width * 0.4329)),
+          //     child: SfCircularChart(
+          //       //title: ChartTitle(text: 'Fee Details'),
+
+          //       margin: EdgeInsets.zero,
+          //       palette: const [
+          //         Color(0xFFD09CFA),
+          //         Color(0xFF72FFFF),
+          //         Color(0xFFF2FA5A),
+          //         Color(0xFF93FFD8),
+          //         Color(0xFFFB7AFC),
+          //         Color(0xFFA9F1DF),
+          //         Color(0xFF52734D),
+          //         Color(0xFF91C788),
+          //         Color(0xFFDDFFBC),
+          //         Color(0xFFFEFFDE),
+          //         // Color.fromARGB(255, 135, 234, 245),
+          //         // Color.fromARGB(255, 125, 241, 187),
+          //         // Color.fromARGB(255, 240, 228, 119),
+          //         // Color.fromARGB(255, 238, 180, 118),
+          //         // Color.fromARGB(255, 204, 121, 235),
+          //         // Color.fromARGB(255, 114, 192, 238),
+          //         // Color.fromARGB(255, 238, 118, 170),
+          //         // Color.fromARGB(255, 109, 231, 203)
+          //       ],
+          //       tooltipBehavior: TooltipBehavior(enable: true),
+          //       series: <CircularSeries>[
+          //         PieSeries<FeeDetModel, String>(
+          //           enableTooltip: true,
+          //           dataLabelSettings: const DataLabelSettings(
+          //               isVisible: true,
+          //               labelPosition: ChartDataLabelPosition.inside,
+          //               textStyle: TextStyle(fontSize: 16.0)),
+          //           dataSource: feeDetails,
+          //           xValueMapper: (datum, index) => datum.instName,
+          //           yValueMapper: (datum, index) => datum.amt,
+          //           dataLabelMapper: (datum, index) => datum.amtInK,
+          //         ),
+          //       ],
+          //     )),
         ],
       ),
     );

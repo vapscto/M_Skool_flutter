@@ -75,6 +75,9 @@ class DashboardController extends GetxController {
       timeTableList.add(studentDashboardModel.timeTableList!);
     }
     if (studentDashboardModel.examList != null) {
+      if (examList.isNotEmpty) {
+        examList.clear();
+      }
       examList.add(studentDashboardModel.examList!);
     }
     selectedOption.value = studentDashboardModel.examList!.values!.first;

@@ -43,8 +43,10 @@ class _StudentBdayHomeState extends State<StudentBdayHome>
             child: CustomTabBar(
               tabs: const [
                 CustomTab(
-                    name: "Between Days", asset: "assets/svg/calendar.svg"),
-                CustomTab(name: "Month Wise", asset: "assets/svg/calendar.svg"),
+                    name: "Between Days",
+                    asset: "assets/svg/calendar_icon.svg"),
+                CustomTab(
+                    name: "Month Wise", asset: "assets/svg/calendar_icon.svg"),
               ],
               tabController: tabController!,
             ),

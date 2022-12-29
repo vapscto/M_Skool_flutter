@@ -28,6 +28,14 @@ class ViewDetails extends StatelessWidget {
             base: baseUrlFromInsCode("portal", mskoolController)),
         builder: (_, snapshot) {
           if (snapshot.hasData) {
+            if (snapshot.data!.isEmpty) {
+              return const AnimatedProgressWidget(
+                  title: "No Certificate Found",
+                  animatorHeight: 250,
+                  desc:
+                      "I think you haven't asked as to issue any certificate.",
+                  animationPath: "assets/json/nodata.json");
+            }
             return ListView.separated(
               controller: ScrollController(),
               padding: const EdgeInsets.all(16.0),

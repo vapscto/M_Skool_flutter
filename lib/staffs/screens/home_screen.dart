@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
@@ -61,8 +62,7 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                             .pagename ==
                         "Attendance Entry") {
                       return;
-                    }
-                    if (widget
+                    } else if (widget
                             .loginSuccessModel.staffmobileappprivileges!.values!
                             .elementAt(index)
                             .pagename ==
@@ -92,6 +92,24 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                         return StudentBdayHome(
                           loginSuccessModel: widget.loginSuccessModel,
                           mskoolController: widget.mskoolController,
+                        );
+                      }));
+                      return;
+                    }
+
+                    if (widget
+                            .loginSuccessModel.staffmobileappprivileges!.values!
+                            .elementAt(index)
+                            .pagename ==
+                        "Online Leave Apply") {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return OnlineLeaveApply(
+                          loginSuccessModel: widget.loginSuccessModel,
+                          mskoolController: widget.mskoolController,
+                          title: widget.loginSuccessModel
+                              .staffmobileappprivileges!.values!
+                              .elementAt(index)
+                              .pagename!,
                         );
                       }));
                       return;
