@@ -41,18 +41,18 @@ class InboxController extends GetxController {
           inboxList.add(inboxDataModel.getinboxmsg!.values!.elementAt(i));
         }
 
-        if (inboxDataModel.getinboxmsgReadflg != null ||
-            inboxDataModel.getinboxmsgReadflg!.values != null) {
-          messageFlagList.clear();
-          logger
-              .d(inboxDataModel.getinboxmsgReadflg!.values!.length.toString());
-          for (var i = 0;
-              i < inboxDataModel.getinboxmsgReadflg!.values!.length;
-              i++) {
-            messageFlagList
-                .add(inboxDataModel.getinboxmsgReadflg!.values!.elementAt(i));
-          }
-        }
+        // if (inboxDataModel.getinboxmsgReadflg != null ||
+        //     inboxDataModel.getinboxmsgReadflg!.values != null) {
+        //   messageFlagList.clear();
+        //   logger
+        //       .d(inboxDataModel.getinboxmsgReadflg!.values!.length.toString());
+        //   for (var i = 0;
+        //       i < inboxDataModel.getinboxmsgReadflg!.values!.length;
+        //       i++) {
+        //     messageFlagList
+        //         .add(inboxDataModel.getinboxmsgReadflg!.values!.elementAt(i));
+        //   }
+        // }
         return true;
       }
       return false;

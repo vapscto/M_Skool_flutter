@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 
 class ChatBox extends StatelessWidget {
   final String name;
   final bool isFromMe;
-  final List<String> messages;
+  final String messages;
+  final DateTime istintDateTime;
   const ChatBox(
       {required this.name,
       required this.isFromMe,
       required this.messages,
+      required this.istintDateTime,
       super.key});
 
   @override
@@ -33,50 +35,54 @@ class ChatBox extends StatelessWidget {
             crossAxisAlignment:
                 isFromMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
             children: [
-              for (int i = 0; i < messages.length; i++)
-                Stack(
-                  children: [
-                    Container(
-                      width: messages[i].length > 18
-                          ? MediaQuery.of(context).size.width / 2
-                          : null,
-                      margin: const EdgeInsets.symmetric(vertical: 2),
-                      padding: EdgeInsets.only(
-                          top: 10,
-                          bottom: 10,
-                          left: 10,
-                          right: isFromMe ? 25 : 10),
-                      decoration: BoxDecoration(
-                          color: Color(isFromMe ? 0xffC1E2FF : 0xffEEEEEE),
-                          borderRadius: i == 0
-                              ? BorderRadius.only(
-                                  topLeft: radius,
-                                  topRight: radius,
-                                  bottomLeft: isFromMe ? radius : zero,
-                                  bottomRight: isFromMe ? zero : radius)
-                              : i == (messages.length - 1)
-                                  ? BorderRadius.only(
-                                      topLeft: radius,
-                                      topRight: radius,
-                                      bottomLeft: isFromMe ? radius : zero,
-                                      bottomRight: isFromMe ? zero : radius)
-                                  : BorderRadius.circular(10)),
-                      child: Center(
-                        child: Text(messages[i],
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w400)),
-                      ),
+              // Stack(
+              //   children: [
+              Container(
+                width: messages.length > 18
+                    ? MediaQuery.of(context).size.width / 2
+                    : null,
+                margin: const EdgeInsets.symmetric(vertical: 2),
+                padding: EdgeInsets.only(
+                    top: 10, bottom: 10, left: 10, right: isFromMe ? 25 : 10),
+                decoration: BoxDecoration(
+                    color: Color(isFromMe ? 0xffC1E2FF : 0xffEEEEEE),
+                    borderRadius:
+                        //  i == 0
+                        //     ?
+                        BorderRadius.only(
+                            topLeft: radius,
+                            topRight: radius,
+                            bottomLeft: isFromMe ? radius : zero,
+                            bottomRight: isFromMe ? zero : radius)
+                    // : i == (messages.length - 1)
+                    //     ? BorderRadius.only(
+                    //         topLeft: radius,
+                    //         topRight: radius,
+                    //         bottomLeft: isFromMe ? radius : zero,
+                    //         bottomRight: isFromMe ? zero : radius)
+                    //     : BorderRadius.circular(10)
                     ),
-                    if (isFromMe)
-                      Positioned(
-                          right: 2,
-                          bottom: 2,
-                          child: SvgPicture.asset(
-                              "assets/svg/blue_double_check.svg"))
-                  ],
+                child: Center(
+                  child: Text(messages,
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w400)),
                 ),
-              const Text("2 min",
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400))
+              ),
+              // if (isFromMe)
+              //   Positioned(
+              //       right: 2,
+              //       bottom: 2,
+              //       child: SvgPicture.asset(
+              //           "assets/svg/blue_double_check.svg"))
+              //   ],
+              // ),
+              Text(
+                convertToAgoShort(istintDateTime),
+                style: Theme.of(context)
+                    .textTheme
+                    .displaySmall
+                    ?.copyWith(fontSize: 12, fontWeight: FontWeight.w400),
+              ),
             ],
           ),
           if (isFromMe) ...[const SizedBox(width: 7), profile],

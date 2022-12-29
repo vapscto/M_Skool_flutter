@@ -18,9 +18,14 @@ class InteractionController extends GetxController {
 
   onIndividualGroupType(String user) {}
   RxBool isMessage = RxBool(false);
+  RxBool isSending = RxBool(false);
 
   void isMessageloading(bool loading) async {
     isMessage.value = loading;
+  }
+
+  void isMessageSending(bool loading) async {
+    isSending.value = loading;
   }
 
   RxList<ViewMessageValue> messageList = <ViewMessageValue>[].obs;
