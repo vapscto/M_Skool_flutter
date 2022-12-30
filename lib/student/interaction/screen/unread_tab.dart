@@ -1,6 +1,6 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/student/interaction/widget/chat_profile_tile.dart';
@@ -23,7 +23,16 @@ class _UnReadTabScreenState extends State<UnReadTabScreen> {
   final InboxController inboxController = Get.put(InboxController());
   void loadingUnread() async {
     inboxController.isUnreadloading(true);
-    await Future.delayed(const Duration(seconds: 2));
+    await inboxController.getUnread(
+      miId: widget.loginSuccessModel.mIID!,
+      amstId: widget.loginSuccessModel.amsTId!,
+      asmayId: widget.loginSuccessModel.asmaYId!,
+      userId: widget.loginSuccessModel.userId!,
+      base: baseUrlFromInsCode(
+        'portal',
+        widget.mskoolController,
+      ),
+    );
     inboxController.isUnreadloading(false);
   }
 
@@ -44,20 +53,31 @@ class _UnReadTabScreenState extends State<UnReadTabScreen> {
                 animationPath: "assets/json/interaction.json",
               ),
             )
-          : ListView.separated(
-              itemBuilder: (_, index) {
-                return ChatProfileTile(
-                  loginSuccessModel: widget.loginSuccessModel,
-                  mskoolController: widget.mskoolController,
-                  data:  inboxController.inboxList[index],
-                  // isGroup: Random().nextBool(),
-                  isSeen: Random().nextBool(),
-                  color: Color.fromRGBO(Random().nextInt(255),
-                      Random().nextInt(255), Random().nextInt(255), 1),
-                );
-              },
-              separatorBuilder: (_, index) => const Divider(thickness: 1.5),
-              itemCount: inboxController.inboxList.length),
+          : inboxController.unReadList.isEmpty
+              ? const Center(
+                  child: AnimatedProgressWidget(
+                    title: "Empty Unread",
+                    desc: "",
+                    animationPath: "assets/json/interaction.json",
+                  ),
+                )
+              : ListView.separated(
+                  itemBuilder: (_, index) {
+                    return ChatProfileTile(
+                      loginSuccessModel: widget.loginSuccessModel,
+                      mskoolController: widget.mskoolController,
+                      data: inboxController.unReadList[index],
+                      // isGroup: Random().nextBool(),
+                      isSeen:
+                          inboxController.unReadList[index].istintReadFlg == 1
+                              ? true
+                              : false,
+                      // color: Color.fromRGBO(Random().nextInt(255),
+                      //     Random().nextInt(255), Random().nextInt(255), 1),
+                    );
+                  },
+                  separatorBuilder: (_, index) => const Divider(thickness: 1.5),
+                  itemCount: inboxController.unReadList.length),
     );
   }
 }

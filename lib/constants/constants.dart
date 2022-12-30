@@ -532,11 +532,11 @@ String convertToAgoShort(DateTime input) {
   if (diff.inDays >= 1) {
     return '${diff.inDays} day';
   } else if (diff.inHours >= 1) {
-    return '${diff.inHours} hour';
+    return '${diff.inHours} hr';
   } else if (diff.inMinutes >= 1) {
-    return '${diff.inMinutes} minute';
+    return '${diff.inMinutes} min';
   } else if (diff.inSeconds >= 1) {
-    return '${diff.inSeconds} second';
+    return '${diff.inSeconds} sec';
   } else {
     return 'just now';
   }

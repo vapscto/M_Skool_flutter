@@ -12,14 +12,14 @@ class ChatProfileTile extends StatelessWidget {
   final MskoolController mskoolController;
   // final bool isGroup;
   final bool isSeen;
-  final Color color;
+  // final Color color;
   final GetinboxmsgValue data;
   const ChatProfileTile(
       {required this.loginSuccessModel,
       required this.mskoolController,
       // required this.isGroup,
       required this.isSeen,
-      required this.color,
+      // required this.color,
       required this.data,
       super.key});
 
@@ -40,20 +40,19 @@ class ChatProfileTile extends StatelessWidget {
           //     ?
           CircleAvatar(
         radius: 30,
-        backgroundColor: color,
-        backgroundImage: NetworkImage(data.receiverFilepath.toString()),
+        // backgroundColor: color,
+        backgroundImage: data.receiverFilepath!.isNotEmpty
+            ? NetworkImage(data.receiverFilepath.toString())
+            : const NetworkImage(
+                "https://img.icons8.com/fluency/48/null/user-male-circle.png"),
       ),
-      // : const CircleAvatar(
-      //     radius: 30,
-      //     backgroundImage: AssetImage("assets/images/profile2.png"),
-      //   ),
       title: Text.rich(TextSpan(
           text: "${data.receiver}  |",
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 18),
           children: [
             TextSpan(
               text:
-                  "  ${data.ismintComposedByFlg![0].toUpperCase()}${data.ismintComposedByFlg!.substring(1).toLowerCase()}",
+                  "  ${data.istintToFlg![0].toUpperCase()}${data.istintToFlg!.substring(1).toLowerCase()}",
               style: Theme.of(context)
                   .textTheme
                   .displaySmall
@@ -73,7 +72,7 @@ class ChatProfileTile extends StatelessWidget {
             ),
           ),
           SvgPicture.asset(
-            "assets/svg/${isSeen ? "blue_double_check.svg" : "double_check.svg"}",
+            "assets/svg/double_check.svg",
             color: isSeen ? Colors.blue : Colors.grey,
           )
         ],

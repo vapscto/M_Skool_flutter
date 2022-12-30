@@ -13,6 +13,11 @@ Future<MessageModel?> getMessages({
   required int userId,
   required String base,
 }) async {
+  logger.d(ismintId);
+  logger.d(miId);
+  logger.d(asmayId);
+  logger.d(userId);
+
   var url = base + URLS.getMessages;
   try {
     var response = await dio.post(
@@ -48,7 +53,7 @@ Future<bool> sendMessage({
   required int istintComposedByFlg,
   required int ismintId,
   required int userId,
-  required String image,
+  required List<String> image,
   required String base,
 }) async {
   var url = base + URLS.sendMessage;
@@ -68,7 +73,7 @@ Future<bool> sendMessage({
         "ISMINT_Id": ismintId,
         "UserId": userId,
         "IVRMRT_Id": 7,
-        "images_paths": image
+        "images_paths": image,
       },
     );
     if (response.statusCode == 200) {
@@ -80,5 +85,34 @@ Future<bool> sendMessage({
   } catch (e) {
     logger.d(e.toString());
     return false;
+  }
+}
+
+Future<String?> jpgToNetworkImageUrl(
+    {required String image, required int miId}) async {
+  var url = URLS.interactionImageUpload;
+  try {
+    FormData formData = FormData.fromMap(
+      {
+        "MI_Id": miId,
+        "File": await MultipartFile.fromFile(image),
+      },
+    );
+    var response = await dio.post(
+      url,
+      options: Options(
+        headers: getSession(),
+      ),
+      data: formData,
+    );
+    if (response.statusCode == 200) {
+      var imageUrl = response.data[0]['path'];
+      return imageUrl;
+    } else {
+      return null;
+    }
+  } catch (e) {
+    logger.d(e.toString());
+    return null;
   }
 }

@@ -27,11 +27,9 @@ class CustomDropDownLabel extends StatelessWidget {
         children: [
           SizedBox(
             height: 25,
-            child: FittedBox(
-              fit: BoxFit.cover,
-              child: Image.asset(
-                icon,
-              ),
+            child: Image.asset(
+              icon,
+              fit: BoxFit.contain,
             ),
           ),
           const SizedBox(width: 10),
