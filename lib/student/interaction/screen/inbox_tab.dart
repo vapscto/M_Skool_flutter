@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -55,20 +53,31 @@ class _InboxTabScreenState extends State<InboxTabScreen> {
                 animationPath: "assets/json/interaction.json",
               ),
             )
-          : ListView.separated(
-              itemBuilder: (context, index) {
-                return ChatProfileTile(
-                  loginSuccessModel: widget.loginSuccessModel,
-                  mskoolController: widget.mskoolController,
-                  data: inboxController.inboxList[index],
-                  // isGroup: Random().nextBool(),
-                  isSeen: Random().nextBool(),
-                  color: Color.fromRGBO(Random().nextInt(255),
-                      Random().nextInt(255), Random().nextInt(255), 1),
-                );
-              },
-              separatorBuilder: (_, index) => const Divider(),
-              itemCount: inboxController.inboxList.length),
+          : inboxController.inboxList.isEmpty
+              ? const Center(
+                  child: AnimatedProgressWidget(
+                    title: "Empty Inbox",
+                    desc: "",
+                    animationPath: "assets/json/interaction.json",
+                  ),
+                )
+              : ListView.separated(
+                  itemBuilder: (context, index) {
+                    return ChatProfileTile(
+                      loginSuccessModel: widget.loginSuccessModel,
+                      mskoolController: widget.mskoolController,
+                      data: inboxController.inboxList[index],
+                      // isGroup: Random().nextBool(),
+                      isSeen:
+                          inboxController.inboxList[index].istintReadFlg == 1
+                              ? true
+                              : false,
+                      // color: Color.fromRGBO(Random().nextInt(255),
+                      //     Random().nextInt(255), Random().nextInt(255), 1),
+                    );
+                  },
+                  separatorBuilder: (_, index) => const Divider(),
+                  itemCount: inboxController.inboxList.length),
     );
   }
 }

@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/student/interaction/screen/show_image_screen.dart';
 
 class ChatBox extends StatelessWidget {
   final String name;
   final bool isFromMe;
   final String messages;
   final DateTime istintDateTime;
+  final String attactment;
   const ChatBox(
       {required this.name,
       required this.isFromMe,
       required this.messages,
       required this.istintDateTime,
+      required this.attactment,
       super.key});
 
   @override
@@ -41,31 +45,41 @@ class ChatBox extends StatelessWidget {
                 width: messages.length > 18
                     ? MediaQuery.of(context).size.width / 2
                     : null,
-                margin: const EdgeInsets.symmetric(vertical: 2),
+                margin: const EdgeInsets.symmetric(vertical: 4),
                 padding: EdgeInsets.only(
                     top: 10, bottom: 10, left: 10, right: isFromMe ? 25 : 10),
                 decoration: BoxDecoration(
                     color: Color(isFromMe ? 0xffC1E2FF : 0xffEEEEEE),
-                    borderRadius:
-                        //  i == 0
-                        //     ?
-                        BorderRadius.only(
-                            topLeft: radius,
-                            topRight: radius,
-                            bottomLeft: isFromMe ? radius : zero,
-                            bottomRight: isFromMe ? zero : radius)
-                    // : i == (messages.length - 1)
-                    //     ? BorderRadius.only(
-                    //         topLeft: radius,
-                    //         topRight: radius,
-                    //         bottomLeft: isFromMe ? radius : zero,
-                    //         bottomRight: isFromMe ? zero : radius)
-                    //     : BorderRadius.circular(10)
-                    ),
-                child: Center(
-                  child: Text(messages,
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.w400)),
+                    borderRadius: BorderRadius.only(
+                        topLeft: radius,
+                        topRight: radius,
+                        bottomLeft: isFromMe ? radius : zero,
+                        bottomRight: isFromMe ? zero : radius)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    attactment.isNotEmpty
+                        ? InkWell(
+                            onTap: () {
+                              Get.to(() => ShowImageScreen(
+                                    image: attactment,
+                                  ));
+                            },
+                            child: SizedBox(
+                                height: 200,
+                                width: 100,
+                                child: Image.network(
+                                  attactment,
+                                  filterQuality: FilterQuality.high,
+                                  fit: BoxFit.cover,
+                                )),
+                          )
+                        : const SizedBox(),
+                    if (messages.isNotEmpty) const SizedBox(height: 5),
+                    Text(messages,
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w400)),
+                  ],
                 ),
               ),
               // if (isFromMe)

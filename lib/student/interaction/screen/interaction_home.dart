@@ -4,6 +4,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/student/interaction/screen/composetab.dart';
 import 'package:m_skool_flutter/student/interaction/screen/inbox_tab.dart';
+import 'package:m_skool_flutter/student/interaction/screen/unread_tab.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 // import 'package:m_skool_flutter/interaction/screen/all_tab.dart';
@@ -39,7 +40,7 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
   void initState() {
     _tabController = TabController(
         initialIndex: 0,
-        length: 2, // do it 3 after adding unread tab
+        length: 3,
         vsync: this,
         animationDuration: const Duration(milliseconds: 300));
     loadingInteraction();
@@ -50,7 +51,7 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
     CustomTab(name: "Compose", asset: "assets/svg/edit.svg"),
     CustomTab(name: "Inbox", asset: "assets/svg/inbox.svg"),
     // CustomTab(name: "All", asset: "layersall.svg"),
-    // CustomTab(name: "Unread", asset: "assets/svg/unread.svg"),
+    CustomTab(name: "Unread", asset: "assets/svg/unread.svg"),
   ];
 
   @override
@@ -89,10 +90,10 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
                       mskoolController: widget.mskoolController,
                     ),
                     // AllTabScreen(),
-                    // UnReadTabScreen(
-                    //   loginSuccessModel: widget.loginSuccessModel,
-                    //   mskoolController: widget.mskoolController,
-                    // )
+                    UnReadTabScreen(
+                      loginSuccessModel: widget.loginSuccessModel,
+                      mskoolController: widget.mskoolController,
+                    )
                   ]),
                 )
               ]),

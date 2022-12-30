@@ -30,8 +30,6 @@ class _MessagingScreenState extends State<MessagingScreen> {
       Get.put(InteractionController());
 
   final TextEditingController textMessage = TextEditingController();
-  String image =
-      'https://docs.flutter.dev/assets/images/dash/dash-fainting.gif';
 
   Future<void> getMessageData() async {
     interactionController.isMessageloading(true);
@@ -94,32 +92,52 @@ class _MessagingScreenState extends State<MessagingScreen> {
                       )
                     : ListView.builder(
                         shrinkWrap: true,
-                        // reverse: true,
+                        // physics: const NeverScrollableScrollPhysics(),
                         itemCount: interactionController.messageList.length,
                         itemBuilder: (context, index) {
-                          return ChatBox(
-                            name: widget.loginSuccessModel.studname ==
-                                    interactionController.messageList
+                          return Column(
+                            children: [
+                              // ChatBox(
+                              //     name: widget.loginSuccessModel.studname ==
+                              //             widget.data.receiver
+                              //         ? widget.data.receiver!
+                              //         : widget.data.sender!,
+                              //     isFromMe: widget.data.ismintComposedByFlg ==
+                              //             'Staff'
+                              //         ? false
+                              //         : true,
+                              //     messages: widget.data.ismintInteraction!,
+                              //     istintDateTime: widget.data.ismintDateTime!,
+                              //     attactment: ''),
+                              ChatBox(
+                                name: widget.loginSuccessModel.studname ==
+                                        interactionController.messageList
+                                            .elementAt(index)
+                                            .receiver
+                                    ? interactionController.messageList
                                         .elementAt(index)
-                                        .receiver
-                                ? interactionController.messageList
-                                    .elementAt(index)
-                                    .receiver!
-                                : interactionController.messageList
-                                    .elementAt(index)
-                                    .sender!,
-                            isFromMe: interactionController.messageList
+                                        .receiver!
+                                    : interactionController.messageList
                                         .elementAt(index)
-                                        .istintComposedByFlg ==
-                                    'Student'
-                                ? true
-                                : false,
-                            messages: interactionController.messageList
-                                .elementAt(index)
-                                .istintInteraction!,
-                            istintDateTime: interactionController.messageList
-                                .elementAt(index)
-                                .istintDateTime!,
+                                        .sender!,
+                                isFromMe: interactionController.messageList
+                                            .elementAt(index)
+                                            .istintComposedByFlg ==
+                                        'Student'
+                                    ? true
+                                    : false,
+                                messages: interactionController.messageList
+                                    .elementAt(index)
+                                    .istintInteraction!,
+                                istintDateTime: interactionController
+                                    .messageList
+                                    .elementAt(index)
+                                    .istintDateTime!,
+                                attactment: interactionController.messageList
+                                    .elementAt(index)
+                                    .istintAttachment!,
+                              ),
+                            ],
                           );
                         },
                       ),
@@ -140,7 +158,54 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  interactionController
+                                      .getFromGallery(
+                                          miId: widget.loginSuccessModel.mIID!)
+                                      .then((value) async {
+                                    if (value) {
+                                      interactionController
+                                          .isMessageSending(true);
+                                      await sendMessage(
+                                        miId: widget.loginSuccessModel.mIID!,
+                                        amstId:
+                                            widget.loginSuccessModel.amsTId!,
+                                        asmayId:
+                                            widget.loginSuccessModel.asmaYId!,
+                                        message: textMessage.text,
+                                        istintComposedByFlg:
+                                            widget.data.istintId!,
+                                        ismintId: widget.data.ismintId!,
+                                        userId:
+                                            widget.loginSuccessModel.userId!,
+                                        image: interactionController.image,
+                                        base: baseUrlFromInsCode(
+                                            'portal', widget.mskoolController),
+                                      ).then(
+                                        (value) async {
+                                          if (value) {
+                                            await interactionController
+                                                .getMessage(
+                                              ismintId: widget.data.ismintId!,
+                                              miId: widget
+                                                  .loginSuccessModel.mIID!,
+                                              asmayId: widget
+                                                  .loginSuccessModel.asmaYId!,
+                                              userId: widget
+                                                  .loginSuccessModel.userId!,
+                                              base: baseUrlFromInsCode('portal',
+                                                  widget.mskoolController),
+                                            );
+                                            textMessage.text = '';
+                                          }
+                                        },
+                                      );
+                                      interactionController.image.clear();
+                                      interactionController
+                                          .isMessageSending(false);
+                                    }
+                                  });
+                                },
                                 child: Container(
                                   margin: const EdgeInsets.symmetric(
                                       vertical: 12.0, horizontal: 5.0),
@@ -152,7 +217,54 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                 )),
                             const SizedBox(width: 17),
                             InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  interactionController
+                                      .getFromCamera(
+                                          miId: widget.loginSuccessModel.mIID!)
+                                      .then((value) async {
+                                    if (value) {
+                                      interactionController
+                                          .isMessageSending(true);
+                                      await sendMessage(
+                                        miId: widget.loginSuccessModel.mIID!,
+                                        amstId:
+                                            widget.loginSuccessModel.amsTId!,
+                                        asmayId:
+                                            widget.loginSuccessModel.asmaYId!,
+                                        message: textMessage.text,
+                                        istintComposedByFlg:
+                                            widget.data.istintId!,
+                                        ismintId: widget.data.ismintId!,
+                                        userId:
+                                            widget.loginSuccessModel.userId!,
+                                        image: interactionController.image,
+                                        base: baseUrlFromInsCode(
+                                            'portal', widget.mskoolController),
+                                      ).then(
+                                        (value) async {
+                                          if (value) {
+                                            await interactionController
+                                                .getMessage(
+                                              ismintId: widget.data.ismintId!,
+                                              miId: widget
+                                                  .loginSuccessModel.mIID!,
+                                              asmayId: widget
+                                                  .loginSuccessModel.asmaYId!,
+                                              userId: widget
+                                                  .loginSuccessModel.userId!,
+                                              base: baseUrlFromInsCode('portal',
+                                                  widget.mskoolController),
+                                            );
+                                            textMessage.text = '';
+                                          }
+                                        },
+                                      );
+                                      interactionController.image.clear();
+                                      interactionController
+                                          .isMessageSending(false);
+                                    }
+                                  });
+                                },
                                 child: Container(
                                   margin: const EdgeInsets.only(
                                       right: 17.0, left: 5.0, bottom: 13),
@@ -174,7 +286,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           )
                         : SvgPicture.asset("assets/svg/send_arrow.svg"),
                     onPressed: () async {
-                      if (textMessage.text.isEmpty) {
+                      if (textMessage.text.isEmpty &&
+                          interactionController.image.isEmpty) {
                         return;
                       } else {
                         interactionController.isMessageSending(true);
@@ -186,7 +299,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           istintComposedByFlg: widget.data.istintId!,
                           ismintId: widget.data.ismintId!,
                           userId: widget.loginSuccessModel.userId!,
-                          image: image,
+                          image: interactionController.image,
                           base: baseUrlFromInsCode(
                               'portal', widget.mskoolController),
                         ).then(

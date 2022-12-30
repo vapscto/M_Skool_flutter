@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/student/interaction/model/inbox_model.dart';
 
 class InboxController extends GetxController {
   RxList<GetinboxmsgValue> inboxList = <GetinboxmsgValue>[].obs;
+  RxList<GetinboxmsgValue> unReadList = <GetinboxmsgValue>[].obs;
   RxList<GetinboxmsgReadflgValue> messageFlagList =
       <GetinboxmsgReadflgValue>[].obs;
   RxBool isInboxLoading = RxBool(false);
@@ -40,19 +41,39 @@ class InboxController extends GetxController {
         for (var i = 0; i < inboxDataModel.getinboxmsg!.values!.length; i++) {
           inboxList.add(inboxDataModel.getinboxmsg!.values!.elementAt(i));
         }
+        return true;
+      }
+      return false;
+    } catch (e) {
+      logger.e(e.toString());
+      return false;
+    }
+  }
 
-        // if (inboxDataModel.getinboxmsgReadflg != null ||
-        //     inboxDataModel.getinboxmsgReadflg!.values != null) {
-        //   messageFlagList.clear();
-        //   logger
-        //       .d(inboxDataModel.getinboxmsgReadflg!.values!.length.toString());
-        //   for (var i = 0;
-        //       i < inboxDataModel.getinboxmsgReadflg!.values!.length;
-        //       i++) {
-        //     messageFlagList
-        //         .add(inboxDataModel.getinboxmsgReadflg!.values!.elementAt(i));
-        //   }
-        // }
+  Future<bool> getUnread({
+    required int miId,
+    required int amstId,
+    required int asmayId,
+    required int userId,
+    required String base,
+  }) async {
+    try {
+      InboxDataModel? inboxDataModel = await getInboxData(
+          miId: miId,
+          amstId: amstId,
+          asmayId: asmayId,
+          userId: userId,
+          base: base);
+      if (inboxDataModel!.getinboxmsg != null ||
+          inboxDataModel.getinboxmsg!.values != null) {
+        unReadList.clear();
+        logger.d(inboxDataModel.getinboxmsg!.values!.length.toString());
+        for (var i = 0; i < inboxDataModel.getinboxmsg!.values!.length; i++) {
+          if (inboxDataModel.getinboxmsg!.values!.elementAt(i).istintReadFlg ==
+              0) {
+            unReadList.add(inboxDataModel.getinboxmsg!.values!.elementAt(i));
+          }
+        }
         return true;
       }
       return false;

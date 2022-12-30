@@ -325,76 +325,58 @@ class Value {
   String? receiver;
 
   factory Value.fromJson(Map<String, dynamic> json) => Value(
-        ivrmrTId: json["ivrmrT_Id"] == null ? null : json["ivrmrT_Id"],
-        ivrmrTRole: json["ivrmrT_Role"] == null ? null : json["ivrmrT_Role"],
-        ivrmRId: json["ivrmR_Id"] == null ? null : json["ivrmR_Id"],
-        ivrmrTRoleFlag:
-            json["ivrmrT_RoleFlag"] == null ? null : json["ivrmrT_RoleFlag"],
-        flag: json["flag"] == null ? null : json["flag"],
+        ivrmrTId: json["ivrmrT_Id"],
+        ivrmrTRole: json["ivrmrT_Role"],
+        ivrmRId: json["ivrmR_Id"],
+        ivrmrTRoleFlag: json["ivrmrT_RoleFlag"],
+        flag: json["flag"],
         createdDate: json["createdDate"] == null
             ? null
             : DateTime.parse(json["createdDate"]),
         updatedDate: json["updatedDate"] == null
             ? null
             : DateTime.parse(json["updatedDate"]),
-        type: json["\$type"] == null ? null : json["\$type"],
-        istintAttachment: json["ISTINT_Attachment"] == null
-            ? null
-            : json["ISTINT_Attachment"],
-        istintId: json["ISTINT_Id"] == null ? null : json["ISTINT_Id"],
-        ismintId: json["ISMINT_Id"] == null ? null : json["ISMINT_Id"],
-        ismintGroupOrIndFlg: json["ISMINT_GroupOrIndFlg"] == null
-            ? null
-            : json["ISMINT_GroupOrIndFlg"],
-        istintToFlg: json["ISTINT_ToFlg"] == null ? null : json["ISTINT_ToFlg"],
-        istintComposedById: json["ISTINT_ComposedById"] == null
-            ? null
-            : json["ISTINT_ComposedById"],
-        istintInteraction: json["ISTINT_Interaction"] == null
-            ? null
-            : json["ISTINT_Interaction"],
+        type: json["\$type"],
+        istintAttachment: json["ISTINT_Attachment"],
+        istintId: json["ISTINT_Id"],
+        ismintId: json["ISMINT_Id"],
+        ismintGroupOrIndFlg: json["ISMINT_GroupOrIndFlg"],
+        istintToFlg: json["ISTINT_ToFlg"],
+        istintComposedById: json["ISTINT_ComposedById"],
+        istintInteraction: json["ISTINT_Interaction"],
         istintDateTime: json["ISTINT_DateTime"] == null
             ? null
             : DateTime.parse(json["ISTINT_DateTime"]),
-        istintComposedByFlg: json["ISTINT_ComposedByFlg"] == null
-            ? null
-            : json["ISTINT_ComposedByFlg"],
-        istintInteractionOrder: json["ISTINT_InteractionOrder"] == null
-            ? null
-            : json["ISTINT_InteractionOrder"],
-        sender: json["Sender"] == null ? null : json["Sender"],
-        receiver: json["Receiver"] == null ? null : json["Receiver"],
+        istintComposedByFlg: json["ISTINT_ComposedByFlg"],
+        istintInteractionOrder: json["ISTINT_InteractionOrder"],
+        sender: json["Sender"],
+        receiver: json["Receiver"],
       );
 
   Map<String, dynamic> toJson() => {
-        "ivrmrT_Id": ivrmrTId == null ? null : ivrmrTId,
-        "ivrmrT_Role": ivrmrTRole == null ? null : ivrmrTRole,
-        "ivrmR_Id": ivrmRId == null ? null : ivrmRId,
-        "ivrmrT_RoleFlag": ivrmrTRoleFlag == null ? null : ivrmrTRoleFlag,
-        "flag": flag == null ? null : flag,
+        "ivrmrT_Id": ivrmrTId,
+        "ivrmrT_Role": ivrmrTRole,
+        "ivrmR_Id": ivrmRId,
+        "ivrmrT_RoleFlag": ivrmrTRoleFlag,
+        "flag": flag,
         "createdDate":
             createdDate == null ? null : createdDate!.toIso8601String(),
         "updatedDate":
             updatedDate == null ? null : updatedDate!.toIso8601String(),
-        "\$type": type == null ? null : type,
-        "ISTINT_Attachment": istintAttachment == null ? null : istintAttachment,
-        "ISTINT_Id": istintId == null ? null : istintId,
-        "ISMINT_Id": ismintId == null ? null : ismintId,
-        "ISMINT_GroupOrIndFlg":
-            ismintGroupOrIndFlg == null ? null : ismintGroupOrIndFlg,
-        "ISTINT_ToFlg": istintToFlg == null ? null : istintToFlg,
-        "ISTINT_ComposedById":
-            istintComposedById == null ? null : istintComposedById,
-        "ISTINT_Interaction":
-            istintInteraction == null ? null : istintInteraction,
+        "\$type": type,
+        "ISTINT_Attachment": istintAttachment,
+        "ISTINT_Id": istintId,
+        "ISMINT_Id": ismintId,
+        "ISMINT_GroupOrIndFlg": ismintGroupOrIndFlg,
+        "ISTINT_ToFlg": istintToFlg,
+        "ISTINT_ComposedById": istintComposedById,
+        "ISTINT_Interaction": istintInteraction,
         "ISTINT_DateTime":
             istintDateTime == null ? null : istintDateTime!.toIso8601String(),
-        "ISTINT_ComposedByFlg":
-            istintComposedByFlg == null ? null : istintComposedByFlg,
-        "ISTINT_InteractionOrder":
-            istintInteractionOrder == null ? null : istintInteractionOrder,
-        "Sender": sender == null ? null : sender,
-        "Receiver": receiver == null ? null : receiver,
+        "ISTINT_ComposedByFlg": istintComposedByFlg,
+        "ISTINT_InteractionOrder": istintInteractionOrder,
+        "Sender": sender,
+        "Receiver": receiver,
       };
 }
 
@@ -466,75 +448,57 @@ class ViewMessageValue {
 
   factory ViewMessageValue.fromJson(Map<String, dynamic> json) =>
       ViewMessageValue(
-        ivrmrTId: json["ivrmrT_Id"] == null ? null : json["ivrmrT_Id"],
-        ivrmrTRole: json["ivrmrT_Role"] == null ? null : json["ivrmrT_Role"],
-        ivrmRId: json["ivrmR_Id"] == null ? null : json["ivrmR_Id"],
-        ivrmrTRoleFlag:
-            json["ivrmrT_RoleFlag"] == null ? null : json["ivrmrT_RoleFlag"],
-        flag: json["flag"] == null ? null : json["flag"],
+        ivrmrTId: json["ivrmrT_Id"],
+        ivrmrTRole: json["ivrmrT_Role"],
+        ivrmRId: json["ivrmR_Id"],
+        ivrmrTRoleFlag: json["ivrmrT_RoleFlag"],
+        flag: json["flag"],
         createdDate: json["createdDate"] == null
             ? null
             : DateTime.parse(json["createdDate"]),
         updatedDate: json["updatedDate"] == null
             ? null
             : DateTime.parse(json["updatedDate"]),
-        type: json["\$type"] == null ? null : json["\$type"],
-        istintAttachment: json["ISTINT_Attachment"] == null
-            ? null
-            : json["ISTINT_Attachment"],
-        istintId: json["ISTINT_Id"] == null ? null : json["ISTINT_Id"],
-        ismintId: json["ISMINT_Id"] == null ? null : json["ISMINT_Id"],
-        ismintGroupOrIndFlg: json["ISMINT_GroupOrIndFlg"] == null
-            ? null
-            : json["ISMINT_GroupOrIndFlg"],
-        istintToFlg: json["ISTINT_ToFlg"] == null ? null : json["ISTINT_ToFlg"],
-        istintComposedById: json["ISTINT_ComposedById"] == null
-            ? null
-            : json["ISTINT_ComposedById"],
-        istintInteraction: json["ISTINT_Interaction"] == null
-            ? null
-            : json["ISTINT_Interaction"],
+        type: json["\$type"],
+        istintAttachment: json["ISTINT_Attachment"] ?? '',
+        istintId: json["ISTINT_Id"],
+        ismintId: json["ISMINT_Id"],
+        ismintGroupOrIndFlg: json["ISMINT_GroupOrIndFlg"],
+        istintToFlg: json["ISTINT_ToFlg"],
+        istintComposedById: json["ISTINT_ComposedById"],
+        istintInteraction: json["ISTINT_Interaction"],
         istintDateTime: json["ISTINT_DateTime"] == null
             ? null
             : DateTime.parse(json["ISTINT_DateTime"]),
-        istintComposedByFlg: json["ISTINT_ComposedByFlg"] == null
-            ? null
-            : json["ISTINT_ComposedByFlg"],
-        istintInteractionOrder: json["ISTINT_InteractionOrder"] == null
-            ? null
-            : json["ISTINT_InteractionOrder"],
-        sender: json["Sender"] == null ? null : json["Sender"],
-        receiver: json["Receiver"] == null ? null : json["Receiver"],
+        istintComposedByFlg: json["ISTINT_ComposedByFlg"],
+        istintInteractionOrder: json["ISTINT_InteractionOrder"],
+        sender: json["Sender"],
+        receiver: json["Receiver"],
       );
 
   Map<String, dynamic> toJson() => {
-        "ivrmrT_Id": ivrmrTId == null ? null : ivrmrTId,
-        "ivrmrT_Role": ivrmrTRole == null ? null : ivrmrTRole,
-        "ivrmR_Id": ivrmRId == null ? null : ivrmRId,
-        "ivrmrT_RoleFlag": ivrmrTRoleFlag == null ? null : ivrmrTRoleFlag,
-        "flag": flag == null ? null : flag,
+        "ivrmrT_Id": ivrmrTId,
+        "ivrmrT_Role": ivrmrTRole,
+        "ivrmR_Id": ivrmRId,
+        "ivrmrT_RoleFlag": ivrmrTRoleFlag,
+        "flag": flag,
         "createdDate":
             createdDate == null ? null : createdDate!.toIso8601String(),
         "updatedDate":
             updatedDate == null ? null : updatedDate!.toIso8601String(),
-        "\$type": type == null ? null : type,
-        "ISTINT_Attachment": istintAttachment == null ? null : istintAttachment,
-        "ISTINT_Id": istintId == null ? null : istintId,
-        "ISMINT_Id": ismintId == null ? null : ismintId,
-        "ISMINT_GroupOrIndFlg":
-            ismintGroupOrIndFlg == null ? null : ismintGroupOrIndFlg,
-        "ISTINT_ToFlg": istintToFlg == null ? null : istintToFlg,
-        "ISTINT_ComposedById":
-            istintComposedById == null ? null : istintComposedById,
-        "ISTINT_Interaction":
-            istintInteraction == null ? null : istintInteraction,
+        "\$type": type,
+        "ISTINT_Attachment": istintAttachment ?? '',
+        "ISTINT_Id": istintId,
+        "ISMINT_Id": ismintId,
+        "ISMINT_GroupOrIndFlg": ismintGroupOrIndFlg,
+        "ISTINT_ToFlg": istintToFlg,
+        "ISTINT_ComposedById": istintComposedById,
+        "ISTINT_Interaction": istintInteraction,
         "ISTINT_DateTime":
             istintDateTime == null ? null : istintDateTime!.toIso8601String(),
-        "ISTINT_ComposedByFlg":
-            istintComposedByFlg == null ? null : istintComposedByFlg,
-        "ISTINT_InteractionOrder":
-            istintInteractionOrder == null ? null : istintInteractionOrder,
-        "Sender": sender == null ? null : sender,
-        "Receiver": receiver == null ? null : receiver,
+        "ISTINT_ComposedByFlg": istintComposedByFlg,
+        "ISTINT_InteractionOrder": istintInteractionOrder,
+        "Sender": sender,
+        "Receiver": receiver,
       };
 }
