@@ -142,83 +142,87 @@ class CoeItem extends StatelessWidget {
             Expanded(
               child: Row(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Text(
-                          values.coemEEventName!,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleMedium,
+                  Expanded(
+                    flex: 7,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                          child: Text(
+                            values.coemEEventName!,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 8.0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12.0, vertical: 4.0),
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              'assets/images/calendar_coe.png',
-                              height: 22.0,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .color,
-                            ),
-                            const SizedBox(
-                              width: 8.0,
-                            ),
-                            Text(
-                              getFormatedDate(
-                                  DateTime.parse(values.coeEEStartDate!)),
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                          ],
+                        const SizedBox(
+                          height: 8.0,
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12.0, vertical: 4.0),
-                        child: Row(
-                          children: [
-                            // Icon(
-                            //   Icons.watch_later_outlined,
-                            //   color: Theme.of(context)
-                            //       .textTheme
-                            //       .labelMedium!
-                            //       .color,
-                            // ),
-                            Image.asset(
-                              'assets/images/clock_coe.png',
-                              height: 22.0,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .color,
-                            ),
-                            const SizedBox(
-                              width: 8.0,
-                            ),
-                            Text(
-                              "${values.coeEEStartTime} - ${values.coeEEEndTime}",
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12.0, vertical: 4.0),
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                'assets/images/calendar_coe.png',
+                                height: 22.0,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .color,
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              Text(
+                                getFormatedDate(
+                                    DateTime.parse(values.coeEEStartDate!)),
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12.0, vertical: 4.0),
+                          child: Row(
+                            children: [
+                              // Icon(
+                              //   Icons.watch_later_outlined,
+                              //   color: Theme.of(context)
+                              //       .textTheme
+                              //       .labelMedium!
+                              //       .color,
+                              // ),
+                              Image.asset(
+                                'assets/images/clock_coe.png',
+                                height: 22.0,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .color,
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              Text(
+                                "${values.coeEEStartTime} - ${values.coeEEEndTime}",
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   values.coeeIImages == null || values.coeeIImages!.isEmpty
                       ? const SizedBox(
                           width: 16.0,
                         )
                       : Expanded(
+                          flex: 3,
                           child: InkWell(
                             onTap: () {
                               logger.d(values.coeeVVideos);

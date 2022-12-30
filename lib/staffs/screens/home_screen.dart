@@ -5,8 +5,11 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
+import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
+import 'package:m_skool_flutter/staffs/view_notice/screens/view_notice_home_screen.dart';
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
@@ -112,6 +115,87 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                               .pagename!,
                         );
                       }));
+                      return;
+                    }
+
+                    if (widget
+                            .loginSuccessModel.staffmobileappprivileges!.values!
+                            .elementAt(index)
+                            .pagename! ==
+                        "Notice Board") {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return ViewNoticeHome(
+                          loginSuccessModel: widget.loginSuccessModel,
+                          mskoolController: widget.mskoolController,
+                          title: widget.loginSuccessModel
+                              .staffmobileappprivileges!.values!
+                              .elementAt(index)
+                              .pagename!,
+                        );
+                      }));
+                      return;
+                    }
+                    if (widget
+                            .loginSuccessModel.staffmobileappprivileges!.values!
+                            .elementAt(index)
+                            .pagename! ==
+                        "Punch Report") {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return PunchReport(
+                          loginSuccessModel: widget.loginSuccessModel,
+                          mskoolController: widget.mskoolController,
+                          title: widget.loginSuccessModel
+                              .staffmobileappprivileges!.values!
+                              .elementAt(index)
+                              .pagename!,
+                        );
+                      }));
+                      return;
+                    }
+                    if (widget
+                            .loginSuccessModel.staffmobileappprivileges!.values!
+                            .elementAt(index)
+                            .pagename! ==
+                        "Verify Homework") {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) {
+                            return VerifyHwCwHome(
+                              loginSuccessModel: widget.loginSuccessModel,
+                              mskoolController: widget.mskoolController,
+                              title: widget.loginSuccessModel
+                                  .staffmobileappprivileges!.values!
+                                  .elementAt(index)
+                                  .pagename!,
+                              forHw: true,
+                            );
+                          },
+                        ),
+                      );
+                      return;
+                    }
+                    if (widget
+                            .loginSuccessModel.staffmobileappprivileges!.values!
+                            .elementAt(index)
+                            .pagename! ==
+                        "Verify Classwork") {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) {
+                            return VerifyHwCwHome(
+                              loginSuccessModel: widget.loginSuccessModel,
+                              mskoolController: widget.mskoolController,
+                              title: widget.loginSuccessModel
+                                  .staffmobileappprivileges!.values!
+                                  .elementAt(index)
+                                  .pagename!,
+                              forHw: false,
+                            );
+                          },
+                        ),
+                      );
                       return;
                     }
                   },

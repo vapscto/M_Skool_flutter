@@ -262,6 +262,16 @@ List<Color> noticeBackgroundColor = const [
   Color(0xFFEFFFF1),
 ];
 
+List<Color> lighterColor = const [
+  Color(0xFFFFF3F3),
+  Color.fromARGB(255, 232, 244, 255),
+  Color.fromARGB(255, 244, 235, 255),
+  Color.fromARGB(255, 255, 242, 255),
+  Color(0xFFF0FEFE),
+  Color.fromARGB(255, 255, 244, 242),
+  Color.fromARGB(255, 237, 255, 239),
+];
+
 List<Color> examCardColor = const [
   Color.fromARGB(255, 252, 205, 255),
   Color.fromARGB(255, 243, 238, 178),
