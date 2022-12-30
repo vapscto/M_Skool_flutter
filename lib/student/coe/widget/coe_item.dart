@@ -64,78 +64,85 @@ class CoeItem extends StatelessWidget {
                   const SizedBox(
                     height: 12.0,
                   ),
-                  Container(
-                    width: 30.0,
-                    height: 30.0,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: PopupMenuButton(
-                      padding: EdgeInsets.zero,
-                      icon: const Icon(Icons.more_horiz),
-                      splashRadius: 10,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(9.0)),
-                      itemBuilder: (_) {
-                        List<PopupMenuEntry<dynamic>> popupItem = [];
-                        PopupMenuItem video = PopupMenuItem(
-                          value: "Video",
-                          child: ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            onTap: () {
-                              logger.d(values.coeeVVideos);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => VideoScreen(
-                                          videoUrl: values.coeeVVideos!)));
-                            },
-                            title: Text(
-                              "View Video".tr,
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
+                  values.coeeVVideos == null && values.coeeIImages == null
+                      ? const SizedBox()
+                      : Container(
+                          width: 30.0,
+                          height: 30.0,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
                           ),
-                        );
-                        PopupMenuItem image = PopupMenuItem(
-                          value: "Video",
-                          // onTap: () {
+                          child: PopupMenuButton(
+                            padding: EdgeInsets.zero,
+                            icon: const Icon(Icons.more_horiz),
+                            splashRadius: 10,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(9.0)),
+                            itemBuilder: (_) {
+                              List<PopupMenuEntry<dynamic>> popupItem = [];
+                              PopupMenuItem video = PopupMenuItem(
+                                value: "Video",
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  onTap: () {
+                                    logger.d(values.coeeVVideos);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => VideoScreen(
+                                                videoUrl:
+                                                    values.coeeVVideos!)));
+                                  },
+                                  title: Text(
+                                    "View Video".tr,
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                  ),
+                                ),
+                              );
+                              PopupMenuItem image = PopupMenuItem(
+                                value: "Video",
+                                // onTap: () {
 
-                          //   // Get.to(() =>
-                          //   //     VideoScreen(videoUrl: values.coeeVVideos!));
+                                //   // Get.to(() =>
+                                //   //     VideoScreen(videoUrl: values.coeeVVideos!));
 
-                          // },
-                          child: ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            onTap: () {
-                              logger.d(values.coeeVVideos);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => ViewImage(
-                                          image: values.coeeIImages!)));
+                                // },
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  onTap: () {
+                                    logger.d(values.coeeVVideos);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => ViewImage(
+                                                image: values.coeeIImages!)));
+                                  },
+                                  title: Text(
+                                    "View File".tr,
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                  ),
+                                ),
+                              );
+                              if (values.coeeVVideos == null &&
+                                  values.coeeIImages == null) {
+                                popupItem = [];
+                              }
+                              if (values.coeeVVideos != null &&
+                                  values.coeeVVideos!.isNotEmpty) {
+                                popupItem.add(video);
+                              }
+                              if (values.coeeIImages != null &&
+                                  values.coeeIImages!.isNotEmpty) {
+                                popupItem.add(image);
+                              }
+
+                              return popupItem;
                             },
-                            title: Text(
-                              "View File".tr,
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
                           ),
-                        );
-                        if (values.coeeVVideos == null &&
-                            values.coeeIImages == null) {
-                          popupItem = [];
-                        }
-                        if (values.coeeVVideos!.isNotEmpty) {
-                          popupItem.add(video);
-                        }
-                        if (values.coeeIImages!.isNotEmpty) {
-                          popupItem.add(image);
-                        }
-
-                        return popupItem;
-                      },
-                    ),
-                  )
+                        )
                 ],
               ),
             ),
