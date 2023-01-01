@@ -35,7 +35,7 @@ class ApplyLeaveWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 12.0,
+            height: 18.0,
           ),
           Padding(
             padding: const EdgeInsets.all(12.0),
@@ -57,12 +57,13 @@ class ApplyLeaveWidget extends StatelessWidget {
                             horizontal: 12.0, vertical: 8.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(24.0),
-                            color: const Color(0xFFFFEBEA)),
+                            color: const Color(0xFFDFFBFE)),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Image.asset(
                               "assets/images/reason.png",
+                              color: const Color(0xFF28B6C8),
                               height: 24.0,
                             ),
                             const SizedBox(
@@ -76,13 +77,13 @@ class ApplyLeaveWidget extends StatelessWidget {
                                   .merge(
                                     const TextStyle(
                                         fontSize: 20.0,
-                                        color: Color(0xFFFF6F67)),
+                                        color: Color(0xFF28B6C8)),
                                   ),
                             ),
                           ],
                         ),
                       ),
-                      hintText: 'Type your reason here.',
+                      hintText: 'Enter reason here.',
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
@@ -98,7 +99,7 @@ class ApplyLeaveWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 24.0,
+                  height: 32.0,
                 ),
                 CustomContainer(
                   child: TextField(
@@ -115,13 +116,13 @@ class ApplyLeaveWidget extends StatelessWidget {
                             horizontal: 12.0, vertical: 8.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(24.0),
-                            color: const Color(0xFFFFEBEA)),
+                            color: const Color(0xFFDBFDF5)),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             SvgPicture.asset(
                               "assets/svg/phone.svg",
-                              color: const Color(0xFFFF6F67),
+                              color: const Color(0xFF47BA9E),
                               height: 24.0,
                             ),
                             const SizedBox(
@@ -134,14 +135,15 @@ class ApplyLeaveWidget extends StatelessWidget {
                                   .labelMedium!
                                   .merge(
                                     const TextStyle(
-                                        fontSize: 20.0,
-                                        color: Color(0xFFFF6F67)),
+                                      fontSize: 20.0,
+                                      color: Color(0xFF47BA9E),
+                                    ),
                                   ),
                             ),
                           ],
                         ),
                       ),
-                      hintText: 'Type your phone here.',
+                      hintText: 'Enter Phone Number.',
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
@@ -157,7 +159,7 @@ class ApplyLeaveWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 24.0,
+                  height: 32.0,
                 ),
                 Row(
                   children: [
@@ -172,7 +174,7 @@ class ApplyLeaveWidget extends StatelessWidget {
                               onPressed: () {},
                               icon: SvgPicture.asset(
                                 'assets/svg/calendar_icon.svg',
-                                color: const Color(0xFFFF6F67),
+                                color: const Color(0xFF3E78AA),
                                 height: 22.0,
                               ),
                             ),
@@ -185,13 +187,13 @@ class ApplyLeaveWidget extends StatelessWidget {
                                   horizontal: 12.0, vertical: 8.0),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(24.0),
-                                  color: const Color(0xFFFFEBEA)),
+                                  color: const Color(0xFFE5F3FF)),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   SvgPicture.asset(
                                     "assets/svg/calendar_icon.svg",
-                                    color: const Color(0xFFFF6F67),
+                                    color: const Color(0xFF3E78AA),
                                     height: 24.0,
                                   ),
                                   const SizedBox(
@@ -204,8 +206,9 @@ class ApplyLeaveWidget extends StatelessWidget {
                                         .labelMedium!
                                         .merge(
                                           const TextStyle(
-                                              fontSize: 20.0,
-                                              color: Color(0xFFFF6F67)),
+                                            fontSize: 20.0,
+                                            color: Color(0xFF3E78AA),
+                                          ),
                                         ),
                                   ),
                                 ],
@@ -245,7 +248,7 @@ class ApplyLeaveWidget extends StatelessWidget {
                               onPressed: () {},
                               icon: SvgPicture.asset(
                                 'assets/svg/calendar_icon.svg',
-                                color: const Color(0xFFFF6F67),
+                                color: const Color(0xFF3E78AA),
                                 height: 22.0,
                               ),
                             ),
@@ -256,13 +259,13 @@ class ApplyLeaveWidget extends StatelessWidget {
                                   horizontal: 12.0, vertical: 8.0),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(24.0),
-                                  color: const Color(0xFFFFEBEA)),
+                                  color: const Color(0xFFE5F3FF)),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   SvgPicture.asset(
                                     "assets/svg/calendar_icon.svg",
-                                    color: const Color(0xFFFF6F67),
+                                    color: const Color(0xFF3E78AA),
                                     height: 24.0,
                                   ),
                                   const SizedBox(
@@ -276,7 +279,7 @@ class ApplyLeaveWidget extends StatelessWidget {
                                         .merge(
                                           const TextStyle(
                                               fontSize: 20.0,
-                                              color: Color(0xFFFF6F67)),
+                                              color: Color(0xFF3E78AA)),
                                         ),
                                   ),
                                 ],
@@ -407,7 +410,7 @@ class ApplyLeaveWidget extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(
-                  height: 24.0,
+                  height: 32.0,
                 ),
                 CustomContainer(
                   child: TextField(
@@ -423,7 +426,7 @@ class ApplyLeaveWidget extends StatelessWidget {
                         onPressed: () {},
                         icon: SvgPicture.asset(
                           'assets/svg/calendar_icon.svg',
-                          color: const Color(0xFFFF6F67),
+                          color: const Color(0xFFDE53E1),
                           height: 22.0,
                         ),
                       ),
@@ -434,13 +437,13 @@ class ApplyLeaveWidget extends StatelessWidget {
                             horizontal: 12.0, vertical: 8.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(24.0),
-                            color: const Color(0xFFFFEBEA)),
+                            color: const Color(0xFFFFEDFF)),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             SvgPicture.asset(
                               "assets/svg/calendar_icon.svg",
-                              color: const Color(0xFFFF6F67),
+                              color: const Color(0xFFDE53E1),
                               height: 24.0,
                             ),
                             const SizedBox(
@@ -453,8 +456,9 @@ class ApplyLeaveWidget extends StatelessWidget {
                                   .labelMedium!
                                   .merge(
                                     const TextStyle(
-                                        fontSize: 20.0,
-                                        color: Color(0xFFFF6F67)),
+                                      fontSize: 20.0,
+                                      color: Color(0xFFDE53E1),
+                                    ),
                                   ),
                             ),
                           ],

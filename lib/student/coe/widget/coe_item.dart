@@ -64,161 +64,172 @@ class CoeItem extends StatelessWidget {
                   const SizedBox(
                     height: 12.0,
                   ),
-                  Container(
-                    width: 30.0,
-                    height: 30.0,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: PopupMenuButton(
-                      padding: EdgeInsets.zero,
-                      icon: const Icon(Icons.more_horiz),
-                      splashRadius: 10,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(9.0)),
-                      itemBuilder: (_) {
-                        List<PopupMenuEntry<dynamic>> popupItem = [];
-                        PopupMenuItem video = PopupMenuItem(
-                          value: "Video",
-                          child: ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            onTap: () {
-                              logger.d(values.coeeVVideos);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => VideoScreen(
-                                          videoUrl: values.coeeVVideos!)));
-                            },
-                            title: Text(
-                              "View Video".tr,
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
+                  values.coeeVVideos == null && values.coeeIImages == null
+                      ? const SizedBox()
+                      : Container(
+                          width: 30.0,
+                          height: 30.0,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
                           ),
-                        );
-                        PopupMenuItem image = PopupMenuItem(
-                          value: "Video",
-                          // onTap: () {
+                          child: PopupMenuButton(
+                            padding: EdgeInsets.zero,
+                            icon: const Icon(Icons.more_horiz),
+                            splashRadius: 10,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(9.0)),
+                            itemBuilder: (_) {
+                              List<PopupMenuEntry<dynamic>> popupItem = [];
+                              PopupMenuItem video = PopupMenuItem(
+                                value: "Video",
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  onTap: () {
+                                    logger.d(values.coeeVVideos);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => VideoScreen(
+                                                videoUrl:
+                                                    values.coeeVVideos!)));
+                                  },
+                                  title: Text(
+                                    "View Video".tr,
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                  ),
+                                ),
+                              );
+                              PopupMenuItem image = PopupMenuItem(
+                                value: "Video",
+                                // onTap: () {
 
-                          //   // Get.to(() =>
-                          //   //     VideoScreen(videoUrl: values.coeeVVideos!));
+                                //   // Get.to(() =>
+                                //   //     VideoScreen(videoUrl: values.coeeVVideos!));
 
-                          // },
-                          child: ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            onTap: () {
-                              logger.d(values.coeeVVideos);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => ViewImage(
-                                          image: values.coeeIImages!)));
+                                // },
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  onTap: () {
+                                    logger.d(values.coeeVVideos);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => ViewImage(
+                                                image: values.coeeIImages!)));
+                                  },
+                                  title: Text(
+                                    "View File".tr,
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                  ),
+                                ),
+                              );
+                              if (values.coeeVVideos == null &&
+                                  values.coeeIImages == null) {
+                                popupItem = [];
+                              }
+                              if (values.coeeVVideos != null &&
+                                  values.coeeVVideos!.isNotEmpty) {
+                                popupItem.add(video);
+                              }
+                              if (values.coeeIImages != null &&
+                                  values.coeeIImages!.isNotEmpty) {
+                                popupItem.add(image);
+                              }
+
+                              return popupItem;
                             },
-                            title: Text(
-                              "View File".tr,
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
                           ),
-                        );
-                        if (values.coeeVVideos == null &&
-                            values.coeeIImages == null) {
-                          popupItem = [];
-                        }
-                        if (values.coeeVVideos!.isNotEmpty) {
-                          popupItem.add(video);
-                        }
-                        if (values.coeeIImages!.isNotEmpty) {
-                          popupItem.add(image);
-                        }
-
-                        return popupItem;
-                      },
-                    ),
-                  )
+                        )
                 ],
               ),
             ),
             Expanded(
               child: Row(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Text(
-                          values.coemEEventName!,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleMedium,
+                  Expanded(
+                    flex: 7,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                          child: Text(
+                            values.coemEEventName!,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 8.0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12.0, vertical: 4.0),
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              'assets/images/calendar_coe.png',
-                              height: 22.0,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .color,
-                            ),
-                            const SizedBox(
-                              width: 8.0,
-                            ),
-                            Text(
-                              getFormatedDate(
-                                  DateTime.parse(values.coeEEStartDate!)),
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                          ],
+                        const SizedBox(
+                          height: 8.0,
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12.0, vertical: 4.0),
-                        child: Row(
-                          children: [
-                            // Icon(
-                            //   Icons.watch_later_outlined,
-                            //   color: Theme.of(context)
-                            //       .textTheme
-                            //       .labelMedium!
-                            //       .color,
-                            // ),
-                            Image.asset(
-                              'assets/images/clock_coe.png',
-                              height: 22.0,
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .color,
-                            ),
-                            const SizedBox(
-                              width: 8.0,
-                            ),
-                            Text(
-                              "${values.coeEEStartTime} - ${values.coeEEEndTime}",
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                          ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12.0, vertical: 4.0),
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                'assets/images/calendar_coe.png',
+                                height: 22.0,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .color,
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              Text(
+                                getFormatedDate(
+                                    DateTime.parse(values.coeEEStartDate!)),
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12.0, vertical: 4.0),
+                          child: Row(
+                            children: [
+                              // Icon(
+                              //   Icons.watch_later_outlined,
+                              //   color: Theme.of(context)
+                              //       .textTheme
+                              //       .labelMedium!
+                              //       .color,
+                              // ),
+                              Image.asset(
+                                'assets/images/clock_coe.png',
+                                height: 22.0,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .color,
+                              ),
+                              const SizedBox(
+                                width: 8.0,
+                              ),
+                              Text(
+                                "${values.coeEEStartTime} - ${values.coeEEEndTime}",
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   values.coeeIImages == null || values.coeeIImages!.isEmpty
                       ? const SizedBox(
                           width: 16.0,
                         )
                       : Expanded(
+                          flex: 3,
                           child: InkWell(
                             onTap: () {
                               logger.d(values.coeeVVideos);
