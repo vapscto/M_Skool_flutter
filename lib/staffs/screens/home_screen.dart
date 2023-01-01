@@ -62,7 +62,7 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                             .pagename ==
                         "Attendance Entry") {
                       return;
-                    } else if (widget
+                    }  if (widget
                             .loginSuccessModel.staffmobileappprivileges!.values!
                             .elementAt(index)
                             .pagename ==

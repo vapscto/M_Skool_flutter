@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/student/interaction/widget/chat_profile_tile.dart';
@@ -21,24 +20,24 @@ class UnReadTabScreen extends StatefulWidget {
 
 class _UnReadTabScreenState extends State<UnReadTabScreen> {
   final InboxController inboxController = Get.put(InboxController());
-  void loadingUnread() async {
-    inboxController.isUnreadloading(true);
-    await inboxController.getUnread(
-      miId: widget.loginSuccessModel.mIID!,
-      amstId: widget.loginSuccessModel.amsTId!,
-      asmayId: widget.loginSuccessModel.asmaYId!,
-      userId: widget.loginSuccessModel.userId!,
-      base: baseUrlFromInsCode(
-        'portal',
-        widget.mskoolController,
-      ),
-    );
-    inboxController.isUnreadloading(false);
-  }
+  // void loadingUnread() async {
+  //   inboxController.isUnreadloading(true);
+  //   // await inboxController.getUnread(
+  //   //   miId: widget.loginSuccessModel.mIID!,
+  //   //   amstId: widget.loginSuccessModel.amsTId!,
+  //   //   asmayId: widget.loginSuccessModel.asmaYId!,
+  //   //   userId: widget.loginSuccessModel.userId!,
+  //   //   base: baseUrlFromInsCode(
+  //   //     'portal',
+  //   //     widget.mskoolController,
+  //   //   ),
+  //   // );
+  //   inboxController.isUnreadloading(false);
+  // }
 
   @override
   void initState() {
-    loadingUnread();
+    // loadingUnread();
     super.initState();
   }
 
@@ -57,7 +56,7 @@ class _UnReadTabScreenState extends State<UnReadTabScreen> {
               ? const Center(
                   child: AnimatedProgressWidget(
                     title: "Empty Unread",
-                    desc: "",
+                    desc: "This Screen is under contruction............",
                     animationPath: "assets/json/interaction.json",
                   ),
                 )
@@ -68,10 +67,10 @@ class _UnReadTabScreenState extends State<UnReadTabScreen> {
                       mskoolController: widget.mskoolController,
                       data: inboxController.unReadList[index],
                       // isGroup: Random().nextBool(),
-                      isSeen:
-                          inboxController.unReadList[index].istintReadFlg == 1
-                              ? true
-                              : false,
+                      // isSeen:
+                      //     inboxController.unReadList[index].istintReadFlg == 1
+                      //         ? true
+                      //         : false,
                       // color: Color.fromRGBO(Random().nextInt(255),
                       //     Random().nextInt(255), Random().nextInt(255), 1),
                     );

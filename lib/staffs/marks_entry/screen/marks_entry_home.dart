@@ -57,7 +57,8 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
         child: Column(
           children: [
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              margin: const EdgeInsets.only(
+                  top: 40, left: 16, right: 16, bottom: 16),
               decoration: BoxDecoration(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(16.0),
@@ -123,7 +124,7 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               decoration: BoxDecoration(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(16.0),
@@ -187,7 +188,7 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               decoration: BoxDecoration(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(16.0),
@@ -251,7 +252,7 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               decoration: BoxDecoration(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(16.0),
@@ -315,7 +316,7 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               decoration: BoxDecoration(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(16.0),
@@ -379,7 +380,7 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               decoration: BoxDecoration(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(16.0),

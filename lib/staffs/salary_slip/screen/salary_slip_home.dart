@@ -31,7 +31,8 @@ class _SalarySlipHomeState extends State<SalarySlipHome> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              margin: const EdgeInsets.only(
+                  top: 40, left: 16, right: 16, bottom: 16),
               decoration: BoxDecoration(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(16.0),
@@ -58,9 +59,9 @@ class _SalarySlipHomeState extends State<SalarySlipHome> {
                   ),
                   isDense: true,
                   label: CustomDropDownLabel(
-                    icon: 'assets/images/hat1.png',
+                    icon: 'assets/images/bluecalendar.png',
                     containerColor: Color.fromRGBO(223, 251, 254, 1),
-                    text: 'Academic Year',
+                    text: 'Select Year',
                     textColor: Color.fromRGBO(40, 182, 200, 1),
                   ),
                 ),
@@ -95,7 +96,7 @@ class _SalarySlipHomeState extends State<SalarySlipHome> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               decoration: BoxDecoration(
                 color: Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(16.0),
@@ -122,10 +123,10 @@ class _SalarySlipHomeState extends State<SalarySlipHome> {
                   ),
                   isDense: true,
                   label: CustomDropDownLabel(
-                    icon: 'assets/images/hat1.png',
-                    containerColor: Color.fromRGBO(223, 251, 254, 1),
-                    text: 'Academic Year',
-                    textColor: Color.fromRGBO(40, 182, 200, 1),
+                    icon: 'assets/images/redcalendar.png',
+                    containerColor: Color.fromRGBO(255, 235, 234, 1),
+                    text: 'Select Month',
+                    textColor: Color.fromRGBO(255, 111, 103, 1),
                   ),
                 ),
                 icon: const Padding(

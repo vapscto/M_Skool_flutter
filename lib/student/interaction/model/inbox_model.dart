@@ -630,7 +630,7 @@ class GetinboxmsgValue {
     this.receiverFilepath,
     this.ismintDateTime,
     this.ismintActiveFlag,
-    this.istintReadFlg,
+    // this.istintReadFlg,
   });
 
   String? type;
@@ -652,7 +652,7 @@ class GetinboxmsgValue {
   String? receiverFilepath;
   DateTime? ismintDateTime;
   bool? ismintActiveFlag;
-  int? istintReadFlg;
+  // int? istintReadFlg;
 
   factory GetinboxmsgValue.fromJson(Map<String, dynamic> json) =>
       GetinboxmsgValue(
@@ -675,7 +675,7 @@ class GetinboxmsgValue {
         receiverFilepath: json["Receiver_filepath"],
         ismintDateTime: DateTime.parse(json["ISMINT_DateTime"]),
         ismintActiveFlag: json["ISMINT_ActiveFlag"],
-        istintReadFlg: json["ISTINT_ReadFlg"],
+        // istintReadFlg: json["ISTINT_ReadFlg"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -698,7 +698,8 @@ class GetinboxmsgValue {
         "Receiver_filepath": receiverFilepath,
         "ISMINT_DateTime": ismintDateTime!.toIso8601String(),
         "ISMINT_ActiveFlag": ismintActiveFlag,
-        "ISTINT_ReadFlg": istintReadFlg,
+        // "ISTINT_ReadFlg": istintReadFlg,
+        
       };
 }
 
