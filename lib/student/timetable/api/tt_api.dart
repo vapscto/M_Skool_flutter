@@ -19,6 +19,7 @@ class TTApi {
     required int asmayId,
     required int asmtId,
     required String base,
+    required List<List<String>> pdfTT,
   }) async {
     try {
       final Dio ins = getGlobalDio();
@@ -100,7 +101,22 @@ class TTApi {
           }
         }
 
-        logger.d(dayWiseTT);
+        // logger.d(dayWiseTT);
+
+        // for (int i = 0; i < periodsListModel.values!.length; i++) {
+        //   String code =
+        //       periodsListModel.values!.elementAt(i).ttmPPeriodName!.trim();
+
+        //   List<String> str = [];
+
+        //   for (int j = 0; j < ttModel.values!.length; i++) {
+        //     if (code == ttModel.values!.elementAt(j).ttmPPeriodName!.trim()) {
+        //       str.add(
+        //           "${ttModel.values!.elementAt(j).ismSSubjectName!}\n${ttModel.values!.elementAt(j).staffName}");
+        //     }
+        //   }
+        //   pdfTT.add(str);
+        // }
         final TT tt = TT(
           tt: ttModel,
           gridWeeks: gridWeek,

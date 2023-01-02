@@ -51,9 +51,11 @@ class _HwCwHomeState extends State<HwCwHome>
           )).getAppBar(),
       body: TabBarView(
         controller: tabController,
-        children: const [
-          HwCwAssignWork(),
-          HwCwViewWork(),
+        children: [
+          HwCwAssignWork(
+            forHw: widget.forHw,
+          ),
+          const HwCwViewWork(),
         ],
       ),
     );

@@ -18,7 +18,9 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:m_skool_flutter/widget/pgr_widget.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
 import 'dart:ui' as ui;
+import 'package:pdf/widgets.dart' as pw;
 
 class FeeReceiptTab extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -540,6 +542,273 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                                     );
                                                   });
 
+                                              var document = pw.Document();
+                                              List<pw.TableRow> receiptRow = [];
+                                              receiptRow.add(
+                                                pw.TableRow(children: [
+                                                  pw.Container(
+                                                    padding:
+                                                        const pw.EdgeInsets.all(
+                                                            6.0),
+                                                    decoration:
+                                                        pw.BoxDecoration(
+                                                            color: PdfColor
+                                                                .fromHex(
+                                                                    "#E5F4FF")),
+                                                    child: pw.Text("S.No."),
+                                                  ),
+                                                  pw.Container(
+                                                    padding:
+                                                        const pw.EdgeInsets.all(
+                                                            6.0),
+                                                    decoration:
+                                                        pw.BoxDecoration(
+                                                            color: PdfColor
+                                                                .fromHex(
+                                                                    "#E5F4FF")),
+                                                    child:
+                                                        pw.Text("Particulars"),
+                                                  ),
+                                                  pw.Container(
+                                                    padding:
+                                                        const pw.EdgeInsets.all(
+                                                            6.0),
+                                                    decoration:
+                                                        pw.BoxDecoration(
+                                                            color: PdfColor
+                                                                .fromHex(
+                                                                    "#E5F4FF")),
+                                                    child:
+                                                        pw.Text("Installments"),
+                                                  ),
+                                                  pw.Container(
+                                                    padding:
+                                                        const pw.EdgeInsets.all(
+                                                            6.0),
+                                                    decoration:
+                                                        pw.BoxDecoration(
+                                                            color: PdfColor
+                                                                .fromHex(
+                                                                    "#E5F4FF")),
+                                                    child:
+                                                        pw.Text("Concession"),
+                                                  ),
+                                                  pw.Container(
+                                                    padding:
+                                                        const pw.EdgeInsets.all(
+                                                            6.0),
+                                                    decoration:
+                                                        pw.BoxDecoration(
+                                                            color: PdfColor
+                                                                .fromHex(
+                                                                    "#E5F4FF")),
+                                                    child:
+                                                        pw.Text("Paid Amount"),
+                                                  ),
+                                                ]),
+                                              );
+
+                                              receiptRow.addAll(List.generate(
+                                                  feeController
+                                                      .feeReceiptDetailsList
+                                                      .first
+                                                      .values!
+                                                      .length,
+                                                  (index) =>
+                                                      pw.TableRow(children: [
+                                                        pw.Container(
+                                                          padding: const pw
+                                                                  .EdgeInsets.all(
+                                                              6.0),
+                                                          child: pw.Text(
+                                                              "${index + 1}"),
+                                                        ),
+                                                        pw.Container(
+                                                          padding: const pw
+                                                                  .EdgeInsets.all(
+                                                              6.0),
+                                                          child: pw.Text(
+                                                              feeController
+                                                                  .feeReceiptDetailsList
+                                                                  .first
+                                                                  .values!
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .fmHFeeName!),
+                                                        ),
+                                                        pw.Container(
+                                                          padding: const pw
+                                                                  .EdgeInsets.all(
+                                                              6.0),
+                                                          child: pw.Text(
+                                                              feeController
+                                                                  .feeReceiptDetailsList
+                                                                  .first
+                                                                  .values!
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .ftIName!),
+                                                        ),
+                                                        pw.Container(
+                                                          padding: const pw
+                                                                  .EdgeInsets.all(
+                                                              6.0),
+                                                          child: pw.Text(feeController
+                                                              .feeReceiptDetailsList
+                                                              .first
+                                                              .values!
+                                                              .elementAt(index)
+                                                              .ftPConcessionAmt!
+                                                              .toString()),
+                                                        ),
+                                                        pw.Container(
+                                                          padding: const pw
+                                                                  .EdgeInsets.all(
+                                                              6.0),
+                                                          child: pw.Text(
+                                                              feeController
+                                                                  .feeReceiptDetailsList
+                                                                  .first
+                                                                  .values!
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .ftPPaidAmt!
+                                                                  .toString()),
+                                                        ),
+                                                      ])).toList());
+
+                                              document.addPage(
+                                                  pw.MultiPage(build: (_) {
+                                                return List.generate(
+                                                    feeController
+                                                        .feeReceiptDetailsList
+                                                        .length,
+                                                    (index) => pw.Container(
+                                                          child: pw.Column(
+                                                            children: [
+                                                              pw.Wrap(
+                                                                  spacing: 36.0,
+                                                                  runSpacing:
+                                                                      12.0,
+                                                                  children: [
+                                                                    pw.Text(
+                                                                      'Receipt No : ${feeController.feeReceiptDetailsList.elementAt(index).values!.first.fyPReceiptNo}',
+                                                                      style: pw
+                                                                          .TextStyle(
+                                                                        fontSize:
+                                                                            9,
+                                                                        color: PdfColor.fromHex(
+                                                                            "#000000"),
+                                                                      ),
+                                                                    ),
+                                                                    pw.Text(
+                                                                      'Date : ${feeController.feeReceiptDetailsList.elementAt(index).values!.first.fyPDate!.day} - ${feeController.feeReceiptDetailsList.elementAt(index).values!.first.fyPDate!.month} - ${feeController.feeReceiptDetailsList.elementAt(index).values!.first.fyPDate!.year}',
+                                                                      style: pw
+                                                                          .TextStyle(
+                                                                        fontSize:
+                                                                            9,
+                                                                        color: PdfColor.fromHex(
+                                                                            "#000000"),
+                                                                      ),
+                                                                    ),
+                                                                    pw.Text(
+                                                                      'Adm No : ${feeController.feeReceiptDetailsList.elementAt(index).values!.first.admno}',
+                                                                      style: pw
+                                                                          .TextStyle(
+                                                                        fontSize:
+                                                                            9,
+                                                                        color: PdfColor.fromHex(
+                                                                            "#000000"),
+                                                                      ),
+                                                                    ),
+                                                                    pw.Text(
+                                                                      'Session : ${feeController.feeReceiptDetailsList.elementAt(index).values!.first.admno}',
+                                                                      style: pw
+                                                                          .TextStyle(
+                                                                        fontSize:
+                                                                            9,
+                                                                        color: PdfColor.fromHex(
+                                                                            "#000000"),
+                                                                      ),
+                                                                    ),
+                                                                    pw.Text(
+                                                                      'Name : ${feeController.feeReceiptDetailsList.elementAt(index).values!.first.amsTFirstName} ${feeController.feeReceiptDetailsList.elementAt(index).values!.first.amsTLastName}',
+                                                                      style: pw
+                                                                          .TextStyle(
+                                                                        fontSize:
+                                                                            9,
+                                                                        color: PdfColor.fromHex(
+                                                                            "#000000"),
+                                                                      ),
+                                                                    ),
+                                                                    pw.Text(
+                                                                      'Class/sec : ${feeController.feeReceiptDetailsList.elementAt(index).values!.first.classname}/${feeController.feeReceiptDetailsList.elementAt(index).values!.first.sectionname}',
+                                                                      style: pw
+                                                                          .TextStyle(
+                                                                        fontSize:
+                                                                            9,
+                                                                        color: PdfColor.fromHex(
+                                                                            "#000000"),
+                                                                      ),
+                                                                    ),
+                                                                    pw.Text(
+                                                                      'Father Name : ${feeController.feeReceiptDetailsList.elementAt(index).values!.first.fathername}',
+                                                                      style: pw
+                                                                          .TextStyle(
+                                                                        fontSize:
+                                                                            9,
+                                                                        color: PdfColor.fromHex(
+                                                                            "#000000"),
+                                                                      ),
+                                                                    ),
+                                                                    pw.Text(
+                                                                      'Type : ${feeController.feeReceiptDetailsList.elementAt(index).values!.first.fMCCConcessionName}',
+                                                                      style: pw
+                                                                          .TextStyle(
+                                                                        fontSize:
+                                                                            9,
+                                                                        color: PdfColor.fromHex(
+                                                                            "#000000"),
+                                                                      ),
+                                                                    ),
+                                                                    pw.Text(
+                                                                      'TransactionId : ${feeController.feeReceiptDetailsList.elementAt(index).values!.first.fypTransactionId}',
+                                                                      style: pw
+                                                                          .TextStyle(
+                                                                        fontSize:
+                                                                            9,
+                                                                        color: PdfColor.fromHex(
+                                                                            "#000000"),
+                                                                      ),
+                                                                    ),
+                                                                    pw.Text(
+                                                                      'Duration : ${feeController.feeReceiptDetailsList.elementAt(index).values!.first.admno}',
+                                                                      style: pw
+                                                                          .TextStyle(
+                                                                        fontSize:
+                                                                            9,
+                                                                        color: PdfColor.fromHex(
+                                                                            "#000000"),
+                                                                      ),
+                                                                    ),
+                                                                  ]),
+                                                              pw.SizedBox(
+                                                                  height: 32.0),
+                                                              pw.Table(
+                                                                  border:
+                                                                      pw.TableBorder
+                                                                          .all(
+                                                                    color: PdfColor
+                                                                        .fromHex(
+                                                                            "#000000"),
+                                                                  ),
+                                                                  children:
+                                                                      receiptRow),
+                                                            ],
+                                                          ),
+                                                        ));
+                                              }));
+
                                               RenderRepaintBoundary boundary =
                                                   _receiptKey.currentContext!
                                                           .findRenderObject()
@@ -566,6 +835,13 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                                   "FR-${DateTime.now().microsecondsSinceEpoch}.png";
                                               File file =
                                                   File('$path/$fileName');
+                                              String receiptName =
+                                                  "FR${DateTime.now().microsecondsSinceEpoch}.pdf";
+                                              File receipt =
+                                                  File('$path/$receiptName');
+                                              await receipt.writeAsBytes(
+                                                  await document.save(),
+                                                  flush: true);
 
                                               await file.writeAsBytes(pngBytes,
                                                   flush: true);

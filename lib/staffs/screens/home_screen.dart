@@ -237,6 +237,29 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                       );
                       return;
                     }
+                    if (widget
+                            .loginSuccessModel.staffmobileappprivileges!.values!
+                            .elementAt(index)
+                            .pagename! ==
+                        "Homework") {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) {
+                            return HwCwHome(
+                              loginSuccessModel: widget.loginSuccessModel,
+                              mskoolController: widget.mskoolController,
+                              title: widget.loginSuccessModel
+                                  .staffmobileappprivileges!.values!
+                                  .elementAt(index)
+                                  .pagename!,
+                              forHw: true,
+                            );
+                          },
+                        ),
+                      );
+                      return;
+                    }
                   },
                   title: Text(widget
                       .loginSuccessModel.staffmobileappprivileges!.values!

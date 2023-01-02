@@ -18,8 +18,10 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'package:pdf/pdf.dart';
 import 'dart:ui' as ui;
+import 'package:pdf/widgets.dart' as pw;
+// import 'package:pdf/pdf.dart';
 
 class WeeklyTT extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -37,6 +39,8 @@ final GlobalKey _globalKey = GlobalKey();
 final GlobalKey _periodKey = GlobalKey();
 
 class _WeeklyTTState extends State<WeeklyTT> {
+  final List<List<String>> pdfTT = RxList();
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<TT>(
@@ -44,7 +48,8 @@ class _WeeklyTTState extends State<WeeklyTT> {
             miId: widget.loginSuccessModel.mIID!,
             asmayId: widget.loginSuccessModel.asmaYId!,
             asmtId: widget.loginSuccessModel.amsTId!,
-            base: baseUrlFromInsCode("portal", widget.mskoolController)),
+            base: baseUrlFromInsCode("portal", widget.mskoolController),
+            pdfTT: pdfTT),
         builder: ((context, snapshot) {
           if (snapshot.hasData) {
             return Column(
@@ -255,11 +260,17 @@ class _WeeklyTTState extends State<WeeklyTT> {
                             return Dialog(
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(24.0)),
-                                child: const AnimatedProgressWidget(
-                                    title: "Saving File",
-                                    desc:
-                                        "Please wait we are saving file in your gallery",
-                                    animationPath: "assets/json/default.json"));
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: const [
+                                    AnimatedProgressWidget(
+                                        title: "Saving File",
+                                        desc:
+                                            "Please wait we are saving file in your gallery",
+                                        animationPath:
+                                            "assets/json/default.json"),
+                                  ],
+                                ));
                           });
 
                       RenderRepaintBoundary periodBoundary =
@@ -280,6 +291,120 @@ class _WeeklyTTState extends State<WeeklyTT> {
                           format: ui.ImageByteFormat.png);
                       var pngBytes = byteData!.buffer.asUint8List();
 
+                      final pdf = pw.Document();
+
+                      // var img = PdfImage.file(pdf.document, bytes: pngBytes);
+
+                      List<pw.TableRow> ttRow = [
+                        pw.TableRow(
+                          children: List.generate(
+                            snapshot.data!.gridWeeks.values!.length,
+                            (index) => pw.Container(
+                              alignment: pw.Alignment.center,
+                              padding: const pw.EdgeInsets.all(12.0),
+                              decoration: pw.BoxDecoration(
+                                  color: PdfColor.fromHex("#1E38FC")),
+                              child: pw.Text(
+                                snapshot.data!.gridWeeks.values!
+                                    .elementAt(index)
+                                    .ttmDDayCode!,
+                                style: pw.TextStyle(
+                                  color: PdfColor.fromHex("#FFFFFF"),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ];
+
+                      ttRow.addAll(List.generate(
+                        snapshot.data!.periodsList.values!.length,
+                        (index) => pw.TableRow(
+                          children: List.generate(
+                            pdfTT.elementAt(index).length,
+                            (index2) => pw.Container(
+                                alignment: pw.Alignment.center,
+                                padding: const pw.EdgeInsets.all(12.0),
+                                color: PdfColor.fromInt(
+                                  timetablePdfSubColor.elementAt(
+                                    Random().nextInt(12),
+                                  ),
+                                ).shade(0.01),
+                                child: pw.Text(
+                                    pdfTT.elementAt(index).elementAt(index2))),
+                          ),
+                        ),
+                      ).toList());
+
+                      pdf.addPage(pw.Page(build: (_) {
+                        return pw.Row(
+                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                            children: [
+                              pw.Column(children: [
+                                pw.Container(
+                                    width: 80,
+                                    alignment: pw.Alignment.center,
+                                    padding: const pw.EdgeInsets.all(12.0),
+                                    decoration: pw.BoxDecoration(
+                                      color: PdfColor.fromHex("#1E38FC"),
+                                    ),
+                                    child: pw.Text(
+                                      "Periods",
+                                      style: pw.TextStyle(
+                                          color: PdfColor.fromHex("#FFFFFF")),
+                                    )),
+                                pw.ListView.builder(
+                                    itemBuilder: (context, index) {
+                                      return pw.Container(
+                                        width: 80,
+                                        alignment: pw.Alignment.center,
+                                        padding: const pw.EdgeInsets.all(12.0),
+                                        decoration: pw.BoxDecoration(
+                                          color: PdfColor.fromHex(
+                                              timetablePdfPeriodColor
+                                                  .elementAt(index)),
+                                        ),
+                                        child: pw.Text(
+                                          "Period ${snapshot.data!.periodsList.values!.elementAt(index).ttmPPeriodName!}",
+                                          style: pw.TextStyle(
+                                              fontSize: 12.0,
+                                              color:
+                                                  PdfColor.fromHex("#FFFFFF")),
+                                        ),
+                                      );
+                                    },
+                                    itemCount: snapshot
+                                        .data!.periodsList.values!.length),
+                              ]),
+                              pw.Expanded(
+                                child: pw.Table(children: ttRow),
+                              )
+                              //     child: pw.Table(children: [
+                              //   // pw.TableRow(
+                              //   //   children: List.generate(
+                              //   //     snapshot.data!.gridWeeks.values!.length,
+                              //   //     (index) => pw.Container(
+                              //   //       alignment: pw.Alignment.center,
+                              //   //       padding: const pw.EdgeInsets.all(12.0),
+                              //   //       decoration: pw.BoxDecoration(
+                              //   //           color: PdfColor.fromHex("#1E38FC")),
+                              //   //       child: pw.Text(
+                              //   //         snapshot.data!.gridWeeks.values!
+                              //   //             .elementAt(index)
+                              //   //             .ttmDDayCode!,
+                              //   //         style: pw.TextStyle(
+                              //   //           color: PdfColor.fromHex("#FFFFFF"),
+                              //   //         ),
+                              //   //       ),
+                              //   //     ),
+                              //   //   ),
+                              //   // ),
+
+                              //   //pw.TableRow(children: ),
+                              //   //pw.TableRow(children: )
+                              // ]))
+                            ]);
+                      }));
                       // final BytesBuilder builder = BytesBuilder();
                       // builder.add(periodBytes);
                       // builder.add(pngBytes);
@@ -290,18 +415,18 @@ class _WeeklyTTState extends State<WeeklyTT> {
 
                       //var bs64 = base64Encode(pngBytes);
 
-                      PdfDocument document = PdfDocument();
-                      PdfPage page = document.pages.add();
+                      // PdfDocument document = PdfDocument();
+                      // PdfPage page = document.pages.add();
 
-                      final PdfImage img = PdfBitmap(
-                        pngBytes,
-                      );
-                      page.graphics.drawImage(
-                          img,
-                          Rect.fromLTWH(
-                              0, 0, page.size.width, page.size.width));
+                      // final PdfImage img = PdfBitmap(
+                      //   pngBytes,
+                      // );
+                      // // page.graphics.drawImage(
+                      // //     img,
+                      // //     Rect.fromLTWH(0, 0, img.width.toDouble(),
+                      // //         img.height.toDouble()));
 
-                      List<int> bytes = await document.save();
+                      // List<int> bytes = await document.save();
 
                       // document.dispose();
                       List<Directory>? directory =
@@ -319,7 +444,7 @@ class _WeeklyTTState extends State<WeeklyTT> {
                       File file = File('$path/$fileName');
                       File file2 = File('$path/$fileName2');
 
-                      await file.writeAsBytes(bytes, flush: true);
+                      await file.writeAsBytes(await pdf.save(), flush: true);
                       await file2.writeAsBytes(pngBytes, flush: true);
                       // Fluttertoast.showToast(
                       //     msg: "File saved at ${file.absolute.path}");

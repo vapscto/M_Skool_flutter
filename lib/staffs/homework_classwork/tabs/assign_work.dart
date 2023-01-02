@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/widget/attach_files.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/widget/references_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class HwCwAssignWork extends StatefulWidget {
-  const HwCwAssignWork({super.key});
+  final bool forHw;
+  const HwCwAssignWork({super.key, required this.forHw});
 
   @override
   State<HwCwAssignWork> createState() => _HwCwAssignWorkState();
 }
 
 class _HwCwAssignWorkState extends State<HwCwAssignWork> {
+  TextEditingController text = TextEditingController();
+
   final List<String> sessions = [
     "2023",
     "2022",
@@ -33,6 +40,8 @@ class _HwCwAssignWorkState extends State<HwCwAssignWork> {
   String secSelectedValue = "A";
   String clsSelectedValue = "VIII";
   String subSelectedValue = "Biology";
+
+  RxBool wantToProvideReference = RxBool(false);
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -323,80 +332,8 @@ class _HwCwAssignWorkState extends State<HwCwAssignWork> {
           const SizedBox(
             height: 32.0,
           ),
-          Row(
-            children: [
-              Expanded(
-                child: CustomContainer(
-                  child: TextField(
-                    style: Theme.of(context).textTheme.titleSmall,
-                    readOnly: true,
-                    //maxLines: 4,
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        onPressed: () {},
-                        icon: SvgPicture.asset(
-                          'assets/svg/calendar_icon.svg',
-                          color: const Color(0xFF3E78AA),
-                          height: 22.0,
-                        ),
-                      ),
-                      contentPadding:
-                          const EdgeInsets.only(top: 48.0, left: 12),
-                      border: const OutlineInputBorder(),
-                      label: Container(
-                        margin: const EdgeInsets.only(bottom: 5),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12.0, vertical: 8.0),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24.0),
-                            color: const Color(0xFFE5F3FF)),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(
-                              "assets/svg/calendar_icon.svg",
-                              color: const Color(0xFF3E78AA),
-                              height: 24.0,
-                            ),
-                            const SizedBox(
-                              width: 6.0,
-                            ),
-                            Text(
-                              " Start Date ",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .merge(
-                                    const TextStyle(
-                                      fontSize: 20.0,
-                                      color: Color(0xFF3E78AA),
-                                    ),
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      hintText: 'Select Date',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        ),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 12.0,
-              ),
-              Expanded(
-                child: CustomContainer(
+          widget.forHw
+              ? CustomContainer(
                   child: TextField(
                     readOnly: true,
                     style: Theme.of(context).textTheme.titleSmall,
@@ -421,27 +358,27 @@ class _HwCwAssignWorkState extends State<HwCwAssignWork> {
                             horizontal: 12.0, vertical: 8.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(24.0),
-                            color: const Color(0xFFE5F3FF)),
+                            color: const Color(0xFFEEE8FF)),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             SvgPicture.asset(
                               "assets/svg/calendar_icon.svg",
-                              color: const Color(0xFF3E78AA),
+                              color: const Color(0xFF6F58B4),
                               height: 24.0,
                             ),
                             const SizedBox(
                               width: 6.0,
                             ),
                             Text(
-                              " End Date ",
+                              " Homework Date ",
                               style: Theme.of(context)
                                   .textTheme
                                   .labelMedium!
                                   .merge(
                                     const TextStyle(
                                         fontSize: 20.0,
-                                        color: Color(0xFF3E78AA)),
+                                        color: Color(0xFF6F58B4)),
                                   ),
                             ),
                           ],
@@ -461,17 +398,157 @@ class _HwCwAssignWorkState extends State<HwCwAssignWork> {
                       ),
                     ),
                   ),
+                )
+              : Row(
+                  children: [
+                    Expanded(
+                      child: CustomContainer(
+                        child: TextField(
+                          style: Theme.of(context).textTheme.titleSmall,
+                          readOnly: true,
+                          //maxLines: 4,
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: () {},
+                              icon: SvgPicture.asset(
+                                'assets/svg/calendar_icon.svg',
+                                color: const Color(0xFF3E78AA),
+                                height: 22.0,
+                              ),
+                            ),
+                            contentPadding:
+                                const EdgeInsets.only(top: 48.0, left: 12),
+                            border: const OutlineInputBorder(),
+                            label: Container(
+                              margin: const EdgeInsets.only(bottom: 5),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12.0, vertical: 8.0),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(24.0),
+                                  color: const Color(0xFFE5F3FF)),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/svg/calendar_icon.svg",
+                                    color: const Color(0xFF3E78AA),
+                                    height: 24.0,
+                                  ),
+                                  const SizedBox(
+                                    width: 6.0,
+                                  ),
+                                  Text(
+                                    " Start Date ",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
+                                        .merge(
+                                          const TextStyle(
+                                            fontSize: 20.0,
+                                            color: Color(0xFF3E78AA),
+                                          ),
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            hintText: 'Select Date',
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 12.0,
+                    ),
+                    Expanded(
+                      child: CustomContainer(
+                        child: TextField(
+                          readOnly: true,
+                          style: Theme.of(context).textTheme.titleSmall,
+
+                          //maxLines: 4,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            contentPadding:
+                                const EdgeInsets.only(top: 48.0, left: 12),
+                            suffixIcon: IconButton(
+                              onPressed: () {},
+                              icon: SvgPicture.asset(
+                                'assets/svg/calendar_icon.svg',
+                                color: const Color(0xFF3E78AA),
+                                height: 22.0,
+                              ),
+                            ),
+                            border: const OutlineInputBorder(),
+                            label: Container(
+                              margin: const EdgeInsets.only(bottom: 5),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12.0, vertical: 8.0),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(24.0),
+                                  color: const Color(0xFFE5F3FF)),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/svg/calendar_icon.svg",
+                                    color: const Color(0xFF3E78AA),
+                                    height: 24.0,
+                                  ),
+                                  const SizedBox(
+                                    width: 6.0,
+                                  ),
+                                  Text(
+                                    " End Date ",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
+                                        .merge(
+                                          const TextStyle(
+                                              fontSize: 20.0,
+                                              color: Color(0xFF3E78AA)),
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            hintText: 'Select Date',
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
           const SizedBox(
             height: 32.0,
           ),
           CustomContainer(
             child: TextField(
               style: Theme.of(context).textTheme.titleSmall,
-              readOnly: true,
+              readOnly: false,
+
               //maxLines: 4,
               decoration: InputDecoration(
                 // suffixIcon: IconButton(
@@ -482,6 +559,7 @@ class _HwCwAssignWorkState extends State<HwCwAssignWork> {
                 //     height: 22.0,
                 //   ),
                 // ),
+                isDense: true,
                 contentPadding: const EdgeInsets.only(top: 48.0, left: 12),
                 border: const OutlineInputBorder(),
                 label: Container(
@@ -515,6 +593,7 @@ class _HwCwAssignWorkState extends State<HwCwAssignWork> {
                   ),
                 ),
                 hintText: 'Enter Topic',
+
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
@@ -529,6 +608,160 @@ class _HwCwAssignWorkState extends State<HwCwAssignWork> {
               ),
             ),
           ),
+          const SizedBox(
+            height: 32.0,
+          ),
+          CustomContainer(
+            child: TextField(
+              style: Theme.of(context).textTheme.titleSmall,
+              readOnly: false,
+              maxLines: widget.forHw ? 4 : null,
+              decoration: InputDecoration(
+                // suffixIcon: IconButton(
+                //   onPressed: () {},
+                //   icon: SvgPicture.asset(
+                //     'assets/svg/calendar_icon.svg',
+                //     color: const Color(0xFFC1B538),
+                //     height: 22.0,
+                //   ),
+                // ),
+                isDense: true,
+                contentPadding: const EdgeInsets.only(top: 48.0, left: 12),
+                border: const OutlineInputBorder(),
+                label: Container(
+                  margin: const EdgeInsets.only(bottom: 5),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0, vertical: 8.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24.0),
+                      color: const Color(0xFFDFFBFE)),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SvgPicture.asset(
+                        "assets/svg/chapter.svg",
+                        color: const Color(0xFF28B6C8),
+                        height: 20.0,
+                      ),
+                      const SizedBox(
+                        width: 6.0,
+                      ),
+                      Text(
+                        widget.forHw ? " Assignment " : " Chapter ",
+                        style: Theme.of(context).textTheme.labelMedium!.merge(
+                              const TextStyle(
+                                fontSize: 20.0,
+                                color: Color(0xFF28B6C8),
+                              ),
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+                hintText: 'Enter Chapter name',
+
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                  ),
+                ),
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 32.0,
+          ),
+          widget.forHw
+              ? const SizedBox()
+              : CustomContainer(
+                  child: TextField(
+                    style: Theme.of(context).textTheme.titleSmall,
+                    readOnly: false,
+                    maxLines: 4,
+                    decoration: InputDecoration(
+                      // suffixIcon: IconButton(
+                      //   onPressed: () {},
+                      //   icon: SvgPicture.asset(
+                      //     'assets/svg/calendar_icon.svg',
+                      //     color: const Color(0xFFC1B538),
+                      //     height: 22.0,
+                      //   ),
+                      // ),
+                      isDense: true,
+                      contentPadding:
+                          const EdgeInsets.only(top: 48.0, left: 12),
+                      border: const OutlineInputBorder(),
+                      label: Container(
+                        margin: const EdgeInsets.only(bottom: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12.0, vertical: 8.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24.0),
+                            color: const Color(0xFFFFEBEA)),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SvgPicture.asset(
+                              "assets/svg/content.svg",
+                              color: const Color(0xFFFF6F67),
+                              height: 20.0,
+                            ),
+                            const SizedBox(
+                              width: 6.0,
+                            ),
+                            Text(
+                              " Content ",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .merge(
+                                    const TextStyle(
+                                      fontSize: 20.0,
+                                      color: Color(0xFFFF6F67),
+                                    ),
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      hintText: 'Provide Chapter content or insight\'s',
+
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                        ),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+          const SizedBox(
+            height: 16.0,
+          ),
+          ReferencesWidget(wantToProvideReference: wantToProvideReference),
+          const SizedBox(
+            height: 16.0,
+          ),
+          const AttachedFiles(),
+          const SizedBox(
+            height: 32.0,
+          ),
+          MSkollBtn(
+            title: "Save Details",
+            onPress: () {},
+            size: Size(Get.width * 0.5, 50),
+          )
         ],
       ),
     );
