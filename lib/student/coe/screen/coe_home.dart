@@ -330,6 +330,7 @@ class _CoeHomeState extends State<CoeHome> {
                                       ),
                                       ListView.separated(
                                         shrinkWrap: true,
+                                        reverse: true,
                                         physics:
                                             const NeverScrollableScrollPhysics(),
                                         itemBuilder: (context, index) {

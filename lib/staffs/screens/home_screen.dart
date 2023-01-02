@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/screen/hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
 import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
@@ -185,6 +186,29 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                         MaterialPageRoute(
                           builder: (_) {
                             return VerifyHwCwHome(
+                              loginSuccessModel: widget.loginSuccessModel,
+                              mskoolController: widget.mskoolController,
+                              title: widget.loginSuccessModel
+                                  .staffmobileappprivileges!.values!
+                                  .elementAt(index)
+                                  .pagename!,
+                              forHw: false,
+                            );
+                          },
+                        ),
+                      );
+                      return;
+                    }
+                    if (widget
+                            .loginSuccessModel.staffmobileappprivileges!.values!
+                            .elementAt(index)
+                            .pagename! ==
+                        "Classwork") {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) {
+                            return HwCwHome(
                               loginSuccessModel: widget.loginSuccessModel,
                               mskoolController: widget.mskoolController,
                               title: widget.loginSuccessModel
