@@ -341,6 +341,54 @@ List<Color> timetablePeriodColor = const [
   Color.fromARGB(255, 150, 14, 127),
   Color.fromARGB(255, 114, 24, 150),
 ];
+
+List<int> timetableLLPeriodColor = const [
+  0xFFDBB3F3,
+  0xFFB2E7EE,
+  0xFF9CDDBE,
+  0xFFDDD695,
+  0xFFE6C6A3,
+  0xFFE0A3BF,
+  0xFFC9DF99,
+  0xFF96DADD,
+  0xFFDAA9A6,
+  0xFFBCDFA8,
+  0xFFAAD2DA,
+  0xFFDDA8D4,
+  0xFFCCA8DA,
+];
+
+List<String> timetablePdfPeriodColor = const [
+  "#9900F0",
+  "#32E1F7",
+  "#4ED092",
+  "#FFE500",
+  "#FF9621",
+  "#FF60A8",
+  "#A9D252",
+  "#09B4BD",
+  "#FF6F67",
+  "#54C513",
+  "#0C7E92",
+  "#960E7F",
+  "#721896",
+];
+List<int> timetablePdfSubColor = const [
+  0x3C9800F0,
+  0x4432E0F7,
+  0x524ED091,
+  0x52FFE600,
+  0x52FF9721,
+  0x4EFF60A7,
+  0x57AAD252,
+  0x5209B4BD,
+  0x50FF6F67,
+  0x4454C513,
+  0x420C7E92,
+  0x36960E7F,
+  0x34721896,
+];
+
 Color getDashBoardIconByName(String title) {
   switch (title) {
     case "english":

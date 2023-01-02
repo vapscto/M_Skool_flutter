@@ -18,7 +18,9 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/pgr_widget.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
 import 'dart:ui' as ui;
+import 'package:pdf/widgets.dart' as pw;
 
 class DailyTT extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -345,6 +347,61 @@ class _ShowTTState extends State<ShowTT> {
                                   "tt${DateTime.now().microsecondsSinceEpoch}.png";
                               File file = File('$path/$fileName');
 
+                              var document = pw.Document();
+                              document.addPage(pw.Page(build: (_) {
+                                return pw.ListView.separated(
+                                    itemBuilder: (_, index) {
+                                      return pw.Container(
+                                        decoration: pw.BoxDecoration(
+                                            borderRadius:
+                                                pw.BorderRadius.circular(8.0),
+                                            color: PdfColor.fromInt(
+                                                timetableLLPeriodColor
+                                                    .elementAt(index))),
+                                        child: pw.Row(children: [
+                                          pw.Container(
+                                            width: 80,
+                                            height: 80,
+                                            decoration: pw.BoxDecoration(
+                                                borderRadius:
+                                                    pw.BorderRadius.circular(
+                                                        8.0),
+                                                color: PdfColor.fromHex(
+                                                    timetablePdfPeriodColor
+                                                        .elementAt(index))),
+                                            child: pw.Center(
+                                              child: pw.Text(
+                                                "P${index + 1}",
+                                                style: pw.TextStyle(
+                                                  color: PdfColor.fromHex(
+                                                    "#FFFFFF",
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          pw.SizedBox(
+                                            width: 12.0,
+                                          ),
+                                          pw.Expanded(
+                                            child: pw.Text(
+                                              "${snapshot.data!.elementAt(index).iSMSSubjectName} | ${snapshot.data!.elementAt(index).tTMSABAbbreviation} | ${snapshot.data!.elementAt(index).tTMDPTStartTime}",
+                                            ),
+                                          )
+                                        ]),
+                                      );
+                                    },
+                                    separatorBuilder: (_, index) {
+                                      return pw.SizedBox(height: 6.0);
+                                    },
+                                    itemCount: snapshot.data!.length);
+                              }));
+                              String fileName2 =
+                                  "tt${DateTime.now().microsecondsSinceEpoch}.pdf";
+                              File file2 = File('$path/$fileName2');
+
+                              await file2.writeAsBytes(await document.save(),
+                                  flush: true);
                               await file.writeAsBytes(pngBytes, flush: true);
 
                               await GallerySaver.saveImage(file.path);
