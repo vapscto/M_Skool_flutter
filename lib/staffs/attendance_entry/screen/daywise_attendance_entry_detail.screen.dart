@@ -3,16 +3,16 @@ import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 
-class MonthWiseAttendanceEntryDetailScreen extends StatefulWidget {
-  const MonthWiseAttendanceEntryDetailScreen({super.key});
+class DayWiseAttendanceEntryDetailScreen extends StatefulWidget {
+  const DayWiseAttendanceEntryDetailScreen({super.key});
 
   @override
-  State<MonthWiseAttendanceEntryDetailScreen> createState() =>
-      _MonthWiseAttendanceEntryDetailScreenState();
+  State<DayWiseAttendanceEntryDetailScreen> createState() =>
+      _DayWiseAttendanceEntryDetailScreenState();
 }
 
-class _MonthWiseAttendanceEntryDetailScreenState
-    extends State<MonthWiseAttendanceEntryDetailScreen> {
+class _DayWiseAttendanceEntryDetailScreenState
+    extends State<DayWiseAttendanceEntryDetailScreen> {
   bool selectAll = false;
   @override
   Widget build(BuildContext context) {
@@ -83,8 +83,33 @@ class _MonthWiseAttendanceEntryDetailScreenState
           padding:
               const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 100),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(
+                height: 33,
+                child: CheckboxListTile(
+                  checkboxShape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  dense: true,
+                  activeColor: Theme.of(context).primaryColor,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                  visualDensity: const VisualDensity(horizontal: -4.0),
+                  title: Text(
+                    "Select All",
+                    style: Theme.of(context).textTheme.labelSmall!.merge(
+                        const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                            letterSpacing: 0.3)),
+                  ),
+                  value: selectAll,
+                  onChanged: (value) {
+                    setState(() {
+                      selectAll = value!;
+                    });
+                  },
+                ),
+              ),
               const SizedBox(height: 20),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
@@ -100,8 +125,10 @@ class _MonthWiseAttendanceEntryDetailScreenState
                       dataRowHeight: 37,
                       headingRowHeight: 40,
                       horizontalMargin: 8,
-                      columnSpacing: 33,
+                      columnSpacing: 30,
                       dividerThickness: 1,
+                      showCheckboxColumn: true,
+
                       headingTextStyle: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.w700),
                       border: TableBorder.all(
@@ -115,10 +142,13 @@ class _MonthWiseAttendanceEntryDetailScreenState
                       columns: const [
                         DataColumn(
                           numeric: true,
-                          label: Text(
-                            'S.No',
-                            style: TextStyle(
-                              fontSize: 14,
+                          label: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'S.No',
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
                             ),
                           ),
                         ),
@@ -127,6 +157,7 @@ class _MonthWiseAttendanceEntryDetailScreenState
                             alignment: Alignment.center,
                             child: Text(
                               'Name',
+                              textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontSize: 14),
                             ),
@@ -138,7 +169,9 @@ class _MonthWiseAttendanceEntryDetailScreenState
                             child: Text(
                               'Roll No',
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 14),
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
                             ),
                           ),
                         ),
@@ -146,8 +179,7 @@ class _MonthWiseAttendanceEntryDetailScreenState
                           label: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              'Class\nTaken',
-                              textAlign: TextAlign.center,
+                              'Adm. No',
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 14,
@@ -159,7 +191,19 @@ class _MonthWiseAttendanceEntryDetailScreenState
                           label: Align(
                             alignment: Alignment.center,
                             child: Text(
-                              'Class\nAttended',
+                              'Attendance',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Twice\nAttendance',
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -174,47 +218,48 @@ class _MonthWiseAttendanceEntryDetailScreenState
                         var i = index + 1;
                         return DataRow(
                           cells: [
-                            DataCell(
-                              Align(
+                            DataCell(Align(
                                 alignment: Alignment.center,
-                                child: Text(
-                                  '$i',
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
+                                child: Text('$i',
+                                    overflow: TextOverflow.ellipsis))),
                             const DataCell(
-                              Text(
-                                'Ankush Verma',
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                              Text('Ankush Verma',
+                                  overflow: TextOverflow.ellipsis),
                             ),
                             DataCell(
                               Align(
                                 alignment: Alignment.center,
-                                child: Text(
-                                  '$i',
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                                child: Text(' $i',
+                                    overflow: TextOverflow.ellipsis),
                               ),
                             ),
                             const DataCell(
                               Align(
                                 alignment: Alignment.center,
-                                child: Text(
-                                  '25',
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                                child: Text('2013-410',
+                                    overflow: TextOverflow.ellipsis),
                               ),
                             ),
                             DataCell(
                               Align(
                                 alignment: Alignment.center,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TextFormField(
-                                      textAlign: TextAlign.center),
-                                ),
+                                child: Checkbox(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    value: false,
+                                    onChanged: (_) {}),
+                              ),
+                            ),
+                            DataCell(
+                              Align(
+                                alignment: Alignment.center,
+                                child: Checkbox(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    value: false,
+                                    onChanged: (_) {}),
                               ),
                             ),
                           ],
