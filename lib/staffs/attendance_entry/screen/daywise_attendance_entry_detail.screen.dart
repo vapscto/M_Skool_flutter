@@ -126,14 +126,14 @@ class _DayWiseAttendanceEntryDetailScreenState
                       headingRowHeight: 40,
                       horizontalMargin: 8,
                       columnSpacing: 30,
-                      dividerThickness: 1,
+                      dividerThickness: 0.1,
                       showCheckboxColumn: true,
 
                       headingTextStyle: const TextStyle(
                           color: Colors.white, fontWeight: FontWeight.w700),
                       border: TableBorder.all(
                         borderRadius: BorderRadius.circular(12),
-                        width: 0.5,
+                        width: 0.6,
                         color: Colors.grey.withOpacity(0.5),
                       ),
                       // showBottomBorder: true,
