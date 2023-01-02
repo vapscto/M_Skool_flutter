@@ -80,12 +80,15 @@ class _PeriodWiseAttendanceEntryDetailScreenState
       floatingActionButton: const HomeFab(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          padding:
+              const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 100),
           child: Column(
             children: [
               SizedBox(
                 height: 33,
                 child: CheckboxListTile(
+                  checkboxShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
                   dense: true,
                   activeColor: Theme.of(context).primaryColor,
                   contentPadding: const EdgeInsets.symmetric(horizontal: 8),
@@ -108,112 +111,136 @@ class _PeriodWiseAttendanceEntryDetailScreenState
               ),
               const SizedBox(height: 20),
               SizedBox(
-                width: double.infinity,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: DataTable(
-                    dataTextStyle: const TextStyle(
-                        fontSize: 12,
-                        color: Color.fromRGBO(0, 0, 0, 0.95),
-                        fontWeight: FontWeight.w500),
-                    dataRowHeight: 37,
-                    headingRowHeight: 40,
-                    horizontalMargin: 8,
-                    columnSpacing: 10,
-                    dividerThickness: 1,
-                    headingTextStyle: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w700),
-                    border: TableBorder.all(
-                        borderRadius: BorderRadius.circular(12), width: 0.5),
-                    // showBottomBorder: true,
-                    headingRowColor: MaterialStateProperty.all(
-                        Theme.of(context).primaryColor),
-                    columns: const [
-                      DataColumn(
-                        numeric: true,
-                        label: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'S.No',
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '  Name',
-                            style: TextStyle(fontSize: 14),
-                          ),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '  Roll No',
-                            style: TextStyle(fontSize: 14),
-                          ),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '  Adm. No',
-                            style: TextStyle(
-                                fontSize: 14, overflow: TextOverflow.clip),
-                          ),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '  Attendance',
-                            style: TextStyle(
-                                fontSize: 14, overflow: TextOverflow.clip),
-                          ),
-                        ),
-                      ),
-                    ],
+                width: MediaQuery.of(context).size.width,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: DataTable(
+                      dataTextStyle: const TextStyle(
+                          fontSize: 12,
+                          color: Color.fromRGBO(0, 0, 0, 0.95),
+                          fontWeight: FontWeight.w500),
+                      dataRowHeight: 37,
+                      headingRowHeight: 40,
+                      horizontalMargin: 8,
+                      columnSpacing: 25,
+                      dividerThickness: 1,
+                      showCheckboxColumn: true,
 
-                    rows: List.generate(10, (index) {
-                      var i = index + 1;
-                      return DataRow(
-                        cells: [
-                          DataCell(Align(
-                              alignment: Alignment.center, child: Text('$i'))),
-                          const DataCell(
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text('  Ankush'),
+                      headingTextStyle: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w700),
+                      border: TableBorder.all(
+                        borderRadius: BorderRadius.circular(12),
+                        width: 0.5,
+                        color: Colors.grey.withOpacity(0.5),
+                      ),
+                      // showBottomBorder: true,
+                      headingRowColor: MaterialStateProperty.all(
+                          Theme.of(context).primaryColor),
+                      columns: const [
+                        DataColumn(
+                          numeric: true,
+                          label: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'S.No',
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
                             ),
                           ),
-                          DataCell(
-                            Align(
-                              alignment: Alignment.center,
-                              child: Text(' $i'),
+                        ),
+                        DataColumn(
+                          label: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Name',
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 14),
                             ),
                           ),
-                          const DataCell(
-                            Align(
-                              alignment: Alignment.center,
-                              child: Text('  2013-410'),
+                        ),
+                        DataColumn(
+                          label: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Roll No',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
                             ),
                           ),
-                          DataCell(
-                            Align(
-                              alignment: Alignment.center,
-                              child: Checkbox(value: false, onChanged: (_) {}),
+                        ),
+                        DataColumn(
+                          label: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Adm. No',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
                             ),
                           ),
-                        ],
-                      );
-                    }),
+                        ),
+                        DataColumn(
+                          label: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Attendance',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+
+                      rows: List.generate(10, (index) {
+                        var i = index + 1;
+                        return DataRow(
+                          cells: [
+                            DataCell(Align(
+                                alignment: Alignment.center,
+                                child: Text('$i',
+                                    overflow: TextOverflow.ellipsis))),
+                            const DataCell(
+                              Text('Ankush Verma',
+                                  overflow: TextOverflow.ellipsis),
+                            ),
+                            DataCell(
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text(' $i',
+                                    overflow: TextOverflow.ellipsis),
+                              ),
+                            ),
+                            const DataCell(
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text('2013-410',
+                                    overflow: TextOverflow.ellipsis),
+                              ),
+                            ),
+                            DataCell(
+                              Align(
+                                alignment: Alignment.center,
+                                child: Checkbox(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    value: false,
+                                    onChanged: (_) {}),
+                              ),
+                            ),
+                          ],
+                        );
+                      }),
+                    ),
                   ),
                 ),
               ),
