@@ -68,10 +68,10 @@ class _InboxTabScreenState extends State<InboxTabScreen> {
                       mskoolController: widget.mskoolController,
                       data: inboxController.inboxList[index],
                       // isGroup: Random().nextBool(),
-                      isSeen:
-                          inboxController.inboxList[index].istintReadFlg == 1
-                              ? true
-                              : false,
+                      // isSeen:
+                      //     inboxController.inboxList[index].istintReadFlg == 1
+                      //         ? true
+                      //         : false,
                       // color: Color.fromRGBO(Random().nextInt(255),
                       //     Random().nextInt(255), Random().nextInt(255), 1),
                     );

@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/staffs/marks_entry/screen/marks_entry_detail_screen.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/screen/periodwise_attendance_entry_detail_screen.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
+import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
-import 'package:video_player/video_player.dart';
 
-import '../../../widget/custom_back_btn.dart';
-
-class MarksEntryHome extends StatefulWidget {
-  const MarksEntryHome({super.key});
+class PeriodWiseAttendanceEntryHomeScreen extends StatefulWidget {
+  const PeriodWiseAttendanceEntryHomeScreen({super.key});
 
   @override
-  State<MarksEntryHome> createState() => _MarksEntryHomeState();
+  State<PeriodWiseAttendanceEntryHomeScreen> createState() =>
+      _PeriodWiseAttendanceEntryHomeScreenState();
 }
 
-class _MarksEntryHomeState extends State<MarksEntryHome> {
+class _PeriodWiseAttendanceEntryHomeScreenState
+    extends State<PeriodWiseAttendanceEntryHomeScreen> {
   List<String> demoList = [
     'Demo',
     'Demo1',
@@ -24,36 +24,17 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
   ];
   String slected = 'Demo';
 
-  final VideoPlayerController controller =
-      VideoPlayerController.asset("assets/video/marksentry_illustration.mp4");
-
-  // @override
-  // void initState() {
-  //   controller.initialize().then((value) {
-  //     controller.play();
-  //     controller.setLooping(true);
-  //     setState(() {});
-  //   });
-  //   super.initState();
-  // }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
+  String selectedRadio = 'regular';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: const CustomGoBackButton(),
         leadingWidth: 25,
-        title: const Text('Marks Entry'),
+        title: const Text('Attendance Entry'),
       ),
       floatingActionButton: const HomeFab(),
       body: SingleChildScrollView(
-        // physics: const NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             Container(
@@ -279,9 +260,9 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
                   ),
                   isDense: true,
                   label: CustomDropDownLabel(
-                    icon: 'assets/images/examnew.png',
+                    icon: 'assets/images/selectSub.png',
                     containerColor: Color.fromRGBO(229, 243, 255, 1),
-                    text: 'Exam',
+                    text: 'Select Subject',
                     textColor: Color.fromRGBO(62, 120, 170, 1),
                   ),
                 ),
@@ -343,9 +324,9 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
                   ),
                   isDense: true,
                   label: CustomDropDownLabel(
-                    icon: 'assets/images/subname.png',
+                    icon: 'assets/images/selectPeriod.png',
                     containerColor: Color.fromRGBO(238, 232, 255, 1),
-                    text: 'Subject Name',
+                    text: 'Select Period',
                     textColor: Color.fromRGBO(111, 88, 180, 1),
                   ),
                 ),
@@ -379,87 +360,60 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
                 },
               ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              decoration: BoxDecoration(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                borderRadius: BorderRadius.circular(16.0),
-                boxShadow: const [
-                  BoxShadow(
-                    offset: Offset(0, 1),
-                    blurRadius: 8,
-                    color: Colors.black12,
-                  ),
-                ],
-              ),
-              child: DropdownButtonFormField<String>(
-                value: slected,
-                decoration: const InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                    ),
-                  ),
-                  isDense: true,
-                  label: CustomDropDownLabel(
-                    icon: 'assets/images/subsubject.png',
-                    containerColor: Color.fromRGBO(252, 244, 222, 1),
-                    text: 'Sub Subject',
-                    textColor: Color.fromRGBO(206, 167, 61, 1),
-                  ),
+            SizedBox(
+              height: 33,
+              child: RadioListTile(
+                dense: true,
+                activeColor: Theme.of(context).primaryColor,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                visualDensity: const VisualDensity(horizontal: -4.0),
+                title: Text(
+                  "Regular",
+                  style: Theme.of(context).textTheme.labelSmall!.merge(
+                      const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16.0,
+                          letterSpacing: 0.3)),
                 ),
-                icon: const Padding(
-                  padding: EdgeInsets.only(top: 3),
-                  child: Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    size: 30,
-                  ),
-                ),
-                iconSize: 30,
-                items: List.generate(demoList.length, (index) {
-                  return DropdownMenuItem(
-                    value: demoList[index],
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 13, left: 5),
-                      child: Text(
-                        demoList[index],
-                        style: Theme.of(context).textTheme.labelSmall!.merge(
-                            const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16.0,
-                                letterSpacing: 0.3)),
-                      ),
-                    ),
-                  );
-                }),
-                onChanged: (s) {
-                  // selectedStaff = s!;
-                  // logger.d(s.hrmEId.toString());
+                value: "regular",
+                groupValue: selectedRadio,
+                onChanged: (value) {
+                  setState(() {
+                    selectedRadio = value.toString();
+                  });
                 },
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(
+              height: 33,
+              child: RadioListTile(
+                dense: true,
+                activeColor: Theme.of(context).primaryColor,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                visualDensity: const VisualDensity(horizontal: -4.0),
+                title: Text(
+                  "Extra Period",
+                  style: Theme.of(context).textTheme.labelSmall!.merge(
+                      const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16.0,
+                          letterSpacing: 0.3)),
+                ),
+                value: "extraPeriod",
+                groupValue: selectedRadio,
+                onChanged: (value) {
+                  setState(() {
+                    selectedRadio = value.toString();
+                  });
+                },
+              ),
+            ),
+            const SizedBox(height: 100),
             MSkollBtn(
                 title: 'View Details',
                 onPress: () {
-                  Get.to(() => const MarksEntryDetailScreen());
-                  // Get.to(() => const SalarySlipHome());
+                  Get.to(() => const PeriodWiseAttendanceEntryDetailScreen());
                 }),
-            const SizedBox(height: 20),
-            // Center(
-            //   child: SizedBox(
-            //     height: 200,
-            //     child: AspectRatio(
-            //       aspectRatio: controller.value.aspectRatio,
-            //       child: VideoPlayer(controller),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),

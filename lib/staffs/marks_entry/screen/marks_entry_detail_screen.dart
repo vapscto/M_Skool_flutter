@@ -144,10 +144,10 @@ class _MarksEntryDetailScreenState extends State<MarksEntryDetailScreen> {
                         const DataCell(Align(
                             alignment: Alignment.center,
                             child: Text('2013-410'))),
-                        const DataCell(
+                        DataCell(
                           Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text('18'),
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(textAlign: TextAlign.center),
                           ),
                         ),
                       ],
