@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
+import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/consolidated_datewise_student_attendance_detail_screen.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/consolidated_monthly_student_attendance_detail_screen.dart';
+import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/detailed_datewise_student_attendance_detail_screen.dart';
+import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/detailed_monthly_student_attendance_detail_screen.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/widget/selectdatefromtodate.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/widget/selectmonthscrollcontainer.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/widget/selectstudentscrollcontainer.dart';
@@ -382,7 +385,7 @@ class _StudentAttendanceStaffHomeState
                         EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
                     child: SelectMonthScrollContainer())
                 : const SelectDateFromToDate(),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: SelectStudentScrollContainer(),
@@ -397,6 +400,21 @@ class _StudentAttendanceStaffHomeState
                         configuration == 'monthly') {
                       Get.to(() =>
                           const ConsolidatedMonthlyStudentAttendanceDetailScreen());
+                    }
+                    if (selectedRadio == 'consolidated' &&
+                        configuration == 'datewise') {
+                      Get.to(() =>
+                          const ConsolidatedDateWiseStudentAttendanceDetailScreen());
+                    }
+                    if (selectedRadio == 'detailed' &&
+                        configuration == 'monthly') {
+                      Get.to(() =>
+                          const DetailedMonthlyStudentAttendanceDetailScreeen());
+                    }
+                    if (selectedRadio == 'detailed' &&
+                        configuration == 'datewise') {
+                      Get.to(() =>
+                          const DetailedDateWiseStudentAttendanceDetailScreen());
                     }
                   }),
             ),

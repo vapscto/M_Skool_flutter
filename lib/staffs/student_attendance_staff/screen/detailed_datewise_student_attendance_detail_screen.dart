@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
-import 'package:m_skool_flutter/widget/home_fab.dart';
 
-class ConsolidatedMonthlyStudentAttendanceDetailScreen extends StatefulWidget {
-  const ConsolidatedMonthlyStudentAttendanceDetailScreen({super.key});
+import '../../../widget/home_fab.dart';
+
+class DetailedDateWiseStudentAttendanceDetailScreen extends StatefulWidget {
+  const DetailedDateWiseStudentAttendanceDetailScreen({super.key});
 
   @override
-  State<ConsolidatedMonthlyStudentAttendanceDetailScreen> createState() =>
-      _ConsolidatedMonthlyStudentAttendanceDetailScreenState();
+  State<DetailedDateWiseStudentAttendanceDetailScreen> createState() =>
+      _DetailedDateWiseStudentAttendanceDetailScreenState();
 }
 
-class _ConsolidatedMonthlyStudentAttendanceDetailScreenState
-    extends State<ConsolidatedMonthlyStudentAttendanceDetailScreen> {
+class _DetailedDateWiseStudentAttendanceDetailScreenState
+    extends State<DetailedDateWiseStudentAttendanceDetailScreen> {
+  int i = 3;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +41,7 @@ class _ConsolidatedMonthlyStudentAttendanceDetailScreenState
                           fontSize: 12,
                           color: Color.fromRGBO(0, 0, 0, 0.95),
                           fontWeight: FontWeight.w500),
-                      dataRowHeight: 37,
+                      dataRowHeight: i * 35,
                       headingRowHeight: 40,
                       horizontalMargin: 8,
                       columnSpacing: 26,
@@ -65,41 +67,42 @@ class _ConsolidatedMonthlyStudentAttendanceDetailScreenState
                           ),
                         ),
                         DataColumn(
-                          label: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Class Held',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 14),
-                            ),
+                          label: Text(
+                            'Date',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 14),
                           ),
                         ),
                         DataColumn(
-                          label: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Class Present',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 14),
-                            ),
+                          label: Text(
+                            'Class\nHeld',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 14),
                           ),
                         ),
                         DataColumn(
-                          label: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Percentage',
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
+                          label: Text(
+                            'Class\nPresent',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Text(
+                            'Percentage',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 14,
                             ),
                           ),
                         ),
                       ],
 
-                      rows: List.generate(20, (index) {
+                      rows: List.generate(2, (index) {
                         var i = index + 1;
                         return const DataRow(
                           cells: [
@@ -111,10 +114,19 @@ class _ConsolidatedMonthlyStudentAttendanceDetailScreenState
                               ),
                             ),
                             DataCell(
+                              Text(
+                                '1-Dec\n\n 2-Dec\n\n2-Dec',
+                                maxLines: 12,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            DataCell(
                               Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  '15',
+                                  '15\n\n12\n\n10',
+                                  textAlign: TextAlign.right,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
@@ -123,7 +135,8 @@ class _ConsolidatedMonthlyStudentAttendanceDetailScreenState
                               Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  '10',
+                                  '10\n\n3\n\n8',
+                                  textAlign: TextAlign.right,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
@@ -132,7 +145,7 @@ class _ConsolidatedMonthlyStudentAttendanceDetailScreenState
                               Align(
                                 alignment: Alignment.center,
                                 child: Text(
-                                  '25%',
+                                  '25%\n\n50%\n\n30%',
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
