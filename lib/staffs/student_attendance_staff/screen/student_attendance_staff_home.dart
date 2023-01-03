@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
+import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/consolidated_monthly_student_attendance_detail_screen.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/widget/selectdatefromtodate.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/widget/selectmonthscrollcontainer.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/widget/selectstudentscrollcontainer.dart';
@@ -391,7 +393,11 @@ class _StudentAttendanceStaffHomeState
               child: MSkollBtn(
                   title: 'Search',
                   onPress: () {
-                    // Get.to(() => );
+                    if (selectedRadio == 'consolidated' &&
+                        configuration == 'monthly') {
+                      Get.to(() =>
+                          const ConsolidatedMonthlyStudentAttendanceDetailScreen());
+                    }
                   }),
             ),
             const SizedBox(height: 30),

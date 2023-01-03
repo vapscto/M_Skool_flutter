@@ -17,7 +17,7 @@ class _SelectDateFromToDateState extends State<SelectDateFromToDate> {
     return Row(
       children: [
         Container(
-          height: 50,
+          height: 55,
           width: MediaQuery.of(context).size.width / 2.6,
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
           child: CustomContainer(
@@ -100,7 +100,7 @@ class _SelectDateFromToDateState extends State<SelectDateFromToDate> {
           ),
         ),
         Container(
-          height: 50,
+          height: 55,
           width: MediaQuery.of(context).size.width / 2.6,
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
           child: CustomContainer(

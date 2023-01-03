@@ -83,7 +83,7 @@ Future<bool> sendMessage({
     logger.d('false');
     return false;
   } catch (e) {
-    logger.d(e.toString());
+    logger.e(e.toString());
     return false;
   }
 }

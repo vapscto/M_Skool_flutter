@@ -631,6 +631,7 @@ class GetinboxmsgValue {
     this.ismintDateTime,
     this.ismintActiveFlag,
     // this.istintReadFlg,
+    this.read,
   });
 
   String? type;
@@ -652,6 +653,7 @@ class GetinboxmsgValue {
   String? receiverFilepath;
   DateTime? ismintDateTime;
   bool? ismintActiveFlag;
+  bool? read;
   // int? istintReadFlg;
 
   factory GetinboxmsgValue.fromJson(Map<String, dynamic> json) =>
@@ -699,7 +701,6 @@ class GetinboxmsgValue {
         "ISMINT_DateTime": ismintDateTime!.toIso8601String(),
         "ISMINT_ActiveFlag": ismintActiveFlag,
         // "ISTINT_ReadFlg": istintReadFlg,
-        
       };
 }
 
