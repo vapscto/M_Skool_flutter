@@ -53,8 +53,6 @@ class _DayWiseAttendanceEntryHomeState
                 ],
               ),
               child: DropdownButtonFormField<String>(
-                itemHeight: 60,
-                menuMaxHeight: 60,
                 value: slected,
                 decoration: const InputDecoration(
                   focusedBorder: OutlineInputBorder(

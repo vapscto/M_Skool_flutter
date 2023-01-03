@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/staffs/homework_classwork/screen/hw_cw_home.dart
 import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
 import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
+import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/student_attendance_staff_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/view_notice/screens/view_notice_home_screen.dart';
@@ -71,6 +72,13 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                         // () => const PeriodWiseAttendanceEntryHomeScreen(),
                         () => const DayWiseAttendanceEntryHome(),
                       );
+                    }
+                    if (widget
+                            .loginSuccessModel.staffmobileappprivileges!.values!
+                            .elementAt(index)
+                            .pagename ==
+                        "Student Attendance Staff") {
+                      Get.to(() => const StudentAttendanceStaffHome());
                     }
                     if (widget
                             .loginSuccessModel.staffmobileappprivileges!.values!

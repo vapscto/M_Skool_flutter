@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/student/interaction/apis/messaging_api.dart';
 import 'package:m_skool_flutter/student/interaction/controller/interaction_controller.dart';
@@ -290,13 +291,14 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           interactionController.image.isEmpty) {
                         return;
                       } else {
+                        logger.d(widget.data.istintId);
                         interactionController.isMessageSending(true);
                         await sendMessage(
                           miId: widget.loginSuccessModel.mIID!,
                           amstId: widget.loginSuccessModel.amsTId!,
                           asmayId: widget.loginSuccessModel.asmaYId!,
                           message: textMessage.text,
-                          istintComposedByFlg: widget.data.istintId!,
+                          istintComposedByFlg: widget.data.ismintComposedById!,
                           ismintId: widget.data.ismintId!,
                           userId: widget.loginSuccessModel.userId!,
                           image: interactionController.image,
@@ -304,6 +306,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                               'portal', widget.mskoolController),
                         ).then(
                           (value) async {
+                           
                             if (value) {
                               await interactionController.getMessage(
                                 ismintId: widget.data.ismintId!,
@@ -315,6 +318,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                               );
                               textMessage.text = '';
                             }
+                        
                           },
                         );
                         interactionController.isMessageSending(false);

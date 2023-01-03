@@ -37,10 +37,33 @@ class InboxController extends GetxController {
       if (inboxDataModel!.getinboxmsg != null ||
           inboxDataModel.getinboxmsg!.values != null) {
         inboxList.clear();
-        logger.d(inboxDataModel.getinboxmsg!.values!.length.toString());
-        for (var i = 0; i < inboxDataModel.getinboxmsg!.values!.length; i++) {
-          inboxList.add(inboxDataModel.getinboxmsg!.values!.elementAt(i));
+        List<GetinboxmsgValue>? inboxMessage =
+            inboxDataModel.getinboxmsg!.values;
+
+        var readFlags = inboxDataModel.getinboxmsgReadflg!.values;
+        for (var i = 0; i < inboxMessage!.length; i++) {
+          final rf = readFlags!.firstWhere(
+              (value) => value.ismintId == inboxMessage[i].ismintId);
+          final readFlag = rf;
+          int? readFlagValue;
+          if (readFlag.ismintId != null) {
+            readFlagValue = readFlag.istintReadFlg;
+          }
+          if (inboxList.isEmpty) {
+            inboxList.add(inboxMessage.elementAt(i));
+          } else if (inboxList.isNotEmpty) {
+            var alCnt = 0;
+            for (var val in inboxList) {
+              if (val.ismintId == inboxMessage[i].ismintId) {
+                alCnt += 1;
+              }
+            }
+            if (alCnt == 0) {
+              inboxList.add(inboxMessage.elementAt(i));
+            }
+          }
         }
+        logger.d(inboxList.elementAt(0).istintId);
         return true;
       }
       return false;
@@ -82,4 +105,5 @@ class InboxController extends GetxController {
   //     return false;
   //   }
   // }
+
 }
