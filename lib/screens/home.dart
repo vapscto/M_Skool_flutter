@@ -54,7 +54,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   RxInt pageNumber = 0.obs;
   RxString keyWord = "".obs;
-  TextEditingController textEditingController = TextEditingController();
+  //TextEditingController textEditingController = TextEditingController();
   DashboardController dashboardController = Get.put(DashboardController());
   ScrollController scrollController = ScrollController();
   RxList<LoginValues> values = RxList<LoginValues>();
@@ -85,6 +85,15 @@ class _HomeState extends State<Home> {
   }
 
   final GlobalKey<ScaffoldState> _scaffold = GlobalKey<ScaffoldState>();
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    //textEditingController.dispose();
+    Get.delete<HwCwNbController>();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -179,7 +188,15 @@ class _HomeState extends State<Home> {
           title: homeViewPage.elementAt(pageNumber.value)["title"]!,
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return NoticeHome(
+                      appBarTitle: "Notice",
+                      loginSuccessModel: widget.loginSuccessModel,
+                      mskoolController: widget.mskoolController,
+                      hwCwNbController: hwCwNbController);
+                }));
+              },
               icon: SvgPicture.asset(
                 'assets/svg/bell.svg',
               ),
@@ -272,513 +289,536 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // DashboardProfile(loginSuccessModel: widget.loginSuccessModel),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Obx(() {
-                      return dashboardController.calList.isNotEmpty ||
-                              dashboardController.birthday.isNotEmpty
-                          ? HomePageCarasouel(
-                              coeList: dashboardController.calList.value,
-                              bdayList: dashboardController.birthday.value,
-                              loginSuccessModel: widget.loginSuccessModel,
-                              mskoolController: widget.mskoolController,
+    return RefreshIndicator(
+      onRefresh: () async {
+        await dashboardController.studentDashBoardDetails(
+            miId: widget.loginSuccessModel.mIID!,
+            asmayId: widget.loginSuccessModel.asmaYId!,
+            amstId: widget.loginSuccessModel.amsTId!,
+            base: baseUrlFromInsCode("portal", widget.mskoolController),
+            asmcLId: widget.loginSuccessModel.asmcLId!,
+            asmSId: widget.loginSuccessModel.asmSId!);
+      },
+      child: Obx(() {
+        //logger.d("Reload in thr");
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // DashboardProfile(loginSuccessModel: widget.loginSuccessModel),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Obx(() {
+                        logger.d("Reload in CalList & Bday");
+                        return dashboardController.calList.isNotEmpty ||
+                                dashboardController.birthday.isNotEmpty
+                            ? HomePageCarasouel(
+                                coeList: dashboardController.calList.value,
+                                bdayList: dashboardController.birthday.value,
+                                loginSuccessModel: widget.loginSuccessModel,
+                                mskoolController: widget.mskoolController,
+                              )
+                            : const SizedBox();
+                      }),
+
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      // const DashBoardExamChart(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          (dashboardController.attendance.isNotEmpty)
+                              ? Expanded(
+                                  flex: 1,
+                                  child: CardWidget(
+                                    padding: const EdgeInsets.all(0),
+                                    children: [
+                                      // Row(
+                                      //   mainAxisAlignment:
+                                      //       MainAxisAlignment.spaceBetween,
+                                      //   children: [
+                                      //     Text(
+                                      //       "Attendance",
+                                      //       style: Theme.of(context)
+                                      //           .textTheme
+                                      //           .titleSmall!
+                                      //           .copyWith(
+                                      //             fontWeight: FontWeight.w600,
+                                      //           ),
+                                      //     ),
+                                      //     InkWell(
+                                      //       onTap: () {
+                                      //         Get.to(() => AttendanceHomeScreen(
+                                      //             loginSuccessModel:
+                                      //                 widget.loginSuccessModel,
+                                      //             mskoolController:
+                                      //                 widget.mskoolController));
+                                      //       },
+                                      //       child: Text(
+                                      //         "Know more",
+                                      //         style: Theme.of(context)
+                                      //             .textTheme
+                                      //             .labelMedium!
+                                      //             .copyWith(
+                                      //                 decoration: TextDecoration
+                                      //                     .underline,
+                                      //                 fontSize: 14),
+                                      //       ),
+                                      //     )
+                                      //   ],
+                                      // ),
+
+                                      SizedBox(
+                                        height: 36,
+                                        child: InkWell(
+                                          onTap: () {
+                                            Get.to(() => AttendanceHomeScreen(
+                                                loginSuccessModel:
+                                                    widget.loginSuccessModel,
+                                                mskoolController:
+                                                    widget.mskoolController));
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0, right: 8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Attendance",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleMedium,
+                                                ),
+                                                const Icon(Icons
+                                                    .chevron_right_rounded),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        // trailing
+                                      ),
+                                      SizedBox(
+                                        height: Get.width * 0.4329,
+                                        child: DashBoardAttendance(
+                                          attendanceValue: dashboardController
+                                              .attendance
+                                              .first
+                                              .values!
+                                              .first
+                                              .score!,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Container(),
+                          const SizedBox(
+                            width: 12.0,
+                          ),
+                          (dashboardController.feeList.isNotEmpty)
+                              ? Expanded(
+                                  flex: 1,
+                                  child: DashboardFeeGraph(
+                                    feeDet: dashboardController
+                                        .feeList.first.values!,
+                                    loginSuccessModel: widget.loginSuccessModel,
+                                    mskoolController: widget.mskoolController,
+                                  ),
+                                )
+                              : Container(),
+                        ],
+                      ),
+                      (dashboardController.timeTableList.isNotEmpty)
+                          ? Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 15, bottom: 15),
+                              child: DashboardTimetable(
+                                timeTableList:
+                                    dashboardController.timeTableList.last,
+                                loginSuccessModel: widget.loginSuccessModel,
+                                mskoolController: widget.mskoolController,
+                              ),
                             )
-                          : const SizedBox();
-                    }),
-
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    // const DashBoardExamChart(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        (dashboardController.attendance.isNotEmpty)
-                            ? Expanded(
-                                flex: 1,
-                                child: CardWidget(
-                                  padding: const EdgeInsets.all(0),
-                                  children: [
-                                    // Row(
-                                    //   mainAxisAlignment:
-                                    //       MainAxisAlignment.spaceBetween,
-                                    //   children: [
-                                    //     Text(
-                                    //       "Attendance",
-                                    //       style: Theme.of(context)
-                                    //           .textTheme
-                                    //           .titleSmall!
-                                    //           .copyWith(
-                                    //             fontWeight: FontWeight.w600,
-                                    //           ),
-                                    //     ),
-                                    //     InkWell(
-                                    //       onTap: () {
-                                    //         Get.to(() => AttendanceHomeScreen(
-                                    //             loginSuccessModel:
-                                    //                 widget.loginSuccessModel,
-                                    //             mskoolController:
-                                    //                 widget.mskoolController));
-                                    //       },
-                                    //       child: Text(
-                                    //         "Know more",
-                                    //         style: Theme.of(context)
-                                    //             .textTheme
-                                    //             .labelMedium!
-                                    //             .copyWith(
-                                    //                 decoration: TextDecoration
-                                    //                     .underline,
-                                    //                 fontSize: 14),
-                                    //       ),
-                                    //     )
-                                    //   ],
-                                    // ),
-
-                                    SizedBox(
-                                      height: 36,
-                                      child: InkWell(
-                                        onTap: () {
+                          : Container(),
+                      // const SizedBox(
+                      //   height: 6.0,
+                      // ),
+                      (dashboardController.timeTableList.isNotEmpty)
+                          ? CustomContainer(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    height: 6.0,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Get.to(() => ExamHome(
+                                          loginSuccessModel:
+                                              widget.loginSuccessModel,
+                                          mskoolController:
+                                              widget.mskoolController));
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8.0, right: 8.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Exam",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium,
+                                          ),
+                                          const Icon(
+                                              Icons.chevron_right_rounded),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Transform.translate(
+                                    offset: const Offset(0, -4.0),
+                                    child: Obx(() {
+                                      return dashboardController
+                                              .examList.first.values!.isEmpty
+                                          ? const SizedBox()
+                                          : Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8.0),
+                                              child: DropdownButton<
+                                                  ExamListNewValues>(
+                                                value: dashboardController
+                                                    .selectedOption.value,
+                                                isDense: true,
+                                                underline: const SizedBox(),
+                                                isExpanded: false,
+                                                icon: Icon(
+                                                  Icons.keyboard_arrow_down,
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .titleMedium!
+                                                      .color,
+                                                ),
+                                                style: const TextStyle(
+                                                    fontSize: 14.0,
+                                                    color: Colors.black),
+                                                items: List.generate(
+                                                    dashboardController.examList
+                                                        .first.values!.length,
+                                                    (index) => DropdownMenuItem(
+                                                        value:
+                                                            dashboardController
+                                                                .examList
+                                                                .first
+                                                                .values!
+                                                                .elementAt(
+                                                                    index),
+                                                        child: Text(
+                                                            dashboardController
+                                                                .examList
+                                                                .first
+                                                                .values!
+                                                                .elementAt(
+                                                                    index)
+                                                                .eMEExamName!))),
+                                                onChanged: (value) async {
+                                                  dashboardController
+                                                      .selectedOption
+                                                      .value = value!;
+                                                  await DashboardExamApi.instance.loadExamData(
+                                                      miId: widget
+                                                          .loginSuccessModel
+                                                          .mIID!,
+                                                      asmayId: widget
+                                                          .loginSuccessModel
+                                                          .asmaYId!,
+                                                      asmclId: widget
+                                                          .loginSuccessModel
+                                                          .asmcLId!,
+                                                      asmsId: widget
+                                                          .loginSuccessModel
+                                                          .asmSId!,
+                                                      amstId: widget
+                                                          .loginSuccessModel
+                                                          .amsTId!,
+                                                      emeId: dashboardController
+                                                          .selectedOption
+                                                          .value
+                                                          .eMEId!,
+                                                      base: baseUrlFromInsCode(
+                                                          "portal",
+                                                          widget
+                                                              .mskoolController),
+                                                      dashboardController:
+                                                          dashboardController);
+                                                },
+                                              ),
+                                            );
+                                    }),
+                                  ),
+                                  const SizedBox(
+                                    height: 12.0,
+                                  ),
+                                  Obx(() {
+                                    //logger.d("Updating here");
+                                    return DashboardLineChart(
+                                      selectedExam: dashboardController
+                                          .selectedOption.value,
+                                      loginSuccessModel:
+                                          widget.loginSuccessModel,
+                                      mskoolController: widget.mskoolController,
+                                      dashboardController: dashboardController,
+                                    );
+                                  }),
+                                  const SizedBox(
+                                    height: 12.0,
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Container(),
+                      const SizedBox(
+                        height: 16.0,
+                      ),
+                      Text(
+                        "Dashboard",
+                        style: Theme.of(context).textTheme.titleMedium!.merge(
+                              const TextStyle(fontSize: 20.0),
+                            ),
+                      ),
+                      const SizedBox(
+                        height: 16.0,
+                      ),
+                      Center(
+                        child: GridView.count(
+                          // alignment: WrapAlignment.spaceBetween,
+                          // spacing: 3,
+                          // crossAxisAlignment: WrapCrossAlignment.center,
+                          // mainAxisSpacing: 10,
+                          childAspectRatio: 0.9,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          crossAxisCount: 4,
+                          children: List.generate(
+                              widget.loginSuccessModel.staffmobileappprivileges!
+                                  .values!.length,
+                              (i) => InkWell(
+                                    onTap: () {
+                                      switch (widget
+                                          .loginSuccessModel
+                                          .staffmobileappprivileges!
+                                          .values![i]
+                                          .pagename) {
+                                        case "Attendance":
                                           Get.to(() => AttendanceHomeScreen(
                                               loginSuccessModel:
                                                   widget.loginSuccessModel,
                                               mskoolController:
                                                   widget.mskoolController));
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 8.0, right: 8.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "Attendance",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium,
-                                              ),
-                                              const Icon(
-                                                  Icons.chevron_right_rounded),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      // trailing
-                                    ),
-                                    SizedBox(
-                                      height: Get.width * 0.4329,
-                                      child: DashBoardAttendance(
-                                        attendanceValue: dashboardController
-                                            .attendance
-                                            .first
-                                            .values!
-                                            .first
-                                            .score!,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Container(),
-                        const SizedBox(
-                          width: 12.0,
-                        ),
-                        (dashboardController.feeList.isNotEmpty)
-                            ? Expanded(
-                                flex: 1,
-                                child: DashboardFeeGraph(
-                                  feeDet:
-                                      dashboardController.feeList.first.values!,
-                                  loginSuccessModel: widget.loginSuccessModel,
-                                  mskoolController: widget.mskoolController,
-                                ),
-                              )
-                            : Container(),
-                      ],
-                    ),
-                    (dashboardController.timeTableList.isNotEmpty)
-                        ? Padding(
-                            padding: const EdgeInsets.only(top: 15, bottom: 15),
-                            child: DashboardTimetable(
-                              timeTableList:
-                                  dashboardController.timeTableList.last,
-                              loginSuccessModel: widget.loginSuccessModel,
-                              mskoolController: widget.mskoolController,
-                            ),
-                          )
-                        : Container(),
-                    // const SizedBox(
-                    //   height: 6.0,
-                    // ),
-                    (dashboardController.timeTableList.isNotEmpty)
-                        ? CustomContainer(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  height: 6.0,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Get.to(() => ExamHome(
-                                        loginSuccessModel:
-                                            widget.loginSuccessModel,
-                                        mskoolController:
-                                            widget.mskoolController));
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 8.0, right: 8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "Exam",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium,
-                                        ),
-                                        const Icon(Icons.chevron_right_rounded),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Transform.translate(
-                                  offset: const Offset(0, -4.0),
-                                  child: Obx(() {
-                                    return dashboardController
-                                            .examList.first.values!.isEmpty
-                                        ? const SizedBox()
-                                        : Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0),
-                                            child: DropdownButton<
-                                                ExamListNewValues>(
-                                              value: dashboardController
-                                                  .selectedOption.value,
-                                              isDense: true,
-                                              underline: const SizedBox(),
-                                              isExpanded: false,
-                                              icon: Icon(
-                                                Icons.keyboard_arrow_down,
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .color,
-                                              ),
-                                              style: const TextStyle(
-                                                  fontSize: 14.0,
-                                                  color: Colors.black),
-                                              items: List.generate(
-                                                  dashboardController.examList
-                                                      .first.values!.length,
-                                                  (index) => DropdownMenuItem(
-                                                      value: dashboardController
-                                                          .examList
-                                                          .first
-                                                          .values!
-                                                          .elementAt(index),
-                                                      child: Text(
-                                                          dashboardController
-                                                              .examList
-                                                              .first
-                                                              .values!
-                                                              .elementAt(index)
-                                                              .eMEExamName!))),
-                                              onChanged: (value) async {
-                                                dashboardController
-                                                    .selectedOption
-                                                    .value = value!;
-                                                await DashboardExamApi.instance.loadExamData(
-                                                    miId: widget
-                                                        .loginSuccessModel
-                                                        .mIID!,
-                                                    asmayId: widget
-                                                        .loginSuccessModel
-                                                        .asmaYId!,
-                                                    asmclId: widget
-                                                        .loginSuccessModel
-                                                        .asmcLId!,
-                                                    asmsId: widget
-                                                        .loginSuccessModel
-                                                        .asmSId!,
-                                                    amstId: widget
-                                                        .loginSuccessModel
-                                                        .amsTId!,
-                                                    emeId: dashboardController
-                                                        .selectedOption
-                                                        .value
-                                                        .eMEId!,
-                                                    base: baseUrlFromInsCode(
-                                                        "portal",
-                                                        widget
-                                                            .mskoolController),
-                                                    dashboardController:
-                                                        dashboardController);
-                                              },
+                                          break;
+                                        case "Fee Details":
+                                          // Get.to(() => FeeHomeScreen(
+                                          //     loginSuccessModel:
+                                          //         widget.loginSuccessModel,
+                                          //     mskoolController:
+                                          //         widget.mskoolController));
+                                          break;
+                                        case "Fee Payment":
+                                          Get.to(
+                                            () => OnlinePaymentScreen(
+                                              loginSuccessModel:
+                                                  widget.loginSuccessModel,
+                                              mskoolController:
+                                                  widget.mskoolController,
+                                              title:
+                                                  "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
                                             ),
                                           );
-                                  }),
-                                ),
-                                const SizedBox(
-                                  height: 12.0,
-                                ),
-                                Obx(() {
-                                  //logger.d("Updating here");
-                                  return DashboardLineChart(
-                                    selectedExam: dashboardController
-                                        .selectedOption.value,
-                                    loginSuccessModel: widget.loginSuccessModel,
-                                    mskoolController: widget.mskoolController,
-                                    dashboardController: dashboardController,
-                                  );
-                                }),
-                                const SizedBox(
-                                  height: 12.0,
-                                ),
-                              ],
-                            ),
-                          )
-                        : Container(),
-                    const SizedBox(
-                      height: 16.0,
-                    ),
-                    Text(
-                      "Dashboard",
-                      style: Theme.of(context).textTheme.titleMedium!.merge(
-                            const TextStyle(fontSize: 20.0),
-                          ),
-                    ),
-                    const SizedBox(
-                      height: 16.0,
-                    ),
-                    Center(
-                      child: GridView.count(
-                        // alignment: WrapAlignment.spaceBetween,
-                        // spacing: 3,
-                        // crossAxisAlignment: WrapCrossAlignment.center,
-                        // mainAxisSpacing: 10,
-                        childAspectRatio: 0.9,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        crossAxisCount: 4,
-                        children: List.generate(
-                            widget.loginSuccessModel.staffmobileappprivileges!
-                                .values!.length,
-                            (i) => InkWell(
-                                  onTap: () {
-                                    switch (widget
-                                        .loginSuccessModel
-                                        .staffmobileappprivileges!
-                                        .values![i]
-                                        .pagename) {
-                                      case "Attendance":
-                                        Get.to(() => AttendanceHomeScreen(
-                                            loginSuccessModel:
-                                                widget.loginSuccessModel,
-                                            mskoolController:
-                                                widget.mskoolController));
-                                        break;
-                                      case "Fee Details":
-                                        // Get.to(() => FeeHomeScreen(
-                                        //     loginSuccessModel:
-                                        //         widget.loginSuccessModel,
-                                        //     mskoolController:
-                                        //         widget.mskoolController));
-                                        break;
-                                      case "Fee Payment":
-                                        Get.to(
-                                          () => OnlinePaymentScreen(
-                                            loginSuccessModel:
-                                                widget.loginSuccessModel,
-                                            mskoolController:
-                                                widget.mskoolController,
-                                            title:
-                                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                          ),
-                                        );
-                                        break;
-                                      case "Fee Analysis":
-                                        Get.to(
-                                          () => FeeAnalysisScreen(
-                                            loginSuccessModel:
-                                                widget.loginSuccessModel,
-                                            mskoolController:
-                                                widget.mskoolController,
-                                            title:
-                                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                          ),
-                                        );
-                                        break;
-                                      case "Classwork":
-                                        Get.to(() => ClassWorkHomeScreen(
-                                            loginSuccessModel:
-                                                widget.loginSuccessModel,
-                                            mskoolController:
-                                                widget.mskoolController,
-                                            // hwCwNbController:
-                                            //     widget.hwCwNbController,
-                                            title:
-                                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}"));
-                                        break;
-                                      case "Homework":
-                                        Get.to(
-                                          () => HomeWorkScreen(
-                                            loginSuccessModel:
-                                                widget.loginSuccessModel,
-                                            mskoolController:
-                                                widget.mskoolController,
-                                            // hwCwNbController:
-                                            //     widget.hwCwNbController,
-                                            title:
-                                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                          ),
-                                        );
-                                        break;
-                                      case "COE":
-                                        Get.to(() => CoeHome(
+                                          break;
+                                        case "Fee Analysis":
+                                          Get.to(
+                                            () => FeeAnalysisScreen(
+                                              loginSuccessModel:
+                                                  widget.loginSuccessModel,
+                                              mskoolController:
+                                                  widget.mskoolController,
+                                              title:
+                                                  "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                            ),
+                                          );
+                                          break;
+                                        case "Classwork":
+                                          Get.to(() => ClassWorkHomeScreen(
                                               loginSuccessModel:
                                                   widget.loginSuccessModel,
                                               mskoolController:
                                                   widget.mskoolController,
                                               // hwCwNbController:
                                               //     widget.hwCwNbController,
-                                              // title:
-                                              //     "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}"
-                                            ));
-                                        break;
-                                      case "Notice Board":
-                                        Get.to(
-                                          () => NoticeHome(
-                                            loginSuccessModel:
-                                                widget.loginSuccessModel,
-                                            mskoolController:
-                                                widget.mskoolController,
-                                            hwCwNbController:
-                                                widget.hwCwNbController,
-                                            appBarTitle:
-                                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                          ),
-                                        );
-                                        break;
-                                      case "Library":
-                                        String base = baseUrlFromInsCode(
-                                            "portal", widget.mskoolController);
-                                        Get.to(
-                                          () => LibraryHome(
-                                            miId:
-                                                widget.loginSuccessModel.mIID!,
-                                            asmayId: widget
-                                                .loginSuccessModel.asmaYId!,
-                                            asmtId: widget
-                                                .loginSuccessModel.amsTId!,
-                                            base: base,
-                                            title:
-                                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                          ),
-                                        );
-                                        break;
-                                      case "Syllabus":
-                                        break;
-                                      case "Exam":
-                                        Get.to(() => ExamHome(
+                                              title:
+                                                  "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}"));
+                                          break;
+                                        case "Homework":
+                                          Get.to(
+                                            () => HomeWorkScreen(
                                               loginSuccessModel:
                                                   widget.loginSuccessModel,
                                               mskoolController:
                                                   widget.mskoolController,
-                                            ));
-                                        break;
-                                      case "Interaction":
-                                        Get.to(() => InteractionHomeScreen(
-                                              loginSuccessModel:
-                                                  widget.loginSuccessModel,
-                                              mskoolController:
-                                                  widget.mskoolController,
-                                            ));
-                                        break;
-                                      case "Certificate":
-                                        Get.to(() => CertificateHomeScreen(
-                                              loginSuccessModel:
-                                                  widget.loginSuccessModel,
-                                              mskoolController:
-                                                  widget.mskoolController,
-                                            ));
-                                        break;
-                                      case "Time Table":
-                                        Get.to(() => TimeTableHome(
-                                              loginSuccessModel:
-                                                  widget.loginSuccessModel,
-                                              mskoolController:
-                                                  widget.mskoolController,
-                                            ));
-                                        break;
-                                      case "Fee Receipt":
-                                        Get.to(
-                                          () => FeeReceiptHome(
-                                            loginSuccessModel:
-                                                widget.loginSuccessModel,
-                                            mskoolController:
-                                                widget.mskoolController,
-                                            title:
-                                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                          ),
-                                        );
-                                        break;
-                                      default:
-                                    }
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: SizedBox(
-                                      width: 80,
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset(
-                                              getDashBoardIconByName(
-                                                  "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}"),
-                                              height: 60,
+                                              // hwCwNbController:
+                                              //     widget.hwCwNbController,
+                                              title:
+                                                  "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
                                             ),
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
-                                              //maxLines: 1,
-                                              textAlign: TextAlign.center,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall!
-                                                  .merge(const TextStyle(
-                                                      fontSize: 13.0)),
+                                          );
+                                          break;
+                                        case "COE":
+                                          Get.to(() => CoeHome(
+                                                loginSuccessModel:
+                                                    widget.loginSuccessModel,
+                                                mskoolController:
+                                                    widget.mskoolController,
+                                                // hwCwNbController:
+                                                //     widget.hwCwNbController,
+                                                // title:
+                                                //     "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}"
+                                              ));
+                                          break;
+                                        case "Notice Board":
+                                          Get.to(
+                                            () => NoticeHome(
+                                              loginSuccessModel:
+                                                  widget.loginSuccessModel,
+                                              mskoolController:
+                                                  widget.mskoolController,
+                                              hwCwNbController:
+                                                  widget.hwCwNbController,
+                                              appBarTitle:
+                                                  "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
                                             ),
-                                          )
-                                        ],
+                                          );
+                                          break;
+                                        case "Library":
+                                          String base = baseUrlFromInsCode(
+                                              "portal",
+                                              widget.mskoolController);
+                                          Get.to(
+                                            () => LibraryHome(
+                                              miId: widget
+                                                  .loginSuccessModel.mIID!,
+                                              asmayId: widget
+                                                  .loginSuccessModel.asmaYId!,
+                                              asmtId: widget
+                                                  .loginSuccessModel.amsTId!,
+                                              base: base,
+                                              title:
+                                                  "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                            ),
+                                          );
+                                          break;
+                                        case "Syllabus":
+                                          break;
+                                        case "Exam":
+                                          Get.to(() => ExamHome(
+                                                loginSuccessModel:
+                                                    widget.loginSuccessModel,
+                                                mskoolController:
+                                                    widget.mskoolController,
+                                              ));
+                                          break;
+                                        case "Interaction":
+                                          Get.to(() => InteractionHomeScreen(
+                                                loginSuccessModel:
+                                                    widget.loginSuccessModel,
+                                                mskoolController:
+                                                    widget.mskoolController,
+                                              ));
+                                          break;
+                                        case "Certificate":
+                                          Get.to(() => CertificateHomeScreen(
+                                                loginSuccessModel:
+                                                    widget.loginSuccessModel,
+                                                mskoolController:
+                                                    widget.mskoolController,
+                                              ));
+                                          break;
+                                        case "Time Table":
+                                          Get.to(() => TimeTableHome(
+                                                loginSuccessModel:
+                                                    widget.loginSuccessModel,
+                                                mskoolController:
+                                                    widget.mskoolController,
+                                              ));
+                                          break;
+                                        case "Fee Receipt":
+                                          Get.to(
+                                            () => FeeReceiptHome(
+                                              loginSuccessModel:
+                                                  widget.loginSuccessModel,
+                                              mskoolController:
+                                                  widget.mskoolController,
+                                              title:
+                                                  "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                            ),
+                                          );
+                                          break;
+                                        default:
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: SizedBox(
+                                        width: 80,
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Image.asset(
+                                                getDashBoardIconByName(
+                                                    "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}"),
+                                                height: 60,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![i].pagename}",
+                                                //maxLines: 1,
+                                                textAlign: TextAlign.center,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .merge(const TextStyle(
+                                                        fontSize: 13.0)),
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                )),
+                                  )),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      }),
+    );
   }
 }
 

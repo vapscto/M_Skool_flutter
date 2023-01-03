@@ -19,7 +19,7 @@ class TTApi {
     required int asmayId,
     required int asmtId,
     required String base,
-    required List<List<String>> pdfTT,
+    // required CreatePdfController pdfTT,
   }) async {
     try {
       final Dio ins = getGlobalDio();
@@ -102,27 +102,33 @@ class TTApi {
         }
 
         // logger.d(dayWiseTT);
+        // Isolate.spawn((message) {
+        //   List<List<PdfTTModel>> ttr = [];
+        //   for (int i = 0; i < periodsListModel.values!.length; i++) {
+        //     String code =
+        //         periodsListModel.values!.elementAt(i).ttmPPeriodName!.trim();
 
-        // for (int i = 0; i < periodsListModel.values!.length; i++) {
-        //   String code =
-        //       periodsListModel.values!.elementAt(i).ttmPPeriodName!.trim();
+        //     List<String> str = [];
 
-        //   List<String> str = [];
-
-        //   for (int j = 0; j < ttModel.values!.length; i++) {
-        //     if (code == ttModel.values!.elementAt(j).ttmPPeriodName!.trim()) {
-        //       str.add(
-        //           "${ttModel.values!.elementAt(j).ismSSubjectName!}\n${ttModel.values!.elementAt(j).staffName}");
+        //     for (int j = 0; j < ttModel.values!.length; i++) {
+        //       if (code == ttModel.values!.elementAt(j).ttmPPeriodName!.trim()) {
+        //         logger.d(
+        //             "${ttModel.values!.elementAt(j).ismSSubjectName!}\n${ttModel.values!.elementAt(j).staffName}");
+        //         str.add(
+        //             "${ttModel.values!.elementAt(j).ismSSubjectName!}\n${ttModel.values!.elementAt(j).staffName}");
+        //       }
         //     }
+        //     //ttr.add(str);
         //   }
-        //   pdfTT.add(str);
-        // }
+        //   pdfTT.updateTTSub(ttr);
+        // }, "message");
         final TT tt = TT(
           tt: ttModel,
           gridWeeks: gridWeek,
           periodsList: periodsListModel,
           dayWise: dayWiseTT,
         );
+
         return tt;
       } else {
         Fluttertoast.showToast(msg: 'Unable to fetch data');

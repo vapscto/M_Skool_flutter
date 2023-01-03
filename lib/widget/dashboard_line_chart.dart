@@ -133,6 +133,7 @@ class _ChartState extends State<Chart> {
           ),
           primaryXAxis: CategoryAxis(
             name: 'Subjects',
+            isVisible: false,
             maximumLabelWidth: 60,
             //edgeLabelPlacement: EdgeLabelPlacement.shift,
             labelRotation: 45,

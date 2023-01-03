@@ -69,10 +69,16 @@ class BdaySliderItem extends StatelessWidget {
                         height: 1.12),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: Get.width * 0.06),
-                    child: Text(value.aMSTFirstName!,
-                        style: GoogleFonts.bubblegumSans(
-                            fontSize: 20.0, height: 0.9)),
+                    padding: EdgeInsets.only(
+                        left: Get.width * 0.06, right: Get.width * 0.02),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Text(value.aMSTFirstName!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.bubblegumSans(
+                              fontSize: 20.0, height: 0.9)),
+                    ),
                   ),
                   const SizedBox(
                     height: 8.0,

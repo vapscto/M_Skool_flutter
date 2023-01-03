@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:document_file_save_plus/document_file_save_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -39,17 +40,25 @@ final GlobalKey _globalKey = GlobalKey();
 final GlobalKey _periodKey = GlobalKey();
 
 class _WeeklyTTState extends State<WeeklyTT> {
-  final List<List<String>> pdfTT = RxList();
+  final RxList<List<String>> pdfTT = RxList();
+
+  // final CreatePdfController pdfController = Get.put(CreatePdfController());
+
+  @override
+  void dispose() {
+    // Get.delete<CreatePdfController>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<TT>(
         future: TTApi.instance.getTimeTable(
-            miId: widget.loginSuccessModel.mIID!,
-            asmayId: widget.loginSuccessModel.asmaYId!,
-            asmtId: widget.loginSuccessModel.amsTId!,
-            base: baseUrlFromInsCode("portal", widget.mskoolController),
-            pdfTT: pdfTT),
+          miId: widget.loginSuccessModel.mIID!,
+          asmayId: widget.loginSuccessModel.asmaYId!,
+          asmtId: widget.loginSuccessModel.amsTId!,
+          base: baseUrlFromInsCode("portal", widget.mskoolController),
+        ),
         builder: ((context, snapshot) {
           if (snapshot.hasData) {
             return Column(
@@ -295,138 +304,114 @@ class _WeeklyTTState extends State<WeeklyTT> {
 
                       // var img = PdfImage.file(pdf.document, bytes: pngBytes);
 
-                      List<pw.TableRow> ttRow = [
+                      // ttRow.addAll(List.generate(
+                      //     snapshot.data!.dayWise.length, (index) => pw.TableRow(children: pw.Container()) ).toList());
+
+                      // ttRow.addAll(List.generate(
+                      //   snapshot.data!.dayWise.length,
+                      //   (index) => pw.TableRow(
+                      //     children: List.generate(
+                      //       pdfTT.elementAt(index).length,
+                      //       (index2) => pw.Container(
+                      //           alignment: pw.Alignment.center,
+                      //           padding: const pw.EdgeInsets.all(12.0),
+                      //           color: PdfColor.fromInt(
+                      //             timetablePdfSubColor.elementAt(
+                      //               Random().nextInt(12),
+                      //             ),
+                      //           ).shade(0.01),
+                      //           child: pw.Text(
+                      //               pdfTT.elementAt(index).elementAt(index2))),
+                      //     ),
+                      //   ),
+                      // ).toList());
+
+                      List<pw.TableRow> pdfPeriodsName = [
                         pw.TableRow(
-                          children: List.generate(
-                            snapshot.data!.gridWeeks.values!.length,
-                            (index) => pw.Container(
-                              alignment: pw.Alignment.center,
-                              padding: const pw.EdgeInsets.all(12.0),
-                              decoration: pw.BoxDecoration(
-                                  color: PdfColor.fromHex("#1E38FC")),
-                              child: pw.Text(
-                                snapshot.data!.gridWeeks.values!
-                                    .elementAt(index)
-                                    .ttmDDayCode!,
-                                style: pw.TextStyle(
-                                  color: PdfColor.fromHex("#FFFFFF"),
-                                ),
-                              ),
+                          children: [
+                            pw.Container(
+                              color: PdfColor.fromHex("#1E38FC"),
+                              padding: const pw.EdgeInsets.all(6.0),
+                              child: pw.Text("Day",
+                                  style: pw.TextStyle(
+                                      color: PdfColor.fromHex("#FFFFFF"))),
                             ),
-                          ),
+                          ],
                         ),
                       ];
-
-                      ttRow.addAll(List.generate(
-                        snapshot.data!.periodsList.values!.length,
+                      pdfPeriodsName.addAll(List.generate(
+                        snapshot.data!.gridWeeks.values!.length,
                         (index) => pw.TableRow(
-                          children: List.generate(
-                            pdfTT.elementAt(index).length,
-                            (index2) => pw.Container(
-                                alignment: pw.Alignment.center,
-                                padding: const pw.EdgeInsets.all(12.0),
-                                color: PdfColor.fromInt(
-                                  timetablePdfSubColor.elementAt(
-                                    Random().nextInt(12),
-                                  ),
-                                ).shade(0.01),
+                          children: [
+                            pw.Container(
+                                padding: const pw.EdgeInsets.symmetric(
+                                    vertical: 13.0, horizontal: 15.0),
+                                color: PdfColor.fromHex(
+                                    timetablePdfPeriodColor.elementAt(index)),
                                 child: pw.Text(
-                                    pdfTT.elementAt(index).elementAt(index2))),
-                          ),
+                                    "${snapshot.data!.gridWeeks.values!.elementAt(index).ttmDDayCode}",
+                                    style: pw.TextStyle(
+                                        color: PdfColor.fromHex("#FFFFFF")))),
+                          ],
                         ),
                       ).toList());
 
-                      pdf.addPage(pw.Page(build: (_) {
-                        return pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            children: [
-                              pw.Column(children: [
-                                pw.Container(
-                                    width: 80,
-                                    alignment: pw.Alignment.center,
-                                    padding: const pw.EdgeInsets.all(12.0),
-                                    decoration: pw.BoxDecoration(
-                                      color: PdfColor.fromHex("#1E38FC"),
-                                    ),
-                                    child: pw.Text(
-                                      "Periods",
+                      List<pw.TableRow> pdfSub = [];
+                      pdfSub.add(
+                        pw.TableRow(
+                          children: List.generate(
+                              snapshot.data!.periodsList.values!.length,
+                              (index) => pw.Container(
+                                  color: PdfColor.fromHex("#1E38FC"),
+                                  padding: const pw.EdgeInsets.symmetric(
+                                      horizontal: 6.0, vertical: 6.0),
+                                  child: pw.Text(
+                                      "Period ${snapshot.data!.periodsList.values!.elementAt(index).ttmPPeriodName}",
                                       style: pw.TextStyle(
-                                          color: PdfColor.fromHex("#FFFFFF")),
-                                    )),
-                                pw.ListView.builder(
-                                    itemBuilder: (context, index) {
-                                      return pw.Container(
-                                        width: 80,
-                                        alignment: pw.Alignment.center,
-                                        padding: const pw.EdgeInsets.all(12.0),
-                                        decoration: pw.BoxDecoration(
-                                          color: PdfColor.fromHex(
-                                              timetablePdfPeriodColor
-                                                  .elementAt(index)),
-                                        ),
-                                        child: pw.Text(
-                                          "Period ${snapshot.data!.periodsList.values!.elementAt(index).ttmPPeriodName!}",
-                                          style: pw.TextStyle(
-                                              fontSize: 12.0,
-                                              color:
-                                                  PdfColor.fromHex("#FFFFFF")),
-                                        ),
-                                      );
-                                    },
-                                    itemCount: snapshot
-                                        .data!.periodsList.values!.length),
-                              ]),
-                              pw.Expanded(
-                                child: pw.Table(children: ttRow),
-                              )
-                              //     child: pw.Table(children: [
-                              //   // pw.TableRow(
-                              //   //   children: List.generate(
-                              //   //     snapshot.data!.gridWeeks.values!.length,
-                              //   //     (index) => pw.Container(
-                              //   //       alignment: pw.Alignment.center,
-                              //   //       padding: const pw.EdgeInsets.all(12.0),
-                              //   //       decoration: pw.BoxDecoration(
-                              //   //           color: PdfColor.fromHex("#1E38FC")),
-                              //   //       child: pw.Text(
-                              //   //         snapshot.data!.gridWeeks.values!
-                              //   //             .elementAt(index)
-                              //   //             .ttmDDayCode!,
-                              //   //         style: pw.TextStyle(
-                              //   //           color: PdfColor.fromHex("#FFFFFF"),
-                              //   //         ),
-                              //   //       ),
-                              //   //     ),
-                              //   //   ),
-                              //   // ),
+                                          color:
+                                              PdfColor.fromHex("#FFFFFF"))))),
+                        ),
+                      );
 
-                              //   //pw.TableRow(children: ),
-                              //   //pw.TableRow(children: )
-                              // ]))
-                            ]);
+                      for (int i = 0; i < snapshot.data!.dayWise.length; i++) {
+                        pdfSub.add(
+                          pw.TableRow(
+                            children: List.generate(
+                                snapshot.data!.dayWise
+                                    .elementAt(i)
+                                    .value
+                                    .length, (index) {
+                              return pw.Container(
+                                color: PdfColor.fromInt(ttLighterBoxColor
+                                    .elementAt(Random().nextInt(12))),
+                                padding: const pw.EdgeInsets.symmetric(
+                                    horizontal: 6.0, vertical: 6.0),
+                                child: pw.Text(
+                                    "${snapshot.data!.dayWise.elementAt(i).value.elementAt(index).subjectName}\n${snapshot.data!.dayWise.elementAt(i).value.elementAt(index).teacher}"),
+                              );
+                            }),
+                          ),
+                        );
+                      }
+                      List<pw.Widget> pdfTemplate = [
+                        pw.Table(
+                            border: pw.TableBorder.all(
+                                color: PdfColor.fromHex("#000000")),
+                            children: pdfPeriodsName),
+                        pw.Table(
+                            border: pw.TableBorder.all(
+                                color: PdfColor.fromHex("#000000")),
+                            children: pdfSub)
+                      ];
+
+                      pdf.addPage(pw.Page(build: (_) {
+                        return pw.Row(children: pdfTemplate);
                       }));
-                      // final BytesBuilder builder = BytesBuilder();
-                      // builder.add(periodBytes);
-                      // builder.add(pngBytes);
 
-                      // logger.d(periodBytes.length);
-                      // logger.d(pngBytes.length);
-                      // logger.d(builder.toBytes().length);
-
-                      //var bs64 = base64Encode(pngBytes);
-
-                      // PdfDocument document = PdfDocument();
-                      // PdfPage page = document.pages.add();
-
-                      // final PdfImage img = PdfBitmap(
-                      //   pngBytes,
-                      // );
-                      // // page.graphics.drawImage(
-                      // //     img,
-                      // //     Rect.fromLTWH(0, 0, img.width.toDouble(),
-                      // //         img.height.toDouble()));
-
-                      // List<int> bytes = await document.save();
+                      DocumentFileSavePlus.saveFile(
+                          await pdf.save(),
+                          "WTT-${DateTime.now().millisecondsSinceEpoch}",
+                          "application/pdf");
 
                       // document.dispose();
                       List<Directory>? directory =

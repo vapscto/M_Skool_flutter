@@ -63,15 +63,27 @@ class DashboardController extends GetxController {
     }
 
     if (studentDashboardModel.attendanceList != null) {
+      if (attendance.isNotEmpty) {
+        attendance.clear();
+      }
       attendance.add(studentDashboardModel.attendanceList!);
     }
     if (studentDashboardModel.feesList != null) {
+      if (feeList.isNotEmpty) {
+        feeList.clear();
+      }
       feeList.add(studentDashboardModel.feesList!);
     }
     if (studentDashboardModel.feesList != null) {
+      if (feeList.isNotEmpty) {
+        feeList.clear();
+      }
       feeList.add(studentDashboardModel.feesList!);
     }
     if (studentDashboardModel.timeTableList != null) {
+      if (timeTableList.isNotEmpty) {
+        timeTableList.clear();
+      }
       timeTableList.add(studentDashboardModel.timeTableList!);
     }
     if (studentDashboardModel.examList != null) {
