@@ -71,6 +71,7 @@ dependencies:
   lottie: ^2.1.0
   timeago: ^3.3.0
   pdf: ^3.8.4
+  document_file_save_plus: ^1.0.9
 
 dev_dependencies:
   flutter_test:

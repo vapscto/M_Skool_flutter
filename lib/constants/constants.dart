@@ -358,6 +358,22 @@ List<int> timetableLLPeriodColor = const [
   0xFFCCA8DA,
 ];
 
+List<int> ttLighterBoxColor = const [
+  0xFFD7C5E2,
+  0xFFB0D5DA,
+  0xFFA1E7C5,
+  0xFFD8D3A6,
+  0xFFDAC5AE,
+  0xFFE5BACD,
+  0xFFD8E6BB,
+  0xFFC2E9EB,
+  0xFFEEC7C5,
+  0xFFD7ECCA,
+  0xFFC4E9F0,
+  0xFFEBBDE3,
+  0xFFD5B2E2,
+];
+
 List<String> timetablePdfPeriodColor = const [
   "#9900F0",
   "#32E1F7",

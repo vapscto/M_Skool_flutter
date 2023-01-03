@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:document_file_save_plus/document_file_save_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -399,14 +399,18 @@ class _ShowTTState extends State<ShowTT> {
                               String fileName2 =
                                   "tt${DateTime.now().microsecondsSinceEpoch}.pdf";
                               File file2 = File('$path/$fileName2');
+                              await DocumentFileSavePlus.saveFile(
+                                  await document.save(),
+                                  "DTT-${DateTime.now().millisecondsSinceEpoch}",
+                                  "application/pdf");
 
-                              await file2.writeAsBytes(await document.save(),
-                                  flush: true);
-                              await file.writeAsBytes(pngBytes, flush: true);
+                              // await file2.writeAsBytes(await document.save(),
+                              //     flush: true);
+                              // await file.writeAsBytes(pngBytes, flush: true);
 
-                              await GallerySaver.saveImage(file.path);
+                              // await GallerySaver.saveImage(file.path);
                               Fluttertoast.showToast(
-                                  msg: "File saved to Gallery");
+                                  msg: "File saved to Download Folder");
 
                               Navigator.pop(context);
                             } catch (e) {
