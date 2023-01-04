@@ -15,9 +15,15 @@ import 'package:m_skool_flutter/staffs/staff_tt/screens/staff_tt_home.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/student_attendance_staff_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
+import 'package:m_skool_flutter/staffs/widget/staff_carasouel.dart';
+import 'package:m_skool_flutter/staffs/widget/staff_home_leave.dart';
+import 'package:m_skool_flutter/staffs/widget/staff_home_lop.dart';
+import 'package:m_skool_flutter/staffs/widget/staff_home_tt.dart';
+import 'package:m_skool_flutter/staffs/widget/staff_punch_report.dart';
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
+import '../../controller/global_utilities.dart';
 import '../marks_entry/screen/marks_entry_home.dart';
 
 class StaffHomeScreen extends StatefulWidget {
@@ -34,6 +40,9 @@ class StaffHomeScreen extends StatefulWidget {
 
 class _StaffHomeScreen extends State<StaffHomeScreen> {
   final GlobalKey<ScaffoldState> _scaffold = GlobalKey<ScaffoldState>();
+
+  int color = -1;
+  int ttColor = -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,15 +59,49 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
       ),
       drawer: const Drawer(),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ListView.builder(
+            const StaffCarasouel(),
+            const SizedBox(
+              height: 16.0,
+            ),
+            const StaffPunchCardAndLop(),
+            const SizedBox(
+              height: 16.0,
+            ),
+            const StaffHomeLeave(),
+            const SizedBox(
+              height: 16.0,
+            ),
+            const StaffHomeTT(),
+            const SizedBox(
+              height: 16.0,
+            ),
+            Text(
+              "Dashboard",
+              style: Theme.of(context).textTheme.titleSmall!.merge(
+                    const TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+            ),
+            const SizedBox(
+              height: 16.0,
+            ),
+            GridView.builder(
               shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
               itemCount: widget
                   .loginSuccessModel.staffmobileappprivileges!.values!.length,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  childAspectRatio: 0.8,
+                  crossAxisSpacing: 8.0,
+                  mainAxisSpacing: 8.0),
               itemBuilder: (_, index) {
-                return ListTile(
+                return InkWell(
                   onTap: () {
                     logger.d(widget
                         .loginSuccessModel.staffmobileappprivileges!.values!
@@ -312,12 +355,55 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                       return;
                     }
                   },
-                  title: Text(widget
-                      .loginSuccessModel.staffmobileappprivileges!.values!
-                      .elementAt(index)
-                      .pagename!),
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: SizedBox(
+                      width: 80,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              getDashBoardIconByName(
+                                  "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"),
+                              height: 60,
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
+                              //maxLines: 1,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .merge(const TextStyle(fontSize: 13.0)),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                 );
               },
+            ),
+            // ListView.builder(
+            //   shrinkWrap: true,
+            //   physics: const NeverScrollableScrollPhysics(),
+            //   itemCount: widget
+            //       .loginSuccessModel.staffmobileappprivileges!.values!.length,
+            //   itemBuilder: (_, index) {
+            //     return ListTile(
+            //       onTap: () {},
+            //       title: Text(widget
+            //           .loginSuccessModel.staffmobileappprivileges!.values!
+            //           .elementAt(index)
+            //           .pagename!),
+            //     );
+            //   },
+            // ),
+            const SizedBox(
+              height: 24.0,
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
@@ -352,6 +438,25 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class StaffPunchCardAndLop extends StatelessWidget {
+  const StaffPunchCardAndLop({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: const [
+        Expanded(child: StaffHomeLop()),
+        SizedBox(
+          width: 12.0,
+        ),
+        Expanded(child: StaffPunchReport())
+      ],
     );
   }
 }
