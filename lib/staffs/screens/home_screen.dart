@@ -15,7 +15,6 @@ import 'package:m_skool_flutter/staffs/staff_tt/screens/staff_tt_home.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/student_attendance_staff_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
-import 'package:m_skool_flutter/staffs/view_notice/screens/view_notice_home_screen.dart';
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
@@ -141,16 +140,16 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                             .elementAt(index)
                             .pagename! ==
                         "Notice Board") {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return ViewNoticeHome(
-                          loginSuccessModel: widget.loginSuccessModel,
-                          mskoolController: widget.mskoolController,
-                          title: widget.loginSuccessModel
-                              .staffmobileappprivileges!.values!
-                              .elementAt(index)
-                              .pagename!,
-                        );
-                      }));
+                      // Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      //   return ViewNoticeHome(
+                      //     loginSuccessModel: widget.loginSuccessModel,
+                      //     mskoolController: widget.mskoolController,
+                      //     title: widget.loginSuccessModel
+                      //         .staffmobileappprivileges!.values!
+                      //         .elementAt(index)
+                      //         .pagename!,
+                      //   );
+                      // }));
 
                       // Notice Board Staff
                       Get.to(() => const NoticeBoardStaffHome());
