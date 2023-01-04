@@ -34,61 +34,7 @@ class _LeavesState extends State<Leaves> {
             if (backgroundColor > 6) {
               backgroundColor = 0;
             }
-            return SizedBox(
-              width: Get.width * 0.38,
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    return const ApplyForLeave();
-                  }));
-                },
-                child: CustomContainer(
-                    child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Row(
-                    children: [
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          CircularProgressIndicator(
-                            value: 0.5,
-                            backgroundColor: noticeBackgroundColor
-                                .elementAt(backgroundColor)
-                                .withOpacity(0.8),
-                            color: noticeColor.elementAt(backgroundColor),
-                          ),
-                          Align(
-                              alignment: Alignment.center,
-                              child: SvgPicture.asset(
-                                "assets/svg/medication.svg",
-                                color: noticeColor.elementAt(backgroundColor),
-                              )),
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 12.0,
-                      ),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "08",
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            Text(
-                              "Sick Leave",
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                )),
-              ),
-            );
+            return LeaveNames(backgroundColor: backgroundColor);
           },
           itemCount: 5,
           separatorBuilder: (BuildContext context, int index) {
@@ -97,6 +43,74 @@ class _LeavesState extends State<Leaves> {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class LeaveNames extends StatelessWidget {
+  const LeaveNames({
+    Key? key,
+    required this.backgroundColor,
+  }) : super(key: key);
+
+  final int backgroundColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: Get.width * 0.38,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return const ApplyForLeave();
+          }));
+        },
+        child: CustomContainer(
+            child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  CircularProgressIndicator(
+                    value: 0.5,
+                    backgroundColor: noticeBackgroundColor
+                        .elementAt(backgroundColor)
+                        .withOpacity(0.8),
+                    color: noticeColor.elementAt(backgroundColor),
+                  ),
+                  Align(
+                      alignment: Alignment.center,
+                      child: SvgPicture.asset(
+                        "assets/svg/medication.svg",
+                        color: noticeColor.elementAt(backgroundColor),
+                      )),
+                ],
+              ),
+              const SizedBox(
+                width: 12.0,
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "08",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Text(
+                      "Sick Leave",
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )),
       ),
     );
   }

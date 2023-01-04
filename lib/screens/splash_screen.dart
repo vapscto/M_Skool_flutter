@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/manager/screens/manager_home.dart';
 import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/institutional_code_model.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
@@ -14,6 +15,8 @@ import 'package:m_skool_flutter/screens/institutional_login.dart';
 import 'package:m_skool_flutter/screens/login_screen.dart';
 import 'package:m_skool_flutter/screens/on_board.dart';
 import 'package:m_skool_flutter/staffs/screens/home_screen.dart';
+import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
+import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -145,15 +148,72 @@ class _SplashScreenState extends State<SplashScreen> {
           .instance
           .authenticateNow(userName, password, miId, loginBaseUrl);
 
-      if (loginSuccessModel.roleId == URLS.staff) {
+      logger.d(loginSuccessModel.roleId);
+
+      if (loginSuccessModel.roleId == URLS.staff ||
+          loginSuccessModel.roleId == URLS.hod) {
         return Future.value(StaffHomeScreen(
             loginSuccessModel: loginSuccessModel,
             mskoolController: mskoolController));
       }
 
-      return Future.value(Home(
-        loginSuccessModel: loginSuccessModel,
-        mskoolController: mskoolController,
+      if (loginSuccessModel.roleId == URLS.manager) {
+        return Future.value(ManagerHome(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
+      }
+
+      if (loginSuccessModel.roleId == URLS.student) {
+        return Future.value(Home(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ));
+      }
+
+      return Future.value(Center(
+        child: Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text("This app is not used to manage this ID"),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                  child: SizedBox(
+                    width: 180,
+                    height: 40,
+                    child: CustomElevatedButton(
+                        isGradient: false,
+                        boxShadow: const BoxShadow(),
+                        color: const Color(0xFFFFDFD6),
+                        child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Icon(
+                                Icons.logout,
+                                color: Color(0xffF24E1E),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "Log Out",
+                                style: TextStyle(
+                                    color: Color(0xffF24E1E),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600),
+                              )
+                            ]),
+                        onPressed: () {
+                          Get.dialog(const LogoutConfirmationPopup());
+                        }),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ));
     } on Exception catch (e) {
       debugPrint(e.toString());
