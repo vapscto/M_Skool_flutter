@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/daywise_attendance_entry_home.dart';
 import 'package:m_skool_flutter/staffs/coe/screens/coe_home.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/screen/hw_cw_home.dart';
+import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
 import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
 import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
@@ -193,6 +194,9 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                               .pagename!,
                         );
                       }));
+
+                      // Notice Board Staff
+                      Get.to(() => const NoticeBoardStaffHome());
                       return;
                     }
                     if (widget
