@@ -153,4 +153,12 @@ class URLS {
   static int principal = 23;
   static int chairman = 22;
   static int manager = 24;
+
+  //Staff Api
+
+  static String viewNoticeCircular = "api/EmployeePtalFacade/onclick_notice";
+  static String staffDailyTTGetDays = "api/EmployeeTTFacade/getdata/";
+  static String getStaffDailyTT = "api/EmployeeTTFacade/getdaily_data/";
+
+  static String getWeeklyTT = "api/EmployeeTTFacade/getdata/";
 }

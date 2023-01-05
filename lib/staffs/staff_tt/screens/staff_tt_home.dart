@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/staff_tt/controller/staff_tt_controller.dart';
 import 'package:m_skool_flutter/staffs/staff_tt/tabs/staff_daily_tt.dart';
 import 'package:m_skool_flutter/staffs/staff_tt/tabs/staff_weekly_tt.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
@@ -22,7 +24,11 @@ class StaffTTHome extends StatefulWidget {
 
 class _StaffTTHomeState extends State<StaffTTHome>
     with SingleTickerProviderStateMixin {
+  final StaffTTController ttController =
+      Get.put<StaffTTController>(StaffTTController());
+
   TabController? tabController;
+
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
@@ -32,6 +38,7 @@ class _StaffTTHomeState extends State<StaffTTHome>
   @override
   void dispose() {
     tabController!.dispose();
+    Get.delete<StaffTTController>();
     super.dispose();
   }
 
@@ -55,9 +62,13 @@ class _StaffTTHomeState extends State<StaffTTHome>
           )).getAppBar(),
       body: TabBarView(
         controller: tabController,
-        children: const [
-          StaffDailyTT(),
-          StaffWeeklyTT(),
+        children: [
+          StaffDailyTT(
+            loginSuccessModel: widget.loginSuccessModel,
+            mskoolController: widget.mskoolController,
+            ttController: ttController,
+          ),
+          const StaffWeeklyTT(),
         ],
       ),
     );

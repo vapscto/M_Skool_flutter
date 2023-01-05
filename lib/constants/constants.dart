@@ -605,3 +605,7 @@ String convertToAgoShort(DateTime input) {
     return 'just now';
   }
 }
+
+String getDate(DateTime dt) {
+  return "${dt.day}-${dt.month}-${dt.year}";
+}

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/staffs/view_notice/model/view_notice_model.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:readmore/readmore.dart';
@@ -8,8 +10,12 @@ import 'package:readmore/readmore.dart';
 class ViewNoticeDetailsScreen extends StatelessWidget {
   final Color bgColor;
   final Color chipColor;
+  final ViewNoticeModelValues values;
   const ViewNoticeDetailsScreen(
-      {super.key, required this.bgColor, required this.chipColor});
+      {super.key,
+      required this.bgColor,
+      required this.chipColor,
+      required this.values});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +36,7 @@ class ViewNoticeDetailsScreen extends StatelessWidget {
             Chip(
               backgroundColor: bgColor,
               label: Text(
-                "02 Nov to 09 Nov",
+                "${getFormatedDate(DateTime.parse(values.iNTBStartDate!))} to ${getFormatedDate(DateTime.parse(values.iNTBEndDate!))}",
                 style: Theme.of(context).textTheme.titleSmall!.merge(
                       TextStyle(color: chipColor),
                     ),
@@ -40,7 +46,7 @@ class ViewNoticeDetailsScreen extends StatelessWidget {
               height: 8.0,
             ),
             Text(
-              "Independence Day",
+              "${values.iNTBTitle}",
               style: Theme.of(context).textTheme.titleSmall!.merge(
                     const TextStyle(
                         fontWeight: FontWeight.w600, fontSize: 16.0),
@@ -50,7 +56,7 @@ class ViewNoticeDetailsScreen extends StatelessWidget {
               height: 8.0,
             ),
             ReadMoreText(
-              "India is part of the continent of Asia. Most of India forms a peninsula, which means it is surrounded by water on three sides. The world's highest mountain range, the Himalaya, rises in the north. The southeast is bordered by the Bay of Bengal, and the southwest is bordered by the Arabian Sea. India's terrain varies widely, from the Thar Desert in the west to jungles in the northeast. A fertile area called the Ganges Plain covers much of northern India. This formation was created from soil that was deposited by rivers running from the Himalaya. In some places, this layer of silt is over 25,000 feet (7,620 meters) deep.",
+              "${values.iNTBDescription}",
               style: Theme.of(context).textTheme.labelSmall!.merge(
                     const TextStyle(
                       fontSize: 14,

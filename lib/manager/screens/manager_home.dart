@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/manager/staff_leave_approval/screen/staff_leave_approval_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
@@ -26,6 +27,7 @@ class _ManagerHomeState extends State<ManagerHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffold,
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
@@ -57,6 +59,23 @@ class _ManagerHomeState extends State<ManagerHome> {
                       "Leave Approval Staff") {
                     Navigator.push(context, MaterialPageRoute(builder: (_) {
                       return StaffLeaveApproval(
+                        loginSuccessModel: widget.loginSuccessModel,
+                        mskoolController: widget.mskoolController,
+                        title: widget
+                            .loginSuccessModel.staffmobileappprivileges!.values!
+                            .elementAt(index)
+                            .pagename!,
+                      );
+                    }));
+
+                    return;
+                  }
+                  if (widget.loginSuccessModel.staffmobileappprivileges!.values!
+                          .elementAt(index)
+                          .pagename ==
+                      "Overall Fee") {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return OverallFeeHome(
                         loginSuccessModel: widget.loginSuccessModel,
                         mskoolController: widget.mskoolController,
                         title: widget
