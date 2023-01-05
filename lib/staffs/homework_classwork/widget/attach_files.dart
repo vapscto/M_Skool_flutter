@@ -38,6 +38,7 @@ class AttachedFiles extends StatelessWidget {
                                       color: Colors.grey.shade300, width: 1.0),
                                 ),
                                 child: ListTile(
+                                  dense: true,
                                   minLeadingWidth: 10,
                                   visualDensity: const VisualDensity(
                                       horizontal: VisualDensity.minimumDensity),
