@@ -55,9 +55,15 @@ class _StudentBdayHomeState extends State<StudentBdayHome>
       ).getAppBar(),
       body: TabBarView(
         controller: tabController,
-        children: const [
-          BetweenDays(),
-          MonthWise(),
+        children: [
+          BetweenDays(
+            loginSuccessModel: widget.loginSuccessModel,
+            mskoolController: widget.mskoolController,
+          ),
+          MonthWise(
+            loginSuccessModel: widget.loginSuccessModel,
+            mskoolController: widget.mskoolController,
+          ),
         ],
       ),
     );

@@ -161,4 +161,6 @@ class URLS {
   static String getStaffDailyTT = "api/EmployeeTTFacade/getdaily_data/";
 
   static String getWeeklyTT = "api/EmployeeTTFacade/getdata/";
+
+  static String getStudentBday = "api/studentbirthdayreportFacade/getdetails/";
 }
