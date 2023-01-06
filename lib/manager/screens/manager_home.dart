@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/manager/staff_leave_approval/screen/staff_leave_approval_home.dart';
+import 'package:m_skool_flutter/manager/student_notice_board/screen/student_notice_board_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
@@ -53,6 +55,10 @@ class _ManagerHomeState extends State<ManagerHome> {
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
+                  logger.d(widget
+                      .loginSuccessModel.staffmobileappprivileges!.values!
+                      .elementAt(index)
+                      .pagename);
                   if (widget.loginSuccessModel.staffmobileappprivileges!.values!
                           .elementAt(index)
                           .pagename ==
@@ -70,6 +76,13 @@ class _ManagerHomeState extends State<ManagerHome> {
 
                     return;
                   }
+                  if (widget.loginSuccessModel.staffmobileappprivileges!.values!
+                          .elementAt(index)
+                          .pagename ==
+                      'Notice Board') {
+                    Get.to(() => const StudentNoticeBoardHome());
+                  }
+
                   if (widget.loginSuccessModel.staffmobileappprivileges!.values!
                           .elementAt(index)
                           .pagename ==
