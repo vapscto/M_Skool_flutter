@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/staffs/student_birthday/model/student_bday_model.dart';
 
 class BirthdayItem extends StatelessWidget {
+  final StudentBdayModelValues value;
   const BirthdayItem({
     Key? key,
     required this.color,
+    required this.value,
   }) : super(key: key);
 
   final int color;
@@ -23,8 +26,7 @@ class BirthdayItem extends StatelessWidget {
           CircleAvatar(
             radius: 36.0,
             backgroundColor: noticeColor.elementAt(color),
-            backgroundImage: const NetworkImage(
-                "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80"),
+            backgroundImage: NetworkImage(value.amstPhoto!),
           ),
           const SizedBox(
             width: 12.0,
@@ -34,7 +36,7 @@ class BirthdayItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Ankush",
+                  value.studentname!,
                   style: Theme.of(context).textTheme.titleSmall!.merge(
                         const TextStyle(
                           fontWeight: FontWeight.w600,
@@ -44,16 +46,16 @@ class BirthdayItem extends StatelessWidget {
                 const SizedBox(
                   height: 6.0,
                 ),
-                const Text("BGHS1254"),
+                Text(value.admno!),
                 const SizedBox(
                   height: 6.0,
                 ),
-                const Text("IX & A"),
+                Text("${value.classname} & ${value.sectionname}"),
               ],
             ),
           ),
           Text(
-            "22-11-2011",
+            getDate(DateTime.parse(value.amstDob!)),
             style: Theme.of(context).textTheme.titleSmall!.merge(
                   const TextStyle(
                     fontWeight: FontWeight.w600,

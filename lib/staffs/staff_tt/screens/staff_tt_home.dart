@@ -68,7 +68,10 @@ class _StaffTTHomeState extends State<StaffTTHome>
             mskoolController: widget.mskoolController,
             ttController: ttController,
           ),
-          const StaffWeeklyTT(),
+          StaffWeeklyTT(
+            loginSuccessModel: widget.loginSuccessModel,
+            mskoolController: widget.mskoolController,
+          ),
         ],
       ),
     );
