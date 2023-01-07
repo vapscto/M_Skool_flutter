@@ -163,4 +163,12 @@ class URLS {
   static String getWeeklyTT = "api/EmployeeTTFacade/getdata/";
 
   static String getStudentBday = "api/studentbirthdayreportFacade/getdetails/";
+
+  static String salaryDetailsApi =
+      "api/EmployeeSalaryDetailsFacade/getdaily_data/";
+
+  static String getSalaryBreak =
+      "api/EmployeeSalaryDetailsFacade/getsalaryalldetails/";
+
+  static String viewNoticeGetSession = "api/EmployeePtalFacade/getdata/";
 }

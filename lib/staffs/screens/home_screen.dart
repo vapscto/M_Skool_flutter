@@ -347,6 +347,29 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                       );
                       return;
                     }
+                    if (widget
+                            .loginSuccessModel.staffmobileappprivileges!.values!
+                            .elementAt(index)
+                            .pagename! ==
+                        "COE") {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) {
+                            return StaffCoeHome(
+                              loginSuccessModel: widget.loginSuccessModel,
+                              mskoolController: widget.mskoolController,
+                              title: widget.loginSuccessModel
+                                  .staffmobileappprivileges!.values!
+                                  .elementAt(index)
+                                  .pagename!,
+                              //forHw: true,
+                            );
+                          },
+                        ),
+                      );
+                      return;
+                    }
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(3.0),

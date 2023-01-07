@@ -21,7 +21,10 @@ class StudentBdayReportApi {
   }) async {
     final Dio ins = getGlobalDio();
     final String api = base + URLS.getStudentBday;
-    bdayController.updateIsErrorOccured(false);
+    if (bdayController.isErrorOccured.value) {
+      bdayController.updateIsErrorOccured(false);
+    }
+
     bdayController.updateIsLoadingBday(true);
     try {
       logger.d({
