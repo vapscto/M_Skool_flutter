@@ -33,17 +33,19 @@ class _MonthWiseState extends State<MonthWise> {
 
   @override
   void initState() {
-    StudentBdayReportApi.instance.getBday(
-        miId: widget.loginSuccessModel.mIID!,
-        fromDate: bdayController.fromSelectedDate.value.toLocal().toString(),
-        toDate: bdayController.toSelectedDate.value.toLocal().toString(),
-        all1: 0,
-        flag: "S",
-        month: fullMonthsWithIndex.first['day'].toString(),
-        base: baseUrlFromInsCode("admission", widget.mskoolController),
-        type: 0,
-        bdayController: bdayController);
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await StudentBdayReportApi.instance.getBday(
+          miId: widget.loginSuccessModel.mIID!,
+          fromDate: bdayController.fromSelectedDate.value.toLocal().toString(),
+          toDate: bdayController.toSelectedDate.value.toLocal().toString(),
+          all1: 0,
+          flag: "S",
+          month: fullMonthsWithIndex.first['day'].toString(),
+          base: baseUrlFromInsCode("admission", widget.mskoolController),
+          type: 0,
+          bdayController: bdayController);
+    });
   }
 
   @override

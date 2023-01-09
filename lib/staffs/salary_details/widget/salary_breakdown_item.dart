@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SalaryBreakDown extends StatelessWidget {
-  const SalaryBreakDown({super.key});
+  final String title;
+  final String amt;
+  const SalaryBreakDown({super.key, required this.title, required this.amt});
 
   @override
   Widget build(BuildContext context) {
@@ -9,11 +11,11 @@ class SalaryBreakDown extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          "Basic Pay",
+          title,
           style: Theme.of(context).textTheme.titleSmall,
         ),
         Text(
-          "30350",
+          amt,
           style: Theme.of(context)
               .textTheme
               .titleSmall!

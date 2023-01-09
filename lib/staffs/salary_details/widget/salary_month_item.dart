@@ -3,9 +3,13 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class SalaryMonthItem extends StatelessWidget {
+  final String month;
+  final double salary;
   const SalaryMonthItem({
     Key? key,
     required this.color,
+    required this.month,
+    required this.salary,
   }) : super(key: key);
 
   final int color;
@@ -28,7 +32,7 @@ class SalaryMonthItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, left: 8.0),
                   child: Text(
-                    "January",
+                    month,
                     style: Theme.of(context).textTheme.titleSmall!.merge(
                           const TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 16),
@@ -59,7 +63,7 @@ class SalaryMonthItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "₹51000",
+                    "₹$salary",
                     style: Theme.of(context).textTheme.titleMedium!.merge(
                         TextStyle(
                             color: noticeColor.elementAt(color),

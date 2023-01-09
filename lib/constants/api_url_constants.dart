@@ -168,4 +168,11 @@ class URLS {
   static String getYearandMonth = 'api/SalarySlipFacade/onloadgetdetails/';
   static String getSalarySlipDetails =
       'api/SalarySlipFacade/GenerateEmployeeSalarySlip/';
+  static String salaryDetailsApi =
+      "api/EmployeeSalaryDetailsFacade/getdaily_data/";
+
+  static String getSalaryBreak =
+      "api/EmployeeSalaryDetailsFacade/getsalaryalldetails/";
+
+  static String viewNoticeGetSession = "api/EmployeePtalFacade/getdata/";
 }

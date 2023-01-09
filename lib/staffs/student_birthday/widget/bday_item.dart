@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/model/student_bday_model.dart';
+import 'package:m_skool_flutter/staffs/student_birthday/widget/student_image_handler.dart';
 
 class BirthdayItem extends StatelessWidget {
   final StudentBdayModelValues value;
@@ -21,13 +22,15 @@ class BirthdayItem extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(12.0),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(
-            radius: 36.0,
-            backgroundColor: noticeColor.elementAt(color),
-            backgroundImage: NetworkImage(value.amstPhoto!),
-          ),
+          // CircleAvatar(
+          //   radius: 36.0,
+          //   backgroundColor: noticeColor.elementAt(color),
+          //   //backgroundImage: NetworkImage(value.amstPhoto!),
+          // ),
+
+          StudentImage(value: value, color: color),
           const SizedBox(
             width: 12.0,
           ),
