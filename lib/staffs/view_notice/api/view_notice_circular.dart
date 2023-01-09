@@ -2,21 +2,35 @@ import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/staffs/view_notice/controller/view_notice_data_controller.dart';
 import 'package:m_skool_flutter/staffs/view_notice/model/view_notice_model.dart';
 
 class ViewCircularNoticeApi {
   ViewCircularNoticeApi.init();
   static final ViewCircularNoticeApi instance = ViewCircularNoticeApi.init();
 
-  Future<List<ViewNoticeModelValues>> getCircularNotice({
+  getCircularNotice({
     required int miId,
     required int userId,
     required int asmayId,
     required String flag,
     required String base,
+    required ViewNoticeDataController dataController,
   }) async {
     final Dio ins = getGlobalDio();
     final String apiUrl = base + URLS.viewNoticeCircular;
+
+    if (dataController.isErrorOccuredWhileLoadingCircularContent.value) {
+      dataController.updateIsErrorOccuredWhileLoadingCircularContent(false);
+    }
+
+    dataController.updateIsLoadingCircularContent(true);
+    logger.d({
+      "MI_Id": miId,
+      "UserId": userId,
+      "ASMAY_Id": asmayId,
+      "Flag": flag,
+    });
     //logger.d(apiUrl);
     try {
       final Response response = await ins.post(
@@ -31,19 +45,23 @@ class ViewCircularNoticeApi {
       );
 
       if (response.data['noticeboard'] == null) {
-        return Future.error(
-          {
-            "errorTitle": "Unable to load notices",
-            "errorMsg":
-                "Sorry! but right now, we are unable to show notices because of data is not available.",
-          },
-        );
+        dataController.updateIsErrorOccuredWhileLoadingCircularContent(true);
+
+        return;
+        // return Future.error(
+        //   {
+        //     "errorTitle": "Unable to load notices",
+        //     "errorMsg":
+        //         "Sorry! but right now, we are unable to show notices because of data is not available.",
+        //   },
+        // );
       }
 
       final ViewNoticeModel notices =
           ViewNoticeModel.fromJson(response.data['noticeboard']);
 
-      return Future.value(notices.values);
+      dataController.updateCircularList(notices.values!);
+      dataController.updateIsLoadingCircularContent(false);
     } catch (e) {
       logger.e(e.toString());
       return Future.error({

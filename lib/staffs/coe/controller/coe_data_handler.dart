@@ -7,7 +7,7 @@ class CoeDataHandler extends GetxController {
   final RxBool isAcademicYearLoaded = RxBool(false);
 
   void updateIsWholePageLoading(bool ok) {
-    isAcademicYearLoaded.value = ok;
+    isWholePageLoading.value = ok;
   }
 
   void updateIsAcademicYearLoaded(bool ok) {
@@ -49,5 +49,33 @@ class CoeDataHandler extends GetxController {
       coeLists.clear();
     }
     coeLists.addAll(list);
+  }
+
+  String loadingAcademicYearString =
+      "We are in process to load academic year, your view will be visible soon";
+
+  String loadingCoeData =
+      "We are loading coe for selected academic year and month, your view will be visible soon";
+
+  RxString coeLoadingStatus = RxString("");
+  void updateCoeLoadingStatus(String status) {
+    coeLoadingStatus.value = status;
+  }
+
+  RxBool errorOccuredWhileLoadingCoe = RxBool(false);
+  void updateIsErrorOccuredWhileLoadingCoe(bool ok) {
+    errorOccuredWhileLoadingCoe.value = ok;
+  }
+
+  Rx<ViewNoticeSessionModelValues> selectedAcademicYear =
+      Rx(ViewNoticeSessionModelValues());
+
+  void updateSelectedAcademicYear(ViewNoticeSessionModelValues model) {
+    selectedAcademicYear.value = model;
+  }
+
+  RxInt selectedMonth = RxInt(DateTime.now().month);
+  void updateSelectedMonth(int value) {
+    selectedMonth.value = value;
   }
 }
