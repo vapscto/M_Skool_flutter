@@ -27,18 +27,18 @@ class SalarySlipDetailModel {
     this.mainList,
   });
 
-  int? hreSId;
-  int? mIId;
-  int? hrmEId;
+  num? hreSId;
+  num? mIId;
+  num? hrmEId;
   String? hreSYear;
   String? hreSMonth;
-  int? hrmEAge;
-  int? basicamount;
+  num? hrmEAge;
+  num? basicamount;
   String? checkRole;
-  int? roleId;
-  int? logInUserId;
-  int? lopAmount;
-  int? lopdays;
+  num? roleId;
+  num? logInUserId;
+  num? lopAmount;
+  num? lopdays;
   MainList? mainList;
 
   factory SalarySlipDetailModel.fromJson(Map<String, dynamic> json) =>
@@ -124,23 +124,23 @@ class MainListValue {
     this.payrollStandard,
   });
 
-  int? hreSId;
-  int? mIId;
-  int? hrmEId;
+  num? hreSId;
+  num? mIId;
+  num? hrmEId;
   String? hreSYear;
   String? hreSMonth;
-  int? hrmEAge;
-  int? basicamount;
-  int? roleId;
-  int? logInUserId;
+  num? hrmEAge;
+  num? basicamount;
+  num? roleId;
+  num? logInUserId;
   InstitutionDetails? institutionDetails;
   CurrentemployeeDetails? currentemployeeDetails;
   String? departmentName;
   String? designationName;
   String? genderName;
   EmployeeSalaryslipDetails? employeeSalaryslipDetails;
-  int? lopAmount;
-  int? lopdays;
+  num? lopAmount;
+  num? lopdays;
   EmployeeLeaveDetails? employeeLeaveDetails;
   Empsaldetail? empsaldetail;
   PayrollStandard? payrollStandard;
@@ -282,13 +282,13 @@ class CurrentemployeeDetails {
     this.updatedDate,
   });
 
-  int? hrmEId;
-  int? mIId;
-  int? hrmeTId;
-  int? hrmgTId;
-  int? hrmDId;
-  int? hrmdeSId;
-  int? hrmGId;
+  num? hrmEId;
+  num? mIId;
+  num? hrmeTId;
+  num? hrmgTId;
+  num? hrmDId;
+  num? hrmdeSId;
+  num? hrmGId;
   String? hrmEEmployeeFirstName;
   String? hrmEEmployeeMiddleName;
   String? hrmEEmployeeLastName;
@@ -299,21 +299,21 @@ class CurrentemployeeDetails {
   String? hrmEPerArea;
   String? hrmEPerCity;
   String? hrmEPerAdd4;
-  int? hrmEPerStateId;
-  int? hrmEPerCountryId;
-  int? hrmEPerPincode;
+  num? hrmEPerStateId;
+  num? hrmEPerCountryId;
+  num? hrmEPerPincode;
   String? hrmELocStreet;
   String? hrmELocArea;
   String? hrmELocCity;
   String? hrmELocAdd4;
-  int? hrmELocStateId;
-  int? hrmELocCountryId;
-  int? hrmELocPincode;
-  int? ivrmmmSId;
-  int? ivrmmGId;
-  int? casteCategoryId;
-  int? casteId;
-  int? religionId;
+  num? hrmELocStateId;
+  num? hrmELocCountryId;
+  num? hrmELocPincode;
+  num? ivrmmmSId;
+  num? ivrmmGId;
+  num? casteCategoryId;
+  num? casteId;
+  num? religionId;
   String? hrmEFatherName;
   String? hrmEMotherName;
   String? hrmESpouseName;
@@ -325,7 +325,7 @@ class CurrentemployeeDetails {
   DateTime? hrmEExpectedRetirementDate;
   DateTime? hrmEPfDate;
   DateTime? hrmEEsiDate;
-  int? hrmEMobileNo;
+  num? hrmEMobileNo;
   String? hrmEEmailId;
   String? hrmEBloodGroup;
   String? hrmEPaymentType;
@@ -342,23 +342,23 @@ class CurrentemployeeDetails {
   String? hrmELeavingReason;
   String? hrmEHeight;
   String? hrmEHeightUom;
-  int? hrmEWeight;
+  num? hrmEWeight;
   String? hrmEWeightUom;
   String? hrmEIdentificationMark;
   String? hrmEApprovalNo;
   String? hrmEPanCardNo;
-  int? hrmEAadharCardNo;
+  num? hrmEAadharCardNo;
   bool? hrmESubstituteFlag;
   String? hrmENationalSsn;
   String? hrmESalaryType;
-  int? hrmEEmployeeOrder;
+  num? hrmEEmployeeOrder;
   bool? hrmEActiveFlag;
   String? hrmEUiNumber;
   String? hrmETechNonTeachingFlg;
-  int? ivrmuLId;
-  int? logInUserId;
-  int? imCId;
-  int? hrmeQId;
+  num? ivrmuLId;
+  num? logInUserId;
+  num? imCId;
+  num? hrmeQId;
   String? hrmEMsTeamsUserId;
   String? hrmEMsTeamsEmailId;
   String? hrmEMsTeamsPassword;
@@ -581,17 +581,17 @@ class EmployeeLeaveDetailsValue {
     this.hrmLLeaveName,
   });
 
-  int? hrelSId;
-  int? mIId;
-  int? hrmEId;
-  int? hrmLId;
-  int? hrmlYId;
-  int? hrelSObLeaves;
-  int? hrelSCreditedLeaves;
-  int? hrelSTotalLeaves;
-  int? hrelSTransLeaves;
-  int? hrelSEncashedLeaves;
-  int? hrelSCbLeaves;
+  num? hrelSId;
+  num? mIId;
+  num? hrmEId;
+  num? hrmLId;
+  num? hrmlYId;
+  num? hrelSObLeaves;
+  num? hrelSCreditedLeaves;
+  num? hrelSTotalLeaves;
+  num? hrelSTransLeaves;
+  num? hrelSEncashedLeaves;
+  num? hrelSCbLeaves;
   String? hrmLLeaveName;
 
   factory EmployeeLeaveDetailsValue.fromJson(Map<String, dynamic> json) =>
@@ -669,17 +669,17 @@ class EmployeeSalaryslipDetailsValue {
   });
 
   String? type;
-  int? miId;
-  int? hrmeId;
+  num? miId;
+  num? hrmeId;
   String? hresYear;
   String? hresMonth;
-  int? hrmedId;
+  num? hrmedId;
   String? hrmedEarnDedFlag;
   String? hrmedAmountPercentFlag;
   String? hrmedEdTypeFlag;
   String? hrmedName;
-  int? amount;
-  int? hrmedOrder;
+  num? amount;
+  num? hrmedOrder;
 
   factory EmployeeSalaryslipDetailsValue.fromJson(Map<String, dynamic> json) =>
       EmployeeSalaryslipDetailsValue(
@@ -743,32 +743,32 @@ class Empsaldetail {
     this.lopdays,
   });
 
-  int? hreSId;
-  int? mIId;
-  int? hrmEId;
+  num? hreSId;
+  num? mIId;
+  num? hrmEId;
   String? hreSYear;
   String? hreSMonth;
-  int? hreSWorkingDays;
+  num? hreSWorkingDays;
   String? hreSDailyRates;
   double? hreSEpf;
   double? hreSFpf;
-  int? hreSAc21;
-  int? hreSAc22;
-  int? hreSAc5;
+  num? hreSAc21;
+  num? hreSAc22;
+  num? hreSAc5;
   DateTime? hreSFromDate;
   DateTime? hreSToDate;
   String? hreSBankCashFlag;
-  int? hrmgTId;
-  int? hrmDId;
-  int? hrmdeSId;
+  num? hrmgTId;
+  num? hrmDId;
+  num? hrmdeSId;
   String? hreSBankCode;
   String? hreSAccountNo;
-  int? hrmEAge;
-  int? basicamount;
-  int? roleId;
-  int? logInUserId;
-  int? lopAmount;
-  int? lopdays;
+  num? hrmEAge;
+  num? basicamount;
+  num? roleId;
+  num? logInUserId;
+  num? lopAmount;
+  num? lopdays;
 
   factory Empsaldetail.fromJson(Map<String, dynamic> json) => Empsaldetail(
         hreSId: json["hreS_Id"],
@@ -884,9 +884,9 @@ class InstitutionDetails {
     this.updatedDate,
   });
 
-  int? mIId;
-  int? mOId;
-  int? mvidcoNId;
+  num? mIId;
+  num? mOId;
+  num? mvidcoNId;
   String? mIName;
   String? mIVcStudentFlag;
   String? mIVcOthersFlag;
@@ -895,31 +895,31 @@ class InstitutionDetails {
   String? mIAddress2;
   String? mIAddress3;
   String? ivrmmcTName;
-  int? ivrmmSId;
+  num? ivrmmSId;
   String? mIMsTeamsAdminUsername;
   String? mIMsTeamsAdminPassword;
-  int? ivrmmCId;
-  int? mIPincode;
+  num? ivrmmCId;
+  num? mIPincode;
   String? mIBackgroundImage;
   String? mIFormColor;
   String? mIFontColor;
-  int? mIFontSize;
+  num? mIFontSize;
   String? mIWeekStartDay;
   String? mIDateFormat;
   String? mIDateSeparator;
   String? mILogo;
-  int? mIActiveFlag;
+  num? mIActiveFlag;
   String? mINaacInstitutionTypeFlg;
   String? mIAffiliation;
-  int? ivrmPId;
-  int? sessionMiId;
-  int? sessionMoId;
+  num? ivrmPId;
+  num? sessionMiId;
+  num? sessionMoId;
   String? mISubdomain;
-  int? userId;
-  int? roleId;
+  num? userId;
+  num? roleId;
   String? mIContactDetails;
   String? mIAboutInstitute;
-  int? mIFranchiseFlag;
+  num? mIFranchiseFlag;
   String? mISchoolCollegeFlag;
   String? mINaacSubInstitutionTypeFlg;
   String? mIMsTeamsClientId;
@@ -931,8 +931,8 @@ class InstitutionDetails {
   String? mIMsTeamsGrantType;
   String? mIMsTeamsScope;
   String? mIEntityId;
-  int? perviousMiId;
-  int? currentMiId;
+  num? perviousMiId;
+  num? currentMiId;
   DateTime? createdDate;
   DateTime? updatedDate;
 
@@ -1086,9 +1086,9 @@ class PayrollStandard {
     this.hrCAlertDay,
   });
 
-  int? hrCId;
-  int? mIId;
-  int? hrCPfMaxAmt;
+  num? hrCId;
+  num? mIId;
+  num? hrCPfMaxAmt;
   double? hrCFpfPer;
   double? hrCEpfPer;
   bool? hrCAsPerEmpFlag;
@@ -1096,32 +1096,32 @@ class PayrollStandard {
   double? hrCAccNo2;
   double? hrCAccNo21;
   double? hrCAccNo22;
-  int? hrCRetirementYrs;
+  num? hrCRetirementYrs;
   String? hrCECodePrefix;
   double? hrCEsiMax;
   double? hrCEsiEmplrCont;
   String? hrCPayMethodFlg;
   bool? hrCArrSalaryFlag;
   bool? hrCCummArrFlag;
-  int? hrCSalaryFromDay;
-  int? hrCSalaryToDay;
-  int? hrCArtfpfPer;
-  int? hrCArtepfPer;
-  int? hrCEsiMaxAmount;
-  int? hrCAc2MinAmount;
-  int? hrCAc21MinAmount;
-  int? hrCAc22MinAmount;
+  num? hrCSalaryFromDay;
+  num? hrCSalaryToDay;
+  num? hrCArtfpfPer;
+  num? hrCArtepfPer;
+  num? hrCEsiMaxAmount;
+  num? hrCAc2MinAmount;
+  num? hrCAc21MinAmount;
+  num? hrCAc22MinAmount;
   bool? hrCSalAdvApprovalFlg;
   bool? hrCLoanApprovalFlg;
   bool? hrCSalApprovalFlg;
-  int? hrCEducationCess;
-  int? roleId;
+  num? hrCEducationCess;
+  num? roleId;
   String? hrCIncrementMonth;
-  int? hrCMinimumWorkingPeriod;
+  num? hrCMinimumWorkingPeriod;
   bool? hrCFixedIncrmentFlg;
-  int? hrCNoOfOptionalHolidays;
-  int? hrCIncrementOnceInMonths;
-  int? hrCAlertDay;
+  num? hrCNoOfOptionalHolidays;
+  num? hrCIncrementOnceInMonths;
+  num? hrCAlertDay;
 
   factory PayrollStandard.fromJson(Map<String, dynamic> json) =>
       PayrollStandard(

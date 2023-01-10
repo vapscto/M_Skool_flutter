@@ -154,7 +154,7 @@ class URLS {
   static int chairman = 22;
   static int manager = 24;
 
-  //Staff Api
+  // ****************Staff Api****************//
 
   static String viewNoticeCircular = "api/EmployeePtalFacade/onclick_notice";
   static String staffDailyTTGetDays = "api/EmployeeTTFacade/getdata/";
@@ -168,6 +168,9 @@ class URLS {
   static String getYearandMonth = 'api/SalarySlipFacade/onloadgetdetails/';
   static String getSalarySlipDetails =
       'api/SalarySlipFacade/GenerateEmployeeSalarySlip/';
+
+  // SALARY DETAILS API .........
+
   static String salaryDetailsApi =
       "api/EmployeeSalaryDetailsFacade/getdaily_data/";
 

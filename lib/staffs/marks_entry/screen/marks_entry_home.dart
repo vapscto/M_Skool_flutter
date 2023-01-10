@@ -6,10 +6,18 @@ import 'package:m_skool_flutter/widget/home_fab.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../controller/mskoll_controller.dart';
+import '../../../model/login_success_model.dart';
 import '../../../widget/custom_back_btn.dart';
 
 class MarksEntryHome extends StatefulWidget {
-  const MarksEntryHome({super.key});
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  const MarksEntryHome({
+    super.key,
+    required this.loginSuccessModel,
+    required this.mskoolController,
+  });
 
   @override
   State<MarksEntryHome> createState() => _MarksEntryHomeState();

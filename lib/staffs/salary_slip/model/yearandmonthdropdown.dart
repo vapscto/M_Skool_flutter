@@ -35,15 +35,15 @@ class YearAndMonthDropdownModel {
   int? hrmEAge;
   int? basicamount;
   int? roleId;
-  Dropdown? monthdropdown;
+  MonthDropdown? monthdropdown;
   Dropdown? employeedropdown;
-  Dropdown? leaveyeardropdown;
+  YearDropdown? leaveyeardropdown;
   Dropdown? departmentdropdown;
   Dropdown? designationdropdown;
   int? logInUserId;
   Dropdown? groupTypedropdown;
-  int? lopAmount;
-  int? lopdays;
+  num? lopAmount;
+  num? lopdays;
 
   factory YearAndMonthDropdownModel.fromJson(Map<String, dynamic> json) =>
       YearAndMonthDropdownModel(
@@ -53,9 +53,9 @@ class YearAndMonthDropdownModel {
         hrmEAge: json["hrmE_Age"],
         basicamount: json["basicamount"],
         roleId: json["roleId"],
-        monthdropdown: Dropdown.fromJson(json["monthdropdown"]),
+        monthdropdown: MonthDropdown.fromJson(json["monthdropdown"]),
         employeedropdown: Dropdown.fromJson(json["employeedropdown"]),
-        leaveyeardropdown: Dropdown.fromJson(json["leaveyeardropdown"]),
+        leaveyeardropdown: YearDropdown.fromJson(json["leaveyeardropdown"]),
         departmentdropdown: Dropdown.fromJson(json["departmentdropdown"]),
         designationdropdown: Dropdown.fromJson(json["designationdropdown"]),
         logInUserId: json["logInUserId"],
@@ -239,11 +239,11 @@ class Value {
   String? hrmESpouseOccupation;
   String? hrmESpouseEmailId;
   String? hrmESpouseAddress;
-  DateTime? hrmEDob;
-  DateTime? hrmEDoj;
-  DateTime? hrmEExpectedRetirementDate;
-  DateTime? hrmEPfDate;
-  DateTime? hrmEEsiDate;
+  String? hrmEDob;
+  String? hrmEDoj;
+  String? hrmEExpectedRetirementDate;
+  String? hrmEPfDate;
+  String? hrmEEsiDate;
   int? hrmEMobileNo;
   String? hrmEEmailId;
   String? hrmEBloodGroup;
@@ -278,8 +278,8 @@ class Value {
   String? hrmEMsTeamsUserId;
   String? hrmEMsTeamsEmailId;
   String? hrmEMsTeamsPassword;
-  DateTime? createdDate;
-  DateTime? updatedDate;
+  String? createdDate;
+  String? updatedDate;
   int? hrmlYId;
   String? hrmlYLeaveYear;
   DateTime? hrmlYFromDate;
@@ -473,5 +473,133 @@ class Value {
         "ivrM_Month_Name": ivrMMonthName,
         "is_Active": isActive,
         "ivrM_Month_Max_Days": ivrMMonthMaxDays,
+      };
+}
+
+class MonthDropdown {
+  MonthDropdown({
+    this.type,
+    this.values,
+  });
+
+  String? type;
+  List<MonthDropdownValue?>? values;
+
+  factory MonthDropdown.fromJson(Map<String, dynamic> json) => MonthDropdown(
+        type: json["\$type"],
+        values: json["\$values"] == null
+            ? []
+            : List<MonthDropdownValue?>.from(
+                json["\$values"]!.map((x) => MonthDropdownValue.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "\$type": type,
+        "\$values": values == null
+            ? []
+            : List<dynamic>.from(values!.map((x) => x!.toJson())),
+      };
+}
+
+class MonthDropdownValue {
+  MonthDropdownValue({
+    this.ivrMMonthId,
+    this.ivrMMonthName,
+    this.isActive,
+    this.ivrMMonthMaxDays,
+  });
+
+  int? ivrMMonthId;
+  String? ivrMMonthName;
+  bool? isActive;
+  int? ivrMMonthMaxDays;
+
+  factory MonthDropdownValue.fromJson(Map<String, dynamic> json) =>
+      MonthDropdownValue(
+        ivrMMonthId: json["ivrM_Month_Id"],
+        ivrMMonthName: json["ivrM_Month_Name"],
+        isActive: json["is_Active"],
+        ivrMMonthMaxDays: json["ivrM_Month_Max_Days"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "ivrM_Month_Id": ivrMMonthId,
+        "ivrM_Month_Name": ivrMMonthName,
+        "is_Active": isActive,
+        "ivrM_Month_Max_Days": ivrMMonthMaxDays,
+      };
+}
+
+class YearDropdown {
+  YearDropdown({
+    this.type,
+    this.values,
+  });
+
+  String? type;
+  List<YearDropdownValue?>? values;
+
+  factory YearDropdown.fromJson(Map<String, dynamic> json) => YearDropdown(
+        type: json["\$type"],
+        values: json["\$values"] == null
+            ? []
+            : List<YearDropdownValue?>.from(
+                json["\$values"]!.map((x) => YearDropdownValue.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "\$type": type,
+        "\$values": values == null
+            ? []
+            : List<dynamic>.from(values!.map((x) => x!.toJson())),
+      };
+}
+
+class YearDropdownValue {
+  YearDropdownValue({
+    this.hrmlYId,
+    this.mIId,
+    this.hrmlYLeaveYear,
+    this.hrmlYFromDate,
+    this.hrmlYToDate,
+    this.hrmlYActiveFlag,
+    this.hrmlYLeaveYearOrder,
+    this.createdDate,
+    this.updatedDate,
+  });
+
+  int? hrmlYId;
+  int? mIId;
+  String? hrmlYLeaveYear;
+  DateTime? hrmlYFromDate;
+  DateTime? hrmlYToDate;
+  bool? hrmlYActiveFlag;
+  int? hrmlYLeaveYearOrder;
+  DateTime? createdDate;
+  DateTime? updatedDate;
+
+  factory YearDropdownValue.fromJson(Map<String, dynamic> json) =>
+      YearDropdownValue(
+        hrmlYId: json["hrmlY_Id"],
+        mIId: json["mI_Id"],
+        hrmlYLeaveYear: json["hrmlY_LeaveYear"],
+        hrmlYFromDate: DateTime.parse(json["hrmlY_FromDate"]),
+        hrmlYToDate: DateTime.parse(json["hrmlY_ToDate"]),
+        hrmlYActiveFlag: json["hrmlY_ActiveFlag"],
+        hrmlYLeaveYearOrder: json["hrmlY_LeaveYearOrder"],
+        createdDate: DateTime.parse(json["createdDate"]),
+        updatedDate: DateTime.parse(json["updatedDate"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "hrmlY_Id": hrmlYId,
+        "mI_Id": mIId,
+        "hrmlY_LeaveYear": hrmlYLeaveYear,
+        "hrmlY_FromDate": hrmlYFromDate?.toIso8601String(),
+        "hrmlY_ToDate": hrmlYToDate?.toIso8601String(),
+        "hrmlY_ActiveFlag": hrmlYActiveFlag,
+        "hrmlY_LeaveYearOrder": hrmlYLeaveYearOrder,
+        "createdDate": createdDate?.toIso8601String(),
+        "updatedDate": updatedDate?.toIso8601String(),
       };
 }
