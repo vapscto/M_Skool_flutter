@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/view_notice/controller/view_notice_data_controller.dart';
 import 'package:m_skool_flutter/staffs/view_notice/screens/circula_screen.dart';
 import 'package:m_skool_flutter/staffs/view_notice/widget/filter_controller_widget.dart';
 import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
@@ -30,6 +31,8 @@ class _ViewNoticeHomeState extends State<ViewNoticeHome> {
   RxBool showFilter = RxBool(false);
   RxString noticeType = RxString("circular");
   final HwCwNbController hwCwNbController = Get.put(HwCwNbController());
+  final ViewNoticeDataController viewNoticeDataController =
+      Get.put(ViewNoticeDataController());
   int color = -1;
   final List<Color> usedBgColor = [];
   final List<Color> usedChipColor = [];
@@ -37,6 +40,8 @@ class _ViewNoticeHomeState extends State<ViewNoticeHome> {
   @override
   void dispose() {
     Get.delete<HwCwNbController>();
+    Get.delete<ViewNoticeDataController>();
+
     usedBgColor.clear();
     usedChipColor.clear();
 
@@ -106,6 +111,7 @@ class _ViewNoticeHomeState extends State<ViewNoticeHome> {
                       ? CirculaNotice(
                           loginSuccessModel: widget.loginSuccessModel,
                           mskoolController: widget.mskoolController,
+                          dataController: viewNoticeDataController,
                         )
                       : noticeType.value == "syllabus"
                           ? const SizedBox(child: Text("Syllabus Widget"))

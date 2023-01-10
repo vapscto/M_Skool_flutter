@@ -2,29 +2,27 @@ import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/staffs/view_notice/controller/view_notice_data_controller.dart';
+import 'package:m_skool_flutter/staffs/coe/controller/coe_data_handler.dart';
 import 'package:m_skool_flutter/staffs/view_notice/model/view_notice_session_model.dart';
 
-class ViewNoticeGetSession {
-  ViewNoticeGetSession.init();
-  static final ViewNoticeGetSession instance = ViewNoticeGetSession.init();
-
+class CoeAcademicSession {
+  CoeAcademicSession.init();
+  static final CoeAcademicSession instance = CoeAcademicSession.init();
   getViewNoticeSession({
     required int miId,
     required int asmayId,
     required int amstId,
     required String flag,
     required String base,
-    required ViewNoticeDataController dataController,
+    required CoeDataHandler handler,
   }) async {
+    if (handler.isErrorOccured.value) {
+      handler.updateIsErrorOccured(false);
+    }
+    handler.updateIsWholePageLoading(true);
+    handler.updateCoeLoadingStatus(handler.loadingAcademicYearString);
     final String api = base + URLS.viewNoticeGetSession;
     final Dio ins = getGlobalDio();
-
-    if (dataController.isErrorOccuredWhileLoadingCircular.value) {
-      dataController.updateIsErrorOccuredWhileLoadingCircular(false);
-    }
-
-    dataController.updateIsCircularPageLoading(true);
 
     try {
       final Response response =
@@ -37,12 +35,15 @@ class ViewNoticeGetSession {
 
       final ViewNoticeSessionModel sessionModel =
           ViewNoticeSessionModel.fromJson(response.data['yearlist']);
-      dataController.updateSelectedSession(sessionModel.values!.first);
-      dataController.updateCircularSession(sessionModel.values!);
-      dataController.updateIsCircularPageLoading(false);
+      handler.updateSelectedAcademicYear(sessionModel.values!.first);
+      handler.updateSessions(sessionModel.values!);
+      handler.updateIsAcademicYearLoaded(true);
+
+      handler.updateIsWholePageLoading(false);
+      handler.updateIsErrorOccured(false);
     } on Exception catch (e) {
       logger.e(e.toString());
-      dataController.updateIsErrorOccuredWhileLoadingCircular(true);
+      handler.updateIsErrorOccured(true);
     }
   }
 }

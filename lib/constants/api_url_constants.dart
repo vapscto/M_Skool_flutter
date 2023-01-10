@@ -157,9 +157,10 @@ class URLS {
   // ****************Staff Api****************//
 
   static String viewNoticeCircular = "api/EmployeePtalFacade/onclick_notice";
+  static String viewNoticeGetSession = "api/EmployeePtalFacade/getdata/";
+
   static String staffDailyTTGetDays = "api/EmployeeTTFacade/getdata/";
   static String getStaffDailyTT = "api/EmployeeTTFacade/getdaily_data/";
-
   static String getWeeklyTT = "api/EmployeeTTFacade/getdata/";
 
   static String getStudentBday = "api/studentbirthdayreportFacade/getdetails/";
@@ -173,9 +174,16 @@ class URLS {
 
   static String salaryDetailsApi =
       "api/EmployeeSalaryDetailsFacade/getdaily_data/";
-
   static String getSalaryBreak =
       "api/EmployeeSalaryDetailsFacade/getsalaryalldetails/";
 
-  static String viewNoticeGetSession = "api/EmployeePtalFacade/getdata/";
+  static String staffCoe = "api/COEReportFacade/";
+
+  static String getHwYear = "api/EmployeeStudentHomeworkFacade/Getdetails/";
+  static String getHwClass = "api/EmployeeStudentHomeworkFacade/get_classes/";
+  static String getSection =
+      "api/EmployeeStudentHomeworkFacade/getsectiondata/";
+  static String getSubjects = "api/EmployeeStudentHomeworkFacade/getsubject/";
+  static String saveHw = "api/EmployeeStudentHomeworkFacade/savedetail/";
+  
 }

@@ -39,6 +39,8 @@ class StaffCoeModelValues {
   int? asmaYOrder;
   int? amCId;
   bool? categoryflag;
+  String? coeeVVideos;
+  String? coeeIImages;
 
   StaffCoeModelValues(
       {this.mIId,
