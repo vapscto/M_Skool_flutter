@@ -185,5 +185,15 @@ class URLS {
       "api/EmployeeStudentHomeworkFacade/getsectiondata/";
   static String getSubjects = "api/EmployeeStudentHomeworkFacade/getsubject/";
   static String saveHw = "api/EmployeeStudentHomeworkFacade/savedetail/";
-  
+
+  // MARKS ENTRY API ............
+
+  static String getacademicYear = 'api/MarksEntryFacade/Getdetails/';
+  static String getclass = 'api/MarksEntryFacade/onselectAcdYear/';
+  static String getsection = 'api/MarksEntryFacade/onselectclass/';
+  static String getexam = 'api/MarksEntryFacade/onselectSection/';
+  static String getsubjectname = 'api/MarksEntryFacade/onselectExam/';
+  static String getsubsubject = '';
+  static String getmarksentrydetails = 'api/MarksEntryFacade/onselectSubject/';
+  static String savemarksentrydetails = 'api/MarksEntryFacade/SaveMarks/';
 }

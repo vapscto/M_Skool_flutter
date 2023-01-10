@@ -36,27 +36,27 @@ class ExamDropdownModel {
     this.lastdateexamflag,
   });
 
-  int? estMId;
-  int? mIId;
-  int? asmaYId;
-  int? asmcLId;
-  int? asmSId;
-  int? amsTId;
-  int? emEId;
-  int? ismSId;
-  int? roleid;
-  int? estMMarks;
-  int? id;
+  num? estMId;
+  num? mIId;
+  num? asmaYId;
+  num? asmcLId;
+  num? asmSId;
+  num? amsTId;
+  num? emEId;
+  num? ismSId;
+  num? roleid;
+  num? estMMarks;
+  num? id;
   DateTime? loginDateTime;
   bool? estMActiveFlg;
   Examlist? examlist;
-  int? emgRId;
-  int? saveupdatecount;
-  int? lastdateentry;
+  num? emgRId;
+  num? saveupdatecount;
+  num? lastdateentry;
   bool? lastdateentryflag;
-  int? emsSId;
-  int? emsEId;
-  int? lastdateexam;
+  num? emsSId;
+  num? emsEId;
+  num? lastdateexam;
   bool? lastdateexamflag;
 
   factory ExamDropdownModel.fromJson(Map<String, dynamic> json) =>
@@ -118,26 +118,26 @@ class Examlist {
   });
 
   String? type;
-  List<Value?>? values;
+  List<ExamlistValue?>? values;
 
   factory Examlist.fromJson(Map<String, dynamic> json) => Examlist(
         type: json["\$type"],
         values: json["\$values"] == null
             ? []
-            : List<Value?>.from(
-                json["\$values"]!.map((x) => Value.fromJson(x))),
+            : List<ExamlistValue?>.from(
+                json["\$values"]!.map((x) => ExamlistValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "\u0024type": type,
-        "\u0024values": values == null
+        "\$type": type,
+        "\$values": values == null
             ? []
             : List<dynamic>.from(values!.map((x) => x!.toJson())),
       };
 }
 
-class Value {
-  Value({
+class ExamlistValue {
+  ExamlistValue({
     this.emEId,
     this.mIId,
     this.emEExamName,
@@ -151,19 +151,19 @@ class Value {
     this.emEExamDescription,
   });
 
-  int? emEId;
-  int? mIId;
+  num? emEId;
+  num? mIId;
   String? emEExamName;
   String? emEExamCode;
   String? emEIvrsExamName;
-  int? emEExamOrder;
+  num? emEExamOrder;
   bool? emEFinalExamFlag;
   bool? emEActiveFlag;
   DateTime? updatedDate;
-  DateTime? createdDate;
+  String? createdDate;
   String? emEExamDescription;
 
-  factory Value.fromJson(Map<String, dynamic> json) => Value(
+  factory ExamlistValue.fromJson(Map<String, dynamic> json) => ExamlistValue(
         emEId: json["emE_Id"],
         mIId: json["mI_Id"],
         emEExamName: json["emE_ExamName"],

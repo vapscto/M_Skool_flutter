@@ -36,27 +36,27 @@ class ClassDropdownModel {
     this.lastdateexamflag,
   });
 
-  int? estMId;
-  int? mIId;
-  int? asmaYId;
-  int? asmcLId;
-  int? asmSId;
-  int? amsTId;
-  int? emEId;
-  int? ismSId;
-  int? roleid;
-  int? estMMarks;
-  int? id;
+  num? estMId;
+  num? mIId;
+  num? asmaYId;
+  num? asmcLId;
+  num? asmSId;
+  num? amsTId;
+  num? emEId;
+  num? ismSId;
+  num? roleid;
+  num? estMMarks;
+  num? id;
   DateTime? loginDateTime;
   bool? estMActiveFlg;
   Ctlist? ctlist;
-  int? emgRId;
-  int? saveupdatecount;
-  int? lastdateentry;
+  num? emgRId;
+  num? saveupdatecount;
+  num? lastdateentry;
   bool? lastdateentryflag;
-  int? emsSId;
-  int? emsEId;
-  int? lastdateexam;
+  num? emsSId;
+  num? emsEId;
+  num? lastdateexam;
   bool? lastdateexamflag;
 
   factory ClassDropdownModel.fromJson(Map<String, dynamic> json) =>
@@ -118,14 +118,14 @@ class Ctlist {
   });
 
   String? type;
-  List<Value?>? values;
+  List<CtlistValue?>? values;
 
   factory Ctlist.fromJson(Map<String, dynamic> json) => Ctlist(
         type: json["\$type"],
         values: json["\$values"] == null
             ? []
-            : List<Value?>.from(
-                json["\$values"]!.map((x) => Value.fromJson(x))),
+            : List<CtlistValue?>.from(
+                json["\$values"]!.map((x) => CtlistValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -136,8 +136,8 @@ class Ctlist {
       };
 }
 
-class Value {
-  Value({
+class CtlistValue {
+  CtlistValue({
     this.asmcLId,
     this.asmcLClassName,
     this.asmcLOrder,
@@ -155,23 +155,23 @@ class Value {
     this.updatedDate,
   });
 
-  int? asmcLId;
+  num? asmcLId;
   String? asmcLClassName;
-  int? asmcLOrder;
-  int? mIId;
-  int? asmcLMinAgeYear;
-  int? asmcLMinAgeMonth;
-  int? asmcLMinAgeDays;
-  int? asmcLMaxAgeYear;
-  int? asmcLMaxAgeMonth;
-  int? asmcLMaxAgeDays;
-  int? asmcLMaxCapacity;
+  num? asmcLOrder;
+  num? mIId;
+  num? asmcLMinAgeYear;
+  num? asmcLMinAgeMonth;
+  num? asmcLMinAgeDays;
+  num? asmcLMaxAgeYear;
+  num? asmcLMaxAgeMonth;
+  num? asmcLMaxAgeDays;
+  num? asmcLMaxCapacity;
   bool? asmcLActiveFlag;
-  int? asmcLPreadmFlag;
+  num? asmcLPreadmFlag;
   DateTime? createdDate;
   DateTime? updatedDate;
 
-  factory Value.fromJson(Map<String, dynamic> json) => Value(
+  factory CtlistValue.fromJson(Map<String, dynamic> json) => CtlistValue(
         asmcLId: json["asmcL_Id"],
         asmcLClassName: json["asmcL_ClassName"],
         asmcLOrder: json["asmcL_Order"],

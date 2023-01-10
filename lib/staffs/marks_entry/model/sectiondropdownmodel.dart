@@ -36,27 +36,27 @@ class SectionDropdownModel {
     this.lastdateexamflag,
   });
 
-  int? estMId;
-  int? mIId;
-  int? asmaYId;
-  int? asmcLId;
-  int? asmSId;
-  int? amsTId;
-  int? emEId;
-  int? ismSId;
-  int? roleid;
-  int? estMMarks;
-  int? id;
+  num? estMId;
+  num? mIId;
+  num? asmaYId;
+  num? asmcLId;
+  num? asmSId;
+  num? amsTId;
+  num? emEId;
+  num? ismSId;
+  num? roleid;
+  num? estMMarks;
+  num? id;
   DateTime? loginDateTime;
   bool? estMActiveFlg;
   Seclist? seclist;
-  int? emgRId;
-  int? saveupdatecount;
-  int? lastdateentry;
+  num? emgRId;
+  num? saveupdatecount;
+  num? lastdateentry;
   bool? lastdateentryflag;
-  int? emsSId;
-  int? emsEId;
-  int? lastdateexam;
+  num? emsSId;
+  num? emsEId;
+  num? lastdateexam;
   bool? lastdateexamflag;
 
   factory SectionDropdownModel.fromJson(Map<String, dynamic> json) =>
@@ -118,14 +118,14 @@ class Seclist {
   });
 
   String? type;
-  List<Value?>? values;
+  List<SeclistValue?>? values;
 
   factory Seclist.fromJson(Map<String, dynamic> json) => Seclist(
         type: json["\$type"],
         values: json["\$values"] == null
             ? []
-            : List<Value?>.from(
-                json["\$values"]!.map((x) => Value.fromJson(x))),
+            : List<SeclistValue?>.from(
+                json["\$values"]!.map((x) => SeclistValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -136,8 +136,8 @@ class Seclist {
       };
 }
 
-class Value {
-  Value({
+class SeclistValue {
+  SeclistValue({
     this.asmSId,
     this.mIId,
     this.asmCSectionName,
@@ -149,17 +149,17 @@ class Value {
     this.updatedDate,
   });
 
-  int? asmSId;
-  int? mIId;
+  num? asmSId;
+  num? mIId;
   String? asmCSectionName;
   String? asmCSectionCode;
-  int? asmCOrder;
-  int? asmCActiveFlag;
-  int? asmCMaxCapacity;
+  num? asmCOrder;
+  num? asmCActiveFlag;
+  num? asmCMaxCapacity;
   DateTime? createdDate;
   DateTime? updatedDate;
 
-  factory Value.fromJson(Map<String, dynamic> json) => Value(
+  factory SeclistValue.fromJson(Map<String, dynamic> json) => SeclistValue(
         asmSId: json["asmS_Id"],
         mIId: json["mI_Id"],
         asmCSectionName: json["asmC_SectionName"],

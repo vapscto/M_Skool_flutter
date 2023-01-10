@@ -51,7 +51,7 @@ class AcademicYearModel {
     this.id,
     this.loginDateTime,
     this.estMActiveFlg,
-    this.ctlist,
+    // this.ctlist,
     this.acdlist,
     this.emgRId,
     this.saveupdatecount,
@@ -62,7 +62,7 @@ class AcademicYearModel {
     this.lastdateexam,
     this.lastdateexamflag,
     this.mobileprivileges,
-    this.staffmobileappprivileges,
+    // this.staffmobileappprivileges,
     this.pagename,
     this.pageicon,
     this.pageurl,
@@ -72,35 +72,35 @@ class AcademicYearModel {
     this.ivrmmaPDeleteFlg,
   });
 
-  int? estMId;
-  int? mIId;
-  int? asmaYId;
-  int? asmcLId;
-  int? asmSId;
-  int? amsTId;
-  int? emEId;
-  int? ismSId;
-  int? roleid;
-  int? estMMarks;
-  int? id;
+  num? estMId;
+  num? mIId;
+  num? asmaYId;
+  num? asmcLId;
+  num? asmSId;
+  num? amsTId;
+  num? emEId;
+  num? ismSId;
+  num? roleid;
+  num? estMMarks;
+  num? id;
   DateTime? loginDateTime;
   bool? estMActiveFlg;
-  AcdlistClass? ctlist;
+  // CtList? ctlist;
   AcdlistClass? acdlist;
-  int? emgRId;
-  int? saveupdatecount;
-  int? lastdateentry;
+  num? emgRId;
+  num? saveupdatecount;
+  num? lastdateentry;
   bool? lastdateentryflag;
-  int? emsSId;
-  int? emsEId;
-  int? lastdateexam;
+  num? emsSId;
+  num? emsEId;
+  num? lastdateexam;
   bool? lastdateexamflag;
   String? mobileprivileges;
-  Staffmobileappprivileges? staffmobileappprivileges;
+  // Staffmobileappprivileges? staffmobileappprivileges;
   String? pagename;
   String? pageicon;
   String? pageurl;
-  int? ivrmrmaPId;
+  num? ivrmrmaPId;
   bool? ivrmmaPAddFlg;
   bool? ivrmmaPUpdateFlg;
   bool? ivrmmaPDeleteFlg;
@@ -120,8 +120,8 @@ class AcademicYearModel {
         id: json["id"],
         loginDateTime: DateTime.parse(json["loginDateTime"]),
         estMActiveFlg: json["estM_ActiveFlg"],
-        ctlist: json["ctlist"],
-        acdlist: json["acdlist"],
+        // ctlist: json["ctlist"] ?? {},
+        acdlist: AcdlistClass.fromJson(json["acdlist"]),
         emgRId: json["emgR_Id"],
         saveupdatecount: json["saveupdatecount"],
         lastdateentry: json["lastdateentry"],
@@ -131,7 +131,7 @@ class AcademicYearModel {
         lastdateexam: json["lastdateexam"],
         lastdateexamflag: json["lastdateexamflag"],
         mobileprivileges: json["mobileprivileges"],
-        staffmobileappprivileges: json["staffmobileappprivileges"],
+        // staffmobileappprivileges: json["staffmobileappprivileges"],
         pagename: json["pagename"],
         pageicon: json["pageicon"],
         pageurl: json["pageurl"],
@@ -155,8 +155,8 @@ class AcademicYearModel {
         "id": id,
         "loginDateTime": loginDateTime?.toIso8601String(),
         "estM_ActiveFlg": estMActiveFlg,
-        "ctlist": ctlist,
-        "acdlist": acdlist,
+        // "ctlist": ctlist,
+        "acdlist": acdlist!.toJson(),
         "emgR_Id": emgRId,
         "saveupdatecount": saveupdatecount,
         "lastdateentry": lastdateentry,
@@ -166,7 +166,7 @@ class AcademicYearModel {
         "lastdateexam": lastdateexam,
         "lastdateexamflag": lastdateexamflag,
         "mobileprivileges": mobileprivileges,
-        "staffmobileappprivileges": staffmobileappprivileges,
+        // "staffmobileappprivileges": staffmobileappprivileges,
         "pagename": pagename,
         "pageicon": pageicon,
         "pageurl": pageurl,
@@ -184,14 +184,14 @@ class AcdlistClass {
   });
 
   String? type;
-  List<Value?>? values;
+  List<AcdlistClassValue?>? values;
 
   factory AcdlistClass.fromJson(Map<String, dynamic> json) => AcdlistClass(
         type: json["\$type"],
         values: json["\$values"] == null
             ? []
-            : List<Value?>.from(
-                json["\$values"]!.map((x) => Value.fromJson(x))),
+            : List<AcdlistClassValue?>.from(
+                json["\$values"]!.map((x) => AcdlistClassValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -202,8 +202,8 @@ class AcdlistClass {
       };
 }
 
-class Value {
-  Value({
+class AcdlistClassValue {
+  AcdlistClassValue({
     this.asmaYId,
     this.mIId,
     this.asmaYYear,
@@ -233,35 +233,36 @@ class Value {
     this.asmaYArrearFeeDate,
   });
 
-  int? asmaYId;
-  int? mIId;
+  num? asmaYId;
+  num? mIId;
   String? asmaYYear;
   DateTime? asmaYFromDate;
   DateTime? asmaYToDate;
   DateTime? asmaYPreAdmFDate;
   DateTime? asmaYPreAdmTDate;
-  int? asmaYOrder;
-  int? asmaYActiveFlag;
+  num? asmaYOrder;
+  num? asmaYActiveFlag;
   DateTime? asmaYCutOfDate;
-  int? asmaYPreActiveFlag;
+  num? asmaYPreActiveFlag;
   bool? isActive;
   bool? asmaYReggularFlg;
   bool? asmaYNewFlg;
   bool? asmaYNewAdmissionFlg;
-  int? asmaYCreatedBy;
-  int? asmaYUpdatedBy;
+  num? asmaYCreatedBy;
+  num? asmaYUpdatedBy;
   String? asmaYAcademicYearCode;
-  DateTime? asmaYRegularFeeFDate;
-  DateTime? asmaYRegularFeeTDate;
-  DateTime? createdDate;
-  DateTime? updatedDate;
-  DateTime? asmaYTransportSDate;
-  DateTime? asmaYTransportEDate;
-  DateTime? asmaYReferenceDate;
-  DateTime? asmaYAdvanceFeeDate;
-  DateTime? asmaYArrearFeeDate;
+  String? asmaYRegularFeeFDate;
+  String? asmaYRegularFeeTDate;
+  String? createdDate;
+  String? updatedDate;
+  String? asmaYTransportSDate;
+  String? asmaYTransportEDate;
+  String? asmaYReferenceDate;
+  String? asmaYAdvanceFeeDate;
+  String? asmaYArrearFeeDate;
 
-  factory Value.fromJson(Map<String, dynamic> json) => Value(
+  factory AcdlistClassValue.fromJson(Map<String, dynamic> json) =>
+      AcdlistClassValue(
         asmaYId: json["asmaY_Id"],
         mIId: json["mI_Id"],
         asmaYYear: json["asmaY_Year"],
@@ -282,8 +283,8 @@ class Value {
         asmaYAcademicYearCode: json["asmaY_AcademicYearCode"],
         asmaYRegularFeeFDate: json["asmaY_RegularFeeFDate"],
         asmaYRegularFeeTDate: json["asmaY_RegularFeeTDate"],
-        createdDate: DateTime.parse(json["createdDate"]),
-        updatedDate: DateTime.parse(json["updatedDate"]),
+        createdDate: json["createdDate"],
+        updatedDate: json["updatedDate"],
         asmaYTransportSDate: json["asmaY_TransportSDate"],
         asmaYTransportEDate: json["asmaY_TransportEDate"],
         asmaYReferenceDate: json["asmaY_ReferenceDate"],
@@ -312,8 +313,8 @@ class Value {
         "asmaY_AcademicYearCode": asmaYAcademicYearCode,
         "asmaY_RegularFeeFDate": asmaYRegularFeeFDate,
         "asmaY_RegularFeeTDate": asmaYRegularFeeTDate,
-        "createdDate": createdDate?.toIso8601String(),
-        "updatedDate": updatedDate?.toIso8601String(),
+        "createdDate": createdDate,
+        "updatedDate": updatedDate,
         "asmaY_TransportSDate": asmaYTransportSDate,
         "asmaY_TransportEDate": asmaYTransportEDate,
         "asmaY_ReferenceDate": asmaYReferenceDate,
@@ -321,3 +322,148 @@ class Value {
         "asmaY_ArrearFeeDate": asmaYArrearFeeDate,
       };
 }
+
+// class CtList {
+//   CtList({
+//     this.type,
+//     this.values,
+//   });
+
+//   String? type;
+//   List<CtListValue?>? values;
+
+//   factory CtList.fromJson(Map<String, dynamic> json) => CtList(
+//         type: json["\$type"],
+//         values: json["\$values"] == null
+//             ? []
+//             : List<CtListValue?>.from(
+//                 json["\$values"]!.map((x) => CtListValue.fromJson(x))),
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         "\$type": type,
+//         "\$values": values == null
+//             ? []
+//             : List<dynamic>.from(values!.map((x) => x!.toJson())),
+//       };
+// }
+
+// class CtListValue {
+//   CtListValue({
+//     this.asmaYId,
+//     this.mIId,
+//     this.asmaYYear,
+//     this.asmaYFromDate,
+//     this.asmaYToDate,
+//     this.asmaYPreAdmFDate,
+//     this.asmaYPreAdmTDate,
+//     this.asmaYOrder,
+//     this.asmaYActiveFlag,
+//     this.asmaYCutOfDate,
+//     this.asmaYPreActiveFlag,
+//     this.isActive,
+//     this.asmaYReggularFlg,
+//     this.asmaYNewFlg,
+//     this.asmaYNewAdmissionFlg,
+//     this.asmaYCreatedBy,
+//     this.asmaYUpdatedBy,
+//     this.asmaYAcademicYearCode,
+//     this.asmaYRegularFeeFDate,
+//     this.asmaYRegularFeeTDate,
+//     this.createdDate,
+//     this.updatedDate,
+//     this.asmaYTransportSDate,
+//     this.asmaYTransportEDate,
+//     this.asmaYReferenceDate,
+//     this.asmaYAdvanceFeeDate,
+//     this.asmaYArrearFeeDate,
+//   });
+
+//   num? asmaYId;
+//   num? mIId;
+//   String? asmaYYear;
+//   DateTime? asmaYFromDate;
+//   DateTime? asmaYToDate;
+//   DateTime? asmaYPreAdmFDate;
+//   DateTime? asmaYPreAdmTDate;
+//   num? asmaYOrder;
+//   num? asmaYActiveFlag;
+//   DateTime? asmaYCutOfDate;
+//   num? asmaYPreActiveFlag;
+//   bool? isActive;
+//   bool? asmaYReggularFlg;
+//   bool? asmaYNewFlg;
+//   bool? asmaYNewAdmissionFlg;
+//   num? asmaYCreatedBy;
+//   num? asmaYUpdatedBy;
+//   String? asmaYAcademicYearCode;
+//   DateTime? asmaYRegularFeeFDate;
+//   DateTime? asmaYRegularFeeTDate;
+//   DateTime? createdDate;
+//   DateTime? updatedDate;
+//   DateTime? asmaYTransportSDate;
+//   DateTime? asmaYTransportEDate;
+//   DateTime? asmaYReferenceDate;
+//   DateTime? asmaYAdvanceFeeDate;
+//   DateTime? asmaYArrearFeeDate;
+
+//   factory CtListValue.fromJson(Map<String, dynamic> json) => CtListValue(
+//         asmaYId: json["asmaY_Id"],
+//         mIId: json["mI_Id"],
+//         asmaYYear: json["asmaY_Year"],
+//         asmaYFromDate: DateTime.parse(json["asmaY_From_Date"]),
+//         asmaYToDate: DateTime.parse(json["asmaY_To_Date"]),
+//         asmaYPreAdmFDate: DateTime.parse(json["asmaY_PreAdm_F_Date"]),
+//         asmaYPreAdmTDate: DateTime.parse(json["asmaY_PreAdm_T_Date"]),
+//         asmaYOrder: json["asmaY_Order"],
+//         asmaYActiveFlag: json["asmaY_ActiveFlag"],
+//         asmaYCutOfDate: DateTime.parse(json["asmaY_Cut_Of_Date"]),
+//         asmaYPreActiveFlag: json["asmaY_Pre_ActiveFlag"],
+//         isActive: json["is_Active"],
+//         asmaYReggularFlg: json["asmaY_ReggularFlg"],
+//         asmaYNewFlg: json["asmaY_NewFlg"],
+//         asmaYNewAdmissionFlg: json["asmaY_NewAdmissionFlg"],
+//         asmaYCreatedBy: json["asmaY_CreatedBy"],
+//         asmaYUpdatedBy: json["asmaY_UpdatedBy"],
+//         asmaYAcademicYearCode: json["asmaY_AcademicYearCode"],
+//         asmaYRegularFeeFDate: json["asmaY_RegularFeeFDate"],
+//         asmaYRegularFeeTDate: json["asmaY_RegularFeeTDate"],
+//         createdDate: DateTime.parse(json["createdDate"]),
+//         updatedDate: DateTime.parse(json["updatedDate"]),
+//         asmaYTransportSDate: json["asmaY_TransportSDate"],
+//         asmaYTransportEDate: json["asmaY_TransportEDate"],
+//         asmaYReferenceDate: json["asmaY_ReferenceDate"],
+//         asmaYAdvanceFeeDate: json["asmaY_AdvanceFeeDate"],
+//         asmaYArrearFeeDate: json["asmaY_ArrearFeeDate"],
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         "asmaY_Id": asmaYId,
+//         "mI_Id": mIId,
+//         "asmaY_Year": asmaYYear,
+//         "asmaY_From_Date": asmaYFromDate?.toIso8601String(),
+//         "asmaY_To_Date": asmaYToDate?.toIso8601String(),
+//         "asmaY_PreAdm_F_Date": asmaYPreAdmFDate?.toIso8601String(),
+//         "asmaY_PreAdm_T_Date": asmaYPreAdmTDate?.toIso8601String(),
+//         "asmaY_Order": asmaYOrder,
+//         "asmaY_ActiveFlag": asmaYActiveFlag,
+//         "asmaY_Cut_Of_Date": asmaYCutOfDate?.toIso8601String(),
+//         "asmaY_Pre_ActiveFlag": asmaYPreActiveFlag,
+//         "is_Active": isActive,
+//         "asmaY_ReggularFlg": asmaYReggularFlg,
+//         "asmaY_NewFlg": asmaYNewFlg,
+//         "asmaY_NewAdmissionFlg": asmaYNewAdmissionFlg,
+//         "asmaY_CreatedBy": asmaYCreatedBy,
+//         "asmaY_UpdatedBy": asmaYUpdatedBy,
+//         "asmaY_AcademicYearCode": asmaYAcademicYearCode,
+//         "asmaY_RegularFeeFDate": asmaYRegularFeeFDate,
+//         "asmaY_RegularFeeTDate": asmaYRegularFeeTDate,
+//         "createdDate": createdDate?.toIso8601String(),
+//         "updatedDate": updatedDate?.toIso8601String(),
+//         "asmaY_TransportSDate": asmaYTransportSDate,
+//         "asmaY_TransportEDate": asmaYTransportEDate,
+//         "asmaY_ReferenceDate": asmaYReferenceDate,
+//         "asmaY_AdvanceFeeDate": asmaYAdvanceFeeDate,
+//         "asmaY_ArrearFeeDate": asmaYArrearFeeDate,
+//       };
+// }

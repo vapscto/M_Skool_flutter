@@ -36,27 +36,27 @@ class SubjectDropdownModel {
     this.lastdateexamflag,
   });
 
-  int? estMId;
-  int? mIId;
-  int? asmaYId;
-  int? asmcLId;
-  int? asmSId;
-  int? amsTId;
-  int? emEId;
-  int? ismSId;
-  int? roleid;
-  int? estMMarks;
-  int? id;
+  num? estMId;
+  num? mIId;
+  num? asmaYId;
+  num? asmcLId;
+  num? asmSId;
+  num? amsTId;
+  num? emEId;
+  num? ismSId;
+  num? roleid;
+  num? estMMarks;
+  num? id;
   DateTime? loginDateTime;
   bool? estMActiveFlg;
   Subjectlist? subjectlist;
-  int? emgRId;
-  int? saveupdatecount;
-  int? lastdateentry;
+  num? emgRId;
+  num? saveupdatecount;
+  num? lastdateentry;
   bool? lastdateentryflag;
-  int? emsSId;
-  int? emsEId;
-  int? lastdateexam;
+  num? emsSId;
+  num? emsEId;
+  num? lastdateexam;
   bool? lastdateexamflag;
 
   factory SubjectDropdownModel.fromJson(Map<String, dynamic> json) =>
@@ -118,14 +118,14 @@ class Subjectlist {
   });
 
   String? type;
-  List<Value?>? values;
+  List<SubjectlistValue?>? values;
 
   factory Subjectlist.fromJson(Map<String, dynamic> json) => Subjectlist(
         type: json["\$type"],
         values: json["\$values"] == null
             ? []
-            : List<Value?>.from(
-                json["\$values"]!.map((x) => Value.fromJson(x))),
+            : List<SubjectlistValue?>.from(
+                json["\$values"]!.map((x) => SubjectlistValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -136,8 +136,8 @@ class Subjectlist {
       };
 }
 
-class Value {
-  Value({
+class SubjectlistValue {
+  SubjectlistValue({
     this.ismSId,
     this.mIId,
     this.ismSSubjectName,
@@ -159,27 +159,28 @@ class Value {
     this.updatedDate,
   });
 
-  int? ismSId;
-  int? mIId;
+  num? ismSId;
+  num? mIId;
   String? ismSSubjectName;
   String? ismSSubjectCode;
   String? ismSIvrsSubjectName;
-  int? ismSMaxMarks;
-  int? ismSMinMarks;
-  int? ismSExamFlag;
-  int? ismSPreadmFlag;
-  int? ismSSubjectFlag;
-  int? ismSBatchAppl;
-  int? ismSActiveFlag;
-  int? ismSOrderFlag;
+  num? ismSMaxMarks;
+  num? ismSMinMarks;
+  num? ismSExamFlag;
+  num? ismSPreadmFlag;
+  num? ismSSubjectFlag;
+  num? ismSBatchAppl;
+  num? ismSActiveFlag;
+  num? ismSOrderFlag;
   bool? ismSTtFlag;
   bool? ismSAttendanceFlag;
-  int? ismSLanguageFlg;
-  int? ismSAtExtraFeeFlg;
+  num? ismSLanguageFlg;
+  num? ismSAtExtraFeeFlg;
   DateTime? createdDate;
   DateTime? updatedDate;
 
-  factory Value.fromJson(Map<String, dynamic> json) => Value(
+  factory SubjectlistValue.fromJson(Map<String, dynamic> json) =>
+      SubjectlistValue(
         ismSId: json["ismS_Id"],
         mIId: json["mI_Id"],
         ismSSubjectName: json["ismS_SubjectName"],
