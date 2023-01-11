@@ -131,7 +131,12 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                             .elementAt(index)
                             .pagename ==
                         "Mark Entry") {
-                      Get.to(() => const MarksEntryHome());
+                      Get.to(
+                        () => MarksEntryHome(
+                          loginSuccessModel: widget.loginSuccessModel,
+                          mskoolController: widget.mskoolController,
+                        ),
+                      );
                     }
 
                     if (widget
@@ -140,7 +145,12 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                             .pagename ==
                         "Salary Details") {
                       Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return SalaryDetails(
+                        return
+                            // SalarySlipHome(
+                            //   loginSuccessModel: widget.loginSuccessModel,
+                            //   mskoolController: widget.mskoolController,
+                            // );
+                            SalaryDetails(
                           loginSuccessModel: widget.loginSuccessModel,
                           mskoolController: widget.mskoolController,
                         );
