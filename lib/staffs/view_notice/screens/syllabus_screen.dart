@@ -11,34 +11,26 @@ import 'package:m_skool_flutter/staffs/view_notice/widget/circular_notice_widget
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
-class CirculaNotice extends StatefulWidget {
+class SyllabusScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final ViewNoticeDataController dataController;
-  final String message;
 
-  const CirculaNotice({
+  const SyllabusScreen({
     super.key,
     required this.loginSuccessModel,
     required this.mskoolController,
     required this.dataController,
-    required this.message,
   });
 
   @override
-  State<CirculaNotice> createState() => _CirculaNoticeState();
+  State<SyllabusScreen> createState() => _SyllabusScreenState();
 }
 
-class _CirculaNoticeState extends State<CirculaNotice> {
+class _SyllabusScreenState extends State<SyllabusScreen> {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget.dataController.circularSession.clear();
-      widget.dataController.circularList.clear();
-      widget.dataController.updateIsErrorOccuredWhileLoadingCircular(false);
-      widget.dataController.updateIsCircularPageLoading(true);
-      loadCircularNT();
-    });
+    loadCircularNT();
     super.initState();
   }
 
@@ -47,7 +39,7 @@ class _CirculaNoticeState extends State<CirculaNotice> {
       miId: widget.loginSuccessModel.mIID!,
       asmayId: widget.loginSuccessModel.asmaYId!,
       amstId: widget.loginSuccessModel.amsTId!,
-      flag: widget.message,
+      flag: "s",
       base: baseUrlFromInsCode("portal", widget.mskoolController),
       dataController: widget.dataController,
     );
@@ -58,9 +50,14 @@ class _CirculaNoticeState extends State<CirculaNotice> {
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!,
         asmayId: widget.dataController.selectedSession.value.asmaYId!,
-        flag: widget.message,
+        flag: "s",
         base: baseUrlFromInsCode("portal", widget.mskoolController),
         dataController: widget.dataController);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -111,14 +108,14 @@ class _CirculaNoticeState extends State<CirculaNotice> {
                           dataController: widget.dataController,
                           loginSuccessModel: widget.loginSuccessModel,
                           mskoolController: widget.mskoolController,
-                          message: widget.message,
+                          message: "s",
                         ),
                         const SizedBox(
                           height: 16.0,
                         ),
                         CircularNoticeWidget(
                           datController: widget.dataController,
-                          moduleName: "Circular",
+                          moduleName: "Syllabus",
                           base: baseUrlFromInsCode(
                               "portal", widget.mskoolController),
                         ),

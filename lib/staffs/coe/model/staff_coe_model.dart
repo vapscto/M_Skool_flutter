@@ -25,72 +25,46 @@ class StaffCoeModel {
 }
 
 class StaffCoeModelValues {
-  int? mIId;
-  int? asmaYId;
-  int? asmcLId;
-  int? month;
-  int? count;
   String? eventName;
   String? eventDesc;
   String? coeEEStartDate;
   String? coeEEEndDate;
-  int? year;
-  int? hrmlYId;
-  int? asmaYOrder;
-  int? amCId;
-  bool? categoryflag;
+
   String? coeeVVideos;
   String? coeeIImages;
+  String? cOEEEEndTime;
+  String? cOEEEStartTime;
 
-  StaffCoeModelValues(
-      {this.mIId,
-      this.asmaYId,
-      this.asmcLId,
-      this.month,
-      this.count,
-      this.eventName,
-      this.eventDesc,
-      this.coeEEStartDate,
-      this.coeEEEndDate,
-      this.year,
-      this.hrmlYId,
-      this.asmaYOrder,
-      this.amCId,
-      this.categoryflag});
+  StaffCoeModelValues({
+    this.eventName,
+    this.eventDesc,
+    this.coeEEStartDate,
+    this.coeEEEndDate,
+    this.cOEEEEndTime,
+    this.cOEEEStartTime,
+    this.coeeIImages,
+    this.coeeVVideos,
+  });
 
   StaffCoeModelValues.fromJson(Map<String, dynamic> json) {
-    mIId = json['mI_Id'];
-    asmaYId = json['asmaY_Id'];
-    asmcLId = json['asmcL_Id'];
-    month = json['month'];
-    count = json['count'];
-    eventName = json['eventName'];
-    eventDesc = json['eventDesc'];
-    coeEEStartDate = json['coeE_EStartDate'];
-    coeEEEndDate = json['coeE_EEndDate'];
-    year = json['year'];
-    hrmlYId = json['hrmlY_Id'];
-    asmaYOrder = json['asmaY_Order'];
-    amCId = json['amC_Id'];
-    categoryflag = json['categoryflag'];
+    eventName = json['COEME_EventName'];
+    eventDesc = json['COEME_EventDesc'];
+    coeEEStartDate = json['COEE_EStartDate'];
+    coeEEEndDate = json['COEE_EEndDate'];
+    coeeIImages = json['COEEI_Images'];
+    cOEEEEndTime = json['COEE_EEndTime'];
+    cOEEEStartTime = json['COEE_EStartTime'];
+    coeeVVideos = json['COEEV_Videos'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['mI_Id'] = mIId;
-    data['asmaY_Id'] = asmaYId;
-    data['asmcL_Id'] = asmcLId;
-    data['month'] = month;
-    data['count'] = count;
+
     data['eventName'] = eventName;
     data['eventDesc'] = eventDesc;
     data['coeE_EStartDate'] = coeEEStartDate;
     data['coeE_EEndDate'] = coeEEEndDate;
-    data['year'] = year;
-    data['hrmlY_Id'] = hrmlYId;
-    data['asmaY_Order'] = asmaYOrder;
-    data['amC_Id'] = amCId;
-    data['categoryflag'] = categoryflag;
+
     return data;
   }
 }

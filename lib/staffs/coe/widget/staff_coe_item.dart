@@ -64,7 +64,9 @@ class StaffCoeItem extends StatelessWidget {
                   const SizedBox(
                     height: 12.0,
                   ),
-                  values.coeeVVideos == null && values.coeeIImages == null
+                  (values.coeeVVideos == null && values.coeeIImages == null) ||
+                          (values.coeeVVideos!.isEmpty &&
+                              values.coeeIImages!.isEmpty)
                       ? const SizedBox()
                       : Container(
                           width: 30.0,
@@ -216,7 +218,7 @@ class StaffCoeItem extends StatelessWidget {
                               ),
                               Expanded(
                                 child: Text(
-                                  "${values.coeEEStartDate} - ${values.coeEEEndDate}",
+                                  "${values.cOEEEStartTime} - ${values.cOEEEEndTime}",
                                   maxLines: 1,
                                   style: Theme.of(context).textTheme.titleSmall,
                                 ),

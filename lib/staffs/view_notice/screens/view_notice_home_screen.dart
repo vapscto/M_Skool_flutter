@@ -5,6 +5,8 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/view_notice/controller/view_notice_data_controller.dart';
 import 'package:m_skool_flutter/staffs/view_notice/screens/circula_screen.dart';
+import 'package:m_skool_flutter/staffs/view_notice/screens/syllabus_screen.dart';
+import 'package:m_skool_flutter/staffs/view_notice/screens/tt_screen.dart';
 import 'package:m_skool_flutter/staffs/view_notice/widget/filter_controller_widget.dart';
 import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
@@ -112,10 +114,21 @@ class _ViewNoticeHomeState extends State<ViewNoticeHome> {
                           loginSuccessModel: widget.loginSuccessModel,
                           mskoolController: widget.mskoolController,
                           dataController: viewNoticeDataController,
+                          message: 'o',
                         )
                       : noticeType.value == "syllabus"
-                          ? const SizedBox(child: Text("Syllabus Widget"))
-                          : const SizedBox(child: Text("TT Widget"));
+                          ? SyllabusScreen(
+                              loginSuccessModel: widget.loginSuccessModel,
+                              mskoolController: widget.mskoolController,
+                              dataController: viewNoticeDataController,
+                              // dataController: viewNoticeDataController,
+                              // message: 's',
+                            )
+                          : TTScreen(
+                              loginSuccessModel: widget.loginSuccessModel,
+                              mskoolController: widget.mskoolController,
+                              dataController: viewNoticeDataController,
+                            );
             }),
           ],
         ),

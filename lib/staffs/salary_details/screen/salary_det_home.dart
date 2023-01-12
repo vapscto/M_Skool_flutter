@@ -3,7 +3,7 @@ import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/salary_details/api/salary_details_api.dart';
-import 'package:m_skool_flutter/staffs/salary_details/models/salary_detail_monthwise_model.dart';
+import 'package:m_skool_flutter/staffs/salary_details/models/salary_model.dart';
 import 'package:m_skool_flutter/staffs/salary_details/screen/salary_overall_det.dart';
 import 'package:m_skool_flutter/staffs/salary_details/widget/salary_line_chart.dart';
 import 'package:m_skool_flutter/staffs/salary_details/widget/salary_month_item.dart';
@@ -31,13 +31,27 @@ class _SalaryDetailsState extends State<SalaryDetails> {
     return Scaffold(
       appBar: const CustomAppBar(title: "Salary Details").getAppBar(),
       floatingActionButton: const HomeFab(),
-      body: FutureBuilder<List<SalaryDetailsMonthwiseValues>>(
+      body: FutureBuilder<SalaryModel>(
           future: SalaryDetailsApi.instance.getSalary(
               miId: widget.loginSuccessModel.mIID!,
               userId: widget.loginSuccessModel.userId!,
               year: DateTime.now().year,
               base: baseUrlFromInsCode("portal", widget.mskoolController)),
           builder: (_, snapshot) {
+            if (snapshot.hasData &&
+                (snapshot.data!.graphValues.isEmpty ||
+                    snapshot.data!.monthwiseValues.isEmpty)) {
+              return const Center(
+                child: AnimatedProgressWidget(
+                  animationPath: "assets/json/nodata.json",
+                  animatorHeight: 250,
+                  title: "No Salary Details",
+                  desc:
+                      "We don't have any salary details corresponding to the session",
+                ),
+              );
+            }
+
             if (snapshot.hasData) {
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(16.0),
@@ -66,7 +80,9 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                     const SizedBox(
                       height: 4.0,
                     ),
-                    const SalaryLineChart(),
+                    SalaryLineChart(
+                      graphValues: snapshot.data!.graphValues,
+                    ),
                     const SizedBox(
                       height: 16.0,
                     ),
@@ -82,7 +98,7 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                     ),
                     GridView.builder(
                         shrinkWrap: true,
-                        itemCount: snapshot.data!.length,
+                        itemCount: snapshot.data!.monthwiseValues.length,
                         physics: const NeverScrollableScrollPhysics(),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
@@ -104,10 +120,11 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (_) {
                                   return SalaryOverallDetails(
-                                    hresId:
-                                        snapshot.data!.elementAt(index).hresId!,
+                                    hresId: snapshot.data!.monthwiseValues
+                                        .elementAt(index)
+                                        .hresId!,
                                     loginSuccessModel: widget.loginSuccessModel,
-                                    month: snapshot.data!
+                                    month: snapshot.data!.monthwiseValues
                                         .elementAt(index)
                                         .monthName!,
                                     mskoolController: widget.mskoolController,
@@ -116,9 +133,12 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                               },
                               child: SalaryMonthItem(
                                 color: color,
-                                month:
-                                    snapshot.data!.elementAt(index).monthName!,
-                                salary: snapshot.data!.elementAt(index).salary!,
+                                month: snapshot.data!.monthwiseValues
+                                    .elementAt(index)
+                                    .monthName!,
+                                salary: snapshot.data!.monthwiseValues
+                                    .elementAt(index)
+                                    .salary!,
                               ));
                         }),
                   ],

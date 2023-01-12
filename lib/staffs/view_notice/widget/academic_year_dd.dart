@@ -11,11 +11,13 @@ class AcademicYearDD extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final ViewNoticeDataController dataController;
+  final String message;
   const AcademicYearDD({
     Key? key,
     required this.dataController,
     required this.loginSuccessModel,
     required this.mskoolController,
+    required this.message,
   }) : super(key: key);
 
   @override
@@ -91,7 +93,7 @@ class AcademicYearDD extends StatelessWidget {
                   miId: loginSuccessModel.mIID!,
                   userId: loginSuccessModel.userId!,
                   asmayId: dataController.selectedSession.value.asmaYId!,
-                  flag: "O",
+                  flag: message,
                   base: baseUrlFromInsCode("portal", mskoolController),
                   dataController: dataController);
             }),

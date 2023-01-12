@@ -507,11 +507,11 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
                   trackVisibility: true,
                   radius: const Radius.circular(10),
                   thickness: 14,
-                  thumbVisibility: true,
-                  controller: _controller,
+                  //thumbVisibility: true,
+                  //controller: _controller,
                   child: ListView.builder(
                     // padding: const EdgeInsets.only(top: 1),
-                    controller: _controller,
+                    //controller: _controller,
                     itemCount: noticeTitle.length,
                     itemBuilder: (context, index) {
                       return SizedBox(
@@ -612,11 +612,11 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
                   trackVisibility: true,
                   radius: const Radius.circular(10),
                   thickness: 14,
-                  thumbVisibility: true,
-                  controller: _controller,
+                  //thumbVisibility: true,
+                  //controller: _controller,
                   child: ListView.builder(
                     // padding: const EdgeInsets.only(top: 1),
-                    controller: _controller,
+                    //controller: _controller,
                     shrinkWrap: true,
                     itemCount: 1,
                     itemBuilder: (context, index) {
@@ -718,11 +718,11 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
                   trackVisibility: true,
                   radius: const Radius.circular(10),
                   thickness: 14,
-                  thumbVisibility: true,
-                  controller: _controller,
+                  //thumbVisibility: true,
+                  //controller: _controller,
                   child: ListView.builder(
                     // padding: const EdgeInsets.only(top: 1),
-                    controller: _controller,
+                    //controller: _controller,
                     itemCount: 1,
                     shrinkWrap: true, // till lenght is 5 is will true
                     itemBuilder: (context, index) {

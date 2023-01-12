@@ -29,7 +29,7 @@ class ViewCircularNoticeApi {
       "MI_Id": miId,
       "UserId": userId,
       "ASMAY_Id": asmayId,
-      "Flag": flag,
+      "message": flag,
     });
     //logger.d(apiUrl);
     try {
@@ -40,7 +40,7 @@ class ViewCircularNoticeApi {
           "MI_Id": miId,
           "UserId": userId,
           "ASMAY_Id": asmayId,
-          "Flag": flag,
+          "message": flag,
         },
       );
 

@@ -196,4 +196,6 @@ class URLS {
   static String getsubsubject = '';
   static String getmarksentrydetails = 'api/MarksEntryFacade/onselectSubject/';
   static String savemarksentrydetails = 'api/MarksEntryFacade/SaveMarks/';
+
+  static String nB_Attachment = "api/EmployeePtalFacade/viewnotice";
 }

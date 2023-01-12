@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/staffs/view_notice/api/view_attachment_api.dart';
+import 'package:m_skool_flutter/staffs/view_notice/model/attachment_model.dart';
 import 'package:m_skool_flutter/staffs/view_notice/model/view_notice_model.dart';
+import 'package:m_skool_flutter/staffs/view_notice/widget/pdf_attachment.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
-import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:readmore/readmore.dart';
+
+import '../widget/other_attachment.dart';
 
 class ViewNoticeDetailsScreen extends StatelessWidget {
   final Color bgColor;
   final Color chipColor;
   final ViewNoticeModelValues values;
-  const ViewNoticeDetailsScreen(
-      {super.key,
-      required this.bgColor,
-      required this.chipColor,
-      required this.values});
+  final String base;
+  final int intBId;
+  const ViewNoticeDetailsScreen({
+    super.key,
+    required this.bgColor,
+    required this.chipColor,
+    required this.values,
+    required this.base,
+    required this.intBId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -71,73 +79,93 @@ class ViewNoticeDetailsScreen extends StatelessWidget {
               lessStyle: const TextStyle(color: Color(0xFFF97A33)),
             ),
             const SizedBox(
-              height: 16.0,
+              height: 36.0,
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomContainer(
-                    child: Row(
+            FutureBuilder<List<AttachmentModelValues>>(
+                future: ViewAttachmentApi.instance
+                    .getAttachment(intBId: intBId, base: base),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                "assets/svg/pdf.svg",
-                                width: 80,
-                              ),
-                              const SizedBox(
-                                width: 12.0,
-                              ),
-                              Text(
-                                "Circular.pdf",
-                                style: Theme.of(context).textTheme.titleSmall,
+                        snapshot.data!.isNotEmpty
+                            ? Text(
+                                "Attached Files",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .merge(
+                                      const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                               )
-                            ],
+                            : const SizedBox(),
+                        const SizedBox(
+                          height: 16.0,
+                        ),
+                        ListView.separated(
+                            shrinkWrap: true,
+                            itemBuilder: (_, index) {
+                              return snapshot.data!
+                                      .elementAt(index)
+                                      .intbfLFileName!
+                                      .endsWith(".pdf")
+                                  ? PdfAttachment(
+                                      attachmentName: snapshot.data!
+                                          .elementAt(index)
+                                          .intbfLFileName!,
+                                      attachmentUrl: snapshot.data!
+                                          .elementAt(index)
+                                          .intbfLFilePath!,
+                                    )
+                                  : OtherAttachment(
+                                      attachmentName: snapshot.data!
+                                          .elementAt(index)
+                                          .intbfLFileName!,
+                                      attachmentUrl: snapshot.data!
+                                          .elementAt(index)
+                                          .intbfLFilePath!,
+                                    );
+                            },
+                            separatorBuilder: (_, index) {
+                              return const SizedBox(
+                                height: 12.0,
+                              );
+                            },
+                            itemCount: snapshot.data!.length),
+                      ],
+                    );
+                  }
+
+                  if (snapshot.hasError) {
+                    return Row(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.red.shade100,
+                          child: const Icon(
+                            Icons.error,
+                            color: Colors.red,
                           ),
                         ),
+                        const SizedBox(
+                          width: 12.0,
+                        ),
+                        const Expanded(
+                          child: Text(
+                              "An error occured while loading attachment for this particular notice"),
+                        ),
                       ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: Get.width * 0.1,
-                ),
-                InkWell(
-                  onTap: () async {
-                    // if (values.iNTBFLFileName == null ||
-                    //     values.iNTBFLFilePath == null) {
-                    //   // logger.d(values.iNTBFLFileName);
-                    //   // logger.d(values.iNTBFLFilePath);
-                    //   Fluttertoast.showToast(msg: "No File to download");
-                    //   return;
-                    // }
+                    );
+                  }
 
-                    // if (await canLaunchUrl(Uri.parse(values.iNTBFLFilePath!))) {
-                    //   await launchUrl(Uri.parse(values.iNTBFLFilePath!),
-                    //       mode: LaunchMode.externalApplication);
-                    // } else {
-                    //   Fluttertoast.showToast(
-                    //       msg:
-                    //           "No External Application to handle this request");
-                    // }
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 16.0),
-                    padding: const EdgeInsets.all(12.0),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.0),
-                        color: const Color(0xFFD9EDFF)),
-                    child: SvgPicture.asset(
-                      "assets/svg/download.svg",
-                      height: 24.0,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+                  return const AnimatedProgressWidget(
+                      title: "Loding Attachment's",
+                      desc:
+                          "Please wait while we load attachment for you, If available it will appear here ",
+                      animationPath: "assets/json/default.json");
+                })
           ],
         ),
       ),
