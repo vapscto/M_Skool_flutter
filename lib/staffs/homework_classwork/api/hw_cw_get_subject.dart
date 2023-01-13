@@ -17,6 +17,7 @@ class HwCwGetSubjectsApi {
     required int ivrmrtId,
     required int loginId,
     required String base,
+    required int hrmeId,
     required HwCwController hwCwController,
   }) async {
     final Dio ins = getGlobalDio();
@@ -34,6 +35,7 @@ class HwCwGetSubjectsApi {
       "ASMCL_Id": asmclId,
       "hm_section_list": sections,
       "IVRMRT_Id": ivrmrtId,
+      "HRME_Id": hrmeId,
     });
     try {
       final Response response = await ins.post(

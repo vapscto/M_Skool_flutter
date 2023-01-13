@@ -97,6 +97,7 @@ class HwCwAcademicYearDD extends StatelessWidget {
     await HwCwGetClassApi.instance.getHwCwClasses(
       miId: loginSuccessModel.mIID!,
       loginId: loginSuccessModel.userId!,
+      hrmeId: loginSuccessModel.empcode!,
       asmayId: hwCwController.selectedSession.value.asmaYId!,
       ivrmrtId: loginSuccessModel.roleId!,
       base: baseUrlFromInsCode(
@@ -116,6 +117,7 @@ class HwCwAcademicYearDD extends StatelessWidget {
         ivrmrtId: loginSuccessModel.roleId!,
         asmayId: hwCwController.selectedSession.value.asmaYId!,
         userId: loginSuccessModel.userId!,
+        hrmeId: loginSuccessModel.empcode!,
         loginId: loginSuccessModel.userId!,
         asmclId: hwCwController.selectedClass.value.asmcLId!,
         base: baseUrlFromInsCode("portal", mskoolController),
@@ -127,6 +129,7 @@ class HwCwAcademicYearDD extends StatelessWidget {
 
     await HwCwGetSubjectsApi.instance.getSubjects(
       miId: loginSuccessModel.mIID!,
+      hrmeId: loginSuccessModel.empcode!,
       asmayId: hwCwController.selectedSession.value.asmaYId!,
       asmclId: hwCwController.selectedClass.value.asmcLId!,
       sections: [

@@ -15,6 +15,7 @@ class HwCwGetAcademicYear {
     required int loginId,
     required int ivrmrtId,
     required int asmayId,
+    required int hrmeId,
     required String base,
     required HwCwController hwCwController,
   }) async {
@@ -35,7 +36,8 @@ class HwCwGetAcademicYear {
         "userId": userId,
         "login_Id": userId,
         "IVRMRT_Id": ivrmrtId,
-        "ASMAY_Id": asmayId
+        "ASMAY_Id": asmayId,
+        "HRME_Id": hrmeId,
       });
 
       if (response.data['yearlist'] == null) {

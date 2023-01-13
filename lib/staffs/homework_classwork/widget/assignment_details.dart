@@ -479,9 +479,6 @@ class _AssignmentDetailsState extends State<AssignmentDetails> {
                   ),
                 ),
               ),
-        const SizedBox(
-          height: 16.0,
-        ),
         ReferencesWidget(wantToProvideReference: wantToProvideReference),
         const SizedBox(
           height: 16.0,

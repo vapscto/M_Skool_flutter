@@ -15,6 +15,7 @@ class HwCwGetClassApi {
     required int asmayId,
     required int ivrmrtId,
     required String base,
+    required int hrmeId,
     required HwCwController hwCwController,
   }) async {
     try {
@@ -33,6 +34,7 @@ class HwCwGetClassApi {
         "Login_Id": loginId,
         "ASMAY_Id": asmayId,
         "IVRMRT_Id": ivrmrtId,
+        "HRME_Id": hrmeId,
       });
 
       if (response.data['classlist'] == null) {

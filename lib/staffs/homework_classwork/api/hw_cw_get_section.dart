@@ -17,6 +17,7 @@ class HwCwGetSection {
     required int loginId,
     required int asmclId,
     required String base,
+    required int hrmeId,
     required HwCwController hwCwController,
   }) async {
     try {
@@ -48,6 +49,7 @@ class HwCwGetSection {
         "ASMAY_Id": asmayId,
         "ASMCL_Id": asmclId,
         "IVRMRT_Id": ivrmrtId,
+        "HRME_Id": 28,
       });
 
       if (response.data['sectionlist'] == null) {

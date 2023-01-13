@@ -26,8 +26,9 @@ class _ReferencesWidgetState extends State<ReferencesWidget> {
         ListTile(
           contentPadding: EdgeInsets.zero,
           minLeadingWidth: 8,
-          visualDensity:
-              const VisualDensity(horizontal: VisualDensity.minimumDensity),
+          visualDensity: const VisualDensity(
+              horizontal: VisualDensity.minimumDensity,
+              vertical: VisualDensity.minimumDensity),
           leading: Obx(() {
             return Checkbox(
               visualDensity:

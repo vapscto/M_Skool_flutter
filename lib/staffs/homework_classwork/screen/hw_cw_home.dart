@@ -53,6 +53,7 @@ class _HwCwHomeState extends State<HwCwHome>
       loginId: widget.loginSuccessModel.userId!,
       ivrmrtId: widget.loginSuccessModel.roleId!,
       asmayId: widget.loginSuccessModel.asmaYId!,
+      hrmeId: widget.loginSuccessModel.empcode!,
       base: baseUrlFromInsCode(
         "portal",
         widget.mskoolController,
@@ -69,6 +70,7 @@ class _HwCwHomeState extends State<HwCwHome>
       loginId: widget.loginSuccessModel.userId!,
       asmayId: hwCwController.selectedSession.value.asmaYId!,
       ivrmrtId: widget.loginSuccessModel.roleId!,
+      hrmeId: widget.loginSuccessModel.empcode!,
       base: baseUrlFromInsCode(
         "portal",
         widget.mskoolController,
@@ -86,6 +88,7 @@ class _HwCwHomeState extends State<HwCwHome>
         ivrmrtId: widget.loginSuccessModel.roleId!,
         asmayId: hwCwController.selectedSession.value.asmaYId!,
         userId: widget.loginSuccessModel.userId!,
+        hrmeId: widget.loginSuccessModel.empcode!,
         loginId: widget.loginSuccessModel.userId!,
         asmclId: hwCwController.selectedClass.value.asmcLId!,
         base: baseUrlFromInsCode("portal", widget.mskoolController),
@@ -99,6 +102,7 @@ class _HwCwHomeState extends State<HwCwHome>
       miId: widget.loginSuccessModel.mIID!,
       asmayId: hwCwController.selectedSession.value.asmaYId!,
       asmclId: hwCwController.selectedClass.value.asmcLId!,
+      hrmeId: widget.loginSuccessModel.empcode!,
       sections: [
         {"ASMS_Id": hwCwController.selectedSection.value.asmSId!}
       ],

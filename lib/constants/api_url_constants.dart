@@ -198,4 +198,9 @@ class URLS {
   static String savemarksentrydetails = 'api/MarksEntryFacade/SaveMarks/';
 
   static String nB_Attachment = "api/EmployeePtalFacade/viewnotice";
+
+  static String punchReport = "api/EmployeePunchAttendenceFacade/getrpt/";
+
+  static String getHwList =
+      "api/EmployeeStudentHomeworkFacade/gethomework_list/";
 }

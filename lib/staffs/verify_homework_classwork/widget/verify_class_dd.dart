@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -8,24 +8,20 @@ import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_cw_get_section.
 import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_cw_get_subject.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/controller/hw_cw_controller.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/model/hw_cw_classes_model.dart';
-import 'package:m_skool_flutter/staffs/homework_classwork/widget/hw_cw_section_dd.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/widget/verify_section_dd.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
-class HwCwClassDD extends StatelessWidget {
-  final bool forHw;
+class VerifyClassDD extends StatelessWidget {
+  final HwCwController verifyController;
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  const HwCwClassDD({
-    Key? key,
-    required this.hwCwController,
-    required this.forHw,
-    required this.loginSuccessModel,
-    required this.mskoolController,
-  }) : super(key: key);
-
-  final HwCwController hwCwController;
+  const VerifyClassDD(
+      {super.key,
+      required this.verifyController,
+      required this.loginSuccessModel,
+      required this.mskoolController});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +32,7 @@ class HwCwClassDD extends StatelessWidget {
         ),
         CustomContainer(
           child: DropdownButtonFormField<HwCwClassesListModelValues>(
-              value: hwCwController.selectedClass.value,
+              value: verifyController.selectedClass.value,
               style: Theme.of(context).textTheme.titleSmall!.merge(
                     const TextStyle(fontSize: 16.0),
                   ),
@@ -88,7 +84,7 @@ class HwCwClassDD extends StatelessWidget {
                   size: 30,
                 ),
               ),
-              items: hwCwController.classes
+              items: verifyController.classes
                   .map((e) => DropdownMenuItem<HwCwClassesListModelValues>(
                       value: e,
                       child: Padding(
@@ -97,25 +93,25 @@ class HwCwClassDD extends StatelessWidget {
                       )))
                   .toList(),
               onChanged: (e) async {
-                hwCwController.updateSelectedClass(e!);
+                verifyController.updateSelectedClass(e!);
                 await loadAgain();
               }),
         ),
         Obx(() {
-          return hwCwController.isErrorOccuredLoadingSection.value
+          return verifyController.isErrorOccuredLoadingSection.value
               ? ErrWidget(err: {
                   "errorTitle": "An Unexpected Error Occurred",
-                  "errorMsg": hwCwController.errorStatus.value
+                  "errorMsg": verifyController.errorStatus.value
                 })
-              : hwCwController.isSectionLoading.value
+              : verifyController.isSectionLoading.value
                   ? Center(
                       child: AnimatedProgressWidget(
                         title: "Loading Available Section's",
-                        desc: hwCwController.loadingStatus.value,
+                        desc: verifyController.loadingStatus.value,
                         animationPath: "assets/json/hwanim.json",
                       ),
                     )
-                  : hwCwController.sections.isEmpty
+                  : verifyController.sections.isEmpty
                       ? const Center(
                           child: AnimatedProgressWidget(
                             title: "No Section Available",
@@ -125,12 +121,10 @@ class HwCwClassDD extends StatelessWidget {
                             animatorHeight: 250,
                           ),
                         )
-                      : HwCwSectionDD(
-                          hwCwController: hwCwController,
-                          forHw: forHw,
-                          loginSuccessModel: loginSuccessModel,
+                      : VerifySectionDD(
+                          verifyController: verifyController,
                           mskoolController: mskoolController,
-                        );
+                          loginSuccessModel: loginSuccessModel);
         })
       ],
     );
@@ -141,29 +135,29 @@ class HwCwClassDD extends StatelessWidget {
         miId: loginSuccessModel.mIID!,
         ivrmrtId: loginSuccessModel.roleId!,
         hrmeId: loginSuccessModel.empcode!,
-        asmayId: hwCwController.selectedSession.value.asmaYId!,
+        asmayId: verifyController.selectedSession.value.asmaYId!,
         userId: loginSuccessModel.userId!,
         loginId: loginSuccessModel.userId!,
-        asmclId: hwCwController.selectedClass.value.asmcLId!,
+        asmclId: verifyController.selectedClass.value.asmcLId!,
         base: baseUrlFromInsCode("portal", mskoolController),
-        hwCwController: hwCwController);
-    if (hwCwController.isErrorOccuredLoadingSection.value ||
-        hwCwController.sections.isEmpty) {
+        hwCwController: verifyController);
+    if (verifyController.isErrorOccuredLoadingSection.value ||
+        verifyController.sections.isEmpty) {
       return;
     }
 
     await HwCwGetSubjectsApi.instance.getSubjects(
       miId: loginSuccessModel.mIID!,
       hrmeId: loginSuccessModel.empcode!,
-      asmayId: hwCwController.selectedSession.value.asmaYId!,
-      asmclId: hwCwController.selectedClass.value.asmcLId!,
+      asmayId: verifyController.selectedSession.value.asmaYId!,
+      asmclId: verifyController.selectedClass.value.asmcLId!,
       sections: [
-        {"ASMS_Id": hwCwController.selectedSection.value.asmSId!}
+        {"ASMS_Id": verifyController.selectedSection.value.asmSId!}
       ],
       ivrmrtId: loginSuccessModel.roleId!,
       loginId: loginSuccessModel.userId!,
       base: baseUrlFromInsCode("portal", mskoolController),
-      hwCwController: hwCwController,
+      hwCwController: verifyController,
     );
   }
 }

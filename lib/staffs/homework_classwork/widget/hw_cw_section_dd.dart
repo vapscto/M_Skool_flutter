@@ -138,6 +138,7 @@ class HwCwSectionDD extends StatelessWidget {
   Future<void> loadAgain() async {
     await HwCwGetSubjectsApi.instance.getSubjects(
       miId: loginSuccessModel.mIID!,
+      hrmeId: loginSuccessModel.empcode!,
       asmayId: hwCwController.selectedSession.value.asmaYId!,
       asmclId: hwCwController.selectedClass.value.asmcLId!,
       sections: [
