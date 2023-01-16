@@ -193,8 +193,8 @@ class URLS {
   static String getsection = 'api/MarksEntryFacade/onselectclass/';
   static String getexam = 'api/MarksEntryFacade/onselectSection/';
   static String getsubjectname = 'api/MarksEntryFacade/onselectExam/';
-  static String getsubsubject = '';
-  static String getmarksentrydetails = 'api/MarksEntryFacade/onselectSubject/';
+  static String getsubsubject = 'api/MarksEntryFacade/onselectSubject/';
+  static String getmarksentrydetails = 'api/MarksEntryFacade/onsearch/';
   static String savemarksentrydetails = 'api/MarksEntryFacade/SaveMarks/';
 
   static String nB_Attachment = "api/EmployeePtalFacade/viewnotice";
@@ -216,4 +216,14 @@ class URLS {
 
   static String getVerifyClassWorkList =
       "api/IVRM_ClassWorkFacade/getclasswork_list/";
+  // STUDENT ATTENDANCE API .................
+
+  static String getStudentAcademicYear =
+      'api/EmployeeStudentAttendenceDetailsFacade/Getdetails/';
+  static String getStudentClass =
+      'api/EmployeeStudentAttendenceDetailsFacade/getclass/';
+  static String getStudentSection =
+      'api/EmployeeStudentAttendenceDetailsFacade/Getsection/';
+  static String getStudentList = '';
+  static String getStudentAttendanceDetails = '';
 }

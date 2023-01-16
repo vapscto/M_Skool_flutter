@@ -394,29 +394,31 @@ class _StudentAttendanceStaffHomeState
             Align(
               alignment: Alignment.center,
               child: MSkollBtn(
-                  title: 'Search',
-                  onPress: () {
-                    if (selectedRadio == 'consolidated' &&
-                        configuration == 'monthly') {
-                      Get.to(() =>
-                          const ConsolidatedMonthlyStudentAttendanceDetailScreen());
-                    }
-                    if (selectedRadio == 'consolidated' &&
-                        configuration == 'datewise') {
-                      Get.to(() =>
-                          const ConsolidatedDateWiseStudentAttendanceDetailScreen());
-                    }
-                    if (selectedRadio == 'detailed' &&
-                        configuration == 'monthly') {
-                      Get.to(() =>
-                          const DetailedMonthlyStudentAttendanceDetailScreeen());
-                    }
-                    if (selectedRadio == 'detailed' &&
-                        configuration == 'datewise') {
-                      Get.to(() =>
-                          const DetailedDateWiseStudentAttendanceDetailScreen());
-                    }
-                  }),
+                title: 'Search',
+                onPress: () {
+                  if (selectedRadio == 'consolidated' &&
+                      configuration == 'monthly') {
+                    Get.to(() =>
+                        const ConsolidatedMonthlyStudentAttendanceDetailScreen());
+                  }
+                  if (selectedRadio == 'consolidated' &&
+                      configuration == 'datewise') {
+                    Get.to(() =>
+                        const ConsolidatedDateWiseStudentAttendanceDetailScreen());
+                  }
+                  if (selectedRadio == 'detailed' &&
+                      configuration == 'monthly') {
+                    Get.to(() =>
+                        const DetailedMonthlyStudentAttendanceDetailScreeen());
+                  }
+                  if (selectedRadio == 'detailed' &&
+                      configuration == 'datewise') {
+                    Get.to(() =>
+                        const DetailedDateWiseStudentAttendanceDetailScreen());
+                  }
+                },
+                size: const Size.fromWidth(150),
+              ),
             ),
             const SizedBox(height: 30),
           ],

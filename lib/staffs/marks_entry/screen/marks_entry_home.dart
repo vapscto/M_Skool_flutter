@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/controller/marks_entry_related_controller.dart';
@@ -7,6 +8,7 @@ import 'package:m_skool_flutter/staffs/marks_entry/model/classdropdownmodel.dart
 import 'package:m_skool_flutter/staffs/marks_entry/model/examdropdownmodel.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/model/sectiondropdownmodel.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/model/subjectdropdownmodel.dart';
+import 'package:m_skool_flutter/staffs/marks_entry/model/subsubjectdropdownmodel.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/screen/marks_entry_detail_screen.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
@@ -37,21 +39,20 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
 
   final VideoPlayerController controller =
       VideoPlayerController.asset("assets/video/marksentry_illustration.mp4");
-  List<String> demoList = [
-    'Demo',
-    'Demo1',
-    'Demo3',
-    'Demo5',
-  ];
-  String slected = 'Demo';
+
   AcdlistClassValue? selectedAcademicYear;
   CtlistValue? selectedClass;
   SeclistValue? selectedSection;
   ExamlistValue? selectedExam;
   SubjectlistValue? selectedSubjectName;
+  SubsubjectlistValue? selectedSubSubject;
 
   void getAcademicYear() async {
     marksEntryController.isacademicyearloading(true);
+    marksEntryController.classList.clear();
+    marksEntryController.sectionList.clear();
+    marksEntryController.examList.clear();
+    marksEntryController.subjectNameList.clear();
     await marksEntryController
         .getacademicyear(
       miId: widget.loginSuccessModel.mIID!,
@@ -73,6 +74,9 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
 
   void getClass(int asmayId) async {
     marksEntryController.isclassloading(true);
+    marksEntryController.sectionList.clear();
+    marksEntryController.examList.clear();
+    marksEntryController.subjectNameList.clear();
     await marksEntryController
         .getclass(
       miId: widget.loginSuccessModel.mIID!,
@@ -96,6 +100,8 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
 
   void getSection(int asmclId) async {
     marksEntryController.issectionloading(true);
+    marksEntryController.examList.clear();
+    marksEntryController.subjectNameList.clear();
     await marksEntryController
         .getsection(
       miId: widget.loginSuccessModel.mIID!,
@@ -117,6 +123,7 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
 
   void getExam(int asmsId) async {
     marksEntryController.isexamloading(true);
+    marksEntryController.subjectNameList.clear();
     await marksEntryController
         .getexam(
       miId: widget.loginSuccessModel.mIID!,
@@ -138,6 +145,7 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
 
   void getSubject(int emeId) async {
     marksEntryController.issubjectloading(true);
+
     await marksEntryController
         .getsubjectname(
       miId: widget.loginSuccessModel.mIID!,
@@ -153,10 +161,46 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
       if (value) {
         if (marksEntryController.subjectNameList.isNotEmpty) {
           selectedSubjectName = marksEntryController.subjectNameList.first;
+          getSubSubject(selectedSubjectName!.ismSId!.toInt());
+          // logger.d(widget.loginSuccessModel.mIID);
+          // logger.d(selectedAcademicYear!.asmaYId);
+          // logger.d(selectedClass!.asmcLId);
+          // logger.d(selectedSection!.asmSId);
+          // logger.d(widget.loginSuccessModel.amsTId);
+          // logger.d(selectedExam!.emEId);
+          // logger.d(selectedSubjectName!.ismSId);
+          // logger.d(widget.loginSuccessModel.userId);
         }
       }
     });
     marksEntryController.issubjectloading(false);
+  }
+
+  void getSubSubject(int ismsId) async {
+    marksEntryController.issubsubjectloading(true);
+    await marksEntryController
+        .getSubSubject(
+      miId: widget.loginSuccessModel.mIID!,
+      asmayId: selectedAcademicYear!.asmaYId!.toInt(),
+      asmclId: selectedClass!.asmcLId!.toInt(),
+      asmsId: selectedSection!.asmSId!.toInt(),
+      amstId: widget.loginSuccessModel.amsTId!,
+      emeId: selectedExam!.emEId!.toInt(),
+      userId: widget.loginSuccessModel.userId!,
+      ismsId: ismsId,
+      base: baseUrlFromInsCode(
+        'exam',
+        widget.mskoolController,
+      ),
+    )
+        .then((value) {
+      if (value) {
+        if (marksEntryController.subSubjectList.isNotEmpty) {
+          selectedSubSubject = marksEntryController.subSubjectList.first;
+        }
+      }
+    });
+    marksEntryController.issubsubjectloading(false);
   }
 
   @override
@@ -607,86 +651,130 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
                                     );
                                   }),
                                   onChanged: (s) {
-                                    // selectedStaff = s!;
-                                    // logger.d(s.hrmEId.toString());
+                                    selectedSubjectName = s!;
+                                    getSubSubject(s.ismSId!.toInt());
                                   },
                                 ),
                               )
                             : const SizedBox(),
-                    // Container(
-                    //   margin: const EdgeInsets.symmetric(
-                    //       horizontal: 16, vertical: 16),
-                    //   decoration: BoxDecoration(
-                    //     color: Theme.of(context).scaffoldBackgroundColor,
-                    //     borderRadius: BorderRadius.circular(16.0),
-                    //     boxShadow: const [
-                    //       BoxShadow(
-                    //         offset: Offset(0, 1),
-                    //         blurRadius: 8,
-                    //         color: Colors.black12,
-                    //       ),
-                    //     ],
-                    //   ),
-                    //   child: DropdownButtonFormField<String>(
-                    //     value: slected,
-                    //     decoration: const InputDecoration(
-                    //       focusedBorder: OutlineInputBorder(
-                    //         borderSide: BorderSide(
-                    //           color: Colors.transparent,
-                    //         ),
-                    //       ),
-                    //       enabledBorder: OutlineInputBorder(
-                    //         borderSide: BorderSide(
-                    //           color: Colors.transparent,
-                    //         ),
-                    //       ),
-                    //       isDense: true,
-                    //       label: CustomDropDownLabel(
-                    //         icon: 'assets/images/subsubject.png',
-                    //         containerColor: Color.fromRGBO(252, 244, 222, 1),
-                    //         text: 'Sub Subject',
-                    //         textColor: Color.fromRGBO(206, 167, 61, 1),
-                    //       ),
-                    //     ),
-                    //     icon: const Padding(
-                    //       padding: EdgeInsets.only(top: 3),
-                    //       child: Icon(
-                    //         Icons.keyboard_arrow_down_rounded,
-                    //         size: 30,
-                    //       ),
-                    //     ),
-                    //     iconSize: 30,
-                    //     items: List.generate(demoList.length, (index) {
-                    //       return DropdownMenuItem(
-                    //         value: demoList[index],
-                    //         child: Padding(
-                    //           padding: const EdgeInsets.only(top: 13, left: 5),
-                    //           child: Text(
-                    //             demoList[index],
-                    //             style: Theme.of(context)
-                    //                 .textTheme
-                    //                 .labelSmall!
-                    //                 .merge(const TextStyle(
-                    //                     fontWeight: FontWeight.w400,
-                    //                     fontSize: 16.0,
-                    //                     letterSpacing: 0.3)),
-                    //           ),
-                    //         ),
-                    //       );
-                    //     }),
-                    //     onChanged: (s) {
-                    //       // selectedStaff = s!;
-                    //       // logger.d(s.hrmEId.toString());
-                    //     },
-                    //   ),
-                    // ),
+                    marksEntryController.isSubSubject.value
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : marksEntryController.academicYearList.isNotEmpty &&
+                                marksEntryController.classList.isNotEmpty &&
+                                marksEntryController.sectionList.isNotEmpty &&
+                                marksEntryController.examList.isNotEmpty &&
+                                marksEntryController
+                                    .subjectNameList.isNotEmpty &&
+                                marksEntryController.subSubjectList.isNotEmpty
+                            ? Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 16),
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      offset: Offset(0, 1),
+                                      blurRadius: 8,
+                                      color: Colors.black12,
+                                    ),
+                                  ],
+                                ),
+                                child: DropdownButtonFormField<
+                                    SubsubjectlistValue>(
+                                  value: selectedSubSubject,
+                                  decoration: const InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                    isDense: true,
+                                    label: CustomDropDownLabel(
+                                      icon: 'assets/images/subsubject.png',
+                                      containerColor:
+                                          Color.fromRGBO(252, 244, 222, 1),
+                                      text: 'Sub Subject',
+                                      textColor:
+                                          Color.fromRGBO(206, 167, 61, 1),
+                                    ),
+                                  ),
+                                  icon: const Padding(
+                                    padding: EdgeInsets.only(top: 3),
+                                    child: Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      size: 30,
+                                    ),
+                                  ),
+                                  iconSize: 30,
+                                  items: List.generate(
+                                      marksEntryController
+                                          .subSubjectList.length, (index) {
+                                    return DropdownMenuItem(
+                                      value: marksEntryController
+                                          .subSubjectList[index],
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 13, left: 5),
+                                        child: Text(
+                                          marksEntryController.subSubjectList
+                                              .elementAt(index)
+                                              .emsSSubSubjectName!,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall!
+                                              .merge(const TextStyle(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 16.0,
+                                                  letterSpacing: 0.3)),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                                  onChanged: (s) {
+                                    selectedSubSubject = s!;
+                                  },
+                                ),
+                              )
+                            : const SizedBox(),
                     const SizedBox(height: 20),
                     MSkollBtn(
-                        title: 'View Details',
-                        onPress: () {
-                          Get.to(() => const MarksEntryDetailScreen());
-                          // Get.to(() => const SalarySlipHome());
-                        }),
+                      title: 'View Details',
+                      onPress: marksEntryController
+                                  .academicYearList.isNotEmpty &&
+                              marksEntryController.classList.isNotEmpty &&
+                              marksEntryController.sectionList.isNotEmpty &&
+                              marksEntryController.examList.isNotEmpty &&
+                              marksEntryController.subjectNameList.isNotEmpty
+                          ? () {
+                              Get.to(() => MarksEntryDetailScreen(
+                                    loginSuccessModel: widget.loginSuccessModel,
+                                    mskoolController: widget.mskoolController,
+                                    asmayId:
+                                        selectedAcademicYear!.asmaYId!.toInt(),
+                                    asmclId: selectedClass!.asmcLId!.toInt(),
+                                    asmsId: selectedSection!.asmSId!.toInt(),
+                                    emeId: selectedExam!.emEId!.toInt(),
+                                    ismsId:
+                                        selectedSubjectName!.ismSId!.toInt(),
+                                    emssId: selectedSubSubject == null
+                                        ? 0
+                                        : selectedSubSubject!.emsSId!.toInt(),
+                                  ));
+                            }
+                          : () {
+                              Fluttertoast.showToast(
+                                  msg: 'Select all fields..');
+                            },
+                    ),
                     const SizedBox(height: 20),
                     Center(
                       child: SizedBox(

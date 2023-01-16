@@ -5,8 +5,10 @@ import 'package:m_skool_flutter/staffs/marks_entry/api/marks_entry_related_api.d
 import 'package:m_skool_flutter/staffs/marks_entry/model/academicyearmodel.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/model/classdropdownmodel.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/model/examdropdownmodel.dart';
+import 'package:m_skool_flutter/staffs/marks_entry/model/marksentrytabledatamodel.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/model/sectiondropdownmodel.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/model/subjectdropdownmodel.dart';
+import 'package:m_skool_flutter/staffs/marks_entry/model/subsubjectdropdownmodel.dart';
 
 class MarksEntryController extends GetxController {
   List<AcdlistClassValue> academicYearList = <AcdlistClassValue>[].obs;
@@ -14,12 +16,17 @@ class MarksEntryController extends GetxController {
   List<SeclistValue> sectionList = <SeclistValue>[].obs;
   List<ExamlistValue> examList = <ExamlistValue>[].obs;
   List<SubjectlistValue> subjectNameList = <SubjectlistValue>[].obs;
+  List<StudentListValue> marksEntryDataTableList = <StudentListValue>[].obs;
+  List<SubsubjectlistValue> subSubjectList = <SubsubjectlistValue>[].obs;
 
   RxBool isAcamedicYear = RxBool(false);
   RxBool isClass = RxBool(false);
   RxBool isSection = RxBool(false);
   RxBool isExam = RxBool(false);
   RxBool isSubject = RxBool(false);
+  RxBool isSubSubject = RxBool(false);
+  RxBool isTable = RxBool(false);
+  RxBool isSave = RxBool(false);
 
   void isacademicyearloading(bool loading) {
     isAcamedicYear.value = loading;
@@ -39,6 +46,18 @@ class MarksEntryController extends GetxController {
 
   void issubjectloading(bool loading) {
     isSubject.value = loading;
+  }
+
+  void issubsubjectloading(bool loading) {
+    isSubSubject.value = loading;
+  }
+
+  void istableloading(bool loading) {
+    isTable.value = loading;
+  }
+
+  void issaveloading(bool loading) {
+    isSave.value = loading;
   }
 
   Future<bool> getacademicyear({
@@ -179,6 +198,88 @@ class MarksEntryController extends GetxController {
             i++) {
           subjectNameList
               .add(subjectDropdownModel.subjectlist!.values!.elementAt(i)!);
+        }
+        return true;
+      }
+      return false;
+    } catch (e) {
+      logger.d(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> getSubSubject({
+    required int miId,
+    required int asmayId,
+    required int asmclId,
+    required int asmsId,
+    required int amstId,
+    required int emeId,
+    required int userId,
+    required int ismsId,
+    required String base,
+  }) async {
+    SubSubjectDropdownModel? subSubjectDropdownModel = await getsubsubjectData(
+        miId: miId,
+        asmayId: asmayId,
+        asmclId: asmclId,
+        asmsId: asmsId,
+        amstId: amstId,
+        emeId: emeId,
+        userId: userId,
+        ismsId: ismsId,
+        base: base);
+    try {
+      if (subSubjectDropdownModel!.subsubjectlist != null ||
+          subSubjectDropdownModel.subsubjectlist!.values != null) {
+        subSubjectList.clear();
+        for (var i = 0;
+            i < subSubjectDropdownModel.subsubjectlist!.values!.length;
+            i++) {
+          subSubjectList.add(
+              subSubjectDropdownModel.subsubjectlist!.values!.elementAt(i)!);
+        }
+        return true;
+      }
+      return false;
+    } catch (e) {
+      logger.d(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> getMarksEntrytabledetail({
+    required int userId,
+    required int miId,
+    required int roleId,
+    required int asmsId,
+    required int asmclId,
+    required int asmayId,
+    required int emeId,
+    required int ismsId,
+    required String base,
+  }) async {
+    MarksEntryDataTableModel? marksEntryDataTableModel =
+        await getMarksEntryDataTableModel(
+            userId: userId,
+            miId: miId,
+            roleId: roleId,
+            asmsId: asmsId,
+            asmclId: asmclId,
+            asmayId: asmayId,
+            emeId: emeId,
+            ismsId: ismsId,
+            base: base);
+
+    try {
+      if (marksEntryDataTableModel!.studentList != null ||
+          marksEntryDataTableModel.studentList!.values != null) {
+        marksEntryDataTableList.clear();
+        for (var i = 0;
+            i < marksEntryDataTableModel.studentList!.values!.length;
+            i++) {
+          marksEntryDataTableList
+              .add(marksEntryDataTableModel.studentList!.values!.elementAt(i)!);
         }
         return true;
       }
