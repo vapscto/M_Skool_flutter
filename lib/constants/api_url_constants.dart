@@ -193,7 +193,7 @@ class URLS {
   static String getsection = 'api/MarksEntryFacade/onselectclass/';
   static String getexam = 'api/MarksEntryFacade/onselectSection/';
   static String getsubjectname = 'api/MarksEntryFacade/onselectExam/';
-  static String getsubsubject = '';
-  static String getmarksentrydetails = 'api/MarksEntryFacade/onselectSubject/';
+  static String getsubsubject = 'api/MarksEntryFacade/onselectSubject/';
+  static String getmarksentrydetails = 'api/MarksEntryFacade/onsearch/';
   static String savemarksentrydetails = 'api/MarksEntryFacade/SaveMarks/';
 }

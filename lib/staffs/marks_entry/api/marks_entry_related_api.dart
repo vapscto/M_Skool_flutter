@@ -5,8 +5,10 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/model/academicyearmodel.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/model/classdropdownmodel.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/model/examdropdownmodel.dart';
+import 'package:m_skool_flutter/staffs/marks_entry/model/marksentrytabledatamodel.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/model/sectiondropdownmodel.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/model/subjectdropdownmodel.dart';
+import 'package:m_skool_flutter/staffs/marks_entry/model/subsubjectdropdownmodel.dart';
 
 var dio = Dio();
 
@@ -174,5 +176,142 @@ Future<SubjectDropdownModel?> getsubjectNameData({
   } catch (e) {
     logger.d(e.toString());
     return null;
+  }
+}
+
+Future<SubSubjectDropdownModel?> getsubsubjectData({
+  required int miId,
+  required int asmayId,
+  required int asmclId,
+  required int asmsId,
+  required int amstId,
+  required int emeId,
+  required int userId,
+  required int ismsId,
+  required String base,
+}) async {
+  var url = base + URLS.getsubsubject;
+  try {
+    var response = await dio.post(
+      url,
+      options: Options(
+        headers: getSession(),
+      ),
+      data: {
+        "MI_Id": miId,
+        "ASMAY_Id": asmayId,
+        "ASMCL_Id": asmclId,
+        "ASMS_Id": asmsId,
+        "AMST_Id": amstId,
+        "EME_Id": emeId,
+        "Id": userId,
+        "ISMS_Id": ismsId
+      },
+    );
+    if (response.statusCode == 200) {
+      SubSubjectDropdownModel subSubjectDropdownModel =
+          SubSubjectDropdownModel.fromJson(response.data);
+      return subSubjectDropdownModel;
+    }
+    return null;
+  } catch (e) {
+    logger.d(e.toString());
+    return null;
+  }
+}
+
+Future<MarksEntryDataTableModel?> getMarksEntryDataTableModel({
+  required int userId,
+  required int miId,
+  required int roleId,
+  required int asmsId,
+  required int asmclId,
+  required int asmayId,
+  required int emeId,
+  required int ismsId,
+  required String base,
+}) async {
+  var url = base + URLS.getmarksentrydetails;
+  try {
+    logger.d({
+      "Id": userId,
+      "MI_Id": miId,
+      "roleid": roleId,
+      "ASMS_Id": asmsId,
+      "ASMCL_Id": asmclId,
+      "ASMAY_Id": asmayId,
+      "EME_Id": emeId,
+      "ISMS_Id": ismsId,
+      // "EMSS_Id": 2,
+    });
+    var response = await dio.post(
+      url,
+      options: Options(
+        headers: getSession(),
+      ),
+      data: {
+        "Id": userId,
+        "MI_Id": miId,
+        "roleid": roleId,
+        "ASMS_Id": asmsId,
+        "ASMCL_Id": asmclId,
+        "ASMAY_Id": asmayId,
+        "EME_Id": emeId,
+        "ISMS_Id": ismsId,
+        // "EMSS_Id": 0,
+      },
+    );
+    if (response.statusCode == 200) {
+      MarksEntryDataTableModel marksEntryDataTableModel =
+          MarksEntryDataTableModel.fromJson(response.data);
+      return marksEntryDataTableModel;
+    }
+    return null;
+  } catch (e) {
+    logger.d(e.toString());
+    return null;
+  }
+}
+
+Future<bool> saveMarksEntryDetails(
+    {required int miId,
+    required int asmayId,
+    required int asmclId,
+    required int asmsId,
+    required int amstId,
+    required int emeId,
+    required int ismsId,
+    required int userId,
+    // required int emssId,
+    required List<Map<String, dynamic>> detailsList,
+    required String base}) async {
+  var url = base + URLS.savemarksentrydetails;
+  try {
+    var response = await dio.post(url,
+        options: Options(
+          headers: getSession(),
+        ),
+        data: {
+          "MI_Id": miId,
+          "ASMAY_Id": asmayId,
+          "ASMCL_Id": asmclId,
+          "ASMS_Id": asmsId,
+          "AMST_Id": amstId,
+          "EME_Id": emeId,
+          "ISMS_Id": ismsId,
+          "Id": userId,
+          "IP4": "::1 Mobile",
+          "LoginDateTime": DateTime.now().toIso8601String(),
+          "detailsList": detailsList,
+          // "EMSS_Id": 0,
+          // "EMSE_Id": 0
+        });
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    logger.d(e.toString());
+    return false;
   }
 }

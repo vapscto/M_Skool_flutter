@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:m_skool_flutter/staffs/marks_entry/controller/marks_entry_related_controller.dart';
 
 class SaveBtn extends StatefulWidget {
   final String title;
@@ -10,6 +12,8 @@ class SaveBtn extends StatefulWidget {
 }
 
 class _SaveBtnState extends State<SaveBtn> {
+  final MarksEntryController marksEntryController =
+      Get.put(MarksEntryController());
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -21,16 +25,22 @@ class _SaveBtnState extends State<SaveBtn> {
         ),
       ),
       onPressed: widget.onPress,
-      child: Text(
-        widget.title,
-        style: Theme.of(context).textTheme.labelSmall!.merge(
-              TextStyle(
-                color: Theme.of(context).primaryColor,
-                letterSpacing: 0.3,
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
+      child: Obx(
+        () => marksEntryController.isSave.value
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Text(
+                widget.title,
+                style: Theme.of(context).textTheme.labelSmall!.merge(
+                      TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        letterSpacing: 0.3,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
               ),
-            ),
       ),
     );
   }
