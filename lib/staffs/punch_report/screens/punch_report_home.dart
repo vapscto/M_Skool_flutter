@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/punch_report/api/punch_report_api.dart';
+import 'package:m_skool_flutter/staffs/punch_report/controller/punch_filter_controller.dart';
 import 'package:m_skool_flutter/staffs/punch_report/widget/punch_report_item.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/err_widget.dart';
 
 class PunchReport extends StatefulWidget {
   final String title;
@@ -21,6 +29,18 @@ class PunchReport extends StatefulWidget {
 
 class _PunchReportState extends State<PunchReport> {
   int color = -1;
+
+  final PunchFilterController punchFilterController =
+      Get.put(PunchFilterController());
+
+  int backgroundColor = -1;
+
+  @override
+  void dispose() {
+    Get.delete<PunchFilterController>();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +56,40 @@ class _PunchReportState extends State<PunchReport> {
                 children: [
                   Expanded(
                       child: InkWell(
-                    onTap: () {},
+                    onTap: () async {
+                      final DateTime? dt = await showDatePicker(
+                        context: context,
+                        initialDate: punchFilterController.startFrom.value,
+                        firstDate: DateTime(2011, 01, 01),
+                        lastDate: punchFilterController.endTo.value,
+                      );
+
+                      if (dt == null) {
+                        Fluttertoast.showToast(
+                            msg: "Please select Start Date.");
+                        return;
+                      }
+                      punchFilterController.updateDisplayAbleStartFrom(
+                          "${dt.day}-${dt.month}-${dt.year}");
+                      punchFilterController.updateStartFrom(dt);
+
+                      if (punchFilterController.start.value > 0) {
+                        await PunchReportApi.instance.pcReports(
+                            miId: widget.loginSuccessModel.mIID!,
+                            userId: widget.loginSuccessModel.userId!,
+                            fromDate: punchFilterController.startFrom.value
+                                .toLocal()
+                                .toString(),
+                            endDate: punchFilterController.endTo.value
+                                .toLocal()
+                                .toString(),
+                            base: baseUrlFromInsCode(
+                              "portal",
+                              widget.mskoolController,
+                            ),
+                            controller: punchFilterController);
+                      }
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(12.0),
                       alignment: Alignment.centerLeft,
@@ -46,7 +99,10 @@ class _PunchReportState extends State<PunchReport> {
                       ),
                       width: double.infinity,
                       height: 50,
-                      child: const Text("From Date"),
+                      child: Obx(() {
+                        return Text(
+                            punchFilterController.displayAbleStartFrom.value);
+                      }),
                     ),
                   )),
                   const SizedBox(
@@ -54,7 +110,40 @@ class _PunchReportState extends State<PunchReport> {
                   ),
                   Expanded(
                       child: InkWell(
-                    onTap: () {},
+                    onTap: () async {
+                      final DateTime? dt = await showDatePicker(
+                        context: context,
+                        initialDate: punchFilterController.startFrom.value,
+                        firstDate: punchFilterController.startFrom.value,
+                        lastDate: DateTime.now(),
+                      );
+
+                      if (dt == null) {
+                        Fluttertoast.showToast(
+                            msg:
+                                "You didn't selected end date to show punch report");
+                        return;
+                      }
+
+                      punchFilterController.updateDisplayAbleEndTo(
+                          "${dt.day}-${dt.month}-${dt.year}");
+                      punchFilterController.updateEndTo(dt);
+
+                      punchFilterController.start.value += 1;
+
+                      await PunchReportApi.instance.pcReports(
+                          miId: widget.loginSuccessModel.mIID!,
+                          userId: widget.loginSuccessModel.userId!,
+                          fromDate: punchFilterController.startFrom.value
+                              .toLocal()
+                              .toString(),
+                          endDate: punchFilterController.endTo.value
+                              .toLocal()
+                              .toString(),
+                          base: baseUrlFromInsCode(
+                              "portal", widget.mskoolController),
+                          controller: punchFilterController);
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(12.0),
                       alignment: Alignment.centerLeft,
@@ -64,95 +153,161 @@ class _PunchReportState extends State<PunchReport> {
                       ),
                       width: double.infinity,
                       height: 50,
-                      child: const Text("To Date"),
+                      child: Obx(() {
+                        return Text(
+                            punchFilterController.displayAbleEndTo.value);
+                      }),
                     ),
                   )),
                 ],
               ),
             )),
       ).getAppBar(),
-      body: ListView.separated(
-          padding: const EdgeInsets.all(16.0),
-          itemBuilder: (_, index) {
-            color += 1;
-            if (color % 6 == 0) {
-              color = 0;
-            }
-
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: lighterColor.elementAt(color)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "22 Oct 2022",
-                        style: Theme.of(context).textTheme.titleSmall!.merge(
-                              const TextStyle(
-                                fontWeight: FontWeight.w600,
-                              ),
+      body: Obx(() {
+        logger.d("message");
+        return punchFilterController.start.value == 0
+            ? const Center(
+                child: AnimatedProgressWidget(
+                  title: "Please Select Start & End Date",
+                  desc:
+                      "When you select the data then your punch details will appear here.",
+                  animationPath: "assets/json/nodata.json",
+                  animatorHeight: 250,
+                ),
+              )
+            : punchFilterController.isErrorOccured.value
+                ? Center(
+                    child: ErrWidget(
+                      err: {
+                        "errorTitle": "Unexpected Error Occured",
+                        "errorMsg": punchFilterController.message.value,
+                      },
+                    ),
+                  )
+                : punchFilterController.startFilteration.value
+                    ? const Center(
+                        child: AnimatedProgressWidget(
+                            title: "Loading Punch Report",
+                            desc:
+                                "Please wait, While we load Punch Report for you.",
+                            animationPath: "assets/json/default.json"),
+                      )
+                    : punchFilterController.reports.isEmpty
+                        ? const Center(
+                            child: AnimatedProgressWidget(
+                              animationPath: "assets/json/nodata.json",
+                              animatorHeight: 250,
+                              title: "No Record Found",
+                              desc:
+                                  "At this selected date, there is no puch report available",
                             ),
-                      ),
-                      Chip(
-                        label: Text(
-                          "7 hours",
-                          style: Theme.of(context).textTheme.titleSmall!.merge(
-                                const TextStyle(
-                                  color: Colors.white,
+                          )
+                        : ListView.separated(
+                            padding: const EdgeInsets.all(16.0),
+                            itemBuilder: (_, index) {
+                              backgroundColor += 1;
+                              if (backgroundColor % 6 == 0) {
+                                backgroundColor = 0;
+                              }
+
+                              return Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    color: lighterColor
+                                        .elementAt(backgroundColor)),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          getFormatedDate(DateTime.parse(
+                                              punchFilterController.reports
+                                                  .elementAt(index)
+                                                  .punchdate!)),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .merge(
+                                                const TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                        ),
+                                        Chip(
+                                          label: Text(
+                                            timeDifference(
+                                                punchFilterController.reports
+                                                    .elementAt(index)
+                                                    .punchINtime!,
+                                                punchFilterController.reports
+                                                    .elementAt(index)
+                                                    .punchOUTtime!),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .merge(
+                                                  const TextStyle(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                          ),
+                                          backgroundColor: noticeColor
+                                              .elementAt(backgroundColor),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 6.0,
+                                    ),
+                                    PunchReportItem(
+                                      title: "In Time",
+                                      time: timing(
+                                          "${punchFilterController.reports.elementAt(index).punchINtime}"),
+                                    ),
+                                    const SizedBox(
+                                      height: 12.0,
+                                    ),
+                                    PunchReportItem(
+                                      title: "Out Time",
+                                      time: timing(
+                                          "${punchFilterController.reports.elementAt(index).punchOUTtime}"),
+                                    ),
+                                    const SizedBox(
+                                      height: 12.0,
+                                    ),
+                                    PunchReportItem(
+                                      title: "Late In Time",
+                                      time:
+                                          "${punchFilterController.reports.elementAt(index).lateby}",
+                                    ),
+                                    const SizedBox(
+                                      height: 12.0,
+                                    ),
+                                    PunchReportItem(
+                                      title: "Early Out",
+                                      time:
+                                          "${punchFilterController.reports.elementAt(index).earlyby}",
+                                    ),
+                                    const SizedBox(
+                                      height: 12.0,
+                                    ),
+                                  ],
                                 ),
-                              ),
-                        ),
-                        backgroundColor: noticeColor.elementAt(color),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 6.0,
-                  ),
-                  const PunchReportItem(
-                    title: "In Time",
-                    time: "09:05 AM",
-                  ),
-                  const SizedBox(
-                    height: 12.0,
-                  ),
-                  const PunchReportItem(
-                    title: "Out Time",
-                    time: "11:05 PM",
-                  ),
-                  const SizedBox(
-                    height: 12.0,
-                  ),
-                  const PunchReportItem(
-                    title: "Late In Time",
-                    time: "5 Min",
-                  ),
-                  const SizedBox(
-                    height: 12.0,
-                  ),
-                  const PunchReportItem(
-                    title: "Early Out",
-                    time: "55 min",
-                  ),
-                  const SizedBox(
-                    height: 12.0,
-                  ),
-                ],
-              ),
-            );
-          },
-          separatorBuilder: (_, index) {
-            return const SizedBox(
-              height: 16.0,
-            );
-          },
-          itemCount: 20),
+                              );
+                            },
+                            separatorBuilder: (_, index) {
+                              return const SizedBox(
+                                height: 16.0,
+                              );
+                            },
+                            itemCount: punchFilterController.reports.length);
+      }),
     );
   }
 }

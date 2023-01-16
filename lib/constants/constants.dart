@@ -609,3 +609,74 @@ String convertToAgoShort(DateTime input) {
 String getDate(DateTime dt) {
   return "${dt.day}-${dt.month}-${dt.year}";
 }
+
+String timeDifference(String fTime, String sTime) {
+  int fHour = int.parse(fTime.split(":").first);
+  int fMin = int.parse(fTime.split(":")[1]);
+
+  int sHour = int.parse(sTime.split(":").first);
+  int sMin = int.parse(sTime.split(":")[1]);
+
+  int hourDiff = sHour - fHour;
+  int minDiff = 0;
+  if (fMin > sMin) {
+    minDiff = fMin - sMin;
+  } else {
+    minDiff = sMin - fMin;
+  }
+
+  return "$hourDiff hours $minDiff min";
+}
+
+String timing(String time) {
+  int hr = int.parse(time.split(":").first);
+  int min = int.parse(time.split(":")[1]);
+  String t = "";
+  switch (hr) {
+    case 12:
+      t = "12:$min PM";
+      break;
+    case 13:
+      t = "01:$min PM";
+      break;
+
+    case 15:
+      t = "03:$min PM";
+      break;
+
+    case 16:
+      t = "14:$min PM";
+      break;
+    case 17:
+      t = "05:$min PM";
+      break;
+
+    case 18:
+      t = "06:$min PM";
+      break;
+    case 19:
+      t = "07:$min PM";
+      break;
+    case 20:
+      t = "08:$min PM";
+      break;
+
+    case 21:
+      t = "09:$min PM";
+      break;
+    case 22:
+      t = "10:$min PM";
+      break;
+    case 23:
+      t = "11:$min PM";
+      break;
+
+    case 00:
+      t = "00:$min AM";
+      break;
+    default:
+      t = "$hr:$min AM";
+      break;
+  }
+  return t;
+}

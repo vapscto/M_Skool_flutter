@@ -8,10 +8,14 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
 class CircularNoticeWidget extends StatefulWidget {
+  final String base;
   final ViewNoticeDataController datController;
+  final String moduleName;
   const CircularNoticeWidget({
     super.key,
     required this.datController,
+    required this.moduleName,
+    required this.base,
   });
 
   @override
@@ -38,10 +42,10 @@ class _CircularNoticeWidgetState extends State<CircularNoticeWidget> {
                     SizedBox(
                       height: Get.height * 0.1,
                     ),
-                    const AnimatedProgressWidget(
-                        title: "Loading Circular's",
+                    AnimatedProgressWidget(
+                        title: "Loading ${widget.moduleName} ",
                         desc:
-                            "We are loading circular's , it will be displayed here.",
+                            "We are loading timetable's , it will be displayed here.",
                         animationPath: "assets/json/Noticeboard.json"),
                   ],
                 )
@@ -51,11 +55,12 @@ class _CircularNoticeWidgetState extends State<CircularNoticeWidget> {
                         SizedBox(
                           height: Get.height * 0.1,
                         ),
-                        const AnimatedProgressWidget(
-                          title: "No Circular Available",
+                        AnimatedProgressWidget(
+                          title: "No ${widget.moduleName} Available",
                           desc:
-                              "Hi sir/ma'am there is not circular available for this session, you can try with other.",
+                              "Hi sir/ma'am there is no timetable available for this session, you can try with other.",
                           animationPath: "assets/json/nodata.json",
+                          animatorHeight: 250,
                         ),
                       ],
                     )
@@ -83,6 +88,10 @@ class _CircularNoticeWidgetState extends State<CircularNoticeWidget> {
                                   ),
                                   values: widget.datController.circularList
                                       .elementAt(index),
+                                  intBId: widget.datController.circularList
+                                      .elementAt(index)
+                                      .iNTBId!,
+                                  base: widget.base,
                                 );
                               }),
                             );

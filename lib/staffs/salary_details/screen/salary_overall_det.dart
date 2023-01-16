@@ -208,7 +208,7 @@ class SalaryOverallDetails extends StatelessWidget {
                                     fontSize: 20.0)),
                           ),
                           trailing: Text(
-                            "₹ ${snapshot.data!.totalEarningModel.values!.first.salary}",
+                            "${snapshot.data!.totalEarningModel.values!.first.salary! - snapshot.data!.totalDeductionModel.values!.first.salary!}",
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!

@@ -1,39 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/staffs/salary_details/models/salary_det_graph_model.dart';
+import 'package:m_skool_flutter/staffs/salary_details/models/salary_details_graph_model.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class SalaryLineChart extends StatefulWidget {
-  const SalaryLineChart({super.key});
+  final List<SalaryDetailsGraphValues> graphValues;
+  const SalaryLineChart({super.key, required this.graphValues});
 
   @override
   State<SalaryLineChart> createState() => _SalaryLineChartState();
 }
 
 class _SalaryLineChartState extends State<SalaryLineChart> {
-  List<SalaryGraphDetModel> salary = [
-    SalaryGraphDetModel(salary: 49500 / 1000, month: "Jan"),
-    SalaryGraphDetModel(salary: 51500 / 1000, month: "Feb"),
-    SalaryGraphDetModel(salary: 40000 / 1000, month: "Mar"),
-    SalaryGraphDetModel(salary: 47580 / 1000, month: "Apr"),
-    SalaryGraphDetModel(salary: 49000 / 1000, month: "May"),
-  ];
+  List<SalaryGraphDetModel> salary = [];
 
-  List<SalaryGraphDetModel> deduction = [
-    SalaryGraphDetModel(salary: 500 / 1000, month: "Jan"),
-    SalaryGraphDetModel(salary: 1500 / 1000, month: "Feb"),
-    SalaryGraphDetModel(salary: 4000 / 1000, month: "Mar"),
-    SalaryGraphDetModel(salary: 580 / 1000, month: "Apr"),
-    SalaryGraphDetModel(salary: 4900 / 1000, month: "May"),
-  ];
+  List<SalaryGraphDetModel> deduction = [];
 
-  List<SalaryGraphDetModel> lop = [
-    SalaryGraphDetModel(salary: 5070 / 1000, month: "Jan"),
-    SalaryGraphDetModel(salary: 1500 / 1000, month: "Feb"),
-    SalaryGraphDetModel(salary: 0 / 1000, month: "Mar"),
-    SalaryGraphDetModel(salary: 5880 / 1000, month: "Apr"),
-    SalaryGraphDetModel(salary: 0 / 1000, month: "May"),
-  ];
+  List<SalaryGraphDetModel> lop = [];
+
+  @override
+  void initState() {
+    for (var e in widget.graphValues) {
+      salary.add(SalaryGraphDetModel(
+          salary: e.earning! / 1000, month: e.hRESMonth!, type: "Salary"));
+
+      deduction.add(SalaryGraphDetModel(
+          salary: e.deduction! / 1000, month: e.hRESMonth!, type: "Deduction"));
+
+      lop.add(SalaryGraphDetModel(
+          salary: e.lOP! / 1000, month: e.hRESMonth!, type: "LOP"));
+    }
+    widget.graphValues.map((e) {
+      setState(() {});
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,21 +50,25 @@ class _SalaryLineChartState extends State<SalaryLineChart> {
             SfCartesianChart(
               primaryYAxis: NumericAxis(labelFormat: "{value}K"),
               primaryXAxis: CategoryAxis(name: "Months"),
+              tooltipBehavior: TooltipBehavior(enable: true),
               series: <LineSeries>[
                 LineSeries<SalaryGraphDetModel, String>(
                     name: "Salary",
+                    enableTooltip: true,
                     color: const Color.fromARGB(255, 74, 173, 212),
                     dataSource: salary,
                     xValueMapper: ((datum, index) => datum.month),
                     yValueMapper: (datum, index) => datum.salary),
                 LineSeries<SalaryGraphDetModel, String>(
                     name: "Deduction",
+                    enableTooltip: true,
                     color: const Color(0xFFD0F801),
                     dataSource: deduction,
                     xValueMapper: ((datum, index) => datum.month),
                     yValueMapper: (datum, index) => datum.salary),
                 LineSeries<SalaryGraphDetModel, String>(
                     dataSource: lop,
+                    enableTooltip: true,
                     color: const Color(0xFFFF828A),
                     name: "LOP",
                     xValueMapper: ((datum, index) => datum.month),

@@ -1,14 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/get_hw_api.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_hw_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/widget/hw_cw_content_item.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class VerifyHwCwViewDetails extends StatelessWidget {
   final String title;
   final bool forHw;
+  final MskoolController mskoolController;
+  final LoginSuccessModel loginSuccessModel;
+  final int asmayId;
+  final int asmclId;
+  final int asmsId;
+  final int ismsId;
+  final String fromDate;
+  final String toDate;
   const VerifyHwCwViewDetails(
-      {super.key, required this.title, required this.forHw});
+      {super.key,
+      required this.title,
+      required this.forHw,
+      required this.mskoolController,
+      required this.loginSuccessModel,
+      required this.asmayId,
+      required this.asmclId,
+      required this.asmsId,
+      required this.ismsId,
+      required this.fromDate,
+      required this.toDate});
 
   @override
   Widget build(BuildContext context) {
@@ -40,25 +65,56 @@ class VerifyHwCwViewDetails extends StatelessWidget {
                 : const SizedBox(
                     height: 16.0,
                   ),
-            ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (_, index) {
-                  color += 1;
-                  if (color % 6 == 0) {
-                    color = 0;
+            FutureBuilder<List<VerifyHwListModelValues>>(
+                future: GetHwApi.instance.getHwForVerification(
+                  miId: loginSuccessModel.mIID!,
+                  hrmeId: loginSuccessModel.empcode!,
+                  loginId: loginSuccessModel.userId!,
+                  userId: loginSuccessModel.userId!,
+                  ivrmrtId: loginSuccessModel.roleId!,
+                  roleFlag: "Staff",
+                  asmayId: asmayId,
+                  ismsId: ismsId,
+                  asmclId: asmclId,
+                  asmsId: asmsId,
+                  fromDate: fromDate,
+                  toDate: toDate,
+                  base: baseUrlFromInsCode(
+                    "portal",
+                    mskoolController,
+                  ),
+                ),
+                builder: (_, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (_, index) {
+                          color += 1;
+                          if (color % 6 == 0) {
+                            color = 0;
+                          }
+                          return VerifyHwCwItem(
+                            forHw: forHw,
+                            model: snapshot.data!.elementAt(index),
+                            color: lighterColor.elementAt(color),
+                          );
+                        },
+                        separatorBuilder: (_, index) {
+                          return const SizedBox(
+                            height: 16.0,
+                          );
+                        },
+                        itemCount: snapshot.data!.length);
                   }
-                  return VerifyHwCwItem(
-                    forHw: forHw,
-                    color: lighterColor.elementAt(color),
-                  );
-                },
-                separatorBuilder: (_, index) {
-                  return const SizedBox(
-                    height: 16.0,
-                  );
-                },
-                itemCount: 10)
+                  return AnimatedProgressWidget(
+                      title: forHw
+                          ? "Loading Uploaded HomeWork's "
+                          : "Loading uploaded Classwork",
+                      desc:
+                          "Please wait while we load uploaded assignments for you.",
+                      animationPath: "assets/json/default.json");
+                }),
           ],
         ),
       ),
@@ -68,10 +124,12 @@ class VerifyHwCwViewDetails extends StatelessWidget {
 
 class VerifyHwCwItem extends StatelessWidget {
   final Color color;
+  final VerifyHwListModelValues model;
   const VerifyHwCwItem({
     Key? key,
     required this.forHw,
     required this.color,
+    required this.model,
   }) : super(key: key);
 
   final bool forHw;
@@ -105,7 +163,7 @@ class VerifyHwCwItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Prasanna",
+                            "${model.studentname}",
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
@@ -117,7 +175,7 @@ class VerifyHwCwItem extends StatelessWidget {
                             height: 6.0,
                           ),
                           Text(
-                            "2013-325",
+                            "${model.amstAdmno}",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall!
@@ -151,33 +209,65 @@ class VerifyHwCwItem extends StatelessWidget {
           const SizedBox(
             height: 16.0,
           ),
-          HwCwUploadedContentItem(
-            onViewClicked: () {},
-            onDownloadClicked: () {},
-            isPdf: false,
-            title: 'Eye Diagram',
-          ),
-          const SizedBox(
-            height: 12.0,
-          ),
-          HwCwUploadedContentItem(
-            onViewClicked: () {},
-            onDownloadClicked: () {},
-            isPdf: false,
-            title: 'Intestine Description',
-          ),
-          const SizedBox(
-            height: 12.0,
-          ),
-          HwCwUploadedContentItem(
-            onViewClicked: () {},
-            onDownloadClicked: () {},
-            isPdf: true,
-            title: 'Human eye',
+          Row(
+            children: [
+              Expanded(
+                flex: 7,
+                child: CustomContainer(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.attachment_outlined,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        const SizedBox(
+                          width: 12.0,
+                        ),
+                        Text(
+                          "View Attachment's",
+                          style: Theme.of(context).textTheme.titleSmall,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const Expanded(flex: 3, child: SizedBox())
+            ],
           ),
           const SizedBox(
             height: 16.0,
           ),
+          // HwCwUploadedContentItem(
+          //   onViewClicked: () {},
+          //   onDownloadClicked: () {},
+          //   isPdf: false,
+          //   title: 'Eye Diagram',
+          // ),
+          // const SizedBox(
+          //   height: 12.0,
+          // ),
+          // HwCwUploadedContentItem(
+          //   onViewClicked: () {},
+          //   onDownloadClicked: () {},
+          //   isPdf: false,
+          //   title: 'Intestine Description',
+          // ),
+          // const SizedBox(
+          //   height: 12.0,
+          // ),
+          // HwCwUploadedContentItem(
+          //   onViewClicked: () {},
+          //   onDownloadClicked: () {},
+          //   isPdf: true,
+          //   title: 'Human eye',
+          // ),
+          // const SizedBox(
+          //   height: 16.0,
+          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

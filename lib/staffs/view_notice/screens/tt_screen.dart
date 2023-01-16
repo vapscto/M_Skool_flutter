@@ -11,35 +11,33 @@ import 'package:m_skool_flutter/staffs/view_notice/widget/circular_notice_widget
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
-class CirculaNotice extends StatefulWidget {
+class TTScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final ViewNoticeDataController dataController;
-  final String message;
-
-  const CirculaNotice({
-    super.key,
-    required this.loginSuccessModel,
-    required this.mskoolController,
-    required this.dataController,
-    required this.message,
-  });
+  const TTScreen(
+      {super.key,
+      required this.loginSuccessModel,
+      required this.mskoolController,
+      required this.dataController});
 
   @override
-  State<CirculaNotice> createState() => _CirculaNoticeState();
+  State<TTScreen> createState() => _TTScreenState();
 }
 
-class _CirculaNoticeState extends State<CirculaNotice> {
+class _TTScreenState extends State<TTScreen> {
+  // final ViewNoticeDataController dataController =
+  //     Get.put(ViewNoticeDataController());
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget.dataController.circularSession.clear();
-      widget.dataController.circularList.clear();
-      widget.dataController.updateIsErrorOccuredWhileLoadingCircular(false);
-      widget.dataController.updateIsCircularPageLoading(true);
-      loadCircularNT();
-    });
+    loadCircularNT();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // Get.delete<ViewNoticeDataController>();
+    super.dispose();
   }
 
   Future<void> loadCircularNT() async {
@@ -47,7 +45,7 @@ class _CirculaNoticeState extends State<CirculaNotice> {
       miId: widget.loginSuccessModel.mIID!,
       asmayId: widget.loginSuccessModel.asmaYId!,
       amstId: widget.loginSuccessModel.amsTId!,
-      flag: widget.message,
+      flag: "tt",
       base: baseUrlFromInsCode("portal", widget.mskoolController),
       dataController: widget.dataController,
     );
@@ -58,7 +56,7 @@ class _CirculaNoticeState extends State<CirculaNotice> {
         miId: widget.loginSuccessModel.mIID!,
         userId: widget.loginSuccessModel.userId!,
         asmayId: widget.dataController.selectedSession.value.asmaYId!,
-        flag: widget.message,
+        flag: "tt",
         base: baseUrlFromInsCode("portal", widget.mskoolController),
         dataController: widget.dataController);
   }
@@ -111,14 +109,14 @@ class _CirculaNoticeState extends State<CirculaNotice> {
                           dataController: widget.dataController,
                           loginSuccessModel: widget.loginSuccessModel,
                           mskoolController: widget.mskoolController,
-                          message: widget.message,
+                          message: "tt",
                         ),
                         const SizedBox(
                           height: 16.0,
                         ),
                         CircularNoticeWidget(
                           datController: widget.dataController,
-                          moduleName: "Circular",
+                          moduleName: 'timetable',
                           base: baseUrlFromInsCode(
                               "portal", widget.mskoolController),
                         ),
