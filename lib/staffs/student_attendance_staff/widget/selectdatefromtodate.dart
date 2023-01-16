@@ -26,25 +26,26 @@ class _SelectDateFromToDateState extends State<SelectDateFromToDate> {
                 style: Theme.of(context).textTheme.titleSmall,
                 readOnly: true,
                 //maxLines: 4,
+                onTap: () async {
+                  var date = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2023),
+                    lastDate: DateTime(2025),
+                  );
+                  if (date != null) {
+                    setState(() {
+                      startDate.text =
+                          "${numberList[date.day]}-${numberList[date.month]}-${date.year}";
+                    });
+                  }
+                },
                 decoration: InputDecoration(
                   suffixIcon: IconButton(
-                    onPressed: () async {
-                      var date = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(2023),
-                        lastDate: DateTime(2025),
-                      );
-                      if (date != null) {
-                        setState(() {
-                          startDate.text =
-                              "${numberList[date.day]}-${numberList[date.month]}-${date.year}";
-                        });
-                      }
-                    },
+                    onPressed: () async {},
                     icon: SvgPicture.asset(
                       'assets/svg/calendar_icon.svg',
-                      color: const Color(0xFF3E78AA),
+                      color: const Color(0xFF787878),
                       height: 22.0,
                     ),
                   ),
@@ -107,27 +108,28 @@ class _SelectDateFromToDateState extends State<SelectDateFromToDate> {
                 style: Theme.of(context).textTheme.titleSmall,
 
                 //maxLines: 4,
+                onTap: () async {
+                  var date = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2023),
+                    lastDate: DateTime(2025),
+                  );
+                  if (date != null) {
+                    setState(() {
+                      endDate.text =
+                          "${numberList[date.day]}-${numberList[date.month]}-${date.year}";
+                    });
+                  }
+                },
                 decoration: InputDecoration(
                   isDense: true,
                   contentPadding: const EdgeInsets.only(top: 48.0, left: 12),
                   suffixIcon: IconButton(
-                    onPressed: () async {
-                      var date = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(2023),
-                        lastDate: DateTime(2025),
-                      );
-                      if (date != null) {
-                        setState(() {
-                          endDate.text =
-                              "${numberList[date.day]}-${numberList[date.month]}-${date.year}";
-                        });
-                      }
-                    },
+                    onPressed: () async {},
                     icon: SvgPicture.asset(
                       'assets/svg/calendar_icon.svg',
-                      color: const Color(0xFF3E78AA),
+                      color: const Color(0xFF787878),
                       height: 22.0,
                     ),
                   ),

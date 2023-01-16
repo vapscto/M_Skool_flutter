@@ -512,14 +512,14 @@ class SectionList {
   });
 
   String? type;
-  List<Value?>? values;
+  List<SectionListValue?>? values;
 
   factory SectionList.fromJson(Map<String, dynamic> json) => SectionList(
         type: json["\$type"],
         values: json["\$values"] == null
             ? []
-            : List<Value?>.from(
-                json["\$values"]!.map((x) => Value.fromJson(x))),
+            : List<SectionListValue?>.from(
+                json["\$values"]!.map((x) => SectionListValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -530,8 +530,8 @@ class SectionList {
       };
 }
 
-class Value {
-  Value({
+class SectionListValue {
+  SectionListValue({
     this.type,
     this.asmSId,
     this.asmCSectionName,
@@ -541,7 +541,8 @@ class Value {
   int? asmSId;
   String? asmCSectionName;
 
-  factory Value.fromJson(Map<String, dynamic> json) => Value(
+  factory SectionListValue.fromJson(Map<String, dynamic> json) =>
+      SectionListValue(
         type: json["\$type"],
         asmSId: json["asmS_Id"],
         asmCSectionName: json["asmC_SectionName"],

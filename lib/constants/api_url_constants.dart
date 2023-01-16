@@ -203,4 +203,15 @@ class URLS {
 
   static String getHwList =
       "api/EmployeeStudentHomeworkFacade/gethomework_list/";
+
+  // STUDENT ATTENDANCE API .................
+
+  static String getStudentAcademicYear =
+      'api/EmployeeStudentAttendenceDetailsFacade/Getdetails/';
+  static String getStudentClass =
+      'api/EmployeeStudentAttendenceDetailsFacade/getclass/';
+  static String getStudentSection =
+      'api/EmployeeStudentAttendenceDetailsFacade/Getsection/';
+  static String getStudentList = '';
+  static String getStudentAttendanceDetails = '';
 }

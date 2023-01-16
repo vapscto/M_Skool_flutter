@@ -4,14 +4,14 @@
 
 import 'dart:convert';
 
-AcademicYearModel? academicYearModelFromJson(String str) =>
-    AcademicYearModel.fromJson(json.decode(str));
+StudentAttendanceAcademicYearModel? academicYearModelFromJson(String str) =>
+    StudentAttendanceAcademicYearModel.fromJson(json.decode(str));
 
-String academicYearModelToJson(AcademicYearModel? data) =>
+String academicYearModelToJson(StudentAttendanceAcademicYearModel? data) =>
     json.encode(data!.toJson());
 
-class AcademicYearModel {
-  AcademicYearModel({
+class StudentAttendanceAcademicYearModel {
+  StudentAttendanceAcademicYearModel({
     this.emeRId,
     this.intBId,
     this.roleid,
@@ -161,7 +161,7 @@ class AcademicYearModel {
   int? rollno;
   int? amstMobile;
   DateTime? studentdob;
-  Yearlist? yearlist;
+  StudentAttendanceYearlist? yearlist;
   int? id;
   int? hreSId;
   int? hresId;
@@ -255,8 +255,9 @@ class AcademicYearModel {
   int? ivrmuLId;
   int? ttmBAfterPeriod;
 
-  factory AcademicYearModel.fromJson(Map<String, dynamic> json) =>
-      AcademicYearModel(
+  factory StudentAttendanceAcademicYearModel.fromJson(
+          Map<String, dynamic> json) =>
+      StudentAttendanceAcademicYearModel(
         emeRId: json["emeR_Id"],
         intBId: json["intB_Id"],
         roleid: json["roleid"],
@@ -284,7 +285,7 @@ class AcademicYearModel {
         rollno: json["rollno"],
         amstMobile: json["amst_mobile"],
         studentdob: DateTime.parse(json["studentdob"]),
-        yearlist: Yearlist.fromJson(json["yearlist"]),
+        yearlist: StudentAttendanceYearlist.fromJson(json["yearlist"]),
         id: json["id"],
         hreSId: json["hreS_Id"],
         hresId: json["hres_id"],
@@ -503,21 +504,22 @@ class AcademicYearModel {
       };
 }
 
-class Yearlist {
-  Yearlist({
+class StudentAttendanceYearlist {
+  StudentAttendanceYearlist({
     this.type,
     this.values,
   });
 
   String? type;
-  List<YearlistValue?>? values;
+  List<StudentAttendanceYearlistValue?>? values;
 
-  factory Yearlist.fromJson(Map<String, dynamic> json) => Yearlist(
+  factory StudentAttendanceYearlist.fromJson(Map<String, dynamic> json) =>
+      StudentAttendanceYearlist(
         type: json["\$type"],
         values: json["\$values"] == null
             ? []
-            : List<YearlistValue?>.from(
-                json["\$values"]!.map((x) => YearlistValue.fromJson(x))),
+            : List<StudentAttendanceYearlistValue?>.from(json["\$values"]!
+                .map((x) => StudentAttendanceYearlistValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -528,8 +530,8 @@ class Yearlist {
       };
 }
 
-class YearlistValue {
-  YearlistValue({
+class StudentAttendanceYearlistValue {
+  StudentAttendanceYearlistValue({
     this.asmaYId,
     this.mIId,
     this.asmaYYear,
@@ -587,7 +589,8 @@ class YearlistValue {
   DateTime? asmaYRegularFeeTDate;
   DateTime? asmaYArrearFeeDate;
 
-  factory YearlistValue.fromJson(Map<String, dynamic> json) => YearlistValue(
+  factory StudentAttendanceYearlistValue.fromJson(Map<String, dynamic> json) =>
+      StudentAttendanceYearlistValue(
         asmaYId: json["asmaY_Id"],
         mIId: json["mI_Id"],
         asmaYYear: json["asmaY_Year"],
