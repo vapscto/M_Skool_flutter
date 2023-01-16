@@ -203,4 +203,17 @@ class URLS {
 
   static String getHwList =
       "api/EmployeeStudentHomeworkFacade/gethomework_list/";
+
+  static String getCwAttachedFile = "api/IVRM_ClassWorkFacade/viewclasswork/";
+  static String getHwAttachedFile =
+      "api/EmployeeStudentHomeworkFacade/viewhomework";
+
+  static String getCwAttachmentFile =
+      "api/IVRM_ClassWorkFacade/viewstudentupload/";
+
+  static String getStudentUploadedHw =
+      "api/EmployeeStudentHomeworkFacade/viewstudentupload/";
+
+  static String getVerifyClassWorkList =
+      "api/IVRM_ClassWorkFacade/getclasswork_list/";
 }

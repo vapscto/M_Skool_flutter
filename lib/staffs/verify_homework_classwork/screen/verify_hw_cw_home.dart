@@ -216,7 +216,9 @@ class _VerifyHwCwHomeState extends State<VerifyHwCwHome> {
                                                 loginSuccessModel:
                                                     widget.loginSuccessModel,
                                                 mskoolController:
-                                                    widget.mskoolController);
+                                                    widget.mskoolController,
+                                                forHw: widget.forHw,
+                                              );
                               }),
                             ],
                           ),
