@@ -1,8 +1,18 @@
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/get_classwork_attachment_api.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/get_homework_attachment_api.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/get_student_attachment_api.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/upload_hw.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/controller/pick_image_controller.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/cw_attachment_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/cw_student_attachment_model.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/hw_attachment_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/hw_student_attachment_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_cw_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_hw_model.dart';
@@ -11,14 +21,17 @@ import 'package:m_skool_flutter/student/coe/screen/view_image.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:path/path.dart' as p;
 
-class VerifyHwCwItem extends StatelessWidget {
+class VerifyHwCwItem extends StatefulWidget {
   final Color color;
   final VerifyHwListModelValues? model;
   final VerifyClassworkListValues? cwList;
   final LoginSuccessModel loginSuccessModel;
+  final TextEditingController marks;
+  final PickImageController imageController;
 
   const VerifyHwCwItem({
     Key? key,
@@ -30,6 +43,8 @@ class VerifyHwCwItem extends StatelessWidget {
     required this.loginSuccessModel,
     required this.asmayId,
     this.cwList,
+    required this.marks,
+    required this.imageController,
   }) : super(key: key);
 
   final bool forHw;
@@ -38,10 +53,15 @@ class VerifyHwCwItem extends StatelessWidget {
   final int asmayId;
 
   @override
+  State<VerifyHwCwItem> createState() => _VerifyHwCwItemState();
+}
+
+class _VerifyHwCwItemState extends State<VerifyHwCwItem> {
+  @override
   Widget build(BuildContext context) {
     return Container(
-      decoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(8.0), color: color),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0), color: widget.color),
       padding: const EdgeInsets.all(12.0),
       child: Column(
         children: [
@@ -49,6 +69,7 @@ class VerifyHwCwItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
+                flex: 7,
                 child: Column(children: [
                   Row(
                     children: [
@@ -66,9 +87,9 @@ class VerifyHwCwItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            forHw
-                                ? "${model!.studentname}"
-                                : "${cwList!.studentname}",
+                            widget.forHw
+                                ? "${widget.model!.studentname}"
+                                : "${widget.cwList!.studentname}",
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
@@ -80,9 +101,9 @@ class VerifyHwCwItem extends StatelessWidget {
                             height: 6.0,
                           ),
                           Text(
-                            forHw
-                                ? "${model!.amstAdmno}"
-                                : "${cwList!.amstAdmno}",
+                            widget.forHw
+                                ? "${widget.model!.amstAdmno}"
+                                : "${widget.cwList!.amstAdmno}",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall!
@@ -100,17 +121,19 @@ class VerifyHwCwItem extends StatelessWidget {
                   )
                 ]),
               ),
-              forHw
-                  ? const SizedBox()
-                  : Text(
-                      "02.75",
-                      style: Theme.of(context).textTheme.titleSmall!.merge(
-                            TextStyle(
-                                fontSize: 20.0,
-                                decoration: TextDecoration.underline,
-                                color: Theme.of(context).primaryColor),
-                          ),
-                    ),
+              Expanded(
+                flex: 3,
+                child: TextField(
+                  controller: widget.marks,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleSmall!.merge(
+                        TextStyle(
+                            fontSize: 20.0,
+                            decoration: TextDecoration.underline,
+                            color: Theme.of(context).primaryColor),
+                      ),
+                ),
+              ),
             ],
           ),
           const SizedBox(
@@ -176,21 +199,22 @@ class VerifyHwCwItem extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                forHw
+                                widget.forHw
                                     ? FutureBuilder<
                                             List<HwStuAttachmentModelValues>>(
                                         future: GetStudentAttachmentApi.instance
                                             .getHomeWorkUploads(
-                                                miId: miId,
-                                                loginId:
-                                                    loginSuccessModel.userId!,
-                                                asmayId: asmayId,
-                                                userId:
-                                                    loginSuccessModel.userId!,
-                                                amstId: model!.aMSTId!,
-                                                iHwuplId: model!.iHWUPLId!,
-                                                iHwId: model!.iHWId!,
-                                                base: base),
+                                                miId: widget.miId,
+                                                loginId: widget
+                                                    .loginSuccessModel.userId!,
+                                                asmayId: widget.asmayId,
+                                                userId: widget
+                                                    .loginSuccessModel.userId!,
+                                                amstId: widget.model!.aMSTId!,
+                                                iHwuplId:
+                                                    widget.model!.iHWUPLId!,
+                                                iHwId: widget.model!.iHWId!,
+                                                base: widget.base),
                                         builder: (_, snapshot) {
                                           if (snapshot.hasData) {
                                             return ListView.separated(
@@ -328,16 +352,17 @@ class VerifyHwCwItem extends StatelessWidget {
                                             List<CwStuAttachmentModelValues>>(
                                         future: GetStudentAttachmentApi.instance
                                             .getClassWorkUploads(
-                                                miId: miId,
-                                                loginId:
-                                                    loginSuccessModel.userId!,
-                                                asmayId: asmayId,
-                                                userId:
-                                                    loginSuccessModel.userId!,
-                                                amstId: cwList!.aMSTId!,
-                                                icwuplId: cwList!.iCWUPLId!,
-                                                icwId: cwList!.iCWId!,
-                                                base: base),
+                                                miId: widget.miId,
+                                                loginId: widget
+                                                    .loginSuccessModel.userId!,
+                                                asmayId: widget.asmayId,
+                                                userId: widget
+                                                    .loginSuccessModel.userId!,
+                                                amstId: widget.cwList!.aMSTId!,
+                                                icwuplId:
+                                                    widget.cwList!.iCWUPLId!,
+                                                icwId: widget.cwList!.iCWId!,
+                                                base: widget.base),
                                         builder: (_, snapshot) {
                                           if (snapshot.hasData) {
                                             return ListView.separated(
@@ -447,7 +472,7 @@ class VerifyHwCwItem extends StatelessWidget {
                                                       },
                                                       title: snapshot.data!
                                                           .elementAt(index)
-                                                          .icwupLAttachment!,
+                                                          .icwupLFileName!,
                                                       isPdf: false);
                                                 },
                                                 separatorBuilder: (_, index) {
@@ -591,38 +616,211 @@ class VerifyHwCwItem extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Column(children: [
-                                  HwCwUploadedContentItem(
-                                    onViewClicked: () {},
-                                    onDownloadClicked: () {},
-                                    isPdf: false,
-                                    title: 'Eye Diagram',
-                                    deleteAsset: "assets/svg/delete.svg",
-                                  ),
-                                  const SizedBox(
-                                    height: 12.0,
-                                  ),
-                                  HwCwUploadedContentItem(
-                                    onViewClicked: () {},
-                                    onDownloadClicked: () {},
-                                    isPdf: false,
-                                    title: 'Intestine Description',
-                                    deleteAsset: "assets/svg/delete.svg",
-                                  ),
-                                  const SizedBox(
-                                    height: 12.0,
-                                  ),
-                                  HwCwUploadedContentItem(
-                                    onViewClicked: () {},
-                                    onDownloadClicked: () {},
-                                    isPdf: true,
-                                    title: 'Human eye',
-                                    deleteAsset: "assets/svg/delete.svg",
-                                  ),
-                                ]),
-                              )
+                              widget.forHw
+                                  ? FutureBuilder<
+                                          List<HwAttachmentModelValues>>(
+                                      future: GetHomeworkAttachmentApi.instance
+                                          .getHwAttachedFile(
+                                              iHwId: widget.model!.iHWId!,
+                                              miId: widget.miId,
+                                              base: widget.base),
+                                      builder: (_, snapshot) {
+                                        if (snapshot.hasData) {
+                                          return ListView.separated(
+                                              shrinkWrap: true,
+                                              padding:
+                                                  const EdgeInsets.all(16.0),
+                                              itemBuilder: (_, index) {
+                                                return HwCwUploadedContentItem(
+                                                  onViewClicked: () async {
+                                                    if ([
+                                                      ".jpg",
+                                                      ".jpeg",
+                                                      ".png",
+                                                      ".gif"
+                                                    ].contains(p.extension(snapshot
+                                                        .data!
+                                                        .elementAt(index)
+                                                        .ihwatTAttachment!))) {
+                                                      Navigator.push(context,
+                                                          MaterialPageRoute(
+                                                              builder: (_) {
+                                                        return ViewImage(
+                                                            image: snapshot
+                                                                .data!
+                                                                .elementAt(
+                                                                    index)
+                                                                .ihwatTAttachment!);
+                                                      }));
+                                                      return;
+                                                    }
+
+                                                    if (await canLaunchUrl(
+                                                        Uri.parse(snapshot.data!
+                                                            .elementAt(index)
+                                                            .ihwatTAttachment!))) {
+                                                      await launchUrl(Uri.parse(
+                                                          snapshot.data!
+                                                              .elementAt(index)
+                                                              .ihwatTAttachment!));
+                                                      return;
+                                                    }
+                                                    Fluttertoast.showToast(
+                                                        msg:
+                                                            "No Specific application found to view this file");
+                                                  },
+                                                  onDownloadClicked: () async {
+                                                    if (await canLaunchUrl(
+                                                        Uri.parse(snapshot.data!
+                                                            .elementAt(index)
+                                                            .ihwatTAttachment!))) {
+                                                      await launchUrl(Uri.parse(
+                                                          snapshot.data!
+                                                              .elementAt(index)
+                                                              .ihwatTAttachment!));
+                                                      return;
+                                                    }
+                                                    Fluttertoast.showToast(
+                                                        msg:
+                                                            "No Specific application found to view this file");
+                                                  },
+                                                  isPdf: p.extension(snapshot
+                                                              .data!
+                                                              .elementAt(index)
+                                                              .ihwatTAttachment!) ==
+                                                          ".pdf"
+                                                      ? true
+                                                      : false,
+                                                  title: snapshot.data!
+                                                      .elementAt(index)
+                                                      .ihwatTFileName!,
+                                                  // deleteAsset: "assets/svg/delete.svg",
+                                                );
+                                              },
+                                              separatorBuilder: (_, index) {
+                                                return const SizedBox(
+                                                  height: 16.0,
+                                                );
+                                              },
+                                              itemCount: snapshot.data!.length);
+                                        }
+
+                                        if (snapshot.hasError) {
+                                          return ErrWidget(
+                                              err: snapshot.error
+                                                  as Map<String, dynamic>);
+                                        }
+                                        return const AnimatedProgressWidget(
+                                            title: "Loading Your upload's",
+                                            desc:
+                                                "Please wait we are loading upload's for you..",
+                                            animationPath:
+                                                "assets/json/default.json");
+                                      })
+                                  : FutureBuilder<
+                                          List<CwAttachmentModelValues>>(
+                                      future: GetClassworkAttachmentApi.instance
+                                          .getAttachedFiles(
+                                        miId: widget.miId,
+                                        base: widget.base,
+                                        asmayId: widget.asmayId,
+                                        iCwId: widget.cwList!.iCWId!,
+                                        userId:
+                                            widget.loginSuccessModel.userId!,
+                                      ),
+                                      builder: (_, snapshot) {
+                                        if (snapshot.hasData) {
+                                          return ListView.separated(
+                                              shrinkWrap: true,
+                                              padding:
+                                                  const EdgeInsets.all(16.0),
+                                              itemBuilder: (_, index) {
+                                                return HwCwUploadedContentItem(
+                                                  onViewClicked: () async {
+                                                    if ([
+                                                      ".jpg",
+                                                      ".jpeg",
+                                                      ".png",
+                                                      ".gif"
+                                                    ].contains(p.extension(snapshot
+                                                        .data!
+                                                        .elementAt(index)
+                                                        .icwatTAttachment!))) {
+                                                      Navigator.push(context,
+                                                          MaterialPageRoute(
+                                                              builder: (_) {
+                                                        return ViewImage(
+                                                            image: snapshot
+                                                                .data!
+                                                                .elementAt(
+                                                                    index)
+                                                                .icwatTAttachment!);
+                                                      }));
+                                                      return;
+                                                    }
+
+                                                    if (await canLaunchUrl(
+                                                        Uri.parse(snapshot.data!
+                                                            .elementAt(index)
+                                                            .icwatTAttachment!))) {
+                                                      await launchUrl(Uri.parse(
+                                                          snapshot.data!
+                                                              .elementAt(index)
+                                                              .icwatTAttachment!));
+                                                      return;
+                                                    }
+                                                    Fluttertoast.showToast(
+                                                        msg:
+                                                            "No Specific application found to view this file");
+                                                  },
+                                                  onDownloadClicked: () async {
+                                                    if (await canLaunchUrl(
+                                                        Uri.parse(snapshot.data!
+                                                            .elementAt(index)
+                                                            .icwatTAttachment!))) {
+                                                      await launchUrl(Uri.parse(
+                                                          snapshot.data!
+                                                              .elementAt(index)
+                                                              .icwatTAttachment!));
+                                                      return;
+                                                    }
+                                                    Fluttertoast.showToast(
+                                                        msg:
+                                                            "No Specific application found to view this file");
+                                                  },
+                                                  isPdf: p.extension(snapshot
+                                                              .data!
+                                                              .elementAt(index)
+                                                              .icwatTAttachment!) ==
+                                                          ".pdf"
+                                                      ? true
+                                                      : false,
+                                                  title: snapshot.data!
+                                                      .elementAt(index)
+                                                      .icwatTFileName!,
+                                                  // deleteAsset: "assets/svg/delete.svg",
+                                                );
+                                              },
+                                              separatorBuilder: (_, index) {
+                                                return const SizedBox(
+                                                  height: 16.0,
+                                                );
+                                              },
+                                              itemCount: snapshot.data!.length);
+                                        }
+
+                                        if (snapshot.hasError) {
+                                          return ErrWidget(
+                                              err: snapshot.error
+                                                  as Map<String, dynamic>);
+                                        }
+                                        return const AnimatedProgressWidget(
+                                            title: "Loading Your upload's",
+                                            desc:
+                                                "Please wait we are loading upload's for you..",
+                                            animationPath:
+                                                "assets/json/default.json");
+                                      })
                             ],
                           ),
                         );
@@ -644,7 +842,350 @@ class VerifyHwCwItem extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8.0),
                     )),
-                onPressed: () {},
+                onPressed: () {
+                  final ImagePicker picker = ImagePicker();
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (_) {
+                        return Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Upload Attachment",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .merge(
+                                      const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                              ),
+                              const SizedBox(
+                                height: 16.0,
+                              ),
+                              Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () async {
+                                      final XFile? xfile =
+                                          await picker.pickImage(
+                                              source: ImageSource.camera);
+                                      if (xfile == null) {
+                                        Fluttertoast.showToast(
+                                            msg: "No Image selected");
+                                        return;
+                                      }
+
+                                      widget.imageController.images.add(xfile);
+                                    },
+                                    child: Column(
+                                      children: [
+                                        CircleAvatar(
+                                          minRadius: 36.0,
+                                          backgroundColor:
+                                              Theme.of(context).dividerColor,
+                                          child: Icon(
+                                            Icons.camera_alt,
+                                            size: 36.0,
+                                            color: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .color,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 8.0,
+                                        ),
+                                        const Text("Camera"),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 16.0,
+                                  ),
+                                  InkWell(
+                                    onTap: () async {
+                                      final List<XFile?> pickedImage =
+                                          await picker.pickMultiImage();
+                                      if (pickedImage.isEmpty) {
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "No Image selected for attachment");
+                                        return;
+                                      }
+                                      widget.imageController
+                                          .addToImages(pickedImage);
+                                    },
+                                    child: Column(
+                                      children: [
+                                        CircleAvatar(
+                                          minRadius: 36.0,
+                                          backgroundColor:
+                                              Theme.of(context).dividerColor,
+                                          child: Icon(
+                                            Icons.image,
+                                            size: 36.0,
+                                            color: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .color,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 8.0,
+                                        ),
+                                        const Text("Gallery"),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 16.0,
+                                  ),
+                                  InkWell(
+                                    onTap: () async {
+                                      final FilePickerResult? pickerRes =
+                                          await FilePicker.platform.pickFiles(
+                                              dialogTitle:
+                                                  "Select Attachment's",
+                                              allowMultiple: true);
+                                      if (pickerRes == null) {
+                                        Fluttertoast.showToast(
+                                            msg: "No File selected..");
+                                        return;
+                                      }
+                                      widget.imageController
+                                          .addPlatformFile(pickerRes.files);
+                                    },
+                                    child: Column(
+                                      children: [
+                                        CircleAvatar(
+                                          minRadius: 36.0,
+                                          backgroundColor:
+                                              Theme.of(context).dividerColor,
+                                          child: Icon(
+                                            Icons.document_scanner_outlined,
+                                            size: 36.0,
+                                            color: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .color,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 8.0,
+                                        ),
+                                        const Text("Others"),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 16.0,
+                              ),
+                              Obx(() {
+                                return SizedBox(
+                                  width: double.infinity,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Row(children: [
+                                          ...List.generate(
+                                            widget
+                                                .imageController.images.length,
+                                            (index) => Container(
+                                              height: 100,
+                                              width: 100,
+                                              padding: const EdgeInsets.all(24),
+                                              margin: const EdgeInsets.only(
+                                                  right: 12.0),
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Colors.grey.shade300,
+                                                    width: 1.0,
+                                                  ),
+                                                  image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: FileImage(File(
+                                                          widget.imageController
+                                                              .images
+                                                              .elementAt(index)!
+                                                              .path))),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          16.0)),
+                                              child: Container(
+                                                decoration: const BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.black45,
+                                                ),
+                                                child: IconButton(
+                                                  color: Colors.white,
+                                                  onPressed: () {
+                                                    widget
+                                                        .imageController.images
+                                                        .removeAt(index);
+                                                  },
+                                                  icon: const Icon(Icons.close),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          ...List.generate(
+                                            widget.imageController.platformFile
+                                                .length,
+                                            (index) => Container(
+                                              width: 100,
+                                              height: 100,
+                                              margin: const EdgeInsets.only(
+                                                  right: 12.0),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(16.0),
+                                                border: Border.all(
+                                                  color: Colors.grey.shade300,
+                                                  width: 1.0,
+                                                ),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  IconButton(
+                                                    onPressed: () {
+                                                      widget.imageController
+                                                          .platformFile
+                                                          .removeAt(index);
+                                                    },
+                                                    icon:
+                                                        const Icon(Icons.close),
+                                                  ),
+                                                  p.extension(widget
+                                                              .imageController
+                                                              .platformFile
+                                                              .elementAt(index)
+                                                              .path!) ==
+                                                          ".pdf"
+                                                      ? const Icon(
+                                                          Icons
+                                                              .picture_as_pdf_outlined,
+                                                          size: 36.0,
+                                                        )
+                                                      : const Icon(
+                                                          Icons
+                                                              .file_copy_outlined,
+                                                          size: 36.0,
+                                                        ),
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        ]),
+                                      ),
+                                      const SizedBox(
+                                        height: 16.0,
+                                      ),
+                                      widget.imageController.images
+                                                  .isNotEmpty ||
+                                              widget.imageController
+                                                  .platformFile.isNotEmpty
+                                          ? MSkollBtn(
+                                              title: "Upload Now",
+                                              onPress: () async {
+                                                Navigator.pop(context);
+                                                UploadHwAttachment.instance
+                                                    .uploadNow(
+                                                        miId: widget.miId,
+                                                        controller: widget
+                                                            .imageController,
+                                                        base: "base",
+                                                        forHw: widget.forHw);
+
+                                                await showModalBottomSheet(
+                                                    context: context,
+                                                    builder: (_) {
+                                                      return Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(16.0),
+                                                          child: Obx(() {
+                                                            return widget
+                                                                    .imageController
+                                                                    .isErrorOccured
+                                                                    .value
+                                                                ? ErrWidget(
+                                                                    err: {
+                                                                        "errorTitle":
+                                                                            "An Error Occured",
+                                                                        "errorMsg": widget
+                                                                            .imageController
+                                                                            .uploadStatus
+                                                                            .value,
+                                                                      })
+                                                                : widget
+                                                                        .imageController
+                                                                        .isUploading
+                                                                        .value
+                                                                    ? AnimatedProgressWidget(
+                                                                        title:
+                                                                            "Uploading Attachment's",
+                                                                        desc: widget
+                                                                            .imageController
+                                                                            .uploadStatus
+                                                                            .value,
+                                                                        animationPath:
+                                                                            "assets/json/default.json")
+                                                                    : Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.min,
+                                                                        children: [
+                                                                          const CircleAvatar(
+                                                                            minRadius:
+                                                                                36.0,
+                                                                            backgroundColor:
+                                                                                Colors.green,
+                                                                            child:
+                                                                                Icon(
+                                                                              Icons.check,
+                                                                              color: Colors.white,
+                                                                            ),
+                                                                          ),
+                                                                          const SizedBox(
+                                                                            height:
+                                                                                12.0,
+                                                                          ),
+                                                                          Text(
+                                                                            "Upload Completed",
+                                                                            style:
+                                                                                Theme.of(context).textTheme.titleSmall!.merge(const TextStyle(fontWeight: FontWeight.w600)),
+                                                                          ),
+                                                                        ],
+                                                                      );
+                                                          }));
+                                                    });
+
+                                                widget.imageController.images
+                                                    .clear();
+                                                widget.imageController
+                                                    .platformFile
+                                                    .clear();
+                                              },
+                                              size: Size(Get.width * 0.5, 50),
+                                            )
+                                          : const SizedBox()
+                                    ],
+                                  ),
+                                );
+                              })
+                            ],
+                          ),
+                        );
+                      });
+                },
                 child: const Text("Upload"),
               ),
             ],

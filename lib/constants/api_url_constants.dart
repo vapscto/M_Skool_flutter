@@ -226,4 +226,6 @@ class URLS {
       'api/EmployeeStudentAttendenceDetailsFacade/Getsection/';
   static String getStudentList = '';
   static String getStudentAttendanceDetails = '';
+
+  static String uploadCwEnd = "api/LoginFacade/ClassworkUpload";
 }

@@ -16,6 +16,12 @@ class GetHomeworkAttachmentApi {
   }) async {
     final Dio ins = getGlobalDio();
     final String api = base + URLS.getHwAttachedFile;
+
+    logger.d(api);
+    logger.d({
+      "IHW_Id": iHwId,
+      "MI_Id": miId,
+    });
     try {
       final Response response =
           await ins.post(api, options: Options(headers: getSession()), data: {

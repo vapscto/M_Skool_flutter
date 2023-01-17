@@ -35,12 +35,12 @@ class _MessagingScreenState extends State<MessagingScreen> {
   Future<void> getMessageData() async {
     interactionController.isMessageloading(true);
     await interactionController.getMessage(
-      ismintId: widget.data.ismintId!,
-      miId: widget.loginSuccessModel.mIID!,
-      asmayId: widget.loginSuccessModel.asmaYId!,
-      userId: widget.loginSuccessModel.userId!,
-      base: baseUrlFromInsCode('portal', widget.mskoolController),
-    );
+        ismintId: widget.data.ismintId!,
+        miId: widget.loginSuccessModel.mIID!,
+        asmayId: widget.loginSuccessModel.asmaYId!,
+        userId: widget.loginSuccessModel.userId!,
+        base: baseUrlFromInsCode('portal', widget.mskoolController),
+        ivrmrtId: widget.loginSuccessModel.roleId!);
     interactionController.isMessageloading(false);
   }
 
@@ -187,16 +187,24 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                           if (value) {
                                             await interactionController
                                                 .getMessage(
-                                              ismintId: widget.data.ismintId!,
-                                              miId: widget
-                                                  .loginSuccessModel.mIID!,
-                                              asmayId: widget
-                                                  .loginSuccessModel.asmaYId!,
-                                              userId: widget
-                                                  .loginSuccessModel.userId!,
-                                              base: baseUrlFromInsCode('portal',
-                                                  widget.mskoolController),
-                                            );
+                                                    ismintId: widget
+                                                        .data.ismintId!,
+                                                    miId: widget
+                                                        .loginSuccessModel
+                                                        .mIID!,
+                                                    asmayId: widget
+                                                        .loginSuccessModel
+                                                        .asmaYId!,
+                                                    userId: widget
+                                                        .loginSuccessModel
+                                                        .userId!,
+                                                    base: baseUrlFromInsCode(
+                                                        'portal',
+                                                        widget
+                                                            .mskoolController),
+                                                    ivrmrtId: widget
+                                                        .loginSuccessModel
+                                                        .roleId!);
                                             textMessage.text = '';
                                           }
                                         },
@@ -246,16 +254,24 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                           if (value) {
                                             await interactionController
                                                 .getMessage(
-                                              ismintId: widget.data.ismintId!,
-                                              miId: widget
-                                                  .loginSuccessModel.mIID!,
-                                              asmayId: widget
-                                                  .loginSuccessModel.asmaYId!,
-                                              userId: widget
-                                                  .loginSuccessModel.userId!,
-                                              base: baseUrlFromInsCode('portal',
-                                                  widget.mskoolController),
-                                            );
+                                                    ismintId: widget
+                                                        .data.ismintId!,
+                                                    miId: widget
+                                                        .loginSuccessModel
+                                                        .mIID!,
+                                                    asmayId: widget
+                                                        .loginSuccessModel
+                                                        .asmaYId!,
+                                                    userId: widget
+                                                        .loginSuccessModel
+                                                        .userId!,
+                                                    base: baseUrlFromInsCode(
+                                                        'portal',
+                                                        widget
+                                                            .mskoolController),
+                                                    ivrmrtId: widget
+                                                        .loginSuccessModel
+                                                        .roleId!);
                                             textMessage.text = '';
                                           }
                                         },
@@ -306,19 +322,17 @@ class _MessagingScreenState extends State<MessagingScreen> {
                               'portal', widget.mskoolController),
                         ).then(
                           (value) async {
-                           
                             if (value) {
                               await interactionController.getMessage(
-                                ismintId: widget.data.ismintId!,
-                                miId: widget.loginSuccessModel.mIID!,
-                                asmayId: widget.loginSuccessModel.asmaYId!,
-                                userId: widget.loginSuccessModel.userId!,
-                                base: baseUrlFromInsCode(
-                                    'portal', widget.mskoolController),
-                              );
+                                  ismintId: widget.data.ismintId!,
+                                  miId: widget.loginSuccessModel.mIID!,
+                                  asmayId: widget.loginSuccessModel.asmaYId!,
+                                  userId: widget.loginSuccessModel.userId!,
+                                  base: baseUrlFromInsCode(
+                                      'portal', widget.mskoolController),
+                                  ivrmrtId: widget.loginSuccessModel.roleId!);
                               textMessage.text = '';
                             }
-                        
                           },
                         );
                         interactionController.isMessageSending(false);

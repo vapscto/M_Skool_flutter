@@ -18,6 +18,14 @@ class GetClassworkAttachmentApi {
   }) async {
     final Dio ins = getGlobalDio();
     final String apiUrl = base + URLS.getCwAttachedFile;
+    logger.d(apiUrl);
+    logger.d({
+      "ICW_Id": iCwId,
+      "ASMAY_Id": asmayId,
+      "MI_Id": miId,
+      "User_Id": userId,
+    });
+
     try {
       final Response response = await ins
           .post(apiUrl, options: Options(headers: getSession()), data: {

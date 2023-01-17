@@ -287,7 +287,7 @@ class _VerifySubjectDDState extends State<VerifySubjectDD> {
             }
             Navigator.push(context, MaterialPageRoute(builder: (_) {
               return VerifyHwCwViewDetails(
-                title: "",
+                title: widget.forHw ? "View Homework" : "View Classwork",
                 forHw: widget.forHw,
                 asmayId: widget.verifyController.selectedSession.value.asmaYId!,
                 asmclId: widget.verifyController.selectedClass.value.asmcLId!,
