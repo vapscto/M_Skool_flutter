@@ -6,13 +6,13 @@ import 'package:m_skool_flutter/student/interaction/model/message_model.dart';
 
 var dio = Dio();
 
-Future<MessageModel?> getMessages({
-  required int ismintId,
-  required int miId,
-  required int asmayId,
-  required int userId,
-  required String base,
-}) async {
+Future<MessageModel?> getMessages(
+    {required int ismintId,
+    required int miId,
+    required int asmayId,
+    required int userId,
+    required String base,
+    required int ivrmrtId}) async {
   logger.d(ismintId);
   logger.d(miId);
   logger.d(asmayId);
@@ -27,7 +27,7 @@ Future<MessageModel?> getMessages({
       ),
       data: {
         "ISMINT_Id": ismintId,
-        "IVRMRT_Id": 7,
+        "IVRMRT_Id": ivrmrtId,
         "MI_Id": miId,
         "ASMAY_Id": asmayId,
         "UserId": userId

@@ -25,6 +25,18 @@ class GetCwApi {
   }) async {
     final Dio ins = getGlobalDio();
     final String api = base + URLS.getVerifyClassWorkList;
+    logger.d(api);
+    logger.d({
+      "Mi_Id": miId,
+      "login_Id": loginId,
+      "User_Id": userId,
+      "ASMAY_Id": asmayId,
+      "ASMCL_Id": "$asmclId",
+      "ASMS_Id": "$asmsId",
+      "ISMS_Id": "$ismsId",
+      "fromdate": fromDate,
+      "todate": toDate
+    });
     try {
       final Response response =
           await ins.post(api, options: Options(headers: getSession()), data: {

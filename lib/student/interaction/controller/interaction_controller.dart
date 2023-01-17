@@ -30,20 +30,21 @@ class InteractionController extends GetxController {
 
   RxList<ViewMessageValue> messageList = <ViewMessageValue>[].obs;
 
-  Future<bool> getMessage({
-    required int ismintId,
-    required int miId,
-    required int asmayId,
-    required int userId,
-    required String base,
-  }) async {
+  Future<bool> getMessage(
+      {required int ismintId,
+      required int miId,
+      required int asmayId,
+      required int userId,
+      required String base,
+      required int ivrmrtId}) async {
     try {
       MessageModel? messageModel = await getMessages(
           ismintId: ismintId,
           miId: miId,
           asmayId: asmayId,
           userId: userId,
-          base: base);
+          base: base,
+          ivrmrtId: ivrmrtId);
 
       if (messageModel!.viewmessage != null ||
           messageModel.viewmessage!.values != null) {

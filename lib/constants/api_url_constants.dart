@@ -230,4 +230,5 @@ class URLS {
   // ATTENDANCE ENTRY API .................
   static String getAttendanceInitialData =
       'api/StudentAttendanceEntryFacade/getinitialdata';
+  static String uploadCwEnd = "api/LoginFacade/ClassworkUpload";
 }

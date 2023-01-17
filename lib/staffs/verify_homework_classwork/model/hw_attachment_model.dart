@@ -32,7 +32,7 @@ class HwAttachmentModelValues {
   int? ivrmrTId;
   int? asmaYId;
   int? amsTId;
-  int? marks;
+  double? marks;
   int? ihWAssignmentNo;
   int? ismSId;
   int? ivrmuLId;

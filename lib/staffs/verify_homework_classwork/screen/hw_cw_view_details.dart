@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/get_cw_api.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/get_hw_api.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/controller/pick_image_controller.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_cw_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_hw_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/widget/verify_item.dart';
@@ -12,7 +15,7 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
-class VerifyHwCwViewDetails extends StatelessWidget {
+class VerifyHwCwViewDetails extends StatefulWidget {
   final String title;
   final bool forHw;
   final MskoolController mskoolController;
@@ -37,16 +40,56 @@ class VerifyHwCwViewDetails extends StatelessWidget {
       required this.toDate});
 
   @override
+  State<VerifyHwCwViewDetails> createState() => _VerifyHwCwViewDetailsState();
+}
+
+class _VerifyHwCwViewDetailsState extends State<VerifyHwCwViewDetails> {
+  final PickImageController imageController = Get.put(PickImageController());
+
+  @override
+  void dispose() {
+    Get.delete<PickImageController>();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     int color = -1;
     return Scaffold(
-      appBar: CustomAppBar(title: title).getAppBar(),
+      appBar: CustomAppBar(title: widget.title, action: [
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: ElevatedButton(
+            onPressed: () {
+              logger.d(imageController.textEditingControllers.length);
+              for (var element in imageController.textEditingControllers) {
+                logger.d(element.text);
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(36.0),
+              ),
+              backgroundColor: Colors.white,
+            ),
+            child: Text(
+              "Save",
+              style: Theme.of(context).textTheme.titleSmall!.merge(
+                    TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+            ),
+          ),
+        ),
+      ]).getAppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            forHw
+            widget.forHw
                 ? const SizedBox()
                 : Container(
                     padding: const EdgeInsets.all(8.0),
@@ -61,33 +104,43 @@ class VerifyHwCwViewDetails extends StatelessWidget {
                           .merge(const TextStyle(color: Color(0xFFA83232))),
                     ),
                   ),
-            forHw
+            widget.forHw
                 ? const SizedBox()
                 : const SizedBox(
                     height: 16.0,
                   ),
-            forHw
+            widget.forHw
                 ? FutureBuilder<List<VerifyHwListModelValues>>(
                     future: GetHwApi.instance.getHwForVerification(
-                      miId: loginSuccessModel.mIID!,
-                      hrmeId: loginSuccessModel.empcode!,
-                      loginId: loginSuccessModel.userId!,
-                      userId: loginSuccessModel.userId!,
-                      ivrmrtId: loginSuccessModel.roleId!,
+                      miId: widget.loginSuccessModel.mIID!,
+                      hrmeId: widget.loginSuccessModel.empcode!,
+                      loginId: widget.loginSuccessModel.userId!,
+                      userId: widget.loginSuccessModel.userId!,
+                      ivrmrtId: widget.loginSuccessModel.roleId!,
                       roleFlag: "Staff",
-                      asmayId: asmayId,
-                      ismsId: ismsId,
-                      asmclId: asmclId,
-                      asmsId: asmsId,
-                      fromDate: fromDate,
-                      toDate: toDate,
+                      asmayId: widget.asmayId,
+                      ismsId: widget.ismsId,
+                      asmclId: widget.asmclId,
+                      asmsId: widget.asmsId,
+                      fromDate: widget.fromDate,
+                      toDate: widget.toDate,
                       base: baseUrlFromInsCode(
                         "portal",
-                        mskoolController,
+                        widget.mskoolController,
                       ),
                     ),
                     builder: (_, snapshot) {
                       if (snapshot.hasData) {
+                        if (snapshot.data!.isEmpty) {
+                          return const Center(
+                            child: AnimatedProgressWidget(
+                                title: "No HomeWork uploaded",
+                                desc:
+                                    "There are no assignment uploaded by the student's",
+                                animationPath: "assets/json/default.json"),
+                          );
+                        }
+                        imageController.updateHwList(snapshot.data!);
                         return ListView.separated(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
@@ -96,15 +149,21 @@ class VerifyHwCwViewDetails extends StatelessWidget {
                               if (color % 6 == 0) {
                                 color = 0;
                               }
+
+                              imageController.updateTextEditingControllers(
+                                  TextEditingController());
                               return VerifyHwCwItem(
-                                forHw: forHw,
+                                forHw: widget.forHw,
+                                imageController: imageController,
+                                marks: imageController.textEditingControllers
+                                    .elementAt(index),
                                 model: snapshot.data!.elementAt(index),
                                 color: lighterColor.elementAt(color),
                                 base: baseUrlFromInsCode(
-                                    "portal", mskoolController),
-                                miId: loginSuccessModel.mIID!,
-                                loginSuccessModel: loginSuccessModel,
-                                asmayId: asmayId,
+                                    "portal", widget.mskoolController),
+                                miId: widget.loginSuccessModel.mIID!,
+                                loginSuccessModel: widget.loginSuccessModel,
+                                asmayId: widget.asmayId,
                               );
                             },
                             separatorBuilder: (_, index) {
@@ -128,21 +187,34 @@ class VerifyHwCwViewDetails extends StatelessWidget {
                   )
                 : FutureBuilder<List<VerifyClassworkListValues>>(
                     future: GetCwApi.instance.getCwList(
-                        miId: loginSuccessModel.mIID!,
-                        hrmeId: loginSuccessModel.empcode!,
-                        loginId: loginSuccessModel.userId!,
-                        userId: loginSuccessModel.userId!,
-                        ivrmrtId: loginSuccessModel.roleId!,
+                        miId: widget.loginSuccessModel.mIID!,
+                        hrmeId: widget.loginSuccessModel.empcode!,
+                        loginId: widget.loginSuccessModel.userId!,
+                        userId: widget.loginSuccessModel.userId!,
+                        ivrmrtId: widget.loginSuccessModel.roleId!,
                         roleFlag: "Staff",
-                        asmayId: asmayId,
-                        ismsId: ismsId,
-                        asmclId: asmclId,
-                        asmsId: asmsId,
-                        fromDate: fromDate,
-                        toDate: toDate,
-                        base: baseUrlFromInsCode("portal", mskoolController)),
+                        asmayId: widget.asmayId,
+                        ismsId: widget.ismsId,
+                        asmclId: widget.asmclId,
+                        asmsId: widget.asmsId,
+                        fromDate: widget.fromDate,
+                        toDate: widget.toDate,
+                        base: baseUrlFromInsCode(
+                            "portal", widget.mskoolController)),
                     builder: (_, snapshot) {
                       if (snapshot.hasData) {
+                        if (snapshot.data!.isEmpty) {
+                          return const Center(
+                            child: AnimatedProgressWidget(
+                                title: "No HomeWork uploaded",
+                                desc:
+                                    "There are no assignment uploaded by the student's",
+                                animationPath: "assets/json/default.json"),
+                          );
+                        }
+
+                        imageController.updateCwList(snapshot.data!);
+
                         return ListView.separated(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
@@ -151,14 +223,19 @@ class VerifyHwCwViewDetails extends StatelessWidget {
                               if (color % 6 == 0) {
                                 color = 0;
                               }
+                              imageController.updateTextEditingControllers(
+                                  TextEditingController());
                               return VerifyHwCwItem(
-                                asmayId: asmayId,
+                                asmayId: widget.asmayId,
+                                imageController: imageController,
+                                marks: imageController.textEditingControllers
+                                    .elementAt(index),
                                 base: baseUrlFromInsCode(
-                                    "portal", mskoolController),
+                                    "portal", widget.mskoolController),
                                 color: lighterColor.elementAt(color),
-                                forHw: forHw,
-                                loginSuccessModel: loginSuccessModel,
-                                miId: loginSuccessModel.mIID!,
+                                forHw: widget.forHw,
+                                loginSuccessModel: widget.loginSuccessModel,
+                                miId: widget.loginSuccessModel.mIID!,
                                 cwList: snapshot.data!.elementAt(index),
                               );
                             },
