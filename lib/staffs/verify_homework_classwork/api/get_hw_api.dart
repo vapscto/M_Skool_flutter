@@ -29,18 +29,18 @@ class GetHwApi {
 
       final Response response =
           await ins.post(api, options: Options(headers: getSession()), data: {
-        "MI_Id": 4,
-        "HRME_Id": 28,
-        "Login_Id": 43881,
-        "UserId": 43881,
-        "IVRMRT_Id": 18,
+        "MI_Id": miId,
+        "HRME_Id": hrmeId,
+        "Login_Id": loginId,
+        "UserId": userId,
+        "IVRMRT_Id": ivrmrtId,
         "Role_flag": "Staff",
-        "ASMAY_Id": 82,
-        "ISMS_Id": 66,
-        "ASMCL_Id": 13,
-        "ASMS_Id": 2,
-        "fromdate": "2021-01-01",
-        "todate": "2023-01-13"
+        "ASMAY_Id": asmayId,
+        "ISMS_Id": ismsId,
+        "ASMCL_Id": asmclId,
+        "ASMS_Id": asmsId,
+        "fromdate": fromDate,
+        "todate": toDate
       });
 
       final VerifyHwListModel hwListModel =

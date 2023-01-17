@@ -17,11 +17,13 @@ class VerifyClassDD extends StatelessWidget {
   final HwCwController verifyController;
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final bool forHw;
   const VerifyClassDD(
       {super.key,
       required this.verifyController,
       required this.loginSuccessModel,
-      required this.mskoolController});
+      required this.mskoolController,
+      required this.forHw});
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +126,9 @@ class VerifyClassDD extends StatelessWidget {
                       : VerifySectionDD(
                           verifyController: verifyController,
                           mskoolController: mskoolController,
-                          loginSuccessModel: loginSuccessModel);
+                          loginSuccessModel: loginSuccessModel,
+                          forHw: forHw,
+                        );
         })
       ],
     );
