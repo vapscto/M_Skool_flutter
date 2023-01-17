@@ -49,6 +49,8 @@ class _StudentAttendanceStaffHomeState
 
   void getAcademicYearDropdown() async {
     studentAttendanceController.isacademicyearloading(true);
+    studentAttendanceController.classList.clear();
+    studentAttendanceController.sectionList.clear();
     await studentAttendanceController
         .getAcademicYear(
             base: baseUrlFromInsCode('portal', widget.mskoolController),
@@ -67,6 +69,7 @@ class _StudentAttendanceStaffHomeState
 
   void getClassYearDropdown(int asmayId) async {
     studentAttendanceController.isclassloading(true);
+    studentAttendanceController.sectionList.clear();
     await studentAttendanceController
         .getClass(
             base: baseUrlFromInsCode('portal', widget.mskoolController),

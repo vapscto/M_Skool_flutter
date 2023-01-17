@@ -73,6 +73,7 @@ dependencies:
   pdf: ^3.8.4
   document_file_save_plus: ^1.0.9
   cached_network_image: ^3.2.3
+  data_table_2: ^2.3.10
 
 dev_dependencies:
   flutter_test:

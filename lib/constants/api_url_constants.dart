@@ -226,4 +226,8 @@ class URLS {
       'api/EmployeeStudentAttendenceDetailsFacade/Getsection/';
   static String getStudentList = '';
   static String getStudentAttendanceDetails = '';
+
+  // ATTENDANCE ENTRY API .................
+  static String getAttendanceInitialData =
+      'api/StudentAttendanceEntryFacade/getinitialdata';
 }

@@ -98,6 +98,7 @@ Future<String?> jpgToNetworkImageUrl(
         "File": await MultipartFile.fromFile(image),
       },
     );
+
     var response = await dio.post(
       url,
       options: Options(
@@ -106,6 +107,7 @@ Future<String?> jpgToNetworkImageUrl(
       data: formData,
     );
     if (response.statusCode == 200) {
+      logger.d(response.data);
       var imageUrl = response.data[0]['path'];
       return imageUrl;
     } else {

@@ -3,16 +3,16 @@ import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 
-class PeriodWiseAttendanceEntryDetailScreen extends StatefulWidget {
-  const PeriodWiseAttendanceEntryDetailScreen({super.key});
+class AttendanceEntryDetailScreen extends StatefulWidget {
+  const AttendanceEntryDetailScreen({super.key});
 
   @override
-  State<PeriodWiseAttendanceEntryDetailScreen> createState() =>
-      _PeriodWiseAttendanceEntryDetailScreenState();
+  State<AttendanceEntryDetailScreen> createState() =>
+      _AttendanceEntryDetailScreenState();
 }
 
-class _PeriodWiseAttendanceEntryDetailScreenState
-    extends State<PeriodWiseAttendanceEntryDetailScreen> {
+class _AttendanceEntryDetailScreenState
+    extends State<AttendanceEntryDetailScreen> {
   bool selectAll = false;
   @override
   Widget build(BuildContext context) {
