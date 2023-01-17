@@ -124,7 +124,10 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                             .elementAt(index)
                             .pagename ==
                         "Student Attendance Staff") {
-                      Get.to(() => const StudentAttendanceStaffHome());
+                      Get.to(() => StudentAttendanceStaffHome(
+                            loginSuccessModel: widget.loginSuccessModel,
+                            mskoolController: widget.mskoolController,
+                          ));
                     }
                     if (widget
                             .loginSuccessModel.staffmobileappprivileges!.values!
