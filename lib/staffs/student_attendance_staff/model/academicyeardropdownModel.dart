@@ -13,10 +13,10 @@ String academicYearModelToJson(StudentAttendanceAcademicYearModel? data) =>
 class StudentAttendanceAcademicYearModel {
   StudentAttendanceAcademicYearModel({
     this.emeRId,
-    this.intBId,
+    this.numBId,
     this.roleid,
     this.paymentNootificationStaff,
-    this.disabledint,
+    this.disablednum,
     this.blockdashboard,
     this.disabledorg,
     this.disablesubscription,
@@ -134,135 +134,135 @@ class StudentAttendanceAcademicYearModel {
     this.ttmBAfterPeriod,
   });
 
-  int? emeRId;
-  int? intBId;
-  int? roleid;
-  int? paymentNootificationStaff;
-  bool? disabledint;
+  num? emeRId;
+  num? numBId;
+  num? roleid;
+  num? paymentNootificationStaff;
+  bool? disablednum;
   bool? blockdashboard;
   bool? disabledorg;
   bool? disablesubscription;
   bool? subscriptionover;
-  int? mIId;
-  int? hrmEId;
-  int? asmaYId;
-  int? periodCount;
+  num? mIId;
+  num? hrmEId;
+  num? asmaYId;
+  num? periodCount;
   bool? ttmdpTActiveFlag;
-  int? asmcLId;
-  int? asmSId;
-  int? ismSId;
+  num? asmcLId;
+  num? asmSId;
+  num? ismSId;
   bool? asmcLActiveFlag;
-  int? dayCount;
-  int? ttmDId;
-  int? studentcount;
-  int? amstId;
+  num? dayCount;
+  num? ttmDId;
+  num? studentcount;
+  num? amstId;
   DateTime? amstDob;
-  int? amayRollNo;
-  int? rollno;
-  int? amstMobile;
+  num? amayRollNo;
+  num? rollno;
+  num? amstMobile;
   DateTime? studentdob;
   StudentAttendanceYearlist? yearlist;
-  int? id;
-  int? hreSId;
-  int? hresId;
-  int? userId;
+  num? id;
+  num? hreSId;
+  num? hresId;
+  num? userId;
   bool? hrmLLeaveCreditFlg;
-  int? ivrMMonthId;
+  num? ivrMMonthId;
   bool? isActive;
-  int? ivrMMonthMaxDays;
+  num? ivrMMonthMaxDays;
   DateTime? hrmEDol;
-  int? hreobLId;
-  int? hrmlYId;
+  num? hreobLId;
+  num? hrmlYId;
   DateTime? hreobLDate;
-  int? hreobLObLeaves;
-  int? hrelTId;
-  int? hrelTLeaveId;
+  num? hreobLObLeaves;
+  num? hrelTId;
+  num? hrelTLeaveId;
   DateTime? hrelTFromDate;
   DateTime? hrelTToDate;
-  int? hrelTTotDays;
+  num? hrelTTotDays;
   DateTime? hrelTReportingdate;
   bool? hrelTActiveFlag;
-  int? hrmldcfMId;
-  int? hrmldcFId;
-  int? hrmldcfMMonthId;
-  int? hrelCId;
+  num? hrmldcfMId;
+  num? hrmldcFId;
+  num? hrmldcfMMonthId;
+  num? hrelCId;
   DateTime? hrelCDate;
-  int? hrelCCrLeaves;
-  int? hrmGPayScaleFrom;
-  int? hrmGIncrementOf;
-  int? hrmGPayScaleTo;
-  int? hrmGOrder;
+  num? hrelCCrLeaves;
+  num? hrmGPayScaleFrom;
+  num? hrmGIncrementOf;
+  num? hrmGPayScaleTo;
+  num? hrmGOrder;
   bool? hrmGActiveFlag;
-  int? hrlAId;
-  int? hrlaoNId;
-  int? hrlaoNSanctionLevelNo;
+  num? hrlAId;
+  num? hrlaoNId;
+  num? hrlaoNSanctionLevelNo;
   bool? hrlaoNFinalFlg;
-  int? hreltDId;
+  num? hreltDId;
   DateTime? hreltDFromDate;
   DateTime? hreltDToDate;
   bool? hreltDLwpFlag;
-  int? hrelSId;
-  int? hrelSObLeaves;
-  int? hrelSCreditedLeaves;
-  int? hrelSTotalLeaves;
-  int? hrelSTransLeaves;
-  int? hrelSEncashedLeaves;
-  int? hrelSCbLeaves;
-  int? hrelaPId;
-  int? hrelaPApplicationId;
-  int? hrelaPTotalDays;
-  int? hrelaPContactNoOnLeave;
+  num? hrelSId;
+  num? hrelSObLeaves;
+  num? hrelSCreditedLeaves;
+  num? hrelSTotalLeaves;
+  num? hrelSTransLeaves;
+  num? hrelSEncashedLeaves;
+  num? hrelSCbLeaves;
+  num? hrelaPId;
+  num? hrelaPApplicationId;
+  num? hrelaPTotalDays;
+  num? hrelaPContactNoOnLeave;
   bool? hrelaPFinalFlag;
   bool? hrelaPActiveFlag;
   DateTime? hrmlYFromDate;
   DateTime? hrmlYToDate;
   bool? hrmlYActiveFlag;
-  int? hrmldcMId;
+  num? hrmldcMId;
   bool? hrmldcFMaxLeaveAplFlg;
-  int? hrmldcFMaxLeaveCf;
-  int? hrmldeCId;
+  num? hrmldcFMaxLeaveCf;
+  num? hrmldeCId;
   bool? hrmldeCServiceAplFlg;
   bool? hrmldeCMaxLeaveFlg;
-  int? hrmldeCMaxLeaves;
+  num? hrmldeCMaxLeaves;
   bool? hrmldeCMinLeaveFlg;
-  int? hrmldeCMinLeaves;
+  num? hrmldeCMinLeaves;
   bool? hrmldeCVariableFixedFlg;
-  int? hrmldeCFixedAmount;
-  int? month;
-  int? year;
-  int? hrelapAId;
+  num? hrmldeCFixedAmount;
+  num? month;
+  num? year;
+  num? hrelapAId;
   bool? hrelapAFinalFlag;
-  int? igAId;
+  num? igAId;
   DateTime? igADate;
   bool? igACommonGalleryFlg;
-  int? igaPId;
+  num? igaPId;
   bool? igaPCoverPhotoFlag;
-  int? hrmLId;
-  int? leavecode;
-  int? count;
+  num? hrmLId;
+  num? leavecode;
+  num? count;
   bool? returnval;
   bool? editFlag;
-  int? miid;
-  int? hrmDId;
-  int? hrmdeSId;
-  int? emEId;
-  int? present;
-  int? classheld;
-  int? type;
-  int? perc;
-  int? monthid;
+  num? miid;
+  num? hrmDId;
+  num? hrmdeSId;
+  num? emEId;
+  num? present;
+  num? classheld;
+  num? type;
+  num? perc;
+  num? monthid;
   bool? emeRActiveFlag;
-  int? ivrmuLId;
-  int? ttmBAfterPeriod;
+  num? ivrmuLId;
+  num? ttmBAfterPeriod;
 
   factory StudentAttendanceAcademicYearModel.fromJson(
           Map<String, dynamic> json) =>
       StudentAttendanceAcademicYearModel(
         emeRId: json["emeR_Id"],
-        intBId: json["intB_Id"],
+        numBId: json["numB_Id"],
         roleid: json["roleid"],
         paymentNootificationStaff: json["paymentNootificationStaff"],
-        disabledint: json["disabledint"],
+        disablednum: json["disablednum"],
         blockdashboard: json["blockdashboard"],
         disabledorg: json["disabledorg"],
         disablesubscription: json["disablesubscription"],
@@ -382,10 +382,10 @@ class StudentAttendanceAcademicYearModel {
 
   Map<String, dynamic> toJson() => {
         "emeR_Id": emeRId,
-        "intB_Id": intBId,
+        "numB_Id": numBId,
         "roleid": roleid,
         "paymentNootificationStaff": paymentNootificationStaff,
-        "disabledint": disabledint,
+        "disablednum": disablednum,
         "blockdashboard": blockdashboard,
         "disabledorg": disabledorg,
         "disablesubscription": disablesubscription,
@@ -561,33 +561,33 @@ class StudentAttendanceYearlistValue {
     this.asmaYArrearFeeDate,
   });
 
-  int? asmaYId;
-  int? mIId;
+  num? asmaYId;
+  num? mIId;
   String? asmaYYear;
   DateTime? asmaYFromDate;
   DateTime? asmaYToDate;
   DateTime? asmaYPreAdmFDate;
   DateTime? asmaYPreAdmTDate;
-  int? asmaYOrder;
-  int? asmaYActiveFlag;
+  num? asmaYOrder;
+  num? asmaYActiveFlag;
   DateTime? asmaYCutOfDate;
-  int? asmaYPreActiveFlag;
+  num? asmaYPreActiveFlag;
   bool? isActive;
   bool? asmaYReggularFlg;
   bool? asmaYNewFlg;
   bool? asmaYNewAdmissionFlg;
-  DateTime? asmaYTransportSDate;
-  DateTime? asmaYTransportEDate;
-  int? asmaYCreatedBy;
-  int? asmaYUpdatedBy;
-  DateTime? asmaYReferenceDate;
+  String? asmaYTransportSDate;
+  String? asmaYTransportEDate;
+  num? asmaYCreatedBy;
+  num? asmaYUpdatedBy;
+  String? asmaYReferenceDate;
   String? asmaYAcademicYearCode;
   DateTime? createdDate;
   DateTime? updatedDate;
-  DateTime? asmaYAdvanceFeeDate;
-  DateTime? asmaYRegularFeeFDate;
-  DateTime? asmaYRegularFeeTDate;
-  DateTime? asmaYArrearFeeDate;
+  String? asmaYAdvanceFeeDate;
+  String? asmaYRegularFeeFDate;
+  String? asmaYRegularFeeTDate;
+  String? asmaYArrearFeeDate;
 
   factory StudentAttendanceYearlistValue.fromJson(Map<String, dynamic> json) =>
       StudentAttendanceYearlistValue(

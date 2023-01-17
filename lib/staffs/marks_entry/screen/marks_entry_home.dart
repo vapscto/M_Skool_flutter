@@ -65,8 +65,10 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
     )
         .then((value) {
       if (value) {
-        selectedAcademicYear = marksEntryController.academicYearList.first;
-        getClass(selectedAcademicYear!.asmaYId!.toInt());
+        if (marksEntryController.academicYearList.isNotEmpty) {
+          selectedAcademicYear = marksEntryController.academicYearList.first;
+          getClass(selectedAcademicYear!.asmaYId!.toInt());
+        }
       }
     });
     marksEntryController.isacademicyearloading(false);
