@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/screen/daywise_attendance_entry_home.dart';
 import 'package:m_skool_flutter/staffs/coe/screens/coe_home.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/screen/hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/interaction/screen/interaction_home.dart';
@@ -25,6 +24,7 @@ import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
 import '../../controller/global_utilities.dart';
+import '../attendance_entry/screen/attendance_entry_home.dart';
 import '../marks_entry/screen/marks_entry_home.dart';
 
 class StaffHomeScreen extends StatefulWidget {
@@ -115,8 +115,11 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
                         "Attendance Entry") {
                       Get.to(
                         // () => const MonthWiseAttendanceEntryHomeScreen(),
-                        // () => const PeriodWiseAttendanceEntryHomeScreen(),
-                        () => const DayWiseAttendanceEntryHome(),
+                        () => AttendanceEntryHomeScreen(
+                          loginSuccessModel: widget.loginSuccessModel,
+                          mskoolController: widget.mskoolController,
+                        ),
+                        // () => const DayWiseAttendanceEntryHome(),
                       );
                     }
                     if (widget
