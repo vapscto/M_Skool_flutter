@@ -2,6 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/controller/pick_image_controller.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/attachments_model.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/filtered_attachment_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_cw_model.dart';
 
 class GetCwApi {
@@ -22,6 +25,7 @@ class GetCwApi {
     required String fromDate,
     required String toDate,
     required String base,
+    required PickImageController controller,
   }) async {
     final Dio ins = getGlobalDio();
     final String api = base + URLS.getVerifyClassWorkList;
@@ -54,6 +58,26 @@ class GetCwApi {
       final VerifyClassworkList classworks =
           VerifyClassworkList.fromJson(response.data['getclasswork_list']);
 
+      final AttachmentsModel attachment =
+          AttachmentsModel.fromJson(response.data['viewhomework']);
+      final List<FilteredAttachment> fAttachments = [];
+      for (var element in classworks.values!) {
+        List<Map<String, dynamic>> attach = [];
+        for (var element2 in attachment.values!) {
+          if (element.aMSTId == element2.aMSTId) {
+            attach.add({
+              "FilePath1": element2.icwuplatTFileName,
+              "FileName1": element2.icwuplatTAttachment,
+              "ICWUPL_Id": element2.iCWUPLId,
+              "ICWUPLATT_Id": element2.icwuplatTId,
+              "Remark": ""
+            });
+          }
+        }
+        fAttachments.add(
+            FilteredAttachment(amstId: element.aMSTId!, attachments: attach));
+      }
+      controller.updateFilteredAttachment(fAttachments);
       return Future.value(classworks.values);
     } on DioError catch (e) {
       logger.e(e.message);

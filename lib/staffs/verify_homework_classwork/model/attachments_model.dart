@@ -1,15 +1,15 @@
-class VerifyClassworkList {
+class AttachmentsModel {
   String? type;
-  List<VerifyClassworkListValues>? values;
+  List<AttachmentsModelValues>? values;
 
-  VerifyClassworkList({this.type, this.values});
+  AttachmentsModel({this.type, this.values});
 
-  VerifyClassworkList.fromJson(Map<String, dynamic> json) {
+  AttachmentsModel.fromJson(Map<String, dynamic> json) {
     type = json['\$type'];
     if (json['\$values'] != null) {
-      values = <VerifyClassworkListValues>[];
+      values = <AttachmentsModelValues>[];
       json['\$values'].forEach((v) {
-        values!.add(VerifyClassworkListValues.fromJson(v));
+        values!.add(AttachmentsModelValues.fromJson(v));
       });
     }
   }
@@ -24,11 +24,16 @@ class VerifyClassworkList {
   }
 }
 
-class VerifyClassworkListValues {
+class AttachmentsModelValues {
   String? type;
   int? iCWUPLId;
   int? iCWId;
   int? aMSTId;
+  String? icwuplatTAttachment;
+  String? icwuplatTFileName;
+  String? icwuplatTStaffUpload;
+  String? icwuplatTStaffRemarks;
+  int? icwuplatTId;
   String? studentname;
   String? amstAdmno;
   String? iCWTopic;
@@ -39,17 +44,21 @@ class VerifyClassworkListValues {
   String? iCWToDate;
   String? iSMSSubjectName;
   int? filesCount;
-  int? iCWUPLMarks;
+  String? iCWUPLMarks;
   String? iCWUPLStaffRemarks;
   String? iCWFilePath1;
   String? fileName1;
-  String? aMSTPhotoname;
 
-  VerifyClassworkListValues(
+  AttachmentsModelValues(
       {this.type,
       this.iCWUPLId,
       this.iCWId,
       this.aMSTId,
+      this.icwuplatTAttachment,
+      this.icwuplatTFileName,
+      this.icwuplatTStaffUpload,
+      this.icwuplatTStaffRemarks,
+      this.icwuplatTId,
       this.studentname,
       this.amstAdmno,
       this.iCWTopic,
@@ -63,14 +72,18 @@ class VerifyClassworkListValues {
       this.iCWUPLMarks,
       this.iCWUPLStaffRemarks,
       this.iCWFilePath1,
-      this.fileName1,
-      this.aMSTPhotoname});
+      this.fileName1});
 
-  VerifyClassworkListValues.fromJson(Map<String, dynamic> json) {
+  AttachmentsModelValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
     iCWUPLId = json['ICWUPL_Id'];
     iCWId = json['ICW_Id'];
     aMSTId = json['AMST_Id'];
+    icwuplatTAttachment = json['icwuplatT_Attachment'];
+    icwuplatTFileName = json['icwuplatT_FileName'];
+    icwuplatTStaffUpload = json['icwuplatT_StaffUpload'];
+    icwuplatTStaffRemarks = json['icwuplatT_StaffRemarks'];
+    icwuplatTId = json['icwuplatT_Id'];
     studentname = json['studentname'];
     amstAdmno = json['amst_admno'];
     iCWTopic = json['ICW_Topic'];
@@ -85,7 +98,6 @@ class VerifyClassworkListValues {
     iCWUPLStaffRemarks = json['ICWUPL_StaffRemarks'];
     iCWFilePath1 = json['ICW_FilePath1'];
     fileName1 = json['FileName1'];
-    aMSTPhotoname = json['AMST_Photoname'];
   }
 
   Map<String, dynamic> toJson() {
@@ -94,6 +106,11 @@ class VerifyClassworkListValues {
     data['ICWUPL_Id'] = iCWUPLId;
     data['ICW_Id'] = iCWId;
     data['AMST_Id'] = aMSTId;
+    data['icwuplatT_Attachment'] = icwuplatTAttachment;
+    data['icwuplatT_FileName'] = icwuplatTFileName;
+    data['icwuplatT_StaffUpload'] = icwuplatTStaffUpload;
+    data['icwuplatT_StaffRemarks'] = icwuplatTStaffRemarks;
+    data['icwuplatT_Id'] = icwuplatTId;
     data['studentname'] = studentname;
     data['amst_admno'] = amstAdmno;
     data['ICW_Topic'] = iCWTopic;
@@ -108,7 +125,6 @@ class VerifyClassworkListValues {
     data['ICWUPL_StaffRemarks'] = iCWUPLStaffRemarks;
     data['ICW_FilePath1'] = iCWFilePath1;
     data['FileName1'] = fileName1;
-    data['AMST_Photoname'] = aMSTPhotoname;
     return data;
   }
 }

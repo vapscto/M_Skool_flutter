@@ -1,18 +1,19 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/filtered_attachment_model.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/images_model.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/upload_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_cw_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_hw_model.dart';
-import 'package:m_skool_flutter/student/homework/model/upload_hw_cw_model.dart';
 
 class PickImageController extends GetxController {
   // PickImageController.init();
   // static PickImageController instance = PickImageController.init();
 
-  RxList<XFile?> images = RxList();
+  RxList<ImageModel> images = RxList();
 
-  void addToImages(List<XFile?> file) {
+  void addToImages(List<ImageModel> file) {
     images.addAll(file);
   }
 
@@ -27,9 +28,9 @@ class PickImageController extends GetxController {
     uploadStatus.value = status;
   }
 
-  RxList<UploadHwCwModel> hwCwModel = RxList();
+  RxList<UploadAttModel> hwCwModel = RxList();
 
-  void addToUpload(UploadHwCwModel model) {
+  void addToUpload(UploadAttModel model) {
     hwCwModel.add(model);
   }
 
@@ -51,7 +52,17 @@ class PickImageController extends GetxController {
     textEditingControllers.add(controller);
   }
 
+  RxList<TextEditingController> selectedEntry = RxList();
+
+  void addToSelectedEntry(TextEditingController controller) {
+    selectedEntry.add(controller);
+  }
+
   RxList<VerifyHwListModelValues> hwList = RxList();
+
+  void addSingleHwEntry(VerifyHwListModelValues value) {
+    hwList.add(value);
+  }
 
   void updateHwList(List<VerifyHwListModelValues> hw) {
     if (hwList.isNotEmpty) {
@@ -62,10 +73,29 @@ class PickImageController extends GetxController {
 
   RxList<VerifyClassworkListValues> cwList = RxList();
 
+  void addToCwList(VerifyClassworkListValues val) {
+    cwList.add(val);
+  }
+
   void updateCwList(List<VerifyClassworkListValues> lst) {
     if (cwList.isNotEmpty) {
       cwList.clear();
     }
     cwList.addAll(lst);
+  }
+
+  RxList<FilteredAttachment> filteredAttachment = RxList();
+
+  void updateFilteredAttachment(List<FilteredAttachment> mList) {
+    if (filteredAttachment.isNotEmpty) {
+      filteredAttachment.clear();
+    }
+    filteredAttachment.addAll(mList);
+  }
+
+  RxList<FilteredAttachment> saveAttachment = RxList();
+
+  void updateSaveAttachment(FilteredAttachment fA) {
+    saveAttachment.add(fA);
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -14,6 +13,7 @@ import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/cw_attach
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/cw_student_attachment_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/hw_attachment_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/hw_student_attachment_model.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/images_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_cw_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_hw_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/widget/hw_cw_content_item.dart';
@@ -32,6 +32,8 @@ class VerifyHwCwItem extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final TextEditingController marks;
   final PickImageController imageController;
+  final bool? selectAll;
+  final Function(bool) onSelect;
 
   const VerifyHwCwItem({
     Key? key,
@@ -45,6 +47,8 @@ class VerifyHwCwItem extends StatefulWidget {
     this.cwList,
     required this.marks,
     required this.imageController,
+    this.selectAll,
+    required this.onSelect,
   }) : super(key: key);
 
   final bool forHw;
@@ -57,8 +61,17 @@ class VerifyHwCwItem extends StatefulWidget {
 }
 
 class _VerifyHwCwItemState extends State<VerifyHwCwItem> {
+  RxBool isSelected = RxBool(false);
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    RxBool? select =
+        widget.selectAll == null ? null : RxBool(widget.selectAll!);
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0), color: widget.color),
@@ -68,55 +81,73 @@ class _VerifyHwCwItemState extends State<VerifyHwCwItem> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Obx(() {
+                return Checkbox(
+                  value: select == null ? isSelected.value : select.value,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(2.0)),
+                  activeColor: Theme.of(context).primaryColor,
+                  onChanged: (b) {
+                    isSelected.value = b!;
+                    if (select != null) {
+                      select.value = b;
+                    }
+                    widget.onSelect(b);
+                  },
+                );
+              }),
               Expanded(
-                flex: 7,
+                flex: 8,
                 child: Column(children: [
                   Row(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 36.0,
                         backgroundImage: NetworkImage(
-                          "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80",
+                          widget.forHw
+                              ? "https://images.unsplash.com/photo-1673908495930-aa64c3fd2638?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+                              : widget.cwList!.aMSTPhotoname!,
                         ),
                       ),
                       const SizedBox(
                         width: 16.0,
                       ),
                       Expanded(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.forHw
-                                ? "${widget.model!.studentname}"
-                                : "${widget.cwList!.studentname}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .merge(const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18.0)),
-                          ),
-                          const SizedBox(
-                            height: 6.0,
-                          ),
-                          Text(
-                            widget.forHw
-                                ? "${widget.model!.amstAdmno}"
-                                : "${widget.cwList!.amstAdmno}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall!
-                                .merge(TextStyle(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .color,
-                                    fontSize: 14.0,
-                                    letterSpacing: 0.2)),
-                          ),
-                        ],
-                      ))
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.forHw
+                                  ? "${widget.model!.studentname}"
+                                  : "${widget.cwList!.studentname}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .merge(const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18.0)),
+                            ),
+                            const SizedBox(
+                              height: 6.0,
+                            ),
+                            Text(
+                              widget.forHw
+                                  ? "${widget.model!.amstAdmno}"
+                                  : "${widget.cwList!.amstAdmno}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall!
+                                  .merge(TextStyle(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
+                                          .color,
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.2)),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   )
                 ]),
@@ -125,6 +156,7 @@ class _VerifyHwCwItemState extends State<VerifyHwCwItem> {
                 flex: 3,
                 child: TextField(
                   controller: widget.marks,
+                  keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleSmall!.merge(
                         TextStyle(
@@ -867,123 +899,145 @@ class _VerifyHwCwItemState extends State<VerifyHwCwItem> {
                               const SizedBox(
                                 height: 16.0,
                               ),
-                              Row(
-                                children: [
-                                  InkWell(
-                                    onTap: () async {
-                                      final XFile? xfile =
-                                          await picker.pickImage(
-                                              source: ImageSource.camera);
-                                      if (xfile == null) {
-                                        Fluttertoast.showToast(
-                                            msg: "No Image selected");
-                                        return;
-                                      }
+                              Obx(() {
+                                return widget.imageController.images.isEmpty
+                                    ? Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: () async {
+                                              final XFile? xfile =
+                                                  await picker.pickImage(
+                                                      source:
+                                                          ImageSource.camera);
+                                              if (xfile == null) {
+                                                Fluttertoast.showToast(
+                                                    msg: "No Image selected");
+                                                return;
+                                              }
 
-                                      widget.imageController.images.add(xfile);
-                                    },
-                                    child: Column(
-                                      children: [
-                                        CircleAvatar(
-                                          minRadius: 36.0,
-                                          backgroundColor:
-                                              Theme.of(context).dividerColor,
-                                          child: Icon(
-                                            Icons.camera_alt,
-                                            size: 36.0,
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .color,
+                                              widget.imageController.images.add(
+                                                  ImageModel(
+                                                      amstId: widget.forHw
+                                                          ? widget
+                                                              .model!.aMSTId!
+                                                          : widget
+                                                              .cwList!.aMSTId!,
+                                                      xfile: [xfile]));
+                                            },
+                                            child: Column(
+                                              children: [
+                                                CircleAvatar(
+                                                  minRadius: 36.0,
+                                                  backgroundColor:
+                                                      Theme.of(context)
+                                                          .dividerColor,
+                                                  child: Icon(
+                                                    Icons.camera_alt,
+                                                    size: 36.0,
+                                                    color: Theme.of(context)
+                                                        .textTheme
+                                                        .titleMedium!
+                                                        .color,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 8.0,
+                                                ),
+                                                const Text("Camera"),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        const SizedBox(
-                                          height: 8.0,
-                                        ),
-                                        const Text("Camera"),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 16.0,
-                                  ),
-                                  InkWell(
-                                    onTap: () async {
-                                      final List<XFile?> pickedImage =
-                                          await picker.pickMultiImage();
-                                      if (pickedImage.isEmpty) {
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "No Image selected for attachment");
-                                        return;
-                                      }
-                                      widget.imageController
-                                          .addToImages(pickedImage);
-                                    },
-                                    child: Column(
-                                      children: [
-                                        CircleAvatar(
-                                          minRadius: 36.0,
-                                          backgroundColor:
-                                              Theme.of(context).dividerColor,
-                                          child: Icon(
-                                            Icons.image,
-                                            size: 36.0,
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .color,
+                                          const SizedBox(
+                                            width: 16.0,
                                           ),
-                                        ),
-                                        const SizedBox(
-                                          height: 8.0,
-                                        ),
-                                        const Text("Gallery"),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 16.0,
-                                  ),
-                                  InkWell(
-                                    onTap: () async {
-                                      final FilePickerResult? pickerRes =
-                                          await FilePicker.platform.pickFiles(
-                                              dialogTitle:
-                                                  "Select Attachment's",
-                                              allowMultiple: true);
-                                      if (pickerRes == null) {
-                                        Fluttertoast.showToast(
-                                            msg: "No File selected..");
-                                        return;
-                                      }
-                                      widget.imageController
-                                          .addPlatformFile(pickerRes.files);
-                                    },
-                                    child: Column(
-                                      children: [
-                                        CircleAvatar(
-                                          minRadius: 36.0,
-                                          backgroundColor:
-                                              Theme.of(context).dividerColor,
-                                          child: Icon(
-                                            Icons.document_scanner_outlined,
-                                            size: 36.0,
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium!
-                                                .color,
+                                          InkWell(
+                                            onTap: () async {
+                                              final XFile? pickedImage =
+                                                  await picker.pickImage(
+                                                      source:
+                                                          ImageSource.gallery);
+                                              if (pickedImage == null) {
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "No Image selected for attachment");
+                                                return;
+                                              }
+                                              widget.imageController.images.add(
+                                                  ImageModel(
+                                                      amstId: widget.forHw
+                                                          ? widget
+                                                              .model!.aMSTId!
+                                                          : widget
+                                                              .cwList!.aMSTId!,
+                                                      xfile: [pickedImage]));
+                                            },
+                                            child: Column(
+                                              children: [
+                                                CircleAvatar(
+                                                  minRadius: 36.0,
+                                                  backgroundColor:
+                                                      Theme.of(context)
+                                                          .dividerColor,
+                                                  child: Icon(
+                                                    Icons.image,
+                                                    size: 36.0,
+                                                    color: Theme.of(context)
+                                                        .textTheme
+                                                        .titleMedium!
+                                                        .color,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 8.0,
+                                                ),
+                                                const Text("Gallery"),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        const SizedBox(
-                                          height: 8.0,
-                                        ),
-                                        const Text("Others"),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                          const SizedBox(
+                                            width: 16.0,
+                                          ),
+                                          // InkWell(
+                                          //   onTap: () async {
+                                          //     final FilePickerResult? pickerRes =
+                                          //         await FilePicker.platform.pickFiles(
+                                          //             dialogTitle:
+                                          //                 "Select Attachment's",
+                                          //             allowMultiple: true);
+                                          //     if (pickerRes == null) {
+                                          //       Fluttertoast.showToast(
+                                          //           msg: "No File selected..");
+                                          //       return;
+                                          //     }
+                                          //     widget.imageController
+                                          //         .addPlatformFile(pickerRes.files);
+                                          //   },
+                                          //   child: Column(
+                                          //     children: [
+                                          //       CircleAvatar(
+                                          //         minRadius: 36.0,
+                                          //         backgroundColor:
+                                          //             Theme.of(context).dividerColor,
+                                          //         child: Icon(
+                                          //           Icons.document_scanner_outlined,
+                                          //           size: 36.0,
+                                          //           color: Theme.of(context)
+                                          //               .textTheme
+                                          //               .titleMedium!
+                                          //               .color,
+                                          //         ),
+                                          //       ),
+                                          //       const SizedBox(
+                                          //         height: 8.0,
+                                          //       ),
+                                          //       const Text("Others"),
+                                          //     ],
+                                          //   ),
+                                          // ),
+                                        ],
+                                      )
+                                    : const SizedBox();
+                              }),
                               const SizedBox(
                                 height: 16.0,
                               ),
@@ -1015,7 +1069,9 @@ class _VerifyHwCwItemState extends State<VerifyHwCwItem> {
                                                       image: FileImage(File(
                                                           widget.imageController
                                                               .images
-                                                              .elementAt(index)!
+                                                              .elementAt(index)
+                                                              .xfile
+                                                              .first
                                                               .path))),
                                                   borderRadius:
                                                       BorderRadius.circular(

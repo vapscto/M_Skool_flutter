@@ -228,4 +228,10 @@ class URLS {
   static String getStudentAttendanceDetails = '';
 
   static String uploadCwEnd = "api/LoginFacade/ClassworkUpload";
+
+  static String saveVerifyHw =
+      "api/EmployeeStudentHomeworkFacade/homework_marks_update/";
+
+  static String saveVerifyCw =
+      "api/IVRM_ClassWorkFacade/classwork_marks_update/";
 }
