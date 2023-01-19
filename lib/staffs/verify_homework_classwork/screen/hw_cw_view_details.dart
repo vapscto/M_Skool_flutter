@@ -297,30 +297,30 @@ class _VerifyHwCwViewDetailsState extends State<VerifyHwCwViewDetails> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      color: const Color(0xFFFBCFCF)),
-                  child: Text(
-                    "Maximum Marks : 20",
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .merge(const TextStyle(color: Color(0xFFA83232))),
-                  ),
-                ),
-                Obx(() {
-                  return Checkbox(
-                      value: selectAll.value,
-                      onChanged: (b) {
-                        selectAll.value = b!;
-                      });
-                }),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Container(
+            //       padding: const EdgeInsets.all(8.0),
+            //       decoration: BoxDecoration(
+            //           borderRadius: BorderRadius.circular(8.0),
+            //           color: const Color(0xFFFBCFCF)),
+            //       child: Text(
+            //         "Maximum Marks : 20",
+            //         style: Theme.of(context)
+            //             .textTheme
+            //             .titleSmall!
+            //             .merge(const TextStyle(color: Color(0xFFA83232))),
+            //       ),
+            //     ),
+            //     Obx(() {
+            //       return Checkbox(
+            //           value: selectAll.value,
+            //           onChanged: (b) {
+            //             selectAll.value = b!;
+            //           });
+            //     }),
+            //   ],
+            // ),
             const SizedBox(
               height: 16.0,
             ),
@@ -369,7 +369,16 @@ class _VerifyHwCwViewDetailsState extends State<VerifyHwCwViewDetails> {
                               }
 
                               imageController.updateTextEditingControllers(
-                                  TextEditingController());
+                                  TextEditingController(
+                                      text: snapshot.data!
+                                                  .elementAt(index)
+                                                  .iHWUPLMarks ==
+                                              null
+                                          ? "0"
+                                          : snapshot.data!
+                                              .elementAt(index)
+                                              .iHWUPLMarks
+                                              .toString()));
                               return Obx(() {
                                 return VerifyHwCwItem(
                                   forHw: widget.forHw,
@@ -486,7 +495,16 @@ class _VerifyHwCwViewDetailsState extends State<VerifyHwCwViewDetails> {
                                 color = 0;
                               }
                               imageController.updateTextEditingControllers(
-                                  TextEditingController());
+                                  TextEditingController(
+                                      text: snapshot.data!
+                                                  .elementAt(index)
+                                                  .iCWUPLMarks ==
+                                              null
+                                          ? "0"
+                                          : snapshot.data!
+                                              .elementAt(index)
+                                              .iCWUPLMarks
+                                              .toString()));
                               return VerifyHwCwItem(
                                 asmayId: widget.asmayId,
                                 imageController: imageController,

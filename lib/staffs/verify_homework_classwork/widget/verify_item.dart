@@ -105,7 +105,7 @@ class _VerifyHwCwItemState extends State<VerifyHwCwItem> {
                         radius: 36.0,
                         backgroundImage: NetworkImage(
                           widget.forHw
-                              ? "https://images.unsplash.com/photo-1673908495930-aa64c3fd2638?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+                              ? widget.model!.aMSTPhotoname!
                               : widget.cwList!.aMSTPhotoname!,
                         ),
                       ),

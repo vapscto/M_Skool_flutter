@@ -33,6 +33,10 @@ class _AssignmentDetailsState extends State<AssignmentDetails> {
   final TextEditingController hwDate = TextEditingController();
   final TextEditingController topic = TextEditingController();
   final TextEditingController ass = TextEditingController();
+  final Rx<DateTime> startDt = Rx(DateTime.now());
+  final Rx<DateTime> endDt = Rx(DateTime(DateTime.now().year + 1));
+  final TextEditingController startDtCtrl = TextEditingController();
+  final TextEditingController startDtEndCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -126,14 +130,15 @@ class _AssignmentDetailsState extends State<AssignmentDetails> {
                         style: Theme.of(context).textTheme.titleSmall,
                         readOnly: true,
                         //maxLines: 4,
+                        controller: startDtCtrl,
                         decoration: InputDecoration(
                           suffixIcon: IconButton(
                             onPressed: () async {
                               final DateTime? dt = await showDatePicker(
                                 context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime.now(),
-                                lastDate: DateTime(DateTime.now().year, 12, 31),
+                                initialDate: startDt.value,
+                                firstDate: startDt.value,
+                                lastDate: endDt.value,
                               );
 
                               if (dt == null) {
@@ -142,6 +147,9 @@ class _AssignmentDetailsState extends State<AssignmentDetails> {
                                         "No Start Date Selected for assigning classwork");
                                 return;
                               }
+                              startDt.value = dt;
+                              startDtCtrl.text =
+                                  "${startDt.value.day}-${startDt.value.month}-${startDt.value.year}";
                             },
                             icon: SvgPicture.asset(
                               'assets/svg/calendar_icon.svg',
@@ -209,14 +217,32 @@ class _AssignmentDetailsState extends State<AssignmentDetails> {
                       child: TextField(
                         readOnly: true,
                         style: Theme.of(context).textTheme.titleSmall,
-
+                        controller: startDtEndCtrl,
                         //maxLines: 4,
                         decoration: InputDecoration(
                           isDense: true,
                           contentPadding:
                               const EdgeInsets.only(top: 48.0, left: 12),
                           suffixIcon: IconButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              final DateTime? dt = await showDatePicker(
+                                context: context,
+                                initialDate: startDt.value,
+                                firstDate: startDt.value,
+                                lastDate:
+                                    DateTime(DateTime.now().year + 1, 12, 31),
+                              );
+
+                              if (dt == null) {
+                                Fluttertoast.showToast(
+                                    msg:
+                                        "No End Date Selected for assigning classwork");
+                                return;
+                              }
+                              endDt.value = dt;
+                              startDtEndCtrl.text =
+                                  "${endDt.value.day}-${endDt.value.month}-${endDt.value.year}";
+                            },
                             icon: SvgPicture.asset(
                               'assets/svg/calendar_icon.svg',
                               color: const Color(0xFF3E78AA),

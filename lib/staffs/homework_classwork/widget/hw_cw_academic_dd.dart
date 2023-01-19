@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_cw_get_class.da
 import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_cw_get_section.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_cw_get_subject.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/controller/hw_cw_controller.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/verify_cw_subject_api.dart';
 import 'package:m_skool_flutter/staffs/view_notice/model/view_notice_session_model.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
@@ -17,9 +18,11 @@ class HwCwAcademicYearDD extends StatelessWidget {
     required this.hwCwController,
     required this.loginSuccessModel,
     required this.mskoolController,
+    required this.forHw,
   }) : super(key: key);
 
   final HwCwController hwCwController;
+  final bool forHw;
 
   @override
   Widget build(BuildContext context) {
@@ -127,16 +130,37 @@ class HwCwAcademicYearDD extends StatelessWidget {
       return;
     }
 
-    await HwCwGetSubjectsApi.instance.getSubjects(
+    if (forHw) {
+      List<Map<String, dynamic>> map = [];
+      for (var element in hwCwController.selectedSection) {
+        map.add({
+          "ASMS_Id": element.asmSId,
+        });
+      }
+      await HwCwGetSubjectsApi.instance.getSubjects(
+        miId: loginSuccessModel.mIID!,
+        hrmeId: loginSuccessModel.empcode!,
+        asmayId: hwCwController.selectedSession.value.asmaYId!,
+        asmclId: hwCwController.selectedClass.value.asmcLId!,
+        sections: [
+          {"ASMS_Id": hwCwController.selectedSection.first.asmSId!}
+        ],
+        ivrmrtId: loginSuccessModel.roleId!,
+        loginId: loginSuccessModel.userId!,
+        base: baseUrlFromInsCode("portal", mskoolController),
+        hwCwController: hwCwController,
+      );
+      return;
+    }
+    await VerifyCwSubjectListApi.instance.getCwSubjects(
       miId: loginSuccessModel.mIID!,
-      hrmeId: loginSuccessModel.empcode!,
-      asmayId: hwCwController.selectedSession.value.asmaYId!,
-      asmclId: hwCwController.selectedClass.value.asmcLId!,
-      sections: [
-        {"ASMS_Id": hwCwController.selectedSection.value.asmSId!}
-      ],
-      ivrmrtId: loginSuccessModel.roleId!,
+      hrme: loginSuccessModel.empcode!,
       loginId: loginSuccessModel.userId!,
+      userId: loginSuccessModel.userId!,
+      ivrmrtId: loginSuccessModel.roleId!,
+      asmayId: loginSuccessModel.asmaYId!,
+      asmscld: loginSuccessModel.asmcLId!,
+      asmsId: loginSuccessModel.asmSId!,
       base: baseUrlFromInsCode("portal", mskoolController),
       hwCwController: hwCwController,
     );

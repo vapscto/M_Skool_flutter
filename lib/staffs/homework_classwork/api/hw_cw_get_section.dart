@@ -62,6 +62,10 @@ class HwCwGetSection {
       }
       final HwCwSectionListModel sectionListModel =
           HwCwSectionListModel.fromJson(response.data['sectionlist']);
+
+      if (hwCwController.selectedSection.isNotEmpty) {
+        hwCwController.selectedSection.clear();
+      }
       if (sectionListModel.values!.isNotEmpty) {
         hwCwController.updateSelectedSection(sectionListModel.values!.first);
       }

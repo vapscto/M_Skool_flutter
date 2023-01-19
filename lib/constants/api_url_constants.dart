@@ -237,4 +237,8 @@ class URLS {
 
   static String saveVerifyCw =
       "api/IVRM_ClassWorkFacade/classwork_marks_update/";
+
+  static String verifySub = "api/IVRM_ClassWorkFacade/getsubjectlist/";
+
+  static String getCwYear = "api/IVRM_ClassWorkFacade/Getdetails/";
 }

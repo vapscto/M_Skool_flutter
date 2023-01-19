@@ -252,6 +252,16 @@ List<Color> noticeColor = const [
   Color(0xFFAF6152),
   Color(0xFF3FCF52),
 ];
+
+List<Color> hwCwViewWorkColor = const [
+  Color.fromARGB(255, 255, 175, 175),
+  Color.fromARGB(255, 150, 206, 255),
+  Color.fromARGB(255, 199, 154, 255),
+  Color.fromARGB(255, 253, 153, 255),
+  Color.fromARGB(255, 150, 243, 255),
+  Color.fromARGB(255, 255, 179, 163),
+  Color.fromARGB(255, 167, 255, 178),
+];
 List<Color> noticeBackgroundColor = const [
   Color(0xFFFFd8d8),
   Color(0xFFDFEFFD),

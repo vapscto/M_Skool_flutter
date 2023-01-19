@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_cw_get_subject.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/controller/hw_cw_controller.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/model/hw_cw_section_model.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/verify_cw_subject_api.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/widget/verify_subject_dd.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -33,7 +34,7 @@ class VerifySectionDD extends StatelessWidget {
         ),
         CustomContainer(
           child: DropdownButtonFormField<HwCwSectionListModelValue>(
-              value: verifyController.selectedSection.value,
+              value: verifyController.selectedSection.first,
               style: Theme.of(context).textTheme.titleSmall!.merge(
                     const TextStyle(fontSize: 16.0),
                   ),
@@ -114,7 +115,8 @@ class VerifySectionDD extends StatelessWidget {
                         animationPath: "assets/json/hwanim.json",
                       ),
                     )
-                  : verifyController.subjects.isEmpty
+                  : verifyController.subjects.isEmpty &&
+                          verifyController.cwSubjectList.isEmpty
                       ? const Center(
                           child: AnimatedProgressWidget(
                             title: "No Subject's Available",
@@ -136,18 +138,32 @@ class VerifySectionDD extends StatelessWidget {
   }
 
   Future<void> loadAgain() async {
-    await HwCwGetSubjectsApi.instance.getSubjects(
-      miId: loginSuccessModel.mIID!,
-      hrmeId: loginSuccessModel.empcode!,
-      asmayId: verifyController.selectedSession.value.asmaYId!,
-      asmclId: verifyController.selectedClass.value.asmcLId!,
-      sections: [
-        {"ASMS_Id": verifyController.selectedSection.value.asmSId!}
-      ],
-      ivrmrtId: loginSuccessModel.roleId!,
-      loginId: loginSuccessModel.userId!,
-      base: baseUrlFromInsCode("portal", mskoolController),
-      hwCwController: verifyController,
-    );
+    if (forHw) {
+      await HwCwGetSubjectsApi.instance.getSubjects(
+        miId: loginSuccessModel.mIID!,
+        hrmeId: loginSuccessModel.empcode!,
+        asmayId: verifyController.selectedSession.value.asmaYId!,
+        asmclId: verifyController.selectedClass.value.asmcLId!,
+        sections: [
+          {"ASMS_Id": verifyController.selectedSection.first.asmSId!}
+        ],
+        ivrmrtId: loginSuccessModel.roleId!,
+        loginId: loginSuccessModel.userId!,
+        base: baseUrlFromInsCode("portal", mskoolController),
+        hwCwController: verifyController,
+      );
+      return;
+    }
+    await VerifyCwSubjectListApi.instance.getCwSubjects(
+        miId: loginSuccessModel.mIID!,
+        hrme: loginSuccessModel.empcode!,
+        loginId: loginSuccessModel.userId!,
+        userId: loginSuccessModel.userId!,
+        ivrmrtId: loginSuccessModel.roleId!,
+        asmayId: verifyController.selectedSession.value.asmaYId!,
+        asmscld: verifyController.selectedClass.value.asmcLId!,
+        asmsId: verifyController.selectedSection.first.asmSId!,
+        base: baseUrlFromInsCode("portal", mskoolController),
+        hwCwController: verifyController);
   }
 }

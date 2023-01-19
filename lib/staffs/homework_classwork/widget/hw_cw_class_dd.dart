@@ -158,7 +158,7 @@ class HwCwClassDD extends StatelessWidget {
       asmayId: hwCwController.selectedSession.value.asmaYId!,
       asmclId: hwCwController.selectedClass.value.asmcLId!,
       sections: [
-        {"ASMS_Id": hwCwController.selectedSection.value.asmSId!}
+        {"ASMS_Id": hwCwController.selectedSection.first.asmSId!}
       ],
       ivrmrtId: loginSuccessModel.roleId!,
       loginId: loginSuccessModel.userId!,

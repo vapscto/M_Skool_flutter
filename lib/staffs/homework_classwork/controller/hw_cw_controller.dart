@@ -1,7 +1,10 @@
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/model/classwork_view_work_model.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/model/homework_view_work_model.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/model/hw_cw_classes_model.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/model/hw_cw_section_model.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/model/hw_cw_subject_model.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_cw_sub_list_model.dart';
 import 'package:m_skool_flutter/staffs/view_notice/model/view_notice_session_model.dart';
 
 class HwCwController extends GetxController {
@@ -108,11 +111,10 @@ class HwCwController extends GetxController {
     selectedClass.value = selClass;
   }
 
-  Rx<HwCwSectionListModelValue> selectedSection =
-      Rx(HwCwSectionListModelValue());
+  RxList<HwCwSectionListModelValue> selectedSection = RxList();
 
   void updateSelectedSection(HwCwSectionListModelValue val) {
-    selectedSection.value = val;
+    selectedSection.add(val);
   }
 
   Rx<HwCwSubjectListModelValues> selectedSubject =
@@ -125,5 +127,57 @@ class HwCwController extends GetxController {
 
   void updateHwDate(DateTime now) {
     hwDate.value = now;
+  }
+
+  RxList<VerifyCwSubjectListModelValues> cwSubjectList = RxList();
+
+  void updateCwSubjectList(List<VerifyCwSubjectListModelValues> cw) {
+    if (cwSubjectList.isNotEmpty) {
+      cwSubjectList.clear();
+    }
+    cwSubjectList.addAll(cw);
+  }
+
+  Rx<VerifyCwSubjectListModelValues> selectedCwSub =
+      Rx<VerifyCwSubjectListModelValues>(VerifyCwSubjectListModelValues());
+
+  void updateSelectedCwSubject(VerifyCwSubjectListModelValues val) {
+    selectedCwSub.value = val;
+  }
+
+  RxBool isWorkLoading = RxBool(false);
+
+  void updateIsWorkLoading(bool b) {
+    isWorkLoading.value = b;
+  }
+
+  RxBool isErrorOccuredWhileLoadingWork = RxBool(false);
+  void updateIsErrorOccuredWhileLoadingWork(bool b) {
+    isErrorOccuredWhileLoadingWork.value = b;
+  }
+
+  RxList<HomeWorkViewWorkValues> homeWorks = RxList();
+
+  void updateHomeWorks(List<HomeWorkViewWorkValues> hw) {
+    if (homeWorks.isNotEmpty) {
+      homeWorks.clear();
+    }
+    homeWorks.addAll(hw);
+  }
+
+  RxList<ClassWorkViewWorkValues> classWorks = RxList();
+
+  void updateClassWorks(List<ClassWorkViewWorkValues> cw) {
+    if (classWorks.isNotEmpty) {
+      classWorks.clear();
+    }
+    classWorks.addAll(cw);
+  }
+
+  RxString viewWorkLoadingStatus =
+      RxString("Please wait while we are loading your assigned work");
+
+  void updateViewWorkLoadingStatus(String status) {
+    viewWorkLoadingStatus.value = status;
   }
 }
