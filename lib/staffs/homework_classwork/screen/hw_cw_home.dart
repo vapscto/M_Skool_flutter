@@ -88,7 +88,8 @@ class _HwCwHomeState extends State<HwCwHome>
         loginId: widget.loginSuccessModel.userId!,
         asmclId: hwCwController.selectedClass.value.asmcLId!,
         base: baseUrlFromInsCode("portal", widget.mskoolController),
-        hwCwController: hwCwController);
+        hwCwController: hwCwController,
+        fromVerifyCat: false);
     if (hwCwController.isErrorOccuredLoadingSection.value ||
         hwCwController.sections.isEmpty) {
       return;

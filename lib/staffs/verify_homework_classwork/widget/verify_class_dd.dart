@@ -145,7 +145,8 @@ class VerifyClassDD extends StatelessWidget {
         loginId: loginSuccessModel.userId!,
         asmclId: verifyController.selectedClass.value.asmcLId!,
         base: baseUrlFromInsCode("portal", mskoolController),
-        hwCwController: verifyController);
+        hwCwController: verifyController,
+        fromVerifyCat: true);
     if (verifyController.isErrorOccuredLoadingSection.value ||
         verifyController.sections.isEmpty) {
       return;

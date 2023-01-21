@@ -146,7 +146,8 @@ class HwCwClassDD extends StatelessWidget {
         loginId: loginSuccessModel.userId!,
         asmclId: hwCwController.selectedClass.value.asmcLId!,
         base: baseUrlFromInsCode("portal", mskoolController),
-        hwCwController: hwCwController);
+        hwCwController: hwCwController,
+        fromVerifyCat: false);
     if (hwCwController.isErrorOccuredLoadingSection.value ||
         hwCwController.sections.isEmpty) {
       return;

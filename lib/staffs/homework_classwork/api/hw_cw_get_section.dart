@@ -19,6 +19,7 @@ class HwCwGetSection {
     required String base,
     required int hrmeId,
     required HwCwController hwCwController,
+    required bool fromVerifyCat,
   }) async {
     try {
       final Dio ins = getGlobalDio();
@@ -63,11 +64,16 @@ class HwCwGetSection {
       final HwCwSectionListModel sectionListModel =
           HwCwSectionListModel.fromJson(response.data['sectionlist']);
 
-      if (hwCwController.selectedSection.isNotEmpty) {
-        hwCwController.selectedSection.clear();
-      }
-      if (sectionListModel.values!.isNotEmpty) {
-        hwCwController.updateSelectedSection(sectionListModel.values!.first);
+      if (fromVerifyCat) {
+        hwCwController
+            .updateVerifySelectedSection(sectionListModel.values!.first);
+      } else {
+        if (hwCwController.selectedSection.isNotEmpty) {
+          hwCwController.selectedSection.clear();
+        }
+        if (sectionListModel.values!.isNotEmpty) {
+          hwCwController.updateSelectedSection(sectionListModel.values!.first);
+        }
       }
       hwCwController.updateSections(sectionListModel.values!);
       hwCwController.updateIsSectionLoading(false);

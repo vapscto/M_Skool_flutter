@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/staffs/model/dashboard_lop_model.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class StaffHomeLop extends StatelessWidget {
-  const StaffHomeLop({super.key});
+  final DashboardLopModelValues value;
+  const StaffHomeLop({super.key, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +42,10 @@ class StaffHomeLop extends StatelessWidget {
             //   height: 12.0,
             // ),
             Text(
-              "₹5000",
+              "₹ ${value.lOPAmount}",
               style: Theme.of(context).textTheme.titleMedium!.merge(
                     const TextStyle(
-                      fontSize: 30.0,
+                      fontSize: 25.0,
                       color: Color(0xFFFF385C),
                     ),
                   ),
@@ -52,10 +54,10 @@ class StaffHomeLop extends StatelessWidget {
               height: 4.0,
             ),
             Text(
-              "15 day leave",
+              "${value.lOPCOUNT} day leave",
               style: Theme.of(context).textTheme.titleSmall!.merge(
                     TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 16.0,
                         color: Theme.of(context).textTheme.labelMedium!.color,
                         fontWeight: FontWeight.normal),
                   ),

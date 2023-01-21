@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/api/save_cw_api.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/api/save_hw_api.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/controller/hw_cw_controller.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/widget/attach_files.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/widget/references_widget.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class AssignmentDetails extends StatefulWidget {
@@ -33,6 +38,7 @@ class _AssignmentDetailsState extends State<AssignmentDetails> {
   final TextEditingController hwDate = TextEditingController();
   final TextEditingController topic = TextEditingController();
   final TextEditingController ass = TextEditingController();
+  final TextEditingController content = TextEditingController();
   final Rx<DateTime> startDt = Rx(DateTime.now());
   final Rx<DateTime> endDt = Rx(DateTime(DateTime.now().year + 1));
   final TextEditingController startDtCtrl = TextEditingController();
@@ -435,14 +441,14 @@ class _AssignmentDetailsState extends State<AssignmentDetails> {
             ),
           ),
         ),
-        const SizedBox(
-          height: 32.0,
+        SizedBox(
+          height: widget.forHw ? 0 : 32.0,
         ),
         widget.forHw
             ? const SizedBox()
             : CustomContainer(
                 child: TextField(
-                  // controller: ass,
+                  controller: content,
                   style: Theme.of(context).textTheme.titleSmall,
                   readOnly: false,
                   maxLines: 4,
@@ -505,17 +511,206 @@ class _AssignmentDetailsState extends State<AssignmentDetails> {
                   ),
                 ),
               ),
-        ReferencesWidget(wantToProvideReference: wantToProvideReference),
+        ReferencesWidget(
+          wantToProvideReference: wantToProvideReference,
+          hwCwController: widget.hwCwController,
+        ),
         const SizedBox(
           height: 16.0,
         ),
-        const AttachedFiles(),
+        AttachedFiles(
+          hwCwController: widget.hwCwController,
+        ),
         const SizedBox(
           height: 32.0,
         ),
         MSkollBtn(
           title: "Save Details",
-          onPress: () {},
+          onPress: () {
+            if (!widget.forHw) {
+              if (startDtCtrl.text.isEmpty) {
+                Fluttertoast.showToast(
+                    msg: "Please Select Start Date in order to continue");
+                return;
+              }
+
+              if (startDtEndCtrl.text.isEmpty) {
+                Fluttertoast.showToast(
+                    msg: "Please Select End Date in order to continue");
+                return;
+              }
+            } else {
+              if (hwDate.text.isEmpty) {
+                Fluttertoast.showToast(
+                    msg: "Please Select homework Date in order to continue");
+                return;
+              }
+            }
+
+            if (topic.text.isEmpty) {
+              Fluttertoast.showToast(msg: "Please Select topic to continue");
+              return;
+            }
+
+            if (ass.text.isEmpty) {
+              widget.forHw
+                  ? Fluttertoast.showToast(
+                      msg: "Please Provide assignment to continue")
+                  : Fluttertoast.showToast(
+                      msg: "Please provide chapter to continue");
+              return;
+            }
+
+            if (content.text.isEmpty && !widget.forHw) {
+              Fluttertoast.showToast(msg: "Please Provide Content to continue");
+              return;
+            }
+
+            if (wantToProvideReference.value &&
+                widget.hwCwController.textEditors.isEmpty) {
+              Fluttertoast.showToast(
+                  msg:
+                      "Please provide reference to continue or if you don't want to provide please uncheck the reference");
+              return;
+            }
+
+            if (wantToProvideReference.value) {
+              bool isEmpty = false;
+
+              for (var element in widget.hwCwController.textEditors) {
+                if (element.text.isEmpty) {
+                  isEmpty = true;
+                  break;
+                }
+              }
+
+              if (isEmpty) {
+                Fluttertoast.showToast(
+                    msg: "Somewhere your forgot to provide reference");
+                return;
+              }
+            }
+
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) {
+                  return Dialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0)),
+                      child: FutureBuilder<bool>(
+                        future: widget.forHw
+                            ? SaveHwApi.instance.saveHw(
+                                miId: widget.loginSuccessModel.mIID!,
+                                asmayId: widget.hwCwController.selectedSession
+                                    .value.asmaYId!,
+                                asmclId: widget.hwCwController.selectedClass
+                                    .value.asmcLId!,
+                                ismsId: widget.hwCwController.selectedSubject
+                                    .value.ismSId!,
+                                controller: widget.hwCwController,
+                                base: baseUrlFromInsCode(
+                                    "portal", widget.mskoolController),
+                                userId: widget.loginSuccessModel.userId!,
+                                ivrmrtId: widget.loginSuccessModel.roleId!,
+                                hrmeId: widget.loginSuccessModel.empcode!,
+                                loginId: widget.loginSuccessModel.userId!,
+                                assignment: ass.text,
+                                date: widget.hwCwController.hwDate.value
+                                    .toLocal()
+                                    .toString(),
+                                topic: topic.text)
+                            : SaveCwApi.instance.save(
+                                miId: widget.loginSuccessModel.mIID!,
+                                asmayId: widget.hwCwController.selectedSession
+                                    .value.asmaYId!,
+                                asmclId: widget.hwCwController.selectedClass
+                                    .value.asmcLId!,
+                                ismsId: widget.hwCwController.selectedSubject.value.ismSId!,
+                                topic: topic.text,
+                                subTopic: ass.text,
+                                content: content.text,
+                                fromDate: startDt.value.toLocal().toString(),
+                                toDate: endDt.value.toLocal().toString(),
+                                controller: widget.hwCwController,
+                                base: baseUrlFromInsCode("portal", widget.mskoolController),
+                                userId: widget.loginSuccessModel.userId!,
+                                ivrmrtId: widget.loginSuccessModel.roleId!,
+                                hrmeId: widget.loginSuccessModel.empcode!,
+                                loginId: widget.loginSuccessModel.userId!),
+                        builder: (_, snapshot) {
+                          if (snapshot.hasData && snapshot.data!) {
+                            return Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const CircleAvatar(
+                                    minRadius: 36.0,
+                                    backgroundColor: Colors.green,
+                                    child: Icon(
+                                      Icons.check,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 12.0,
+                                  ),
+                                  Text(
+                                    "Homework Saved Successfully",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(
+                                          const TextStyle(
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                  ),
+                                  const SizedBox(
+                                    height: 8.0,
+                                  ),
+                                  const Text(
+                                    "We have successfully sent homework to student's",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(
+                                    height: 12.0,
+                                  ),
+                                  MSkollBtn(
+                                      title: "Ok Understood!",
+                                      onPress: () {
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
+                                      })
+                                ],
+                              ),
+                            );
+                          }
+
+                          if (snapshot.hasError) {
+                            return ErrWidget(
+                                err: snapshot.error as Map<String, dynamic>);
+                          }
+
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Obx(() {
+                                return AnimatedProgressWidget(
+                                    title: widget.forHw
+                                        ? "Saving HomeWork"
+                                        : "Saving classwork",
+                                    desc:
+                                        widget.hwCwController.saveStatus.value,
+                                    animationPath: "assets/json/default.json");
+                              }),
+                            ],
+                          );
+                        },
+                      ));
+                });
+          },
           size: Size(Get.width * 0.5, 50),
         )
       ],

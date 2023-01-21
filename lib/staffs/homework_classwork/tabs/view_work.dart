@@ -89,6 +89,7 @@ class _HwCwViewWorkState extends State<HwCwViewWork> {
                               forHw: widget.forHw,
                               homeWork: widget.hwController.homeWorks
                                   .elementAt(index),
+                              mskoolController: widget.mskoolController,
                             );
                           },
                           separatorBuilder: (_, index) {
@@ -119,6 +120,7 @@ class _HwCwViewWorkState extends State<HwCwViewWork> {
                               forHw: widget.forHw,
                               classwork: widget.hwController.classWorks
                                   .elementAt(index),
+                              mskoolController: widget.mskoolController,
                             );
                           },
                           separatorBuilder: (_, index) {

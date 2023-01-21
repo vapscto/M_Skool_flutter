@@ -313,7 +313,8 @@ class _VerifySubjectDDState extends State<VerifySubjectDD> {
                 forHw: widget.forHw,
                 asmayId: widget.verifyController.selectedSession.value.asmaYId!,
                 asmclId: widget.verifyController.selectedClass.value.asmcLId!,
-                asmsId: widget.verifyController.selectedSection.first.asmSId!,
+                asmsId:
+                    widget.verifyController.verifySelectedSection.value.asmSId!,
                 fromDate: startDT.toLocal().toString(),
                 ismsId: widget.forHw
                     ? widget.verifyController.selectedSubject.value.ismSId!

@@ -34,7 +34,7 @@ class VerifySectionDD extends StatelessWidget {
         ),
         CustomContainer(
           child: DropdownButtonFormField<HwCwSectionListModelValue>(
-              value: verifyController.selectedSection.first,
+              value: verifyController.sections.first,
               style: Theme.of(context).textTheme.titleSmall!.merge(
                     const TextStyle(fontSize: 16.0),
                   ),
@@ -97,7 +97,7 @@ class VerifySectionDD extends StatelessWidget {
                       )))
                   .toList(),
               onChanged: (e) {
-                verifyController.updateSelectedSection(e!);
+                verifyController.updateVerifySelectedSection(e!);
                 loadAgain();
               }),
         ),
@@ -145,7 +145,7 @@ class VerifySectionDD extends StatelessWidget {
         asmayId: verifyController.selectedSession.value.asmaYId!,
         asmclId: verifyController.selectedClass.value.asmcLId!,
         sections: [
-          {"ASMS_Id": verifyController.selectedSection.first.asmSId!}
+          {"ASMS_Id": verifyController.verifySelectedSection.value.asmSId!}
         ],
         ivrmrtId: loginSuccessModel.roleId!,
         loginId: loginSuccessModel.userId!,

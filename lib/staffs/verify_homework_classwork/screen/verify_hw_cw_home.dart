@@ -110,15 +110,17 @@ class _VerifyHwCwHomeState extends State<VerifyHwCwHome> {
     }
 
     await HwCwGetSection.instance.getSections(
-        miId: widget.loginSuccessModel.mIID!,
-        ivrmrtId: widget.loginSuccessModel.roleId!,
-        asmayId: verifyController.selectedSession.value.asmaYId!,
-        userId: widget.loginSuccessModel.userId!,
-        hrmeId: widget.loginSuccessModel.empcode!,
-        loginId: widget.loginSuccessModel.userId!,
-        asmclId: verifyController.selectedClass.value.asmcLId!,
-        base: baseUrlFromInsCode("portal", widget.mskoolController),
-        hwCwController: verifyController);
+      miId: widget.loginSuccessModel.mIID!,
+      ivrmrtId: widget.loginSuccessModel.roleId!,
+      asmayId: verifyController.selectedSession.value.asmaYId!,
+      userId: widget.loginSuccessModel.userId!,
+      hrmeId: widget.loginSuccessModel.empcode!,
+      loginId: widget.loginSuccessModel.userId!,
+      asmclId: verifyController.selectedClass.value.asmcLId!,
+      base: baseUrlFromInsCode("portal", widget.mskoolController),
+      hwCwController: verifyController,
+      fromVerifyCat: true,
+    );
     if (verifyController.isErrorOccuredLoadingSection.value ||
         verifyController.sections.isEmpty) {
       return;

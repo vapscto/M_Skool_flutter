@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
-import 'package:m_skool_flutter/staffs/homework_classwork/widget/attach_files.dart';
-import 'package:m_skool_flutter/staffs/homework_classwork/widget/references_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
@@ -475,11 +473,11 @@ class _NewNoticeTabState extends State<NewNoticeTab> {
           const SizedBox(
             height: 14.0,
           ),
-          ReferencesWidget(wantToProvideReference: wantToProvideReference),
+          // ReferencesWidget(wantToProvideReference: wantToProvideReference, hwCwController: ,),
           const SizedBox(
             height: 16.0,
           ),
-          const AttachedFiles(),
+          // const AttachedFiles(),
           const SizedBox(
             height: 32.0,
           ),

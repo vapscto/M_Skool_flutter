@@ -358,7 +358,7 @@ class _VerifyHwCwViewDetailsState extends State<VerifyHwCwViewDetails> {
                             ),
                           );
                         }
-
+                        logger.d(snapshot.data!.length);
                         return ListView.separated(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),

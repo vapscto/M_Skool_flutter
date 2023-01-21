@@ -1,4 +1,7 @@
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/model/classwork_view_work_model.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/model/homework_view_work_model.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/model/hw_cw_classes_model.dart';
@@ -117,6 +120,13 @@ class HwCwController extends GetxController {
     selectedSection.add(val);
   }
 
+  Rx<HwCwSectionListModelValue> verifySelectedSection =
+      Rx<HwCwSectionListModelValue>(HwCwSectionListModelValue());
+
+  void updateVerifySelectedSection(HwCwSectionListModelValue val) {
+    verifySelectedSection.value = val;
+  }
+
   Rx<HwCwSubjectListModelValues> selectedSubject =
       Rx(HwCwSubjectListModelValues());
   void updateSelectedSubject(HwCwSubjectListModelValues sub) {
@@ -179,5 +189,64 @@ class HwCwController extends GetxController {
 
   void updateViewWorkLoadingStatus(String status) {
     viewWorkLoadingStatus.value = status;
+  }
+
+  final RxList<TextEditingController> textEditors = RxList([]);
+
+  void addToEditors(TextEditingController controller) {
+    textEditors.add(controller);
+  }
+
+  void removeEditor(int index) {
+    textEditors.removeAt(index);
+  }
+
+  final List<XFile?> attachment = RxList();
+  final List<PlatformFile> attFiles = RxList();
+
+  void addMultipleAttachment(List<XFile?> att) {
+    attachment.addAll(att);
+  }
+
+  void addToAttachment(XFile f) {
+    attachment.add(f);
+  }
+
+  void removeAttachment(int index) {
+    attachment.removeAt(index);
+  }
+
+  void addMultipleAttFiles(List<PlatformFile> att) {
+    attFiles.addAll(att);
+  }
+
+  void addToFile(PlatformFile f) {
+    attFiles.add(f);
+  }
+
+  void removeAtt(int index) {
+    attFiles.removeAt(index);
+  }
+
+  RxBool isSaving = RxBool(false);
+  RxBool isErrorOccuredSavingHw = RxBool(false);
+  RxBool isUploadingFiles = RxBool(false);
+
+  RxString saveStatus = RxString("Connecting to server");
+
+  void updateIsUploadingFiles(bool b) {
+    isUploadingFiles.value = b;
+  }
+
+  void updateSaveStatus(String status) {
+    saveStatus.value = status;
+  }
+
+  void updateIsSaving(bool b) {
+    isSaving.value = b;
+  }
+
+  void updateIsErrorOccuredSavingHw(bool f) {
+    isErrorOccuredSavingHw.value = f;
   }
 }
