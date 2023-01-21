@@ -2,20 +2,39 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/api/attendance_entry_related_api.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/initialdataModel.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/model/sectionModel.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/model/studentListModel.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/model/studentListModel1.dart';
 
 class AttendanceEntryController extends GetxController {
   RxList<AcademicYearListValue> academicYearList =
       <AcademicYearListValue>[].obs;
   RxList<ClassListValue> classList = <ClassListValue>[].obs;
-  RxList<ClassListValue> sectionList = <ClassListValue>[].obs;
+  RxList<SectionListValue> sectionList = <SectionListValue>[].obs;
   RxList<SubjectListValue> subjectList = <SubjectListValue>[].obs;
   RxList<PeriodlistValue> periodList = <PeriodlistValue>[].obs;
   RxList<MonthListValue> monthList = <MonthListValue>[].obs;
 
+  RxList<StudentListValues> studentList = <StudentListValues>[].obs;
+  RxList<StudentListValuess> studentList1 = <StudentListValuess>[].obs;
+
+  RxString attendanceEntryType = ''.obs;
+  RxNum countClassHeld = RxNum(0.0);
+
   RxBool isInitialData = RxBool(false);
+  RxBool isSection = RxBool(false);
+  RxBool isStudentData = RxBool(false);
 
   void isinitialdataloading(bool loading) async {
     isInitialData.value = loading;
+  }
+
+  void issectionloading(bool loading) async {
+    isSection.value = loading;
+  }
+
+  void isstudentdataloading(bool loading) async {
+    isStudentData.value = loading;
   }
 
   Future<bool> getAttendanceEntryInitialData({
@@ -53,13 +72,13 @@ class AttendanceEntryController extends GetxController {
         }
       }
 
-      if (initialDataModel.sectionList != null ||
-          initialDataModel.sectionList!.values != null) {
-        sectionList.clear();
-        for (var i = 0; i < initialDataModel.sectionList!.values!.length; i++) {
-          sectionList.add(initialDataModel.sectionList!.values!.elementAt(i)!);
-        }
-      }
+      // if (initialDataModel.sectionList != null ||
+      //     initialDataModel.sectionList!.values != null) {
+      //   sectionList.clear();
+      //   for (var i = 0; i < initialDataModel.sectionList!.values!.length; i++) {
+      //     sectionList.add(initialDataModel.sectionList!.values!.elementAt(i)!);
+      //   }
+      // }
       if (initialDataModel.monthList != null ||
           initialDataModel.monthList!.values != null) {
         monthList.clear();
@@ -68,13 +87,13 @@ class AttendanceEntryController extends GetxController {
         }
       }
 
-      if (initialDataModel.subjectList != null ||
-          initialDataModel.subjectList!.values != null) {
-        subjectList.clear();
-        for (var i = 0; i < initialDataModel.subjectList!.values!.length; i++) {
-          subjectList.add(initialDataModel.subjectList!.values!.elementAt(i)!);
-        }
-      }
+      // if (initialDataModel.subjectList != null ||
+      //     initialDataModel.subjectList!.values != null) {
+      //   subjectList.clear();
+      //   for (var i = 0; i < initialDataModel.subjectList!.values!.length; i++) {
+      //     subjectList.add(initialDataModel.subjectList!.values!.elementAt(i)!);
+      //   }
+      // }
       if (initialDataModel.periodlist != null ||
           initialDataModel.periodlist!.values != null) {
         periodList.clear();
@@ -88,5 +107,111 @@ class AttendanceEntryController extends GetxController {
       logger.d(e.toString());
       return false;
     }
+  }
+
+  Future<bool> getSection({
+    required int asmayId,
+    required String asmclId,
+    required int miId,
+    required String username,
+    required int roleId,
+    required int userId,
+    required String base,
+  }) async {
+    SectionModel? sectionModel = await getSectionData(
+        asmayId: asmayId,
+        asmclId: asmclId,
+        miId: miId,
+        username: username,
+        roleId: roleId,
+        userId: userId,
+        base: base);
+
+    try {
+      if (sectionModel!.sectionList != null ||
+          sectionModel.sectionList!.values != null) {
+        sectionList.clear();
+        attendanceEntryType.value = '';
+        for (var i = 0; i < sectionModel.sectionList!.values!.length; i++) {
+          sectionList.add(sectionModel.sectionList!.values!.elementAt(i)!);
+        }
+        attendanceEntryType.value = sectionModel.asAAttEntryType!;
+        return true;
+      }
+      return false;
+    } catch (e) {
+      logger.d(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> getAttendanceDataOnchangeofMonth({
+    required int miId,
+    required int asmayId,
+    required int asmclId,
+    required int asmsId,
+    required int monthId,
+    required String base,
+  }) async {
+    StudentListModel? studentListModel = await getAttendanceDataOnChangeofMonth(
+        miId: miId,
+        asmayId: asmayId,
+        asmclId: asmclId,
+        asmsId: asmsId,
+        monthId: monthId,
+        base: base);
+    studentList.clear();
+    try {
+      if (studentListModel!.studentList != null ||
+          studentListModel.studentList!.values != null) {
+        for (var i = 0; i < studentListModel.studentList!.values!.length; i++) {
+          studentList.add(studentListModel.studentList!.values!.elementAt(i)!);
+        }
+        countClassHeld.value = studentListModel.countclass!;
+        return true;
+      }
+      return false;
+    } catch (e) {
+      logger.d(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> getAttendanceDataOnChangeOfSection({
+    required int asmayId,
+    required int userId,
+    required int miId,
+    required String username,
+    required int roleId,
+    required String fromDate,
+    required String asmclId,
+    required String asmsId,
+    required String monthFlag,
+    required String monthFlag1,
+    required String base,
+  }) async {
+    
+    StudentListModel1? studentListModel1 = await onChangeOfSection(
+        asmayId: asmayId,
+        userId: userId,
+        miId: miId,
+        username: username,
+        roleId: roleId,
+        fromDate: fromDate,
+        asmclId: asmclId,
+        asmsId: asmsId,
+        monthFlag: monthFlag,
+        monthFlag1: monthFlag1,
+        base: base);
+
+    if (studentListModel1!.studentList != null ||
+        studentListModel1.studentList!.values != null) {
+      studentList1.clear();
+      for (var i = 0; i < studentListModel1.studentList!.values!.length; i++) {
+        studentList1.add(studentListModel1.studentList!.values!.elementAt(i)!);
+      }
+      return true;
+    }
+    return false;
   }
 }
