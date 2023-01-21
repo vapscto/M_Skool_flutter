@@ -146,7 +146,8 @@ class HwCwClassDD extends StatelessWidget {
         loginId: loginSuccessModel.userId!,
         asmclId: hwCwController.selectedClass.value.asmcLId!,
         base: baseUrlFromInsCode("portal", mskoolController),
-        hwCwController: hwCwController);
+        hwCwController: hwCwController,
+        fromVerifyCat: false);
     if (hwCwController.isErrorOccuredLoadingSection.value ||
         hwCwController.sections.isEmpty) {
       return;
@@ -158,7 +159,7 @@ class HwCwClassDD extends StatelessWidget {
       asmayId: hwCwController.selectedSession.value.asmaYId!,
       asmclId: hwCwController.selectedClass.value.asmcLId!,
       sections: [
-        {"ASMS_Id": hwCwController.selectedSection.value.asmSId!}
+        {"ASMS_Id": hwCwController.selectedSection.first.asmSId!}
       ],
       ivrmrtId: loginSuccessModel.roleId!,
       loginId: loginSuccessModel.userId!,

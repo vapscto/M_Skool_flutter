@@ -244,4 +244,16 @@ class URLS {
 
   static String saveVerifyCw =
       "api/IVRM_ClassWorkFacade/classwork_marks_update/";
+
+  static String verifySub = "api/IVRM_ClassWorkFacade/getsubjectlist/";
+
+  static String getCwYear = "api/IVRM_ClassWorkFacade/Getdetails/";
+
+  static String saveCw = "api/IVRM_ClassWorkFacade/savedetail/";
+
+  static String staffDashboard = "api/AdmissionCtrl/staffDashboardDetails/";
+
+  static String getHwAttachment = "api/EmployeeStudentHomeworkFacade/viewData";
+
+  static String getCwAttachment = "api/IVRM_ClassWorkFacade/viewData";
 }

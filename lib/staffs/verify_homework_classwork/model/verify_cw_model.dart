@@ -39,7 +39,7 @@ class VerifyClassworkListValues {
   String? iCWToDate;
   String? iSMSSubjectName;
   int? filesCount;
-  int? iCWUPLMarks;
+  double? iCWUPLMarks;
   String? iCWUPLStaffRemarks;
   String? iCWFilePath1;
   String? fileName1;

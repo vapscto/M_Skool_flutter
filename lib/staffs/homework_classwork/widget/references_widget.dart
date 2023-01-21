@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/controller/hw_cw_controller.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/widget/reference_item.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class ReferencesWidget extends StatefulWidget {
   final RxBool wantToProvideReference;
-  const ReferencesWidget({super.key, required this.wantToProvideReference});
+  final HwCwController hwCwController;
+  const ReferencesWidget(
+      {super.key,
+      required this.wantToProvideReference,
+      required this.hwCwController});
 
   @override
   State<ReferencesWidget> createState() => _ReferencesWidgetState();
@@ -13,7 +18,7 @@ class ReferencesWidget extends StatefulWidget {
 
 class _ReferencesWidgetState extends State<ReferencesWidget> {
   final RxList<ReferenceItem> referencesItems = RxList([]);
-  final RxList<TextEditingController> textEditors = RxList([]);
+
   final ScrollController scrollController = ScrollController();
 
   final RxList<Map<String, dynamic>> ref = RxList([]);
@@ -23,6 +28,9 @@ class _ReferencesWidgetState extends State<ReferencesWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(
+          height: 16.0,
+        ),
         ListTile(
           contentPadding: EdgeInsets.zero,
           minLeadingWidth: 8,
@@ -44,9 +52,10 @@ class _ReferencesWidgetState extends State<ReferencesWidget> {
             return widget.wantToProvideReference.value
                 ? IconButton(
                     onPressed: () {
-                      textEditors.add(TextEditingController());
+                      widget.hwCwController
+                          .addToEditors(TextEditingController());
                       referencesItems.add(ReferenceItem(
-                        controller: textEditors.last,
+                        controller: widget.hwCwController.textEditors.last,
                       ));
                       scrollController.animateTo(
                           scrollController.position.maxScrollExtent,
@@ -73,7 +82,7 @@ class _ReferencesWidgetState extends State<ReferencesWidget> {
                       Expanded(child: referencesItems.elementAt(index)),
                       IconButton(
                         onPressed: () {
-                          textEditors.removeAt(index);
+                          widget.hwCwController.removeEditor(index);
                           referencesItems.removeAt(index);
                         },
                         icon: const Icon(

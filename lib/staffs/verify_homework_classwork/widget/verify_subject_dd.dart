@@ -3,8 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/controller/hw_cw_controller.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/model/hw_cw_subject_model.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_cw_sub_list_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/hw_cw_view_details.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -33,6 +36,7 @@ class _VerifySubjectDDState extends State<VerifySubjectDD> {
   DateTime endDT = DateTime.now();
   @override
   Widget build(BuildContext context) {
+    logger.d(widget.verifyController.cwSubjectList.length);
     return Column(
       children: [
         const SizedBox(
@@ -40,7 +44,9 @@ class _VerifySubjectDDState extends State<VerifySubjectDD> {
         ),
         CustomContainer(
           child: DropdownButtonFormField(
-              value: widget.verifyController.selectedSubject.value,
+              value: widget.forHw
+                  ? widget.verifyController.selectedSubject.value
+                  : widget.verifyController.selectedCwSub.value,
               style: Theme.of(context).textTheme.titleSmall!.merge(
                     const TextStyle(fontSize: 16.0),
                   ),
@@ -94,16 +100,32 @@ class _VerifySubjectDDState extends State<VerifySubjectDD> {
                   size: 30,
                 ),
               ),
-              items: widget.verifyController.subjects
-                  .map((e) => DropdownMenuItem(
-                      value: e,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 8, left: 5),
-                        child: Text("${e.ismSSubjectName}"),
-                      )))
-                  .toList(),
+              items: !widget.forHw
+                  ? widget.verifyController.cwSubjectList
+                      .map((e) =>
+                          DropdownMenuItem<VerifyCwSubjectListModelValues>(
+                              value: e,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 8, left: 5),
+                                child: Text("${e.iSMSSubjectName}"),
+                              )))
+                      .toList()
+                  : widget.verifyController.subjects
+                      .map((e) => DropdownMenuItem<HwCwSubjectListModelValues>(
+                          value: e,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 8, left: 5),
+                            child: Text("${e.ismSSubjectName}"),
+                          )))
+                      .toList(),
               onChanged: (e) {
-                widget.verifyController.updateSelectedSubject(e!);
+                if (widget.forHw) {
+                  widget.verifyController
+                      .updateSelectedSubject(e as HwCwSubjectListModelValues);
+                  return;
+                }
+                widget.verifyController.updateSelectedCwSubject(
+                    e as VerifyCwSubjectListModelValues);
               }),
         ),
         const SizedBox(
@@ -291,9 +313,12 @@ class _VerifySubjectDDState extends State<VerifySubjectDD> {
                 forHw: widget.forHw,
                 asmayId: widget.verifyController.selectedSession.value.asmaYId!,
                 asmclId: widget.verifyController.selectedClass.value.asmcLId!,
-                asmsId: widget.verifyController.selectedSection.value.asmSId!,
+                asmsId:
+                    widget.verifyController.verifySelectedSection.value.asmSId!,
                 fromDate: startDT.toLocal().toString(),
-                ismsId: widget.verifyController.selectedSubject.value.ismSId!,
+                ismsId: widget.forHw
+                    ? widget.verifyController.selectedSubject.value.ismSId!
+                    : widget.verifyController.selectedCwSub.value.iSMSId!,
                 loginSuccessModel: widget.loginSuccesModel,
                 mskoolController: widget.mskoolController,
                 toDate: endDT.toLocal().toString(),

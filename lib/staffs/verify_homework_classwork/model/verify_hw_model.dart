@@ -39,6 +39,7 @@ class VerifyHwListModelValues {
   String? iHWUPLStaffRemarks;
   String? iHWFilePath1;
   double? iHWUPLMarks;
+  String? aMSTPhotoname;
 
   VerifyHwListModelValues(
       {this.type,
@@ -54,7 +55,8 @@ class VerifyHwListModelValues {
       this.iHWUPLId,
       this.iHWUPLStaffRemarks,
       this.iHWFilePath1,
-      this.iHWUPLMarks});
+      this.iHWUPLMarks,
+      this.aMSTPhotoname});
 
   VerifyHwListModelValues.fromJson(Map<String, dynamic> json) {
     type = json['$type'];
@@ -71,6 +73,7 @@ class VerifyHwListModelValues {
     iHWUPLStaffRemarks = json['IHWUPL_StaffRemarks'];
     iHWFilePath1 = json['IHW_FilePath1'];
     iHWUPLMarks = json['IHWUPL_Marks'];
+    aMSTPhotoname = json['AMST_Photoname'];
   }
 
   Map<String, dynamic> toJson() {
@@ -89,6 +92,7 @@ class VerifyHwListModelValues {
     data['IHWUPL_StaffRemarks'] = iHWUPLStaffRemarks;
     data['IHW_FilePath1'] = iHWFilePath1;
     data['IHWUPL_Marks'] = iHWUPLMarks;
+    data['AMST_Photoname'] = aMSTPhotoname;
     return data;
   }
 }

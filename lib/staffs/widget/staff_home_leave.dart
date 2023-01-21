@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:m_skool_flutter/staffs/online_leave/widget/leaves.dart';
+import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/staffs/controller/dashboard_controller.dart';
+import 'package:m_skool_flutter/staffs/widget/dashboard_leave_name_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class StaffHomeLeave extends StatefulWidget {
-  const StaffHomeLeave({super.key});
+  final StaffDashboardController controller;
+  const StaffHomeLeave({super.key, required this.controller});
 
   @override
   State<StaffHomeLeave> createState() => _StaffHomeLeaveState();
@@ -13,6 +16,7 @@ class _StaffHomeLeaveState extends State<StaffHomeLeave> {
   int backgroundColor = -1;
   @override
   Widget build(BuildContext context) {
+    logger.d("Building");
     return CustomContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,14 +48,17 @@ class _StaffHomeLeaveState extends State<StaffHomeLeave> {
                   if (backgroundColor % 6 == 0) {
                     backgroundColor = 0;
                   }
-                  return LeaveNames(backgroundColor: backgroundColor);
+                  return DashboardLeaveNames(
+                    backgroundColor: backgroundColor,
+                    values: widget.controller.dashboardLeaves.elementAt(index),
+                  );
                 },
                 separatorBuilder: (_, index) {
                   return const SizedBox(
                     width: 8.0,
                   );
                 },
-                itemCount: 5),
+                itemCount: widget.controller.dashboardLeaves.length),
           ),
         ],
       ),

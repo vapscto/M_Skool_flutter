@@ -44,7 +44,7 @@ class AttachmentsModelValues {
   String? iCWToDate;
   String? iSMSSubjectName;
   int? filesCount;
-  String? iCWUPLMarks;
+  num? iCWUPLMarks;
   String? iCWUPLStaffRemarks;
   String? iCWFilePath1;
   String? fileName1;

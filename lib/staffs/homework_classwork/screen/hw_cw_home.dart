@@ -38,11 +38,7 @@ class _HwCwHomeState extends State<HwCwHome>
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
-    if (widget.forHw) {
-      loadHw();
-    } else {
-      loadCw();
-    }
+    loadHw();
     super.initState();
   }
 
@@ -92,28 +88,30 @@ class _HwCwHomeState extends State<HwCwHome>
         loginId: widget.loginSuccessModel.userId!,
         asmclId: hwCwController.selectedClass.value.asmcLId!,
         base: baseUrlFromInsCode("portal", widget.mskoolController),
-        hwCwController: hwCwController);
+        hwCwController: hwCwController,
+        fromVerifyCat: false);
     if (hwCwController.isErrorOccuredLoadingSection.value ||
         hwCwController.sections.isEmpty) {
       return;
     }
-
+    List<Map<String, dynamic>> map = [];
+    for (var element in hwCwController.selectedSection) {
+      map.add({
+        "ASMS_Id": element.asmSId,
+      });
+    }
     await HwCwGetSubjectsApi.instance.getSubjects(
       miId: widget.loginSuccessModel.mIID!,
       asmayId: hwCwController.selectedSession.value.asmaYId!,
       asmclId: hwCwController.selectedClass.value.asmcLId!,
       hrmeId: widget.loginSuccessModel.empcode!,
-      sections: [
-        {"ASMS_Id": hwCwController.selectedSection.value.asmSId!}
-      ],
+      sections: map,
       ivrmrtId: widget.loginSuccessModel.roleId!,
       loginId: widget.loginSuccessModel.userId!,
       base: baseUrlFromInsCode("portal", widget.mskoolController),
       hwCwController: hwCwController,
     );
   }
-
-  Future<void> loadCw() async {}
 
   @override
   void dispose() {
@@ -146,7 +144,12 @@ class _HwCwHomeState extends State<HwCwHome>
             loginSuccessModel: widget.loginSuccessModel,
             mskoolController: widget.mskoolController,
           ),
-          const HwCwViewWork(),
+          HwCwViewWork(
+            forHw: widget.forHw,
+            loginSuccessModel: widget.loginSuccessModel,
+            mskoolController: widget.mskoolController,
+            hwController: hwCwController,
+          ),
         ],
       ),
     );

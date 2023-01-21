@@ -3,67 +3,59 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/controller/hw_cw_controller.dart';
-import 'package:m_skool_flutter/staffs/homework_classwork/model/hw_cw_subject_model.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_cw_sub_list_model.dart';
 
-class HwCwGetSubjectsApi {
-  HwCwGetSubjectsApi.init();
-  static final HwCwGetSubjectsApi instance = HwCwGetSubjectsApi.init();
+class VerifyCwSubjectListApi {
+  VerifyCwSubjectListApi.init();
+  static final VerifyCwSubjectListApi instance = VerifyCwSubjectListApi.init();
 
-  Future<void> getSubjects({
-    required int miId,
-    required int asmayId,
-    required int asmclId,
-    required List<Map<String, dynamic>> sections,
-    required int ivrmrtId,
-    required int loginId,
-    required String base,
-    required int hrmeId,
-    required HwCwController hwCwController,
-  }) async {
+  getCwSubjects(
+      {required int miId,
+      required int hrme,
+      required int loginId,
+      required int userId,
+      required int ivrmrtId,
+      required int asmayId,
+      required int asmscld,
+      required int asmsId,
+      required String base,
+      required HwCwController hwCwController}) async {
+    final apiUrl = base + URLS.verifySub;
     final Dio ins = getGlobalDio();
-    final String apiUrl = base + URLS.getSubjects;
     if (hwCwController.isErrorOccuredLoadingSubject.value) {
       hwCwController.updateIsErrorOccuredLoadingSubject(false);
     }
     hwCwController.updateLoadingStatus(
         "We are in process to loading subject's for selected Academic Year, Class and section");
     hwCwController.updateIsSubjectLoading(true);
-    logger.d({
-      "MI_Id": miId,
-      "Login_Id": loginId,
-      "ASMAY_Id": asmayId,
-      "ASMCL_Id": asmclId,
-      "hm_section_list": sections,
-      "IVRMRT_Id": ivrmrtId,
-      "HRME_Id": hrmeId,
-    });
     try {
-      final Response response = await ins.post(
-        apiUrl,
-        options: Options(headers: getSession()),
-        data: {
-          "MI_Id": miId,
-          "Login_Id": loginId,
-          "ASMAY_Id": asmayId,
-          "hrme_id": hrmeId,
-          "ASMCL_Id": asmclId,
-          "hm_section_list": sections,
-          "IVRMRT_Id": ivrmrtId,
-        },
-      );
-      if (response.data['subjectlist'] == null) {
+      final Response response = await ins
+          .post(apiUrl, options: Options(headers: getSession()), data: {
+        "MI_Id": miId,
+        "HRME_Id": hrme,
+        "Login_Id": loginId,
+        "UserId": userId,
+        "IVRMRT_Id": ivrmrtId,
+        "Role_flag": "Staff",
+        "ASMAY_Id": asmayId,
+        "ASMCL_Id": asmscld,
+        "ASMS_Id": asmsId
+      });
+      if (response.data['getsubject_list'] == null) {
         hwCwController.updateIsSectionLoading(false);
         hwCwController.updateIsErrorOccuredLoadingSubject(true);
         hwCwController.updateErrorStatus(
             "No Subject are present in record, try changing class, section or academic year, or do contact your technical team for assistance");
         return;
       }
-      final HwCwSubjectListModel subjectListModel =
-          HwCwSubjectListModel.fromJson(response.data['subjectlist']);
-      if (subjectListModel.values!.isNotEmpty) {
-        hwCwController.updateSelectedSubject(subjectListModel.values!.first);
+      final VerifyCwSubjectListModel verifyCwSubjectListModel =
+          VerifyCwSubjectListModel.fromJson(response.data['getsubject_list']);
+
+      if (verifyCwSubjectListModel.values!.isNotEmpty) {
+        hwCwController
+            .updateSelectedCwSubject(verifyCwSubjectListModel.values!.first);
       }
-      hwCwController.updateSubjects(subjectListModel.values!);
+      hwCwController.updateCwSubjectList(verifyCwSubjectListModel.values!);
       hwCwController.updateIsSubjectLoading(false);
     } on DioError catch (e) {
       logger.e(e.message);

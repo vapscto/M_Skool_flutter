@@ -2,11 +2,14 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/controller/hw_cw_controller.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class AttachedFiles extends StatelessWidget {
-  const AttachedFiles({super.key});
+  final HwCwController hwCwController;
+  const AttachedFiles({super.key, required this.hwCwController});
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +53,7 @@ class AttachedFiles extends StatelessWidget {
                                       children: [
                                         InkWell(
                                           onTap: () async {
+                                            Navigator.pop(context);
                                             final XFile? xfile =
                                                 await pickImage.pickImage(
                                                     source: ImageSource.camera);
@@ -58,6 +62,8 @@ class AttachedFiles extends StatelessWidget {
                                                   msg: "No Image selected");
                                               return;
                                             }
+                                            hwCwController
+                                                .addToAttachment(xfile);
                                           },
                                           child: Column(
                                             children: [
@@ -87,6 +93,7 @@ class AttachedFiles extends StatelessWidget {
                                         ),
                                         InkWell(
                                           onTap: () async {
+                                            Navigator.pop(context);
                                             final List<XFile?> pickedImage =
                                                 await pickImage
                                                     .pickMultiImage();
@@ -96,6 +103,9 @@ class AttachedFiles extends StatelessWidget {
                                                       "No Image selected for attachment");
                                               return;
                                             }
+                                            hwCwController
+                                                .addMultipleAttachment(
+                                                    pickedImage);
                                           },
                                           child: Column(
                                             children: [
@@ -137,6 +147,9 @@ class AttachedFiles extends StatelessWidget {
                                                   msg: "No File selected..");
                                               return;
                                             }
+
+                                            hwCwController.addMultipleAttFiles(
+                                                pickerRes.files);
                                           },
                                           child: Column(
                                             children: [
@@ -173,48 +186,204 @@ class AttachedFiles extends StatelessWidget {
                   const SizedBox(
                     height: 12.0,
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 7,
-                        child: ListView.separated(
-                            //padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                            shrinkWrap: true,
-                            itemBuilder: (_, index) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  border: Border.all(
-                                      color: Colors.grey.shade300, width: 1.0),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Obx(() {
+                      return hwCwController.attachment.isEmpty &&
+                              hwCwController.attFiles.isEmpty
+                          ? Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "No Attachment attached",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .merge(const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      )),
                                 ),
-                                child: ListTile(
-                                  dense: true,
-                                  minLeadingWidth: 10,
-                                  visualDensity: const VisualDensity(
-                                      horizontal: VisualDensity.minimumDensity),
-                                  leading: Icon(
-                                    Icons.image_outlined,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                  title: Text(
-                                    "File name.png",
-                                    style:
-                                        Theme.of(context).textTheme.titleSmall,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                const SizedBox(
+                                  height: 8.0,
+                                ),
+                                const Text(
+                                  "When you add attachment, it will appear here",
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(
+                                  height: 12.0,
+                                ),
+                              ],
+                            )
+                          :
+                          // : ListView.separated(
+                          //     //padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                          //     shrinkWrap: true,
+                          //     itemBuilder: (_, index) {
+                          //       // if(hwCwController)
+                          //       return Row(
+                          //         children: [
+                          //           Expanded(
+                          //             child: Container(
+                          //               decoration: BoxDecoration(
+                          //                 borderRadius:
+                          //                     BorderRadius.circular(8.0),
+                          //                 border: Border.all(
+                          //                     color: Colors.grey.shade300,
+                          //                     width: 1.0),
+                          //               ),
+                          //               child: ListTile(
+                          //                 dense: true,
+                          //                 minLeadingWidth: 10,
+                          //                 visualDensity: const VisualDensity(
+                          //                     horizontal:
+                          //                         VisualDensity.minimumDensity),
+                          //                 leading: Icon(
+                          //                   Icons.image_outlined,
+                          //                   color:
+                          //                       Theme.of(context).primaryColor,
+                          //                 ),
+                          //                 title: Text(
+                          //                   hwCwController.attachment
+                          //                       .elementAt(index)!
+                          //                       .name,
+                          //                   style: Theme.of(context)
+                          //                       .textTheme
+                          //                       .titleSmall,
+                          //                   maxLines: 1,
+                          //                   overflow: TextOverflow.ellipsis,
+                          //                 ),
+                          //               ),
+                          //             ),
+                          //           ),
+                          //           const SizedBox(
+                          //             width: 16.0,
+                          //           ),
+                          //           IconButton(
+                          //               onPressed: () {
+                          //                 hwCwController
+                          //                     .removeAttachment(index);
+                          //               },
+                          //               icon: const Icon(Icons.close))
+                          //         ],
+                          //       );
+                          //     },
+                          //     separatorBuilder: (_, index) {
+                          //       return const SizedBox(
+                          //         height: 12.0,
+                          //       );
+                          //     },
+                          //     itemCount: hwCwController.attachment.length);
+                          Column(
+                              children: [
+                                ...List.generate(
+                                  hwCwController.attachment.length,
+                                  (index) => Row(
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          margin: const EdgeInsets.only(
+                                              bottom: 12.0),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            border: Border.all(
+                                                color: Colors.grey.shade300,
+                                                width: 1.0),
+                                          ),
+                                          child: ListTile(
+                                            dense: true,
+                                            minLeadingWidth: 10,
+                                            visualDensity: const VisualDensity(
+                                                horizontal: VisualDensity
+                                                    .minimumDensity),
+                                            leading: Icon(
+                                              Icons.image_outlined,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                            ),
+                                            title: Text(
+                                              hwCwController.attachment
+                                                  .elementAt(index)!
+                                                  .name,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 16.0,
+                                      ),
+                                      IconButton(
+                                          onPressed: () {
+                                            hwCwController
+                                                .removeAttachment(index);
+                                          },
+                                          icon: const Icon(Icons.close))
+                                    ],
                                   ),
                                 ),
-                              );
-                            },
-                            separatorBuilder: (_, index) {
-                              return const SizedBox(
-                                height: 12.0,
-                              );
-                            },
-                            itemCount: 3),
-                      ),
-                      const Expanded(flex: 3, child: SizedBox())
-                    ],
+                                ...List.generate(
+                                    hwCwController.attFiles.length,
+                                    (index) => Row(
+                                          children: [
+                                            Expanded(
+                                              child: Container(
+                                                margin: const EdgeInsets.only(
+                                                    bottom: 12.0),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                  border: Border.all(
+                                                      color:
+                                                          Colors.grey.shade300,
+                                                      width: 1.0),
+                                                ),
+                                                child: ListTile(
+                                                  dense: true,
+                                                  minLeadingWidth: 10,
+                                                  visualDensity:
+                                                      const VisualDensity(
+                                                          horizontal: VisualDensity
+                                                              .minimumDensity),
+                                                  leading: Icon(
+                                                    Icons.file_open_outlined,
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                  ),
+                                                  title: Text(
+                                                    hwCwController.attFiles
+                                                        .elementAt(index)
+                                                        .name,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall,
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 16.0,
+                                            ),
+                                            IconButton(
+                                                onPressed: () {
+                                                  hwCwController
+                                                      .removeAtt(index);
+                                                },
+                                                icon: const Icon(Icons.close))
+                                          ],
+                                        ))
+                              ],
+                            );
+                    }),
                   ),
                 ],
               ),

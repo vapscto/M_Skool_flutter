@@ -75,16 +75,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          "assets/images/vpslogo.png",
+                        Image.network(
+                          widget.mskoolController.universalInsCodeModel!.value
+                              .institutioNLOGO,
                           height: 40,
                         ),
                         const SizedBox(
                           width: 12.0,
                         ),
-                        Text(
-                          "VAPS International School",
-                          style: Theme.of(context).textTheme.titleMedium,
+                        Expanded(
+                          child: Text(
+                            "${widget.mskoolController.universalInsCodeModel!.value.institutioNNAME} ",
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
                         ),
                       ],
                     ),
