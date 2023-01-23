@@ -43,7 +43,11 @@ class StaffDashboardContainer extends StatelessWidget {
           const SizedBox(
             height: 16.0,
           ),
-          const StaffHomeTT(),
+          controller.dashboardTT.isEmpty
+              ? const SizedBox()
+              : StaffHomeTT(
+                  controller: controller,
+                ),
           const SizedBox(
             height: 16.0,
           ),

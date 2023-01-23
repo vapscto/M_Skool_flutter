@@ -159,7 +159,7 @@ class VerifyClassDD extends StatelessWidget {
         asmayId: verifyController.selectedSession.value.asmaYId!,
         asmclId: verifyController.selectedClass.value.asmcLId!,
         sections: [
-          {"ASMS_Id": verifyController.selectedSection.first.asmSId!}
+          {"ASMS_Id": verifyController.verifySelectedSection.value.asmSId!}
         ],
         ivrmrtId: loginSuccessModel.roleId!,
         loginId: loginSuccessModel.userId!,
@@ -176,7 +176,7 @@ class VerifyClassDD extends StatelessWidget {
         ivrmrtId: loginSuccessModel.roleId!,
         asmayId: verifyController.selectedSession.value.asmaYId!,
         asmscld: verifyController.selectedClass.value.asmcLId!,
-        asmsId: verifyController.selectedSection.first.asmSId!,
+        asmsId: verifyController.verifySelectedSection.value.asmSId!,
         base: baseUrlFromInsCode("portal", mskoolController),
         hwCwController: verifyController);
   }

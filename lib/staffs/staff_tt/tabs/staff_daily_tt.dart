@@ -8,9 +8,11 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/staff_tt/api/staff_daily_tt.dart';
 import 'package:m_skool_flutter/staffs/staff_tt/controller/staff_tt_controller.dart';
 import 'package:m_skool_flutter/staffs/staff_tt/model/daily_tt_days_model.dart';
+import 'package:m_skool_flutter/staffs/staff_tt/pdf/daily_pdf_generator.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class StaffDailyTT extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -219,74 +221,121 @@ class _StaffDailyTTState extends State<StaffDailyTT> {
                                               ),
                                             ],
                                           )
-                                        : ListView.separated(
-                                            shrinkWrap: true,
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
-                                            itemBuilder: (_, index) {
-                                              return Material(
-                                                child: ListTile(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0)),
-                                                  contentPadding:
-                                                      EdgeInsets.zero,
-                                                  tileColor:
-                                                      timetablePeriodColor
-                                                          .elementAt(index)
-                                                          .withOpacity(0.15),
-                                                  title: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            right: 16.0),
-                                                    child: Text(
-                                                      "Class : ${widget.ttController.dailyTT.elementAt(index).asmcLClassName} | Section: ${widget.ttController.dailyTT.elementAt(index).asmCSectionName} | Time : ${widget.ttController.dailyTT.elementAt(index).ttmdpTStartTime}",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleSmall!
-                                                          .merge(
-                                                              const TextStyle(
-                                                                  fontSize:
-                                                                      16.0,
-                                                                  height: 1.5)),
-                                                    ),
-                                                  ),
-                                                  leading: Container(
-                                                    alignment: Alignment.center,
-                                                    height: double.infinity,
-                                                    width: 80,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                      color:
-                                                          timetablePeriodColor
-                                                              .elementAt(index),
-                                                    ),
-                                                    child: Text(
-                                                      "P${index + 1}",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleMedium!
-                                                          .merge(
-                                                            const TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
+                                        : Column(
+                                            children: [
+                                              ListView.separated(
+                                                  shrinkWrap: true,
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  itemBuilder: (_, index) {
+                                                    return Material(
+                                                      child: ListTile(
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8.0)),
+                                                        contentPadding:
+                                                            EdgeInsets.zero,
+                                                        tileColor:
+                                                            timetablePeriodColor
+                                                                .elementAt(
+                                                                    index)
+                                                                .withOpacity(
+                                                                    0.15),
+                                                        title: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  right: 16.0),
+                                                          child: Text(
+                                                            "Class : ${widget.ttController.dailyTT.elementAt(index).asmcLClassName} | Section: ${widget.ttController.dailyTT.elementAt(index).asmCSectionName} | Time : ${widget.ttController.dailyTT.elementAt(index).ttmdpTStartTime}",
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .titleSmall!
+                                                                .merge(const TextStyle(
+                                                                    fontSize:
+                                                                        16.0,
+                                                                    height:
+                                                                        1.5)),
                                                           ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            separatorBuilder: (_, index) {
-                                              return const SizedBox(
-                                                height: 6.0,
-                                              );
-                                            },
-                                            itemCount: widget
-                                                .ttController.dailyTT.length);
+                                                        ),
+                                                        leading: Container(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          height:
+                                                              double.infinity,
+                                                          width: 80,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8.0),
+                                                            color:
+                                                                timetablePeriodColor
+                                                                    .elementAt(
+                                                                        index),
+                                                          ),
+                                                          child: Text(
+                                                            "P${index + 1}",
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .titleMedium!
+                                                                .merge(
+                                                                  const TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  separatorBuilder: (_, index) {
+                                                    return const SizedBox(
+                                                      height: 6.0,
+                                                    );
+                                                  },
+                                                  itemCount: widget.ttController
+                                                      .dailyTT.length),
+                                              const SizedBox(
+                                                height: 16.0,
+                                              ),
+                                              MSkollBtn(
+                                                  title: "Generate Pdf",
+                                                  onPress: () async {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (_) {
+                                                          return Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: const [
+                                                              AnimatedProgressWidget(
+                                                                  title:
+                                                                      "Generating Pdf",
+                                                                  desc:
+                                                                      "Please wait while we generate pdf for you",
+                                                                  animationPath:
+                                                                      "assets/json/default.json")
+                                                            ],
+                                                          );
+                                                        });
+                                                    await TTPdfGenerator
+                                                        .instance
+                                                        .generateDailyTT(widget
+                                                            .ttController
+                                                            .dailyTT);
+
+                                                    Navigator.pop(context);
+                                                  })
+                                            ],
+                                          );
                           }),
                         ],
                       ),

@@ -45,10 +45,10 @@ class HwCwGetSubjectsApi {
           "MI_Id": miId,
           "Login_Id": loginId,
           "ASMAY_Id": asmayId,
-          "hrme_id": hrmeId,
           "ASMCL_Id": asmclId,
           "hm_section_list": sections,
           "IVRMRT_Id": ivrmrtId,
+          "HRME_Id": hrmeId,
         },
       );
       if (response.data['subjectlist'] == null) {

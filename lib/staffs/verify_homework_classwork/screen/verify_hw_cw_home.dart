@@ -73,6 +73,7 @@ class _VerifyHwCwHomeState extends State<VerifyHwCwHome> {
   }
 
   Future<void> loadVHw() async {
+    // logger.d(widget.forHw);
     await HwCwGetAcademicYear.instance.getAcademicYear(
       miId: widget.loginSuccessModel.mIID!,
       userId: widget.loginSuccessModel.userId!,
@@ -109,30 +110,75 @@ class _VerifyHwCwHomeState extends State<VerifyHwCwHome> {
       return;
     }
 
+    // await HwCwGetSection.instance.getSections(
+    //   miId: widget.loginSuccessModel.mIID!,
+    //   ivrmrtId: widget.loginSuccessModel.roleId!,
+    //   asmayId: verifyController.selectedSession.value.asmaYId!,
+    //   userId: widget.loginSuccessModel.userId!,
+    //   hrmeId: widget.loginSuccessModel.empcode!,
+    //   loginId: widget.loginSuccessModel.userId!,
+    //   asmclId: verifyController.selectedClass.value.asmcLId!,
+    //   base: baseUrlFromInsCode("portal", widget.mskoolController),
+    //   hwCwController: verifyController,
+    //   fromVerifyCat: true,
+    // );
+    // if (verifyController.isErrorOccuredLoadingSection.value ||
+    //     verifyController.sections.isEmpty) {
+    //   return;
+    // }
+
+    // if (widget.forHw) {
+    //   await HwCwGetSubjectsApi.instance.getSubjects(
+    //     miId: widget.loginSuccessModel.mIID!,
+    //     asmayId: verifyController.selectedSession.value.asmaYId!,
+    //     asmclId: verifyController.selectedClass.value.asmcLId!,
+    //     hrmeId: widget.loginSuccessModel.empcode!,
+    //     sections: [
+    //       {"ASMS_Id": verifyController.verifySelectedSection.value.asmSId!}
+    //     ],
+    //     ivrmrtId: widget.loginSuccessModel.roleId!,
+    //     loginId: widget.loginSuccessModel.userId!,
+    //     base: baseUrlFromInsCode("portal", widget.mskoolController),
+    //     hwCwController: verifyController,
+    //   );
+    //   return;
+    // }
+    // logger.d("420");
+    // await VerifyCwSubjectListApi.instance.getCwSubjects(
+    //     miId: widget.loginSuccessModel.mIID!,
+    //     hrme: widget.loginSuccessModel.empcode!,
+    //     loginId: widget.loginSuccessModel.userId!,
+    //     userId: widget.loginSuccessModel.userId!,
+    //     ivrmrtId: widget.loginSuccessModel.roleId!,
+    //     asmayId: verifyController.selectedSession.value.asmaYId!,
+    //     asmscld: verifyController.selectedClass.value.asmcLId!,
+    //     asmsId: verifyController.verifySelectedSection.value.asmSId!,
+    //     base: baseUrlFromInsCode("portal", widget.mskoolController),
+    //     hwCwController: verifyController);
     await HwCwGetSection.instance.getSections(
-      miId: widget.loginSuccessModel.mIID!,
-      ivrmrtId: widget.loginSuccessModel.roleId!,
-      asmayId: verifyController.selectedSession.value.asmaYId!,
-      userId: widget.loginSuccessModel.userId!,
-      hrmeId: widget.loginSuccessModel.empcode!,
-      loginId: widget.loginSuccessModel.userId!,
-      asmclId: verifyController.selectedClass.value.asmcLId!,
-      base: baseUrlFromInsCode("portal", widget.mskoolController),
-      hwCwController: verifyController,
-      fromVerifyCat: true,
-    );
+        miId: widget.loginSuccessModel.mIID!,
+        ivrmrtId: widget.loginSuccessModel.roleId!,
+        hrmeId: widget.loginSuccessModel.empcode!,
+        asmayId: verifyController.selectedSession.value.asmaYId!,
+        userId: widget.loginSuccessModel.userId!,
+        loginId: widget.loginSuccessModel.userId!,
+        asmclId: verifyController.selectedClass.value.asmcLId!,
+        base: baseUrlFromInsCode("portal", widget.mskoolController),
+        hwCwController: verifyController,
+        fromVerifyCat: true);
     if (verifyController.isErrorOccuredLoadingSection.value ||
         verifyController.sections.isEmpty) {
       return;
     }
+
     if (widget.forHw) {
       await HwCwGetSubjectsApi.instance.getSubjects(
         miId: widget.loginSuccessModel.mIID!,
+        hrmeId: widget.loginSuccessModel.empcode!,
         asmayId: verifyController.selectedSession.value.asmaYId!,
         asmclId: verifyController.selectedClass.value.asmcLId!,
-        hrmeId: widget.loginSuccessModel.empcode!,
         sections: [
-          {"ASMS_Id": verifyController.selectedSection.first.asmSId!}
+          {"ASMS_Id": verifyController.verifySelectedSection.value.asmSId!}
         ],
         ivrmrtId: widget.loginSuccessModel.roleId!,
         loginId: widget.loginSuccessModel.userId!,
@@ -149,7 +195,7 @@ class _VerifyHwCwHomeState extends State<VerifyHwCwHome> {
         ivrmrtId: widget.loginSuccessModel.roleId!,
         asmayId: verifyController.selectedSession.value.asmaYId!,
         asmscld: verifyController.selectedClass.value.asmcLId!,
-        asmsId: verifyController.selectedSection.first.asmSId!,
+        asmsId: verifyController.verifySelectedSection.value.asmSId!,
         base: baseUrlFromInsCode("portal", widget.mskoolController),
         hwCwController: verifyController);
   }

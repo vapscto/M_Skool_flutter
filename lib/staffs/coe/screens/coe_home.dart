@@ -19,11 +19,13 @@ class StaffCoeHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final String title;
+  final bool? showAppBar;
   const StaffCoeHome(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController,
-      required this.title});
+      required this.title,
+      this.showAppBar});
 
   @override
   State<StaffCoeHome> createState() => _StaffCoeHomeState();
@@ -65,6 +67,7 @@ class _StaffCoeHomeState extends State<StaffCoeHome> {
   @override
   void initState() {
     loadCoeScreen();
+
     super.initState();
   }
 
@@ -77,7 +80,9 @@ class _StaffCoeHomeState extends State<StaffCoeHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Coe").getAppBar(),
+      appBar: widget.showAppBar == null
+          ? const CustomAppBar(title: "Coe").getAppBar()
+          : null,
       floatingActionButton: const HomeFab(),
       body: Obx(() {
         return coeDataHandler.isErrorOccured.value

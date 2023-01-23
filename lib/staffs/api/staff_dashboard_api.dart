@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/staffs/controller/dashboard_controller.dart';
 import 'package:m_skool_flutter/staffs/model/dashboard_leave_model.dart';
 import 'package:m_skool_flutter/staffs/model/dashboard_lop_model.dart';
+import 'package:m_skool_flutter/staffs/model/dashboard_tt_model.dart';
 
 class StaffDashboardApi {
   StaffDashboardApi.init();
@@ -45,7 +46,11 @@ class StaffDashboardApi {
 
       if (response.data['calList'] != null) {}
 
-      if (response.data['timeTableDetails'] != null) {}
+      if (response.data['timeTableDetails'] != null) {
+        controller.updateDashboardTT(StaffDashboardTimetableModel.fromJson(
+                response.data['timeTableDetails'])
+            .values!);
+      }
     } on DioError catch (e) {
       logger.d(e.message);
     } on Exception catch (e) {

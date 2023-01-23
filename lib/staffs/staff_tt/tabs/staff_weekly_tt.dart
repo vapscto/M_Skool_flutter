@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/staff_tt/api/staff_weekly_tt.dart';
 import 'package:m_skool_flutter/staffs/staff_tt/model/staff_weekly_tt_model.dart';
+import 'package:m_skool_flutter/staffs/staff_tt/pdf/daily_pdf_generator.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
@@ -214,7 +215,12 @@ class StaffWeeklyTT extends StatelessWidget {
                   const SizedBox(
                     height: 36.0,
                   ),
-                  MSkollBtn(title: "Generate PDF", onPress: () {}),
+                  MSkollBtn(
+                      title: "Generate PDF",
+                      onPress: () {
+                        TTPdfGenerator.instance
+                            .generateWeeklyTT(snapshot.data!);
+                      }),
                 ],
               ),
             );

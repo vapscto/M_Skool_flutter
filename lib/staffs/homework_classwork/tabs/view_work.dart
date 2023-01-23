@@ -85,11 +85,28 @@ class _HwCwViewWorkState extends State<HwCwViewWork> {
                               color = 0;
                             }
                             return HwCwViewWorkItem(
+                              miId: widget.loginSuccessModel.mIID!,
                               color: color,
                               forHw: widget.forHw,
                               homeWork: widget.hwController.homeWorks
                                   .elementAt(index),
                               mskoolController: widget.mskoolController,
+                              func: () {
+                                GetHomeWorks.instance.getHomeWorks(
+                                  miId: widget.loginSuccessModel.mIID!,
+                                  asmayId: widget.loginSuccessModel.asmaYId!,
+                                  hrmeId: widget.loginSuccessModel.empcode!,
+                                  userId: widget.loginSuccessModel.userId!,
+                                  ivrmrtId: widget.loginSuccessModel.roleId!,
+                                  loginId: widget.loginSuccessModel.userId!,
+                                  base: baseUrlFromInsCode(
+                                    "portal",
+                                    widget.mskoolController,
+                                  ),
+                                  controller: widget.hwController,
+                                  forHw: widget.forHw,
+                                );
+                              },
                             );
                           },
                           separatorBuilder: (_, index) {
@@ -121,6 +138,23 @@ class _HwCwViewWorkState extends State<HwCwViewWork> {
                               classwork: widget.hwController.classWorks
                                   .elementAt(index),
                               mskoolController: widget.mskoolController,
+                              miId: widget.loginSuccessModel.mIID!,
+                              func: () {
+                                GetHomeWorks.instance.getHomeWorks(
+                                  miId: widget.loginSuccessModel.mIID!,
+                                  asmayId: widget.loginSuccessModel.asmaYId!,
+                                  hrmeId: widget.loginSuccessModel.empcode!,
+                                  userId: widget.loginSuccessModel.userId!,
+                                  ivrmrtId: widget.loginSuccessModel.roleId!,
+                                  loginId: widget.loginSuccessModel.userId!,
+                                  base: baseUrlFromInsCode(
+                                    "portal",
+                                    widget.mskoolController,
+                                  ),
+                                  controller: widget.hwController,
+                                  forHw: widget.forHw,
+                                );
+                              },
                             );
                           },
                           separatorBuilder: (_, index) {

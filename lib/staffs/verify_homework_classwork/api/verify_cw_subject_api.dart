@@ -29,6 +29,17 @@ class VerifyCwSubjectListApi {
         "We are in process to loading subject's for selected Academic Year, Class and section");
     hwCwController.updateIsSubjectLoading(true);
     try {
+      logger.d({
+        "MI_Id": miId,
+        "HRME_Id": hrme,
+        "Login_Id": loginId,
+        "UserId": userId,
+        "IVRMRT_Id": ivrmrtId,
+        "Role_flag": "Staff",
+        "ASMAY_Id": asmayId,
+        "ASMCL_Id": asmscld,
+        "ASMS_Id": asmsId
+      });
       final Response response = await ins
           .post(apiUrl, options: Options(headers: getSession()), data: {
         "MI_Id": miId,

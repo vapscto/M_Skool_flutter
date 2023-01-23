@@ -30,7 +30,9 @@ class DashboardLeaveNames extends StatelessWidget {
                 alignment: Alignment.center,
                 children: [
                   CircularProgressIndicator(
-                    value: 0.5,
+                    value: (values.hRELSTotalLeaves! /
+                            values.hRELSCBLeaves!.toDouble())
+                        .toDouble(),
                     backgroundColor: noticeBackgroundColor
                         .elementAt(backgroundColor)
                         .withOpacity(0.8),

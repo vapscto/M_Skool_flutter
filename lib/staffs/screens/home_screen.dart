@@ -2,28 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/api/staff_dashboard_api.dart';
 import 'package:m_skool_flutter/staffs/coe/screens/coe_home.dart';
 import 'package:m_skool_flutter/staffs/controller/dashboard_controller.dart';
-import 'package:m_skool_flutter/staffs/homework_classwork/screen/hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/interaction/screen/interaction_home.dart';
-import 'package:m_skool_flutter/staffs/online_leave/screen/online_leave_home.dart';
-import 'package:m_skool_flutter/staffs/punch_report/screens/punch_report_home.dart';
-import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dart';
-import 'package:m_skool_flutter/staffs/staff_tt/screens/staff_tt_home.dart';
-import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/student_attendance_staff_home.dart';
-import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
-import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
-import 'package:m_skool_flutter/staffs/view_notice/screens/view_notice_home_screen.dart';
-import 'package:m_skool_flutter/staffs/widget/staff_dashboard_container.dart';
-import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
-import 'package:m_skool_flutter/widget/logout_confirmation.dart';
+import 'package:m_skool_flutter/staffs/tabs/dashboard_tab.dart';
+import 'package:m_skool_flutter/staffs/tabs/staff_profile_tab.dart';
+import 'package:m_skool_flutter/staffs/widget/drawer_widget.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../../controller/global_utilities.dart';
-import '../attendance_entry/screen/attendance_entry_home.dart';
-import '../marks_entry/screen/marks_entry_home.dart';
 
 class StaffHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -39,11 +28,60 @@ class StaffHomeScreen extends StatefulWidget {
 
 class _StaffHomeScreen extends State<StaffHomeScreen> {
   final GlobalKey<ScaffoldState> _scaffold = GlobalKey<ScaffoldState>();
-
+  final RxList<Widget> homeList = <Widget>[].obs;
   int color = -1;
   int ttColor = -1;
   final StaffDashboardController dashboardController =
       Get.put(StaffDashboardController());
+  final PageController controller = PageController(initialPage: 0);
+
+  @override
+  void initState() {
+    homeList.add(
+      Dashboard(
+        mskoolController: widget.mskoolController,
+        dashboardController: dashboardController,
+        loginSuccessModel: widget.loginSuccessModel,
+      ),
+    );
+    homeList.add(
+      InteractionHome(
+        mskoolController: widget.mskoolController,
+        //dashboardController: dashboardController,
+        loginSuccessModel: widget.loginSuccessModel,
+        showAppBar: false,
+      ),
+    );
+    homeList.add(
+      StaffCoeHome(
+        mskoolController: widget.mskoolController,
+        // dashboardController: dashboardController,
+        loginSuccessModel: widget.loginSuccessModel, title: 'COE',
+        showAppBar: false,
+      ),
+    );
+    homeList.add(StaffProfileTab(
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController));
+
+    StaffDashboardApi.instance.loadDashboard(
+        miId: widget.loginSuccessModel.mIID!,
+        userId: widget.loginSuccessModel.userId!,
+        base: baseUrlFromInsCode("portal", widget.mskoolController),
+        controller: dashboardController);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    Get.delete<StaffDashboardController>();
+    controller.dispose();
+    super.dispose();
+  }
+
+  RxInt index = RxInt(0);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +89,15 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
+        title: Obx(() {
+          return Text(index.value == 0
+              ? "Dashboard"
+              : index.value == 1
+                  ? "Interaction"
+                  : index.value == 2
+                      ? "COE"
+                      : "Profile");
+        }),
         leading: IconButton(
           icon: SvgPicture.asset('assets/svg/menu.svg'),
           onPressed: () {
@@ -58,420 +105,78 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
           },
         ),
       ),
-      drawer: const Drawer(),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          await StaffDashboardApi.instance.loadDashboard(
-              miId: widget.loginSuccessModel.mIID!,
-              userId: widget.loginSuccessModel.userId!,
-              base: baseUrlFromInsCode("portal", widget.mskoolController),
-              controller: dashboardController);
-          logger.d(dashboardController.dashboardLop.length);
-        },
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              StaffDashboardContainer(
-                controller: dashboardController,
-                loginSuccessModel: widget.loginSuccessModel,
-                mskoolController: widget.mskoolController,
-              ),
-              Text(
-                "Dashboard",
-                style: Theme.of(context).textTheme.titleSmall!.merge(
-                      const TextStyle(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-              ),
-              const SizedBox(
-                height: 16.0,
-              ),
-              GridView.builder(
-                shrinkWrap: true,
-                itemCount: widget
-                    .loginSuccessModel.staffmobileappprivileges!.values!.length,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    childAspectRatio: 0.8,
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0),
-                itemBuilder: (_, index) {
-                  return InkWell(
-                    onTap: () {
-                      logger.d(widget
-                          .loginSuccessModel.staffmobileappprivileges!.values!
-                          .elementAt(index)
-                          .pagename);
-                      if (widget.loginSuccessModel.staffmobileappprivileges!
-                              .values!
-                              .elementAt(index)
-                              .pagename ==
-                          "Attendance Entry") {
-                        Get.to(
-                          // () => const MonthWiseAttendanceEntryHomeScreen(),
-                          () => AttendanceEntryHomeScreen(
-                            loginSuccessModel: widget.loginSuccessModel,
-                            mskoolController: widget.mskoolController,
-                          ),
-                          // () => const DayWiseAttendanceEntryHome(),
-                        );
-                      }
-                      if (widget.loginSuccessModel.staffmobileappprivileges!
-                              .values!
-                              .elementAt(index)
-                              .pagename ==
-                          "Student Attendance Staff") {
-                        Get.to(() => StudentAttendanceStaffHome(
-                              loginSuccessModel: widget.loginSuccessModel,
-                              mskoolController: widget.mskoolController,
-                            ));
-                      }
-                      if (widget.loginSuccessModel.staffmobileappprivileges!
-                              .values!
-                              .elementAt(index)
-                              .pagename ==
-                          "Mark Entry") {
-                        Get.to(
-                          () => MarksEntryHome(
-                            loginSuccessModel: widget.loginSuccessModel,
-                            mskoolController: widget.mskoolController,
-                          ),
-                        );
-                      }
-
-                      if (widget.loginSuccessModel.staffmobileappprivileges!
-                              .values!
-                              .elementAt(index)
-                              .pagename ==
-                          "Salary Details") {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return
-                              // SalarySlipHome(
-                              //   loginSuccessModel: widget.loginSuccessModel,
-                              //   mskoolController: widget.mskoolController,
-                              // );
-                              SalaryDetails(
-                            loginSuccessModel: widget.loginSuccessModel,
-                            mskoolController: widget.mskoolController,
-                          );
-                        }));
-                        return;
-                      }
-                      if (widget.loginSuccessModel.staffmobileappprivileges!
-                              .values!
-                              .elementAt(index)
-                              .pagename ==
-                          "Staff Birth Day Report") {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return StudentBdayHome(
-                            loginSuccessModel: widget.loginSuccessModel,
-                            mskoolController: widget.mskoolController,
-                          );
-                        }));
-                        return;
-                      }
-
-                      if (widget.loginSuccessModel.staffmobileappprivileges!
-                              .values!
-                              .elementAt(index)
-                              .pagename ==
-                          "Online Leave Apply") {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return OnlineLeaveApply(
-                            loginSuccessModel: widget.loginSuccessModel,
-                            mskoolController: widget.mskoolController,
-                            title: widget.loginSuccessModel
-                                .staffmobileappprivileges!.values!
-                                .elementAt(index)
-                                .pagename!,
-                          );
-                        }));
-                        return;
-                      }
-
-                      if (widget.loginSuccessModel.staffmobileappprivileges!
-                              .values!
-                              .elementAt(index)
-                              .pagename! ==
-                          "Notice Board") {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return ViewNoticeHome(
-                            loginSuccessModel: widget.loginSuccessModel,
-                            mskoolController: widget.mskoolController,
-                            title: widget.loginSuccessModel
-                                .staffmobileappprivileges!.values!
-                                .elementAt(index)
-                                .pagename!,
-                          );
-                        }));
-
-                        // Notice Board Staff
-                        // Get.to(() => const NoticeBoardStaffHome());
-                        return;
-                      }
-                      if (widget.loginSuccessModel.staffmobileappprivileges!
-                              .values!
-                              .elementAt(index)
-                              .pagename! ==
-                          "Punch Report") {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return PunchReport(
-                            loginSuccessModel: widget.loginSuccessModel,
-                            mskoolController: widget.mskoolController,
-                            title: widget.loginSuccessModel
-                                .staffmobileappprivileges!.values!
-                                .elementAt(index)
-                                .pagename!,
-                          );
-                        }));
-                        return;
-                      }
-
-                      if (widget.loginSuccessModel.staffmobileappprivileges!
-                              .values!
-                              .elementAt(index)
-                              .pagename! ==
-                          "Verify Homework") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return VerifyHwCwHome(
-                                loginSuccessModel: widget.loginSuccessModel,
-                                mskoolController: widget.mskoolController,
-                                title: widget.loginSuccessModel
-                                    .staffmobileappprivileges!.values!
-                                    .elementAt(index)
-                                    .pagename!,
-                                forHw: true,
-                              );
-                            },
-                          ),
-                        );
-                        return;
-                      }
-                      if (widget.loginSuccessModel.staffmobileappprivileges!
-                              .values!
-                              .elementAt(index)
-                              .pagename! ==
-                          "Verify Classwork") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return VerifyHwCwHome(
-                                loginSuccessModel: widget.loginSuccessModel,
-                                mskoolController: widget.mskoolController,
-                                title: widget.loginSuccessModel
-                                    .staffmobileappprivileges!.values!
-                                    .elementAt(index)
-                                    .pagename!,
-                                forHw: false,
-                              );
-                            },
-                          ),
-                        );
-                        return;
-                      }
-                      if (widget.loginSuccessModel.staffmobileappprivileges!
-                              .values!
-                              .elementAt(index)
-                              .pagename! ==
-                          "Classwork") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return HwCwHome(
-                                loginSuccessModel: widget.loginSuccessModel,
-                                mskoolController: widget.mskoolController,
-                                title: widget.loginSuccessModel
-                                    .staffmobileappprivileges!.values!
-                                    .elementAt(index)
-                                    .pagename!,
-                                forHw: false,
-                              );
-                            },
-                          ),
-                        );
-                        return;
-                      }
-                      if (widget.loginSuccessModel.staffmobileappprivileges!
-                              .values!
-                              .elementAt(index)
-                              .pagename! ==
-                          "Homework") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return HwCwHome(
-                                loginSuccessModel: widget.loginSuccessModel,
-                                mskoolController: widget.mskoolController,
-                                title: widget.loginSuccessModel
-                                    .staffmobileappprivileges!.values!
-                                    .elementAt(index)
-                                    .pagename!,
-                                forHw: true,
-                              );
-                            },
-                          ),
-                        );
-                        return;
-                      }
-                      if (widget.loginSuccessModel.staffmobileappprivileges!
-                              .values!
-                              .elementAt(index)
-                              .pagename! ==
-                          "Interaction") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return InteractionHome(
-                                loginSuccessModel: widget.loginSuccessModel,
-                                mskoolController: widget.mskoolController,
-                              );
-                            },
-                          ),
-                        );
-                        return;
-                      }
-                      if (widget.loginSuccessModel.staffmobileappprivileges!
-                              .values!
-                              .elementAt(index)
-                              .pagename! ==
-                          "Time Table") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return StaffTTHome(
-                                loginSuccessModel: widget.loginSuccessModel,
-                                mskoolController: widget.mskoolController,
-                                title: widget.loginSuccessModel
-                                    .staffmobileappprivileges!.values!
-                                    .elementAt(index)
-                                    .pagename!,
-                                //forHw: true,
-                              );
-                            },
-                          ),
-                        );
-                        return;
-                      }
-                      if (widget.loginSuccessModel.staffmobileappprivileges!
-                              .values!
-                              .elementAt(index)
-                              .pagename! ==
-                          "COE") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return StaffCoeHome(
-                                loginSuccessModel: widget.loginSuccessModel,
-                                mskoolController: widget.mskoolController,
-                                title: widget.loginSuccessModel
-                                    .staffmobileappprivileges!.values!
-                                    .elementAt(index)
-                                    .pagename!,
-                                //forHw: true,
-                              );
-                            },
-                          ),
-                        );
-                        return;
-                      }
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: SizedBox(
-                        width: 80,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(
-                                getDashBoardIconByName(
-                                    "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"),
-                                height: 60,
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
-                                //maxLines: 1,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .merge(const TextStyle(fontSize: 13.0)),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-              // ListView.builder(
-              //   shrinkWrap: true,
-              //   physics: const NeverScrollableScrollPhysics(),
-              //   itemCount: widget
-              //       .loginSuccessModel.staffmobileappprivileges!.values!.length,
-              //   itemBuilder: (_, index) {
-              //     return ListTile(
-              //       onTap: () {},
-              //       title: Text(widget
-              //           .loginSuccessModel.staffmobileappprivileges!.values!
-              //           .elementAt(index)
-              //           .pagename!),
-              //     );
-              //   },
-              // ),
-              const SizedBox(
-                height: 24.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                child: SizedBox(
-                  width: 180,
-                  height: 40,
-                  child: CustomElevatedButton(
-                      isGradient: false,
-                      boxShadow: const BoxShadow(),
-                      color: const Color(0xFFFFDFD6),
-                      child:
-                          Row(mainAxisSize: MainAxisSize.min, children: const [
-                        Icon(
-                          Icons.logout,
-                          color: Color(0xffF24E1E),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "Log Out",
-                          style: TextStyle(
-                              color: Color(0xffF24E1E),
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600),
-                        )
-                      ]),
-                      onPressed: () {
-                        Get.dialog(const LogoutConfirmationPopup());
-                      }),
-                ),
-              ),
-            ],
-          ),
+      drawer: Drawer(
+        child: StaffDashboardDrawer(
+          loginSuccessModel: widget.loginSuccessModel,
+          mskoolController: widget.mskoolController,
         ),
+      ),
+      body: PageView.builder(
+        controller: controller,
+        itemBuilder: (_, index) {
+          return homeList.elementAt(index);
+        },
+        itemCount: homeList.length,
+        onPageChanged: (v) {
+          index.value = v;
+        },
+      ),
+      bottomNavigationBar: Material(
+        elevation: 10.0,
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Obx(() {
+          return SalomonBottomBar(
+            currentIndex: index.value,
+            items: [
+              SalomonBottomBarItem(
+                  unselectedColor: const Color(0xFFC0C0C0),
+                  icon: SvgPicture.asset(
+                    "assets/svg/home_icon.svg",
+                    height: 24,
+                    color: index.value == 0
+                        ? Theme.of(context).primaryColor
+                        : const Color(0xFFC0C0C0),
+                  ),
+                  title: const Text("Home")),
+              SalomonBottomBarItem(
+                  unselectedColor: const Color(0xFFC0C0C0),
+                  icon: SvgPicture.asset(
+                    "assets/svg/message.svg",
+                    height: 24,
+                    color: index.value == 1
+                        ? Theme.of(context).primaryColor
+                        : const Color(0xFFC0C0C0),
+                  ),
+                  title: const Text("Interaction")),
+              SalomonBottomBarItem(
+                  unselectedColor: const Color(0xFFC0C0C0),
+                  icon: SvgPicture.asset(
+                    "assets/svg/calendar.svg",
+                    height: 26,
+                    color: index.value == 2
+                        ? Theme.of(context).primaryColor
+                        : const Color(0xFFC0C0C0),
+                  ),
+                  title: const Text("COE")),
+              SalomonBottomBarItem(
+                  unselectedColor: const Color(0xFFC0C0C0),
+                  icon: SvgPicture.asset(
+                    "assets/svg/profile.svg",
+                    height: 30,
+                    color: index.value == 3
+                        ? Theme.of(context).primaryColor
+                        : const Color(0xFFC0C0C0),
+                  ),
+                  title: const Text("Profile")),
+            ],
+            onTap: (v) {
+              index.value = v;
+              controller.animateToPage(v,
+                  duration: const Duration(milliseconds: 800),
+                  curve: Curves.fastLinearToSlowEaseIn);
+            },
+          );
+        }),
       ),
     );
   }
