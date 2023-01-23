@@ -32,15 +32,15 @@ class HwCwGetSection {
           "We are in process to loading section's for selected Academic Year, and class");
       hwCwController.updateIsSectionLoading(true);
 
-      logger.d({
-        "MI_Id": miId,
-        "Login_Id": loginId,
-        "UserId": userId,
-        "ivrmrT_Id": ivrmrtId,
-        "ASMAY_Id": asmayId,
-        "ASMCL_Id": asmclId,
-        "IVRMRT_Id": ivrmrtId,
-      });
+      // logger.d({
+      //   "MI_Id": miId,
+      //   "Login_Id": loginId,
+      //   "UserId": userId,
+      //   "ivrmrT_Id": ivrmrtId,
+      //   "ASMAY_Id": asmayId,
+      //   "ASMCL_Id": asmclId,
+      //   "IVRMRT_Id": ivrmrtId,
+      // });
       final Response response = await ins
           .post(apiUrl, options: Options(headers: getSession()), data: {
         "MI_Id": miId,
@@ -63,8 +63,10 @@ class HwCwGetSection {
       }
       final HwCwSectionListModel sectionListModel =
           HwCwSectionListModel.fromJson(response.data['sectionlist']);
-
-      if (fromVerifyCat) {
+      //logger.d("message 420");
+      if (fromVerifyCat == true) {
+        logger.d("message");
+        logger.d(sectionListModel.values!.first.toJson());
         hwCwController
             .updateVerifySelectedSection(sectionListModel.values!.first);
       } else {
@@ -75,6 +77,7 @@ class HwCwGetSection {
           hwCwController.updateSelectedSection(sectionListModel.values!.first);
         }
       }
+
       hwCwController.updateSections(sectionListModel.values!);
       hwCwController.updateIsSectionLoading(false);
     } on DioError catch (e) {

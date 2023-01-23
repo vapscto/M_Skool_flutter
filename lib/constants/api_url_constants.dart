@@ -256,4 +256,11 @@ class URLS {
   static String getHwAttachment = "api/EmployeeStudentHomeworkFacade/viewData";
 
   static String getCwAttachment = "api/IVRM_ClassWorkFacade/viewData";
+
+  static String activateDeactiveHw =
+      "api/EmployeeStudentHomeworkFacade/deactivate";
+
+  static String activateDeactiveCw = "api/IVRM_ClassWorkFacade/deactivate";
+
+  static String getStaffProfileDet = "api/AdmissionCtrl/staffProfile/";
 }

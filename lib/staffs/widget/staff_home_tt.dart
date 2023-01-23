@@ -1,11 +1,13 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:m_skool_flutter/staffs/controller/dashboard_controller.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 import '../../constants/constants.dart';
 
 class StaffHomeTT extends StatefulWidget {
-  const StaffHomeTT({super.key});
+  final StaffDashboardController controller;
+  const StaffHomeTT({super.key, required this.controller});
 
   @override
   State<StaffHomeTT> createState() => _StaffHomeTTState();
@@ -68,7 +70,7 @@ class _StaffHomeTTState extends State<StaffHomeTT> {
                             child: SizedBox(
                               width: 70,
                               child: Text(
-                                "VIII-$ttColor",
+                                "${widget.controller.dashboardTT.elementAt(index).classsection}",
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                                 style: const TextStyle(),
@@ -87,21 +89,21 @@ class _StaffHomeTTState extends State<StaffHomeTT> {
                         width: 120,
                         height: 10,
                         color: noticeColor.elementAt(ttColor),
-                        child: const Padding(
-                          padding: EdgeInsets.only(
-                            left: 8.0,
-                            right: 8.0,
-                            top: 4,
-                            bottom: 4,
-                          ),
-                          child: Text("VIII"),
-                        ),
+                        // child: const Padding(
+                        //   padding: EdgeInsets.only(
+                        //     left: 8.0,
+                        //     right: 8.0,
+                        //     top: 4,
+                        //     bottom: 4,
+                        //   ),
+                        //   child: Text("VIII"),
+                        // ),
                       ),
                       const SizedBox(
                         height: 8,
                       ),
                       Text(
-                        "09:00 AM",
+                        "${widget.controller.dashboardTT.elementAt(index).tTMDPTStartTime}",
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium!
@@ -117,7 +119,7 @@ class _StaffHomeTTState extends State<StaffHomeTT> {
                 width: 8.0,
               );
             },
-            itemCount: 8,
+            itemCount: widget.controller.dashboardTT.length,
           ),
         )
       ],

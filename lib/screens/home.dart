@@ -28,6 +28,7 @@ import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart
 import 'package:m_skool_flutter/student/library/screen/library_home.dart';
 import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/tabs/profile_tab.dart';
+import 'package:m_skool_flutter/widget/attendance_shortage_widget.dart';
 
 import 'package:m_skool_flutter/widget/card_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -81,6 +82,18 @@ class _HomeState extends State<Home> {
         context: context,
         loginSuccessModel: widget.loginSuccessModel,
         mskoolController: widget.mskoolController);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      showDialog(
+          context: context,
+          builder: (_) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0)),
+              insetPadding: const EdgeInsets.all(16.0),
+              child: const AttendanceShortage(),
+            );
+          });
+    });
     super.initState();
   }
 
