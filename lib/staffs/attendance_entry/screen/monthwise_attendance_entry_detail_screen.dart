@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/controller/attendance_entry_related_controller.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/widget/attendance_textfield_widget.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
@@ -213,15 +214,10 @@ class _MonthWiseAttendanceEntryDetailScreenState
                                   ),
                                 ),
                               ),
-                              DataCell(
+                              const DataCell(
                                 Align(
                                   alignment: Alignment.center,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    child: TextFormField(
-                                        textAlign: TextAlign.center),
-                                  ),
+                                  child: AttendanceTextfieldWidget(),
                                 ),
                               ),
                             ],

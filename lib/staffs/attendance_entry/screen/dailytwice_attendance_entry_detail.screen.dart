@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/controller/attendance_entry_related_controller.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/widget/attendance_checkbox_widget.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 
-class DailyOnceAttendanceEntryDetailScreen extends StatefulWidget {
-  const DailyOnceAttendanceEntryDetailScreen({super.key});
+class DailyTwiceAttendanceEntryDetailScreen extends StatefulWidget {
+  const DailyTwiceAttendanceEntryDetailScreen({super.key});
 
   @override
-  State<DailyOnceAttendanceEntryDetailScreen> createState() =>
-      _DailyOnceAttendanceEntryDetailScreenState();
+  State<DailyTwiceAttendanceEntryDetailScreen> createState() =>
+      _DailyTwiceAttendanceEntryDetailScreenState();
 }
 
-class _DailyOnceAttendanceEntryDetailScreenState
-    extends State<DailyOnceAttendanceEntryDetailScreen> {
+class _DailyTwiceAttendanceEntryDetailScreenState
+    extends State<DailyTwiceAttendanceEntryDetailScreen> {
   final AttendanceEntryController attendanceEntryController =
       Get.put(AttendanceEntryController());
   bool selectAll = false;
@@ -93,7 +94,8 @@ class _DailyOnceAttendanceEntryDetailScreenState
                   height: 33,
                   child: CheckboxListTile(
                     checkboxShape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                     dense: true,
                     activeColor: Theme.of(context).primaryColor,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 8),
@@ -129,15 +131,15 @@ class _DailyOnceAttendanceEntryDetailScreenState
                         dataRowHeight: 37,
                         headingRowHeight: 40,
                         horizontalMargin: 8,
-                        columnSpacing: 25,
-                        dividerThickness: 1,
+                        columnSpacing: 30,
+                        dividerThickness: 0.1,
                         showCheckboxColumn: true,
 
                         headingTextStyle: const TextStyle(
                             color: Colors.white, fontWeight: FontWeight.w700),
                         border: TableBorder.all(
                           borderRadius: BorderRadius.circular(12),
-                          width: 0.5,
+                          width: 0.6,
                           color: Colors.grey.withOpacity(0.5),
                         ),
                         // showBottomBorder: true,
@@ -203,6 +205,19 @@ class _DailyOnceAttendanceEntryDetailScreenState
                               ),
                             ),
                           ),
+                          DataColumn(
+                            label: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Twice\nAttendance',
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
 
                         rows: List.generate(
@@ -224,7 +239,7 @@ class _DailyOnceAttendanceEntryDetailScreenState
                                 Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                      ' ${attendanceEntryController.studentList1.elementAt(index).amaYRollNo}',
+                                      '${attendanceEntryController.studentList1.elementAt(index).amaYRollNo}',
                                       overflow: TextOverflow.ellipsis),
                                 ),
                               ),
@@ -239,12 +254,17 @@ class _DailyOnceAttendanceEntryDetailScreenState
                               DataCell(
                                 Align(
                                   alignment: Alignment.center,
-                                  child: Checkbox(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      value: false,
-                                      onChanged: (_) {}),
+                                  child: AttendanceCheckboxWidget(
+                                    attendance: selectAll ? true : false,
+                                  ),
+                                ),
+                              ),
+                              DataCell(
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: AttendanceCheckboxWidget(
+                                    attendance: selectAll ? true : false,
+                                  ),
                                 ),
                               ),
                             ],

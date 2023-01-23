@@ -9,8 +9,8 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/controller/attendance_entry_related_controller.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/initialdataModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/sectionModel.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_detail_screen.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/screen/daywise_attendance_entry_detail.screen.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/screen/dailyonce_attendance_entry_detail_screen.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/screen/dailytwice_attendance_entry_detail.screen.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/monthwise_attendance_entry_detail_screen.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/periodwise_attendance_entry_detail_screen.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
@@ -124,6 +124,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
   }
 
   void getStudentListOnChangeOfSection(String asmsId) async {
+    attendanceEntryController.isstudentdataloading(true);
     await attendanceEntryController
         .getAttendanceDataOnChangeOfSection(
       asmayId: selectedAcademicYear!.asmaYId!.toInt(),
@@ -147,10 +148,15 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
     )
         .then(
       (value) {
-        logger.d(value);
+        if (!value) {
+          logger.d(value);
+          attendanceEntryController.isstudentdataloading(false);
+          return;
+        }
         logger.d(attendanceEntryController.studentList1.first);
       },
     );
+    attendanceEntryController.isstudentdataloading(false);
   }
 
   void getSubjectListAndStudentList(int asmsId) async {
@@ -982,8 +988,13 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                         }
                       },
                       child: attendanceEntryController.isStudentData.value
-                          ? const CircularProgressIndicator(
-                              color: Colors.white,
+                          ? const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 3,
+                                color: Colors.white,
+                              ),
                             )
                           : Text(
                               'View Details',
