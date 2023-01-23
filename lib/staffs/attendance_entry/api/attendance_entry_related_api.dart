@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/staffs/attendance_entry/model/initialdataModel.d
 import 'package:m_skool_flutter/staffs/attendance_entry/model/sectionModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/studentListModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/studentListModel1.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/model/subjectModel.dart';
 
 var dio = Dio();
 Future<InitialDataModel?> getAttendanceEntryIntialData({
@@ -146,7 +147,6 @@ Future<StudentListModel1?> onChangeOfSection({
   required String base,
 }) async {
   var url = base + URLS.onChangeClass;
-  logger.d(fromDate);
   try {
     var response = await dio.post(
       url,
@@ -180,5 +180,45 @@ Future<StudentListModel1?> onChangeOfSection({
   }
 }
 
+// to get subject list... and studentlist for periodwise attendance entry..
 
-/// api call for subjectlist model is done
+Future<SubjectModel?> onChangeSection({
+  required int asmayId,
+  required String asmclId,
+  required int asmsId,
+  required int userId,
+  required int miId,
+  required String username,
+  required int roleId,
+  required String base,
+}) async {
+  var url = base + URLS.onChangeClass;
+  try {
+    var response = await dio.post(
+      url,
+      options: Options(
+        headers: getSession(),
+      ),
+      data: {
+        "ASMAY_Id": asmayId,
+        "ASMCL_Id": asmclId,
+        "ASMS_Id": asmsId,
+        "classsecflag": "1",
+        "userId": userId,
+        "MI_Id": miId,
+        "username": username,
+        "flag": "S",
+        "roleId": roleId,
+        "checksubject": 1
+      },
+    );
+    if (response.statusCode == 200) {
+      SubjectModel subjectModel = SubjectModel.fromJson(response.data);
+      return subjectModel;
+    }
+    return null;
+  } catch (e) {
+    logger.d(e.toString());
+    return null;
+  }
+}

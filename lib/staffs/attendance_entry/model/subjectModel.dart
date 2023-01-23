@@ -50,12 +50,12 @@ class SubjectModel {
   int? asmcLId;
   int? asmSId;
   int? amsTId;
-  int? asAClassAttended;
+  double? asAClassAttended;
   SectionListClass? sectionList;
   SectionListClass? subjectList;
   StudentList? studentList;
   bool? returnval;
-  int? countclass;
+  double? countclass;
   int? countclass1;
   String? attendanceentryflag;
   int? attdefaultdisplay;
@@ -153,16 +153,16 @@ class Admissionstandarad {
 
   factory Admissionstandarad.fromJson(Map<String, dynamic> json) =>
       Admissionstandarad(
-        type: json["\$4type"],
+        type: json["\$type"],
         values: json["\$values"] == null
             ? []
-            : List<AdmissionstandaradValue?>.from(json["\$4values"]
+            : List<AdmissionstandaradValue?>.from(json["\$values"]
                 .map((x) => AdmissionstandaradValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "\$4type": type,
-        "\$4values": values == null
+        "\$type": type,
+        "\$values": values == null
             ? []
             : List<dynamic>.from(values!.map((x) => x!.toJson())),
       };
@@ -283,16 +283,16 @@ class Getstandarad {
   List<GetstandaradValue?>? values;
 
   factory Getstandarad.fromJson(Map<String, dynamic> json) => Getstandarad(
-        type: json["\$4type"],
+        type: json["\$type"],
         values: json["\$values"] == null
             ? []
             : List<GetstandaradValue?>.from(
-                json["\$4values"].map((x) => GetstandaradValue.fromJson(x))),
+                json["\$values"].map((x) => GetstandaradValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "\$4type": type,
-        "\$4values": values == null
+        "\$type": type,
+        "\$values": values == null
             ? []
             : List<dynamic>.from(values!.map((x) => x!.toJson())),
       };
@@ -622,27 +622,27 @@ class SectionListClass {
   });
 
   String? type;
-  List<SectionListValue?>? values;
+  List<SubjectListValue?>? values;
 
   factory SectionListClass.fromJson(Map<String, dynamic> json) =>
       SectionListClass(
-        type: json["\$4type"],
+        type: json["\$type"],
         values: json["\$values"] == null
             ? []
-            : List<SectionListValue?>.from(
-                json["\$4values"].map((x) => SectionListValue.fromJson(x))),
+            : List<SubjectListValue?>.from(
+                json["\$values"].map((x) => SubjectListValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "\$4type": type,
-        "\$4values": values == null
+        "\$type": type,
+        "\$values": values == null
             ? []
             : List<dynamic>.from(values!.map((x) => x!.toJson())),
       };
 }
 
-class SectionListValue {
-  SectionListValue({
+class SubjectListValue {
+  SubjectListValue({
     this.asAId,
     this.mIId,
     this.asmaYId,
@@ -673,9 +673,9 @@ class SectionListValue {
   int? asmSId;
   String? asmCSectionName;
   int? amsTId;
-  int? asAClassAttended;
+  double? asAClassAttended;
   bool? returnval;
-  int? countclass;
+  double? countclass;
   int? countclass1;
   int? attdefaultdisplay;
   int? empCode;
@@ -688,8 +688,8 @@ class SectionListValue {
   int? asasBId;
   String? ismSSubjectName;
 
-  factory SectionListValue.fromJson(Map<String, dynamic> json) =>
-      SectionListValue(
+  factory SubjectListValue.fromJson(Map<String, dynamic> json) =>
+      SubjectListValue(
         asAId: json["asA_Id"],
         mIId: json["mI_Id"],
         asmaYId: json["asmaY_Id"],
@@ -748,16 +748,16 @@ class StudentList {
   List<StudentListValuess?>? values;
 
   factory StudentList.fromJson(Map<String, dynamic> json) => StudentList(
-        type: json["\$4type"],
+        type: json["\$type"],
         values: json["\$values"] == null
             ? []
             : List<StudentListValuess?>.from(
-                json["\$4values"].map((x) => StudentListValuess.fromJson(x))),
+                json["\$values"].map((x) => StudentListValuess.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "\$4type": type,
-        "\$4values": values == null
+        "\$type": type,
+        "\$values": values == null
             ? []
             : List<dynamic>.from(values!.map((x) => x!.toJson())),
       };

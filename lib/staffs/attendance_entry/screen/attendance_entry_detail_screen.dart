@@ -5,16 +5,16 @@ import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 
-class AttendanceEntryDetailScreen extends StatefulWidget {
-  const AttendanceEntryDetailScreen({super.key});
+class DailyOnceAttendanceEntryDetailScreen extends StatefulWidget {
+  const DailyOnceAttendanceEntryDetailScreen({super.key});
 
   @override
-  State<AttendanceEntryDetailScreen> createState() =>
-      _AttendanceEntryDetailScreenState();
+  State<DailyOnceAttendanceEntryDetailScreen> createState() =>
+      _DailyOnceAttendanceEntryDetailScreenState();
 }
 
-class _AttendanceEntryDetailScreenState
-    extends State<AttendanceEntryDetailScreen> {
+class _DailyOnceAttendanceEntryDetailScreenState
+    extends State<DailyOnceAttendanceEntryDetailScreen> {
   final AttendanceEntryController attendanceEntryController =
       Get.put(AttendanceEntryController());
   bool selectAll = false;

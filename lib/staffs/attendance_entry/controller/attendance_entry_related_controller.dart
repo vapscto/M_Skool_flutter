@@ -5,18 +5,21 @@ import 'package:m_skool_flutter/staffs/attendance_entry/model/initialdataModel.d
 import 'package:m_skool_flutter/staffs/attendance_entry/model/sectionModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/studentListModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/studentListModel1.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/model/subjectModel.dart'
+    as PWM;
 
 class AttendanceEntryController extends GetxController {
   RxList<AcademicYearListValue> academicYearList =
       <AcademicYearListValue>[].obs;
   RxList<ClassListValue> classList = <ClassListValue>[].obs;
   RxList<SectionListValue> sectionList = <SectionListValue>[].obs;
-  RxList<SubjectListValue> subjectList = <SubjectListValue>[].obs;
+  RxList<PWM.SubjectListValue> subjectList = <PWM.SubjectListValue>[].obs;
   RxList<PeriodlistValue> periodList = <PeriodlistValue>[].obs;
   RxList<MonthListValue> monthList = <MonthListValue>[].obs;
 
   RxList<StudentListValues> studentList = <StudentListValues>[].obs;
   RxList<StudentListValuess> studentList1 = <StudentListValuess>[].obs;
+  RxList<PWM.StudentListValuess> studentList2 = <PWM.StudentListValuess>[].obs;
 
   RxString attendanceEntryType = ''.obs;
   RxNum countClassHeld = RxNum(0.0);
@@ -24,6 +27,7 @@ class AttendanceEntryController extends GetxController {
   RxBool isInitialData = RxBool(false);
   RxBool isSection = RxBool(false);
   RxBool isStudentData = RxBool(false);
+  RxBool isSubject = RxBool(false);
 
   void isinitialdataloading(bool loading) async {
     isInitialData.value = loading;
@@ -35,6 +39,10 @@ class AttendanceEntryController extends GetxController {
 
   void isstudentdataloading(bool loading) async {
     isStudentData.value = loading;
+  }
+
+  void issubjectloading(bool loading) async {
+    isSubject.value = loading;
   }
 
   Future<bool> getAttendanceEntryInitialData({
@@ -72,13 +80,6 @@ class AttendanceEntryController extends GetxController {
         }
       }
 
-      // if (initialDataModel.sectionList != null ||
-      //     initialDataModel.sectionList!.values != null) {
-      //   sectionList.clear();
-      //   for (var i = 0; i < initialDataModel.sectionList!.values!.length; i++) {
-      //     sectionList.add(initialDataModel.sectionList!.values!.elementAt(i)!);
-      //   }
-      // }
       if (initialDataModel.monthList != null ||
           initialDataModel.monthList!.values != null) {
         monthList.clear();
@@ -87,13 +88,6 @@ class AttendanceEntryController extends GetxController {
         }
       }
 
-      // if (initialDataModel.subjectList != null ||
-      //     initialDataModel.subjectList!.values != null) {
-      //   subjectList.clear();
-      //   for (var i = 0; i < initialDataModel.subjectList!.values!.length; i++) {
-      //     subjectList.add(initialDataModel.subjectList!.values!.elementAt(i)!);
-      //   }
-      // }
       if (initialDataModel.periodlist != null ||
           initialDataModel.periodlist!.values != null) {
         periodList.clear();
@@ -190,7 +184,6 @@ class AttendanceEntryController extends GetxController {
     required String monthFlag1,
     required String base,
   }) async {
-    
     StudentListModel1? studentListModel1 = await onChangeOfSection(
         asmayId: asmayId,
         userId: userId,
@@ -204,14 +197,64 @@ class AttendanceEntryController extends GetxController {
         monthFlag1: monthFlag1,
         base: base);
 
-    if (studentListModel1!.studentList != null ||
-        studentListModel1.studentList!.values != null) {
-      studentList1.clear();
-      for (var i = 0; i < studentListModel1.studentList!.values!.length; i++) {
-        studentList1.add(studentListModel1.studentList!.values!.elementAt(i)!);
+    try {
+      if (studentListModel1!.studentList != null ||
+          studentListModel1.studentList!.values != null) {
+        studentList1.clear();
+        for (var i = 0;
+            i < studentListModel1.studentList!.values!.length;
+            i++) {
+          studentList1
+              .add(studentListModel1.studentList!.values!.elementAt(i)!);
+        }
+        return true;
       }
-      return true;
+      return false;
+    } catch (e) {
+      logger.d(e.toString());
+      return false;
     }
-    return false;
+  }
+
+  Future<bool> getSubjectAndStudentListOnChangeSection({
+    required int asmayId,
+    required String asmclId,
+    required int asmsId,
+    required int userId,
+    required int miId,
+    required String username,
+    required int roleId,
+    required String base,
+  }) async {
+    PWM.SubjectModel? subjectModel = await onChangeSection(
+        asmayId: asmayId,
+        asmclId: asmclId,
+        asmsId: asmsId,
+        userId: userId,
+        miId: miId,
+        username: username,
+        roleId: roleId,
+        base: base);
+    try {
+      if (subjectModel!.subjectList != null ||
+          subjectModel.subjectList!.values != null) {
+        subjectList.clear();
+        for (var i = 0; i < subjectModel.subjectList!.values!.length; i++) {
+          subjectList.add(subjectModel.subjectList!.values!.elementAt(i)!);
+        }
+      }
+      if (subjectModel.studentList != null ||
+          subjectModel.studentList!.values != null) {
+        studentList2.clear();
+        for (var i = 0; i < subjectModel.studentList!.values!.length; i++) {
+          studentList2.add(subjectModel.studentList!.values!.elementAt(i)!);
+        }
+        return true;
+      }
+      return false;
+    } catch (e) {
+      logger.d(e.toString());
+      return false;
+    }
   }
 }

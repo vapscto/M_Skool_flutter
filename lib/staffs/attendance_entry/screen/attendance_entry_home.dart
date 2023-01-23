@@ -12,11 +12,14 @@ import 'package:m_skool_flutter/staffs/attendance_entry/model/sectionModel.dart'
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_detail_screen.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/daywise_attendance_entry_detail.screen.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/monthwise_attendance_entry_detail_screen.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/screen/periodwise_attendance_entry_detail_screen.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/model/subjectModel.dart'
+    as PWM;
 
 class AttendanceEntryHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -39,7 +42,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
   AcademicYearListValue? selectedAcademicYear;
   ClassListValue? selectedClass;
   SectionListValue? selectedSection;
-  SubjectListValue? selectedSubject;
+  PWM.SubjectListValue? selectedSubject;
   PeriodlistValue? selectedPeriod;
   MonthListValue? selectedMonth;
 
@@ -110,7 +113,11 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
       ),
     )
         .then((value) {
-      logger.d(value);
+      if (!value) {
+        logger.d(value);
+        attendanceEntryController.isstudentdataloading(false);
+        return;
+      }
       logger.d(attendanceEntryController.studentList.first);
     });
     attendanceEntryController.isstudentdataloading(false);
@@ -144,6 +151,28 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
         logger.d(attendanceEntryController.studentList1.first);
       },
     );
+  }
+
+  void getSubjectListAndStudentList(int asmsId) async {
+    attendanceEntryController.issubjectloading(true);
+    await attendanceEntryController
+        .getSubjectAndStudentListOnChangeSection(
+      asmayId: selectedAcademicYear!.asmaYId!.toInt(),
+      asmclId: selectedClass!.asmcLId.toString(),
+      asmsId: asmsId,
+      userId: widget.loginSuccessModel.userId!,
+      miId: widget.loginSuccessModel.mIID!,
+      username: widget.loginSuccessModel.userName!,
+      roleId: widget.loginSuccessModel.roleId!,
+      base: baseUrlFromInsCode(
+        'admission',
+        widget.mskoolController,
+      ),
+    )
+        .then((value) {
+      logger.d(value);
+    });
+    attendanceEntryController.issubjectloading(false);
   }
 
   @override
@@ -427,6 +456,8 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                 selectedSection = s!;
                                 setState(() {
                                   selectedMonth = null;
+                                  selectedSubject = null;
+                                  selectedPeriod = null;
                                 });
 
                                 if (attendanceEntryController
@@ -440,7 +471,8 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                 } else if (attendanceEntryController
                                         .attendanceEntryType.value ==
                                     'P') {
-                                  // getsubjectlist.
+                                  getSubjectListAndStudentList(
+                                      s.asmSId!.toInt());
                                 }
                               },
                             ),
@@ -607,257 +639,284 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                 ),
                               )
                             : const SizedBox(),
-                    attendanceEntryController.isSection.value
-                        ? const SizedBox()
-                        : attendanceEntryController.attendanceEntryType.value ==
-                                    'P' &&
-                                selectedSection != null
-                            ? Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 16),
-                                decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  borderRadius: BorderRadius.circular(16.0),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      offset: Offset(0, 1),
-                                      blurRadius: 8,
-                                      color: Colors.black12,
+                    attendanceEntryController.isSubject.value
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : attendanceEntryController.isSection.value
+                            ? const SizedBox()
+                            : attendanceEntryController
+                                            .attendanceEntryType.value ==
+                                        'P' &&
+                                    selectedSection != null
+                                ? Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 16),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      borderRadius: BorderRadius.circular(16.0),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          offset: Offset(0, 1),
+                                          blurRadius: 8,
+                                          color: Colors.black12,
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                child:
-                                    DropdownButtonFormField<SubjectListValue>(
-                                  value: selectedSubject,
-                                  decoration: InputDecoration(
-                                    focusedBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                    enabledBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                    hintStyle: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall!
-                                        .merge(const TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.3)),
-                                    hintText: 'Select Subject',
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.always,
-                                    isDense: true,
-                                    label: const CustomDropDownLabel(
-                                      icon: 'assets/images/selectSub.png',
-                                      containerColor:
-                                          Color.fromRGBO(229, 243, 255, 1),
-                                      text: 'Select Subject',
-                                      textColor:
-                                          Color.fromRGBO(62, 120, 170, 1),
-                                    ),
-                                  ),
-                                  icon: const Padding(
-                                    padding: EdgeInsets.only(top: 3),
-                                    child: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      size: 30,
-                                    ),
-                                  ),
-                                  iconSize: 30,
-                                  items: List.generate(
-                                      attendanceEntryController
-                                          .subjectList.length, (index) {
-                                    return DropdownMenuItem(
-                                      value: attendanceEntryController
-                                          .subjectList[index],
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 13, left: 5),
-                                        child: Text(
-                                          attendanceEntryController
-                                              .subjectList[index]
-                                              .ismSIvrsSubjectName!,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelSmall!
-                                              .merge(const TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 16.0,
-                                                  letterSpacing: 0.3)),
+                                    child: DropdownButtonFormField<
+                                        PWM.SubjectListValue>(
+                                      value: selectedSubject,
+                                      decoration: InputDecoration(
+                                        focusedBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                          ),
+                                        ),
+                                        enabledBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                          ),
+                                        ),
+                                        hintStyle: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .merge(const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.3)),
+                                        hintText: 'Select Subject',
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.always,
+                                        isDense: true,
+                                        label: const CustomDropDownLabel(
+                                          icon: 'assets/images/selectSub.png',
+                                          containerColor:
+                                              Color.fromRGBO(229, 243, 255, 1),
+                                          text: 'Select Subject',
+                                          textColor:
+                                              Color.fromRGBO(62, 120, 170, 1),
                                         ),
                                       ),
-                                    );
-                                  }),
-                                  onChanged: (s) {
-                                    selectedSubject = s!;
-                                  },
-                                ),
-                              )
-                            : const SizedBox(),
-                    attendanceEntryController.isSection.value
-                        ? const SizedBox()
-                        : attendanceEntryController.attendanceEntryType.value ==
-                                    'P' &&
-                                selectedSection != null
-                            ? Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 16),
-                                decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  borderRadius: BorderRadius.circular(16.0),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      offset: Offset(0, 1),
-                                      blurRadius: 8,
-                                      color: Colors.black12,
-                                    ),
-                                  ],
-                                ),
-                                child: DropdownButtonFormField<PeriodlistValue>(
-                                  value: selectedPeriod,
-                                  decoration: InputDecoration(
-                                    focusedBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                    enabledBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                    isDense: true,
-                                    hintStyle: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall!
-                                        .merge(const TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14.0,
-                                            letterSpacing: 0.3)),
-                                    hintText: 'Select Period',
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.always,
-                                    label: const CustomDropDownLabel(
-                                      icon: 'assets/images/selectPeriod.png',
-                                      containerColor:
-                                          Color.fromRGBO(238, 232, 255, 1),
-                                      text: 'Select Period',
-                                      textColor:
-                                          Color.fromRGBO(111, 88, 180, 1),
-                                    ),
-                                  ),
-                                  icon: const Padding(
-                                    padding: EdgeInsets.only(top: 3),
-                                    child: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      size: 30,
-                                    ),
-                                  ),
-                                  iconSize: 30,
-                                  items: List.generate(
-                                      attendanceEntryController
-                                          .periodList.length, (index) {
-                                    return DropdownMenuItem(
-                                      value: attendanceEntryController
-                                          .periodList[index],
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 13, left: 5),
-                                        child: Text(
-                                          attendanceEntryController
-                                              .periodList[index]
-                                              .ttmPPeriodName!,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelSmall!
-                                              .merge(const TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 16.0,
-                                                  letterSpacing: 0.3)),
+                                      icon: const Padding(
+                                        padding: EdgeInsets.only(top: 3),
+                                        child: Icon(
+                                          Icons.keyboard_arrow_down_rounded,
+                                          size: 30,
                                         ),
                                       ),
-                                    );
-                                  }),
-                                  onChanged: (s) {
-                                    selectedPeriod = s!;
-                                  },
-                                ),
-                              )
-                            : const SizedBox(),
-                    attendanceEntryController.isSection.value
+                                      iconSize: 30,
+                                      items: List.generate(
+                                          attendanceEntryController
+                                              .subjectList.length, (index) {
+                                        return DropdownMenuItem(
+                                          value: attendanceEntryController
+                                              .subjectList[index],
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 13, left: 5),
+                                            child: Text(
+                                              attendanceEntryController
+                                                  .subjectList[index]
+                                                  .ismSSubjectName!,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelSmall!
+                                                  .merge(const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 16.0,
+                                                      letterSpacing: 0.3)),
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                      onChanged: (s) {
+                                        selectedSubject = s!;
+                                        setState(() {});
+                                      },
+                                    ),
+                                  )
+                                : const SizedBox(),
+                    attendanceEntryController.isSubject.value
                         ? const SizedBox()
-                        : attendanceEntryController.attendanceEntryType.value ==
-                                    'P' &&
-                                selectedSection != null
-                            ? SizedBox(
-                                height: 33,
-                                child: RadioListTile(
-                                  dense: true,
-                                  activeColor: Theme.of(context).primaryColor,
-                                  contentPadding:
-                                      const EdgeInsets.symmetric(horizontal: 8),
-                                  visualDensity:
-                                      const VisualDensity(horizontal: -4.0),
-                                  title: Text(
-                                    "Regular",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall!
-                                        .merge(const TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.3)),
-                                  ),
-                                  value: "Regular",
-                                  groupValue: selectedRadio,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedRadio = value.toString();
-                                    });
-                                  },
-                                ),
-                              )
-                            : const SizedBox(),
-                    attendanceEntryController.isSection.value
+                        : attendanceEntryController.isSection.value ||
+                                selectedSubject == null
+                            ? const SizedBox()
+                            : attendanceEntryController
+                                            .attendanceEntryType.value ==
+                                        'P' &&
+                                    selectedSection != null
+                                ? Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 16),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      borderRadius: BorderRadius.circular(16.0),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          offset: Offset(0, 1),
+                                          blurRadius: 8,
+                                          color: Colors.black12,
+                                        ),
+                                      ],
+                                    ),
+                                    child: DropdownButtonFormField<
+                                        PeriodlistValue>(
+                                      value: selectedPeriod,
+                                      decoration: InputDecoration(
+                                        focusedBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                          ),
+                                        ),
+                                        enabledBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                          ),
+                                        ),
+                                        isDense: true,
+                                        hintStyle: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .merge(const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.3)),
+                                        hintText: 'Select Period',
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.always,
+                                        label: const CustomDropDownLabel(
+                                          icon:
+                                              'assets/images/selectPeriod.png',
+                                          containerColor:
+                                              Color.fromRGBO(238, 232, 255, 1),
+                                          text: 'Select Period',
+                                          textColor:
+                                              Color.fromRGBO(111, 88, 180, 1),
+                                        ),
+                                      ),
+                                      icon: const Padding(
+                                        padding: EdgeInsets.only(top: 3),
+                                        child: Icon(
+                                          Icons.keyboard_arrow_down_rounded,
+                                          size: 30,
+                                        ),
+                                      ),
+                                      iconSize: 30,
+                                      items: List.generate(
+                                          attendanceEntryController
+                                              .periodList.length, (index) {
+                                        return DropdownMenuItem(
+                                          value: attendanceEntryController
+                                              .periodList[index],
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 13, left: 5),
+                                            child: Text(
+                                              attendanceEntryController
+                                                  .periodList[index]
+                                                  .ttmPPeriodName!,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelSmall!
+                                                  .merge(const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      fontSize: 16.0,
+                                                      letterSpacing: 0.3)),
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                      onChanged: (s) {
+                                        selectedPeriod = s!;
+                                        setState(() {});
+                                      },
+                                    ),
+                                  )
+                                : const SizedBox(),
+                    attendanceEntryController.isSubject.value
                         ? const SizedBox()
-                        : attendanceEntryController.attendanceEntryType.value ==
-                                    'P' &&
-                                selectedSection != null
-                            ? SizedBox(
-                                height: 33,
-                                child: RadioListTile(
-                                  dense: true,
-                                  activeColor: Theme.of(context).primaryColor,
-                                  contentPadding:
-                                      const EdgeInsets.symmetric(horizontal: 8),
-                                  visualDensity:
-                                      const VisualDensity(horizontal: -4.0),
-                                  title: Text(
-                                    "Extra Period",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall!
-                                        .merge(const TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 16.0,
-                                            letterSpacing: 0.3)),
-                                  ),
-                                  value: "extraPeriod",
-                                  groupValue: selectedRadio,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedRadio = value.toString();
-                                    });
-                                  },
-                                ),
-                              )
-                            : const SizedBox(),
+                        : attendanceEntryController.isSection.value ||
+                                selectedPeriod == null
+                            ? const SizedBox()
+                            : attendanceEntryController
+                                            .attendanceEntryType.value ==
+                                        'P' &&
+                                    selectedSection != null
+                                ? SizedBox(
+                                    height: 33,
+                                    child: RadioListTile(
+                                      dense: true,
+                                      activeColor:
+                                          Theme.of(context).primaryColor,
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                      visualDensity:
+                                          const VisualDensity(horizontal: -4.0),
+                                      title: Text(
+                                        "Regular",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .merge(const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 16.0,
+                                                letterSpacing: 0.3)),
+                                      ),
+                                      value: "Regular",
+                                      groupValue: selectedRadio,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          selectedRadio = value.toString();
+                                        });
+                                      },
+                                    ),
+                                  )
+                                : const SizedBox(),
+                    attendanceEntryController.isSubject.value
+                        ? const SizedBox()
+                        : attendanceEntryController.isSection.value ||
+                                selectedPeriod == null
+                            ? const SizedBox()
+                            : attendanceEntryController
+                                            .attendanceEntryType.value ==
+                                        'P' &&
+                                    selectedSection != null
+                                ? SizedBox(
+                                    height: 33,
+                                    child: RadioListTile(
+                                      dense: true,
+                                      activeColor:
+                                          Theme.of(context).primaryColor,
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                      visualDensity:
+                                          const VisualDensity(horizontal: -4.0),
+                                      title: Text(
+                                        "Extra Period",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .merge(const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 16.0,
+                                                letterSpacing: 0.3)),
+                                      ),
+                                      value: "extraPeriod",
+                                      groupValue: selectedRadio,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          selectedRadio = value.toString();
+                                        });
+                                      },
+                                    ),
+                                  )
+                                : const SizedBox(),
                     const SizedBox(height: 80),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -889,7 +948,8 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                             'D') {
                           if (attendanceEntryController
                               .studentList1.isNotEmpty) {
-                            Get.to(() => const AttendanceEntryDetailScreen());
+                            Get.to(() =>
+                                const DailyOnceAttendanceEntryDetailScreen());
                           } else {
                             Fluttertoast.showToast(
                                 msg: "Something went wrong..");
@@ -900,24 +960,43 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                           if (attendanceEntryController
                               .studentList1.isNotEmpty) {
                             Get.to(() =>
-                                const DayWiseAttendanceEntryDetailScreen());
+                                const DailyTwiceAttendanceEntryDetailScreen());
                           } else {
                             Fluttertoast.showToast(
                                 msg: "Something went wrong..");
                           }
+                        } else if (attendanceEntryController
+                                .attendanceEntryType.value ==
+                            'P') {
+                          if (selectedSubject == null) {
+                            Fluttertoast.showToast(msg: "Select Subject.");
+                          } else if (selectedPeriod == null) {
+                            Fluttertoast.showToast(msg: "Select Peroid.");
+                          } else if (attendanceEntryController
+                              .studentList2.isNotEmpty) {
+                            Get.to(() =>
+                                const PeriodWiseAttendanceEntryDetailScreen());
+                          } else {
+                            Fluttertoast.showToast(msg: "No data available...");
+                          }
                         }
                       },
-                      child: Text(
-                        'View Details',
-                        style: Theme.of(context).textTheme.labelSmall!.merge(
-                              const TextStyle(
-                                color: Colors.white,
-                                letterSpacing: 0.3,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                              ),
+                      child: attendanceEntryController.isStudentData.value
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : Text(
+                              'View Details',
+                              style:
+                                  Theme.of(context).textTheme.labelSmall!.merge(
+                                        const TextStyle(
+                                          color: Colors.white,
+                                          letterSpacing: 0.3,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
                             ),
-                      ),
                     )
                   ],
                 ),
