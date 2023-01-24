@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/notice_board_staff/controller/notice_board_controller.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/tabs/new_notice_tab_screen.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/tabs/view_notice_tab_screen.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
@@ -6,7 +10,14 @@ import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class NoticeBoardStaffHome extends StatefulWidget {
-  const NoticeBoardStaffHome({super.key});
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  final String title;
+  const NoticeBoardStaffHome(
+      {super.key,
+      required this.loginSuccessModel,
+      required this.mskoolController,
+      required this.title});
 
   @override
   State<NoticeBoardStaffHome> createState() => _NoticeBoardStaffHomeState();
@@ -15,10 +26,18 @@ class NoticeBoardStaffHome extends StatefulWidget {
 class _NoticeBoardStaffHomeState extends State<NoticeBoardStaffHome>
     with SingleTickerProviderStateMixin {
   TabController? tabController;
+  final NoticeBoardController noticeBoardController =
+      Get.put(NoticeBoardController());
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    Get.delete<NoticeBoardController>();
+    super.dispose();
   }
 
   @override
@@ -45,9 +64,17 @@ class _NoticeBoardStaffHomeState extends State<NoticeBoardStaffHome>
       ).getAppBar(),
       body: TabBarView(
         controller: tabController,
-        children: const [
-          NewNoticeTabScreen(),
-          ViewNoticeTabScreen(),
+        children: [
+          NewNoticeTabScreen(
+            noticeBoardController: noticeBoardController,
+            loginSuccessModel: widget.loginSuccessModel,
+            mskoolController: widget.mskoolController,
+          ),
+          ViewNoticeTabScreen(
+            nbController: noticeBoardController,
+            loginSuccessModel: widget.loginSuccessModel,
+            mskoolController: widget.mskoolController,
+          ),
         ],
       ),
     );

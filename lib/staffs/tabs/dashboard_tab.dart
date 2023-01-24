@@ -18,11 +18,12 @@ import 'package:m_skool_flutter/staffs/salary_details/screen/salary_det_home.dar
 import 'package:m_skool_flutter/staffs/staff_tt/screens/staff_tt_home.dart';
 import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
-import 'package:m_skool_flutter/staffs/view_notice/screens/view_notice_home_screen.dart';
 import 'package:m_skool_flutter/staffs/widget/staff_dashboard_container.dart';
 
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
+
+import '../notice_board_staff/screen/notice_board_staff_home.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({
@@ -169,19 +170,26 @@ class Dashboard extends StatelessWidget {
                             .elementAt(index)
                             .pagename! ==
                         "Notice Board") {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) {
-                        return ViewNoticeHome(
-                          loginSuccessModel: loginSuccessModel,
-                          mskoolController: mskoolController,
-                          title: loginSuccessModel
-                              .staffmobileappprivileges!.values!
-                              .elementAt(index)
-                              .pagename!,
-                        );
-                      }));
+                      // Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      //   return ViewNoticeHome(
+                      //     loginSuccessModel: loginSuccessModel,
+                      //     mskoolController: mskoolController,
+                      //     title: loginSuccessModel
+                      //         .staffmobileappprivileges!.values!
+                      //         .elementAt(index)
+                      //         .pagename!,
+                      //   );
+                      // }));
 
                       // Notice Board Staff
-                      // Get.to(() => const NoticeBoardStaffHome());
+                      Get.to(() => NoticeBoardStaffHome(
+                            loginSuccessModel: loginSuccessModel,
+                            mskoolController: mskoolController,
+                            title: loginSuccessModel
+                                .staffmobileappprivileges!.values!
+                                .elementAt(index)
+                                .pagename!,
+                          ));
                       return;
                     }
                     if (loginSuccessModel.staffmobileappprivileges!.values!

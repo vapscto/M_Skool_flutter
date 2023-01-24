@@ -83,7 +83,7 @@ class _StaffCoeHomeState extends State<StaffCoeHome> {
       appBar: widget.showAppBar == null
           ? const CustomAppBar(title: "Coe").getAppBar()
           : null,
-      floatingActionButton: const HomeFab(),
+      floatingActionButton: widget.showAppBar != null ? null : const HomeFab(),
       body: Obx(() {
         return coeDataHandler.isErrorOccured.value
             ? const Center(

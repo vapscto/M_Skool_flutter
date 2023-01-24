@@ -24,7 +24,12 @@ class StaffPunchCardAndLop extends StatelessWidget {
         const SizedBox(
           width: 12.0,
         ),
-        const Expanded(child: StaffPunchReport())
+        Expanded(
+            child: controller.dashboardPunch.isEmpty
+                ? const SizedBox()
+                : StaffPunchReport(
+                    values: controller.dashboardPunch.first,
+                  ))
       ],
     );
   }

@@ -153,7 +153,7 @@ class _VerifyHwCwItemState extends State<VerifyHwCwItem> {
                 ]),
               ),
               Expanded(
-                flex: 3,
+                flex: 2,
                 child: TextField(
                   controller: widget.marks,
                   keyboardType: TextInputType.number,

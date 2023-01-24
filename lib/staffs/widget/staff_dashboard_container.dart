@@ -23,7 +23,13 @@ class StaffDashboardContainer extends StatelessWidget {
     return Obx(() {
       return Column(
         children: [
-          const StaffCarasouel(),
+          controller.dashboardCoe.isEmpty
+              ? const SizedBox()
+              : StaffCarasouel(
+                  loginSuccessModel: loginSuccessModel,
+                  mList: controller.dashboardCoe,
+                  mskoolController: mskoolController,
+                ),
           const SizedBox(
             height: 16.0,
           ),

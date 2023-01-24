@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:m_skool_flutter/main.dart';
 
 class CheckBoxContainer extends StatefulWidget {
   final bool isChecked;
@@ -22,6 +23,7 @@ class _CheckBoxContainerState extends State<CheckBoxContainer> {
   @override
   void initState() {
     selected = widget.isChecked;
+    logger.d(widget.isChecked);
     super.initState();
   }
 

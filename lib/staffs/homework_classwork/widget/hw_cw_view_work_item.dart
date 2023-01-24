@@ -348,12 +348,14 @@ class HwCwViewWorkItem extends StatelessWidget {
                                                                     .elementAt(
                                                                         index)
                                                                     .ihwatTAttachment!))) {
-                                                              await launchUrl(Uri
-                                                                  .parse(snapshot
+                                                              await launchUrl(
+                                                                  Uri.parse(snapshot
                                                                       .data!
                                                                       .elementAt(
                                                                           index)
-                                                                      .ihwatTAttachment!));
+                                                                      .ihwatTAttachment!),
+                                                                  mode: LaunchMode
+                                                                      .externalApplication);
                                                             }
                                                           },
                                                           title: snapshot.data!
@@ -500,12 +502,14 @@ class HwCwViewWorkItem extends StatelessWidget {
                                                                     .elementAt(
                                                                         index)
                                                                     .icwatTAttachment!))) {
-                                                              await launchUrl(Uri
-                                                                  .parse(snapshot
+                                                              await launchUrl(
+                                                                  Uri.parse(snapshot
                                                                       .data!
                                                                       .elementAt(
                                                                           index)
-                                                                      .icwatTAttachment!));
+                                                                      .icwatTAttachment!),
+                                                                  mode: LaunchMode
+                                                                      .externalApplication);
                                                             }
                                                           },
                                                           title: snapshot.data!

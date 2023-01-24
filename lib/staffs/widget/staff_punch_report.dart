@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/staffs/model/dashboard_punch_report_model.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class StaffPunchReport extends StatelessWidget {
-  const StaffPunchReport({super.key});
+  final DashboardPunchReportModelValues values;
+  const StaffPunchReport({super.key, required this.values});
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +29,15 @@ class StaffPunchReport extends StatelessWidget {
                       ),
                     ),
               ),
-              trailing:
-                  Text("27 Nov", style: Theme.of(context).textTheme.titleSmall),
+              trailing: Text(
+                  getFormatedDate(DateTime.parse(values.punchdate!))
+                      .substring(
+                          0,
+                          getFormatedDate(DateTime.parse(values.punchdate!))
+                                  .length -
+                              2)
+                      .trim(),
+                  style: Theme.of(context).textTheme.titleSmall),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -38,7 +48,7 @@ class StaffPunchReport extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "04 H",
+                          "${int.parse(values.punchOUTtime!.split(":").first) - int.parse(values.punchINtime!.split(":").first)} H",
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.titleSmall!.merge(
                               const TextStyle(
@@ -53,7 +63,7 @@ class StaffPunchReport extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "30 min",
+                          "${int.parse(values.punchOUTtime!.split(":").last) - int.parse(values.punchINtime!.split(":").last)} min",
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.titleSmall!.merge(
                               const TextStyle(
@@ -76,7 +86,8 @@ class StaffPunchReport extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 color: const Color.fromRGBO(222, 205, 233, 0.6),
               ),
-              child: const Text("Late in : 15 min"),
+              child: Text(
+                  "Late in : ${values.lateby!.split(":").first}H ${values.lateby!.split(":").last} min"),
             ),
             const SizedBox(
               height: 8.0,
@@ -98,7 +109,11 @@ class StaffPunchReport extends StatelessWidget {
                   SizedBox(
                       width: Get.width * 0.12,
                       height: 30,
-                      child: const TextField()),
+                      child: TextField(
+                        readOnly: true,
+                        controller: TextEditingController(
+                            text: values.earlyby.toString()),
+                      )),
                 ],
               ),
             ),

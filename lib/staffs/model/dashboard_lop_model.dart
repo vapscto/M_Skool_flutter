@@ -28,6 +28,7 @@ class DashboardLopModelValues {
   String? type;
   double? lOPAmount;
   int? lOPCOUNT;
+  String? monthname;
 
   DashboardLopModelValues({this.type, this.lOPAmount, this.lOPCOUNT});
 
@@ -35,6 +36,7 @@ class DashboardLopModelValues {
     type = json['$type'];
     lOPAmount = json['LOPAmount'];
     lOPCOUNT = json['LOPCOUNT'];
+    monthname = json['monthname'];
   }
 
   Map<String, dynamic> toJson() {
@@ -42,6 +44,7 @@ class DashboardLopModelValues {
     data['$type'] = type;
     data['LOPAmount'] = lOPAmount;
     data['LOPCOUNT'] = lOPCOUNT;
+    data['monthname'] = monthname;
     return data;
   }
 }
