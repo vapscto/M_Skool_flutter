@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/controller/attendance_entry_related_controller.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/widget/attendance_checkbox_widget.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
@@ -7,7 +9,13 @@ import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class DailyOnceAttendanceEntryDetailScreen extends StatefulWidget {
-  const DailyOnceAttendanceEntryDetailScreen({super.key});
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  const DailyOnceAttendanceEntryDetailScreen({
+    super.key,
+    required this.loginSuccessModel,
+    required this.mskoolController,
+  });
 
   @override
   State<DailyOnceAttendanceEntryDetailScreen> createState() =>
@@ -241,6 +249,7 @@ class _DailyOnceAttendanceEntryDetailScreenState
                                 Align(
                                   alignment: Alignment.center,
                                   child: AttendanceCheckboxWidget(
+                                    index: index,
                                     attendance: selectAll ? true : false,
                                   ),
                                 ),

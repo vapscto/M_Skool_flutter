@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
@@ -48,6 +49,11 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
 
   String selectedRadio = 'Regular';
   var todayDate = TextEditingController();
+  var startDate = TextEditingController();
+  var endDate = TextEditingController();
+  DateTime? selecteddate;
+  DateTime? selectedstartdate;
+  DateTime? selectedenddate;
 
   void getInitialData() async {
     attendanceEntryController.isinitialdataloading(true);
@@ -292,6 +298,8 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                             selectedMonth = null;
                             selectedSubject = null;
                             selectedPeriod = null;
+                            startDate.text = '';
+                            endDate.text = '';
                           });
                         },
                       ),
@@ -373,6 +381,8 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                           selectedClass = s!;
                           selectedSection = null;
                           selectedMonth = null;
+                          startDate.text = '';
+                          endDate.text = '';
                           getSectionData(s.asmcLId!.toInt());
                         },
                       ),
@@ -464,6 +474,8 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                   selectedMonth = null;
                                   selectedSubject = null;
                                   selectedPeriod = null;
+                                  startDate.text = '';
+                                  endDate.text = '';
                                 });
 
                                 if (attendanceEntryController
@@ -570,6 +582,8 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                   }),
                                   onChanged: (s) {
                                     selectedMonth = s!;
+                                    startDate.text = '';
+                                    endDate.text = '';
                                     getStudentListOnChangeOfMonth(
                                         s.ivrMMonthId!.toInt());
                                   },
@@ -583,27 +597,34 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                         'D' ||
                                     attendanceEntryController
                                             .attendanceEntryType.value ==
-                                        'H') &&
+                                        'H' ||
+                                    attendanceEntryController
+                                            .attendanceEntryType.value ==
+                                        'P' ||
+                                    attendanceEntryController
+                                            .attendanceEntryType.value ==
+                                        'M') &&
                                 selectedSection != null
                             ? Container(
                                 margin: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 30),
+                                    horizontal: 16, vertical: 25),
                                 child: CustomContainer(
                                   child: TextField(
                                     style:
                                         Theme.of(context).textTheme.titleSmall,
                                     controller: todayDate,
                                     onTap: () async {
-                                      var date = await showDatePicker(
+                                      selecteddate = await showDatePicker(
                                         context: context,
                                         initialDate: DateTime.now(),
                                         firstDate: DateTime.now(),
                                         lastDate: DateTime.now(),
                                       );
-                                      if (date != null) {
+
+                                      if (selecteddate != null) {
                                         setState(() {
                                           todayDate.text =
-                                              "${numberList[date.day]}-${numberList[date.month]}-${date.year}";
+                                              "${numberList[selecteddate!.day]}-${numberList[selecteddate!.month]}-${selecteddate!.year}";
                                         });
                                       }
                                     },
@@ -625,7 +646,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                       hintText: 'Select date.'.tr,
                                       suffixIcon: Image.asset(
                                         'assets/images/darkbluecalendar.png',
-                                        color: Colors.black,
+                                        color: const Color(0xFF3E78AA),
                                       ),
                                       floatingLabelBehavior:
                                           FloatingLabelBehavior.always,
@@ -642,6 +663,218 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                     ),
                                     readOnly: true,
                                   ),
+                                ),
+                              )
+                            : const SizedBox(),
+                    attendanceEntryController.isSection.value
+                        ? const SizedBox()
+                        : attendanceEntryController.attendanceEntryType.value ==
+                                    'M' &&
+                                selectedSection != null &&
+                                selectedMonth != null
+                            ? Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0, vertical: 16),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: CustomContainer(
+                                        child: TextField(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall,
+                                          readOnly: true,
+                                          controller: startDate,
+                                          onTap: () async {
+                                            selectedstartdate =
+                                                await showDatePicker(
+                                              context: context,
+                                              initialDate: DateTime.now(),
+                                              firstDate: DateTime(2000),
+                                              lastDate: DateTime(2030),
+                                            );
+
+                                            if (selectedstartdate != null) {
+                                              setState(() {
+                                                startDate.text =
+                                                    "${numberList[selectedstartdate!.day]}-${numberList[selectedstartdate!.month]}-${selectedstartdate!.year}";
+                                              });
+                                            }
+                                          },
+                                          decoration: InputDecoration(
+                                            suffixIcon: IconButton(
+                                              onPressed: () {},
+                                              icon: SvgPicture.asset(
+                                                'assets/svg/calendar_icon.svg',
+                                                color: const Color(0xFF3E78AA),
+                                                height: 22.0,
+                                              ),
+                                            ),
+                                            contentPadding:
+                                                const EdgeInsets.only(
+                                                    top: 48.0, left: 12),
+                                            border: const OutlineInputBorder(),
+                                            label: Container(
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 5),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12.0,
+                                                      vertical: 8.0),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          24.0),
+                                                  color:
+                                                      const Color(0xFFE5F3FF)),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    "assets/svg/calendar_icon.svg",
+                                                    color:
+                                                        const Color(0xFF3E78AA),
+                                                    height: 24.0,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 6.0,
+                                                  ),
+                                                  Text(
+                                                    " Start Date ",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .labelMedium!
+                                                        .merge(
+                                                          const TextStyle(
+                                                            fontSize: 20.0,
+                                                            color: Color(
+                                                                0xFF3E78AA),
+                                                          ),
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            hintText: 'Select Date',
+                                            floatingLabelBehavior:
+                                                FloatingLabelBehavior.always,
+                                            enabledBorder:
+                                                const OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                              ),
+                                            ),
+                                            focusedBorder:
+                                                const OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 12.0,
+                                    ),
+                                    Expanded(
+                                      child: CustomContainer(
+                                        child: TextField(
+                                          readOnly: true,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall,
+                                          controller: endDate,
+                                          onTap: () async {
+                                            selectedenddate =
+                                                await showDatePicker(
+                                              context: context,
+                                              initialDate: DateTime.now(),
+                                              firstDate: DateTime(2000),
+                                              lastDate: DateTime(2030),
+                                            );
+
+                                            if (selectedenddate != null) {
+                                              setState(() {
+                                                endDate.text =
+                                                    "${numberList[selectedenddate!.day]}-${numberList[selectedenddate!.month]}-${selectedenddate!.year}";
+                                              });
+                                            }
+                                          },
+                                          decoration: InputDecoration(
+                                            isDense: true,
+                                            contentPadding:
+                                                const EdgeInsets.only(
+                                                    top: 48.0, left: 12),
+                                            suffixIcon: IconButton(
+                                              onPressed: () {},
+                                              icon: SvgPicture.asset(
+                                                'assets/svg/calendar_icon.svg',
+                                                color: const Color(0xFF3E78AA),
+                                                height: 22.0,
+                                              ),
+                                            ),
+                                            border: const OutlineInputBorder(),
+                                            label: Container(
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 5),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12.0,
+                                                      vertical: 8.0),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          24.0),
+                                                  color:
+                                                      const Color(0xFFE5F3FF)),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    "assets/svg/calendar_icon.svg",
+                                                    color:
+                                                        const Color(0xFF3E78AA),
+                                                    height: 24.0,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 6.0,
+                                                  ),
+                                                  Text(
+                                                    " End Date ",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .labelMedium!
+                                                        .merge(
+                                                          const TextStyle(
+                                                              fontSize: 20.0,
+                                                              color: Color(
+                                                                  0xFF3E78AA)),
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            hintText: 'Select Date',
+                                            floatingLabelBehavior:
+                                                FloatingLabelBehavior.always,
+                                            enabledBorder:
+                                                const OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                              ),
+                                            ),
+                                            focusedBorder:
+                                                const OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               )
                             : const SizedBox(),
@@ -940,10 +1173,16 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                             'M') {
                           if (selectedMonth == null) {
                             Fluttertoast.showToast(msg: 'Select month');
+                          } else if (startDate.text.isEmpty ||
+                              endDate.text.isEmpty) {
+                            Fluttertoast.showToast(
+                                msg: 'Select start date and end date.');
                           } else if (attendanceEntryController
                               .studentList.isNotEmpty) {
-                            Get.to(() =>
-                                const MonthWiseAttendanceEntryDetailScreen());
+                            Get.to(() => MonthWiseAttendanceEntryDetailScreen(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                ));
                           } else {
                             Fluttertoast.showToast(
                                 msg:
@@ -954,8 +1193,10 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                             'D') {
                           if (attendanceEntryController
                               .studentList1.isNotEmpty) {
-                            Get.to(() =>
-                                const DailyOnceAttendanceEntryDetailScreen());
+                            Get.to(() => DailyOnceAttendanceEntryDetailScreen(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                ));
                           } else {
                             Fluttertoast.showToast(
                                 msg: "Something went wrong..");
@@ -965,8 +1206,10 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                             'H') {
                           if (attendanceEntryController
                               .studentList1.isNotEmpty) {
-                            Get.to(() =>
-                                const DailyTwiceAttendanceEntryDetailScreen());
+                            Get.to(() => DailyTwiceAttendanceEntryDetailScreen(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                ));
                           } else {
                             Fluttertoast.showToast(
                                 msg: "Something went wrong..");
@@ -980,8 +1223,18 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                             Fluttertoast.showToast(msg: "Select Peroid.");
                           } else if (attendanceEntryController
                               .studentList2.isNotEmpty) {
-                            Get.to(() =>
-                                const PeriodWiseAttendanceEntryDetailScreen());
+                            Get.to(() => PeriodWiseAttendanceEntryDetailScreen(
+                                  loginSuccessModel: widget.loginSuccessModel,
+                                  mskoolController: widget.mskoolController,
+                                  asaId: attendanceEntryController.asaId.value,
+                                  asmayId:
+                                      selectedAcademicYear!.asmaYId!.toInt(),
+                                  asmclId: selectedClass!.asmcLId!.toInt(),
+                                  asmsId: selectedSection!.asmSId!.toInt(),
+                                  periodId: selectedPeriod!.ttmPId!.toInt(),
+                                  selectedradio: selectedRadio,
+                                  subjectId: selectedSubject!.ismSId!.toInt(),
+                                ));
                           } else {
                             Fluttertoast.showToast(msg: "No data available...");
                           }
