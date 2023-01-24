@@ -222,3 +222,26 @@ Future<SubjectModel?> onChangeSection({
     return null;
   }
 }
+
+Future<bool> saveAttendanceEntry({
+  required Map<String, dynamic> data,
+  required String base,
+}) async {
+  var url = base + URLS.saveAttendanceEntry;
+  try {
+    var response = await dio.post(
+      url,
+      options: Options(
+        headers: getSession(),
+      ),
+      data: data,
+    );
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    logger.d(e.toString());
+    return false;
+  }
+}

@@ -23,11 +23,13 @@ class AttendanceEntryController extends GetxController {
 
   RxString attendanceEntryType = ''.obs;
   RxNum countClassHeld = RxNum(0.0);
+  RxInt asaId = RxInt(0);
 
   RxBool isInitialData = RxBool(false);
   RxBool isSection = RxBool(false);
   RxBool isStudentData = RxBool(false);
   RxBool isSubject = RxBool(false);
+  RxBool isSave = RxBool(false);
 
   void isinitialdataloading(bool loading) async {
     isInitialData.value = loading;
@@ -43,6 +45,10 @@ class AttendanceEntryController extends GetxController {
 
   void issubjectloading(bool loading) async {
     isSubject.value = loading;
+  }
+
+  void issaveloading(bool loading) async {
+    isSave.value = loading;
   }
 
   Future<bool> getAttendanceEntryInitialData({
@@ -162,6 +168,7 @@ class AttendanceEntryController extends GetxController {
           studentList.add(studentListModel.studentList!.values!.elementAt(i)!);
         }
         countClassHeld.value = studentListModel.countclass!;
+        asaId.value = studentListModel.asAId!;
         return true;
       }
       return false;
@@ -207,6 +214,7 @@ class AttendanceEntryController extends GetxController {
           studentList1
               .add(studentListModel1.studentList!.values!.elementAt(i)!);
         }
+        asaId.value = studentListModel1.asAId!;
         return true;
       }
       return false;
@@ -249,6 +257,7 @@ class AttendanceEntryController extends GetxController {
         for (var i = 0; i < subjectModel.studentList!.values!.length; i++) {
           studentList2.add(subjectModel.studentList!.values!.elementAt(i)!);
         }
+        asaId.value = subjectModel.asAId!;
         return true;
       }
       return false;

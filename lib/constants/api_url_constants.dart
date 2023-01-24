@@ -262,6 +262,9 @@ class URLS {
 
   static String onChangeMonth =
       'api/StudentAttendanceEntryFacade/getmonthclassheld/';
+
+  static String saveAttendanceEntry =
+      'api/StudentAttendanceEntryFacade/savestudentattendance/';
   // ..............
 
   //Dashboard
