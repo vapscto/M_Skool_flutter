@@ -27,6 +27,8 @@ class NoticeAllStudent extends StatefulWidget {
 class _NoticeAllStudentState extends State<NoticeAllStudent> {
   final RxBool selectAllStudent = RxBool(false);
 
+  final ScrollController _controller = ScrollController();
+
   @override
   void initState() {
     List<Map<String, dynamic>> sections = [];
@@ -106,10 +108,11 @@ class _NoticeAllStudentState extends State<NoticeAllStudent> {
                                 trackVisibility: true,
                                 radius: const Radius.circular(10),
                                 thickness: 14,
-                                //thumbVisibility: true,
-                                //controller: _controller,
+                                thumbVisibility: true,
+                                controller: _controller,
                                 child: Obx(() {
                                   return SingleChildScrollView(
+                                    controller: _controller,
                                     child: Column(
                                       children: [
                                         SizedBox(
@@ -181,9 +184,7 @@ class _NoticeAllStudentState extends State<NoticeAllStudent> {
                                                                       index));
                                                         }
                                                       },
-                                                      isChecked:
-                                                          selectAllStudent
-                                                              .value));
+                                                      isChecked: RxBool(true)));
                                             });
                                           },
                                         ),

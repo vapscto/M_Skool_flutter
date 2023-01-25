@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/model/classes_model_data_model.dart';
+import 'package:m_skool_flutter/staffs/notice_board_staff/model/department_model.dart';
+import 'package:m_skool_flutter/staffs/notice_board_staff/model/designation_model.dart';
+import 'package:m_skool_flutter/staffs/notice_board_staff/model/notice_employee_data.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/model/notice_student_data_model.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/model/section_detail_model.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/model/view_notice_data_model.dart';
@@ -10,6 +13,18 @@ class NoticeBoardController extends GetxController {
   RxBool isErrorOccuredWhileLoadingWork = RxBool(false);
 
   RxBool isErrorOccuredWhileLoadingSection = RxBool(false);
+
+  RxBool isErrorOccuredWhileLoadingDepartment = RxBool(false);
+
+  RxBool isDesignationLoading = RxBool(false);
+
+  void updateIsDesignationLoading(bool b) {
+    isDesignationLoading.value = b;
+  }
+
+  void updateIsErrorOccuredWhileLoadingDepartment(bool b) {
+    isErrorOccuredWhileLoadingDepartment.value = b;
+  }
 
   void updateIsErrorOccuredWhileLoadingSection(bool b) {
     isErrorOccuredWhileLoadingSection.value = b;
@@ -121,5 +136,105 @@ class NoticeBoardController extends GetxController {
 
   void removeFromSection(SectionDetailsModelValues v) {
     selectedSections.remove(v);
+  }
+
+  RxBool isDepartmentLoading = RxBool(false);
+
+  void updateIsDepartmentLoading(bool b) {
+    isDepartmentLoading.value = b;
+  }
+
+  RxList<DepartmentListModelValues> departments = RxList();
+
+  void updateDepartment(List<DepartmentListModelValues> mList) {
+    if (departments.isNotEmpty) {
+      departments.clear();
+    }
+    departments.addAll(mList);
+  }
+
+  RxBool isErrorOccuredWhileLoadingDesignation = RxBool(false);
+
+  void updateIsErrorOccuredWhileLoadingDesignation(bool b) {
+    isErrorOccuredWhileLoadingDesignation.value = b;
+  }
+
+  RxList<DesignationDataModelValues> designation = RxList();
+  void updateDesignation(List<DesignationDataModelValues> dsgn) {
+    if (designation.isNotEmpty) {
+      designation.clear();
+    }
+    designation.addAll(dsgn);
+  }
+
+  RxList<DepartmentListModelValues> selectedDepartment = RxList();
+
+  void addToSelectedDepartment(DepartmentListModelValues dept) {
+    selectedDepartment.add(dept);
+  }
+
+  void selectAllDept(List<DepartmentListModelValues> dept) {
+    if (selectedDepartment.isNotEmpty) {
+      selectedDepartment.clear();
+    }
+    selectedDepartment.addAll(dept);
+  }
+
+  void removeFromSelectedDepartment(DepartmentListModelValues re) {
+    selectedDepartment.remove(re);
+  }
+
+  RxList<DesignationDataModelValues> selectedDesignation = RxList();
+
+  void addToSelectedDesignation(DesignationDataModelValues dept) {
+    selectedDesignation.add(dept);
+  }
+
+  void selectAllDesignation(List<DesignationDataModelValues> dept) {
+    if (selectedDesignation.isNotEmpty) {
+      selectedDesignation.clear();
+    }
+    selectedDesignation.addAll(dept);
+  }
+
+  void removeFromSelectedDesignation(DesignationDataModelValues re) {
+    selectedDesignation.remove(re);
+  }
+
+  RxBool isErrorOccuredWhileLoadingEmployee = RxBool(false);
+  void updateIsErrorOccuredWhileLoadingEmployee(bool b) {
+    isErrorOccuredWhileLoadingEmployee.value = b;
+  }
+
+  RxList<NoticeEmployeeDataModelValues> employee = RxList();
+
+  void updateNoticeEmployeeDataModel(List<NoticeEmployeeDataModelValues> emp) {
+    if (employee.isNotEmpty) {
+      employee.clear();
+    }
+    employee.addAll(emp);
+  }
+
+  RxList<NoticeEmployeeDataModelValues> selectedEmployee = RxList();
+
+  void addToSelectedEmployee(NoticeEmployeeDataModelValues emp) {
+    selectedEmployee.add(emp);
+  }
+
+  void removeFromSelectedEmployee(NoticeEmployeeDataModelValues emp) {
+    selectedEmployee.remove(emp);
+  }
+
+  RxBool isEmpLoading = RxBool(false);
+
+  void updateIsEmpLoading(bool v) {
+    isEmpLoading.value = v;
+  }
+
+  void selectAllEmployee(List<NoticeEmployeeDataModelValues> emp) {
+    if (selectedEmployee.isNotEmpty) {
+      selectedEmployee.clear();
+    }
+    selectedEmployee.addAll(emp);
   }
 }

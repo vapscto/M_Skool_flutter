@@ -12,11 +12,13 @@ class StaffTTHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final String title;
+  final String? day;
   const StaffTTHome(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController,
-      required this.title});
+      required this.title,
+      this.day});
 
   @override
   State<StaffTTHome> createState() => _StaffTTHomeState();
@@ -67,6 +69,7 @@ class _StaffTTHomeState extends State<StaffTTHome>
             loginSuccessModel: widget.loginSuccessModel,
             mskoolController: widget.mskoolController,
             ttController: ttController,
+            day: widget.day,
           ),
           StaffWeeklyTT(
             loginSuccessModel: widget.loginSuccessModel,

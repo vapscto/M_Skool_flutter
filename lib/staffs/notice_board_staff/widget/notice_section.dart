@@ -29,7 +29,9 @@ class NoticeSection extends StatefulWidget {
 }
 
 class _NoticeSectionState extends State<NoticeSection> {
-  final RxBool selectAllClass = RxBool(false);
+  final RxBool selectAllSection = RxBool(false);
+
+  final ScrollController _controller = ScrollController();
 
   @override
   void initState() {
@@ -70,231 +72,264 @@ class _NoticeSectionState extends State<NoticeSection> {
                       ? const AnimatedProgressWidget(
                           title: "No Section Found",
                           desc:
-                              "There is no section available, ask them to add",
+                              "There is no section available, ask them to add or select another class",
                           animationPath: "assets/json/nodata.json",
                           animatorHeight: 250,
                         )
-                      : Stack(
-                          clipBehavior: Clip.none,
+                      : Column(
                           children: [
-                            Container(
-                              height: 150,
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
-                              decoration: BoxDecoration(
-                                color:
-                                    Theme.of(context).scaffoldBackgroundColor,
-                                borderRadius: BorderRadius.circular(16.0),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    offset: Offset(0, 1),
-                                    blurRadius: 4,
-                                    color: Colors.black12,
+                            Stack(
+                              clipBehavior: Clip.none,
+                              children: [
+                                Container(
+                                  height: 150,
+                                  padding: const EdgeInsets.only(
+                                      top: 10, bottom: 10),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor,
+                                    borderRadius: BorderRadius.circular(16.0),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        offset: Offset(0, 1),
+                                        blurRadius: 4,
+                                        color: Colors.black12,
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              child: RawScrollbar(
-                                thumbColor: const Color(0xFF1E38FC),
-                                trackColor:
-                                    const Color.fromRGBO(223, 239, 253, 1),
-                                trackRadius: const Radius.circular(10),
-                                trackVisibility: true,
-                                radius: const Radius.circular(10),
-                                thickness: 14,
-                                //thumbVisibility: true,
-                                //controller: _controller,
-                                child: Obx(() {
-                                  return SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                            height: 30,
-                                            child: CheckboxListTile(
-                                              controlAffinity:
-                                                  ListTileControlAffinity
-                                                      .leading,
-                                              checkboxShape:
-                                                  RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              6)),
-                                              dense: true,
-                                              activeColor: Theme.of(context)
-                                                  .primaryColor,
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 8),
-                                              visualDensity:
-                                                  const VisualDensity(
-                                                      horizontal: -4.0),
-                                              title: Text(
-                                                "Select All",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .labelSmall!
-                                                    .merge(const TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        fontSize: 14.0,
-                                                        letterSpacing: 0.3)),
-                                              ),
-                                              value: selectAllClass.value,
-                                              onChanged: (value) {
-                                                selectAllClass.value = value!;
-                                              },
-                                            )),
-                                        ListView.builder(
-                                          // padding: const EdgeInsets.only(top: 1),
-                                          //controller: _controller,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount:
-                                              widget.controller.sections.length,
-                                          shrinkWrap:
-                                              true, // till lenght is 5 is will true
-                                          itemBuilder: (context, index) {
-                                            return Obx(() {
+                                  child: RawScrollbar(
+                                    thumbColor: const Color(0xFF1E38FC),
+                                    trackColor:
+                                        const Color.fromRGBO(223, 239, 253, 1),
+                                    trackRadius: const Radius.circular(10),
+                                    trackVisibility: true,
+                                    radius: const Radius.circular(10),
+                                    thickness: 14,
+                                    thumbVisibility: true,
+                                    controller: _controller,
+                                    child: SingleChildScrollView(
+                                      controller: _controller,
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                              height: 35,
+                                              child: Obx(() {
+                                                return CheckboxListTile(
+                                                  controlAffinity:
+                                                      ListTileControlAffinity
+                                                          .leading,
+                                                  checkboxShape:
+                                                      RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(6)),
+                                                  dense: true,
+                                                  activeColor: Theme.of(context)
+                                                      .primaryColor,
+                                                  contentPadding:
+                                                      const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 8),
+                                                  visualDensity:
+                                                      const VisualDensity(
+                                                          horizontal: -4.0),
+                                                  title: Text(
+                                                    "Select All",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .labelSmall!
+                                                        .merge(const TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            fontSize: 16.0,
+                                                            letterSpacing:
+                                                                0.3)),
+                                                  ),
+                                                  value: selectAllSection.value,
+                                                  onChanged: (value) {
+                                                    selectAllSection.value =
+                                                        value!;
+                                                    if (!value) {
+                                                      widget.controller.students
+                                                          .clear();
+                                                      widget.controller
+                                                          .selectedSections
+                                                          .clear();
+                                                    } else {
+                                                      widget.controller
+                                                          .selectedSections
+                                                          .clear();
+                                                      widget.controller
+                                                          .selectedSections
+                                                          .addAll(widget
+                                                              .controller
+                                                              .sections);
+                                                      if (widget
+                                                          .controller
+                                                          .studentSelection
+                                                          .value) {
+                                                        loadStudent();
+                                                      }
+                                                    }
+                                                  },
+                                                );
+                                              })),
+                                          ListView.builder(
+                                            // padding: const EdgeInsets.only(top: 1),
+                                            //controller: _controller,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemCount: widget
+                                                .controller.sections.length,
+                                            shrinkWrap:
+                                                true, // till lenght is 5 is will true
+                                            itemBuilder: (context, index) {
                                               return SizedBox(
-                                                  height: 30,
-                                                  child: CheckBoxContainer(
-                                                      sectionName:
-                                                          "${widget.controller.sections.elementAt(index).asmcLClassName}-${widget.controller.sections.elementAt(index).aSMCSectionName}",
-                                                      func: (b) {
-                                                        if (b) {
-                                                          widget.controller
-                                                              .addToSection(widget
-                                                                  .controller
-                                                                  .sections
-                                                                  .elementAt(
-                                                                      index));
-                                                        } else {
-                                                          widget.controller
-                                                              .removeFromSection(
+                                                height: 35,
+                                                child: Obx(() {
+                                                  return CheckBoxContainer(
+                                                    sectionName:
+                                                        "${widget.controller.sections.elementAt(index).asmcLClassName}-${widget.controller.sections.elementAt(index).aSMCSectionName}",
+                                                    func: (b) {
+                                                      if (b) {
+                                                        widget.controller
+                                                            .addToSection(widget
+                                                                .controller
+                                                                .sections
+                                                                .elementAt(
+                                                                    index));
+                                                      } else {
+                                                        widget.controller
+                                                            .removeFromSection(
+                                                                widget
+                                                                    .controller
+                                                                    .sections
+                                                                    .elementAt(
+                                                                        index));
+                                                      }
+
+                                                      if (widget
+                                                          .controller
+                                                          .selectedSections
+                                                          .isEmpty) {
+                                                        widget
+                                                            .controller.students
+                                                            .clear();
+                                                        return;
+                                                      }
+
+                                                      if (widget
+                                                          .controller
+                                                          .studentSelection
+                                                          .value) {
+                                                        loadStudent();
+                                                      }
+                                                    },
+                                                    isChecked:
+                                                        selectAllSection.value
+                                                            ? RxBool(true)
+                                                            : RxBool(
+                                                                widget
+                                                                    .controller
+                                                                    .selectedSections
+                                                                    .contains(
                                                                   widget
                                                                       .controller
                                                                       .sections
                                                                       .elementAt(
-                                                                          index));
-                                                        }
-
-                                                        List<
-                                                                Map<String,
-                                                                    dynamic>>
-                                                            sections = [];
-                                                        List<
-                                                                Map<String,
-                                                                    dynamic>>
-                                                            classT = [];
-
-                                                        for (var element in widget
-                                                            .controller
-                                                            .selectedClasses) {
-                                                          classT.add({
-                                                            "ASMCL_Id":
-                                                                element.asmcLId
-                                                          });
-                                                        }
-
-                                                        for (var element
-                                                            in widget.controller
-                                                                .sections) {
-                                                          sections.add({
-                                                            "ASMS_Id":
-                                                                element.asmSId,
-                                                            "ASMCL_Id":
-                                                                element.asmcLId
-                                                          });
-                                                        }
-
-                                                        NoticeGetStudent.instance.getStudents(
-                                                            asmayId: widget
-                                                                .loginSuccessModel
-                                                                .asmaYId!,
-                                                            userId: widget
-                                                                .loginSuccessModel
-                                                                .userId!,
-                                                            ivrmrtId: widget
-                                                                .loginSuccessModel
-                                                                .roleId!,
-                                                            miId: widget
-                                                                .loginSuccessModel
-                                                                .mIID!,
-                                                            sectionListArray:
-                                                                sections,
-                                                            classlsttwo: classT,
-                                                            base: baseUrlFromInsCode(
-                                                                "portal",
-                                                                widget
-                                                                    .mskoolController),
-                                                            noticeBoardController:
-                                                                widget
-                                                                    .controller);
-                                                      },
-                                                      isChecked: selectAllClass
-                                                          .value));
-                                            });
-                                          },
-                                        ),
-                                        const SizedBox(
-                                          height: 16.0,
-                                        )
-                                      ],
+                                                                          index),
+                                                                ),
+                                                              ),
+                                                  );
+                                                }),
+                                              );
+                                            },
+                                          ),
+                                          const SizedBox(
+                                            height: 16.0,
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  );
-                                }),
-                              ),
-                            ),
-                            Positioned(
-                              top: -20,
-                              left: 14,
-                              child: Container(
-                                height: 30,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 7),
-                                decoration: const BoxDecoration(
-                                  color: Color(0xFFDBFDF5),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(24),
                                   ),
                                 ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/svg/section_.svg',
-                                      fit: BoxFit.cover,
-                                      height: 24,
+                                Positioned(
+                                  top: -20,
+                                  left: 14,
+                                  child: Container(
+                                    height: 30,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 7),
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xFFDBFDF5),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(24),
+                                      ),
                                     ),
-                                    const SizedBox(width: 5),
-                                    Text(
-                                      ' Sections ',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .merge(
-                                            const TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 14.0,
-                                              color: Color(0xFF47BA9E),
-                                            ),
-                                          ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/svg/section_.svg',
+                                          fit: BoxFit.cover,
+                                          height: 24,
+                                        ),
+                                        const SizedBox(width: 5),
+                                        Text(
+                                          ' Sections ',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .merge(
+                                                const TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 14.0,
+                                                  color: Color(0xFF47BA9E),
+                                                ),
+                                              ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
+                            Obx(() {
+                              return widget.controller.studentSelection.value
+                                  ? NoticeAllStudent(
+                                      mskoolController: widget.mskoolController,
+                                      loginSuccessModel:
+                                          widget.loginSuccessModel,
+                                      controller: widget.controller)
+                                  : const SizedBox();
+                            })
                           ],
                         );
         }),
-        Obx(() {
-          return widget.controller.studentSelection.value
-              ? NoticeAllStudent(
-                  mskoolController: widget.mskoolController,
-                  loginSuccessModel: widget.loginSuccessModel,
-                  controller: widget.controller)
-              : const SizedBox();
-        })
       ],
     );
+  }
+
+  void loadStudent() async {
+    List<Map<String, dynamic>> sections = [];
+    List<Map<String, dynamic>> classT = [];
+
+    for (var element in widget.controller.selectedClasses) {
+      classT.add({"ASMCL_Id": element.asmcLId});
+    }
+
+    for (var element in widget.controller.sections) {
+      sections.add({"ASMS_Id": element.asmSId, "ASMCL_Id": element.asmcLId});
+    }
+
+    NoticeGetStudent.instance.getStudents(
+        asmayId: widget.loginSuccessModel.asmaYId!,
+        userId: widget.loginSuccessModel.userId!,
+        ivrmrtId: widget.loginSuccessModel.roleId!,
+        miId: widget.loginSuccessModel.mIID!,
+        sectionListArray: sections,
+        classlsttwo: classT,
+        base: baseUrlFromInsCode("portal", widget.mskoolController),
+        noticeBoardController: widget.controller);
   }
 }

@@ -368,7 +368,7 @@ class Dashboard extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Image.asset(
-                              getDashBoardIconByName(
+                              getStaffDashboardIcon(
                                   "${loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"),
                               height: 60,
                             ),
@@ -377,6 +377,7 @@ class Dashboard extends StatelessWidget {
                             child: Text(
                               "${loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
                               //maxLines: 1,
+                              maxLines: 2,
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme

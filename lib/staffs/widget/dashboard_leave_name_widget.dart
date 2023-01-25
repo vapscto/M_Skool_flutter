@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/staffs/model/dashboard_leave_model.dart';
@@ -8,8 +7,12 @@ import 'package:m_skool_flutter/widget/custom_container.dart';
 class DashboardLeaveNames extends StatelessWidget {
   final int backgroundColor;
   final DashboardLeaveModelValues values;
-  const DashboardLeaveNames(
-      {super.key, required this.backgroundColor, required this.values});
+
+  const DashboardLeaveNames({
+    super.key,
+    required this.backgroundColor,
+    required this.values,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,11 @@ class DashboardLeaveNames extends StatelessWidget {
       child: InkWell(
         onTap: () {
           // Navigator.push(context, MaterialPageRoute(builder: (_) {
-          //   return const ApplyForLeave();
+          //   return OnlineLeaveApply(
+          //     loginSuccessModel: loginSuccessModel,
+          //     mskoolController: mskoolController,
+          //     title: 'Online Leave Apply',
+          //   );
           // }));
         },
         child: CustomContainer(
@@ -40,13 +47,16 @@ class DashboardLeaveNames extends StatelessWidget {
                   ),
                   Align(
                       alignment: Alignment.center,
-                      child: SvgPicture.asset(
+                      child: Image.asset(
                         values.hRMLLeaveCode!.toLowerCase() == "sl"
-                            ? "assets/svg/medication.svg"
+                            ? "assets/images/sl.png"
                             : values.hRMLLeaveCode!.toLowerCase() == "cl"
-                                ? "assets/svg/casual_leave.svg"
-                                : "assets/svg/earned_leaves.svg",
+                                ? "assets/images/cl.png"
+                                : values.hRMLLeaveCode!.toLowerCase() == "el"
+                                    ? "assets/images/el.png"
+                                    : "assets/images/el.png",
                         color: noticeColor.elementAt(backgroundColor),
+                        width: 24.0,
                       )),
                 ],
               ),

@@ -275,4 +275,6 @@ class URLS {
   static String noticeGetDetails = "api/NoticeBoardFacade/Getdetails/";
   static String getNoticeSection = "api/NoticeBoardFacade/getsection";
   static String getNoticeStudent = "api/NoticeBoardFacade/getstudent";
+  static String getDesignation = "api/NoticeBoardFacade/Deptselectiondetails";
+  static String getEmployee = "api/NoticeBoardFacade/Desgselectiondetails";
 }

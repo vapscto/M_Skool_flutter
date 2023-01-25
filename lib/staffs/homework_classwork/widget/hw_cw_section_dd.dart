@@ -75,8 +75,9 @@ class HwCwSectionDD extends StatelessWidget {
 
                           loadAgain();
                         },
-                        isChecked: hwCwController.selectedSection
-                            .contains(hwCwController.sections.elementAt(index)),
+                        isChecked: RxBool(hwCwController.selectedSection
+                            .contains(
+                                hwCwController.sections.elementAt(index))),
                       ),
                     );
                   },

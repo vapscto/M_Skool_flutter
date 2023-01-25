@@ -37,7 +37,12 @@ class GetSectionsApi {
 
       final SectionDetailsModel sectionDetailsModel =
           SectionDetailsModel.fromJson(response.data['sectionlist']);
-
+      if (sectionDetailsModel.values!.isNotEmpty) {
+        if (noticeBoardController.selectedSections.isNotEmpty) {
+          noticeBoardController.selectedSections.clear();
+        }
+        noticeBoardController.addToSection(sectionDetailsModel.values!.first);
+      }
       noticeBoardController.updateSection(sectionDetailsModel.values!);
       noticeBoardController.updateIsSectionLoading(false);
     } on DioError catch (e) {

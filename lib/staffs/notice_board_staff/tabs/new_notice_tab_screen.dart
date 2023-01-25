@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/controller/notice_board_controller.dart';
+import 'package:m_skool_flutter/staffs/notice_board_staff/widget/staff_widget.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/widget/student_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
@@ -614,7 +615,10 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
                     loginSuccessModel: widget.loginSuccessModel,
                     mskoolController: widget.mskoolController,
                   )
-                : const SizedBox();
+                : StaffWidget(
+                    controller: widget.noticeBoardController,
+                    loginSuccessModel: widget.loginSuccessModel,
+                    mskoolController: widget.mskoolController);
           }),
           // const SizedBox(
           //   height: 14.0,

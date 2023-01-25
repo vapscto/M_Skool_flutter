@@ -320,7 +320,7 @@ class StaffDashboardDrawer extends StatelessWidget {
                       child: CircleAvatar(
                         // radius: 18,
                         backgroundImage: AssetImage(
-                          getDashBoardIconByName(
+                          getStaffDashboardIcon(
                               "${loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"),
                         ),
                         backgroundColor: Colors.white,

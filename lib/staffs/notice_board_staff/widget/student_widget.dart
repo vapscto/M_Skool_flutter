@@ -29,6 +29,8 @@ class _StudentWidgetState extends State<StudentWidget> {
   // RxBool studentSelection = RxBool(false);
   RxBool selectAllClass = RxBool(false);
 
+  final ScrollController _controller = ScrollController();
+
   @override
   void initState() {
     StaffNoticeBoardApi.instance.getClassList(
@@ -105,161 +107,142 @@ class _StudentWidgetState extends State<StudentWidget> {
                                 ],
                               ),
                               child: RawScrollbar(
-                                thumbColor: const Color(0xFF1E38FC),
-                                trackColor:
-                                    const Color.fromRGBO(223, 239, 253, 1),
-                                trackRadius: const Radius.circular(10),
-                                trackVisibility: true,
-                                radius: const Radius.circular(10),
-                                thickness: 14,
-                                //thumbVisibility: true,
-                                //controller: _controller,
-                                child: Obx(() {
-                                  return Column(
-                                    children: [
-                                      SizedBox(
-                                          height: 30,
-                                          child: CheckboxListTile(
-                                            controlAffinity:
-                                                ListTileControlAffinity.leading,
-                                            checkboxShape:
-                                                RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            6)),
-                                            dense: true,
-                                            activeColor:
-                                                Theme.of(context).primaryColor,
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 8),
-                                            visualDensity: const VisualDensity(
-                                                horizontal: -4.0),
-                                            title: Text(
-                                              "Select All",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .labelSmall!
-                                                  .merge(const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 14.0,
-                                                      letterSpacing: 0.3)),
-                                            ),
-                                            value: selectAllClass.value,
-                                            onChanged: (value) {
-                                              selectAllClass.value = value!;
-                                            },
-                                          )),
-                                      ListView.builder(
-                                        // padding: const EdgeInsets.only(top: 1),
-                                        //controller: _controller,
-                                        itemCount: widget
-                                            .controller.classesList.length,
-                                        shrinkWrap:
-                                            true, // till lenght is 5 is will true
-                                        itemBuilder: (context, index) {
-                                          return Obx(() {
+                                  thumbColor: const Color(0xFF1E38FC),
+                                  trackColor:
+                                      const Color.fromRGBO(223, 239, 253, 1),
+                                  trackRadius: const Radius.circular(10),
+                                  trackVisibility: true,
+                                  radius: const Radius.circular(10),
+                                  thickness: 14,
+                                  thumbVisibility: true,
+                                  controller: _controller,
+                                  child: SingleChildScrollView(
+                                    controller: _controller,
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                            height: 30,
+                                            child: Obx(() {
+                                              return CheckboxListTile(
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .leading,
+                                                checkboxShape:
+                                                    RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(6)),
+                                                dense: true,
+                                                activeColor: Theme.of(context)
+                                                    .primaryColor,
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8),
+                                                visualDensity:
+                                                    const VisualDensity(
+                                                        horizontal: -4.0),
+                                                title: Text(
+                                                  "Select All",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .labelSmall!
+                                                      .merge(const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontSize: 16.0,
+                                                          letterSpacing: 0.3)),
+                                                ),
+                                                value: selectAllClass.value,
+                                                onChanged: (value) {
+                                                  selectAllClass.value = value!;
+
+                                                  if (value) {
+                                                    widget.controller
+                                                        .selectedClasses
+                                                        .addAll(widget
+                                                            .controller
+                                                            .classesList);
+                                                    loadSection();
+                                                  } else {
+                                                    widget.controller
+                                                        .selectedClasses
+                                                        .clear();
+                                                    widget.controller.sections
+                                                        .clear();
+                                                    widget.controller.students
+                                                        .clear();
+                                                  }
+                                                },
+                                              );
+                                            })),
+                                        const SizedBox(
+                                          height: 4.0,
+                                        ),
+                                        ListView.builder(
+                                          itemCount: widget
+                                              .controller.classesList.length,
+                                          shrinkWrap: true,
+                                          itemBuilder: (context, index) {
                                             return SizedBox(
-                                                height: 30,
-                                                // child: CheckboxListTile(
-                                                //   controlAffinity:
-                                                //       ListTileControlAffinity.leading,
-                                                //   checkboxShape: RoundedRectangleBorder(
-                                                //       borderRadius:
-                                                //           BorderRadius.circular(6)),
-                                                //   dense: true,
-                                                //   activeColor:
-                                                //       Theme.of(context).primaryColor,
-                                                //   contentPadding:
-                                                //       const EdgeInsets.symmetric(
-                                                //           horizontal: 8),
-                                                //   visualDensity: const VisualDensity(
-                                                //       horizontal: -4.0),
-                                                //   title: Text(
-                                                //     "noticeTitle[index]",
-                                                //     style: Theme.of(context)
-                                                //         .textTheme
-                                                //         .labelSmall!
-                                                //         .merge(const TextStyle(
-                                                //             fontWeight: FontWeight.w400,
-                                                //             fontSize: 14.0,
-                                                //             letterSpacing: 0.3)),
-                                                //   ),
-                                                //   value: true,
-                                                //   onChanged: (value) {
-                                                //     // setState(() {
-                                                //     //   ee = value!;
-                                                //     // });
-                                                //   },
-                                                // ),
+                                              height: 35,
+                                              child: Obx(() {
+                                                return CheckBoxContainer(
+                                                  sectionName:
+                                                      "${widget.controller.classesList.elementAt(index).asmcLClassName}",
+                                                  func: (b) {
+                                                    if (b) {
+                                                      widget.controller
+                                                          .addToSelectedClasses(
+                                                              widget.controller
+                                                                  .classesList
+                                                                  .elementAt(
+                                                                      index));
+                                                    } else {
+                                                      widget.controller
+                                                          .removeSelectedClass(
+                                                              widget.controller
+                                                                  .classesList
+                                                                  .elementAt(
+                                                                      index));
+                                                    }
+                                                    if (widget
+                                                        .controller
+                                                        .selectedClasses
+                                                        .isEmpty) {
+                                                      widget.controller.sections
+                                                          .clear();
+                                                      widget.controller.students
+                                                          .clear();
+                                                      return;
+                                                    }
 
-                                                child: CheckBoxContainer(
-                                                    sectionName:
-                                                        "${widget.controller.classesList.elementAt(index).asmcLClassName}",
-                                                    func: (b) {
-                                                      if (b) {
-                                                        widget.controller
-                                                            .addToSelectedClasses(
+                                                    loadSection();
+                                                  },
+                                                  isChecked:
+                                                      selectAllClass.value
+                                                          ? RxBool(true)
+                                                          : RxBool(
+                                                              widget.controller
+                                                                  .selectedClasses
+                                                                  .contains(
                                                                 widget
                                                                     .controller
                                                                     .classesList
                                                                     .elementAt(
-                                                                        index));
-                                                      } else {
-                                                        widget.controller
-                                                            .removeSelectedClass(
-                                                                widget
-                                                                    .controller
-                                                                    .classesList
-                                                                    .elementAt(
-                                                                        index));
-                                                      }
-                                                      List<Map<String, dynamic>>
-                                                          map = [];
-
-                                                      for (var element in widget
-                                                          .controller
-                                                          .selectedClasses) {
-                                                        map.add({
-                                                          "ASMCL_Id":
-                                                              element.asmcLId,
-                                                        });
-                                                      }
-                                                      GetSectionsApi.instance.getSections(
-                                                          asmayId: widget
-                                                              .loginSuccessModel
-                                                              .asmaYId!,
-                                                          ivrmrtId: widget
-                                                              .loginSuccessModel
-                                                              .roleId!,
-                                                          userId: widget
-                                                              .loginSuccessModel
-                                                              .userId!,
-                                                          miId: widget
-                                                              .loginSuccessModel
-                                                              .mIID!,
-                                                          classlsttwo: map,
-                                                          base: baseUrlFromInsCode(
-                                                              "portal",
-                                                              widget
-                                                                  .mskoolController),
-                                                          noticeBoardController:
-                                                              widget
-                                                                  .controller);
-                                                    },
-                                                    isChecked:
-                                                        selectAllClass.value));
-                                          });
-                                        },
-                                      ),
-                                      const SizedBox(
-                                        height: 16.0,
-                                      )
-                                    ],
-                                  );
-                                }),
-                              ),
+                                                                        index),
+                                                              ),
+                                                            ),
+                                                );
+                                              }),
+                                            );
+                                          },
+                                        ),
+                                        const SizedBox(
+                                          height: 16.0,
+                                        )
+                                      ],
+                                    ),
+                                  )),
                             ),
                             Positioned(
                               top: -20,
@@ -315,5 +298,23 @@ class _StudentWidgetState extends State<StudentWidget> {
         }),
       ],
     );
+  }
+
+  void loadSection() {
+    List<Map<String, dynamic>> map = [];
+
+    for (var element in widget.controller.selectedClasses) {
+      map.add({
+        "ASMCL_Id": element.asmcLId,
+      });
+    }
+    GetSectionsApi.instance.getSections(
+        asmayId: widget.loginSuccessModel.asmaYId!,
+        ivrmrtId: widget.loginSuccessModel.roleId!,
+        userId: widget.loginSuccessModel.userId!,
+        miId: widget.loginSuccessModel.mIID!,
+        classlsttwo: map,
+        base: baseUrlFromInsCode("portal", widget.mskoolController),
+        noticeBoardController: widget.controller);
   }
 }
