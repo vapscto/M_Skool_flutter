@@ -124,7 +124,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
         attendanceEntryController.isstudentdataloading(false);
         return;
       }
-      logger.d(attendanceEntryController.studentList.first);
+      logger.d(attendanceEntryController.monthwiseStudentList.first);
     });
     attendanceEntryController.isstudentdataloading(false);
   }
@@ -165,10 +165,10 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
     attendanceEntryController.isstudentdataloading(false);
   }
 
-  void getSubjectListAndStudentList(int asmsId) async {
+  void getSubjectList(int asmsId) async {
     attendanceEntryController.issubjectloading(true);
     await attendanceEntryController
-        .getSubjectAndStudentListOnChangeSection(
+        .getSubjectListOnChangeSection(
       asmayId: selectedAcademicYear!.asmaYId!.toInt(),
       asmclId: selectedClass!.asmcLId.toString(),
       asmsId: asmsId,
@@ -185,6 +185,34 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
       logger.d(value);
     });
     attendanceEntryController.issubjectloading(false);
+  }
+
+  void getStudentListOnChangeOfPeriod(int ttmpId) async {
+    attendanceEntryController.isstudentdataloading(true);
+    await attendanceEntryController
+        .getStudentListOnChangePeriod(
+      asmayId: selectedAcademicYear!.asmaYId!.toInt(),
+      asmclId: selectedClass!.asmcLId!.toInt(),
+      asmsId: selectedSection!.asmSId!.toInt(),
+      ttmpId: ttmpId,
+      ismsId: selectedSubject!.ismSId!,
+      miId: widget.loginSuccessModel.mIID!,
+      base: baseUrlFromInsCode(
+        'admission',
+        widget.mskoolController,
+      ),
+    )
+        .then(
+      (value) {
+        if (!value) {
+          logger.d(value);
+          attendanceEntryController.isstudentdataloading(false);
+          return;
+        }
+        logger.d(attendanceEntryController.periodwiseStudentList.first);
+      },
+    );
+    attendanceEntryController.isstudentdataloading(false);
   }
 
   @override
@@ -489,8 +517,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                 } else if (attendanceEntryController
                                         .attendanceEntryType.value ==
                                     'P') {
-                                  getSubjectListAndStudentList(
-                                      s.asmSId!.toInt());
+                                  getSubjectList(s.asmSId!.toInt());
                                 }
                               },
                             ),
@@ -1072,6 +1099,8 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                       onChanged: (s) {
                                         selectedPeriod = s!;
                                         setState(() {});
+                                        getStudentListOnChangeOfPeriod(
+                                            s.ttmPId!.toInt());
                                       },
                                     ),
                                   )
@@ -1178,7 +1207,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                             Fluttertoast.showToast(
                                 msg: 'Select start date and end date.');
                           } else if (attendanceEntryController
-                              .studentList.isNotEmpty) {
+                              .monthwiseStudentList.isNotEmpty) {
                             Get.to(() => MonthWiseAttendanceEntryDetailScreen(
                                   loginSuccessModel: widget.loginSuccessModel,
                                   mskoolController: widget.mskoolController,
@@ -1196,6 +1225,11 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                             Get.to(() => DailyOnceAttendanceEntryDetailScreen(
                                   loginSuccessModel: widget.loginSuccessModel,
                                   mskoolController: widget.mskoolController,
+                                  asaId: attendanceEntryController.asaId.value,
+                                  asmayId:
+                                      selectedAcademicYear!.asmaYId!.toInt(),
+                                  asmclId: selectedClass!.asmcLId!.toInt(),
+                                  asmsId: selectedSection!.asmSId!.toInt(),
                                 ));
                           } else {
                             Fluttertoast.showToast(
@@ -1209,6 +1243,11 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                             Get.to(() => DailyTwiceAttendanceEntryDetailScreen(
                                   loginSuccessModel: widget.loginSuccessModel,
                                   mskoolController: widget.mskoolController,
+                                  asaId: attendanceEntryController.asaId.value,
+                                  asmayId:
+                                      selectedAcademicYear!.asmaYId!.toInt(),
+                                  asmclId: selectedClass!.asmcLId!.toInt(),
+                                  asmsId: selectedSection!.asmSId!.toInt(),
                                 ));
                           } else {
                             Fluttertoast.showToast(
@@ -1222,7 +1261,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                           } else if (selectedPeriod == null) {
                             Fluttertoast.showToast(msg: "Select Peroid.");
                           } else if (attendanceEntryController
-                              .studentList2.isNotEmpty) {
+                              .periodwiseStudentList.isNotEmpty) {
                             Get.to(() => PeriodWiseAttendanceEntryDetailScreen(
                                   loginSuccessModel: widget.loginSuccessModel,
                                   mskoolController: widget.mskoolController,
