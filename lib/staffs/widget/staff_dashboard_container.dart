@@ -23,7 +23,13 @@ class StaffDashboardContainer extends StatelessWidget {
     return Obx(() {
       return Column(
         children: [
-          const StaffCarasouel(),
+          controller.dashboardCoe.isEmpty
+              ? const SizedBox()
+              : StaffCarasouel(
+                  loginSuccessModel: loginSuccessModel,
+                  mList: controller.dashboardCoe,
+                  mskoolController: mskoolController,
+                ),
           const SizedBox(
             height: 16.0,
           ),
@@ -39,6 +45,8 @@ class StaffDashboardContainer extends StatelessWidget {
               ? const SizedBox()
               : StaffHomeLeave(
                   controller: controller,
+                  loginSuccessModel: loginSuccessModel,
+                  mskoolController: mskoolController,
                 ),
           const SizedBox(
             height: 16.0,
@@ -47,6 +55,8 @@ class StaffDashboardContainer extends StatelessWidget {
               ? const SizedBox()
               : StaffHomeTT(
                   controller: controller,
+                  loginSuccessModel: loginSuccessModel,
+                  mskoolController: mskoolController,
                 ),
           const SizedBox(
             height: 16.0,

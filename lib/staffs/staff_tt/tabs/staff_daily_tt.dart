@@ -18,11 +18,13 @@ class StaffDailyTT extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final StaffTTController ttController;
+  final String? day;
   const StaffDailyTT({
     super.key,
     required this.loginSuccessModel,
     required this.mskoolController,
     required this.ttController,
+    this.day,
   });
 
   @override
@@ -32,18 +34,24 @@ class StaffDailyTT extends StatefulWidget {
 class _StaffDailyTTState extends State<StaffDailyTT> {
   @override
   void initState() {
+    // if (widget.day != null) {
+    //   widget.ttController.updateSelectedDayForDailyTT(
+    //       widget.ttController.dailyTTDays.firstWhere(
+    //     (element) => element.ttmDDayName == widget.day,
+    //   ));
+    // }
     loadApis();
     super.initState();
   }
 
   loadApis() async {
     await StaffDailyTTApi.instance.getDays(
-      miId: widget.loginSuccessModel.mIID!,
-      asmayId: widget.loginSuccessModel.asmaYId!,
-      userId: widget.loginSuccessModel.userId!,
-      base: baseUrlFromInsCode("portal", widget.mskoolController),
-      controller: widget.ttController,
-    );
+        miId: widget.loginSuccessModel.mIID!,
+        asmayId: widget.loginSuccessModel.asmaYId!,
+        userId: widget.loginSuccessModel.userId!,
+        base: baseUrlFromInsCode("portal", widget.mskoolController),
+        controller: widget.ttController,
+        day: widget.day);
 
     await StaffDailyTTApi.instance.getDailyTT(
         miId: widget.loginSuccessModel.mIID!,

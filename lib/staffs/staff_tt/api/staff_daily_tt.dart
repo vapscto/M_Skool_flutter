@@ -14,6 +14,7 @@ class StaffDailyTTApi {
     required int asmayId,
     required int userId,
     required String base,
+    String? day,
     required StaffTTController controller,
   }) async {
     final String apiUrl = base + URLS.staffDailyTTGetDays;
@@ -46,7 +47,14 @@ class StaffDailyTTApi {
           DailyTTDaysModel.fromJson(response.data['allperiods']);
 
       if (dttDays.values!.isNotEmpty) {
-        controller.updateSelectedDayForDailyTT(dttDays.values!.first);
+        if (day == null) {
+          controller.updateSelectedDayForDailyTT(dttDays.values!.first);
+        } else {
+          controller.updateSelectedDayForDailyTT(dttDays.values!.firstWhere(
+            (element) => element.ttmDDayName == day,
+          ));
+          //
+        }
       }
 
       // logger.d(dttDays.toJson());

@@ -128,3 +128,57 @@ String getDashBoardIconByName(String title) {
   }
   return returnValue;
 }
+
+String getStaffDashboardIcon(String pageName) {
+  String icon = "assets/images/";
+
+  if (pageName.toLowerCase().contains("entry") &&
+      !pageName.toLowerCase().contains("mark")) {
+    return icon += "staff_stu_attendance.png";
+  }
+
+  if (pageName.toLowerCase().contains("attendance")) {
+    return icon += "staff_attendance.png";
+  }
+
+  if (pageName.toLowerCase().contains("time")) {
+    return icon += "staff_tt.png";
+  }
+
+  if (pageName.toLowerCase().contains("mark")) {
+    return icon += "staff_me.png";
+  }
+
+  if (pageName.toLowerCase().contains("punch")) {
+    return icon += "staff_pr.png";
+  }
+
+  if (pageName.toLowerCase().contains("salary details")) {
+    return icon += "staff_dt.png";
+  }
+
+  if (pageName.toLowerCase().contains("homework")) {
+    return icon += "staff_hw.png";
+  }
+  if (pageName.toLowerCase().contains("classwork")) {
+    return icon += "staff_classwork.png";
+  }
+  if (pageName.toLowerCase().contains("notice")) {
+    return icon += "staff_nb.png";
+  }
+
+  if (pageName.toLowerCase().contains("birth")) {
+    return icon += "staff_bday.png";
+  }
+  if (pageName.toLowerCase().contains("interaction")) {
+    return icon += "staff_interaction.png";
+  }
+  if (pageName.toLowerCase().contains("leave")) {
+    return icon += "staff_olp.png";
+  }
+  if (pageName.toLowerCase().contains("coe")) {
+    return icon += "staff_coe.png";
+  }
+
+  return icon += "Timetable.png";
+}

@@ -156,13 +156,45 @@ class URLS {
 
   // ****************Staff Api****************//
 
+  // View Notice
   static String viewNoticeCircular = "api/EmployeePtalFacade/onclick_notice";
   static String viewNoticeGetSession = "api/EmployeePtalFacade/getdata/";
 
   static String staffDailyTTGetDays = "api/EmployeeTTFacade/getdata/";
   static String getStaffDailyTT = "api/EmployeeTTFacade/getdaily_data/";
   static String getWeeklyTT = "api/EmployeeTTFacade/getdata/";
+  static String nB_Attachment = "api/EmployeePtalFacade/viewnotice";
 
+  //Verify HW & CW
+  static String getHwList =
+      "api/EmployeeStudentHomeworkFacade/gethomework_list/";
+  static String getCwAttachedFile = "api/IVRM_ClassWorkFacade/viewclasswork/";
+  static String getHwAttachedFile =
+      "api/EmployeeStudentHomeworkFacade/viewhomework";
+
+  static String getCwAttachmentFile =
+      "api/IVRM_ClassWorkFacade/viewstudentupload/";
+
+  static String getStudentUploadedHw =
+      "api/EmployeeStudentHomeworkFacade/viewstudentupload/";
+
+  static String getVerifyClassWorkList =
+      "api/IVRM_ClassWorkFacade/getclasswork_list/";
+  static String uploadCwEnd = "api/LoginFacade/ClassworkUpload";
+
+  static String saveVerifyHw =
+      "api/EmployeeStudentHomeworkFacade/homework_marks_update/";
+
+  static String saveVerifyCw =
+      "api/IVRM_ClassWorkFacade/classwork_marks_update/";
+
+  static String verifySub = "api/IVRM_ClassWorkFacade/getsubjectlist/";
+
+  static String getCwYear = "api/IVRM_ClassWorkFacade/Getdetails/";
+
+  static String saveCw = "api/IVRM_ClassWorkFacade/savedetail/";
+
+  //Birthday
   static String getStudentBday = "api/studentbirthdayreportFacade/getdetails/";
 
   // SALARY SLIP API .........
@@ -177,14 +209,24 @@ class URLS {
   static String getSalaryBreak =
       "api/EmployeeSalaryDetailsFacade/getsalaryalldetails/";
 
+  /// COE **/
   static String staffCoe = "api/COEReportFacade/";
 
+  /* HW CW API */
   static String getHwYear = "api/EmployeeStudentHomeworkFacade/Getdetails/";
   static String getHwClass = "api/EmployeeStudentHomeworkFacade/get_classes/";
   static String getSection =
       "api/EmployeeStudentHomeworkFacade/getsectiondata/";
   static String getSubjects = "api/EmployeeStudentHomeworkFacade/getsubject/";
   static String saveHw = "api/EmployeeStudentHomeworkFacade/savedetail/";
+  static String getHwAttachment = "api/EmployeeStudentHomeworkFacade/viewData";
+
+  static String getCwAttachment = "api/IVRM_ClassWorkFacade/viewData";
+
+  static String activateDeactiveHw =
+      "api/EmployeeStudentHomeworkFacade/deactivate";
+
+  static String activateDeactiveCw = "api/IVRM_ClassWorkFacade/deactivate";
 
   // MARKS ENTRY API ............
 
@@ -197,25 +239,9 @@ class URLS {
   static String getmarksentrydetails = 'api/MarksEntryFacade/onsearch/';
   static String savemarksentrydetails = 'api/MarksEntryFacade/SaveMarks/';
 
-  static String nB_Attachment = "api/EmployeePtalFacade/viewnotice";
-
+  // PunchReport
   static String punchReport = "api/EmployeePunchAttendenceFacade/getrpt/";
 
-  static String getHwList =
-      "api/EmployeeStudentHomeworkFacade/gethomework_list/";
-
-  static String getCwAttachedFile = "api/IVRM_ClassWorkFacade/viewclasswork/";
-  static String getHwAttachedFile =
-      "api/EmployeeStudentHomeworkFacade/viewhomework";
-
-  static String getCwAttachmentFile =
-      "api/IVRM_ClassWorkFacade/viewstudentupload/";
-
-  static String getStudentUploadedHw =
-      "api/EmployeeStudentHomeworkFacade/viewstudentupload/";
-
-  static String getVerifyClassWorkList =
-      "api/IVRM_ClassWorkFacade/getclasswork_list/";
   // STUDENT ATTENDANCE API .................
 
   static String getStudentAcademicYear =
@@ -243,30 +269,15 @@ class URLS {
   static String saveAttendanceEntry =
       'api/StudentAttendanceEntryFacade/savestudentattendance/';
   // ..............
-  static String uploadCwEnd = "api/LoginFacade/ClassworkUpload";
 
-  static String saveVerifyHw =
-      "api/EmployeeStudentHomeworkFacade/homework_marks_update/";
-
-  static String saveVerifyCw =
-      "api/IVRM_ClassWorkFacade/classwork_marks_update/";
-
-  static String verifySub = "api/IVRM_ClassWorkFacade/getsubjectlist/";
-
-  static String getCwYear = "api/IVRM_ClassWorkFacade/Getdetails/";
-
-  static String saveCw = "api/IVRM_ClassWorkFacade/savedetail/";
-
+  //Dashboard
   static String staffDashboard = "api/AdmissionCtrl/staffDashboardDetails/";
-
-  static String getHwAttachment = "api/EmployeeStudentHomeworkFacade/viewData";
-
-  static String getCwAttachment = "api/IVRM_ClassWorkFacade/viewData";
-
-  static String activateDeactiveHw =
-      "api/EmployeeStudentHomeworkFacade/deactivate";
-
-  static String activateDeactiveCw = "api/IVRM_ClassWorkFacade/deactivate";
-
   static String getStaffProfileDet = "api/AdmissionCtrl/staffProfile/";
+
+  /* StaffNoticeBoard */
+  static String noticeGetDetails = "api/NoticeBoardFacade/Getdetails/";
+  static String getNoticeSection = "api/NoticeBoardFacade/getsection";
+  static String getNoticeStudent = "api/NoticeBoardFacade/getstudent";
+  static String getDesignation = "api/NoticeBoardFacade/Deptselectiondetails";
+  static String getEmployee = "api/NoticeBoardFacade/Desgselectiondetails";
 }

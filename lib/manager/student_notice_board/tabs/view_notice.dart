@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:m_skool_flutter/staffs/notice_board_staff/widget/view_notice_card.dart';
 
 class ViewNoticeTab extends StatefulWidget {
   const ViewNoticeTab({super.key});
@@ -19,8 +18,8 @@ class _ViewNoticeTabState extends State<ViewNoticeTab> {
         if (color % 6 == 0) {
           color = 0;
         }
-
-        return ViewNoticeCard(color: color);
+        return const SizedBox();
+        // return ViewNoticeCard(color: color, values:,);
       },
       separatorBuilder: (_, index) {
         return const SizedBox(

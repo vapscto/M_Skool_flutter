@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/staffs/model/dashboard_coe_data_model.dart';
 import 'package:m_skool_flutter/staffs/model/dashboard_leave_model.dart';
 import 'package:m_skool_flutter/staffs/model/dashboard_lop_model.dart';
+import 'package:m_skool_flutter/staffs/model/dashboard_punch_report_model.dart';
 import 'package:m_skool_flutter/staffs/model/dashboard_tt_model.dart';
 
 class StaffDashboardController extends GetxController {
@@ -40,5 +42,23 @@ class StaffDashboardController extends GetxController {
       dashboardTT.clear();
     }
     dashboardTT.addAll(dTT);
+  }
+
+  RxList<DashboardPunchReportModelValues> dashboardPunch = RxList();
+
+  void updateDashboardPunch(List<DashboardPunchReportModelValues> punch) {
+    if (dashboardPunch.isNotEmpty) {
+      dashboardPunch.clear();
+    }
+    dashboardPunch.addAll(punch);
+  }
+
+  RxList<DashboardCoeDataModelValues> dashboardCoe = RxList();
+
+  void updateDashboardCoe(List<DashboardCoeDataModelValues> coe) {
+    if (dashboardCoe.isNotEmpty) {
+      dashboardCoe.clear();
+    }
+    dashboardCoe.addAll(coe);
   }
 }

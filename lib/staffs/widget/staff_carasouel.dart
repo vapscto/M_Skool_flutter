@@ -1,26 +1,30 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/model/dashboard_coe_data_model.dart';
+import 'package:m_skool_flutter/staffs/widget/coe_staff_slider.dart';
 
 class StaffCarasouel extends StatelessWidget {
-  const StaffCarasouel({super.key});
+  final List<DashboardCoeDataModelValues> mList;
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  const StaffCarasouel(
+      {super.key,
+      required this.mList,
+      required this.loginSuccessModel,
+      required this.mskoolController});
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
-      itemCount: 3,
+      itemCount: mList.length,
       itemBuilder: (_, index, count) {
-        return Container(
-          width: double.infinity,
-          margin: const EdgeInsets.only(left: 4, right: 4),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.0),
-            image: const DecorationImage(
-              image: AssetImage("assets/images/banner.png"),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: const Text("This is carasouel Slider .... "),
+        return CoeStaffSlider(
+          coeValue: mList.elementAt(index),
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
         );
       },
       options: CarouselOptions(

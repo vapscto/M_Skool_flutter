@@ -27,11 +27,11 @@ class StaffHomeLop extends StatelessWidget {
                       ),
                     ),
               ),
-              trailing: const Chip(
-                  backgroundColor: Color(0xFFFBCFCF),
+              trailing: Chip(
+                  backgroundColor: const Color(0xFFFBCFCF),
                   label: Text(
-                    "November",
-                    style: TextStyle(color: Color(0xFFA83232)),
+                    "${value.monthname}",
+                    style: const TextStyle(color: Color(0xFFA83232)),
                   )),
             ),
             Image.asset(
