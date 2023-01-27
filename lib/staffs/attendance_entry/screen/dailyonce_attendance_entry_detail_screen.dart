@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/api/attendance_entry_related_api.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/controller/attendance_entry_related_controller.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/widget/attendance_checkbox_widget.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
@@ -11,10 +15,18 @@ import 'package:m_skool_flutter/widget/home_fab.dart';
 class DailyOnceAttendanceEntryDetailScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final int asaId;
+  final int asmayId;
+  final int asmclId;
+  final int asmsId;
   const DailyOnceAttendanceEntryDetailScreen({
     super.key,
     required this.loginSuccessModel,
     required this.mskoolController,
+    required this.asaId,
+    required this.asmayId,
+    required this.asmclId,
+    required this.asmsId,
   });
 
   @override
@@ -27,6 +39,18 @@ class _DailyOnceAttendanceEntryDetailScreenState
   final AttendanceEntryController attendanceEntryController =
       Get.put(AttendanceEntryController());
   bool selectAll = false;
+  List<Map<String, dynamic>> stdList = [];
+
+  void addToStudentList(Map<String, dynamic> data) {
+    stdList.add(data);
+    logger.d(stdList);
+  }
+
+  void removeFromStudentList(int rollNo) {
+    stdList.removeWhere((element) => element['amaY_RollNo'] == rollNo);
+    logger.d(stdList);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +64,36 @@ class _DailyOnceAttendanceEntryDetailScreenState
                 const EdgeInsets.symmetric(vertical: 13.0, horizontal: 16.0),
             child: SaveBtn(
               title: 'Save',
-              onPress: () {},
+              onPress: () async {
+                if (stdList.isEmpty) {
+                  Fluttertoast.showToast(msg: 'Select Attendance');
+                  return;
+                }
+                attendanceEntryController.issaveloading(true);
+                await saveAttendanceEntry(
+                  data: {
+                    "ASA_Id": widget.asaId,
+                    "MI_Id": widget.loginSuccessModel.mIID!,
+                    "ASMAY_Id": widget.asmayId,
+                    "ASA_Att_Type": "Dailyonce",
+                    "ASMCL_Id": widget.asmclId,
+                    "ASMS_Id": widget.asmsId,
+                    "ASA_Entry_DateTime": DateTime.now().toString(),
+                    "ASA_FromDate": DateTime.now().toString(),
+                    "ASA_ToDate": DateTime.now().toString(),
+                    "ASA_ClassHeld": "1.00",
+                    "ASA_Class_Attended": "1.0",
+                    "stdList": stdList,
+                    "username": widget.loginSuccessModel.userName!,
+                    "userId": widget.loginSuccessModel.userId!,
+                  },
+                  base: baseUrlFromInsCode(
+                    'admission',
+                    widget.mskoolController,
+                  ),
+                ).then((value) => logger.d(value));
+                attendanceEntryController.issaveloading(false);
+              },
             ),
           ),
         ],
@@ -251,6 +304,29 @@ class _DailyOnceAttendanceEntryDetailScreenState
                                   child: AttendanceCheckboxWidget(
                                     index: index,
                                     attendance: selectAll ? true : false,
+                                    addToStudentlist: addToStudentList,
+                                    removeFromStudentlist:
+                                        removeFromStudentList,
+                                    admNo: attendanceEntryController
+                                        .studentList1
+                                        .elementAt(index)
+                                        .amsTAdmNo!,
+                                    amstId: attendanceEntryController
+                                        .studentList1
+                                        .elementAt(index)
+                                        .amsTId!,
+                                    amstRegistrationNo:
+                                        attendanceEntryController.studentList1
+                                            .elementAt(index)
+                                            .amsTRegistrationNo!,
+                                    rollNo: attendanceEntryController
+                                        .studentList1
+                                        .elementAt(index)
+                                        .amaYRollNo!,
+                                    studentName: attendanceEntryController
+                                        .studentList1
+                                        .elementAt(index)
+                                        .studentname!,
                                   ),
                                 ),
                               ),

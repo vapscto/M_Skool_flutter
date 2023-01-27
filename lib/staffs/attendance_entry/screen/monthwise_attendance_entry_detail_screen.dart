@@ -185,8 +185,8 @@ class _MonthWiseAttendanceEntryDetailScreenState
                         ],
 
                         rows: List.generate(
-                            attendanceEntryController.studentList.length,
-                            (index) {
+                            attendanceEntryController
+                                .monthwiseStudentList.length, (index) {
                           var i = index + 1;
                           return DataRow(
                             cells: [
@@ -201,7 +201,7 @@ class _MonthWiseAttendanceEntryDetailScreenState
                               ),
                               DataCell(
                                 Text(
-                                  '${attendanceEntryController.studentList.elementAt(index).studentname}',
+                                  '${attendanceEntryController.monthwiseStudentList.elementAt(index).studentname}',
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
@@ -209,7 +209,7 @@ class _MonthWiseAttendanceEntryDetailScreenState
                                 Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    "${attendanceEntryController.studentList.elementAt(index).amaYRollNo!}",
+                                    "${attendanceEntryController.monthwiseStudentList.elementAt(index).amaYRollNo!}",
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),

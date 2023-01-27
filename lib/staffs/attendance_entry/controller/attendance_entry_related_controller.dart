@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/api/attendance_entry_related_api.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/initialdataModel.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/model/periodwiseStudentlistModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/sectionModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/studentListModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/studentListModel1.dart';
@@ -17,9 +18,10 @@ class AttendanceEntryController extends GetxController {
   RxList<PeriodlistValue> periodList = <PeriodlistValue>[].obs;
   RxList<MonthListValue> monthList = <MonthListValue>[].obs;
 
-  RxList<StudentListValues> studentList = <StudentListValues>[].obs;
+  RxList<StudentListValues> monthwiseStudentList = <StudentListValues>[].obs;
   RxList<StudentListValuess> studentList1 = <StudentListValuess>[].obs;
-  RxList<PWM.StudentListValuess> studentList2 = <PWM.StudentListValuess>[].obs;
+  RxList<PeroidWiseStudentListValue> periodwiseStudentList =
+      <PeroidWiseStudentListValue>[].obs;
 
   RxString attendanceEntryType = ''.obs;
   RxNum countClassHeld = RxNum(0.0);
@@ -160,12 +162,13 @@ class AttendanceEntryController extends GetxController {
         asmsId: asmsId,
         monthId: monthId,
         base: base);
-    studentList.clear();
+    monthwiseStudentList.clear();
     try {
       if (studentListModel!.studentList != null ||
           studentListModel.studentList!.values != null) {
         for (var i = 0; i < studentListModel.studentList!.values!.length; i++) {
-          studentList.add(studentListModel.studentList!.values!.elementAt(i)!);
+          monthwiseStudentList
+              .add(studentListModel.studentList!.values!.elementAt(i)!);
         }
         countClassHeld.value = studentListModel.countclass!;
         asaId.value = studentListModel.asAId!;
@@ -224,7 +227,7 @@ class AttendanceEntryController extends GetxController {
     }
   }
 
-  Future<bool> getSubjectAndStudentListOnChangeSection({
+  Future<bool> getSubjectListOnChangeSection({
     required int asmayId,
     required String asmclId,
     required int asmsId,
@@ -250,14 +253,52 @@ class AttendanceEntryController extends GetxController {
         for (var i = 0; i < subjectModel.subjectList!.values!.length; i++) {
           subjectList.add(subjectModel.subjectList!.values!.elementAt(i)!);
         }
+        return true;
       }
-      if (subjectModel.studentList != null ||
-          subjectModel.studentList!.values != null) {
-        studentList2.clear();
-        for (var i = 0; i < subjectModel.studentList!.values!.length; i++) {
-          studentList2.add(subjectModel.studentList!.values!.elementAt(i)!);
+      // if (subjectModel.studentList != null ||
+      //     subjectModel.studentList!.values != null) {
+      //   studentList2.clear();
+      //   for (var i = 0; i < subjectModel.studentList!.values!.length; i++) {
+      //     studentList2.add(subjectModel.studentList!.values!.elementAt(i)!);
+      //   }
+      //   asaId.value = subjectModel.asAId!;
+      //   return true;
+      // }
+      return false;
+    } catch (e) {
+      logger.d(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> getStudentListOnChangePeriod({
+    required int asmayId,
+    required int asmclId,
+    required int asmsId,
+    required int ttmpId,
+    required int ismsId,
+    required int miId,
+    required String base,
+  }) async {
+    PeriodWiseStudentListModel? periodWiseStudentListModel =
+        await onChangeOfPeriod(
+            asmayId: asmayId,
+            asmclId: asmclId,
+            asmsId: asmsId,
+            ttmpId: ttmpId,
+            ismsId: ismsId,
+            miId: miId,
+            base: base);
+    try {
+      if (periodWiseStudentListModel!.studentList != null ||
+          periodWiseStudentListModel.studentList!.values != null) {
+        for (var i = 0;
+            i < periodWiseStudentListModel.studentList!.values!.length;
+            i++) {
+          periodwiseStudentList.add(
+              periodWiseStudentListModel.studentList!.values!.elementAt(i)!);
         }
-        asaId.value = subjectModel.asAId!;
+        asaId.value = periodWiseStudentListModel.asAId!;
         return true;
       }
       return false;

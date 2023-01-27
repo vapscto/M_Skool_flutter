@@ -3,6 +3,7 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/initialdataModel.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/model/periodwiseStudentlistModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/sectionModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/studentListModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/studentListModel1.dart';
@@ -215,6 +216,47 @@ Future<SubjectModel?> onChangeSection({
     if (response.statusCode == 200) {
       SubjectModel subjectModel = SubjectModel.fromJson(response.data);
       return subjectModel;
+    }
+    return null;
+  } catch (e) {
+    logger.d(e.toString());
+    return null;
+  }
+}
+
+Future<PeriodWiseStudentListModel?> onChangeOfPeriod({
+  required int asmayId,
+  required int asmclId,
+  required int asmsId,
+  required int ttmpId,
+  required int ismsId,
+  required int miId,
+  required String base,
+}) async {
+  var url = base + URLS.onChangePeriod;
+  try {
+    var response = await dio.post(
+      url,
+      options: Options(
+        headers: getSession(),
+      ),
+      data: {
+        "ASA_FromDate": DateTime.now().toString(),
+        "ASMAY_Id": asmayId,
+        "ASMCL_Id": asmclId.toString(),
+        "ASMS_Id": asmsId.toString(),
+        "TTMP_Id": ttmpId.toString(),
+        "asasB_Id": null,
+        "ismS_Id": ismsId.toString(),
+        "monthflag": "P",
+        "monthflag1": "period",
+        "MI_Id": miId
+      },
+    );
+    if (response.statusCode == 200) {
+      PeriodWiseStudentListModel periodWiseStudentListModel =
+          PeriodWiseStudentListModel.fromJson(response.data);
+      return periodWiseStudentListModel;
     }
     return null;
   } catch (e) {

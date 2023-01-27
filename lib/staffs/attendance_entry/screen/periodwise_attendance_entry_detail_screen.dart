@@ -276,8 +276,8 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                         ],
 
                         rows: List.generate(
-                            attendanceEntryController.studentList2.length,
-                            (index) {
+                            attendanceEntryController
+                                .periodwiseStudentList.length, (index) {
                           var i = index + 1;
                           return DataRow(
                             cells: [
@@ -287,14 +287,14 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                                       overflow: TextOverflow.ellipsis))),
                               DataCell(
                                 Text(
-                                    '${attendanceEntryController.studentList2.elementAt(index).studentname}',
+                                    '${attendanceEntryController.periodwiseStudentList.elementAt(index).studentname}',
                                     overflow: TextOverflow.ellipsis),
                               ),
                               DataCell(
                                 Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                      ' ${attendanceEntryController.studentList2.elementAt(index).amaYRollNo}',
+                                      ' ${attendanceEntryController.periodwiseStudentList.elementAt(index).amaYRollNo}',
                                       overflow: TextOverflow.ellipsis),
                                 ),
                               ),
@@ -302,7 +302,7 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                                 Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                      '${attendanceEntryController.studentList2.elementAt(index).amsTAdmNo}',
+                                      '${attendanceEntryController.periodwiseStudentList.elementAt(index).amsTAdmNo}',
                                       overflow: TextOverflow.ellipsis),
                                 ),
                               ),
@@ -311,13 +311,31 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                                   alignment: Alignment.center,
                                   child: AttendanceCheckboxWidget(
                                     index: index,
-                                    value: attendanceEntryController
-                                        .studentList2
-                                        .elementAt(index),
                                     attendance: selectAll ? true : false,
                                     addToStudentlist: addToStudentList,
                                     removeFromStudentlist:
                                         removeFromStudentList,
+                                    admNo: attendanceEntryController
+                                        .periodwiseStudentList
+                                        .elementAt(index)
+                                        .amsTAdmNo!,
+                                    amstId: attendanceEntryController
+                                        .periodwiseStudentList
+                                        .elementAt(index)
+                                        .amsTId!,
+                                    amstRegistrationNo:
+                                        attendanceEntryController
+                                            .periodwiseStudentList
+                                            .elementAt(index)
+                                            .amsTRegistrationNo!,
+                                    rollNo: attendanceEntryController
+                                        .periodwiseStudentList
+                                        .elementAt(index)
+                                        .amaYRollNo!,
+                                    studentName: attendanceEntryController
+                                        .periodwiseStudentList
+                                        .elementAt(index)
+                                        .studentname!,
                                   ),
                                 ),
                               ),
