@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/model/classes_model_data_model.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/model/department_model.dart';
@@ -128,6 +129,23 @@ class NoticeBoardController extends GetxController {
     students.addAll(stu);
   }
 
+  RxList<NoticeStudentDetailsModelValues> selectedStuden = RxList();
+
+  void addToSelectedStudent(NoticeStudentDetailsModelValues stu) {
+    selectedStuden.add(stu);
+  }
+
+  void removeToSelectedStudent(NoticeStudentDetailsModelValues re) {
+    selectedStuden.remove(re);
+  }
+
+  void addAllToStudent(List<NoticeStudentDetailsModelValues> st) {
+    if (selectedStuden.isNotEmpty) {
+      selectedStuden.clear();
+    }
+    selectedStuden.addAll(st);
+  }
+
   RxList<SectionDetailsModelValues> selectedSections = RxList();
 
   void addToSection(SectionDetailsModelValues sec) {
@@ -237,4 +255,15 @@ class NoticeBoardController extends GetxController {
     }
     selectedEmployee.addAll(emp);
   }
+
+  RxString noticeType = RxString("Others");
+  Rx<TextEditingController> noticeTitle =
+      Rx<TextEditingController>(TextEditingController());
+
+  Rx<TextEditingController> desc =
+      Rx<TextEditingController>(TextEditingController());
+
+  Rx<DateTime> startDt = Rx<DateTime>(DateTime.now());
+  Rx<DateTime> endDt = Rx<DateTime>(DateTime.now());
+  Rx<DateTime> displayDt = Rx<DateTime>(DateTime.now());
 }

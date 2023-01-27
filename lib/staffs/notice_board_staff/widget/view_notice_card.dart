@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/widget/hw_cw_content_item.dart';
+import 'package:m_skool_flutter/staffs/notice_board_staff/api/active_deactive_nb.dart';
+import 'package:m_skool_flutter/staffs/notice_board_staff/api/get_attachment_api.dart';
+import 'package:m_skool_flutter/staffs/notice_board_staff/model/nb_attachment_model.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/model/view_notice_data_model.dart';
 import 'package:m_skool_flutter/staffs/punch_report/widget/punch_report_item.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
+import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/err_widget.dart';
 
 class ViewNoticeCard extends StatelessWidget {
   final ViewNoticeDetailsModelValuesValues values;
+  final String base;
+  final int miId;
+  final Function() func;
   const ViewNoticeCard({
     Key? key,
     required this.color,
     required this.values,
+    required this.base,
+    required this.func,
+    required this.miId,
   }) : super(key: key);
 
   final int color;
@@ -41,10 +54,15 @@ class ViewNoticeCard extends StatelessWidget {
                     ),
                     Text(
                       values.intBActiveFlag == true ? "Active" : "Deactive",
-                      style: Theme.of(context).textTheme.titleSmall!.merge(
-                          const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.green)),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .merge(TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: values.intBActiveFlag == true
+                                ? Colors.green
+                                : Colors.grey.shade400,
+                          )),
                     ),
                   ],
                 ),
@@ -53,13 +71,30 @@ class ViewNoticeCard extends StatelessWidget {
                   if (values.intBActiveFlag == true) {
                     entries.add(PopupMenuItem(
                       child: const Text("Deactive"),
-                      onTap: () {},
+                      onTap: () async {
+                        await ActivateDeactivateNbApi.instance
+                            .activateDeactivate(
+                                base: base,
+                                intBId: values.intBId!,
+                                flag: false,
+                                miId: miId);
+                        func();
+                      },
                     ));
                   } else {
                     entries.add(
                       PopupMenuItem(
                         child: const Text("Active"),
-                        onTap: () {},
+                        onTap: () async {
+                          await ActivateDeactivateNbApi.instance
+                              .activateDeactivate(
+                                  base: base,
+                                  intBId: values.intBId!,
+                                  flag: true,
+                                  miId: miId);
+                          func();
+                          func();
+                        },
                       ),
                     );
                   }
@@ -127,15 +162,146 @@ class ViewNoticeCard extends StatelessWidget {
                 const SizedBox(
                   height: 12.0,
                 ),
-                // const PunchReportItem(
-                //   title: "Url",
-                //   time: "Url will come here",
-                // ),
-                // const SizedBox(
-                //   height: 16.0,
-                // ),
-                // HwCwContentItem(
-                //     onDownloadClicked: () {}, title: "Grammer.pdf", isPdf: true)
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 7,
+                      child: InkWell(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) {
+                                return Dialog(
+                                  insetPadding: const EdgeInsets.all(16.0),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(12.0)),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16.0, vertical: 16.0),
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context).primaryColor,
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(8.0),
+                                            topRight: Radius.circular(8.0),
+                                          ),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Attachment's",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(
+                                                    const TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 18.0),
+                                                  ),
+                                            ),
+                                            IconButton(
+                                                padding:
+                                                    const EdgeInsets.all(0),
+                                                visualDensity:
+                                                    const VisualDensity(
+                                                        horizontal:
+                                                            VisualDensity
+                                                                .minimumDensity,
+                                                        vertical: VisualDensity
+                                                            .minimumDensity),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                icon: const Icon(
+                                                  Icons.close,
+                                                  color: Colors.white,
+                                                ))
+                                          ],
+                                        ),
+                                      ),
+                                      FutureBuilder<
+                                              List<NBAttachmentModelValues>>(
+                                          future: GetNbAttachmentApi.instance
+                                              .getNbAtt(
+                                            intbId: values.intBId!,
+                                            base: base,
+                                          ),
+                                          builder: (_, snapshot) {
+                                            if (snapshot.hasData) {
+                                              return ListView.separated(
+                                                  padding: const EdgeInsets.all(
+                                                      12.0),
+                                                  shrinkWrap: true,
+                                                  itemBuilder: (_, index) {
+                                                    return HwCwContentItem(
+                                                        onDownloadClicked:
+                                                            () {},
+                                                        title: snapshot.data!
+                                                            .elementAt(index)
+                                                            .intbfLFileName!,
+                                                        isPdf: true);
+                                                  },
+                                                  separatorBuilder:
+                                                      (context, index) {
+                                                    return const SizedBox(
+                                                      height: 12.0,
+                                                    );
+                                                  },
+                                                  itemCount:
+                                                      snapshot.data!.length);
+                                            }
+                                            if (snapshot.hasError) {
+                                              return ErrWidget(
+                                                  err: snapshot.error
+                                                      as Map<String, dynamic>);
+                                            }
+                                            return Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: const [
+                                                AnimatedProgressWidget(
+                                                  title: "Loading Attachment",
+                                                  desc:
+                                                      "We are loading attachment for this particular notice",
+                                                  animationPath:
+                                                      "assets/json/default.json",
+                                                ),
+                                              ],
+                                            );
+                                          }),
+                                    ],
+                                  ),
+                                );
+                              });
+                        },
+                        child: CustomContainer(
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.attachment,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                const SizedBox(
+                                  width: 12.0,
+                                ),
+                                const Expanded(
+                                  child: Text("View Attachment"),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Expanded(flex: 3, child: SizedBox())
+                  ],
+                ),
               ],
             ),
           ),

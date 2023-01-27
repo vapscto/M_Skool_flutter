@@ -1,24 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/controller/hw_cw_controller.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/widget/attach_files.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/widget/references_widget.dart';
+import 'package:m_skool_flutter/staffs/notice_board_staff/api/save_notice.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/controller/notice_board_controller.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/widget/staff_widget.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/widget/student_widget.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class NewNoticeTabScreen extends StatefulWidget {
   final NoticeBoardController noticeBoardController;
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final HwCwController hwCwController;
   const NewNoticeTabScreen(
       {super.key,
       required this.noticeBoardController,
       required this.loginSuccessModel,
-      required this.mskoolController});
+      required this.mskoolController,
+      required this.hwCwController});
 
   @override
   State<NewNoticeTabScreen> createState() => _NewNoticeTabScreenState();
@@ -35,6 +45,7 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
     "Others",
     'Syllabus',
     'Timetable',
+    "Portion",
   ];
 
   List<String> noticeTitle = [
@@ -48,6 +59,9 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
 
   RxBool wantToProvideReference = RxBool(false);
   RxString forStudent = RxString("stu");
+  RxBool forStu = RxBool(false);
+  RxBool forStaff = RxBool(false);
+  RxBool isStartDateProvided = RxBool(false);
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -60,7 +74,7 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      forStudent.value = "stu";
+                      forStu.value = !forStu.value;
                     },
                     child: Obx(() {
                       return AnimatedContainer(
@@ -70,10 +84,10 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
                           curve: Curves.fastLinearToSlowEaseIn,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(3.0),
-                              border: forStudent.value == "stu"
+                              border: forStu.value
                                   ? null
                                   : Border.all(color: Colors.grey, width: 2.0)),
-                          child: forStudent.value == "stu"
+                          child: forStu.value
                               ? Image.asset("assets/images/checkbox.png")
                               : null);
                     }),
@@ -94,7 +108,7 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      forStudent.value = "stf";
+                      forStaff.value = !forStaff.value;
                     },
                     child: Obx(() {
                       return AnimatedContainer(
@@ -104,10 +118,10 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
                           curve: Curves.fastLinearToSlowEaseIn,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(3.0),
-                              border: forStudent.value == "stf"
+                              border: forStaff.value
                                   ? null
                                   : Border.all(color: Colors.grey, width: 2.0)),
-                          child: forStudent.value == "stf"
+                          child: forStaff.value
                               ? Image.asset(
                                   "assets/images/checkbox.png",
                                 )
@@ -130,7 +144,7 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
           ),
           CustomContainer(
             child: DropdownButtonFormField<String>(
-                value: selectedNoticeType,
+                value: widget.noticeBoardController.noticeType.value,
                 style: Theme.of(context).textTheme.titleSmall!.merge(
                       const TextStyle(fontSize: 16.0),
                     ),
@@ -196,88 +210,17 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
                   ),
                 ),
                 onChanged: (e) {
-                  selectedNoticeType = e!;
+                  widget.noticeBoardController.noticeType.value = e!;
                 }),
           ),
           const SizedBox(
             height: 32,
           ),
-          // CustomContainer(
-          //   child: DropdownButtonFormField<String>(
-          //       value: selectedNoticeTitle,
-          //       style: Theme.of(context).textTheme.titleSmall!.merge(
-          //             const TextStyle(fontSize: 16.0),
-          //           ),
-          //       decoration: InputDecoration(
-          //         focusedBorder: const OutlineInputBorder(
-          //           borderSide: BorderSide(
-          //             color: Colors.transparent,
-          //           ),
-          //         ),
-          //         enabledBorder: const OutlineInputBorder(
-          //           borderSide: BorderSide(
-          //             color: Colors.transparent,
-          //           ),
-          //         ),
-          //         label: Container(
-          //           decoration: BoxDecoration(
-          //             color: const Color(0xFFFFEBEA),
-          //             borderRadius: BorderRadius.circular(24.0),
-          //           ),
-          //           padding: const EdgeInsets.symmetric(
-          //               horizontal: 12.0, vertical: 8.0),
-          //           child: Row(
-          //             mainAxisSize: MainAxisSize.min,
-          //             children: [
-          //               SvgPicture.asset(
-          //                 'assets/svg/noteicon.svg',
-          //                 color: const Color.fromRGBO(255, 111, 103, 1),
-          //                 height: 24,
-          //               ),
-          //               const SizedBox(
-          //                 width: 6.0,
-          //               ),
-          //               Text(
-          //                 " Notice Type ",
-          //                 style: Theme.of(context).textTheme.labelMedium!.merge(
-          //                       const TextStyle(
-          //                         fontSize: 20.0,
-          //                         color: Color.fromRGBO(255, 111, 103, 1),
-          //                       ),
-          //                     ),
-          //               ),
-          //             ],
-          //           ),
-          //         ),
-          //         border: const OutlineInputBorder(),
-          //       ),
-          //       icon: const Icon(
-          //         Icons.keyboard_arrow_down_outlined,
-          //         size: 30,
-          //       ),
-          //       items: List.generate(
-          //         noticeType.length,
-          //         (index) => DropdownMenuItem(
-          //           value: noticeTitle[index],
-          //           child: Text(
-          //             noticeTitle[index],
-          //             style: Theme.of(context).textTheme.labelSmall!.merge(
-          //                 const TextStyle(
-          //                     fontWeight: FontWeight.w400,
-          //                     fontSize: 16.0,
-          //                     letterSpacing: 0.3)),
-          //           ),
-          //         ),
-          //       ),
-          //       onChanged: (e) {
-          //         selectedNoticeTitle = e!;
-          //       }),
-          // ),
           CustomContainer(
             child: TextField(
               style: Theme.of(context).textTheme.titleSmall,
 
-              controller: description,
+              controller: widget.noticeBoardController.noticeTitle.value,
               // maxLines: 5,
               decoration: InputDecoration(
                 contentPadding:
@@ -302,7 +245,7 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
                         width: 6.0,
                       ),
                       Text(
-                        " Notice Type ",
+                        " Notice Title ",
                         style: Theme.of(context).textTheme.labelMedium!.merge(
                               const TextStyle(
                                 fontSize: 20.0,
@@ -334,7 +277,7 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
           CustomContainer(
             child: TextField(
               style: Theme.of(context).textTheme.titleSmall,
-              controller: description,
+              controller: widget.noticeBoardController.desc.value,
               maxLines: 5,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
@@ -393,23 +336,35 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
               readOnly: true,
               //maxLines: 4,
               onTap: () async {
+                if (widget.noticeBoardController.endDt.value.year ==
+                        DateTime.now().year &&
+                    widget.noticeBoardController.endDt.value.day ==
+                        DateTime.now().day &&
+                    widget.noticeBoardController.endDt.value.month ==
+                        DateTime.now().month) {
+                  widget.noticeBoardController.endDt.value =
+                      DateTime(DateTime.now().year + 1);
+                }
                 var date = await showDatePicker(
                   context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2023),
-                  lastDate: DateTime(2025),
+                  initialDate: widget.noticeBoardController.startDt.value,
+                  firstDate: widget.noticeBoardController.startDt.value,
+                  lastDate: widget.noticeBoardController.endDt.value,
                 );
                 if (date != null) {
-                  setState(() {
-                    startDate.text =
-                        "${numberList[date.day]}-${numberList[date.month]}-${date.year}";
-                  });
+                  startDate.text =
+                      "${numberList[date.day]}-${numberList[date.month]}-${date.year}";
+                  widget.noticeBoardController.startDt.value = date;
                 }
               },
               decoration: InputDecoration(
-                suffixIcon: const Icon(
-                  Icons.calendar_today_outlined,
-                  color: Colors.grey,
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: SvgPicture.asset(
+                    "assets/svg/calendar_icon.svg",
+                    color: const Color(0xFF3E78AA),
+                    height: 24.0,
+                  ),
                 ),
                 contentPadding: const EdgeInsets.only(top: 48.0, left: 12),
                 border: const OutlineInputBorder(),
@@ -463,28 +418,33 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
           ),
           CustomContainer(
             child: TextField(
-              controller: startDate,
+              controller: endDate,
               style: Theme.of(context).textTheme.titleSmall,
               readOnly: true,
               //maxLines: 4,
               onTap: () async {
+                widget.noticeBoardController.endDt.value =
+                    widget.noticeBoardController.startDt.value;
                 var date = await showDatePicker(
                   context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2023),
-                  lastDate: DateTime(2025),
+                  initialDate: widget.noticeBoardController.endDt.value,
+                  firstDate: widget.noticeBoardController.startDt.value,
+                  lastDate: DateTime(DateTime.now().year + 1),
                 );
                 if (date != null) {
-                  setState(() {
-                    endDate.text =
-                        "${numberList[date.day]}-${numberList[date.month]}-${date.year}";
-                  });
+                  endDate.text =
+                      "${numberList[date.day]}-${numberList[date.month]}-${date.year}";
+                  widget.noticeBoardController.endDt.value = date;
                 }
               },
               decoration: InputDecoration(
-                suffixIcon: const Icon(
-                  Icons.calendar_today_outlined,
-                  color: Colors.grey,
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: SvgPicture.asset(
+                    "assets/svg/calendar_icon.svg",
+                    color: const Color(0xFF6F58B4),
+                    height: 24.0,
+                  ),
                 ),
                 contentPadding: const EdgeInsets.only(top: 48.0, left: 12),
                 border: const OutlineInputBorder(),
@@ -507,7 +467,7 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
                         width: 6.0,
                       ),
                       Text(
-                        " Start Date ",
+                        " End Date ",
                         style: Theme.of(context).textTheme.labelMedium!.merge(
                               const TextStyle(
                                 fontSize: 20.0,
@@ -538,28 +498,31 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
           ),
           CustomContainer(
             child: TextField(
-              controller: startDate,
+              controller: displayDate,
               style: Theme.of(context).textTheme.titleSmall,
               readOnly: true,
               //maxLines: 4,
               onTap: () async {
                 var date = await showDatePicker(
                   context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2023),
-                  lastDate: DateTime(2025),
+                  initialDate: widget.noticeBoardController.displayDt.value,
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime(DateTime.now().year + 1),
                 );
                 if (date != null) {
-                  setState(() {
-                    endDate.text =
-                        "${numberList[date.day]}-${numberList[date.month]}-${date.year}";
-                  });
+                  displayDate.text =
+                      "${numberList[date.day]}-${numberList[date.month]}-${date.year}";
+                  widget.noticeBoardController.displayDt.value = date;
                 }
               },
               decoration: InputDecoration(
-                suffixIcon: const Icon(
-                  Icons.calendar_today_outlined,
-                  color: Colors.grey,
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: SvgPicture.asset(
+                    "assets/svg/calendar_icon.svg",
+                    color: const Color(0xFFBBAC2C),
+                    height: 24.0,
+                  ),
                 ),
                 contentPadding: const EdgeInsets.only(top: 48.0, left: 12),
                 border: const OutlineInputBorder(),
@@ -608,349 +571,105 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
               ),
             ),
           ),
+          ReferencesWidget(
+            wantToProvideReference: wantToProvideReference,
+            hwCwController: widget.hwCwController,
+          ),
+          const SizedBox(
+            height: 16.0,
+          ),
+          AttachedFiles(
+            hwCwController: widget.hwCwController,
+          ),
+          const SizedBox(
+            height: 8.0,
+          ),
           Obx(() {
-            return forStudent.value == "stu"
+            return forStu.value
                 ? StudentWidget(
                     controller: widget.noticeBoardController,
                     loginSuccessModel: widget.loginSuccessModel,
                     mskoolController: widget.mskoolController,
                   )
-                : StaffWidget(
+                : const SizedBox();
+          }),
+          Obx(() {
+            return forStaff.value
+                ? StaffWidget(
                     controller: widget.noticeBoardController,
                     loginSuccessModel: widget.loginSuccessModel,
-                    mskoolController: widget.mskoolController);
+                    mskoolController: widget.mskoolController)
+                : const SizedBox();
           }),
-          // const SizedBox(
-          //   height: 14.0,
-          // ),
-          // // ReferencesWidget(wantToProvideReference: wantToProvideReference),
-          // const SizedBox(
-          //   height: 16.0,
-          // ),
-          // // const AttachedFiles(),
-          // const SizedBox(
-          //   height: 32.0,
-          // ),
-          // Stack(
-          //   clipBehavior: Clip.none,
-          //   children: [
-          //     Container(
-          //       height: 140,
-          //       padding: const EdgeInsets.only(top: 10, bottom: 10),
-          //       decoration: BoxDecoration(
-          //         color: Theme.of(context).scaffoldBackgroundColor,
-          //         borderRadius: BorderRadius.circular(16.0),
-          //         boxShadow: const [
-          //           BoxShadow(
-          //             offset: Offset(0, 1),
-          //             blurRadius: 4,
-          //             color: Colors.black12,
-          //           ),
-          //         ],
-          //       ),
-          //       child: RawScrollbar(
-          //         thumbColor: const Color(0xFF1E38FC),
-          //         trackColor: const Color.fromRGBO(223, 239, 253, 1),
-          //         trackRadius: const Radius.circular(10),
-          //         trackVisibility: true,
-          //         radius: const Radius.circular(10),
-          //         thickness: 14,
-          //         //thumbVisibility: true,
-          //         //controller: _controller,
-          //         child: ListView.builder(
-          //           // padding: const EdgeInsets.only(top: 1),
-          //           //controller: _controller,
-          //           itemCount: noticeTitle.length,
-          //           itemBuilder: (context, index) {
-          //             return SizedBox(
-          //               height: 30,
-          //               child: CheckboxListTile(
-          //                 controlAffinity: ListTileControlAffinity.leading,
-          //                 checkboxShape: RoundedRectangleBorder(
-          //                     borderRadius: BorderRadius.circular(6)),
-          //                 dense: true,
-          //                 activeColor: Theme.of(context).primaryColor,
-          //                 contentPadding:
-          //                     const EdgeInsets.symmetric(horizontal: 8),
-          //                 visualDensity: const VisualDensity(horizontal: -4.0),
-          //                 title: Text(
-          //                   noticeTitle[index],
-          //                   style: Theme.of(context)
-          //                       .textTheme
-          //                       .labelSmall!
-          //                       .merge(const TextStyle(
-          //                           fontWeight: FontWeight.w400,
-          //                           fontSize: 14.0,
-          //                           letterSpacing: 0.3)),
-          //                 ),
-          //                 value: true,
-          //                 onChanged: (value) {
-          //                   // setState(() {
-          //                   //   ee = value!;
-          //                   // });
-          //                 },
-          //               ),
-          //             );
-          //           },
-          //         ),
-          //       ),
-          //     ),
-          //     Positioned(
-          //       top: -20,
-          //       left: 14,
-          //       child: Container(
-          //         height: 30,
-          //         padding:
-          //             const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
-          //         decoration: const BoxDecoration(
-          //           color: Color.fromRGBO(255, 235, 234, 1),
-          //           borderRadius: BorderRadius.all(
-          //             Radius.circular(12),
-          //           ),
-          //         ),
-          //         child: Row(
-          //           mainAxisSize: MainAxisSize.min,
-          //           children: [
-          //             Image.asset(
-          //               'assets/images/subjectfielicon.png',
-          //               fit: BoxFit.contain,
-          //               height: 24,
-          //             ),
-          //             const SizedBox(width: 5),
-          //             Text(
-          //               ' Select Department ',
-          //               style: Theme.of(context).textTheme.titleSmall!.merge(
-          //                     const TextStyle(
-          //                       fontWeight: FontWeight.w600,
-          //                       fontSize: 14.0,
-          //                       color: Color.fromRGBO(255, 111, 103, 1),
-          //                     ),
-          //                   ),
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          // const SizedBox(
-          //   height: 34,
-          // ),
-          // Stack(
-          //   clipBehavior: Clip.none,
-          //   children: [
-          //     Container(
-          //       // height: 140,
-          //       padding: const EdgeInsets.only(top: 10, bottom: 10),
-          //       decoration: BoxDecoration(
-          //         color: Theme.of(context).scaffoldBackgroundColor,
-          //         borderRadius: BorderRadius.circular(16.0),
-          //         boxShadow: const [
-          //           BoxShadow(
-          //             offset: Offset(0, 1),
-          //             blurRadius: 4,
-          //             color: Colors.black12,
-          //           ),
-          //         ],
-          //       ),
-          //       child: RawScrollbar(
-          //         thumbColor: const Color(0xFF1E38FC),
-          //         trackColor: const Color.fromRGBO(223, 239, 253, 1),
-          //         trackRadius: const Radius.circular(10),
-          //         trackVisibility: true,
-          //         radius: const Radius.circular(10),
-          //         thickness: 14,
-          //         //thumbVisibility: true,
-          //         //controller: _controller,
-          //         child: ListView.builder(
-          //           // padding: const EdgeInsets.only(top: 1),
-          //           //controller: _controller,
-          //           shrinkWrap: true,
-          //           itemCount: 1,
-          //           itemBuilder: (context, index) {
-          //             return SizedBox(
-          //               height: 30,
-          //               child: CheckboxListTile(
-          //                 controlAffinity: ListTileControlAffinity.leading,
-          //                 checkboxShape: RoundedRectangleBorder(
-          //                     borderRadius: BorderRadius.circular(6)),
-          //                 dense: true,
-          //                 activeColor: Theme.of(context).primaryColor,
-          //                 contentPadding:
-          //                     const EdgeInsets.symmetric(horizontal: 8),
-          //                 visualDensity: const VisualDensity(horizontal: -4.0),
-          //                 title: Text(
-          //                   noticeTitle[index],
-          //                   style: Theme.of(context)
-          //                       .textTheme
-          //                       .labelSmall!
-          //                       .merge(const TextStyle(
-          //                           fontWeight: FontWeight.w400,
-          //                           fontSize: 14.0,
-          //                           letterSpacing: 0.3)),
-          //                 ),
-          //                 value: true,
-          //                 onChanged: (value) {
-          //                   // setState(() {
-          //                   //   ee = value!;
-          //                   // });
-          //                 },
-          //               ),
-          //             );
-          //           },
-          //         ),
-          //       ),
-          //     ),
-          //     Positioned(
-          //       top: -20,
-          //       left: 14,
-          //       child: Container(
-          //         height: 30,
-          //         padding:
-          //             const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
-          //         decoration: const BoxDecoration(
-          //           color: Color(0xFFDBFDF5),
-          //           borderRadius: BorderRadius.all(
-          //             Radius.circular(12),
-          //           ),
-          //         ),
-          //         child: Row(
-          //           mainAxisSize: MainAxisSize.min,
-          //           children: [
-          //             Image.asset(
-          //               'assets/images/abouticon.png',
-          //               fit: BoxFit.cover,
-          //               height: 24,
-          //             ),
-          //             const SizedBox(width: 5),
-          //             Text(
-          //               ' Select Designation ',
-          //               style: Theme.of(context).textTheme.titleSmall!.merge(
-          //                     const TextStyle(
-          //                       fontWeight: FontWeight.w600,
-          //                       fontSize: 14.0,
-          //                       color: Color.fromRGBO(71, 186, 158, 1),
-          //                     ),
-          //                   ),
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          // const SizedBox(
-          //   height: 34,
-          // ),
-          // Stack(
-          //   clipBehavior: Clip.none,
-          //   children: [
-          //     Container(
-          //       // height: 140,
-          //       padding: const EdgeInsets.only(top: 10, bottom: 10),
-          //       decoration: BoxDecoration(
-          //         color: Theme.of(context).scaffoldBackgroundColor,
-          //         borderRadius: BorderRadius.circular(16.0),
-          //         boxShadow: const [
-          //           BoxShadow(
-          //             offset: Offset(0, 1),
-          //             blurRadius: 4,
-          //             color: Colors.black12,
-          //           ),
-          //         ],
-          //       ),
-          //       child: RawScrollbar(
-          //         thumbColor: const Color(0xFF1E38FC),
-          //         trackColor: const Color.fromRGBO(223, 239, 253, 1),
-          //         trackRadius: const Radius.circular(10),
-          //         trackVisibility: true,
-          //         radius: const Radius.circular(10),
-          //         thickness: 14,
-          //         //thumbVisibility: true,
-          //         //controller: _controller,
-          //         child: ListView.builder(
-          //           // padding: const EdgeInsets.only(top: 1),
-          //           //controller: _controller,
-          //           itemCount: 1,
-          //           shrinkWrap: true, // till lenght is 5 is will true
-          //           itemBuilder: (context, index) {
-          //             return SizedBox(
-          //               height: 30,
-          //               child: CheckboxListTile(
-          //                 controlAffinity: ListTileControlAffinity.leading,
-          //                 checkboxShape: RoundedRectangleBorder(
-          //                     borderRadius: BorderRadius.circular(6)),
-          //                 dense: true,
-          //                 activeColor: Theme.of(context).primaryColor,
-          //                 contentPadding:
-          //                     const EdgeInsets.symmetric(horizontal: 8),
-          //                 visualDensity: const VisualDensity(horizontal: -4.0),
-          //                 title: Text(
-          //                   noticeTitle[index],
-          //                   style: Theme.of(context)
-          //                       .textTheme
-          //                       .labelSmall!
-          //                       .merge(const TextStyle(
-          //                           fontWeight: FontWeight.w400,
-          //                           fontSize: 14.0,
-          //                           letterSpacing: 0.3)),
-          //                 ),
-          //                 value: true,
-          //                 onChanged: (value) {
-          //                   // setState(() {
-          //                   //   ee = value!;
-          //                   // });
-          //                 },
-          //               ),
-          //             );
-          //           },
-          //         ),
-          //       ),
-          //     ),
-          //     Positioned(
-          //       top: -20,
-          //       left: 14,
-          //       child: Container(
-          //         height: 30,
-          //         padding:
-          //             const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
-          //         decoration: const BoxDecoration(
-          //           color: Color.fromRGBO(229, 243, 255, 1),
-          //           borderRadius: BorderRadius.all(
-          //             Radius.circular(12),
-          //           ),
-          //         ),
-          //         child: Row(
-          //           mainAxisSize: MainAxisSize.min,
-          //           children: [
-          //             Image.asset(
-          //               'assets/images/selectteachericon.png',
-          //               fit: BoxFit.cover,
-          //               height: 24,
-          //             ),
-          //             const SizedBox(width: 5),
-          //             Text(
-          //               ' Select Department ',
-          //               style: Theme.of(context).textTheme.titleSmall!.merge(
-          //                     const TextStyle(
-          //                       fontWeight: FontWeight.w600,
-          //                       fontSize: 14.0,
-          //                       color: Color.fromRGBO(62, 120, 170, 1),
-          //                     ),
-          //                   ),
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // ),
           const SizedBox(
             height: 32,
           ),
           MSkollBtn(
             title: "Save Details",
-            onPress: () {},
+            onPress: () {
+              if (!forStaff.value && !forStu.value) {
+                Fluttertoast.showToast(
+                    msg:
+                        "Please Select for whom you are creating notice i.e, Student or Staff");
+                return;
+              }
+
+              if (widget.noticeBoardController.noticeTitle.value.text.isEmpty) {
+                Fluttertoast.showToast(
+                    msg: "Please provide notice title to continue");
+                return;
+              }
+
+              if (widget.noticeBoardController.desc.value.text.isEmpty) {
+                Fluttertoast.showToast(
+                    msg: "Please provide notice desc to continue");
+                return;
+              }
+
+              if (startDate.text.isEmpty) {
+                Fluttertoast.showToast(
+                    msg: "Please provide start date to continue");
+                return;
+              }
+
+              if (endDate.text.isEmpty) {
+                Fluttertoast.showToast(
+                    msg: "Please provide end date to continue");
+              }
+
+              if (wantToProvideReference.value) {
+                if (widget.hwCwController.textEditors.isEmpty) {
+                  Fluttertoast.showToast(
+                      msg:
+                          "You selected to provide reference, but you didn't added any .. Try adding reference or uncheck reference");
+                  return;
+                }
+
+                for (var element in widget.hwCwController.textEditors) {
+                  if (element.text.isEmpty && !element.text.isURL) {
+                    Fluttertoast.showToast(
+                        msg:
+                            "Please provide a valid url or somewhere you missed to provide reference");
+                    continue;
+                  }
+                }
+              }
+
+              if (forStaff.value && forStu.value) {
+                saveForBoth(context);
+                return;
+              }
+
+              if (forStu.value) {
+                saveForStudent(context);
+                return;
+              }
+
+              if (forStaff.value) {
+                saveForEmp(context);
+                return;
+              }
+            },
             size: Size(Get.width * 0.4, 50),
           ),
           const SizedBox(
@@ -959,5 +678,406 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
         ],
       ),
     );
+  }
+
+  void saveForBoth(BuildContext context) {
+    if (widget.noticeBoardController.selectedClasses.isEmpty) {
+      Fluttertoast.showToast(
+          msg:
+              "It may happen that we are loading Please wait until it load's OR You didn't selected any classes ... Please do select one");
+      return;
+    }
+
+    if (widget.noticeBoardController.selectedSections.isEmpty) {
+      Fluttertoast.showToast(
+          msg:
+              "It may happen that we are loading Please wait until it load's OR You didn't selected any classes ... Please do select one");
+      return;
+    }
+
+    if (widget.noticeBoardController.studentSelection.value &&
+        widget.noticeBoardController.selectedStuden.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "May be we are loading or you didn't selected any student");
+      return;
+    }
+
+    if (widget.noticeBoardController.departments.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "May be we are loading or you didn't selected any department");
+      return;
+    }
+
+    if (widget.noticeBoardController.designation.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "May be we are loading or you didn't selected any designation");
+      return;
+    }
+
+    if (widget.noticeBoardController.selectedEmployee.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "May be we are loading or you didn't selected any employee");
+      return;
+    }
+
+    showDialog(
+        context: context,
+        builder: (_) {
+          return Dialog(
+            shape: const RoundedRectangleBorder(),
+            child: FutureBuilder(
+                future: StaffSaveNoticeApi.instance.saveForBoth(
+                    asmayId: widget.loginSuccessModel.asmaYId!,
+                    userId: widget.loginSuccessModel.userId!,
+                    ivrmrtId: widget.loginSuccessModel.roleId!,
+                    miId: widget.loginSuccessModel.mIID!,
+                    title: widget.noticeBoardController.noticeTitle.value.text,
+                    description: widget.noticeBoardController.desc.value.text,
+                    displayDisableFlag: displayDate.text.isNotEmpty,
+                    toStaffFlag: true,
+                    toStudentFlag: false,
+                    displayDate: displayDate.text.isEmpty
+                        ? DateTime.now().toLocal().toString()
+                        : widget.noticeBoardController.displayDt.value
+                            .toLocal()
+                            .toString(),
+                    startDate: widget.noticeBoardController.startDt.value
+                        .toLocal()
+                        .toString(),
+                    endDate: widget.noticeBoardController.endDt.value
+                        .toLocal()
+                        .toString(),
+                    controller: widget.hwCwController,
+                    base: baseUrlFromInsCode("portal", widget.mskoolController),
+                    nbController: widget.noticeBoardController,
+                    nTBTTSyllabusFlag: widget
+                                .noticeBoardController.noticeType.value
+                                .toLowerCase() ==
+                            "Others"
+                        ? "O"
+                        : widget.noticeBoardController.noticeType.value
+                                    .toLowerCase() ==
+                                "Portion"
+                            ? "P"
+                            : widget.noticeBoardController.noticeType.value
+                                        .toLowerCase() ==
+                                    "Syllabus"
+                                ? "S"
+                                : "TT"),
+                builder: (_, snapshot) {
+                  if (snapshot.hasData) {
+                    return Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const CircleAvatar(
+                            backgroundColor: Colors.green,
+                            minRadius: 28,
+                            child: Icon(
+                              Icons.check,
+                              size: 36.0,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8.0,
+                          ),
+                          Text(
+                            "Successfully Saved",
+                            style:
+                                Theme.of(context).textTheme.titleSmall!.merge(
+                                      const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                          ),
+                          const SizedBox(
+                            height: 6.0,
+                          ),
+                          const Text(
+                              "We have sent your notice to respective selection.."),
+                          const SizedBox(
+                            height: 12.0,
+                          ),
+                          MSkollBtn(
+                              title: "Ok Understood",
+                              onPress: () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              })
+                        ],
+                      ),
+                    );
+                  }
+
+                  if (snapshot.hasError) {
+                    return ErrWidget(
+                        err: snapshot.error as Map<String, dynamic>);
+                  }
+
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Obx(() {
+                        return AnimatedProgressWidget(
+                            title: "Please wait we are saving",
+                            desc: widget.hwCwController.saveStatus.toString(),
+                            animationPath: "assets/json/default.json");
+                      })
+                    ],
+                  );
+                }),
+          );
+        });
+  }
+
+  void saveForStudent(BuildContext context) {
+    if (widget.noticeBoardController.selectedClasses.isEmpty) {
+      Fluttertoast.showToast(
+          msg:
+              "It may happen that we are loading Please wait until it load's OR You didn't selected any classes ... Please do select one");
+      return;
+    }
+
+    if (widget.noticeBoardController.selectedSections.isEmpty) {
+      Fluttertoast.showToast(
+          msg:
+              "It may happen that we are loading Please wait until it load's OR You didn't selected any classes ... Please do select one");
+      return;
+    }
+
+    if (widget.noticeBoardController.studentSelection.value &&
+        widget.noticeBoardController.selectedStuden.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "May be we are loading or you didn't selected any student");
+      return;
+    }
+
+    showDialog(
+        context: context,
+        builder: (_) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            child: FutureBuilder(
+                future: StaffSaveNoticeApi.instance.saveForStudent(
+                    asmayId: widget.loginSuccessModel.asmaYId!,
+                    userId: widget.loginSuccessModel.userId!,
+                    ivrmrtId: widget.loginSuccessModel.roleId!,
+                    miId: widget.loginSuccessModel.mIID!,
+                    title: widget.noticeBoardController.noticeTitle.value.text,
+                    description: widget.noticeBoardController.desc.value.text,
+                    displayDisableFlag: displayDate.text.isNotEmpty,
+                    toStaffFlag: true,
+                    toStudentFlag: false,
+                    displayDate: displayDate.text.isEmpty
+                        ? DateTime.now().toLocal().toString()
+                        : widget.noticeBoardController.displayDt.value
+                            .toLocal()
+                            .toString(),
+                    startDate: widget.noticeBoardController.startDt.value
+                        .toLocal()
+                        .toString(),
+                    endDate: widget.noticeBoardController.endDt.value
+                        .toLocal()
+                        .toString(),
+                    controller: widget.hwCwController,
+                    base: baseUrlFromInsCode("portal", widget.mskoolController),
+                    nbController: widget.noticeBoardController,
+                    nTBTTSyllabusFlag: widget
+                                .noticeBoardController.noticeType.value
+                                .toLowerCase() ==
+                            "Others"
+                        ? "O"
+                        : widget.noticeBoardController.noticeType.value
+                                    .toLowerCase() ==
+                                "Portion"
+                            ? "P"
+                            : widget.noticeBoardController.noticeType.value
+                                        .toLowerCase() ==
+                                    "Syllabus"
+                                ? "S"
+                                : "TT"),
+                builder: (_, snapshot) {
+                  if (snapshot.hasData) {
+                    return Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const CircleAvatar(
+                            backgroundColor: Colors.green,
+                            minRadius: 28,
+                            child: Icon(
+                              Icons.check,
+                              size: 36.0,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8.0,
+                          ),
+                          Text(
+                            "Successfully Saved",
+                            style:
+                                Theme.of(context).textTheme.titleSmall!.merge(
+                                      const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                          ),
+                          const SizedBox(
+                            height: 6.0,
+                          ),
+                          const Text(
+                              "We have sent your notice to respective selection.."),
+                          const SizedBox(
+                            height: 12.0,
+                          ),
+                          MSkollBtn(
+                              title: "Ok Understood",
+                              onPress: () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              })
+                        ],
+                      ),
+                    );
+                  }
+
+                  if (snapshot.hasError) {
+                    return ErrWidget(
+                        err: snapshot.error as Map<String, dynamic>);
+                  }
+
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Obx(() {
+                        return AnimatedProgressWidget(
+                            title: "Please wait we are saving",
+                            desc: widget.hwCwController.saveStatus.toString(),
+                            animationPath: "assets/json/default.json");
+                      })
+                    ],
+                  );
+                }),
+          );
+        });
+  }
+
+  void saveForEmp(BuildContext context) {
+    if (widget.noticeBoardController.departments.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "May be we are loading or you didn't selected any department");
+      return;
+    }
+
+    if (widget.noticeBoardController.designation.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "May be we are loading or you didn't selected any designation");
+      return;
+    }
+
+    if (widget.noticeBoardController.selectedEmployee.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "May be we are loading or you didn't selected any employee");
+      return;
+    }
+    showDialog(
+        context: context,
+        builder: (_) {
+          return Dialog(
+            shape: const RoundedRectangleBorder(),
+            child: FutureBuilder(
+                future: StaffSaveNoticeApi.instance.saveForEmployee(
+                    asmayId: widget.loginSuccessModel.asmaYId!,
+                    userId: widget.loginSuccessModel.userId!,
+                    ivrmrtId: widget.loginSuccessModel.roleId!,
+                    miId: widget.loginSuccessModel.mIID!,
+                    title: widget.noticeBoardController.noticeTitle.value.text,
+                    description: widget.noticeBoardController.desc.value.text,
+                    displayDisableFlag: displayDate.text.isNotEmpty,
+                    toStaffFlag: true,
+                    toStudentFlag: false,
+                    displayDate: displayDate.text.isEmpty
+                        ? DateTime.now().toLocal().toString()
+                        : widget.noticeBoardController.displayDt.value
+                            .toLocal()
+                            .toString(),
+                    startDate: widget.noticeBoardController.startDt.value
+                        .toLocal()
+                        .toString(),
+                    endDate: widget.noticeBoardController.endDt.value
+                        .toLocal()
+                        .toString(),
+                    controller: widget.hwCwController,
+                    base: baseUrlFromInsCode("portal", widget.mskoolController),
+                    nbController: widget.noticeBoardController),
+                builder: (_, snapshot) {
+                  if (snapshot.hasData) {
+                    return Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const CircleAvatar(
+                            backgroundColor: Colors.green,
+                            minRadius: 28,
+                            child: Icon(
+                              Icons.check,
+                              size: 36.0,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8.0,
+                          ),
+                          Text(
+                            "Successfully Saved",
+                            style:
+                                Theme.of(context).textTheme.titleSmall!.merge(
+                                      const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                          ),
+                          const SizedBox(
+                            height: 6.0,
+                          ),
+                          const Text(
+                              "We have sent your notice to respective selection.."),
+                          const SizedBox(
+                            height: 12.0,
+                          ),
+                          MSkollBtn(
+                              title: "Ok Understood",
+                              onPress: () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              })
+                        ],
+                      ),
+                    );
+                  }
+
+                  if (snapshot.hasError) {
+                    return ErrWidget(
+                        err: snapshot.error as Map<String, dynamic>);
+                  }
+
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Obx(() {
+                        return AnimatedProgressWidget(
+                            title: "Please wait we are saving",
+                            desc: widget.hwCwController.saveStatus.toString(),
+                            animationPath: "assets/json/default.json");
+                      })
+                    ],
+                  );
+                }),
+          );
+        });
   }
 }

@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/online_leave/model/leave_name_model.dart';
 import 'package:m_skool_flutter/staffs/online_leave/screen/apply_leave.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class Leaves extends StatefulWidget {
-  const Leaves({super.key});
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  final List<LeaveNamesModelValues> leaves;
+  const Leaves(
+      {super.key,
+      required this.loginSuccessModel,
+      required this.mskoolController,
+      required this.leaves});
 
   @override
   State<Leaves> createState() => _LeavesState();
@@ -34,9 +43,19 @@ class _LeavesState extends State<Leaves> {
             if (backgroundColor > 6) {
               backgroundColor = 0;
             }
-            return LeaveNames(backgroundColor: backgroundColor);
+            return InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return const ApplyForLeave();
+                }));
+              },
+              child: LeaveNames(
+                backgroundColor: backgroundColor,
+                leave: widget.leaves.elementAt(index),
+              ),
+            );
           },
-          itemCount: 5,
+          itemCount: widget.leaves.length,
           separatorBuilder: (BuildContext context, int index) {
             return const SizedBox(
               width: 16.0,
@@ -49,9 +68,11 @@ class _LeavesState extends State<Leaves> {
 }
 
 class LeaveNames extends StatelessWidget {
+  final LeaveNamesModelValues leave;
   const LeaveNames({
     Key? key,
     required this.backgroundColor,
+    required this.leave,
   }) : super(key: key);
 
   final int backgroundColor;
@@ -59,59 +80,61 @@ class LeaveNames extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: Get.width * 0.38,
-      child: InkWell(
-        onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return const ApplyForLeave();
-          }));
-        },
-        child: CustomContainer(
-            child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            children: [
-              Stack(
-                alignment: Alignment.center,
+      width: Get.width * 0.42,
+      child: CustomContainer(
+          child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Row(
+          children: [
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                CircularProgressIndicator(
+                  value: leave.hrelSCBLeaves! / leave.hrelSTotalLeaves!,
+                  backgroundColor: noticeBackgroundColor
+                      .elementAt(backgroundColor)
+                      .withOpacity(0.8),
+                  color: noticeColor.elementAt(backgroundColor),
+                ),
+                Align(
+                    alignment: Alignment.center,
+                    child: Image.asset(
+                      leave.hrmLLeaveCode!.toLowerCase() == "sl"
+                          ? "assets/images/sl.png"
+                          : leave.hrmLLeaveCode!.toLowerCase() == "cl"
+                              ? "assets/images/cl.png"
+                              : leave.hrmLLeaveCode!.toLowerCase() == "el"
+                                  ? "assets/images/el.png"
+                                  : "assets/images/el.png",
+                      color: noticeColor.elementAt(backgroundColor),
+                      width: 24.0,
+                    )),
+              ],
+            ),
+            const SizedBox(
+              width: 12.0,
+            ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircularProgressIndicator(
-                    value: 0.5,
-                    backgroundColor: noticeBackgroundColor
-                        .elementAt(backgroundColor)
-                        .withOpacity(0.8),
-                    color: noticeColor.elementAt(backgroundColor),
+                  Text(
+                    "${leave.hrelSCBLeaves!.toInt()}",
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  Align(
-                      alignment: Alignment.center,
-                      child: SvgPicture.asset(
-                        "assets/svg/medication.svg",
-                        color: noticeColor.elementAt(backgroundColor),
-                      )),
+                  Text(
+                    "${leave.hrmLLeaveName}",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
                 ],
               ),
-              const SizedBox(
-                width: 12.0,
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "08",
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      "Sick Leave",
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )),
-      ),
+            ),
+          ],
+        ),
+      )),
     );
   }
 }

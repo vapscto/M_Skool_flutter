@@ -277,4 +277,11 @@ class URLS {
   static String getNoticeStudent = "api/NoticeBoardFacade/getstudent";
   static String getDesignation = "api/NoticeBoardFacade/Deptselectiondetails";
   static String getEmployee = "api/NoticeBoardFacade/Desgselectiondetails";
+  static String saveNotices = "api/NoticeBoardFacade/savedetail";
+  static String getNbAttachment = "api/NoticeBoardFacade/viewData";
+  static String activeDeactiveNb = "api/NoticeBoardFacade/deactivate";
+
+  /* Online leave apply */
+  static String getLeaveName =
+      "api/OnlineLeaveApplicationFacade/getonlineLeave/";
 }
