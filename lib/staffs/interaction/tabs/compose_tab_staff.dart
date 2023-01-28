@@ -11,7 +11,7 @@ class ComposeTabStaff extends StatefulWidget {
 class _ComposeTabStaffState extends State<ComposeTabStaff> {
   final TextEditingController about = TextEditingController();
   final TextEditingController subject = TextEditingController();
-  String selectedradio = 'ClassTeacher';
+  String? selectedradio;
 
   List<String> demoList = [
     'Demo',
@@ -151,12 +151,15 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                         fontSize: 16.0,
                         letterSpacing: 0.3)),
               ),
-              value: "student",
+              value: "Student",
               groupValue: selectedradio,
-              onChanged: (value) {},
+              onChanged: (value) {
+                setState(() {
+                  selectedradio = value;
+                });
+              },
             ),
           ),
-
           SizedBox(
             height: 33,
             child: RadioListTile(
@@ -165,43 +168,22 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
               contentPadding: const EdgeInsets.symmetric(horizontal: 8),
               visualDensity: const VisualDensity(horizontal: -4.0),
               title: Text(
-                "Class Teachers",
+                "Teachers",
                 style: Theme.of(context).textTheme.labelSmall!.merge(
                     const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 16.0,
                         letterSpacing: 0.3)),
               ),
-              value: "ClassTeacher",
+              value: "Teachers",
               groupValue: selectedradio,
-              onChanged: (value) {},
+              onChanged: (value) {
+                setState(() {
+                  selectedradio = value;
+                });
+              },
             ),
           ),
-          // SizedBox(
-          //   height: 33,
-          //   child: RadioListTile(
-          //     dense: true,
-          //     activeColor: Theme.of(context).primaryColor,
-          //     contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-          //     visualDensity: const VisualDensity(horizontal: -4.0),
-          //     title: Text(
-          //       "Subject Teachers",
-          //       style: Theme.of(context).textTheme.labelSmall!.merge(
-          //           const TextStyle(
-          //               fontWeight: FontWeight.w400,
-          //               fontSize: 16.0,
-          //               letterSpacing: 0.3)),
-          //     ),
-          //     value: "SubjectTeacher",
-          //     groupValue: selectedradio,
-          //     onChanged: (value) {
-          //       setState(() {
-          //         selectedradio = value.toString();
-          //         getStafflistData();
-          //       });
-          //     },
-          //   ),
-          // ),
           SizedBox(
             height: 33,
             child: RadioListTile(
@@ -219,7 +201,11 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
               ),
               value: "HOD",
               groupValue: selectedradio,
-              onChanged: (value) {},
+              onChanged: (value) {
+                setState(() {
+                  selectedradio = value;
+                });
+              },
             ),
           ),
           SizedBox(
@@ -239,7 +225,11 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
               ),
               value: "Principal",
               groupValue: selectedradio,
-              onChanged: (value) {},
+              onChanged: (value) {
+                setState(() {
+                  selectedradio = value;
+                });
+              },
             ),
           ),
           SizedBox(
@@ -259,14 +249,18 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
               ),
               value: "AS",
               groupValue: selectedradio,
-              onChanged: (value) {},
+              onChanged: (value) {
+                setState(() {
+                  selectedradio = value;
+                });
+              },
             ),
           ),
           SizedBox(
             height: 30,
             child: RadioListTile(
               dense: true,
-              activeColor: Colors.blue,
+              activeColor: Theme.of(context).primaryColor,
               contentPadding: const EdgeInsets.symmetric(horizontal: 8),
               visualDensity: const VisualDensity(horizontal: -4.0),
               title: Text(
@@ -279,7 +273,11 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
               ),
               value: "EC",
               groupValue: selectedradio,
-              onChanged: (value) {},
+              onChanged: (value) {
+                setState(() {
+                  selectedradio = value;
+                });
+              },
             ),
           ),
           const SizedBox(
@@ -301,50 +299,60 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
             child: DropdownButtonFormField<String>(
               value: selectedClass,
               decoration: InputDecoration(
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                  ),
-                ),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                  ),
-                ),
-                isDense: true,
-                label: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(229, 243, 255, 1),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(24),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        height: 33,
-                        child: Image.asset(
-                          'assets/images/selectteachericon.png',
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        'Class',
-                        style: Theme.of(context).textTheme.titleSmall!.merge(
-                              const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20.0,
-                                color: Color.fromRGBO(60, 120, 170, 1),
-                              ),
-                            ),
-                      ),
-                    ],
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                    ),
                   ),
-                ),
-              ),
+                  isDense: true,
+                  label: Text(
+                    'Class',
+                    style: Theme.of(context).textTheme.titleSmall!.merge(
+                          const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20.0,
+                            color: Color.fromRGBO(137, 137, 137, 1),
+                          ),
+                        ),
+                  )
+                  // label: Container(
+                  //   padding:
+                  //       const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                  //   decoration: const BoxDecoration(
+                  //     color: Color.fromRGBO(229, 243, 255, 1),
+                  //     borderRadius: BorderRadius.all(
+                  //       Radius.circular(24),
+                  //     ),
+                  //   ),
+                  //   child: Row(
+                  //     mainAxisSize: MainAxisSize.min,
+                  //     children: [
+                  //       SizedBox(
+                  //         height: 33,
+                  //         child: Image.asset(
+                  //           'assets/images/selectteachericon.png',
+                  //         ),
+                  //       ),
+                  //       const SizedBox(width: 10),
+                  //       Text(
+                  //         'Class',
+                  //         style: Theme.of(context).textTheme.titleSmall!.merge(
+                  //               const TextStyle(
+                  //                 fontWeight: FontWeight.w600,
+                  //                 fontSize: 20.0,
+                  //                 color: Color.fromRGBO(60, 120, 170, 1),
+                  //               ),
+                  //             ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  ),
               icon: const Padding(
                 padding: EdgeInsets.only(top: 3),
                 child: Icon(
@@ -375,7 +383,6 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
               },
             ),
           ),
-
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
             decoration: BoxDecoration(
@@ -392,50 +399,60 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
             child: DropdownButtonFormField<String>(
               value: selectedClass,
               decoration: InputDecoration(
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                  ),
-                ),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                  ),
-                ),
-                isDense: true,
-                label: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(229, 243, 255, 1),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(24),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        height: 33,
-                        child: Image.asset(
-                          'assets/images/selectteachericon.png',
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        'Section',
-                        style: Theme.of(context).textTheme.titleSmall!.merge(
-                              const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20.0,
-                                color: Color.fromRGBO(60, 120, 170, 1),
-                              ),
-                            ),
-                      ),
-                    ],
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                    ),
                   ),
-                ),
-              ),
+                  isDense: true,
+                  label: Text(
+                    'Section',
+                    style: Theme.of(context).textTheme.titleSmall!.merge(
+                          const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20.0,
+                            color: Color.fromRGBO(60, 120, 170, 1),
+                          ),
+                        ),
+                  )
+                  // label: Container(
+                  //   padding:
+                  //       const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                  //   decoration: const BoxDecoration(
+                  //     color: Color.fromRGBO(229, 243, 255, 1),
+                  //     borderRadius: BorderRadius.all(
+                  //       Radius.circular(24),
+                  //     ),
+                  //   ),
+                  //   child: Row(
+                  //     mainAxisSize: MainAxisSize.min,
+                  //     children: [
+                  //       SizedBox(
+                  //         height: 33,
+                  //         child: Image.asset(
+                  //           'assets/images/selectteachericon.png',
+                  //         ),
+                  //       ),
+                  //       const SizedBox(width: 10),
+                  //       Text(
+                  //         'Section',
+                  //         style: Theme.of(context).textTheme.titleSmall!.merge(
+                  //               const TextStyle(
+                  //                 fontWeight: FontWeight.w600,
+                  //                 fontSize: 20.0,
+                  //                 color: Color.fromRGBO(60, 120, 170, 1),
+                  //               ),
+                  //             ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  ),
               icon: const Padding(
                 padding: EdgeInsets.only(top: 3),
                 child: Icon(
@@ -466,7 +483,6 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
               },
             ),
           ),
-
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
             decoration: BoxDecoration(
@@ -483,50 +499,60 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
             child: DropdownButtonFormField<String>(
               value: selectedClass,
               decoration: InputDecoration(
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                  ),
-                ),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                  ),
-                ),
-                isDense: true,
-                label: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(229, 243, 255, 1),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(24),
+                  focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        height: 33,
-                        child: Image.asset(
-                          'assets/images/selectteachericon.png',
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        'Select Students',
-                        style: Theme.of(context).textTheme.titleSmall!.merge(
-                              const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20.0,
-                                color: Color.fromRGBO(60, 120, 170, 1),
-                              ),
-                            ),
-                      ),
-                    ],
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                    ),
                   ),
-                ),
-              ),
+                  isDense: true,
+                  label: Text(
+                    'Select Students',
+                    style: Theme.of(context).textTheme.titleSmall!.merge(
+                          const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20.0,
+                            color: Color.fromRGBO(137, 137, 137, 1),
+                          ),
+                        ),
+                  )
+                  // label: Container(
+                  //   padding:
+                  //       const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                  //   decoration: const BoxDecoration(
+                  //     color: Color.fromRGBO(229, 243, 255, 1),
+                  //     borderRadius: BorderRadius.all(
+                  //       Radius.circular(24),
+                  //     ),
+                  //   ),
+                  //   child: Row(
+                  //     mainAxisSize: MainAxisSize.min,
+                  //     children: [
+                  //       SizedBox(
+                  //         height: 33,
+                  //         child: Image.asset(
+                  //           'assets/images/selectteachericon.png',
+                  //         ),
+                  //       ),
+                  //       const SizedBox(width: 10),
+                  //       Text(
+                  //         'Select Students',
+                  //         style: Theme.of(context).textTheme.titleSmall!.merge(
+                  //               const TextStyle(
+                  //                 fontWeight: FontWeight.w600,
+                  //                 fontSize: 20.0,
+                  //                 color: Color.fromRGBO(60, 120, 170, 1),
+                  //               ),
+                  //             ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  ),
               icon: const Padding(
                 padding: EdgeInsets.only(top: 3),
                 child: Icon(
@@ -557,7 +583,6 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
               },
             ),
           ),
-
           const SizedBox(height: 40),
           Center(
             child: ElevatedButton(

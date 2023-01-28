@@ -280,4 +280,11 @@ class URLS {
   static String getNoticeStudent = "api/NoticeBoardFacade/getstudent";
   static String getDesignation = "api/NoticeBoardFacade/Deptselectiondetails";
   static String getEmployee = "api/NoticeBoardFacade/Desgselectiondetails";
+
+  /* Interaction */
+  static String composeOnload = 'api/IVRM_InteractionsFacade/getdetails/';
+  static String onChangeOfClass =
+      'api/EmployeeStudentAttendenceDetailsFacade/Getsection/';
+  static String onChangeOfSection = 'api/IVRM_InteractionsFacade/getstudent/';
+  static String onSubmit = 'api/IVRM_InteractionsFacade/savedetails/';
 }
