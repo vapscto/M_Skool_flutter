@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/interaction/controller/staff_interaction_related_controller.dart';
 import 'package:m_skool_flutter/staffs/interaction/tabs/compose_tab_staff.dart';
 import 'package:m_skool_flutter/staffs/interaction/tabs/inbox_tab_staff.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 
 class InteractionHome extends StatefulWidget {
@@ -22,7 +25,15 @@ class InteractionHome extends StatefulWidget {
 
 class _InteractionHomeState extends State<InteractionHome>
     with SingleTickerProviderStateMixin {
+  final StaffInteractionController staffInteractionController =
+      Get.put(StaffInteractionController());
   late TabController _tabController;
+
+  void loadingInteraction() async {
+    staffInteractionController.isInteractionloading(true);
+    await Future.delayed(const Duration(seconds: 1));
+    staffInteractionController.isInteractionloading(false);
+  }
 
   @override
   void initState() {
@@ -31,7 +42,7 @@ class _InteractionHomeState extends State<InteractionHome>
         length: 2,
         vsync: this,
         animationDuration: const Duration(milliseconds: 300));
-
+    loadingInteraction();
     super.initState();
   }
 
@@ -53,18 +64,34 @@ class _InteractionHomeState extends State<InteractionHome>
               leading: const CustomGoBackButton(),
             )
           : null,
-      body: Column(children: [
-        CustomTabBar(
-          tabs: tabs,
-          tabController: _tabController,
-        ),
-        Expanded(
-          child: TabBarView(controller: _tabController, children: const [
-            ComposeTabStaff(),
-            InboxTabStaff(),
-          ]),
-        )
-      ]),
+      body: Obx(
+        () => staffInteractionController.isInteraction.value
+            ? const Center(
+                child: AnimatedProgressWidget(
+                  title: "Loading Interaction",
+                  desc: "Please wait while we generate a view for you..",
+                  animationPath: "assets/json/interaction.json",
+                ),
+              )
+            : Column(children: [
+                CustomTabBar(
+                  tabs: tabs,
+                  tabController: _tabController,
+                ),
+                Expanded(
+                  child: TabBarView(controller: _tabController, children: [
+                    ComposeTabStaff(
+                      loginSuccessModel: widget.loginSuccessModel,
+                      mskoolController: widget.mskoolController,
+                    ),
+                    InboxTabStaff(
+                      loginSuccessModel: widget.loginSuccessModel,
+                      mskoolController: widget.mskoolController,
+                    ),
+                  ]),
+                )
+              ]),
+      ),
     );
   }
 }
