@@ -15,6 +15,7 @@ import 'package:m_skool_flutter/staffs/verify_homework_classwork/widget/verify_c
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class VerifyHwCwHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -138,6 +139,7 @@ class _VerifyHwCwHomeState extends State<VerifyHwCwHome> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(title: widget.title).getAppBar(),
+        floatingActionButton: const HomeFab(),
         body: Obx(() {
           return verifyController.isErrorOccuredLoadingAcademicYear.value
               ? Center(

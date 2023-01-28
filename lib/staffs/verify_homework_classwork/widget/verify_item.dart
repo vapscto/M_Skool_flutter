@@ -9,9 +9,7 @@ import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/get_homewor
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/get_student_attachment_api.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/upload_hw.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/controller/pick_image_controller.dart';
-import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/cw_attachment_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/cw_student_attachment_model.dart';
-import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/hw_attachment_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/hw_student_attachment_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/images_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_cw_model.dart';
@@ -70,8 +68,8 @@ class _VerifyHwCwItemState extends State<VerifyHwCwItem> {
 
   @override
   Widget build(BuildContext context) {
-    // RxBool? select =
-    //     widget.selectAll == null ? null : RxBool(widget.selectAll!);
+    RxBool select =
+        widget.selectAll.value ? RxBool(widget.selectAll.value) : RxBool(false);
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0), color: widget.color),
@@ -83,12 +81,12 @@ class _VerifyHwCwItemState extends State<VerifyHwCwItem> {
             children: [
               Obx(() {
                 return Checkbox(
-                  value: widget.selectAll.value,
+                  value: select.value,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(2.0)),
                   activeColor: Theme.of(context).primaryColor,
                   onChanged: (b) {
-                    widget.selectAll.value = b!;
+                    select.value = b!;
                     widget.onSelect(b);
                   },
                 );
@@ -595,268 +593,329 @@ class _VerifyHwCwItemState extends State<VerifyHwCwItem> {
                       context: context,
                       builder: (_) {
                         return Dialog(
-                          insetPadding: const EdgeInsets.all(16.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0, vertical: 16.0),
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).primaryColor,
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(8.0),
-                                    topRight: Radius.circular(8.0),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Uploaded Files",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .merge(
-                                            const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18.0),
-                                          ),
-                                    ),
-                                    IconButton(
-                                        padding: const EdgeInsets.all(0),
-                                        visualDensity: const VisualDensity(
-                                            horizontal:
-                                                VisualDensity.minimumDensity,
-                                            vertical:
-                                                VisualDensity.minimumDensity),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        icon: const Icon(
-                                          Icons.close,
-                                          color: Colors.white,
-                                        ))
-                                  ],
-                                ),
-                              ),
-                              widget.forHw
-                                  ? FutureBuilder<
-                                          List<HwAttachmentModelValues>>(
-                                      future: GetHomeworkAttachmentApi.instance
-                                          .getHwAttachedFile(
-                                              iHwId: widget.model!.iHWId!,
-                                              miId: widget.miId,
-                                              base: widget.base),
-                                      builder: (_, snapshot) {
-                                        if (snapshot.hasData) {
-                                          return ListView.separated(
-                                              shrinkWrap: true,
-                                              padding:
-                                                  const EdgeInsets.all(16.0),
-                                              itemBuilder: (_, index) {
-                                                return HwCwUploadedContentItem(
-                                                  onViewClicked: () async {
-                                                    if ([
-                                                      ".jpg",
-                                                      ".jpeg",
-                                                      ".png",
-                                                      ".gif"
-                                                    ].contains(p.extension(snapshot
-                                                        .data!
-                                                        .elementAt(index)
-                                                        .ihwatTAttachment!))) {
-                                                      Navigator.push(context,
-                                                          MaterialPageRoute(
-                                                              builder: (_) {
-                                                        return ViewImage(
-                                                            image: snapshot
-                                                                .data!
-                                                                .elementAt(
-                                                                    index)
-                                                                .ihwatTAttachment!);
-                                                      }));
-                                                      return;
-                                                    }
-
-                                                    if (await canLaunchUrl(
-                                                        Uri.parse(snapshot.data!
-                                                            .elementAt(index)
-                                                            .ihwatTAttachment!))) {
-                                                      await launchUrl(Uri.parse(
-                                                          snapshot.data!
-                                                              .elementAt(index)
-                                                              .ihwatTAttachment!));
-                                                      return;
-                                                    }
-                                                    Fluttertoast.showToast(
-                                                        msg:
-                                                            "No Specific application found to view this file");
-                                                  },
-                                                  onDownloadClicked: () async {
-                                                    if (await canLaunchUrl(
-                                                        Uri.parse(snapshot.data!
-                                                            .elementAt(index)
-                                                            .ihwatTAttachment!))) {
-                                                      await launchUrl(Uri.parse(
-                                                          snapshot.data!
-                                                              .elementAt(index)
-                                                              .ihwatTAttachment!));
-                                                      return;
-                                                    }
-                                                    Fluttertoast.showToast(
-                                                        msg:
-                                                            "No Specific application found to view this file");
-                                                  },
-                                                  isPdf: p.extension(snapshot
-                                                              .data!
-                                                              .elementAt(index)
-                                                              .ihwatTAttachment!) ==
-                                                          ".pdf"
-                                                      ? true
-                                                      : false,
-                                                  title: snapshot.data!
-                                                      .elementAt(index)
-                                                      .ihwatTFileName!,
-                                                  // deleteAsset: "assets/svg/delete.svg",
-                                                );
-                                              },
-                                              separatorBuilder: (_, index) {
-                                                return const SizedBox(
-                                                  height: 16.0,
-                                                );
-                                              },
-                                              itemCount: snapshot.data!.length);
-                                        }
-
-                                        if (snapshot.hasError) {
-                                          return ErrWidget(
-                                              err: snapshot.error
-                                                  as Map<String, dynamic>);
-                                        }
-                                        return const AnimatedProgressWidget(
-                                            title: "Loading Your upload's",
-                                            desc:
-                                                "Please wait we are loading upload's for you..",
-                                            animationPath:
-                                                "assets/json/default.json");
-                                      })
-                                  : FutureBuilder<
-                                          List<CwAttachmentModelValues>>(
-                                      future: GetClassworkAttachmentApi.instance
-                                          .getAttachedFiles(
-                                        miId: widget.miId,
-                                        base: widget.base,
-                                        asmayId: widget.asmayId,
-                                        iCwId: widget.cwList!.iCWId!,
-                                        userId:
-                                            widget.loginSuccessModel.userId!,
-                                      ),
-                                      builder: (_, snapshot) {
-                                        if (snapshot.hasData) {
-                                          return ListView.separated(
-                                              shrinkWrap: true,
-                                              padding:
-                                                  const EdgeInsets.all(16.0),
-                                              itemBuilder: (_, index) {
-                                                return HwCwUploadedContentItem(
-                                                  onViewClicked: () async {
-                                                    if ([
-                                                      ".jpg",
-                                                      ".jpeg",
-                                                      ".png",
-                                                      ".gif"
-                                                    ].contains(p.extension(snapshot
-                                                        .data!
-                                                        .elementAt(index)
-                                                        .icwatTAttachment!))) {
-                                                      Navigator.push(context,
-                                                          MaterialPageRoute(
-                                                              builder: (_) {
-                                                        return ViewImage(
-                                                            image: snapshot
-                                                                .data!
-                                                                .elementAt(
-                                                                    index)
-                                                                .icwatTAttachment!);
-                                                      }));
-                                                      return;
-                                                    }
-
-                                                    if (await canLaunchUrl(
-                                                        Uri.parse(snapshot.data!
-                                                            .elementAt(index)
-                                                            .icwatTAttachment!))) {
-                                                      await launchUrl(Uri.parse(
-                                                          snapshot.data!
-                                                              .elementAt(index)
-                                                              .icwatTAttachment!));
-                                                      return;
-                                                    }
-                                                    Fluttertoast.showToast(
-                                                        msg:
-                                                            "No Specific application found to view this file");
-                                                  },
-                                                  onDownloadClicked: () async {
-                                                    if (await canLaunchUrl(
-                                                        Uri.parse(snapshot.data!
-                                                            .elementAt(index)
-                                                            .icwatTAttachment!))) {
-                                                      await launchUrl(Uri.parse(
-                                                          snapshot.data!
-                                                              .elementAt(index)
-                                                              .icwatTAttachment!));
-                                                      return;
-                                                    }
-                                                    Fluttertoast.showToast(
-                                                        msg:
-                                                            "No Specific application found to view this file");
-                                                  },
-                                                  isPdf: p.extension(snapshot
-                                                              .data!
-                                                              .elementAt(index)
-                                                              .icwatTAttachment!) ==
-                                                          ".pdf"
-                                                      ? true
-                                                      : false,
-                                                  title: snapshot.data!
-                                                      .elementAt(index)
-                                                      .icwatTFileName!,
-                                                  // deleteAsset: "assets/svg/delete.svg",
-                                                );
-                                              },
-                                              separatorBuilder: (_, index) {
-                                                return const SizedBox(
-                                                  height: 16.0,
-                                                );
-                                              },
-                                              itemCount: snapshot.data!.length);
-                                        }
-
-                                        if (snapshot.hasError) {
-                                          return ErrWidget(
-                                              err: snapshot.error
-                                                  as Map<String, dynamic>);
-                                        }
-                                        return const AnimatedProgressWidget(
-                                            title: "Loading Your upload's",
-                                            desc:
-                                                "Please wait we are loading upload's for you..",
-                                            animationPath:
-                                                "assets/json/default.json");
-                                      })
-                            ],
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                AnimatedProgressWidget(
+                                    title: "Loading Your upload's",
+                                    desc:
+                                        "Please wait we are loading upload's for you.. after that download will start",
+                                    animationPath: "assets/json/default.json")
+                              ],
+                            ),
                           ),
                         );
                       });
+
+                  if (widget.forHw) {
+                    GetHomeworkAttachmentApi.instance
+                        .getHwAttachedFile(
+                            iHwId: widget.model!.iHWId!,
+                            miId: widget.miId,
+                            base: widget.base)
+                        .then((value) async {
+                      Navigator.pop(context);
+                      if (await canLaunchUrl(
+                          Uri.parse(value.first.ihwatTAttachment!))) {
+                        await launchUrl(
+                            Uri.parse(value.first.ihwatTAttachment!),
+                            mode: LaunchMode.externalApplication);
+                        return;
+                      }
+                      Fluttertoast.showToast(
+                          msg:
+                              "No Specific application found to view this file");
+                    });
+                  } else {
+                    GetClassworkAttachmentApi.instance
+                        .getAttachedFiles(
+                            miId: widget.miId,
+                            base: widget.base,
+                            asmayId: widget.asmayId,
+                            iCwId: widget.cwList!.iCWId!,
+                            userId: widget.loginSuccessModel.userId!)
+                        .then((value) async {
+                      Navigator.pop(context);
+                      if (await canLaunchUrl(
+                          Uri.parse(value.first.icwatTAttachment!))) {
+                        await launchUrl(
+                            Uri.parse(value.first.icwatTAttachment!),
+                            mode: LaunchMode.externalApplication);
+                        return;
+                      }
+                      Fluttertoast.showToast(
+                          msg:
+                              "No Specific application found to view this file");
+                    });
+                  }
+                  // showDialog(
+                  //     context: context,
+                  //     builder: (_) {
+                  //       return Dialog(
+                  //         insetPadding: const EdgeInsets.all(16.0),
+                  //         shape: RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.circular(8.0),
+                  //         ),
+                  //         child: Column(
+                  //           mainAxisSize: MainAxisSize.min,
+                  //           children: [
+                  //             Container(
+                  //               width: double.infinity,
+                  //               padding: const EdgeInsets.symmetric(
+                  //                   horizontal: 16.0, vertical: 16.0),
+                  //               decoration: BoxDecoration(
+                  //                 color: Theme.of(context).primaryColor,
+                  //                 borderRadius: const BorderRadius.only(
+                  //                   topLeft: Radius.circular(8.0),
+                  //                   topRight: Radius.circular(8.0),
+                  //                 ),
+                  //               ),
+                  //               child: Row(
+                  //                 mainAxisAlignment:
+                  //                     MainAxisAlignment.spaceBetween,
+                  //                 children: [
+                  //                   Text(
+                  //                     "Uploaded Files",
+                  //                     style: Theme.of(context)
+                  //                         .textTheme
+                  //                         .titleSmall!
+                  //                         .merge(
+                  //                           const TextStyle(
+                  //                               color: Colors.white,
+                  //                               fontSize: 18.0),
+                  //                         ),
+                  //                   ),
+                  //                   IconButton(
+                  //                       padding: const EdgeInsets.all(0),
+                  //                       visualDensity: const VisualDensity(
+                  //                           horizontal:
+                  //                               VisualDensity.minimumDensity,
+                  //                           vertical:
+                  //                               VisualDensity.minimumDensity),
+                  //                       onPressed: () {
+                  //                         Navigator.pop(context);
+                  //                       },
+                  //                       icon: const Icon(
+                  //                         Icons.close,
+                  //                         color: Colors.white,
+                  //                       ))
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //             widget.forHw
+                  //                 ? FutureBuilder<
+                  //                         List<HwAttachmentModelValues>>(
+                  //                     future: GetHomeworkAttachmentApi.instance
+                  //                         .getHwAttachedFile(
+                  //                             iHwId: widget.model!.iHWId!,
+                  //                             miId: widget.miId,
+                  //                             base: widget.base),
+                  //                     builder: (_, snapshot) {
+                  //                       if (snapshot.hasData) {
+                  //                         return ListView.separated(
+                  //                             shrinkWrap: true,
+                  //                             padding:
+                  //                                 const EdgeInsets.all(16.0),
+                  //                             itemBuilder: (_, index) {
+                  //                               return HwCwUploadedContentItem(
+                  //                                 onViewClicked: () async {
+                  //                                   if ([
+                  //                                     ".jpg",
+                  //                                     ".jpeg",
+                  //                                     ".png",
+                  //                                     ".gif"
+                  //                                   ].contains(p.extension(snapshot
+                  //                                       .data!
+                  //                                       .elementAt(index)
+                  //                                       .ihwatTAttachment!))) {
+                  //                                     Navigator.push(context,
+                  //                                         MaterialPageRoute(
+                  //                                             builder: (_) {
+                  //                                       return ViewImage(
+                  //                                           image: snapshot
+                  //                                               .data!
+                  //                                               .elementAt(
+                  //                                                   index)
+                  //                                               .ihwatTAttachment!);
+                  //                                     }));
+                  //                                     return;
+                  //                                   }
+
+                  //                                   if (await canLaunchUrl(
+                  //                                       Uri.parse(snapshot.data!
+                  //                                           .elementAt(index)
+                  //                                           .ihwatTAttachment!))) {
+                  //                                     await launchUrl(Uri.parse(
+                  //                                         snapshot.data!
+                  //                                             .elementAt(index)
+                  //                                             .ihwatTAttachment!));
+                  //                                     return;
+                  //                                   }
+                  //                                   Fluttertoast.showToast(
+                  //                                       msg:
+                  //                                           "No Specific application found to view this file");
+                  //                                 },
+                  //                                 onDownloadClicked: () async {
+                  //                                   if (await canLaunchUrl(
+                  //                                       Uri.parse(snapshot.data!
+                  //                                           .elementAt(index)
+                  //                                           .ihwatTAttachment!))) {
+                  //                                     await launchUrl(Uri.parse(
+                  //                                         snapshot.data!
+                  //                                             .elementAt(index)
+                  //                                             .ihwatTAttachment!));
+                  //                                     return;
+                  //                                   }
+                  //                                   Fluttertoast.showToast(
+                  //                                       msg:
+                  //                                           "No Specific application found to view this file");
+                  //                                 },
+                  //                                 isPdf: p.extension(snapshot
+                  //                                             .data!
+                  //                                             .elementAt(index)
+                  //                                             .ihwatTAttachment!) ==
+                  //                                         ".pdf"
+                  //                                     ? true
+                  //                                     : false,
+                  //                                 title: snapshot.data!
+                  //                                     .elementAt(index)
+                  //                                     .ihwatTFileName!,
+                  //                                 // deleteAsset: "assets/svg/delete.svg",
+                  //                               );
+                  //                             },
+                  //                             separatorBuilder: (_, index) {
+                  //                               return const SizedBox(
+                  //                                 height: 16.0,
+                  //                               );
+                  //                             },
+                  //                             itemCount: snapshot.data!.length);
+                  //                       }
+
+                  //                       if (snapshot.hasError) {
+                  //                         return ErrWidget(
+                  //                             err: snapshot.error
+                  //                                 as Map<String, dynamic>);
+                  //                       }
+                  //                       return const AnimatedProgressWidget(
+                  //                           title: "Loading Your upload's",
+                  //                           desc:
+                  //                               "Please wait we are loading upload's for you..",
+                  //                           animationPath:
+                  //                               "assets/json/default.json");
+                  //                     })
+                  //                 : FutureBuilder<
+                  //                         List<CwAttachmentModelValues>>(
+                  //                     future: GetClassworkAttachmentApi.instance
+                  //                         .getAttachedFiles(
+                  //                       miId: widget.miId,
+                  //                       base: widget.base,
+                  //                       asmayId: widget.asmayId,
+                  //                       iCwId: widget.cwList!.iCWId!,
+                  //                       userId:
+                  //                           widget.loginSuccessModel.userId!,
+                  //                     ),
+                  //                     builder: (_, snapshot) {
+                  //                       if (snapshot.hasData) {
+                  //                         return ListView.separated(
+                  //                             shrinkWrap: true,
+                  //                             padding:
+                  //                                 const EdgeInsets.all(16.0),
+                  //                             itemBuilder: (_, index) {
+                  //                               return HwCwUploadedContentItem(
+                  //                                 onViewClicked: () async {
+                  //                                   if ([
+                  //                                     ".jpg",
+                  //                                     ".jpeg",
+                  //                                     ".png",
+                  //                                     ".gif"
+                  //                                   ].contains(p.extension(snapshot
+                  //                                       .data!
+                  //                                       .elementAt(index)
+                  //                                       .icwatTAttachment!))) {
+                  //                                     Navigator.push(context,
+                  //                                         MaterialPageRoute(
+                  //                                             builder: (_) {
+                  //                                       return ViewImage(
+                  //                                           image: snapshot
+                  //                                               .data!
+                  //                                               .elementAt(
+                  //                                                   index)
+                  //                                               .icwatTAttachment!);
+                  //                                     }));
+                  //                                     return;
+                  //                                   }
+
+                  //                                   if (await canLaunchUrl(
+                  //                                       Uri.parse(snapshot.data!
+                  //                                           .elementAt(index)
+                  //                                           .icwatTAttachment!))) {
+                  //                                     await launchUrl(Uri.parse(
+                  //                                         snapshot.data!
+                  //                                             .elementAt(index)
+                  //                                             .icwatTAttachment!));
+                  //                                     return;
+                  //                                   }
+                  //                                   Fluttertoast.showToast(
+                  //                                       msg:
+                  //                                           "No Specific application found to view this file");
+                  //                                 },
+                  //                                 onDownloadClicked: () async {
+                  //                                   if (await canLaunchUrl(
+                  //                                       Uri.parse(snapshot.data!
+                  //                                           .elementAt(index)
+                  //                                           .icwatTAttachment!))) {
+                  //                                     await launchUrl(Uri.parse(
+                  //                                         snapshot.data!
+                  //                                             .elementAt(index)
+                  //                                             .icwatTAttachment!));
+                  //                                     return;
+                  //                                   }
+                  //                                   Fluttertoast.showToast(
+                  //                                       msg:
+                  //                                           "No Specific application found to view this file");
+                  //                                 },
+                  //                                 isPdf: p.extension(snapshot
+                  //                                             .data!
+                  //                                             .elementAt(index)
+                  //                                             .icwatTAttachment!) ==
+                  //                                         ".pdf"
+                  //                                     ? true
+                  //                                     : false,
+                  //                                 title: snapshot.data!
+                  //                                     .elementAt(index)
+                  //                                     .icwatTFileName!,
+                  //                                 // deleteAsset: "assets/svg/delete.svg",
+                  //                               );
+                  //                             },
+                  //                             separatorBuilder: (_, index) {
+                  //                               return const SizedBox(
+                  //                                 height: 16.0,
+                  //                               );
+                  //                             },
+                  //                             itemCount: snapshot.data!.length);
+                  //                       }
+
+                  //                       if (snapshot.hasError) {
+                  //                         return ErrWidget(
+                  //                             err: snapshot.error
+                  //                                 as Map<String, dynamic>);
+                  //                       }
+                  //                       return const AnimatedProgressWidget(
+                  //                           title: "Loading Your upload's",
+                  //                           desc:
+                  //                               "Please wait we are loading upload's for you..",
+                  //                           animationPath:
+                  //                               "assets/json/default.json");
+                  //                     })
+                  //           ],
+                  //         ),
+                  //       );
+                  //     });
                 },
                 child: Text(
-                  "View Uploaded files",
+                  "Download Corrected File",
                   style: Theme.of(context).textTheme.titleSmall!.merge(
                         TextStyle(
                           color: Theme.of(context).primaryColor,

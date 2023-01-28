@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
-import 'package:m_skool_flutter/staffs/homework_classwork/widget/hw_cw_content_item.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/api/active_deactive_nb.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/api/get_attachment_api.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/model/nb_attachment_model.dart';
+import 'package:m_skool_flutter/staffs/notice_board_staff/model/notice_record_model.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/model/view_notice_data_model.dart';
 import 'package:m_skool_flutter/staffs/punch_report/widget/punch_report_item.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/widget/hw_cw_content_item.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ViewNoticeCard extends StatelessWidget {
   final ViewNoticeDetailsModelValuesValues values;
   final String base;
   final int miId;
+  final int userId;
+  final int asmayId;
+  final int ivrmrtId;
   final Function() func;
   const ViewNoticeCard({
     Key? key,
@@ -22,6 +27,9 @@ class ViewNoticeCard extends StatelessWidget {
     required this.base,
     required this.func,
     required this.miId,
+    required this.userId,
+    required this.asmayId,
+    required this.ivrmrtId,
   }) : super(key: key);
 
   final int color;
@@ -177,6 +185,7 @@ class ViewNoticeCard extends StatelessWidget {
                                       borderRadius:
                                           BorderRadius.circular(12.0)),
                                   child: Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Container(
                                         width: double.infinity,
@@ -233,18 +242,198 @@ class ViewNoticeCard extends StatelessWidget {
                                           ),
                                           builder: (_, snapshot) {
                                             if (snapshot.hasData) {
+                                              if (snapshot.data!.isEmpty) {
+                                                return Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: const [
+                                                    AnimatedProgressWidget(
+                                                      title:
+                                                          "No Attachment Found",
+                                                      desc:
+                                                          "For this particular notice there is no attachment",
+                                                      animationPath:
+                                                          "assets/json/nodata.json",
+                                                      animatorHeight: 250,
+                                                    ),
+                                                  ],
+                                                );
+                                              }
                                               return ListView.separated(
                                                   padding: const EdgeInsets.all(
                                                       12.0),
                                                   shrinkWrap: true,
                                                   itemBuilder: (_, index) {
-                                                    return HwCwContentItem(
-                                                        onDownloadClicked:
-                                                            () {},
-                                                        title: snapshot.data!
-                                                            .elementAt(index)
-                                                            .intbfLFileName!,
-                                                        isPdf: true);
+                                                    return HwCwUploadedContentItem(
+                                                      onDownloadClicked:
+                                                          () async {
+                                                        if (await canLaunchUrl(
+                                                            Uri.parse(snapshot
+                                                                .data!
+                                                                .elementAt(
+                                                                    index)
+                                                                .intbfLFilePath!))) {
+                                                          await launchUrl(
+                                                              Uri.parse(snapshot
+                                                                  .data!
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .intbfLFilePath!),
+                                                              mode: LaunchMode
+                                                                  .externalApplication);
+                                                        }
+                                                      },
+                                                      title: snapshot.data!
+                                                          .elementAt(index)
+                                                          .intbfLFileName!,
+                                                      isPdf: snapshot.data!
+                                                          .elementAt(index)
+                                                          .intbfLFileName!
+                                                          .endsWith(".pdf"),
+                                                      onViewClicked: () {
+                                                        Navigator.pop(context);
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (_) {
+                                                              return Dialog(
+                                                                insetPadding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        16.0),
+                                                                shape: RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            12.0)),
+                                                                child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  children: [
+                                                                    Container(
+                                                                      width: double
+                                                                          .infinity,
+                                                                      padding: const EdgeInsets
+                                                                              .symmetric(
+                                                                          horizontal:
+                                                                              16.0,
+                                                                          vertical:
+                                                                              16.0),
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: Theme.of(context)
+                                                                            .primaryColor,
+                                                                        borderRadius:
+                                                                            const BorderRadius.only(
+                                                                          topLeft:
+                                                                              Radius.circular(8.0),
+                                                                          topRight:
+                                                                              Radius.circular(8.0),
+                                                                        ),
+                                                                      ),
+                                                                      child:
+                                                                          Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            "Sent To",
+                                                                            style: Theme.of(context).textTheme.titleSmall!.merge(
+                                                                                  const TextStyle(color: Colors.white, fontSize: 18.0),
+                                                                                ),
+                                                                          ),
+                                                                          IconButton(
+                                                                              padding: const EdgeInsets.all(0),
+                                                                              visualDensity: const VisualDensity(horizontal: VisualDensity.minimumDensity, vertical: VisualDensity.minimumDensity),
+                                                                              onPressed: () {
+                                                                                Navigator.pop(context);
+                                                                              },
+                                                                              icon: const Icon(
+                                                                                Icons.close,
+                                                                                color: Colors.white,
+                                                                              ))
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                    FutureBuilder<
+                                                                            List<
+                                                                                NoticeRecordModelValues>>(
+                                                                        future: GetNbAttachmentApi
+                                                                            .instance
+                                                                            .getSentList(
+                                                                          base:
+                                                                              base,
+                                                                          asmayId:
+                                                                              asmayId,
+                                                                          intbId:
+                                                                              values.intBId!,
+                                                                          ivrmrtId:
+                                                                              ivrmrtId,
+                                                                          miId:
+                                                                              miId,
+                                                                          staffFlag:
+                                                                              values.iNTBToStaffFlg!,
+                                                                          stuFlag:
+                                                                              values.iNTBToStudentFlg!,
+                                                                          userId:
+                                                                              userId,
+                                                                        ),
+                                                                        builder:
+                                                                            (_, snapshot) {
+                                                                          if (snapshot
+                                                                              .hasData) {
+                                                                            if (snapshot.data!.isEmpty) {
+                                                                              return Column(
+                                                                                mainAxisSize: MainAxisSize.min,
+                                                                                children: const [
+                                                                                  AnimatedProgressWidget(
+                                                                                    title: "No SentList Found",
+                                                                                    desc: "For this particular notice there is no SentList",
+                                                                                    animationPath: "assets/json/nodata.json",
+                                                                                    animatorHeight: 250,
+                                                                                  ),
+                                                                                ],
+                                                                              );
+                                                                            }
+                                                                            return Expanded(
+                                                                              child: ListView.separated(
+                                                                                  padding: const EdgeInsets.all(12.0),
+                                                                                  shrinkWrap: true,
+                                                                                  itemBuilder: (_, index) {
+                                                                                    return ListTile(
+                                                                                      title: Text("Class : ${snapshot.data!.elementAt(index).aSMCLClassName}"),
+                                                                                      subtitle: Text("Section: ${snapshot.data!.elementAt(index).aSMCSectionName}"),
+                                                                                    );
+                                                                                  },
+                                                                                  separatorBuilder: (context, index) {
+                                                                                    return const SizedBox(
+                                                                                      height: 12.0,
+                                                                                    );
+                                                                                  },
+                                                                                  itemCount: snapshot.data!.length),
+                                                                            );
+                                                                          }
+                                                                          if (snapshot
+                                                                              .hasError) {
+                                                                            return ErrWidget(err: snapshot.error as Map<String, dynamic>);
+                                                                          }
+                                                                          return Column(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.min,
+                                                                            children: const [
+                                                                              AnimatedProgressWidget(
+                                                                                title: "Loading Sent list",
+                                                                                desc: "We are loading to whom this attachment is sent",
+                                                                                animationPath: "assets/json/default.json",
+                                                                              ),
+                                                                            ],
+                                                                          );
+                                                                        }),
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            });
+                                                      },
+                                                    );
                                                   },
                                                   separatorBuilder:
                                                       (context, index) {

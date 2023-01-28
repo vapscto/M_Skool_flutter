@@ -54,6 +54,8 @@ class _SalaryLineChartState extends State<SalaryLineChart> {
               series: <LineSeries>[
                 LineSeries<SalaryGraphDetModel, String>(
                     name: "Salary",
+                    isVisible: true,
+                    markerSettings: const MarkerSettings(isVisible: true),
                     enableTooltip: true,
                     color: const Color.fromARGB(255, 74, 173, 212),
                     dataSource: salary,
@@ -62,6 +64,8 @@ class _SalaryLineChartState extends State<SalaryLineChart> {
                 LineSeries<SalaryGraphDetModel, String>(
                     name: "Deduction",
                     enableTooltip: true,
+                    isVisible: true,
+                    markerSettings: const MarkerSettings(isVisible: true),
                     color: const Color(0xFFD0F801),
                     dataSource: deduction,
                     xValueMapper: ((datum, index) => datum.month),
@@ -71,6 +75,8 @@ class _SalaryLineChartState extends State<SalaryLineChart> {
                     enableTooltip: true,
                     color: const Color(0xFFFF828A),
                     name: "LOP",
+                    isVisible: true,
+                    markerSettings: const MarkerSettings(isVisible: true),
                     xValueMapper: ((datum, index) => datum.month),
                     yValueMapper: (datum, index) => datum.salary)
               ],

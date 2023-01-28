@@ -11,6 +11,7 @@ class ViewImage extends StatelessWidget {
       appBar: const CustomAppBar(title: "View File").getAppBar(),
       body: SizedBox(
           width: double.infinity,
+          height: double.infinity,
           child: InteractiveViewer(child: Image.network(image))),
     );
   }

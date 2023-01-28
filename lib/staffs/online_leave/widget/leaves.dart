@@ -23,6 +23,7 @@ class Leaves extends StatefulWidget {
 
 class _LeavesState extends State<Leaves> {
   int backgroundColor = -1;
+  List<Color> bgColor = [];
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -43,10 +44,16 @@ class _LeavesState extends State<Leaves> {
             if (backgroundColor > 6) {
               backgroundColor = 0;
             }
+            bgColor.add(noticeColor.elementAt(backgroundColor));
             return InkWell(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return const ApplyForLeave();
+                  return ApplyForLeave(
+                    values: widget.leaves.elementAt(index),
+                    color: bgColor.elementAt(index),
+                    loginSuccessModel: widget.loginSuccessModel,
+                    mskoolController: widget.mskoolController,
+                  );
                 }));
               },
               child: LeaveNames(

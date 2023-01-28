@@ -93,6 +93,9 @@ class _ViewNoticeTabScreenState extends State<ViewNoticeTabScreen> {
                                 noticeBoardController: widget.nbController);
                           },
                           miId: widget.loginSuccessModel.mIID!,
+                          asmayId: widget.loginSuccessModel.asmaYId!,
+                          ivrmrtId: widget.loginSuccessModel.roleId!,
+                          userId: widget.loginSuccessModel.userId!,
                         );
                       },
                       separatorBuilder: (_, index) {

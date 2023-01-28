@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/online_leave/api/get_applied_leave.dart';
 import 'package:m_skool_flutter/staffs/online_leave/api/get_leaves_name.dart';
+import 'package:m_skool_flutter/staffs/online_leave/model/applied_leave_model.dart';
 import 'package:m_skool_flutter/staffs/online_leave/model/leave_name_model.dart';
 import 'package:m_skool_flutter/staffs/online_leave/widget/all_applied_leave.dart';
 import 'package:m_skool_flutter/staffs/online_leave/widget/leaves.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
@@ -75,10 +78,32 @@ class _OnlineLeaveApplyState extends State<OnlineLeaveApply> {
                     ),
                   );
                 }),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: AppliedLeaveWidget(),
-            ),
+            FutureBuilder<List<AppliedLeaveModelValues>>(
+                future: GetAppliedLeave.instance.getAppliedLeave(
+                    miId: widget.loginSuccessModel.mIID!,
+                    userId: widget.loginSuccessModel.userId!,
+                    base: baseUrlFromInsCode("leave", widget.mskoolController)),
+                builder: (_, snapshot) {
+                  if (snapshot.hasData) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: AppliedLeaveWidget(
+                        leaves: snapshot.data!,
+                      ),
+                    );
+                  }
+
+                  if (snapshot.hasError) {
+                    return ErrWidget(
+                        err: snapshot.error as Map<String, dynamic>);
+                  }
+
+                  return const AnimatedProgressWidget(
+                      title: "Loading applied leaves",
+                      desc:
+                          "Please wait we are loading the leaves you applied for",
+                      animationPath: "assets/json/default.json");
+                }),
           ],
         ),
       ),

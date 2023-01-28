@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/staffs/punch_report/widget/punch_report_item.dar
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class PunchReport extends StatefulWidget {
   final String title;
@@ -44,6 +45,7 @@ class _PunchReportState extends State<PunchReport> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: const HomeFab(),
       appBar: CustomAppBar(
         title: widget.title,
         bottom: PreferredSize(
