@@ -32,7 +32,7 @@ class VerifyHwCwItem extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final TextEditingController marks;
   final PickImageController imageController;
-  final bool? selectAll;
+  final RxBool selectAll;
   final Function(bool) onSelect;
 
   const VerifyHwCwItem({
@@ -47,7 +47,7 @@ class VerifyHwCwItem extends StatefulWidget {
     this.cwList,
     required this.marks,
     required this.imageController,
-    this.selectAll,
+    required this.selectAll,
     required this.onSelect,
   }) : super(key: key);
 
@@ -70,8 +70,8 @@ class _VerifyHwCwItemState extends State<VerifyHwCwItem> {
 
   @override
   Widget build(BuildContext context) {
-    RxBool? select =
-        widget.selectAll == null ? null : RxBool(widget.selectAll!);
+    // RxBool? select =
+    //     widget.selectAll == null ? null : RxBool(widget.selectAll!);
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0), color: widget.color),
@@ -83,15 +83,12 @@ class _VerifyHwCwItemState extends State<VerifyHwCwItem> {
             children: [
               Obx(() {
                 return Checkbox(
-                  value: select == null ? isSelected.value : select.value,
+                  value: widget.selectAll.value,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(2.0)),
                   activeColor: Theme.of(context).primaryColor,
                   onChanged: (b) {
-                    isSelected.value = b!;
-                    if (select != null) {
-                      select.value = b;
-                    }
+                    widget.selectAll.value = b!;
                     widget.onSelect(b);
                   },
                 );

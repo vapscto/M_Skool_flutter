@@ -79,6 +79,20 @@ class _ViewNoticeTabScreenState extends State<ViewNoticeTabScreen> {
                           color: color,
                           values: widget.nbController.viewNoticeList
                               .elementAt(index),
+                          base: baseUrlFromInsCode(
+                              "portal", widget.mskoolController),
+                          func: () {
+                            StaffNoticeBoardApi.instance.getAllNotices(
+                                miId: widget.loginSuccessModel.mIID!,
+                                hrme: widget.loginSuccessModel.empcode!,
+                                userId: widget.loginSuccessModel.userId!,
+                                ivrmrtId: widget.loginSuccessModel.roleId!,
+                                asmayId: widget.loginSuccessModel.asmaYId!,
+                                base: baseUrlFromInsCode(
+                                    "portal", widget.mskoolController),
+                                noticeBoardController: widget.nbController);
+                          },
+                          miId: widget.loginSuccessModel.mIID!,
                         );
                       },
                       separatorBuilder: (_, index) {

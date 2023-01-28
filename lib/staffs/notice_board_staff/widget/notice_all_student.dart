@@ -110,14 +110,14 @@ class _NoticeAllStudentState extends State<NoticeAllStudent> {
                                 thickness: 14,
                                 thumbVisibility: true,
                                 controller: _controller,
-                                child: Obx(() {
-                                  return SingleChildScrollView(
-                                    controller: _controller,
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                            height: 30,
-                                            child: CheckboxListTile(
+                                child: SingleChildScrollView(
+                                  controller: _controller,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                          height: 30,
+                                          child: Obx(() {
+                                            return CheckboxListTile(
                                               controlAffinity:
                                                   ListTileControlAffinity
                                                       .leading,
@@ -143,15 +143,27 @@ class _NoticeAllStudentState extends State<NoticeAllStudent> {
                                                     .merge(const TextStyle(
                                                         fontWeight:
                                                             FontWeight.w400,
-                                                        fontSize: 14.0,
+                                                        fontSize: 16.0,
                                                         letterSpacing: 0.3)),
                                               ),
                                               value: selectAllStudent.value,
                                               onChanged: (value) {
                                                 selectAllStudent.value = value!;
+
+                                                if (value) {
+                                                  widget.controller
+                                                      .addAllToStudent(widget
+                                                          .controller.students);
+                                                  return;
+                                                }
+
+                                                widget.controller.selectedStuden
+                                                    .clear();
                                               },
-                                            )),
-                                        ListView.builder(
+                                            );
+                                          })),
+                                      Obx(() {
+                                        return ListView.builder(
                                           // padding: const EdgeInsets.only(top: 1),
                                           //controller: _controller,
                                           physics:
@@ -161,40 +173,43 @@ class _NoticeAllStudentState extends State<NoticeAllStudent> {
                                           shrinkWrap:
                                               true, // till lenght is 5 is will true
                                           itemBuilder: (context, index) {
-                                            return Obx(() {
-                                              return SizedBox(
-                                                  height: 30,
-                                                  child: CheckBoxContainer(
-                                                      sectionName:
-                                                          "${widget.controller.students.elementAt(index).studentname}",
-                                                      func: (b) {
-                                                        if (b) {
-                                                          widget.controller
-                                                              .addToSelectedClasses(widget
-                                                                  .controller
-                                                                  .classesList
-                                                                  .elementAt(
-                                                                      index));
-                                                        } else {
-                                                          widget.controller
-                                                              .removeSelectedClass(widget
-                                                                  .controller
-                                                                  .classesList
-                                                                  .elementAt(
-                                                                      index));
-                                                        }
-                                                      },
-                                                      isChecked: RxBool(true)));
-                                            });
+                                            return SizedBox(
+                                                height: 30,
+                                                child: CheckBoxContainer(
+                                                    sectionName:
+                                                        "${widget.controller.students.elementAt(index).studentname}",
+                                                    func: (b) {
+                                                      if (b) {
+                                                        widget.controller
+                                                            .addToSelectedStudent(
+                                                                widget
+                                                                    .controller
+                                                                    .students
+                                                                    .elementAt(
+                                                                        index));
+                                                      } else {
+                                                        widget.controller
+                                                            .removeToSelectedStudent(
+                                                                widget
+                                                                    .controller
+                                                                    .students
+                                                                    .elementAt(
+                                                                        index));
+                                                      }
+                                                    },
+                                                    isChecked:
+                                                        selectAllStudent.value
+                                                            ? RxBool(true)
+                                                            : RxBool(false)));
                                           },
-                                        ),
-                                        const SizedBox(
-                                          height: 16.0,
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                }),
+                                        );
+                                      }),
+                                      const SizedBox(
+                                        height: 16.0,
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ),
                             ),
                             Positioned(

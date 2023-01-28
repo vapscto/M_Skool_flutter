@@ -19,10 +19,12 @@ class HwCwAcademicYearDD extends StatelessWidget {
     required this.loginSuccessModel,
     required this.mskoolController,
     required this.forHw,
+    required this.forVerify,
   }) : super(key: key);
 
   final HwCwController hwCwController;
   final bool forHw;
+  final bool forVerify;
 
   @override
   Widget build(BuildContext context) {
@@ -125,13 +127,13 @@ class HwCwAcademicYearDD extends StatelessWidget {
         asmclId: hwCwController.selectedClass.value.asmcLId!,
         base: baseUrlFromInsCode("portal", mskoolController),
         hwCwController: hwCwController,
-        fromVerifyCat: false);
+        fromVerifyCat: forVerify);
     if (hwCwController.isErrorOccuredLoadingSection.value ||
         hwCwController.sections.isEmpty) {
       return;
     }
 
-    if (forHw) {
+    if (forHw || forVerify == false) {
       List<Map<String, dynamic>> map = [];
       for (var element in hwCwController.selectedSection) {
         map.add({
@@ -154,16 +156,15 @@ class HwCwAcademicYearDD extends StatelessWidget {
       return;
     }
     await VerifyCwSubjectListApi.instance.getCwSubjects(
-      miId: loginSuccessModel.mIID!,
-      hrme: loginSuccessModel.empcode!,
-      loginId: loginSuccessModel.userId!,
-      userId: loginSuccessModel.userId!,
-      ivrmrtId: loginSuccessModel.roleId!,
-      asmayId: loginSuccessModel.asmaYId!,
-      asmscld: loginSuccessModel.asmcLId!,
-      asmsId: loginSuccessModel.asmSId!,
-      base: baseUrlFromInsCode("portal", mskoolController),
-      hwCwController: hwCwController,
-    );
+        miId: loginSuccessModel.mIID!,
+        hrme: loginSuccessModel.empcode!,
+        loginId: loginSuccessModel.userId!,
+        userId: loginSuccessModel.userId!,
+        ivrmrtId: loginSuccessModel.roleId!,
+        asmayId: hwCwController.selectedSession.value.asmaYId!,
+        asmscld: hwCwController.selectedClass.value.asmcLId!,
+        asmsId: hwCwController.verifySelectedSection.value.asmSId!,
+        base: baseUrlFromInsCode("portal", mskoolController),
+        hwCwController: hwCwController);
   }
 }

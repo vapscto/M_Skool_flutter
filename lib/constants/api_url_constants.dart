@@ -287,4 +287,11 @@ class URLS {
       'api/EmployeeStudentAttendenceDetailsFacade/Getsection/';
   static String onChangeOfSection = 'api/IVRM_InteractionsFacade/getstudent/';
   static String onSubmit = 'api/IVRM_InteractionsFacade/savedetails/';
+  static String saveNotices = "api/NoticeBoardFacade/savedetail";
+  static String getNbAttachment = "api/NoticeBoardFacade/viewData";
+  static String activeDeactiveNb = "api/NoticeBoardFacade/deactivate";
+
+  /* Online leave apply */
+  static String getLeaveName =
+      "api/OnlineLeaveApplicationFacade/getonlineLeave/";
 }

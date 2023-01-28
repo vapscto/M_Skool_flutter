@@ -67,6 +67,7 @@ class _HwCwAssignWorkState extends State<HwCwAssignWork> {
                             loginSuccessModel: widget.loginSuccessModel,
                             mskoolController: widget.mskoolController,
                             forHw: widget.forHw,
+                            forVerify: false,
                           ),
                           Obx(() {
                             return widget.hwCwController.isClassLoading.value

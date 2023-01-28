@@ -58,58 +58,6 @@ class _VerifyHwCwViewDetailsState extends State<VerifyHwCwViewDetails> {
     super.dispose();
   }
 
-  // Future<void> getCwData() async {
-  //   // SendPort sendPort = cw[0] as SendPort;
-
-  //   Map<String, dynamic> saveJson = {
-  //     "MI_Id": widget.loginSuccessModel.mIID,
-  //     "HRME_Id": widget.loginSuccessModel.empcode,
-  //     "Login_Id": widget.loginSuccessModel.userId,
-  //     "UserId": widget.loginSuccessModel.userId,
-  //     "IVRMRT_Id": widget.loginSuccessModel.roleId,
-  //     "Role_flag": "Staff",
-  //   };
-
-  //   List<Map<String, dynamic>> stuList = [];
-
-  //   for (int i = 0; i < imageController.cwList.length; i++) {
-  //     var element = imageController.cwList.elementAt(i);
-
-  //     logger.d(i);
-
-  //     Map<String, dynamic> stuDet = {
-  //       "AMST_Id": element.aMSTId,
-  //       "ICW_Id": element.iCWId,
-  //       "ICWUPL_Id": element.iCWUPLId,
-  //       "Marks": imageController.selectedEntry.elementAt(i).text,
-  //       "ICWUPL_FileName": "filename",
-  //       "ICWUPL_StaffUplaod": "filename",
-  //       "ICWUPL_StaffRemarks": "",
-  //     };
-  //     // await Future.delayed(Duration.zero);
-  //     for (int j = 0; j < imageController.saveAttachment.length; i++) {
-  //       if (element.aMSTId ==
-  //           imageController.saveAttachment.elementAt(j).amstId) {
-  //         stuDet.addAll(
-  //           {
-  //             "doclist_temp":
-  //                 imageController.saveAttachment.elementAt(j).attachments,
-  //           },
-  //         );
-  //         break;
-  //       }
-  //     }
-  //     stuList.add(stuDet);
-  //   }
-  //   saveJson.addAll({"getclasswork_list_array": stuList});
-
-  //   logger.d({
-  //     "Result": saveJson,
-  //   });
-
-  //   // Isolate.exit(sendPort, cw);
-  // }
-
   saveCw() async {
     bool someWhereMarksisNotThere = false;
 
@@ -379,62 +327,60 @@ class _VerifyHwCwViewDetailsState extends State<VerifyHwCwViewDetails> {
                                               .elementAt(index)
                                               .iHWUPLMarks
                                               .toString()));
-                              return Obx(() {
-                                return VerifyHwCwItem(
-                                  forHw: widget.forHw,
-                                  imageController: imageController,
-                                  marks: imageController.textEditingControllers
-                                      .elementAt(index),
-                                  model: snapshot.data!.elementAt(0),
-                                  color: lighterColor.elementAt(color),
-                                  base: baseUrlFromInsCode(
-                                      "portal", widget.mskoolController),
-                                  miId: widget.loginSuccessModel.mIID!,
-                                  loginSuccessModel: widget.loginSuccessModel,
-                                  asmayId: widget.asmayId,
-                                  selectAll:
-                                      selectAll.value == true ? true : null,
-                                  onSelect: (b) {
-                                    if (b) {
-                                      for (var element in imageController
-                                          .filteredAttachment) {
-                                        if (element.amstId ==
-                                            snapshot.data!
-                                                .elementAt(index)
-                                                .aMSTId) {
-                                          imageController
-                                              .updateSaveAttachment(element);
 
-                                          break;
-                                        }
-                                      }
-
-                                      imageController.addSingleHwEntry(
-                                          snapshot.data!.elementAt(index));
-                                      imageController.addToSelectedEntry(
-                                          imageController.textEditingControllers
-                                              .elementAt(index));
-                                      return;
-                                    }
+                              return VerifyHwCwItem(
+                                forHw: widget.forHw,
+                                imageController: imageController,
+                                marks: imageController.textEditingControllers
+                                    .elementAt(index),
+                                model: snapshot.data!.elementAt(0),
+                                color: lighterColor.elementAt(color),
+                                base: baseUrlFromInsCode(
+                                    "portal", widget.mskoolController),
+                                miId: widget.loginSuccessModel.mIID!,
+                                loginSuccessModel: widget.loginSuccessModel,
+                                asmayId: widget.asmayId,
+                                selectAll: selectAll,
+                                onSelect: (b) {
+                                  if (b) {
                                     for (var element
-                                        in imageController.saveAttachment) {
+                                        in imageController.filteredAttachment) {
                                       if (element.amstId ==
                                           snapshot.data!
                                               .elementAt(index)
                                               .aMSTId) {
-                                        imageController.saveAttachment
-                                            .remove(element);
+                                        imageController
+                                            .updateSaveAttachment(element);
+
                                         break;
                                       }
                                     }
-                                    imageController.selectedEntry.remove(
+
+                                    imageController.addSingleHwEntry(
+                                        snapshot.data!.elementAt(index));
+                                    imageController.addToSelectedEntry(
                                         imageController.textEditingControllers
                                             .elementAt(index));
-                                    imageController.hwList.remove(
-                                        snapshot.data!.elementAt(index));
-                                  },
-                                );
-                              });
+                                    return;
+                                  }
+                                  for (var element
+                                      in imageController.saveAttachment) {
+                                    if (element.amstId ==
+                                        snapshot.data!
+                                            .elementAt(index)
+                                            .aMSTId) {
+                                      imageController.saveAttachment
+                                          .remove(element);
+                                      break;
+                                    }
+                                  }
+                                  imageController.selectedEntry.remove(
+                                      imageController.textEditingControllers
+                                          .elementAt(index));
+                                  imageController.hwList
+                                      .remove(snapshot.data!.elementAt(index));
+                                },
+                              );
                             },
                             separatorBuilder: (_, index) {
                               return const SizedBox(
@@ -517,8 +463,7 @@ class _VerifyHwCwViewDetailsState extends State<VerifyHwCwViewDetails> {
                                 loginSuccessModel: widget.loginSuccessModel,
                                 miId: widget.loginSuccessModel.mIID!,
                                 cwList: snapshot.data!.elementAt(index),
-                                selectAll:
-                                    selectAll.value == true ? true : null,
+                                selectAll: selectAll,
                                 onSelect: (b) {
                                   if (b) {
                                     for (var element

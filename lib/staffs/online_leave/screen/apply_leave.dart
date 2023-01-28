@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/staffs/online_leave/widget/apply_leave_widget.dart';
-import 'package:m_skool_flutter/staffs/online_leave/widget/leaves.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
 class ApplyForLeave extends StatefulWidget {
@@ -39,7 +38,7 @@ class _ApplyForLeaveState extends State<ApplyForLeave> {
             // const SizedBox(
             //   height: 16.0,
             // ),
-            const Leaves(),
+            //   const Leaves(),
           ],
         ),
       ),

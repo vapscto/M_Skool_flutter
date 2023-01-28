@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/controller/hw_cw_controller.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/controller/notice_board_controller.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/tabs/new_notice_tab_screen.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/tabs/view_notice_tab_screen.dart';
@@ -28,6 +29,8 @@ class _NoticeBoardStaffHomeState extends State<NoticeBoardStaffHome>
   TabController? tabController;
   final NoticeBoardController noticeBoardController =
       Get.put(NoticeBoardController());
+
+  final HwCwController hwCwController = Get.put(HwCwController());
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
@@ -37,6 +40,7 @@ class _NoticeBoardStaffHomeState extends State<NoticeBoardStaffHome>
   @override
   void dispose() {
     Get.delete<NoticeBoardController>();
+    Get.delete<HwCwController>();
     super.dispose();
   }
 
@@ -69,6 +73,7 @@ class _NoticeBoardStaffHomeState extends State<NoticeBoardStaffHome>
             noticeBoardController: noticeBoardController,
             loginSuccessModel: widget.loginSuccessModel,
             mskoolController: widget.mskoolController,
+            hwCwController: hwCwController,
           ),
           ViewNoticeTabScreen(
             nbController: noticeBoardController,
