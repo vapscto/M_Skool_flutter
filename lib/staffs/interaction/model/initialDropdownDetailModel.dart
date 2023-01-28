@@ -588,12 +588,12 @@ class Getdetails {
   });
 
   String? type;
-  List<GetdetailsValue?>? values;
+  List<GetdetailsValues?>? values;
 
   factory Getdetails.fromJson(Map<String, dynamic> json) => Getdetails(
         type: json["\$type"],
-        values: List<GetdetailsValue?>.from(
-            json["\$values"].map((x) => GetdetailsValue.fromJson(x))),
+        values: List<GetdetailsValues?>.from(
+            json["\$values"].map((x) => GetdetailsValues.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -602,8 +602,8 @@ class Getdetails {
       };
 }
 
-class GetdetailsValue {
-  GetdetailsValue({
+class GetdetailsValues {
+  GetdetailsValues({
     this.type,
     this.asmclId,
     this.asmclClassName,
@@ -612,6 +612,7 @@ class GetdetailsValue {
     this.id,
     this.empName,
     this.hrmeEmployeeCode,
+    this.examCoordinatorName,
   });
 
   String? type;
@@ -621,10 +622,12 @@ class GetdetailsValue {
   int? iD; // for teacherId,hodId,ASId,
   int? id; // for principalId,EC..
   String? empName;
-  String? hrmeEmployeeCode;
 
-  factory GetdetailsValue.fromJson(Map<String, dynamic> json) =>
-      GetdetailsValue(
+  String? hrmeEmployeeCode;
+  String? examCoordinatorName;
+
+  factory GetdetailsValues.fromJson(Map<String, dynamic> json) =>
+      GetdetailsValues(
         type: json["\$type"],
         asmclId: json["ASMCL_Id"],
         asmclClassName: json["ASMCL_ClassName"],
@@ -633,6 +636,7 @@ class GetdetailsValue {
         id: json["hrmE_Id"],
         empName: json["EmpName"],
         hrmeEmployeeCode: json["HRME_EmployeeCode"],
+        examCoordinatorName: json["empName"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -644,5 +648,6 @@ class GetdetailsValue {
         "EmpName": empName,
         "HRME_EmployeeCode": hrmeEmployeeCode,
         "hrmE_Id": id,
+        "empName": examCoordinatorName,
       };
 }
