@@ -15,10 +15,16 @@ import '../model/inbox_model.dart';
 class MessagingScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  final GetinboxmsgValue data;
+  final int ismintId;
+  final int istintId;
+  final int ismintComposedById;
+  // final GetinboxmsgValue data;
   const MessagingScreen(
       {super.key,
-      required this.data,
+      // required this.data,
+      required this.ismintId,
+      required this.istintId,
+      required this.ismintComposedById,
       required this.loginSuccessModel,
       required this.mskoolController});
 
@@ -35,7 +41,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
   Future<void> getMessageData() async {
     interactionController.isMessageloading(true);
     await interactionController.getMessage(
-        ismintId: widget.data.ismintId!,
+        ismintId: widget.ismintId,
         miId: widget.loginSuccessModel.mIID!,
         asmayId: widget.loginSuccessModel.asmaYId!,
         userId: widget.loginSuccessModel.userId!,
@@ -61,7 +67,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
         title: Text("Message",
             style: Theme.of(context)
                 .textTheme
-                .headline6
+                .titleLarge
                 ?.copyWith(color: Colors.white.withOpacity(0.8))),
         leading: const CustomGoBackButton(),
         // actions: [
@@ -174,9 +180,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                         asmayId:
                                             widget.loginSuccessModel.asmaYId!,
                                         message: textMessage.text,
-                                        istintComposedByFlg:
-                                            widget.data.istintId!,
-                                        ismintId: widget.data.ismintId!,
+                                        istintComposedByFlg: widget.istintId,
+                                        ismintId: widget.ismintId,
                                         userId:
                                             widget.loginSuccessModel.userId!,
                                         image: interactionController.image,
@@ -187,17 +192,16 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                           if (value) {
                                             await interactionController
                                                 .getMessage(
-                                                    ismintId: widget
-                                                        .data.ismintId!,
-                                                    miId: widget
-                                                        .loginSuccessModel
-                                                        .mIID!,
-                                                    asmayId: widget
-                                                        .loginSuccessModel
-                                                        .asmaYId!,
-                                                    userId: widget
-                                                        .loginSuccessModel
-                                                        .userId!,
+                                                    ismintId: widget.ismintId,
+                                                    miId:
+                                                        widget.loginSuccessModel
+                                                            .mIID!,
+                                                    asmayId:
+                                                        widget.loginSuccessModel
+                                                            .asmaYId!,
+                                                    userId:
+                                                        widget.loginSuccessModel
+                                                            .userId!,
                                                     base: baseUrlFromInsCode(
                                                         'portal',
                                                         widget
@@ -241,9 +245,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                         asmayId:
                                             widget.loginSuccessModel.asmaYId!,
                                         message: textMessage.text,
-                                        istintComposedByFlg:
-                                            widget.data.istintId!,
-                                        ismintId: widget.data.ismintId!,
+                                        istintComposedByFlg: widget.istintId,
+                                        ismintId: widget.ismintId,
                                         userId:
                                             widget.loginSuccessModel.userId!,
                                         image: interactionController.image,
@@ -254,17 +257,16 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                           if (value) {
                                             await interactionController
                                                 .getMessage(
-                                                    ismintId: widget
-                                                        .data.ismintId!,
-                                                    miId: widget
-                                                        .loginSuccessModel
-                                                        .mIID!,
-                                                    asmayId: widget
-                                                        .loginSuccessModel
-                                                        .asmaYId!,
-                                                    userId: widget
-                                                        .loginSuccessModel
-                                                        .userId!,
+                                                    ismintId: widget.ismintId,
+                                                    miId:
+                                                        widget.loginSuccessModel
+                                                            .mIID!,
+                                                    asmayId:
+                                                        widget.loginSuccessModel
+                                                            .asmaYId!,
+                                                    userId:
+                                                        widget.loginSuccessModel
+                                                            .userId!,
                                                     base: baseUrlFromInsCode(
                                                         'portal',
                                                         widget
@@ -307,15 +309,15 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           interactionController.image.isEmpty) {
                         return;
                       } else {
-                        logger.d(widget.data.istintId);
+                        logger.d(widget.istintId);
                         interactionController.isMessageSending(true);
                         await sendMessage(
                           miId: widget.loginSuccessModel.mIID!,
                           amstId: widget.loginSuccessModel.amsTId!,
                           asmayId: widget.loginSuccessModel.asmaYId!,
                           message: textMessage.text,
-                          istintComposedByFlg: widget.data.ismintComposedById!,
-                          ismintId: widget.data.ismintId!,
+                          istintComposedByFlg: widget.ismintComposedById,
+                          ismintId: widget.ismintId,
                           userId: widget.loginSuccessModel.userId!,
                           image: interactionController.image,
                           base: baseUrlFromInsCode(
@@ -324,7 +326,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           (value) async {
                             if (value) {
                               await interactionController.getMessage(
-                                  ismintId: widget.data.ismintId!,
+                                  ismintId: widget.ismintId,
                                   miId: widget.loginSuccessModel.mIID!,
                                   asmayId: widget.loginSuccessModel.asmaYId!,
                                   userId: widget.loginSuccessModel.userId!,

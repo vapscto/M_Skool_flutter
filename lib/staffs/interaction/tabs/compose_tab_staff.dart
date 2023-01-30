@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/interaction/controller/staff_interaction_related_controller.dart';
+import 'package:m_skool_flutter/staffs/interaction/api/staff_interaction_compose_related_api.dart';
+import 'package:m_skool_flutter/staffs/interaction/controller/staff_interaction_compose_related_controller.dart';
 import 'package:m_skool_flutter/staffs/interaction/model/initialDropdownDetailModel.dart';
 import 'package:m_skool_flutter/staffs/interaction/model/interactionSectionModel.dart';
 import 'package:m_skool_flutter/staffs/interaction/model/interactionStudentListModel.dart';
-import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
+import 'package:m_skool_flutter/staffs/interaction/widget/student_list_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class ComposeTabStaff extends StatefulWidget {
@@ -24,18 +27,20 @@ class ComposeTabStaff extends StatefulWidget {
 }
 
 class _ComposeTabStaffState extends State<ComposeTabStaff> {
-  final StaffInteractionController staffInteractionController =
-      Get.put(StaffInteractionController());
+  final StaffInteractionComposeController staffInteractionComposeController =
+      Get.put(StaffInteractionComposeController());
   final TextEditingController about = TextEditingController();
   final TextEditingController subject = TextEditingController();
-
+  final List<Map<String, dynamic>> arrayStudents = [];
+  final List<Map<String, dynamic>> arrayTeachers = [];
+  final ScrollController _controller = ScrollController();
   GetdetailsValues? selectedInitialDropdown;
   InteractionSectionListValue? selectedsection;
   GetStudentValue? selectedstudent;
 
   void getInitialData(String selectedStaff) async {
-    staffInteractionController.isgetdetailloading(true);
-    await staffInteractionController
+    staffInteractionComposeController.isgetdetailloading(true);
+    await staffInteractionComposeController
         .getFirstDropdownData(
       asmayId: widget.loginSuccessModel.asmaYId!,
       roleId: widget.loginSuccessModel.roleId!,
@@ -50,15 +55,15 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
     )
         .then((value) {
       if (!value) {
-        staffInteractionController.isgetdetailloading(false);
+        staffInteractionComposeController.isgetdetailloading(false);
       }
     });
-    staffInteractionController.isgetdetailloading(false);
+    staffInteractionComposeController.isgetdetailloading(false);
   }
 
   void getSectionData(int asmclId) async {
-    staffInteractionController.issectionloading(true);
-    await staffInteractionController
+    staffInteractionComposeController.issectionloading(true);
+    await staffInteractionComposeController
         .getSectionListData(
       asmayId: widget.loginSuccessModel.asmaYId!,
       roleId: widget.loginSuccessModel.roleId!,
@@ -73,15 +78,19 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
     )
         .then((value) {
       if (!value) {
-        staffInteractionController.issectionloading(false);
+        staffInteractionComposeController.issectionloading(false);
+        return;
+      }
+      if (staffInteractionComposeController.interactionSectionList.isEmpty) {
+        Fluttertoast.showToast(msg: 'No section for selected class.');
       }
     });
-    staffInteractionController.issectionloading(false);
+    staffInteractionComposeController.issectionloading(false);
   }
 
   void getStudentData(int asmsId) async {
-    staffInteractionController.isstudentloading(true);
-    await staffInteractionController
+    staffInteractionComposeController.isstudentloading(true);
+    await staffInteractionComposeController
         .getStudentListData(
       asmayId: widget.loginSuccessModel.asmaYId!,
       roleId: widget.loginSuccessModel.roleId!,
@@ -97,10 +106,20 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
     )
         .then((value) {
       if (!value) {
-        staffInteractionController.isstudentloading(false);
+        staffInteractionComposeController.isstudentloading(false);
       }
     });
-    staffInteractionController.isstudentloading(false);
+    staffInteractionComposeController.isstudentloading(false);
+  }
+
+  void addStudentInList(int amstId) {
+    arrayStudents.add({"AMST_Id": amstId});
+    logger.d(arrayStudents);
+  }
+
+  void removeFromStudentInList(int amstId) {
+    arrayStudents.removeWhere((v) => v['AMST_Id'] == amstId);
+    logger.d(arrayStudents);
   }
 
   @override
@@ -109,6 +128,67 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
       child: Obx(
         () => Column(
           children: [
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 33,
+                  width: 130,
+                  child: RadioListTile(
+                    dense: true,
+                    activeColor: Theme.of(context).primaryColor,
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                    visualDensity: const VisualDensity(horizontal: -4.0),
+                    title: Text(
+                      "Group",
+                      style: Theme.of(context).textTheme.labelSmall!.merge(
+                          const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16.0,
+                              letterSpacing: 0.3)),
+                    ),
+                    value: "Group",
+                    groupValue:
+                        staffInteractionComposeController.grpOrInd.value,
+                    onChanged: (value) {
+                      staffInteractionComposeController
+                          .groupOrIndividual(value!);
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 33,
+                  width: 140,
+                  child: RadioListTile(
+                    dense: true,
+                    activeColor: Theme.of(context).primaryColor,
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                    visualDensity: const VisualDensity(horizontal: -4.0),
+                    title: Text(
+                      "Individual",
+                      style: Theme.of(context).textTheme.labelSmall!.merge(
+                          const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16.0,
+                              letterSpacing: 0.3)),
+                    ),
+                    value: "Individual",
+                    groupValue:
+                        staffInteractionComposeController.grpOrInd.value,
+                    onChanged: (value) {
+                      staffInteractionComposeController
+                          .groupOrIndividual(value!);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
               child: CustomContainer(
@@ -238,12 +318,13 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                           letterSpacing: 0.3)),
                 ),
                 value: "Student",
-                groupValue: staffInteractionController.selectedradio.value,
+                groupValue:
+                    staffInteractionComposeController.selectedradio.value,
                 onChanged: (value) {
                   selectedInitialDropdown = null;
                   selectedsection = null;
                   selectedstudent = null;
-                  staffInteractionController.selectedValue(value!);
+                  staffInteractionComposeController.selectedValue(value!);
                   getInitialData(value);
                 },
               ),
@@ -264,12 +345,13 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                           letterSpacing: 0.3)),
                 ),
                 value: "Teachers",
-                groupValue: staffInteractionController.selectedradio.value,
+                groupValue:
+                    staffInteractionComposeController.selectedradio.value,
                 onChanged: (value) {
                   selectedInitialDropdown = null;
                   selectedsection = null;
                   selectedstudent = null;
-                  staffInteractionController.selectedValue(value!);
+                  staffInteractionComposeController.selectedValue(value!);
                   getInitialData(value);
                 },
               ),
@@ -290,12 +372,13 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                           letterSpacing: 0.3)),
                 ),
                 value: "HOD",
-                groupValue: staffInteractionController.selectedradio.value,
+                groupValue:
+                    staffInteractionComposeController.selectedradio.value,
                 onChanged: (value) {
                   selectedInitialDropdown = null;
                   selectedsection = null;
                   selectedstudent = null;
-                  staffInteractionController.selectedValue(value!);
+                  staffInteractionComposeController.selectedValue(value!);
                   getInitialData(value);
                 },
               ),
@@ -316,12 +399,13 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                           letterSpacing: 0.3)),
                 ),
                 value: "Principal",
-                groupValue: staffInteractionController.selectedradio.value,
+                groupValue:
+                    staffInteractionComposeController.selectedradio.value,
                 onChanged: (value) {
                   selectedInitialDropdown = null;
                   selectedsection = null;
                   selectedstudent = null;
-                  staffInteractionController.selectedValue(value!);
+                  staffInteractionComposeController.selectedValue(value!);
                   getInitialData(value);
                 },
               ),
@@ -342,12 +426,13 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                           letterSpacing: 0.3)),
                 ),
                 value: "AS",
-                groupValue: staffInteractionController.selectedradio.value,
+                groupValue:
+                    staffInteractionComposeController.selectedradio.value,
                 onChanged: (value) {
                   selectedInitialDropdown = null;
                   selectedsection = null;
                   selectedstudent = null;
-                  staffInteractionController.selectedValue(value!);
+                  staffInteractionComposeController.selectedValue(value!);
                   getInitialData(value);
                 },
               ),
@@ -368,12 +453,13 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                           letterSpacing: 0.3)),
                 ),
                 value: "EC",
-                groupValue: staffInteractionController.selectedradio.value,
+                groupValue:
+                    staffInteractionComposeController.selectedradio.value,
                 onChanged: (value) {
                   selectedInitialDropdown = null;
                   selectedsection = null;
                   selectedstudent = null;
-                  staffInteractionController.selectedValue(value!);
+                  staffInteractionComposeController.selectedValue(value!);
                   getInitialData(value);
                 },
               ),
@@ -381,18 +467,10 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
             const SizedBox(
               height: 20,
             ),
-            staffInteractionController.selectedradio.value.isNotEmpty
-                ? staffInteractionController.isGetDetail.value
+            staffInteractionComposeController.selectedradio.value.isNotEmpty
+                ? staffInteractionComposeController.isGetDetail.value
                     ? const Center(
-                        child: SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: AnimatedProgressWidget(
-                            title: "",
-                            desc: "",
-                            animationPath: "assets/json/interaction.json",
-                          ),
-                        ),
+                        child: CircularProgressIndicator(),
                       )
                     : Container(
                         margin: const EdgeInsets.symmetric(
@@ -429,15 +507,11 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                                       fontWeight: FontWeight.w400,
                                       fontSize: 14.0,
                                       letterSpacing: 0.3)),
-                              hintText: staffInteractionController
-                                          .selectedradio.value ==
-                                      'Student'
-                                  ? 'Select class'
-                                  : 'Select Staff',
+                              hintText: 'select',
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.always,
                               label: Text(
-                                staffInteractionController
+                                staffInteractionComposeController
                                             .selectedradio.value ==
                                         'Student'
                                     ? 'Class'
@@ -452,40 +526,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                                         color: Color.fromRGBO(137, 137, 137, 1),
                                       ),
                                     ),
-                              )
-                              // label: Container(
-                              //   padding:
-                              //       const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-                              //   decoration: const BoxDecoration(
-                              //     color: Color.fromRGBO(229, 243, 255, 1),
-                              //     borderRadius: BorderRadius.all(
-                              //       Radius.circular(24),
-                              //     ),
-                              //   ),
-                              //   child: Row(
-                              //     mainAxisSize: MainAxisSize.min,
-                              //     children: [
-                              //       SizedBox(
-                              //         height: 33,
-                              //         child: Image.asset(
-                              //           'assets/images/selectteachericon.png',
-                              //         ),
-                              //       ),
-                              //       const SizedBox(width: 10),
-                              //       Text(
-                              //         'Class',
-                              //         style: Theme.of(context).textTheme.titleSmall!.merge(
-                              //               const TextStyle(
-                              //                 fontWeight: FontWeight.w600,
-                              //                 fontSize: 20.0,
-                              //                 color: Color.fromRGBO(60, 120, 170, 1),
-                              //               ),
-                              //             ),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
-                              ),
+                              )),
                           icon: const Padding(
                             padding: EdgeInsets.only(top: 3),
                             child: Icon(
@@ -495,28 +536,30 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                           ),
                           iconSize: 30,
                           items: List.generate(
-                              staffInteractionController.getDetailList.length,
-                              (index) {
+                              staffInteractionComposeController
+                                  .getDetailList.length, (index) {
                             return DropdownMenuItem(
-                              value: staffInteractionController.getDetailList
+                              value: staffInteractionComposeController
+                                  .getDetailList
                                   .elementAt(index),
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 6, left: 5),
                                 child: Text(
-                                  staffInteractionController
+                                  staffInteractionComposeController
                                               .selectedradio.value ==
                                           'Student'
-                                      ? staffInteractionController.getDetailList
+                                      ? staffInteractionComposeController
+                                          .getDetailList
                                           .elementAt(index)
                                           .asmclClassName!
-                                      : staffInteractionController
+                                      : staffInteractionComposeController
                                                   .selectedradio.value ==
                                               'EC'
-                                          ? staffInteractionController
+                                          ? staffInteractionComposeController
                                               .getDetailList
                                               .elementAt(index)
                                               .examCoordinatorName!
-                                          : staffInteractionController
+                                          : staffInteractionComposeController
                                               .getDetailList
                                               .elementAt(index)
                                               .empName!,
@@ -533,7 +576,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                           }),
                           onChanged: (s) {
                             selectedInitialDropdown = s!;
-                            if (staffInteractionController
+                            if (staffInteractionComposeController
                                     .selectedradio.value ==
                                 'Student') {
                               getSectionData(s.asmclId!);
@@ -543,19 +586,12 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                         ),
                       )
                 : const SizedBox(),
-            staffInteractionController.selectedradio.value == 'Student' &&
+            staffInteractionComposeController.selectedradio.value ==
+                        'Student' &&
                     selectedInitialDropdown != null
-                ? staffInteractionController.isSection.value
+                ? staffInteractionComposeController.isSection.value
                     ? const Center(
-                        child: SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: AnimatedProgressWidget(
-                            title: "",
-                            desc: "",
-                            animationPath: "assets/json/interaction.json",
-                          ),
-                        ),
+                        child: CircularProgressIndicator(),
                       )
                     : Container(
                         margin: const EdgeInsets.symmetric(
@@ -593,7 +629,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                                       fontWeight: FontWeight.w400,
                                       fontSize: 14.0,
                                       letterSpacing: 0.3)),
-                              hintText: 'select section',
+                              hintText: 'select',
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.always,
                               label: Text(
@@ -608,40 +644,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                                         color: Color.fromRGBO(137, 137, 137, 1),
                                       ),
                                     ),
-                              )
-                              // label: Container(
-                              //   padding:
-                              //       const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-                              //   decoration: const BoxDecoration(
-                              //     color: Color.fromRGBO(229, 243, 255, 1),
-                              //     borderRadius: BorderRadius.all(
-                              //       Radius.circular(24),
-                              //     ),
-                              //   ),
-                              //   child: Row(
-                              //     mainAxisSize: MainAxisSize.min,
-                              //     children: [
-                              //       SizedBox(
-                              //         height: 33,
-                              //         child: Image.asset(
-                              //           'assets/images/selectteachericon.png',
-                              //         ),
-                              //       ),
-                              //       const SizedBox(width: 10),
-                              //       Text(
-                              //         'Section',
-                              //         style: Theme.of(context).textTheme.titleSmall!.merge(
-                              //               const TextStyle(
-                              //                 fontWeight: FontWeight.w600,
-                              //                 fontSize: 20.0,
-                              //                 color: Color.fromRGBO(60, 120, 170, 1),
-                              //               ),
-                              //             ),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
-                              ),
+                              )),
                           icon: const Padding(
                             padding: EdgeInsets.only(top: 3),
                             child: Icon(
@@ -651,16 +654,16 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                           ),
                           iconSize: 30,
                           items: List.generate(
-                              staffInteractionController
+                              staffInteractionComposeController
                                   .interactionSectionList.length, (index) {
                             return DropdownMenuItem(
-                              value: staffInteractionController
+                              value: staffInteractionComposeController
                                   .interactionSectionList
                                   .elementAt(index),
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 6, left: 5),
                                 child: Text(
-                                  staffInteractionController
+                                  staffInteractionComposeController
                                       .interactionSectionList
                                       .elementAt(index)
                                       .asmCSectionName!,
@@ -683,20 +686,15 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                         ),
                       )
                 : const SizedBox(),
-            staffInteractionController.selectedradio.value == 'Student' &&
+            staffInteractionComposeController.selectedradio.value ==
+                        'Student' &&
                     selectedInitialDropdown != null &&
-                    selectedsection != null
-                ? staffInteractionController.isStudent.value
+                    selectedsection != null &&
+                    staffInteractionComposeController.grpOrInd.value ==
+                        'Individual'
+                ? staffInteractionComposeController.isStudent.value
                     ? const Center(
-                        child: SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: AnimatedProgressWidget(
-                            title: "",
-                            desc: "",
-                            animationPath: "assets/json/interaction.json",
-                          ),
-                        ),
+                        child: CircularProgressIndicator(),
                       )
                     : Container(
                         margin: const EdgeInsets.symmetric(
@@ -733,7 +731,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                                       fontWeight: FontWeight.w400,
                                       fontSize: 14.0,
                                       letterSpacing: 0.3)),
-                              hintText: 'select student',
+                              hintText: 'select',
                               floatingLabelBehavior:
                                   FloatingLabelBehavior.always,
                               label: Text(
@@ -748,40 +746,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                                         color: Color.fromRGBO(137, 137, 137, 1),
                                       ),
                                     ),
-                              )
-                              // label: Container(
-                              //   padding:
-                              //       const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-                              //   decoration: const BoxDecoration(
-                              //     color: Color.fromRGBO(229, 243, 255, 1),
-                              //     borderRadius: BorderRadius.all(
-                              //       Radius.circular(24),
-                              //     ),
-                              //   ),
-                              //   child: Row(
-                              //     mainAxisSize: MainAxisSize.min,
-                              //     children: [
-                              //       SizedBox(
-                              //         height: 33,
-                              //         child: Image.asset(
-                              //           'assets/images/selectteachericon.png',
-                              //         ),
-                              //       ),
-                              //       const SizedBox(width: 10),
-                              //       Text(
-                              //         'Select Students',
-                              //         style: Theme.of(context).textTheme.titleSmall!.merge(
-                              //               const TextStyle(
-                              //                 fontWeight: FontWeight.w600,
-                              //                 fontSize: 20.0,
-                              //                 color: Color.fromRGBO(60, 120, 170, 1),
-                              //               ),
-                              //             ),
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
-                              ),
+                              )),
                           icon: const Padding(
                             padding: EdgeInsets.only(top: 3),
                             child: Icon(
@@ -791,15 +756,15 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                           ),
                           iconSize: 30,
                           items: List.generate(
-                              staffInteractionController.studentList.length,
-                              (index) {
-                            return DropdownMenuItem(
-                              value: staffInteractionController.studentList
-                                  .elementAt(index),
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 6, left: 5),
+                            staffInteractionComposeController
+                                .studentList.length,
+                            (index) {
+                              return DropdownMenuItem(
+                                value: staffInteractionComposeController
+                                    .studentList
+                                    .elementAt(index),
                                 child: Text(
-                                  staffInteractionController.studentList
+                                  staffInteractionComposeController.studentList
                                       .elementAt(index)
                                       .studentName!,
                                   style: Theme.of(context)
@@ -810,13 +775,98 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                                           fontSize: 16.0,
                                           letterSpacing: 0.3)),
                                 ),
-                              ),
-                            );
-                          }),
+                              );
+                            },
+                          ),
                           onChanged: (s) {
                             selectedstudent = s!;
                           },
                         ),
+                      )
+                : const SizedBox(),
+            staffInteractionComposeController.selectedradio.value ==
+                        'Student' &&
+                    selectedInitialDropdown != null &&
+                    selectedsection != null &&
+                    staffInteractionComposeController.grpOrInd.value == 'Group'
+                ? staffInteractionComposeController.isStudent.value
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Container(
+                            height: 200,
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 10),
+                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              borderRadius: BorderRadius.circular(16.0),
+                              boxShadow: const [
+                                BoxShadow(
+                                  offset: Offset(0, 1),
+                                  blurRadius: 4,
+                                  color: Colors.black12,
+                                ),
+                              ],
+                            ),
+                            child: RawScrollbar(
+                              thumbColor: const Color(0xFF1E38FC),
+                              trackColor:
+                                  const Color.fromRGBO(223, 239, 253, 1),
+                              trackRadius: const Radius.circular(10),
+                              trackVisibility: true,
+                              radius: const Radius.circular(10),
+                              thickness: 14,
+                              thumbVisibility: true,
+                              controller: _controller,
+                              child: ListView.builder(
+                                controller: _controller,
+                                itemCount: staffInteractionComposeController
+                                    .studentList.length,
+                                itemBuilder: (context, index) {
+                                  return StudentListWidget(
+                                    data: staffInteractionComposeController
+                                        .studentList
+                                        .elementAt(index),
+                                    function: addStudentInList,
+                                    function1: removeFromStudentInList,
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: -10,
+                            left: 14,
+                            child: Container(
+                              height: 30,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 7),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Select Students',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(
+                                          const TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 16.0,
+                                            color: Color.fromRGBO(
+                                                137, 137, 137, 1),
+                                          ),
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       )
                 : const SizedBox(),
             const SizedBox(height: 40),
@@ -830,8 +880,69 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                 ),
-                onPressed: () {},
-                child: staffInteractionController.isSubmit.value
+                onPressed: () {
+                  if (staffInteractionComposeController
+                      .grpOrInd.value.isEmpty) {
+                    Fluttertoast.showToast(msg: 'Select Group or Individual');
+                  } else if (subject.text.isEmpty) {
+                    Fluttertoast.showToast(msg: 'Enter Subject');
+                  } else if (about.text.isEmpty) {
+                    Fluttertoast.showToast(msg: 'Enter About');
+                  } else if (staffInteractionComposeController
+                      .selectedradio.value.isEmpty) {
+                    Fluttertoast.showToast(msg: 'Select Staff');
+                  } else if (selectedInitialDropdown == null) {
+                    if (staffInteractionComposeController.selectedradio.value ==
+                        'Student') {
+                      Fluttertoast.showToast(msg: 'Select class');
+                    } else {
+                      Fluttertoast.showToast(msg: 'Select staff');
+                    }
+                  } else if (staffInteractionComposeController
+                              .selectedradio.value ==
+                          'Student' &&
+                      selectedsection == null) {
+                    Fluttertoast.showToast(msg: 'Select section');
+                  } else if (staffInteractionComposeController
+                          .selectedradio.value ==
+                      'Student') {
+                    if (staffInteractionComposeController.grpOrInd.value ==
+                            'Group' &&
+                        arrayStudents.isEmpty) {
+                      Fluttertoast.showToast(msg: 'Select student');
+                      return;
+                    }
+                    if (staffInteractionComposeController.grpOrInd.value ==
+                            'Individual' &&
+                        selectedstudent == null) {
+                      Fluttertoast.showToast(msg: 'Select student');
+                    }
+                  } else {
+                    submitComposeStaff(
+                      data: {
+                        "ASMAY_Id": widget.loginSuccessModel.asmaYId!,
+                        "ISMINT_ComposedByFlg":
+                            widget.loginSuccessModel.roleforlogin!,
+                        "ISMINT_GroupOrIndFlg":
+                            staffInteractionComposeController.grpOrInd.value,
+                        "ISMINT_Interaction": about.text,
+                        "ISMINT_Subject": subject.text,
+                        "mI_ID": widget.loginSuccessModel.mIID!,
+                        "student_Id": selectedstudent!.amstId,
+                        "arrayStudent": arrayStudents,
+                        "roleflg": widget.loginSuccessModel.roleforlogin!,
+                        // "userflag": widget.loginSuccessModel.user,
+                        "userId": widget.loginSuccessModel.userId!.toString(),
+                        "images_paths": ""
+                      },
+                      base: baseUrlFromInsCode(
+                        'portal',
+                        widget.mskoolController,
+                      ),
+                    );
+                  }
+                },
+                child: staffInteractionComposeController.isSubmit.value
                     ? const SizedBox(
                         height: 18,
                         width: 18,

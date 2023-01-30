@@ -27,6 +27,8 @@ class _InboxTabScreenState extends State<InboxTabScreen> {
       miId: widget.loginSuccessModel.mIID!,
       amstId: widget.loginSuccessModel.amsTId!,
       asmayId: widget.loginSuccessModel.asmaYId!,
+      role: widget.loginSuccessModel.roleforlogin!,
+      roleId: widget.loginSuccessModel.roleId!,
       userId: widget.loginSuccessModel.userId!,
       base: baseUrlFromInsCode(
         'portal',
@@ -66,7 +68,20 @@ class _InboxTabScreenState extends State<InboxTabScreen> {
                     return ChatProfileTile(
                       loginSuccessModel: widget.loginSuccessModel,
                       mskoolController: widget.mskoolController,
-                      data: inboxController.inboxList[index],
+                      ismintComposeById:
+                          inboxController.inboxList[index].ismintComposedById!,
+                      ismintDateTime:
+                          inboxController.inboxList[index].ismintDateTime!,
+                      ismintId: inboxController.inboxList[index].ismintId!,
+                      ismintSubject:
+                          inboxController.inboxList[index].ismintSubject!,
+                      istintId: inboxController.inboxList[index].istintId!,
+                      istintToFlg:
+                          inboxController.inboxList[index].istintToFlg!,
+                      receiver: inboxController.inboxList[index].receiver!,
+                      receiverFilePath:
+                          inboxController.inboxList[index].receiverFilepath!,
+
                       // isGroup: Random().nextBool(),
                       // isSeen:
                       //     inboxController.inboxList[index].istintReadFlg == 1

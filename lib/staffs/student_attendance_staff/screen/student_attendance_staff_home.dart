@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -18,6 +19,7 @@ import 'package:m_skool_flutter/staffs/student_attendance_staff/widget/selectmon
 import 'package:m_skool_flutter/staffs/student_attendance_staff/widget/selectstudentscrollcontainer.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
+import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
@@ -43,9 +45,12 @@ class _StudentAttendanceStaffHomeState
   StudentAttendanceYearlistValue? selectedAcademicYear;
   ClasslistValue? selectedClass;
   SectionListValue? selectedSection;
+  var todayDate = TextEditingController();
+  DateTime? selecteddate;
+  String nameOrAdm = '';
 
-  String selectedRadio = 'consolidated';
-  String configuration = 'monthly';
+  int selectedRadio = 1;
+  int configuration = 1;
 
   void getAcademicYearDropdown() async {
     studentAttendanceController.isacademicyearloading(true);
@@ -385,11 +390,11 @@ class _StudentAttendanceStaffHomeState
                                   visualDensity:
                                       const VisualDensity(horizontal: -4.0),
                                   activeColor: Theme.of(context).primaryColor,
-                                  value: "consolidated",
+                                  value: 1,
                                   groupValue: selectedRadio,
                                   onChanged: (value) {
                                     setState(() {
-                                      selectedRadio = value.toString();
+                                      selectedRadio = value!;
                                       logger.d(selectedRadio);
                                     });
                                   },
@@ -416,11 +421,11 @@ class _StudentAttendanceStaffHomeState
                                   visualDensity:
                                       const VisualDensity(horizontal: -4.0),
                                   activeColor: Theme.of(context).primaryColor,
-                                  value: "detailed",
+                                  value: 2,
                                   groupValue: selectedRadio,
                                   onChanged: (value) {
                                     setState(() {
-                                      selectedRadio = value.toString();
+                                      selectedRadio = value!;
                                       logger.d(selectedRadio);
                                     });
                                   },
@@ -455,6 +460,7 @@ class _StudentAttendanceStaffHomeState
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 14.0),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
                             children: [
@@ -464,11 +470,11 @@ class _StudentAttendanceStaffHomeState
                                   visualDensity:
                                       const VisualDensity(horizontal: -4.0),
                                   activeColor: Theme.of(context).primaryColor,
-                                  value: "monthly",
+                                  value: 1,
                                   groupValue: configuration,
                                   onChanged: (value) {
                                     setState(() {
-                                      configuration = value.toString();
+                                      configuration = value!;
                                       logger.d(configuration);
                                     });
                                   },
@@ -486,7 +492,6 @@ class _StudentAttendanceStaffHomeState
                               ),
                             ],
                           ),
-                          const SizedBox(width: 65),
                           Row(
                             children: [
                               Transform.scale(
@@ -495,11 +500,41 @@ class _StudentAttendanceStaffHomeState
                                   visualDensity:
                                       const VisualDensity(horizontal: -4.0),
                                   activeColor: Theme.of(context).primaryColor,
-                                  value: "datewise",
+                                  value: 2,
                                   groupValue: configuration,
                                   onChanged: (value) {
                                     setState(() {
-                                      configuration = value.toString();
+                                      configuration = value!;
+                                      logger.d(configuration);
+                                    });
+                                  },
+                                ),
+                              ),
+                              Text(
+                                "Betn days",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .merge(const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.3)),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Transform.scale(
+                                scale: 1.1,
+                                child: Radio(
+                                  visualDensity:
+                                      const VisualDensity(horizontal: -4.0),
+                                  activeColor: Theme.of(context).primaryColor,
+                                  value: 3,
+                                  groupValue: configuration,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      configuration = value!;
                                       logger.d(configuration);
                                     });
                                   },
@@ -520,13 +555,142 @@ class _StudentAttendanceStaffHomeState
                         ],
                       ),
                     ),
-                    if (configuration == 'monthly') const SizedBox(height: 10),
-                    configuration == 'monthly'
+                    if (configuration == 1) const SizedBox(height: 10),
+                    configuration == 1
                         ? const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 16.0, vertical: 12),
                             child: SelectMonthScrollContainer())
-                        : const SelectDateFromToDate(),
+                        : configuration == 3
+                            ? Container(
+                                margin: const EdgeInsets.only(
+                                    left: 16, right: 16, top: 25, bottom: 10),
+                                child: CustomContainer(
+                                  child: TextField(
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                    controller: todayDate,
+                                    onTap: () async {
+                                      selecteddate = await showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime.now(),
+                                        lastDate: DateTime.now(),
+                                      );
+
+                                      if (selecteddate != null) {
+                                        setState(() {
+                                          todayDate.text =
+                                              "${numberList[selecteddate!.day]}-${numberList[selecteddate!.month]}-${selecteddate!.year}";
+                                        });
+                                      }
+                                    },
+                                    decoration: InputDecoration(
+                                      border: const OutlineInputBorder(),
+                                      label: Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 20),
+                                        child: const CustomDropDownLabel(
+                                          icon:
+                                              'assets/images/darkbluecalendar.png',
+                                          containerColor:
+                                              Color.fromRGBO(229, 243, 255, 1),
+                                          text: 'Select Date',
+                                          textColor:
+                                              Color.fromRGBO(62, 120, 170, 1),
+                                        ),
+                                      ),
+                                      hintText: 'Select date.'.tr,
+                                      suffixIcon: Image.asset(
+                                        'assets/images/darkbluecalendar.png',
+                                        color: const Color(0xFF3E78AA),
+                                      ),
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.always,
+                                      enabledBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                    ),
+                                    readOnly: true,
+                                  ),
+                                ),
+                              )
+                            : const SelectDateFromToDate(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        children: [
+                          Row(
+                            children: [
+                              Transform.scale(
+                                scale: 1.1,
+                                child: Radio(
+                                  visualDensity:
+                                      const VisualDensity(horizontal: -4.0),
+                                  activeColor: Theme.of(context).primaryColor,
+                                  value: 'name',
+                                  groupValue: nameOrAdm,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      nameOrAdm = value!;
+                                      logger.d(selectedRadio);
+                                    });
+                                  },
+                                ),
+                              ),
+                              Text(
+                                "Name",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .merge(const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.3)),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(width: 30),
+                          Row(
+                            children: [
+                              Transform.scale(
+                                scale: 1.1,
+                                child: Radio(
+                                  visualDensity:
+                                      const VisualDensity(horizontal: -4.0),
+                                  activeColor: Theme.of(context).primaryColor,
+                                  value: 'admno',
+                                  groupValue: nameOrAdm,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      nameOrAdm = value!;
+                                      logger.d(selectedRadio);
+                                    });
+                                  },
+                                ),
+                              ),
+                              Text(
+                                "Admin No.",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .merge(const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.3)),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                     const SizedBox(height: 30),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -538,23 +702,19 @@ class _StudentAttendanceStaffHomeState
                       child: MSkollBtn(
                         title: 'Search',
                         onPress: () {
-                          if (selectedRadio == 'consolidated' &&
-                              configuration == 'monthly') {
+                          if (selectedRadio == 1 && configuration == 1) {
                             Get.to(() =>
                                 const ConsolidatedMonthlyStudentAttendanceDetailScreen());
                           }
-                          if (selectedRadio == 'consolidated' &&
-                              configuration == 'datewise') {
+                          if (selectedRadio == 1 && configuration == 3) {
                             Get.to(() =>
                                 const ConsolidatedDateWiseStudentAttendanceDetailScreen());
                           }
-                          if (selectedRadio == 'detailed' &&
-                              configuration == 'monthly') {
+                          if (selectedRadio == 2 && configuration == 1) {
                             Get.to(() =>
                                 const DetailedMonthlyStudentAttendanceDetailScreeen());
                           }
-                          if (selectedRadio == 'detailed' &&
-                              configuration == 'datewise') {
+                          if (selectedRadio == 2 && configuration == 3) {
                             Get.to(() =>
                                 const DetailedDateWiseStudentAttendanceDetailScreen());
                           }
