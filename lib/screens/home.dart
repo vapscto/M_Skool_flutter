@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/apis/attendance_shortage_api.dart';
 import 'package:m_skool_flutter/apis/dashboard_exam_api.dart';
 import 'package:m_skool_flutter/apis/fee_reminder_api.dart';
 
@@ -13,6 +14,7 @@ import 'package:m_skool_flutter/model/exam_list.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/screens/home_page_drawer.dart';
+import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/student/attendance/screens/home_page.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
 import 'package:m_skool_flutter/student/classwork/screen/classwork_home_screen.dart';
@@ -28,7 +30,6 @@ import 'package:m_skool_flutter/student/interaction/screen/interaction_home.dart
 import 'package:m_skool_flutter/student/library/screen/library_home.dart';
 import 'package:m_skool_flutter/student/timetable/screens/time_table_home.dart';
 import 'package:m_skool_flutter/tabs/profile_tab.dart';
-import 'package:m_skool_flutter/widget/attendance_shortage_widget.dart';
 
 import 'package:m_skool_flutter/widget/card_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -73,27 +74,23 @@ class _HomeState extends State<Home> {
         asmcLId: widget.loginSuccessModel.asmcLId!,
         asmSId: widget.loginSuccessModel.asmSId!);
     FeeReminderApi.instance.showFeeReminder(
+      miId: widget.loginSuccessModel.mIID!,
+      asmayId: widget.loginSuccessModel.asmaYId!,
+      amstId: widget.loginSuccessModel.amsTId!,
+      asmclId: widget.loginSuccessModel.asmcLId!,
+      asmsId: widget.loginSuccessModel.asmSId!,
+      base: baseUrlFromInsCode("portal", widget.mskoolController),
+      context: context,
+      loginSuccessModel: widget.loginSuccessModel,
+      mskoolController: widget.mskoolController,
+    );
+    AttendanceShortageApi.instance.getShortage(
         miId: widget.loginSuccessModel.mIID!,
         asmayId: widget.loginSuccessModel.asmaYId!,
         amstId: widget.loginSuccessModel.amsTId!,
-        asmclId: widget.loginSuccessModel.asmcLId!,
-        asmsId: widget.loginSuccessModel.asmSId!,
+        percentage: 0,
         base: baseUrlFromInsCode("portal", widget.mskoolController),
-        context: context,
-        loginSuccessModel: widget.loginSuccessModel,
-        mskoolController: widget.mskoolController);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      showDialog(
-          context: context,
-          builder: (_) {
-            return Dialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0)),
-              insetPadding: const EdgeInsets.all(16.0),
-              child: const AttendanceShortage(),
-            );
-          });
-    });
+        context: context);
     super.initState();
   }
 
@@ -202,13 +199,20 @@ class _HomeState extends State<Home> {
           actions: [
             IconButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  return NoticeHome(
-                      appBarTitle: "Notice",
-                      loginSuccessModel: widget.loginSuccessModel,
-                      mskoolController: widget.mskoolController,
-                      hwCwNbController: hwCwNbController);
-                }));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return NotificationScreen(
+                        // appBarTitle: "Notice",
+                        loginSuccessModel: widget.loginSuccessModel,
+                        mskoolController: widget.mskoolController,
+                        openFor: 'student', hwCwNbController: hwCwNbController,
+                      );
+                      // hwCwNbController: hwCwNbController);
+                    },
+                  ),
+                );
               },
               icon: SvgPicture.asset(
                 'assets/svg/bell.svg',

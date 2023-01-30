@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class AttendanceShortage extends StatelessWidget {
-  const AttendanceShortage({super.key});
+  final double percentage;
+  const AttendanceShortage({super.key, required this.percentage});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class AttendanceShortage extends StatelessWidget {
                     ranges: [
                       GaugeRange(
                         startValue: 0,
-                        endValue: 40,
+                        endValue: percentage,
                         color: Colors.green,
                       )
                     ],
@@ -70,7 +71,7 @@ class AttendanceShortage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "40%",
+                      "${percentage.toPrecision(1)}%",
                       style: Theme.of(context).textTheme.titleSmall!.merge(
                           const TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 20.0)),

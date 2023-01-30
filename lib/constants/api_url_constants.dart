@@ -298,4 +298,10 @@ class URLS {
   static String appliedLeaves =
       "api/OnlineLeaveApplicationFacade/getonlineLeavestatus";
   static String saveLeave = "api/OnlineLeaveApplicationFacade/save/";
+
+  /* Global Endpoints */
+  static String pushNotification = "api/AdmissionCtrl/PushNotificationonload/";
+
+  static String attendanceShortage =
+      "api/AdmissionCtrl/shortageOfAttendanceAlert";
 }
