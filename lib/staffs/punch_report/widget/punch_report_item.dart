@@ -14,7 +14,7 @@ class PunchReportItem extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          flex: 3,
+          flex: 4,
           child: Text(
             title,
             style: Theme.of(context).textTheme.titleSmall!.merge(
@@ -31,7 +31,7 @@ class PunchReportItem extends StatelessWidget {
         const Text(" : "),
         const SizedBox(width: 12.0),
         Expanded(
-            flex: 7,
+            flex: 6,
             child: Text(
               time,
               style: Theme.of(context)

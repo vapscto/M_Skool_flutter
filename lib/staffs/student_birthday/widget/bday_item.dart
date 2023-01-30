@@ -57,13 +57,24 @@ class BirthdayItem extends StatelessWidget {
               ],
             ),
           ),
-          Text(
-            getDate(DateTime.parse(value.amstDob!)),
-            style: Theme.of(context).textTheme.titleSmall!.merge(
-                  const TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: Text(
+                  getDate(DateTime.parse(value.amstDob!)),
+                  style: Theme.of(context).textTheme.titleSmall!.merge(
+                        const TextStyle(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                 ),
+              ),
+              const SizedBox(
+                height: 46.0,
+              )
+            ],
           ),
         ],
       ),

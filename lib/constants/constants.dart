@@ -256,13 +256,13 @@ List<Color> noticeColor = const [
 ];
 
 List<Color> hwCwViewWorkColor = const [
-  Color.fromARGB(255, 255, 175, 175),
-  Color.fromARGB(255, 150, 206, 255),
-  Color.fromARGB(255, 199, 154, 255),
-  Color.fromARGB(255, 253, 153, 255),
-  Color.fromARGB(255, 150, 243, 255),
-  Color.fromARGB(255, 255, 179, 163),
-  Color.fromARGB(255, 167, 255, 178),
+  Color.fromARGB(255, 255, 202, 202),
+  Color.fromARGB(255, 201, 230, 255),
+  Color.fromARGB(255, 225, 200, 255),
+  Color.fromARGB(255, 254, 209, 255),
+  Color.fromARGB(255, 212, 250, 255),
+  Color.fromARGB(255, 255, 227, 221),
+  Color.fromARGB(255, 234, 255, 236),
 ];
 List<Color> noticeBackgroundColor = const [
   Color(0xFFFFd8d8),
@@ -652,7 +652,7 @@ String timeDifference(String fTime, String sTime) {
     minDiff = sMin - fMin;
   }
 
-  return "$hourDiff hours $minDiff min";
+  return "$hourDiff H $minDiff M";
 }
 
 String timing(String time) {
