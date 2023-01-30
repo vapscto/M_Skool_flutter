@@ -293,8 +293,18 @@ class URLS {
   static String saveNotices = "api/NoticeBoardFacade/savedetail";
   static String getNbAttachment = "api/NoticeBoardFacade/viewData";
   static String activeDeactiveNb = "api/NoticeBoardFacade/deactivate";
+  static String getNbRecord = "api/NoticeBoardFacade/viewrecords/";
 
   /* Online leave apply */
   static String getLeaveName =
       "api/OnlineLeaveApplicationFacade/getonlineLeave/";
+  static String appliedLeaves =
+      "api/OnlineLeaveApplicationFacade/getonlineLeavestatus";
+  static String saveLeave = "api/OnlineLeaveApplicationFacade/save/";
+
+  /* Global Endpoints */
+  static String pushNotification = "api/AdmissionCtrl/PushNotificationonload/";
+
+  static String attendanceShortage =
+      "api/AdmissionCtrl/shortageOfAttendanceAlert";
 }

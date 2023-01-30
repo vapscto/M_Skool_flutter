@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 List months = [
@@ -351,6 +353,21 @@ List<Color> timetablePeriodColor = const [
   Color.fromARGB(255, 150, 14, 127),
   Color.fromARGB(255, 114, 24, 150),
 ];
+List<Color> timetableLightPeriodColor = const [
+  Color.fromARGB(255, 232, 191, 255),
+  Color.fromARGB(255, 190, 247, 255),
+  Color.fromARGB(255, 195, 255, 226),
+  Color.fromARGB(255, 255, 251, 216),
+  Color.fromARGB(255, 255, 233, 208),
+  Color.fromARGB(255, 255, 213, 232),
+  Color.fromARGB(255, 241, 255, 209),
+  Color.fromARGB(255, 213, 253, 255),
+  Color.fromARGB(255, 255, 208, 205),
+  Color.fromARGB(255, 225, 255, 207),
+  Color.fromARGB(255, 206, 248, 255),
+  Color.fromARGB(255, 255, 207, 247),
+  Color.fromARGB(255, 243, 213, 255),
+];
 
 List<int> timetableLLPeriodColor = const [
   0xFFDBB3F3,
@@ -689,4 +706,43 @@ String timing(String time) {
       break;
   }
   return t;
+}
+
+Map<String, dynamic> getNotificationItem(String module) {
+  if (module.toLowerCase() == "interaction") {
+    return {
+      "color": timetablePeriodColor.elementAt(0),
+      "bgColor": timetableLightPeriodColor.elementAt(0),
+      "image": "assets/images/tabinteraction.png",
+    };
+  }
+
+  if (module.toLowerCase() == "homework") {
+    return {
+      "color": timetablePeriodColor.elementAt(1),
+      "bgColor": timetableLightPeriodColor.elementAt(1),
+      "image": "assets/images/cl.png",
+    };
+  }
+
+  if (module.toLowerCase() == "classwork") {
+    return {
+      "color": timetablePeriodColor.elementAt(2),
+      "bgColor": timetableLightPeriodColor.elementAt(2),
+      "image": "assets/images/ENGLISH.png",
+    };
+  }
+  if (module.toLowerCase() == "coe") {
+    return {
+      "color": timetablePeriodColor.elementAt(2),
+      "bgColor": timetableLightPeriodColor.elementAt(2),
+      "image": "assets/images/event.png",
+    };
+  }
+
+  return {
+    "color": timetablePeriodColor.elementAt(Random.secure().nextInt(8)),
+    "bgColor": noticeBackgroundColor.elementAt(Random.secure().nextInt(8)),
+    "image": "assets/images/hat.png",
+  };
 }

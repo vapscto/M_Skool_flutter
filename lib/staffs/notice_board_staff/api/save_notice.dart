@@ -132,6 +132,7 @@ class StaffSaveNoticeApi {
       });
     }
     Map<String, dynamic> both = {
+      "getClass": false,
       "ASMAY_Id": asmayId,
       "UserId": userId,
       "IVRMRT_Id": ivrmrtId,
@@ -286,6 +287,7 @@ class StaffSaveNoticeApi {
     }
 
     Map<String, dynamic> empMap = {
+      "getclass": false,
       "ASMAY_Id": asmayId,
       "UserId": userId,
       "IVRMRT_Id": ivrmrtId,
@@ -304,6 +306,7 @@ class StaffSaveNoticeApi {
       "studentarray": studentArray,
       "classlsttwo": classLstTwo,
       "FilePath_Array": att,
+      "defarray": null
     };
 
     logger.d(empMap);
@@ -435,6 +438,7 @@ class StaffSaveNoticeApi {
     }
 
     Map<String, dynamic> empMap = {
+      "getClass": false,
       "ASMAY_Id": asmayId,
       "UserId": userId,
       "IVRMRT_Id": ivrmrtId,

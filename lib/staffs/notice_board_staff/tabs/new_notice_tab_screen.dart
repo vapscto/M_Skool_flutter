@@ -69,6 +69,7 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
       child: Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 children: [
@@ -102,7 +103,7 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
                 ],
               ),
               const SizedBox(
-                width: 16.0,
+                width: 24.0,
               ),
               Row(
                 children: [
@@ -735,7 +736,7 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
                     description: widget.noticeBoardController.desc.value.text,
                     displayDisableFlag: displayDate.text.isNotEmpty,
                     toStaffFlag: true,
-                    toStudentFlag: false,
+                    toStudentFlag: true,
                     displayDate: displayDate.text.isEmpty
                         ? DateTime.now().toLocal().toString()
                         : widget.noticeBoardController.displayDt.value
@@ -869,8 +870,8 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
                     title: widget.noticeBoardController.noticeTitle.value.text,
                     description: widget.noticeBoardController.desc.value.text,
                     displayDisableFlag: displayDate.text.isNotEmpty,
-                    toStaffFlag: true,
-                    toStudentFlag: false,
+                    toStaffFlag: false,
+                    toStudentFlag: true,
                     displayDate: displayDate.text.isEmpty
                         ? DateTime.now().toLocal().toString()
                         : widget.noticeBoardController.displayDt.value

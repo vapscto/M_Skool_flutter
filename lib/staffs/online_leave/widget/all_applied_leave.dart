@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:m_skool_flutter/staffs/online_leave/model/applied_leave_model.dart';
 import 'package:m_skool_flutter/staffs/online_leave/widget/applied_leaves_item.dart';
 
 class AppliedLeaveWidget extends StatelessWidget {
+  final List<AppliedLeaveModelValues> leaves;
   const AppliedLeaveWidget({
     Key? key,
+    required this.leaves,
   }) : super(key: key);
 
   @override
@@ -37,6 +40,7 @@ class AppliedLeaveWidget extends StatelessWidget {
 
             return AppliedLeaveItem(
               color: color,
+              value: leaves.elementAt(index),
             );
           },
           separatorBuilder: (BuildContext context, int index) {
@@ -44,7 +48,7 @@ class AppliedLeaveWidget extends StatelessWidget {
               height: 16.0,
             );
           },
-          itemCount: 10,
+          itemCount: leaves.length,
         )
       ],
     );

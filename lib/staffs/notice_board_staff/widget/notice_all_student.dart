@@ -162,20 +162,20 @@ class _NoticeAllStudentState extends State<NoticeAllStudent> {
                                               },
                                             );
                                           })),
-                                      Obx(() {
-                                        return ListView.builder(
-                                          // padding: const EdgeInsets.only(top: 1),
-                                          //controller: _controller,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount:
-                                              widget.controller.students.length,
-                                          shrinkWrap:
-                                              true, // till lenght is 5 is will true
-                                          itemBuilder: (context, index) {
-                                            return SizedBox(
-                                                height: 30,
-                                                child: CheckBoxContainer(
+                                      ListView.builder(
+                                        // padding: const EdgeInsets.only(top: 1),
+                                        //controller: _controller,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount:
+                                            widget.controller.students.length,
+                                        shrinkWrap:
+                                            true, // till lenght is 5 is will true
+                                        itemBuilder: (context, index) {
+                                          return SizedBox(
+                                              height: 30,
+                                              child: Obx(() {
+                                                return CheckBoxContainer(
                                                     sectionName:
                                                         "${widget.controller.students.elementAt(index).studentname}",
                                                     func: (b) {
@@ -200,10 +200,10 @@ class _NoticeAllStudentState extends State<NoticeAllStudent> {
                                                     isChecked:
                                                         selectAllStudent.value
                                                             ? RxBool(true)
-                                                            : RxBool(false)));
-                                          },
-                                        );
-                                      }),
+                                                            : RxBool(false));
+                                              }));
+                                        },
+                                      ),
                                       const SizedBox(
                                         height: 16.0,
                                       )

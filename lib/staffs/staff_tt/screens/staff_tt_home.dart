@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/staffs/staff_tt/tabs/staff_daily_tt.dart';
 import 'package:m_skool_flutter/staffs/staff_tt/tabs/staff_weekly_tt.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class StaffTTHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -47,6 +48,7 @@ class _StaffTTHomeState extends State<StaffTTHome>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: const HomeFab(),
       appBar: CustomAppBar(
           title: widget.title,
           bottom: PreferredSize(
