@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/staffs/interaction/api/staff_interaction_related_api.dart';
+import 'package:m_skool_flutter/staffs/interaction/api/staff_interaction_compose_related_api.dart';
 import 'package:m_skool_flutter/staffs/interaction/model/initialDropdownDetailModel.dart';
 import 'package:m_skool_flutter/staffs/interaction/model/interactionSectionModel.dart';
 import 'package:m_skool_flutter/staffs/interaction/model/interactionStudentListModel.dart';
 
-class StaffInteractionController extends GetxController {
+class StaffInteractionComposeController extends GetxController {
   RxList<GetdetailsValues> getDetailList = <GetdetailsValues>[].obs;
 
   RxList<InteractionSectionListValue> interactionSectionList =
@@ -14,6 +14,7 @@ class StaffInteractionController extends GetxController {
   RxList<GetStudentValue> studentList = <GetStudentValue>[].obs;
 
   RxString selectedradio = ''.obs;
+  RxString grpOrInd = 'Group'.obs;
 
   RxBool isInteraction = RxBool(false);
   RxBool isGetDetail = RxBool(false);
@@ -43,6 +44,10 @@ class StaffInteractionController extends GetxController {
 
   void selectedValue(String value) {
     selectedradio.value = value;
+  }
+
+  void groupOrIndividual(String value) {
+    grpOrInd.value = value;
   }
 
   Future<bool> getFirstDropdownData({

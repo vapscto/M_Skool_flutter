@@ -1,16 +1,17 @@
 // To parse this JSON data, do
 //
-//     final inboxDataModel = inboxDataModelFromJson(jsonString);
+//     final staffInboxModel = staffInboxModelFromJson(jsonString);
 
 import 'dart:convert';
 
-InboxDataModel inboxDataModelFromJson(String str) =>
-    InboxDataModel.fromJson(json.decode(str));
+StaffInboxModel staffInboxModelFromJson(String str) =>
+    StaffInboxModel.fromJson(json.decode(str));
 
-String inboxDataModelToJson(InboxDataModel data) => json.encode(data.toJson());
+String staffInboxModelToJson(StaffInboxModel data) =>
+    json.encode(data.toJson());
 
-class InboxDataModel {
-  InboxDataModel({
+class StaffInboxModel {
+  StaffInboxModel({
     this.returnval,
     this.alreadyCnt,
     this.userId,
@@ -32,6 +33,9 @@ class InboxDataModel {
     this.asmSId,
     this.ivrmrTId,
     this.ivrmgCEnableEcIntFlg,
+    this.subteacherlist,
+    this.typelist,
+    this.classteacherlist,
     this.roleFlag,
     this.roletype,
     this.configflag,
@@ -91,6 +95,9 @@ class InboxDataModel {
   int? asmSId;
   int? ivrmrTId;
   bool? ivrmgCEnableEcIntFlg;
+  Subteacherlist? subteacherlist;
+  ClassteacherlistClass? typelist;
+  ClassteacherlistClass? classteacherlist;
   String? roleFlag;
   Roletype? roletype;
   Configflag? configflag;
@@ -128,7 +135,8 @@ class InboxDataModel {
   int? acmSId;
   int? acmSOrder;
 
-  factory InboxDataModel.fromJson(Map<String, dynamic> json) => InboxDataModel(
+  factory StaffInboxModel.fromJson(Map<String, dynamic> json) =>
+      StaffInboxModel(
         returnval: json["returnval"],
         alreadyCnt: json["already_cnt"],
         userId: json["userId"],
@@ -150,6 +158,10 @@ class InboxDataModel {
         asmSId: json["asmS_Id"],
         ivrmrTId: json["ivrmrT_Id"],
         ivrmgCEnableEcIntFlg: json["ivrmgC_EnableECIntFlg"],
+        subteacherlist: Subteacherlist.fromJson(json["subteacherlist"]),
+        typelist: ClassteacherlistClass.fromJson(json["typelist"]),
+        classteacherlist:
+            ClassteacherlistClass.fromJson(json["classteacherlist"]),
         roleFlag: json["role_flag"],
         roletype: Roletype.fromJson(json["roletype"]),
         configflag: Configflag.fromJson(json["configflag"]),
@@ -211,6 +223,9 @@ class InboxDataModel {
         "asmS_Id": asmSId,
         "ivrmrT_Id": ivrmrTId,
         "ivrmgC_EnableECIntFlg": ivrmgCEnableEcIntFlg,
+        "subteacherlist": subteacherlist!.toJson(),
+        "typelist": typelist!.toJson(),
+        "classteacherlist": classteacherlist!.toJson(),
         "role_flag": roleFlag,
         "roletype": roletype!.toJson(),
         "configflag": configflag!.toJson(),
@@ -250,6 +265,77 @@ class InboxDataModel {
       };
 }
 
+class ClassteacherlistClass {
+  ClassteacherlistClass({
+    this.type,
+    this.values,
+  });
+
+  String? type;
+  List<ClassteacherlistValue?>? values;
+
+  factory ClassteacherlistClass.fromJson(Map<String, dynamic> json) =>
+      ClassteacherlistClass(
+        type: json["\$type"],
+        values: List<ClassteacherlistValue?>.from(
+            json["\$values"].map((x) => ClassteacherlistValue.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "\$type": type,
+        "\$values": List<dynamic>.from(values!.map((x) => x!.toJson())),
+      };
+}
+
+class ClassteacherlistValue {
+  ClassteacherlistValue({
+    this.imcTId,
+    this.mIId,
+    this.asmaYId,
+    this.asmcLId,
+    this.asmSId,
+    this.hrmEId,
+    this.imcTActiveFlag,
+    this.createdDate,
+    this.updatedDate,
+  });
+
+  int? imcTId;
+  int? mIId;
+  int? asmaYId;
+  int? asmcLId;
+  int? asmSId;
+  int? hrmEId;
+  bool? imcTActiveFlag;
+  DateTime? createdDate;
+  DateTime? updatedDate;
+
+  factory ClassteacherlistValue.fromJson(Map<String, dynamic> json) =>
+      ClassteacherlistValue(
+        imcTId: json["imcT_Id"],
+        mIId: json["mI_Id"],
+        asmaYId: json["asmaY_Id"],
+        asmcLId: json["asmcL_Id"],
+        asmSId: json["asmS_Id"],
+        hrmEId: json["hrmE_Id"],
+        imcTActiveFlag: json["imcT_ActiveFlag"],
+        createdDate: DateTime.parse(json["createdDate"]),
+        updatedDate: DateTime.parse(json["updatedDate"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "imcT_Id": imcTId,
+        "mI_Id": mIId,
+        "asmaY_Id": asmaYId,
+        "asmcL_Id": asmcLId,
+        "asmS_Id": asmSId,
+        "hrmE_Id": hrmEId,
+        "imcT_ActiveFlag": imcTActiveFlag,
+        "createdDate": createdDate!.toIso8601String(),
+        "updatedDate": updatedDate!.toIso8601String(),
+      };
+}
+
 class Configflag {
   Configflag({
     this.type,
@@ -257,17 +343,17 @@ class Configflag {
   });
 
   String? type;
-  List<ConfigflagValue>? values;
+  List<ConfigflagValue?>? values;
 
   factory Configflag.fromJson(Map<String, dynamic> json) => Configflag(
         type: json["\$type"],
-        values: List<ConfigflagValue>.from(
+        values: List<ConfigflagValue?>.from(
             json["\$values"].map((x) => ConfigflagValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "\$type": type,
-        "\$values": List<dynamic>.from(values!.map((x) => x.toJson())),
+        "\$values": List<dynamic>.from(values!.map((x) => x!.toJson())),
       };
 }
 
@@ -595,27 +681,29 @@ class Getinboxmsg {
   });
 
   String? type;
-  List<GetinboxmsgValue>? values;
+  List<GetinboxmsgValue?>? values;
 
   factory Getinboxmsg.fromJson(Map<String, dynamic> json) => Getinboxmsg(
         type: json["\$type"],
-        values: List<GetinboxmsgValue>.from(
-            json["\$values"].map((x) => GetinboxmsgValue.fromJson(x))),
+        values: json["\$values"] == null
+            ? []
+            : List<GetinboxmsgValue?>.from(
+                json["\$values"].map((x) => GetinboxmsgValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "\$type": type,
-        "\$values": List<dynamic>.from(values!.map((x) => x.toJson())),
+        "\$values": values == null
+            ? []
+            : List<dynamic>.from(values!.map((x) => x!.toJson())),
       };
 }
 
 class GetinboxmsgValue {
   GetinboxmsgValue({
     this.type,
-    this.istintDateTime,
     this.istintAttachment,
     this.ismintId,
-    this.istintId,
     this.ismintInteractionId,
     this.ismintSubject,
     this.ismintInteraction,
@@ -623,69 +711,64 @@ class GetinboxmsgValue {
     this.ismintComposedByFlg,
     this.istintToFlg,
     this.ismintComposedById,
+    this.istintToId,
+    this.istintDateTime,
     this.sender,
-    this.senderSenderFilepath,
+    this.senderFilepath,
     this.role,
     this.receiver,
     this.receiverFilepath,
     this.ismintDateTime,
     this.ismintActiveFlag,
-    // this.istintReadFlg,
-    this.read,
   });
 
   String? type;
-  DateTime? istintDateTime;
   String? istintAttachment;
   int? ismintId;
-  int? istintId;
-  String? ismintInteractionId;
+  dynamic ismintInteractionId;
   String? ismintSubject;
   String? ismintInteraction;
   String? ismintGroupOrIndFlg;
   String? ismintComposedByFlg;
   String? istintToFlg;
   int? ismintComposedById;
+  int? istintToId;
+  DateTime? istintDateTime;
   String? sender;
-  String? senderSenderFilepath;
+  String? senderFilepath;
   String? role;
   String? receiver;
   String? receiverFilepath;
   DateTime? ismintDateTime;
   bool? ismintActiveFlag;
-  bool? read;
-  // int? istintReadFlg;
 
   factory GetinboxmsgValue.fromJson(Map<String, dynamic> json) =>
       GetinboxmsgValue(
         type: json["\$type"],
-        istintDateTime: DateTime.parse(json["ISTINT_DateTime"]),
         istintAttachment: json["ISTINT_Attachment"],
         ismintId: json["ISMINT_Id"],
-        istintId: json["ISTINT_ToId"],
         ismintInteractionId: json["ISMINT_InteractionId"],
         ismintSubject: json["ISMINT_Subject"],
         ismintInteraction: json["ISMINT_Interaction"],
         ismintGroupOrIndFlg: json["ISMINT_GroupOrIndFlg"],
         ismintComposedByFlg: json["ISMINT_ComposedByFlg"],
-        istintToFlg: json['ISTINT_ToFlg'],
+        istintToFlg: json["ISTINT_ToFlg"],
         ismintComposedById: json["ISMINT_ComposedById"],
+        istintToId: json["ISTINT_ToId"],
+        istintDateTime: DateTime.parse(json["ISTINT_DateTime"]),
         sender: json["Sender"],
-        senderSenderFilepath: json["sender_sender_filepath"],
+        senderFilepath: json["sender_filepath"],
         role: json["role"],
         receiver: json["Receiver"],
         receiverFilepath: json["Receiver_filepath"],
         ismintDateTime: DateTime.parse(json["ISMINT_DateTime"]),
         ismintActiveFlag: json["ISMINT_ActiveFlag"],
-        // istintReadFlg: json["ISTINT_ReadFlg"],
       );
 
   Map<String, dynamic> toJson() => {
         "\$type": type,
-        "ISTINT_DateTime": istintDateTime!.toIso8601String(),
         "ISTINT_Attachment": istintAttachment,
         "ISMINT_Id": ismintId,
-        "ISTINT_ToId": istintId,
         "ISMINT_InteractionId": ismintInteractionId,
         "ISMINT_Subject": ismintSubject,
         "ISMINT_Interaction": ismintInteraction,
@@ -693,14 +776,15 @@ class GetinboxmsgValue {
         "ISMINT_ComposedByFlg": ismintComposedByFlg,
         "ISTINT_ToFlg": istintToFlg,
         "ISMINT_ComposedById": ismintComposedById,
+        "ISTINT_ToId": istintToId,
+        "ISTINT_DateTime": istintDateTime!.toIso8601String(),
         "Sender": sender,
-        "sender_sender_filepath": senderSenderFilepath,
+        "sender_filepath": senderFilepath,
         "role": role,
         "Receiver": receiver,
         "Receiver_filepath": receiverFilepath,
         "ISMINT_DateTime": ismintDateTime!.toIso8601String(),
         "ISMINT_ActiveFlag": ismintActiveFlag,
-        // "ISTINT_ReadFlg": istintReadFlg,
       };
 }
 
@@ -711,18 +795,22 @@ class GetinboxmsgReadflg {
   });
 
   String? type;
-  List<GetinboxmsgReadflgValue>? values;
+  List<GetinboxmsgReadflgValue?>? values;
 
   factory GetinboxmsgReadflg.fromJson(Map<String, dynamic> json) =>
       GetinboxmsgReadflg(
         type: json["\$type"],
-        values: List<GetinboxmsgReadflgValue>.from(
-            json["\$values"].map((x) => GetinboxmsgReadflgValue.fromJson(x))),
+        values: json["\$values"] == null
+            ? []
+            : List<GetinboxmsgReadflgValue?>.from(json["\$values"]
+                .map((x) => GetinboxmsgReadflgValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "\$type": type,
-        "\$values": List<dynamic>.from(values!.map((x) => x.toJson())),
+        "\$values": values == null
+            ? []
+            : List<dynamic>.from(values!.map((x) => x!.toJson())),
       };
 }
 
@@ -758,17 +846,17 @@ class Roletype {
   });
 
   String? type;
-  List<RoletypeValue>? values;
+  List<RoletypeValue?>? values;
 
   factory Roletype.fromJson(Map<String, dynamic> json) => Roletype(
         type: json["\$type"],
-        values: List<RoletypeValue>.from(
+        values: List<RoletypeValue?>.from(
             json["\$values"].map((x) => RoletypeValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "\$type": type,
-        "\$values": List<dynamic>.from(values!.map((x) => x.toJson())),
+        "\$values": List<dynamic>.from(values!.map((x) => x!.toJson())),
       };
 }
 
@@ -807,6 +895,72 @@ class RoletypeValue {
         "ivrmR_Id": ivrmRId,
         "ivrmrT_RoleFlag": ivrmrTRoleFlag,
         "flag": flag,
+        "createdDate": createdDate!.toIso8601String(),
+        "updatedDate": updatedDate!.toIso8601String(),
+      };
+}
+
+class Subteacherlist {
+  Subteacherlist({
+    this.type,
+    this.values,
+  });
+
+  String? type;
+  List<SubteacherlistValue?>? values;
+
+  factory Subteacherlist.fromJson(Map<String, dynamic> json) => Subteacherlist(
+        type: json["\$type"],
+        values: List<SubteacherlistValue?>.from(
+            json["\$values"].map((x) => SubteacherlistValue.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "\$type": type,
+        "\$values": List<dynamic>.from(values!.map((x) => x!.toJson())),
+      };
+}
+
+class SubteacherlistValue {
+  SubteacherlistValue({
+    this.elPId,
+    this.mIId,
+    this.asmaYId,
+    this.loginId,
+    this.elPFlg,
+    this.elPActiveFlg,
+    this.createdDate,
+    this.updatedDate,
+  });
+
+  int? elPId;
+  int? mIId;
+  int? asmaYId;
+  int? loginId;
+  String? elPFlg;
+  bool? elPActiveFlg;
+  DateTime? createdDate;
+  DateTime? updatedDate;
+
+  factory SubteacherlistValue.fromJson(Map<String, dynamic> json) =>
+      SubteacherlistValue(
+        elPId: json["elP_Id"],
+        mIId: json["mI_Id"],
+        asmaYId: json["asmaY_Id"],
+        loginId: json["login_Id"],
+        elPFlg: json["elP_Flg"],
+        elPActiveFlg: json["elP_ActiveFlg"],
+        createdDate: DateTime.parse(json["createdDate"]),
+        updatedDate: DateTime.parse(json["updatedDate"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "elP_Id": elPId,
+        "mI_Id": mIId,
+        "asmaY_Id": asmaYId,
+        "login_Id": loginId,
+        "elP_Flg": elPFlg,
+        "elP_ActiveFlg": elPActiveFlg,
         "createdDate": createdDate!.toIso8601String(),
         "updatedDate": updatedDate!.toIso8601String(),
       };

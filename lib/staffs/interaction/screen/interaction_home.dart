@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/interaction/controller/staff_interaction_related_controller.dart';
+import 'package:m_skool_flutter/staffs/interaction/controller/staff_interaction_compose_related_controller.dart';
 import 'package:m_skool_flutter/staffs/interaction/tabs/compose_tab_staff.dart';
 import 'package:m_skool_flutter/staffs/interaction/tabs/inbox_tab_staff.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
@@ -25,14 +25,14 @@ class InteractionHome extends StatefulWidget {
 
 class _InteractionHomeState extends State<InteractionHome>
     with SingleTickerProviderStateMixin {
-  final StaffInteractionController staffInteractionController =
-      Get.put(StaffInteractionController());
+  final StaffInteractionComposeController staffInteractionComposeController =
+      Get.put(StaffInteractionComposeController());
   late TabController _tabController;
 
   void loadingInteraction() async {
-    staffInteractionController.isInteractionloading(true);
+    staffInteractionComposeController.isInteractionloading(true);
     await Future.delayed(const Duration(seconds: 1));
-    staffInteractionController.isInteractionloading(false);
+    staffInteractionComposeController.isInteractionloading(false);
   }
 
   @override
@@ -65,7 +65,7 @@ class _InteractionHomeState extends State<InteractionHome>
             )
           : null,
       body: Obx(
-        () => staffInteractionController.isInteraction.value
+        () => staffInteractionComposeController.isInteraction.value
             ? const Center(
                 child: AnimatedProgressWidget(
                   title: "Loading Interaction",

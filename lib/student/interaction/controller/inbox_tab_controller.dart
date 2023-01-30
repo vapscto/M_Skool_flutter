@@ -6,8 +6,8 @@ import 'package:m_skool_flutter/student/interaction/model/inbox_model.dart';
 class InboxController extends GetxController {
   RxList<GetinboxmsgValue> inboxList = <GetinboxmsgValue>[].obs;
   RxList<GetinboxmsgValue> unReadList = <GetinboxmsgValue>[].obs;
-  RxList<GetinboxmsgReadflgValue> messageFlagList =
-      <GetinboxmsgReadflgValue>[].obs;
+  // RxList<GetinboxmsgReadflgValue> messageFlagList =
+  //     <GetinboxmsgReadflgValue>[].obs;
   RxBool isInboxLoading = RxBool(false);
 
   void isInboxloading(bool loading) async {
@@ -25,6 +25,8 @@ class InboxController extends GetxController {
     required int amstId,
     required int asmayId,
     required int userId,
+    required int roleId,
+    required String role,
     required String base,
   }) async {
     try {
@@ -33,6 +35,8 @@ class InboxController extends GetxController {
           amstId: amstId,
           asmayId: asmayId,
           userId: userId,
+          role: role,
+          roleId: roleId,
           base: base);
       if (inboxDataModel!.getinboxmsg != null ||
           inboxDataModel.getinboxmsg!.values != null) {
@@ -63,7 +67,7 @@ class InboxController extends GetxController {
             }
           }
         }
-        logger.d(inboxList.elementAt(0).istintId);
+        // logger.d(inboxList.elementAt(0).istintId);
         return true;
       }
       return false;
@@ -105,5 +109,4 @@ class InboxController extends GetxController {
   //     return false;
   //   }
   // }
-
 }
