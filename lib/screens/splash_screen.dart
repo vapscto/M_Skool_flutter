@@ -164,7 +164,8 @@ class _SplashScreenState extends State<SplashScreen> {
         ));
       }
 
-      if (loginSuccessModel.roleId == URLS.student) {
+      if (loginSuccessModel.roleId == URLS.student ||
+          loginSuccessModel.roleId == 8) {
         return Future.value(Home(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
