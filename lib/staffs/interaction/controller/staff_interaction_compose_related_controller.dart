@@ -21,6 +21,11 @@ class StaffInteractionComposeController extends GetxController {
   RxBool isSection = RxBool(false);
   RxBool isStudent = RxBool(false);
   RxBool isSubmit = RxBool(false);
+  RxBool isButton = RxBool(true);
+
+  void isbutton(bool loading) {
+    isButton.value = loading;
+  }
 
   void isInteractionloading(bool loading) {
     isInteraction.value = loading;

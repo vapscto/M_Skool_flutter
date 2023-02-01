@@ -64,20 +64,24 @@ class ChatProfileTile extends StatelessWidget {
               : const NetworkImage(
                   "https://img.icons8.com/fluency/48/null/user-male-circle.png"),
         ),
-        title: Text.rich(TextSpan(
-            text: "$receiver  |",
-            style:
-                Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 18),
-            children: [
-              TextSpan(
-                text:
-                    "  ${istintToFlg[0].toUpperCase()}${istintToFlg.substring(1).toLowerCase()}",
+        title: Text.rich(
+            overflow: TextOverflow.ellipsis,
+            TextSpan(
+                text: "$receiver  |",
                 style: Theme.of(context)
                     .textTheme
-                    .displaySmall
+                    .bodyLarge
                     ?.copyWith(fontSize: 18),
-              )
-            ])),
+                children: [
+                  TextSpan(
+                    text:
+                        "  ${istintToFlg[0].toUpperCase()}${istintToFlg.substring(1).toLowerCase()}",
+                    style: Theme.of(context)
+                        .textTheme
+                        .displaySmall
+                        ?.copyWith(fontSize: 18),
+                  )
+                ])),
         subtitle: Row(
           children: [
             Flexible(
