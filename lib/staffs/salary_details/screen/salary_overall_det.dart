@@ -84,6 +84,16 @@ class SalaryOverallDetails extends StatelessWidget {
                     const SizedBox(
                       height: 16.0,
                     ),
+                    Text(
+                      "Deduction's",
+                      style: Theme.of(context).textTheme.titleSmall!.merge(
+                            const TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 16),
+                          ),
+                    ),
+                    const SizedBox(
+                      height: 16.0,
+                    ),
                     CustomContainer(
                       child: Container(
                         padding: const EdgeInsets.symmetric(

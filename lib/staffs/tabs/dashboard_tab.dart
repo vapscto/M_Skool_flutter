@@ -20,9 +20,6 @@ import 'package:m_skool_flutter/staffs/student_birthday/screens/bday_home.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/screen/verify_hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/widget/staff_dashboard_container.dart';
 
-import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
-import 'package:m_skool_flutter/widget/logout_confirmation.dart';
-
 import '../notice_board_staff/screen/notice_board_staff_home.dart';
 
 class Dashboard extends StatelessWidget {
@@ -410,36 +407,36 @@ class Dashboard extends StatelessWidget {
             const SizedBox(
               height: 24.0,
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-              child: SizedBox(
-                width: 180,
-                height: 40,
-                child: CustomElevatedButton(
-                    isGradient: false,
-                    boxShadow: const BoxShadow(),
-                    color: const Color(0xFFFFDFD6),
-                    child: Row(mainAxisSize: MainAxisSize.min, children: const [
-                      Icon(
-                        Icons.logout,
-                        color: Color(0xffF24E1E),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        "Log Out",
-                        style: TextStyle(
-                            color: Color(0xffF24E1E),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
-                      )
-                    ]),
-                    onPressed: () {
-                      Get.dialog(const LogoutConfirmationPopup());
-                    }),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+            //   child: SizedBox(
+            //     width: 180,
+            //     height: 40,
+            //     child: CustomElevatedButton(
+            //         isGradient: false,
+            //         boxShadow: const BoxShadow(),
+            //         color: const Color(0xFFFFDFD6),
+            //         child: Row(mainAxisSize: MainAxisSize.min, children: const [
+            //           Icon(
+            //             Icons.logout,
+            //             color: Color(0xffF24E1E),
+            //           ),
+            //           SizedBox(
+            //             width: 10,
+            //           ),
+            //           Text(
+            //             "Log Out",
+            //             style: TextStyle(
+            //                 color: Color(0xffF24E1E),
+            //                 fontSize: 16,
+            //                 fontWeight: FontWeight.w600),
+            //           )
+            //         ]),
+            //         onPressed: () {
+            //           Get.dialog(const LogoutConfirmationPopup());
+            //         }),
+            //   ),
+            // ),
           ],
         ),
       ),

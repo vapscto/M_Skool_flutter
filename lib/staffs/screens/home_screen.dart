@@ -151,42 +151,46 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
             items: [
               SalomonBottomBarItem(
                   unselectedColor: const Color(0xFFC0C0C0),
-                  icon: SvgPicture.asset(
-                    "assets/svg/home_icon.svg",
-                    height: 24,
-                    color: index.value == 0
-                        ? Theme.of(context).primaryColor
-                        : const Color(0xFFC0C0C0),
+                  selectedColor: const Color(0xFF9900F0),
+                  icon: Image.asset(
+                    'assets/images/floatingicon.png',
+                    height: 30,
+                    color: (index.value == 0)
+                        ? const Color(0xFF9900F0)
+                        : Colors.grey,
                   ),
                   title: const Text("Home")),
               SalomonBottomBarItem(
                   unselectedColor: const Color(0xFFC0C0C0),
-                  icon: SvgPicture.asset(
-                    "assets/svg/message.svg",
-                    height: 24,
-                    color: index.value == 1
-                        ? Theme.of(context).primaryColor
-                        : const Color(0xFFC0C0C0),
+                  selectedColor: const Color(0xFFFF008C),
+                  icon: Image.asset(
+                    'assets/images/tabinteraction.png',
+                    height: 30,
+                    color: (index.value == 1)
+                        ? const Color(0xFFFF008C)
+                        : Colors.grey,
                   ),
                   title: const Text("Interaction")),
               SalomonBottomBarItem(
                   unselectedColor: const Color(0xFFC0C0C0),
-                  icon: SvgPicture.asset(
-                    "assets/svg/calendar.svg",
-                    height: 26,
-                    color: index.value == 2
-                        ? Theme.of(context).primaryColor
-                        : const Color(0xFFC0C0C0),
+                  selectedColor: const Color(0xFFFFA901),
+                  icon: Image.asset(
+                    'assets/images/calendar.png',
+                    height: 24,
+                    color: (index.value == 2)
+                        ? const Color(0xFFFFA901)
+                        : Colors.grey,
                   ),
                   title: const Text("COE")),
               SalomonBottomBarItem(
                   unselectedColor: const Color(0xFFC0C0C0),
-                  icon: SvgPicture.asset(
-                    "assets/svg/profile.svg",
+                  selectedColor: const Color(0xFF3D9292),
+                  icon: Image.asset(
+                    'assets/images/tabprofile.png',
                     height: 30,
-                    color: index.value == 3
-                        ? Theme.of(context).primaryColor
-                        : const Color(0xFFC0C0C0),
+                    color: (index.value == 3)
+                        ? const Color(0xFF3D9292)
+                        : Colors.grey,
                   ),
                   title: const Text("Profile")),
             ],

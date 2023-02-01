@@ -104,9 +104,10 @@ class _StaffHomeTTState extends State<StaffHomeTT> {
                               bottom: 4,
                             ),
                             child: SizedBox(
-                              width: 70,
+                              width: 40,
                               child: Text(
                                 "${widget.controller.dashboardTT.elementAt(index).classsection}",
+                                textAlign: TextAlign.center,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                                 style: const TextStyle(),

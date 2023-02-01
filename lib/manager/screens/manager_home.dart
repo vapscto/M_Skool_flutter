@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/manager/staff_leave_approval/screen/staff_leave_approval_home.dart';
+import 'package:m_skool_flutter/manager/student_details/screen/student_details_home.dart';
 import 'package:m_skool_flutter/manager/student_notice_board/screen/student_notice_board_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
@@ -59,6 +60,24 @@ class _ManagerHomeState extends State<ManagerHome> {
                       .loginSuccessModel.staffmobileappprivileges!.values!
                       .elementAt(index)
                       .pagename);
+
+                  if (widget.loginSuccessModel.staffmobileappprivileges!.values!
+                          .elementAt(index)
+                          .pagename ==
+                      "Student Birth Day Report") {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return ManagerStudentDetails(
+                        loginSuccessModel: widget.loginSuccessModel,
+                        mskoolController: widget.mskoolController,
+                        title: widget
+                            .loginSuccessModel.staffmobileappprivileges!.values!
+                            .elementAt(index)
+                            .pagename!,
+                      );
+                    }));
+
+                    return;
+                  }
                   if (widget.loginSuccessModel.staffmobileappprivileges!.values!
                           .elementAt(index)
                           .pagename ==

@@ -50,32 +50,49 @@ class _StaffTTHomeState extends State<StaffTTHome>
     return Scaffold(
       floatingActionButton: const HomeFab(),
       appBar: CustomAppBar(
-          title: widget.title,
-          bottom: PreferredSize(
-            preferredSize: const Size(double.infinity, 50),
-            child: Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: CustomTabBar(
-                tabController: tabController!,
-                tabs: const [
-                  CustomTab(name: "Daily", asset: "assets/svg/calendar.svg"),
-                  CustomTab(name: "Weekly", asset: "assets/svg/calendar.svg"),
-                ],
-              ),
-            ),
-          )).getAppBar(),
-      body: TabBarView(
-        controller: tabController,
+        title: widget.title,
+        // bottom: PreferredSize(
+        //   preferredSize: const Size(double.infinity, 50),
+        //   child: Container(
+        //     color: Theme.of(context).scaffoldBackgroundColor,
+        //     child: CustomTabBar(
+        //       tabController: tabController!,
+        //       tabs: const [
+        //         CustomTab(name: "Daily", asset: "assets/svg/calendar.svg"),
+        //         CustomTab(name: "Weekly", asset: "assets/svg/calendar.svg"),
+        //       ],
+        //     ),
+        //   ),
+        // ),
+      ).getAppBar(),
+      body: Column(
         children: [
-          StaffDailyTT(
-            loginSuccessModel: widget.loginSuccessModel,
-            mskoolController: widget.mskoolController,
-            ttController: ttController,
-            day: widget.day,
+          Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: CustomTabBar(
+              tabController: tabController!,
+              tabs: const [
+                CustomTab(name: "Daily", asset: "assets/svg/calendar.svg"),
+                CustomTab(name: "Weekly", asset: "assets/svg/calendar.svg"),
+              ],
+            ),
           ),
-          StaffWeeklyTT(
-            loginSuccessModel: widget.loginSuccessModel,
-            mskoolController: widget.mskoolController,
+          Expanded(
+            child: TabBarView(
+              controller: tabController,
+              children: [
+                StaffDailyTT(
+                  loginSuccessModel: widget.loginSuccessModel,
+                  mskoolController: widget.mskoolController,
+                  ttController: ttController,
+                  day: widget.day,
+                ),
+                StaffWeeklyTT(
+                  loginSuccessModel: widget.loginSuccessModel,
+                  mskoolController: widget.mskoolController,
+                ),
+              ],
+            ),
           ),
         ],
       ),

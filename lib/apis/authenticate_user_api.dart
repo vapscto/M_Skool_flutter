@@ -44,6 +44,7 @@ class AuthenticateUserApi {
     final LoginSuccessModel loginSuccessModel =
         LoginSuccessModel.fromJson(response.data);
     //logger.d(loginSuccessModel.toJson());
+    logger.d(loginSuccessModel.roleId);
     cookieBox!.put("cookie", response.headers.map['set-cookie']![0]);
     await importantIds!.put(URLS.miId, loginSuccessModel.mIID);
     await importantIds!.put(URLS.userId, loginSuccessModel.userId);

@@ -41,6 +41,7 @@ class _ReferencesWidgetState extends State<ReferencesWidget> {
             return Checkbox(
               visualDensity:
                   const VisualDensity(horizontal: VisualDensity.minimumDensity),
+              activeColor: Theme.of(context).primaryColor,
               value: widget.wantToProvideReference.value,
               onChanged: (val) {
                 widget.wantToProvideReference.value = val!;

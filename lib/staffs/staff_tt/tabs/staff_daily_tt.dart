@@ -311,7 +311,7 @@ class _StaffDailyTTState extends State<StaffDailyTT> {
                                                   itemCount: widget.ttController
                                                       .dailyTT.length),
                                               const SizedBox(
-                                                height: 16.0,
+                                                height: 48.0,
                                               ),
                                               MSkollBtn(
                                                   title: "Generate Pdf",

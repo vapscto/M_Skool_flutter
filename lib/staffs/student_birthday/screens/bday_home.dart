@@ -33,11 +33,29 @@ class _StudentBdayHomeState extends State<StudentBdayHome>
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: const HomeFab(),
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: "Student Birthday Report",
-        bottom: PreferredSize(
-          preferredSize: const Size(double.infinity, 50),
-          child: Container(
+        // bottom: PreferredSize(
+        //   preferredSize: const Size(double.infinity, 50),
+        //   child: Container(
+        //     // padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        //     color: Colors.white,
+        //     child: CustomTabBar(
+        //       tabs: const [
+        //         CustomTab(
+        //             name: "Between Days",
+        //             asset: "assets/svg/calendar_icon.svg"),
+        //         CustomTab(
+        //             name: "Month Wise", asset: "assets/svg/calendar_icon.svg"),
+        //       ],
+        //       tabController: tabController!,
+        //     ),
+        //   ),
+        // ),
+      ).getAppBar(),
+      body: Column(
+        children: [
+          Container(
             // padding: const EdgeInsets.symmetric(horizontal: 12.0),
             color: Colors.white,
             child: CustomTabBar(
@@ -51,18 +69,20 @@ class _StudentBdayHomeState extends State<StudentBdayHome>
               tabController: tabController!,
             ),
           ),
-        ),
-      ).getAppBar(),
-      body: TabBarView(
-        controller: tabController,
-        children: [
-          BetweenDays(
-            loginSuccessModel: widget.loginSuccessModel,
-            mskoolController: widget.mskoolController,
-          ),
-          MonthWise(
-            loginSuccessModel: widget.loginSuccessModel,
-            mskoolController: widget.mskoolController,
+          Expanded(
+            child: TabBarView(
+              controller: tabController,
+              children: [
+                BetweenDays(
+                  loginSuccessModel: widget.loginSuccessModel,
+                  mskoolController: widget.mskoolController,
+                ),
+                MonthWise(
+                  loginSuccessModel: widget.loginSuccessModel,
+                  mskoolController: widget.mskoolController,
+                ),
+              ],
+            ),
           ),
         ],
       ),

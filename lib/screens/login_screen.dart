@@ -8,12 +8,15 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/screens/forgot_password_screen.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/manager/screens/manager_home.dart';
 import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/home.dart';
 import 'package:m_skool_flutter/staffs/screens/home_screen.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
+import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
 class LoginScreen extends StatefulWidget {
   final MskoolController mskoolController;
@@ -355,6 +358,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                           await Future.delayed(
                               const Duration(milliseconds: 200));
+                          // ignore: use_build_context_synchronously
                           showDialog(
                               context: context,
                               builder: (_) {
@@ -444,26 +448,83 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     logInBox!.put(
                                                         "isLoggedIn", true);
 
-                                                    Get.offAll(snapshot.data!
-                                                                .roleId! ==
-                                                            URLS.student
-                                                        ? Home(
-                                                            loginSuccessModel:
-                                                                snapshot.data!,
-                                                            mskoolController: widget
-                                                                .mskoolController,
-                                                          )
-                                                        : snapshot.data!
-                                                                    .roleId! ==
-                                                                URLS.staff
-                                                            ? StaffHomeScreen(
-                                                                loginSuccessModel:
-                                                                    snapshot
-                                                                        .data!,
-                                                                mskoolController:
-                                                                    widget
-                                                                        .mskoolController)
-                                                            : Container());
+                                                    Get.offAll(
+                                                      () => snapshot
+                                                                  .data!.roleId! ==
+                                                              URLS.student
+                                                          ? Home(
+                                                              loginSuccessModel:
+                                                                  snapshot
+                                                                      .data!,
+                                                              mskoolController:
+                                                                  widget
+                                                                      .mskoolController,
+                                                            )
+                                                          : snapshot.data!.roleId! ==
+                                                                      URLS
+                                                                          .staff ||
+                                                                  snapshot.data!
+                                                                          .roleId ==
+                                                                      URLS.hod
+                                                              ? StaffHomeScreen(
+                                                                  loginSuccessModel:
+                                                                      snapshot
+                                                                          .data!,
+                                                                  mskoolController:
+                                                                      widget
+                                                                          .mskoolController)
+                                                              : snapshot.data!
+                                                                          .roleId! ==
+                                                                      URLS
+                                                                          .manager
+                                                                  ? ManagerHome(
+                                                                      loginSuccessModel:
+                                                                          snapshot
+                                                                              .data!,
+                                                                      mskoolController:
+                                                                          widget
+                                                                              .mskoolController)
+                                                                  : Scaffold(
+                                                                      body:
+                                                                          Center(
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.min,
+                                                                          children: [
+                                                                            const Text("This app is not used to manage this ID"),
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                                                                              child: SizedBox(
+                                                                                width: 180,
+                                                                                height: 40,
+                                                                                child: CustomElevatedButton(
+                                                                                    isGradient: false,
+                                                                                    boxShadow: const BoxShadow(),
+                                                                                    color: const Color(0xFFFFDFD6),
+                                                                                    child: Row(mainAxisSize: MainAxisSize.min, children: const [
+                                                                                      Icon(
+                                                                                        Icons.logout,
+                                                                                        color: Color(0xffF24E1E),
+                                                                                      ),
+                                                                                      SizedBox(
+                                                                                        width: 10,
+                                                                                      ),
+                                                                                      Text(
+                                                                                        "Log Out",
+                                                                                        style: TextStyle(color: Color(0xffF24E1E), fontSize: 16, fontWeight: FontWeight.w600),
+                                                                                      )
+                                                                                    ]),
+                                                                                    onPressed: () {
+                                                                                      Get.dialog(const LogoutConfirmationPopup());
+                                                                                    }),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                    );
                                                     // Navigator.pushReplacement(
                                                     //   context,
                                                     //   MaterialPageRoute(

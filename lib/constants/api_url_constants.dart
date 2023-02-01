@@ -307,4 +307,15 @@ class URLS {
 
   static String attendanceShortage =
       "api/AdmissionCtrl/shortageOfAttendanceAlert";
+
+  /*Manager APIS*/
+
+  //Student Details
+  static String managerAcademic = "api/StudentSearchFacade/getalldetails/";
+  static String managerGetSection =
+      "api/AdmissionCtrl/AcademicyearwiseClassSection/";
+  static String managerGetStuent =
+      "api/AdmissionCtrl/AcademicyearwiseClassSectionStudent/";
+  static String getStudentDetails =
+      "api/StudentSearchFacade/getstudentdetails/";
 }
