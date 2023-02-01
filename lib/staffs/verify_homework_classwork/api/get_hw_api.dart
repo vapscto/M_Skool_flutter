@@ -25,6 +25,7 @@ class GetHwApi {
     required String fromDate,
     required String toDate,
     required String base,
+    required int topic,
     required PickImageController controller,
   }) async {
     try {
@@ -32,32 +33,34 @@ class GetHwApi {
       final String api = base + URLS.getHwList;
       logger.d({
         "MI_Id": miId,
-        "HRME_Id": hrmeId,
+        // "HRME_Id": hrmeId,
         "Login_Id": loginId,
         "UserId": userId,
-        "IVRMRT_Id": ivrmrtId,
-        "Role_flag": "Staff",
+        // "IVRMRT_Id": ivrmrtId,
+        // "Role_flag": "Staff",
         "ASMAY_Id": asmayId,
         "ISMS_Id": ismsId,
         "ASMCL_Id": asmclId,
         "ASMS_Id": asmsId,
         "fromdate": fromDate,
-        "todate": toDate
+        "todate": toDate,
+        "IHW_Id": topic
       });
       final Response response =
           await ins.post(api, options: Options(headers: getSession()), data: {
         "MI_Id": miId,
-        "HRME_Id": hrmeId,
+        // "HRME_Id": hrmeId,
         "Login_Id": loginId,
         "UserId": userId,
-        "IVRMRT_Id": ivrmrtId,
-        "Role_flag": "Staff",
+        // "IVRMRT_Id": ivrmrtId,
+        // "Role_flag": "Staff",
         "ASMAY_Id": asmayId,
         "ISMS_Id": ismsId,
         "ASMCL_Id": asmclId,
         "ASMS_Id": asmsId,
         "fromdate": fromDate,
-        "todate": toDate
+        "todate": toDate,
+        "IHW_Id": topic
       });
 
       final VerifyHwListModel hwListModel =

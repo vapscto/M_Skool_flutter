@@ -7,7 +7,9 @@ import 'package:m_skool_flutter/staffs/homework_classwork/model/homework_view_wo
 import 'package:m_skool_flutter/staffs/homework_classwork/model/hw_cw_classes_model.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/model/hw_cw_section_model.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/model/hw_cw_subject_model.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_classwork_topic_model.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_cw_sub_list_model.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_homework_topic_model.dart';
 import 'package:m_skool_flutter/staffs/view_notice/model/view_notice_session_model.dart';
 
 class HwCwController extends GetxController {
@@ -248,5 +250,51 @@ class HwCwController extends GetxController {
 
   void updateIsErrorOccuredSavingHw(bool f) {
     isErrorOccuredSavingHw.value = f;
+  }
+
+  RxBool isTopicLoading = RxBool(false);
+
+  void updateIsTopicLoading(bool b) {
+    isTopicLoading.value = b;
+  }
+
+  RxBool isErrorOccuredWhileLoadingTopic = RxBool(false);
+
+  void updateIsErrorOccuredWhileLoadingTopic(bool b) {
+    isErrorOccuredWhileLoadingTopic.value = b;
+  }
+
+  RxList<HomeworkTopicModelValues> homeworkTopic = RxList();
+  RxList<ClassworkTopicModelValues> classWorkTopic = RxList();
+  Rx<HomeworkTopicModelValues> selectedHwTopic = Rx<HomeworkTopicModelValues>(
+    HomeworkTopicModelValues(
+      iHWId: 0,
+    ),
+  );
+  Rx<ClassworkTopicModelValues> selectedCwTopic = Rx<ClassworkTopicModelValues>(
+    ClassworkTopicModelValues(
+      iCWId: 0,
+    ),
+  );
+  void updateHomeworkTopic(List<HomeworkTopicModelValues> hw) {
+    if (homeworkTopic.isNotEmpty) {
+      homeworkTopic.clear();
+    }
+    homeworkTopic.addAll(hw);
+  }
+
+  void updateClassworkTopic(List<ClassworkTopicModelValues> cw) {
+    if (classWorkTopic.isNotEmpty) {
+      classWorkTopic.clear();
+    }
+    classWorkTopic.addAll(cw);
+  }
+
+  void updateSelectedHwTopic(HomeworkTopicModelValues hwTopic) {
+    selectedHwTopic.value = hwTopic;
+  }
+
+  void updateSelectedCwTopic(ClassworkTopicModelValues cwTopic) {
+    selectedCwTopic.value = cwTopic;
   }
 }

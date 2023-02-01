@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_cw_get_class.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_cw_get_section.dart';
@@ -10,6 +9,7 @@ import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_cw_get_subject.
 import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_cw_get_year.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/controller/hw_cw_controller.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/widget/hw_cw_academic_dd.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/get_topic_api.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/verify_cw_subject_api.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/widget/verify_class_dd.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
@@ -51,7 +51,7 @@ class _VerifyHwCwHomeState extends State<VerifyHwCwHome> {
   }
 
   Future<void> loadVHw() async {
-    logger.d("Reached");
+    // logger.d("Reached");
 
     await HwCwGetAcademicYear.instance.getAcademicYear(
       miId: widget.loginSuccessModel.mIID!,
@@ -119,20 +119,54 @@ class _VerifyHwCwHomeState extends State<VerifyHwCwHome> {
         base: baseUrlFromInsCode("portal", widget.mskoolController),
         hwCwController: verifyController,
       );
+    } else {
+      await VerifyCwSubjectListApi.instance.getCwSubjects(
+          miId: widget.loginSuccessModel.mIID!,
+          hrme: widget.loginSuccessModel.empcode!,
+          loginId: widget.loginSuccessModel.userId!,
+          userId: widget.loginSuccessModel.userId!,
+          ivrmrtId: widget.loginSuccessModel.roleId!,
+          asmayId: verifyController.selectedSession.value.asmaYId!,
+          asmscld: verifyController.selectedClass.value.asmcLId!,
+          asmsId: verifyController.verifySelectedSection.value.asmSId!,
+          base: baseUrlFromInsCode("portal", widget.mskoolController),
+          hwCwController: verifyController);
+    }
+
+    if (verifyController.isErrorOccuredLoadingSection.value ||
+        (verifyController.cwSubjectList.isEmpty &&
+            verifyController.subjects.isEmpty)) {
       return;
     }
 
-    await VerifyCwSubjectListApi.instance.getCwSubjects(
-        miId: widget.loginSuccessModel.mIID!,
-        hrme: widget.loginSuccessModel.empcode!,
-        loginId: widget.loginSuccessModel.userId!,
-        userId: widget.loginSuccessModel.userId!,
-        ivrmrtId: widget.loginSuccessModel.roleId!,
-        asmayId: verifyController.selectedSession.value.asmaYId!,
-        asmscld: verifyController.selectedClass.value.asmcLId!,
-        asmsId: verifyController.verifySelectedSection.value.asmSId!,
-        base: baseUrlFromInsCode("portal", widget.mskoolController),
-        hwCwController: verifyController);
+    if (widget.forHw) {
+      await GetVerifyTopicApi.instance.getTopicForHw(
+          asmayId: verifyController.selectedSession.value.asmaYId!,
+          asmclId: verifyController.selectedClass.value.asmcLId!,
+          miId: widget.loginSuccessModel.mIID!,
+          asmsId: verifyController.verifySelectedSection.value.asmSId!,
+          ismsId: verifyController.selectedSubject.value.ismSId!,
+          loginId: widget.loginSuccessModel.userId!,
+          controller: verifyController,
+          base: baseUrlFromInsCode(
+            "portal",
+            widget.mskoolController,
+          ));
+      // return;
+    } else {
+      await GetVerifyTopicApi.instance.getTopicForCw(
+          asmayId: verifyController.selectedSession.value.asmaYId!,
+          asmclId: verifyController.selectedClass.value.asmcLId!,
+          miId: widget.loginSuccessModel.mIID!,
+          asmsId: verifyController.verifySelectedSection.value.asmSId!,
+          ismsId: verifyController.selectedCwSub.value.iSMSId!,
+          loginId: widget.loginSuccessModel.userId!,
+          controller: verifyController,
+          base: baseUrlFromInsCode(
+            "portal",
+            widget.mskoolController,
+          ));
+    }
   }
 
   @override

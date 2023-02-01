@@ -25,6 +25,7 @@ class GetCwApi {
     required String fromDate,
     required String toDate,
     required String base,
+    required int topic,
     required PickImageController controller,
   }) async {
     final Dio ins = getGlobalDio();
@@ -39,14 +40,18 @@ class GetCwApi {
       "ASMS_Id": "$asmsId",
       "ISMS_Id": "$ismsId",
       "fromdate": fromDate,
-      "todate": toDate
+      "todate": toDate,
+      "ICW_Id": topic,
+      "AMST_Id": 0,
     });
     try {
       final Response response =
           await ins.post(api, options: Options(headers: getSession()), data: {
         "Mi_Id": miId,
         "login_Id": loginId,
-        "User_Id": userId,
+        // "User_Id": userId,
+        "ICW_Id": topic,
+        "AMST_Id": 0,
         "ASMAY_Id": asmayId,
         "ASMCL_Id": "$asmclId",
         "ASMS_Id": "$asmsId",

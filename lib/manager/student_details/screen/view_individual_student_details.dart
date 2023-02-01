@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/controller/global_utilities.dart';
-import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/manager/student_details/api/get_student_details.dart';
 import 'package:m_skool_flutter/manager/student_details/controller/view_student_details_controller.dart';
 import 'package:m_skool_flutter/manager/student_details/tabs/view_details_tabs/academic.dart';
@@ -9,9 +7,8 @@ import 'package:m_skool_flutter/manager/student_details/tabs/view_details_tabs/a
 import 'package:m_skool_flutter/manager/student_details/tabs/view_details_tabs/exam.dart';
 import 'package:m_skool_flutter/manager/student_details/tabs/view_details_tabs/fee.dart';
 import 'package:m_skool_flutter/manager/student_details/tabs/view_details_tabs/personal.dart';
-import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/custom_tab_bar_2.dart';
 
 class ViewStudentIndividualDetails extends StatefulWidget {
   final int miId;
@@ -57,15 +54,18 @@ class _ViewStudentIndividualDetailsState
       appBar: const CustomAppBar(title: "View Details").getAppBar(),
       body: Column(
         children: [
-          CustomTabBar(
-            tabController: tabController!,
-            tabs: const [
-              CustomTab(name: "Academic", asset: "assets/svg/Vector.svg"),
-              CustomTab(name: "Personal", asset: "assets/svg/Vector.svg"),
-              CustomTab(name: "Attendance", asset: "assets/svg/Vector.svg"),
-              CustomTab(name: "Fee", asset: "assets/svg/Vector.svg"),
-              CustomTab(name: "Exam", asset: "assets/svg/Vector.svg"),
-            ],
+          Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: CustomTabBar2(
+              tabController: tabController!,
+              tabs: const [
+                CustomTab(name: "Academic"),
+                CustomTab(name: "Personal"),
+                CustomTab(name: "Attendance"),
+                CustomTab(name: "Fee"),
+                CustomTab(name: "Exam"),
+              ],
+            ),
           ),
           Expanded(
             child: TabBarView(
