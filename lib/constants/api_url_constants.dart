@@ -257,14 +257,16 @@ class URLS {
 
   // STUDENT ATTENDANCE API .................
 
-  static String getStudentAcademicYear =
-      'api/EmployeeStudentAttendenceDetailsFacade/Getdetails/';
-  static String getStudentClass =
-      'api/EmployeeStudentAttendenceDetailsFacade/getclass/';
-  static String getStudentSection =
-      'api/EmployeeStudentAttendenceDetailsFacade/Getsection/';
-  static String getStudentList = '';
-  static String getStudentAttendanceDetails = '';
+  static String getInitialData =
+      'api/StudentAttendanceReportFacade/getinitialdata';
+  // static String getStudentClass =
+  //     'api/EmployeeStudentAttendenceDetailsFacade/getclass/';
+  // static String getStudentSection =
+  //     'api/EmployeeStudentAttendenceDetailsFacade/Getsection/';
+  static String getStudentList =
+      'api/StudentAttendanceReportFacade/getdatatype';
+  static String getStudentAttendanceDetails =
+      'api/StudentAttendanceReportFacade/searchdata';
 
   // ATTENDANCE ENTRY API .................
   static String getAttendanceInitialData =

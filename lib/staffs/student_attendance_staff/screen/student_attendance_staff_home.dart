@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -7,21 +8,14 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/controller/student_attendance_related_controller.dart';
-import 'package:m_skool_flutter/staffs/student_attendance_staff/model/academicyeardropdownModel.dart';
-import 'package:m_skool_flutter/staffs/student_attendance_staff/model/classdropdownModel.dart';
-import 'package:m_skool_flutter/staffs/student_attendance_staff/model/sectiondropdownModel.dart';
-import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/consolidated_datewise_student_attendance_detail_screen.dart';
+import 'package:m_skool_flutter/staffs/student_attendance_staff/model/initialData.dart';
+import 'package:m_skool_flutter/staffs/student_attendance_staff/model/studentModel.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/consolidated_monthly_student_attendance_detail_screen.dart';
-import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/detailed_datewise_student_attendance_detail_screen.dart';
-import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/detailed_monthly_student_attendance_detail_screen.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/widget/selectdatefromtodate.dart';
-import 'package:m_skool_flutter/staffs/student_attendance_staff/widget/selectmonthscrollcontainer.dart';
-import 'package:m_skool_flutter/staffs/student_attendance_staff/widget/selectstudentscrollcontainer.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
-import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class StudentAttendanceStaffHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -42,11 +36,15 @@ class _StudentAttendanceStaffHomeState
   final StudentAttendanceController studentAttendanceController =
       Get.put(StudentAttendanceController());
 
-  StudentAttendanceYearlistValue? selectedAcademicYear;
+  AcademicListValue? selectedAcademicYear;
   ClasslistValue? selectedClass;
   SectionListValue? selectedSection;
+  MonthListValue? selectedMonth;
+  StudentListValue? selectedStudent;
+
   var todayDate = TextEditingController();
-  DateTime? selecteddate;
+  DateTime? selectedfromdate;
+  DateTime? selectedtodate;
   String nameOrAdm = '';
 
   int selectedRadio = 1;
@@ -54,62 +52,81 @@ class _StudentAttendanceStaffHomeState
 
   void getAcademicYearDropdown() async {
     studentAttendanceController.isacademicyearloading(true);
-    studentAttendanceController.classList.clear();
-    studentAttendanceController.sectionList.clear();
     await studentAttendanceController
-        .getAcademicYear(
-            base: baseUrlFromInsCode('portal', widget.mskoolController),
-            miId: widget.loginSuccessModel.mIID!)
-        .then((value) {
-      if (value) {
-        if (studentAttendanceController.academicYearList.isNotEmpty) {
-          selectedAcademicYear =
-              studentAttendanceController.academicYearList.first;
-          getClassYearDropdown(selectedAcademicYear!.asmaYId!.toInt());
-        }
-      }
-    });
+        .getInitialData(
+          base: baseUrlFromInsCode('admission', widget.mskoolController),
+          miId: widget.loginSuccessModel.mIID!,
+          asmayId: widget.loginSuccessModel.asmaYId!,
+          roleId: widget.loginSuccessModel.roleId!,
+          userId: widget.loginSuccessModel.userId!,
+          username: widget.loginSuccessModel.userName!,
+        )
+        .then((value) {});
     studentAttendanceController.isacademicyearloading(false);
   }
 
-  void getClassYearDropdown(int asmayId) async {
-    studentAttendanceController.isclassloading(true);
-    studentAttendanceController.sectionList.clear();
+  void getStudentListData(String type1) async {
+    studentAttendanceController.isstudentloading(true);
     await studentAttendanceController
-        .getClass(
-            base: baseUrlFromInsCode('portal', widget.mskoolController),
-            miId: widget.loginSuccessModel.mIID!,
-            userId: widget.loginSuccessModel.userId!,
-            asmayId: asmayId)
-        .then((value) {
-      if (value) {
-        if (studentAttendanceController.classList.isNotEmpty) {
-          selectedClass = studentAttendanceController.classList.first;
-          getSectionDropdown();
-        }
-      }
-    });
-    studentAttendanceController.isclassloading(false);
+        .getStudentListData(
+          asmayId: selectedAcademicYear!.asmaYId!.toInt(),
+          asmclId: selectedClass!.asmcLId!.toInt(),
+          asmsId: selectedSection!.asmSId!.toInt(),
+          radiotype: configuration,
+          type1: type1,
+          miId: widget.loginSuccessModel.mIID!,
+          base: baseUrlFromInsCode(
+            'admission',
+            widget.mskoolController,
+          ),
+        )
+        .then((value) {});
+    studentAttendanceController.isstudentloading(false);
   }
 
-  void getSectionDropdown() async {
-    studentAttendanceController.issectionloading(true);
+  void getAttendaceDetail() async {
+    studentAttendanceController.isdetailloading(true);
     await studentAttendanceController
-        .getSection(
-            base: baseUrlFromInsCode('portal', widget.mskoolController),
-            miId: widget.loginSuccessModel.mIID!,
-            userId: widget.loginSuccessModel.userId!,
-            asmayId: selectedAcademicYear!.asmaYId!.toInt(),
-            asmclId: widget.loginSuccessModel.asmcLId!)
+        .getStudentAttendanceDetails(
+      asmayId: selectedAcademicYear!.asmaYId!.toInt(),
+      asmclId: selectedClass!.asmcLId!.toInt(),
+      asmsId: selectedSection!.asmSId!.toInt(),
+      monthId: configuration == 1 ? selectedMonth!.amMId!.toInt() : 0,
+      radioType: configuration,
+      datewise: configuration == 2 ? 1 : 0,
+      fromdate: configuration != 1
+          ? selectedfromdate.toString()
+          : DateTime.now().toString(),
+      todate: configuration == 2
+          ? selectedtodate.toString()
+          : DateTime.now().toString(),
+      type: selectedRadio,
+      amstId: selectedRadio == 1 ? 0 : selectedStudent!.amstId!,
+      miId: widget.loginSuccessModel.mIID!,
+      base: baseUrlFromInsCode(
+        'admission',
+        widget.mskoolController,
+      ),
+    )
         .then((value) {
       logger.d(value);
       if (value) {
-        if (studentAttendanceController.sectionList.isNotEmpty) {
-          selectedSection = studentAttendanceController.sectionList.first;
+        if (studentAttendanceController.studentAttendanceDetailsList.isEmpty) {
+          Fluttertoast.showToast(msg: 'No data available.');
+          return;
         }
+        Get.to(() => const ConsolidatedMonthlyStudentAttendanceDetailScreen());
       }
     });
-    studentAttendanceController.issectionloading(false);
+    studentAttendanceController.isdetailloading(false);
+  }
+
+  void getFromDate(DateTime fromdate) {
+    selectedfromdate = fromdate;
+  }
+
+  void getEndDate(DateTime toDate) {
+    selectedtodate = toDate;
   }
 
   @override
@@ -154,22 +171,30 @@ class _StudentAttendanceStaffHomeState
                           ),
                         ],
                       ),
-                      child: DropdownButtonFormField<
-                          StudentAttendanceYearlistValue>(
+                      child: DropdownButtonFormField<AcademicListValue>(
                         value: selectedAcademicYear,
-                        decoration: const InputDecoration(
-                          focusedBorder: OutlineInputBorder(
+                        decoration: InputDecoration(
+                          focusedBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.transparent,
                             ),
                           ),
-                          enabledBorder: OutlineInputBorder(
+                          enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Colors.transparent,
                             ),
                           ),
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .labelSmall!
+                              .merge(const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                  letterSpacing: 0.3)),
+                          hintText: 'Select Year',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
                           isDense: true,
-                          label: CustomDropDownLabel(
+                          label: const CustomDropDownLabel(
                             icon: 'assets/images/hat.png',
                             containerColor: Color.fromRGBO(223, 251, 254, 1),
                             text: 'Academic Year',
@@ -208,176 +233,169 @@ class _StudentAttendanceStaffHomeState
                         }),
                         onChanged: (s) {
                           selectedAcademicYear = s!;
-                          getClassYearDropdown(s.asmaYId!.toInt());
-                          // logger.d(s.hrmEId.toString());
+                          logger.d(s.asmaYId);
                         },
                       ),
                     ),
-                    studentAttendanceController.isClass.value
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : studentAttendanceController.classList.isNotEmpty
-                            ? Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 16),
-                                decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  borderRadius: BorderRadius.circular(16.0),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      offset: Offset(0, 1),
-                                      blurRadius: 8,
-                                      color: Colors.black12,
-                                    ),
-                                  ],
-                                ),
-                                child: DropdownButtonFormField<ClasslistValue>(
-                                  value: selectedClass,
-                                  decoration: const InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                    isDense: true,
-                                    label: CustomDropDownLabel(
-                                      icon: 'assets/images/classnew.png',
-                                      containerColor:
-                                          Color.fromRGBO(255, 235, 234, 1),
-                                      text: 'Class',
-                                      textColor:
-                                          Color.fromRGBO(255, 111, 103, 1),
-                                    ),
-                                  ),
-                                  icon: const Padding(
-                                    padding: EdgeInsets.only(top: 3),
-                                    child: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      size: 30,
-                                    ),
-                                  ),
-                                  iconSize: 30,
-                                  items: List.generate(
-                                      studentAttendanceController
-                                          .classList.length, (index) {
-                                    return DropdownMenuItem(
-                                      value: studentAttendanceController
-                                          .classList[index],
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 13, left: 5),
-                                        child: Text(
-                                          studentAttendanceController
-                                              .classList[index].classname!,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelSmall!
-                                              .merge(const TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 16.0,
-                                                  letterSpacing: 0.3)),
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                                  onChanged: (s) {
-                                    selectedClass = s!;
-                                    getSectionDropdown();
-                                    // logger.d(s.hrmEId.toString());
-                                  },
-                                ),
-                              )
-                            : const SizedBox(),
-                    studentAttendanceController.isSection.value
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : studentAttendanceController.sectionList.isNotEmpty
-                            ? Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 16),
-                                decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  borderRadius: BorderRadius.circular(16.0),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      offset: Offset(0, 1),
-                                      blurRadius: 8,
-                                      color: Colors.black12,
-                                    ),
-                                  ],
-                                ),
-                                child:
-                                    DropdownButtonFormField<SectionListValue>(
-                                  value: selectedSection,
-                                  decoration: const InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      ),
-                                    ),
-                                    isDense: true,
-                                    label: CustomDropDownLabel(
-                                      icon: 'assets/images/sectionnew.png',
-                                      containerColor:
-                                          Color.fromRGBO(219, 253, 245, 1),
-                                      text: 'Section',
-                                      textColor:
-                                          Color.fromRGBO(71, 186, 158, 1),
-                                    ),
-                                  ),
-                                  icon: const Padding(
-                                    padding: EdgeInsets.only(top: 3),
-                                    child: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      size: 30,
-                                    ),
-                                  ),
-                                  iconSize: 30,
-                                  items: List.generate(
-                                      studentAttendanceController
-                                          .sectionList.length, (index) {
-                                    return DropdownMenuItem(
-                                      value: studentAttendanceController
-                                          .sectionList[index],
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 13, left: 5),
-                                        child: Text(
-                                          studentAttendanceController
-                                              .sectionList[index]
-                                              .asmCSectionName!,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelSmall!
-                                              .merge(const TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 16.0,
-                                                  letterSpacing: 0.3)),
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                                  onChanged: (s) {
-                                    selectedSection = s!;
-                                    // logger.d(s.hrmEId.toString());
-                                  },
-                                ),
-                              )
-                            : const SizedBox(),
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 16),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: BorderRadius.circular(16.0),
+                        boxShadow: const [
+                          BoxShadow(
+                            offset: Offset(0, 1),
+                            blurRadius: 8,
+                            color: Colors.black12,
+                          ),
+                        ],
+                      ),
+                      child: DropdownButtonFormField<ClasslistValue>(
+                        value: selectedClass,
+                        decoration: InputDecoration(
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .labelSmall!
+                              .merge(const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                  letterSpacing: 0.3)),
+                          hintText: 'Select Class',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          isDense: true,
+                          label: const CustomDropDownLabel(
+                            icon: 'assets/images/classnew.png',
+                            containerColor: Color.fromRGBO(255, 235, 234, 1),
+                            text: 'Class',
+                            textColor: Color.fromRGBO(255, 111, 103, 1),
+                          ),
+                        ),
+                        icon: const Padding(
+                          padding: EdgeInsets.only(top: 3),
+                          child: Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            size: 30,
+                          ),
+                        ),
+                        iconSize: 30,
+                        items: List.generate(
+                            studentAttendanceController.classList.length,
+                            (index) {
+                          return DropdownMenuItem(
+                            value: studentAttendanceController.classList[index],
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 13, left: 5),
+                              child: Text(
+                                studentAttendanceController
+                                    .classList[index].asmcLClassName!,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .merge(const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 16.0,
+                                        letterSpacing: 0.3)),
+                              ),
+                            ),
+                          );
+                        }),
+                        onChanged: (s) {
+                          selectedClass = s!;
+                          logger.d(s.asmcLId);
+                        },
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 16),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: BorderRadius.circular(16.0),
+                        boxShadow: const [
+                          BoxShadow(
+                            offset: Offset(0, 1),
+                            blurRadius: 8,
+                            color: Colors.black12,
+                          ),
+                        ],
+                      ),
+                      child: DropdownButtonFormField<SectionListValue>(
+                        value: selectedSection,
+                        decoration: InputDecoration(
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .labelSmall!
+                              .merge(const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.0,
+                                  letterSpacing: 0.3)),
+                          hintText: 'Select section',
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          isDense: true,
+                          label: const CustomDropDownLabel(
+                            icon: 'assets/images/sectionnew.png',
+                            containerColor: Color.fromRGBO(219, 253, 245, 1),
+                            text: 'Section',
+                            textColor: Color.fromRGBO(71, 186, 158, 1),
+                          ),
+                        ),
+                        icon: const Padding(
+                          padding: EdgeInsets.only(top: 3),
+                          child: Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            size: 30,
+                          ),
+                        ),
+                        iconSize: 30,
+                        items: List.generate(
+                            studentAttendanceController.sectionList.length,
+                            (index) {
+                          return DropdownMenuItem(
+                            value:
+                                studentAttendanceController.sectionList[index],
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 13, left: 5),
+                              child: Text(
+                                studentAttendanceController
+                                    .sectionList[index].asmCSectionName!,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .merge(const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 16.0,
+                                        letterSpacing: 0.3)),
+                              ),
+                            ),
+                          );
+                        }),
+                        onChanged: (s) {
+                          selectedSection = s!;
+                          logger.d(s.asmSId);
+                        },
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 14.0),
                       child: Row(
@@ -395,7 +413,9 @@ class _StudentAttendanceStaffHomeState
                                   onChanged: (value) {
                                     setState(() {
                                       selectedRadio = value!;
-                                      logger.d(selectedRadio);
+                                      selectedStudent = null;
+                                      selectedMonth = null;
+                                      nameOrAdm = '';
                                     });
                                   },
                                 ),
@@ -426,7 +446,9 @@ class _StudentAttendanceStaffHomeState
                                   onChanged: (value) {
                                     setState(() {
                                       selectedRadio = value!;
-                                      logger.d(selectedRadio);
+                                      selectedStudent = null;
+                                      selectedMonth = null;
+                                      nameOrAdm = '';
                                     });
                                   },
                                 ),
@@ -475,7 +497,8 @@ class _StudentAttendanceStaffHomeState
                                   onChanged: (value) {
                                     setState(() {
                                       configuration = value!;
-                                      logger.d(configuration);
+                                      selectedfromdate = null;
+                                      selectedtodate = null;
                                     });
                                   },
                                 ),
@@ -505,7 +528,8 @@ class _StudentAttendanceStaffHomeState
                                   onChanged: (value) {
                                     setState(() {
                                       configuration = value!;
-                                      logger.d(configuration);
+                                      selectedfromdate = null;
+                                      selectedtodate = null;
                                     });
                                   },
                                 ),
@@ -535,7 +559,8 @@ class _StudentAttendanceStaffHomeState
                                   onChanged: (value) {
                                     setState(() {
                                       configuration = value!;
-                                      logger.d(configuration);
+                                      selectedfromdate = null;
+                                      selectedtodate = null;
                                     });
                                   },
                                 ),
@@ -557,10 +582,88 @@ class _StudentAttendanceStaffHomeState
                     ),
                     if (configuration == 1) const SizedBox(height: 10),
                     configuration == 1
-                        ? const Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16.0, vertical: 12),
-                            child: SelectMonthScrollContainer())
+                        ? Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              borderRadius: BorderRadius.circular(16.0),
+                              boxShadow: const [
+                                BoxShadow(
+                                  offset: Offset(0, 1),
+                                  blurRadius: 8,
+                                  color: Colors.black12,
+                                ),
+                              ],
+                            ),
+                            child: DropdownButtonFormField<MonthListValue>(
+                              value: selectedMonth,
+                              decoration: InputDecoration(
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                                hintStyle: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .merge(const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.3)),
+                                hintText: 'Select month',
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                isDense: true,
+                                label: const CustomDropDownLabel(
+                                  icon: 'assets/images/darkbluecalendar.png',
+                                  containerColor:
+                                      Color.fromRGBO(229, 243, 255, 1),
+                                  text: 'Select Month',
+                                  textColor: Color.fromRGBO(62, 120, 170, 1),
+                                ),
+                              ),
+                              icon: const Padding(
+                                padding: EdgeInsets.only(top: 3),
+                                child: Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  size: 30,
+                                ),
+                              ),
+                              iconSize: 30,
+                              items: List.generate(
+                                  studentAttendanceController.monthList.length,
+                                  (index) {
+                                return DropdownMenuItem(
+                                  value: studentAttendanceController
+                                      .monthList[index],
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.only(top: 13, left: 5),
+                                    child: Text(
+                                      studentAttendanceController
+                                          .monthList[index].amMName!,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall!
+                                          .merge(const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 16.0,
+                                              letterSpacing: 0.3)),
+                                    ),
+                                  ),
+                                );
+                              }),
+                              onChanged: (s) {
+                                selectedMonth = s!;
+                              },
+                            ),
+                          )
                         : configuration == 3
                             ? Container(
                                 margin: const EdgeInsets.only(
@@ -571,17 +674,18 @@ class _StudentAttendanceStaffHomeState
                                         Theme.of(context).textTheme.titleSmall,
                                     controller: todayDate,
                                     onTap: () async {
-                                      selecteddate = await showDatePicker(
+                                      selectedfromdate = await showDatePicker(
                                         context: context,
                                         initialDate: DateTime.now(),
-                                        firstDate: DateTime.now(),
-                                        lastDate: DateTime.now(),
+                                        firstDate: DateTime(2000),
+                                        lastDate:
+                                            DateTime(DateTime.now().year + 2),
                                       );
 
-                                      if (selecteddate != null) {
+                                      if (selectedfromdate != null) {
                                         setState(() {
                                           todayDate.text =
-                                              "${numberList[selecteddate!.day]}-${numberList[selecteddate!.month]}-${selecteddate!.year}";
+                                              "${numberList[selectedfromdate!.day]}-${numberList[selectedfromdate!.month]}-${selectedfromdate!.year}";
                                         });
                                       }
                                     },
@@ -622,104 +726,264 @@ class _StudentAttendanceStaffHomeState
                                   ),
                                 ),
                               )
-                            : const SelectDateFromToDate(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
-                        children: [
-                          Row(
-                            children: [
-                              Transform.scale(
-                                scale: 1.1,
-                                child: Radio(
-                                  visualDensity:
-                                      const VisualDensity(horizontal: -4.0),
-                                  activeColor: Theme.of(context).primaryColor,
-                                  value: 'name',
-                                  groupValue: nameOrAdm,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      nameOrAdm = value!;
-                                      logger.d(selectedRadio);
-                                    });
+                            : SelectDateFromToDate(
+                                function: getFromDate,
+                                function1: getEndDate,
+                              ),
+                    selectedRadio == 2
+                        ? Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    Transform.scale(
+                                      scale: 1.1,
+                                      child: Radio(
+                                        visualDensity: const VisualDensity(
+                                            horizontal: -4.0),
+                                        activeColor:
+                                            Theme.of(context).primaryColor,
+                                        value: 'name',
+                                        groupValue: nameOrAdm,
+                                        onChanged: (value) {
+                                          if (selectedAcademicYear == null) {
+                                            Fluttertoast.showToast(
+                                                msg: 'Select academic year');
+                                          } else if (selectedClass == null) {
+                                            Fluttertoast.showToast(
+                                                msg: 'Select class');
+                                          } else if (selectedSection == null) {
+                                            Fluttertoast.showToast(
+                                                msg: 'Select section');
+                                          } else {
+                                            setState(() {
+                                              nameOrAdm = value!;
+                                              selectedStudent = null;
+                                            });
+                                            getStudentListData(value!);
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                    Text(
+                                      "Name",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall!
+                                          .merge(const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14.0,
+                                              letterSpacing: 0.3)),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(width: 30),
+                                Row(
+                                  children: [
+                                    Transform.scale(
+                                      scale: 1.1,
+                                      child: Radio(
+                                        visualDensity: const VisualDensity(
+                                            horizontal: -4.0),
+                                        activeColor:
+                                            Theme.of(context).primaryColor,
+                                        value: 'admno',
+                                        groupValue: nameOrAdm,
+                                        onChanged: (value) {
+                                          if (selectedAcademicYear == null) {
+                                            Fluttertoast.showToast(
+                                                msg: 'Select academic year');
+                                          } else if (selectedClass == null) {
+                                            Fluttertoast.showToast(
+                                                msg: 'Select class');
+                                          } else if (selectedSection == null) {
+                                            Fluttertoast.showToast(
+                                                msg: 'Select section');
+                                          } else {
+                                            setState(() {
+                                              nameOrAdm = value!;
+                                              selectedStudent = null;
+                                            });
+                                            getStudentListData(value!);
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                    Text(
+                                      "Admin No.",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall!
+                                          .merge(const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14.0,
+                                              letterSpacing: 0.3)),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
+                        : const SizedBox(),
+                    const SizedBox(height: 15),
+                    selectedRadio == 2
+                        ? studentAttendanceController.isStudent.value
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : Container(
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 16),
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      offset: Offset(0, 1),
+                                      blurRadius: 8,
+                                      color: Colors.black12,
+                                    ),
+                                  ],
+                                ),
+                                child:
+                                    DropdownButtonFormField<StudentListValue>(
+                                  value: selectedStudent,
+                                  decoration: InputDecoration(
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall!
+                                        .merge(const TextStyle(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14.0,
+                                            letterSpacing: 0.3)),
+                                    hintText: 'Select student',
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.always,
+                                    isDense: true,
+                                    label: const CustomDropDownLabel(
+                                      icon: 'assets/images/profileiconsa.png',
+                                      containerColor:
+                                          Color.fromRGBO(238, 232, 255, 1),
+                                      text: 'Select Student',
+                                      textColor:
+                                          Color.fromRGBO(111, 88, 180, 1),
+                                    ),
+                                  ),
+                                  icon: const Padding(
+                                    padding: EdgeInsets.only(top: 3),
+                                    child: Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      size: 30,
+                                    ),
+                                  ),
+                                  iconSize: 30,
+                                  items: List.generate(
+                                      studentAttendanceController
+                                          .studentList.length, (index) {
+                                    return DropdownMenuItem(
+                                      value: studentAttendanceController
+                                          .studentList[index],
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: 13,
+                                          left: 5,
+                                        ),
+                                        child: Text(
+                                          studentAttendanceController
+                                              .studentList[index].name!,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall!
+                                              .merge(const TextStyle(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 16.0,
+                                                  letterSpacing: 0.3)),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                                  onChanged: (s) {
+                                    selectedStudent = s!;
                                   },
                                 ),
-                              ),
-                              Text(
-                                "Name",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .merge(const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.3)),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(width: 30),
-                          Row(
-                            children: [
-                              Transform.scale(
-                                scale: 1.1,
-                                child: Radio(
-                                  visualDensity:
-                                      const VisualDensity(horizontal: -4.0),
-                                  activeColor: Theme.of(context).primaryColor,
-                                  value: 'admno',
-                                  groupValue: nameOrAdm,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      nameOrAdm = value!;
-                                      logger.d(selectedRadio);
-                                    });
-                                  },
-                                ),
-                              ),
-                              Text(
-                                "Admin No.",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .merge(const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14.0,
-                                        letterSpacing: 0.3)),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: SelectStudentScrollContainer(),
-                    ),
+                              )
+                        : const SizedBox(),
                     const SizedBox(height: 20),
                     Align(
                       alignment: Alignment.center,
-                      child: MSkollBtn(
-                        title: 'Search',
-                        onPress: () {
-                          if (selectedRadio == 1 && configuration == 1) {
-                            Get.to(() =>
-                                const ConsolidatedMonthlyStudentAttendanceDetailScreen());
-                          }
-                          if (selectedRadio == 1 && configuration == 3) {
-                            Get.to(() =>
-                                const ConsolidatedDateWiseStudentAttendanceDetailScreen());
-                          }
-                          if (selectedRadio == 2 && configuration == 1) {
-                            Get.to(() =>
-                                const DetailedMonthlyStudentAttendanceDetailScreeen());
-                          }
-                          if (selectedRadio == 2 && configuration == 3) {
-                            Get.to(() =>
-                                const DetailedDateWiseStudentAttendanceDetailScreen());
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          fixedSize: const Size.fromWidth(150),
+                          backgroundColor: Theme.of(context).primaryColor,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 26, vertical: 14.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                        ),
+                        onPressed: () {
+                          if (selectedAcademicYear == null) {
+                            Fluttertoast.showToast(msg: 'Select academic year');
+                          } else if (selectedClass == null) {
+                            Fluttertoast.showToast(msg: 'Select class');
+                          } else if (selectedSection == null) {
+                            Fluttertoast.showToast(msg: 'Select section');
+                          } else if (configuration == 1 &&
+                              selectedMonth == null) {
+                            Fluttertoast.showToast(msg: 'Select month');
+                          } else if (configuration == 2 &&
+                              (selectedfromdate == null ||
+                                  selectedtodate == null)) {
+                            Fluttertoast.showToast(msg: 'Select date');
+                          } else if (configuration == 3 &&
+                              selectedfromdate == null) {
+                            Fluttertoast.showToast(msg: 'Select date');
+                          } else if (selectedRadio == 2 && nameOrAdm.isEmpty) {
+                            Fluttertoast.showToast(
+                                msg: 'Select Name or AdminNo');
+                          } else if (selectedRadio == 2 &&
+                              selectedStudent == null) {
+                            Fluttertoast.showToast(msg: 'Select student');
+                          } else {
+                            getAttendaceDetail();
                           }
                         },
-                        size: const Size.fromWidth(150),
+                        child: studentAttendanceController.isDetail.value
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Text(
+                                'Search',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .merge(
+                                      const TextStyle(
+                                        color: Colors.white,
+                                        letterSpacing: 0.3,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                              ),
                       ),
                     ),
                     const SizedBox(height: 30),

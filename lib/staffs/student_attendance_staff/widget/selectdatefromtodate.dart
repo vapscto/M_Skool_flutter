@@ -4,13 +4,21 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class SelectDateFromToDate extends StatefulWidget {
-  const SelectDateFromToDate({super.key});
+  final Function(DateTime) function;
+  final Function(DateTime) function1;
+  const SelectDateFromToDate({
+    super.key,
+    required this.function,
+    required this.function1,
+  });
 
   @override
   State<SelectDateFromToDate> createState() => _SelectDateFromToDateState();
 }
 
 class _SelectDateFromToDateState extends State<SelectDateFromToDate> {
+  DateTime? selectedfromdate;
+  DateTime? selectedtodate;
   var startDate = TextEditingController();
   var endDate = TextEditingController();
   @override
@@ -27,16 +35,17 @@ class _SelectDateFromToDateState extends State<SelectDateFromToDate> {
                 readOnly: true,
                 //maxLines: 4,
                 onTap: () async {
-                  var date = await showDatePicker(
+                  selectedfromdate = await showDatePicker(
                     context: context,
                     initialDate: DateTime.now(),
                     firstDate: DateTime(2023),
                     lastDate: DateTime(2025),
                   );
-                  if (date != null) {
+                  if (selectedfromdate != null) {
+                    widget.function(selectedfromdate!);
                     setState(() {
                       startDate.text =
-                          "${numberList[date.day]}-${numberList[date.month]}-${date.year}";
+                          "${numberList[selectedfromdate!.day]}-${numberList[selectedfromdate!.month]}-${selectedfromdate!.year}";
                     });
                   }
                 },
@@ -109,16 +118,17 @@ class _SelectDateFromToDateState extends State<SelectDateFromToDate> {
 
                 //maxLines: 4,
                 onTap: () async {
-                  var date = await showDatePicker(
+                  selectedtodate = await showDatePicker(
                     context: context,
                     initialDate: DateTime.now(),
                     firstDate: DateTime(2023),
                     lastDate: DateTime(2025),
                   );
-                  if (date != null) {
+                  if (selectedtodate != null) {
+                    widget.function1(selectedtodate!);
                     setState(() {
                       endDate.text =
-                          "${numberList[date.day]}-${numberList[date.month]}-${date.year}";
+                          "${numberList[selectedtodate!.day]}-${numberList[selectedtodate!.month]}-${selectedtodate!.year}";
                     });
                   }
                 },
