@@ -6,7 +6,6 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/api/get_datewise_notices.dart';
-import 'package:m_skool_flutter/notice/api/get_notice_api.dart';
 import 'package:m_skool_flutter/notice/screen/notice_detail_screen.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';

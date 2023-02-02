@@ -48,11 +48,27 @@ class _NoticeBoardStaffHomeState extends State<NoticeBoardStaffHome>
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: const HomeFab(),
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: "Staff Notice Board",
-        bottom: PreferredSize(
-          preferredSize: const Size(double.infinity, 50),
-          child: Container(
+        // bottom: PreferredSize(
+        //   preferredSize: const Size(double.infinity, 50),
+        //   child: Container(
+        //     // padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        //     color: Colors.white,
+        //     child: CustomTabBar(
+        //       tabs: const [
+        //         CustomTab(
+        //             name: "New Notice", asset: "assets/svg/file-text.svg"),
+        //         CustomTab(name: "View Notice", asset: "assets/svg/eye_svg.svg"),
+        //       ],
+        //       tabController: tabController!,
+        //     ),
+        //   ),
+        // ),
+      ).getAppBar(),
+      body: Column(
+        children: [
+          Container(
             // padding: const EdgeInsets.symmetric(horizontal: 12.0),
             color: Colors.white,
             child: CustomTabBar(
@@ -64,21 +80,23 @@ class _NoticeBoardStaffHomeState extends State<NoticeBoardStaffHome>
               tabController: tabController!,
             ),
           ),
-        ),
-      ).getAppBar(),
-      body: TabBarView(
-        controller: tabController,
-        children: [
-          NewNoticeTabScreen(
-            noticeBoardController: noticeBoardController,
-            loginSuccessModel: widget.loginSuccessModel,
-            mskoolController: widget.mskoolController,
-            hwCwController: hwCwController,
-          ),
-          ViewNoticeTabScreen(
-            nbController: noticeBoardController,
-            loginSuccessModel: widget.loginSuccessModel,
-            mskoolController: widget.mskoolController,
+          Expanded(
+            child: TabBarView(
+              controller: tabController,
+              children: [
+                NewNoticeTabScreen(
+                  noticeBoardController: noticeBoardController,
+                  loginSuccessModel: widget.loginSuccessModel,
+                  mskoolController: widget.mskoolController,
+                  hwCwController: hwCwController,
+                ),
+                ViewNoticeTabScreen(
+                  nbController: noticeBoardController,
+                  loginSuccessModel: widget.loginSuccessModel,
+                  mskoolController: widget.mskoolController,
+                ),
+              ],
+            ),
           ),
         ],
       ),

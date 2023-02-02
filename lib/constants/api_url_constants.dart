@@ -164,6 +164,8 @@ class URLS {
   static String getStaffDailyTT = "api/EmployeeTTFacade/getdaily_data/";
   static String getWeeklyTT = "api/EmployeeTTFacade/getdata/";
   static String nB_Attachment = "api/EmployeePtalFacade/viewnotice";
+  static String filterViewNotice =
+      "api/EmployeePtalFacade/onclick_noticeboard_datewise/";
 
   //Verify HW & CW
   static String getHwTopic =
@@ -234,6 +236,11 @@ class URLS {
 
   static String activateDeactiveCw = "api/IVRM_ClassWorkFacade/deactivate";
 
+  static String getFilteredHw =
+      "api/EmployeePtalFacade/onclick_Homework_datewise/";
+  static String getFilteredCw =
+      "api/EmployeePtalFacade/onclick_classwork_datewise/";
+
   // MARKS ENTRY API ............
 
   static String getacademicYear = 'api/MarksEntryFacade/Getdetails/';
@@ -286,6 +293,10 @@ class URLS {
   static String getNoticeStudent = "api/NoticeBoardFacade/getstudent";
   static String getDesignation = "api/NoticeBoardFacade/Deptselectiondetails";
   static String getEmployee = "api/NoticeBoardFacade/Desgselectiondetails";
+  static String saveNotices = "api/NoticeBoardFacade/savedetail";
+  static String getNbAttachment = "api/NoticeBoardFacade/viewData";
+  static String activeDeactiveNb = "api/NoticeBoardFacade/deactivate";
+  static String getNbRecord = "api/NoticeBoardFacade/viewrecords/";
 
   /*  Staff Interaction */
   static String composeOnload = 'api/IVRM_InteractionsFacade/getdetails/';
@@ -296,10 +307,6 @@ class URLS {
   static String getInbox = 'api/IVRM_InteractionsFacade/getloaddata/';
 
   ////////////////////
-  static String saveNotices = "api/NoticeBoardFacade/savedetail";
-  static String getNbAttachment = "api/NoticeBoardFacade/viewData";
-  static String activeDeactiveNb = "api/NoticeBoardFacade/deactivate";
-  static String getNbRecord = "api/NoticeBoardFacade/viewrecords/";
 
   /* Online leave apply */
   static String getLeaveName =
@@ -324,4 +331,5 @@ class URLS {
       "api/AdmissionCtrl/AcademicyearwiseClassSectionStudent/";
   static String getStudentDetails =
       "api/StudentSearchFacade/getstudentdetails/";
+  static String examDetails = "api/StudentSearchFacade/showsectionGrid/";
 }

@@ -1,13 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_get_work.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/controller/hw_cw_controller.dart';
+import 'package:m_skool_flutter/staffs/view_notice/api/view_notice_filter.dart';
+import 'package:m_skool_flutter/staffs/view_notice/controller/view_notice_data_controller.dart';
 import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 
 class FilterControllerWidget extends StatelessWidget {
   final HwCwNbController hwCwNbController;
   final RxBool showFilter;
+  final bool forHwCw;
+  final bool? forHw;
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  final HwCwController? hwCwController;
+  final ViewNoticeDataController? datController;
   const FilterControllerWidget(
-      {super.key, required this.hwCwNbController, required this.showFilter});
+      {super.key,
+      required this.hwCwNbController,
+      required this.showFilter,
+      required this.forHwCw,
+      required this.loginSuccessModel,
+      required this.mskoolController,
+      this.hwCwController,
+      this.forHw,
+      this.datController});
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +58,19 @@ class FilterControllerWidget extends StatelessWidget {
                 Expanded(
                   child: InkWell(
                     onTap: () async {
+                      // DateTime firstDate = DateTime(
+                      //   DateTime.now().month == 1
+                      //       ? DateTime.now().year - 1
+                      //       : DateTime.now().year,
+                      //   DateTime.now().month == 1
+                      //       ? 12
+                      //       : DateTime.now().day == 1
+                      //           ? DateTime.now().month - 1
+                      //           : DateTime.now().month,
+                      // );
+
                       DateTime firstDate = DateTime(
-                        DateTime.now().month == 1
-                            ? DateTime.now().year - 1
-                            : DateTime.now().year,
-                        DateTime.now().month == 1
-                            ? 12
-                            : DateTime.now().day == 1
-                                ? DateTime.now().month - 1
-                                : DateTime.now().month,
+                        DateTime.now().year - 1,
                       );
 
                       DateTime endDate = DateTime.now();
@@ -202,5 +227,27 @@ class FilterControllerWidget extends StatelessWidget {
     );
   }
 
-  filter() {}
+  filter() async {
+    if (forHwCw) {
+      await GetHomeWorks.instance.getFilteredHwCw(
+        miId: loginSuccessModel.mIID!,
+        asmayId: loginSuccessModel.asmaYId!,
+        hrmeId: loginSuccessModel.empcode!,
+        startDate: hwCwNbController.dtList.first.toLocal().toString(),
+        endDate: hwCwNbController.dtList.last.toLocal().toString(),
+        base: baseUrlFromInsCode("portal", mskoolController),
+        controller: hwCwController!,
+        forHw: forHw!,
+      );
+      return;
+    }
+    ViewNoticeFilterApi.instance.getFilteredNotice(
+        base: baseUrlFromInsCode("portal", mskoolController),
+        hrme: loginSuccessModel.empcode!,
+        asmayId: loginSuccessModel.asmaYId!,
+        miId: loginSuccessModel.mIID!,
+        start: hwCwNbController.dtList.first.toLocal().toString(),
+        end: hwCwNbController.dtList.last.toLocal().toString(),
+        controller: datController!);
+  }
 }

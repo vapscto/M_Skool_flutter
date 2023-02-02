@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -10,6 +11,8 @@ import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_cw_get_year.dar
 import 'package:m_skool_flutter/staffs/homework_classwork/controller/hw_cw_controller.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/tabs/assign_work.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/tabs/view_work.dart';
+import 'package:m_skool_flutter/staffs/view_notice/widget/filter_controller_widget.dart';
+import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
@@ -38,6 +41,9 @@ class _HwCwHomeState extends State<HwCwHome>
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
+    tabController!.addListener(() {
+      currentIndex.value = tabController!.index;
+    });
     loadHw();
     super.initState();
   }
@@ -116,39 +122,76 @@ class _HwCwHomeState extends State<HwCwHome>
   @override
   void dispose() {
     Get.delete<HwCwController>();
+    Get.delete<HwCwNbController>();
     super.dispose();
   }
+
+  RxInt currentIndex = 0.obs;
+  final HwCwNbController hwCwNbController = Get.put(HwCwNbController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-          title: widget.title,
-          bottom: PreferredSize(
-            preferredSize: const Size(double.infinity, 55),
-            child: Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: CustomTabBar(tabController: tabController!, tabs: const [
-                CustomTab(
-                    name: "AssignWork", asset: "assets/svg/file-text.svg"),
-                CustomTab(name: "ViewWork", asset: "assets/svg/eye_svg.svg"),
-              ]),
-            ),
-          )).getAppBar(),
-      body: TabBarView(
-        controller: tabController,
+        title: widget.title,
+        // bottom: PreferredSize(
+        //   preferredSize: const Size(double.infinity, 55),
+        //   child:
+        // ),
+        action: [
+          Obx(() {
+            return currentIndex.value == 1
+                ? IconButton(
+                    onPressed: () {
+                      hwCwController
+                          .updateShowFilter(!hwCwController.showFilter.value);
+                    },
+                    icon: SvgPicture.asset("assets/svg/filter.svg"))
+                : const SizedBox();
+          }),
+        ],
+      ).getAppBar(),
+      body: Column(
         children: [
-          HwCwAssignWork(
-            forHw: widget.forHw,
-            hwCwController: hwCwController,
-            loginSuccessModel: widget.loginSuccessModel,
-            mskoolController: widget.mskoolController,
+          Obx(() {
+            return hwCwController.showFilter.value == false
+                ? const SizedBox()
+                : FilterControllerWidget(
+                    hwCwNbController: hwCwNbController,
+                    showFilter: hwCwController.showFilter,
+                    forHwCw: true,
+                    loginSuccessModel: widget.loginSuccessModel,
+                    mskoolController: widget.mskoolController,
+                    forHw: widget.forHw,
+                    hwCwController: hwCwController,
+                  );
+          }),
+          Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: CustomTabBar(tabController: tabController!, tabs: const [
+              CustomTab(name: "AssignWork", asset: "assets/svg/file-text.svg"),
+              CustomTab(name: "ViewWork", asset: "assets/svg/eye_svg.svg"),
+            ]),
           ),
-          HwCwViewWork(
-            forHw: widget.forHw,
-            loginSuccessModel: widget.loginSuccessModel,
-            mskoolController: widget.mskoolController,
-            hwController: hwCwController,
+          Expanded(
+            child: TabBarView(
+              controller: tabController,
+              children: [
+                HwCwAssignWork(
+                  forHw: widget.forHw,
+                  hwCwController: hwCwController,
+                  loginSuccessModel: widget.loginSuccessModel,
+                  mskoolController: widget.mskoolController,
+                ),
+                HwCwViewWork(
+                  forHw: widget.forHw,
+                  loginSuccessModel: widget.loginSuccessModel,
+                  mskoolController: widget.mskoolController,
+                  hwController: hwCwController, filteration: hwCwNbController,
+                  // showFilter: showFilter,
+                ),
+              ],
+            ),
           ),
         ],
       ),
