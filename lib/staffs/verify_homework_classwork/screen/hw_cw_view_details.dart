@@ -32,6 +32,7 @@ class VerifyHwCwViewDetails extends StatefulWidget {
   final int ismsId;
   final String fromDate;
   final String toDate;
+  final int topicId;
   const VerifyHwCwViewDetails(
       {super.key,
       required this.title,
@@ -43,7 +44,8 @@ class VerifyHwCwViewDetails extends StatefulWidget {
       required this.asmsId,
       required this.ismsId,
       required this.fromDate,
-      required this.toDate});
+      required this.toDate,
+      required this.topicId});
 
   @override
   State<VerifyHwCwViewDetails> createState() => _VerifyHwCwViewDetailsState();
@@ -292,6 +294,7 @@ class _VerifyHwCwViewDetailsState extends State<VerifyHwCwViewDetails> {
                         "portal",
                         widget.mskoolController,
                       ),
+                      topic: widget.topicId,
                     ),
                     builder: (_, snapshot) {
                       if (snapshot.hasData) {
@@ -403,21 +406,23 @@ class _VerifyHwCwViewDetailsState extends State<VerifyHwCwViewDetails> {
                   )
                 : FutureBuilder<List<VerifyClassworkListValues>>(
                     future: GetCwApi.instance.getCwList(
-                        miId: widget.loginSuccessModel.mIID!,
-                        hrmeId: widget.loginSuccessModel.empcode!,
-                        loginId: widget.loginSuccessModel.userId!,
-                        userId: widget.loginSuccessModel.userId!,
-                        ivrmrtId: widget.loginSuccessModel.roleId!,
-                        roleFlag: "Staff",
-                        asmayId: widget.asmayId,
-                        ismsId: widget.ismsId,
-                        asmclId: widget.asmclId,
-                        asmsId: widget.asmsId,
-                        fromDate: widget.fromDate,
-                        toDate: widget.toDate,
-                        base: baseUrlFromInsCode(
-                            "portal", widget.mskoolController),
-                        controller: imageController),
+                      miId: widget.loginSuccessModel.mIID!,
+                      hrmeId: widget.loginSuccessModel.empcode!,
+                      loginId: widget.loginSuccessModel.userId!,
+                      userId: widget.loginSuccessModel.userId!,
+                      ivrmrtId: widget.loginSuccessModel.roleId!,
+                      roleFlag: "Staff",
+                      asmayId: widget.asmayId,
+                      ismsId: widget.ismsId,
+                      asmclId: widget.asmclId,
+                      asmsId: widget.asmsId,
+                      fromDate: widget.fromDate,
+                      toDate: widget.toDate,
+                      base:
+                          baseUrlFromInsCode("portal", widget.mskoolController),
+                      controller: imageController,
+                      topic: widget.topicId,
+                    ),
                     builder: (_, snapshot) {
                       if (snapshot.hasData) {
                         if (snapshot.data!.isEmpty) {

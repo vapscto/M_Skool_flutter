@@ -166,8 +166,11 @@ class URLS {
   static String nB_Attachment = "api/EmployeePtalFacade/viewnotice";
 
   //Verify HW & CW
-  static String getHwList =
+  static String getHwTopic =
       "api/EmployeeStudentHomeworkFacade/gethomework_list/";
+
+  static String getHwList =
+      "api/EmployeeStudentHomeworkFacade/gethomework_listTopic/";
   static String getCwAttachedFile = "api/IVRM_ClassWorkFacade/viewclasswork/";
   static String getHwAttachedFile =
       "api/EmployeeStudentHomeworkFacade/viewhomework";
@@ -179,6 +182,9 @@ class URLS {
       "api/EmployeeStudentHomeworkFacade/viewstudentupload/";
 
   static String getVerifyClassWorkList =
+      "api/IVRM_ClassWorkFacade/getclasswork_Topiclist/";
+
+  static String getVerifyClassWorkTopic =
       "api/IVRM_ClassWorkFacade/getclasswork_list/";
   static String uploadCwEnd = "api/LoginFacade/ClassworkUpload";
 

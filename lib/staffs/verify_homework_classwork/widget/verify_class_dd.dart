@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_cw_get_section.
 import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_cw_get_subject.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/controller/hw_cw_controller.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/model/hw_cw_classes_model.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/get_topic_api.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/verify_cw_subject_api.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/widget/verify_section_dd.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
@@ -166,18 +167,54 @@ class VerifyClassDD extends StatelessWidget {
         base: baseUrlFromInsCode("portal", mskoolController),
         hwCwController: verifyController,
       );
+      // return;
+    } else {
+      await VerifyCwSubjectListApi.instance.getCwSubjects(
+          miId: loginSuccessModel.mIID!,
+          hrme: loginSuccessModel.empcode!,
+          loginId: loginSuccessModel.userId!,
+          userId: loginSuccessModel.userId!,
+          ivrmrtId: loginSuccessModel.roleId!,
+          asmayId: verifyController.selectedSession.value.asmaYId!,
+          asmscld: verifyController.selectedClass.value.asmcLId!,
+          asmsId: verifyController.verifySelectedSection.value.asmSId!,
+          base: baseUrlFromInsCode("portal", mskoolController),
+          hwCwController: verifyController);
+    }
+
+    if (verifyController.isErrorOccuredLoadingSection.value ||
+        (verifyController.cwSubjectList.isEmpty &&
+            verifyController.subjects.isEmpty)) {
       return;
     }
-    await VerifyCwSubjectListApi.instance.getCwSubjects(
-        miId: loginSuccessModel.mIID!,
-        hrme: loginSuccessModel.empcode!,
-        loginId: loginSuccessModel.userId!,
-        userId: loginSuccessModel.userId!,
-        ivrmrtId: loginSuccessModel.roleId!,
-        asmayId: verifyController.selectedSession.value.asmaYId!,
-        asmscld: verifyController.selectedClass.value.asmcLId!,
-        asmsId: verifyController.verifySelectedSection.value.asmSId!,
-        base: baseUrlFromInsCode("portal", mskoolController),
-        hwCwController: verifyController);
+
+    if (forHw) {
+      await GetVerifyTopicApi.instance.getTopicForHw(
+          asmayId: verifyController.selectedSession.value.asmaYId!,
+          asmclId: verifyController.selectedClass.value.asmcLId!,
+          miId: loginSuccessModel.mIID!,
+          asmsId: verifyController.verifySelectedSection.value.asmSId!,
+          ismsId: verifyController.selectedSubject.value.ismSId!,
+          loginId: loginSuccessModel.userId!,
+          controller: verifyController,
+          base: baseUrlFromInsCode(
+            "portal",
+            mskoolController,
+          ));
+      // return;
+    } else {
+      await GetVerifyTopicApi.instance.getTopicForCw(
+          asmayId: verifyController.selectedSession.value.asmaYId!,
+          asmclId: verifyController.selectedClass.value.asmcLId!,
+          miId: loginSuccessModel.mIID!,
+          asmsId: verifyController.verifySelectedSection.value.asmSId!,
+          ismsId: verifyController.selectedCwSub.value.iSMSId!,
+          loginId: loginSuccessModel.userId!,
+          controller: verifyController,
+          base: baseUrlFromInsCode(
+            "portal",
+            mskoolController,
+          ));
+    }
   }
 }

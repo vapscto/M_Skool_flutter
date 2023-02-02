@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_cw_get_class.da
 import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_cw_get_section.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/api/hw_cw_get_subject.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/controller/hw_cw_controller.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/get_topic_api.dart';
 import 'package:m_skool_flutter/staffs/verify_homework_classwork/api/verify_cw_subject_api.dart';
 import 'package:m_skool_flutter/staffs/view_notice/model/view_notice_session_model.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -153,18 +154,55 @@ class HwCwAcademicYearDD extends StatelessWidget {
         base: baseUrlFromInsCode("portal", mskoolController),
         hwCwController: hwCwController,
       );
-      return;
+      // return;
+    } else {
+      await VerifyCwSubjectListApi.instance.getCwSubjects(
+          miId: loginSuccessModel.mIID!,
+          hrme: loginSuccessModel.empcode!,
+          loginId: loginSuccessModel.userId!,
+          userId: loginSuccessModel.userId!,
+          ivrmrtId: loginSuccessModel.roleId!,
+          asmayId: hwCwController.selectedSession.value.asmaYId!,
+          asmscld: hwCwController.selectedClass.value.asmcLId!,
+          asmsId: hwCwController.verifySelectedSection.value.asmSId!,
+          base: baseUrlFromInsCode("portal", mskoolController),
+          hwCwController: hwCwController);
     }
-    await VerifyCwSubjectListApi.instance.getCwSubjects(
-        miId: loginSuccessModel.mIID!,
-        hrme: loginSuccessModel.empcode!,
-        loginId: loginSuccessModel.userId!,
-        userId: loginSuccessModel.userId!,
-        ivrmrtId: loginSuccessModel.roleId!,
-        asmayId: hwCwController.selectedSession.value.asmaYId!,
-        asmscld: hwCwController.selectedClass.value.asmcLId!,
-        asmsId: hwCwController.verifySelectedSection.value.asmSId!,
-        base: baseUrlFromInsCode("portal", mskoolController),
-        hwCwController: hwCwController);
+    if (forVerify) {
+      if (hwCwController.isErrorOccuredLoadingSection.value ||
+          (hwCwController.cwSubjectList.isEmpty &&
+              hwCwController.subjects.isEmpty)) {
+        return;
+      }
+
+      if (forHw) {
+        await GetVerifyTopicApi.instance.getTopicForHw(
+            asmayId: hwCwController.selectedSession.value.asmaYId!,
+            asmclId: hwCwController.selectedClass.value.asmcLId!,
+            miId: loginSuccessModel.mIID!,
+            asmsId: hwCwController.verifySelectedSection.value.asmSId!,
+            ismsId: hwCwController.selectedSubject.value.ismSId!,
+            loginId: loginSuccessModel.userId!,
+            controller: hwCwController,
+            base: baseUrlFromInsCode(
+              "portal",
+              mskoolController,
+            ));
+        // return;
+      } else {
+        await GetVerifyTopicApi.instance.getTopicForCw(
+            asmayId: hwCwController.selectedSession.value.asmaYId!,
+            asmclId: hwCwController.selectedClass.value.asmcLId!,
+            miId: loginSuccessModel.mIID!,
+            asmsId: hwCwController.verifySelectedSection.value.asmSId!,
+            ismsId: hwCwController.selectedCwSub.value.iSMSId!,
+            loginId: loginSuccessModel.userId!,
+            controller: hwCwController,
+            base: baseUrlFromInsCode(
+              "portal",
+              mskoolController,
+            ));
+      }
+    }
   }
 }
