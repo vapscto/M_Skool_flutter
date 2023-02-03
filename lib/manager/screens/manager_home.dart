@@ -106,16 +106,21 @@ class _ManagerHomeState extends State<ManagerHome> {
                           .elementAt(index)
                           .pagename ==
                       "Overall Fee") {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return OverallFeeHome(
-                        loginSuccessModel: widget.loginSuccessModel,
-                        mskoolController: widget.mskoolController,
-                        title: widget
-                            .loginSuccessModel.staffmobileappprivileges!.values!
-                            .elementAt(index)
-                            .pagename!,
-                      );
-                    }));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) {
+                          return OverallFeeHome(
+                            loginSuccessModel: widget.loginSuccessModel,
+                            mskoolController: widget.mskoolController,
+                            title: widget.loginSuccessModel
+                                .staffmobileappprivileges!.values!
+                                .elementAt(index)
+                                .pagename!,
+                          );
+                        },
+                      ),
+                    );
 
                     return;
                   }

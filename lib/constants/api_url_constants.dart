@@ -316,7 +316,7 @@ class URLS {
   static String attendanceShortage =
       "api/AdmissionCtrl/shortageOfAttendanceAlert";
 
-  /*Manager APIS*/
+  ////////////////////////////////////////////////////*Manager APIS*/////////////////////////////////////////
 
   //Student Details
   static String managerAcademic = "api/StudentSearchFacade/getalldetails/";
@@ -326,4 +326,14 @@ class URLS {
       "api/AdmissionCtrl/AcademicyearwiseClassSectionStudent/";
   static String getStudentDetails =
       "api/StudentSearchFacade/getstudentdetails/";
+
+  //////  OVERALL FEE APIS ////////////////////
+  static String getOverallFeeAcademicYear =
+      'api/PrincipalDefaulterFeeFacade/Getdetails/';
+  static String getOverallFeeClass =
+      'api/PrincipalDefaulterFeeFacade/getclass/';
+  static String getOverallFeeSectin =
+      'api/PrincipalDefaulterFeeFacade/Getsection/';
+  static String getOverallFeeResults =
+      'api/PrincipalDefaulterFeeFacade/Getreport/';
 }
