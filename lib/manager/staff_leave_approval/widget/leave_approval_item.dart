@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/manager/staff_leave_approval/model/leave_approval_model.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 import '../../../constants/constants.dart';
 
 class AppliedLeaveAprovalItem extends StatelessWidget {
+  final LeaveApprovalModelValues value;
   const AppliedLeaveAprovalItem({
     Key? key,
+    required this.value,
   }) : super(key: key);
 
   @override
@@ -20,7 +23,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Suffering from fever",
+              value.hRELAPLeaveReason!,
               style: Theme.of(context).textTheme.titleSmall!.merge(
                     const TextStyle(
                         fontWeight: FontWeight.w600, fontSize: 16.0),
@@ -29,7 +32,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
             const SizedBox(
               height: 3.0,
             ),
-            const Text("Sick Leave"),
+            Text(value.hRMLLeaveName!),
             const SizedBox(
               height: 6.0,
             ),
@@ -62,7 +65,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      "25th Oct - 27th Oct",
+                      "${getFormatedDate(DateTime.parse(value.hRELAPFromDate!)).substring(0, getFormatedDate(DateTime.parse(value.hRELAPFromDate!)).length - 2)} - ${getFormatedDate(DateTime.parse(value.hRELAPToDate!)).substring(0, getFormatedDate(DateTime.parse(value.hRELAPToDate!)).length - 2)}",
                       style: Theme.of(context).textTheme.titleSmall!.merge(
                             const TextStyle(
                               fontWeight: FontWeight.w600,
@@ -111,7 +114,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      "Sampath | BGHS204 | Teacher",
+                      "${value.hRMEEmployeeFirstName} | {value.empcode} | {value.designation}",
                       style: Theme.of(context).textTheme.titleSmall!.merge(
                             const TextStyle(
                               fontWeight: FontWeight.w600,
@@ -159,7 +162,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              "Leave Approval for Sampath",
+                                              "Leave Approval for ${value.hRMEEmployeeFirstName}",
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .titleSmall!
