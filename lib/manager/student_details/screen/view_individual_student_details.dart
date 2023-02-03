@@ -85,6 +85,10 @@ class _ViewStudentIndividualDetailsState
                 ),
                 ExamTab(
                   controller: studentDetailsController,
+                  amstId: widget.amstId,
+                  asmayId: widget.asmayId,
+                  miId: widget.miId,
+                  base: widget.baseUrl,
                 ),
               ],
             ),

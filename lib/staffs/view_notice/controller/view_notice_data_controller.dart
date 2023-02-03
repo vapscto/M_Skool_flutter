@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/staffs/view_notice/model/view_notice_filter_model.dart';
 import 'package:m_skool_flutter/staffs/view_notice/model/view_notice_model.dart';
 import 'package:m_skool_flutter/staffs/view_notice/model/view_notice_session_model.dart';
 
@@ -71,5 +72,17 @@ class ViewNoticeDataController {
 
   void updateSelectedSession(ViewNoticeSessionModelValues sessionModel) {
     selectedSession.value = sessionModel;
+  }
+
+  RxBool isErrorOccuredWhileLoadingFilteration = RxBool(false);
+  RxBool isFilterationLoading = RxBool(false);
+
+  RxList<ViewNoticeFilterModelValues> filterList = RxList();
+
+  void addNoticeToFilter(List<ViewNoticeFilterModelValues> val) {
+    if (filterList.isNotEmpty) {
+      filterList.clear();
+    }
+    filterList.addAll(val);
   }
 }

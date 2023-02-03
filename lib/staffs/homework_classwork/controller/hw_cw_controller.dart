@@ -13,6 +13,17 @@ import 'package:m_skool_flutter/staffs/verify_homework_classwork/model/verify_ho
 import 'package:m_skool_flutter/staffs/view_notice/model/view_notice_session_model.dart';
 
 class HwCwController extends GetxController {
+  RxBool showFilter = RxBool(false);
+  void updateShowFilter(bool b) {
+    showFilter.value = b;
+  }
+
+  RxInt filterCount = RxInt(0);
+
+  void updateFilterCount(int b) {
+    filterCount.value = b;
+  }
+
   RxBool isWholePageLoading = RxBool(true);
   void updateIsWholePageLoading(bool ok) {
     isWholePageLoading.value = ok;

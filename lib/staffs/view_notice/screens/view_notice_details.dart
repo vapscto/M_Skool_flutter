@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/staffs/view_notice/api/view_attachment_api.dart';
 import 'package:m_skool_flutter/staffs/view_notice/model/attachment_model.dart';
+import 'package:m_skool_flutter/staffs/view_notice/model/view_notice_filter_model.dart';
 import 'package:m_skool_flutter/staffs/view_notice/model/view_notice_model.dart';
 import 'package:m_skool_flutter/staffs/view_notice/widget/pdf_attachment.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
@@ -13,16 +14,18 @@ import '../widget/other_attachment.dart';
 class ViewNoticeDetailsScreen extends StatelessWidget {
   final Color bgColor;
   final Color chipColor;
-  final ViewNoticeModelValues values;
+  final ViewNoticeModelValues? values;
+  final ViewNoticeFilterModelValues? val;
   final String base;
   final int intBId;
   const ViewNoticeDetailsScreen({
     super.key,
     required this.bgColor,
     required this.chipColor,
-    required this.values,
+    this.values,
     required this.base,
     required this.intBId,
+    this.val,
   });
 
   @override
@@ -44,7 +47,9 @@ class ViewNoticeDetailsScreen extends StatelessWidget {
             Chip(
               backgroundColor: bgColor,
               label: Text(
-                "${getFormatedDate(DateTime.parse(values.iNTBStartDate!))} to ${getFormatedDate(DateTime.parse(values.iNTBEndDate!))}",
+                val != null
+                    ? "${getFormatedDate(DateTime.parse(val!.intBStartDate!))} to ${getFormatedDate(DateTime.parse(val!.intBEndDate!))}"
+                    : "${getFormatedDate(DateTime.parse(values!.iNTBStartDate!))} to ${getFormatedDate(DateTime.parse(values!.iNTBEndDate!))}",
                 style: Theme.of(context).textTheme.titleSmall!.merge(
                       TextStyle(color: chipColor),
                     ),
@@ -54,7 +59,7 @@ class ViewNoticeDetailsScreen extends StatelessWidget {
               height: 8.0,
             ),
             Text(
-              "${values.iNTBTitle}",
+              val != null ? "${values!.iNTBTitle}" : "${values!.iNTBTitle}",
               style: Theme.of(context).textTheme.titleSmall!.merge(
                     const TextStyle(
                         fontWeight: FontWeight.w600, fontSize: 16.0),
@@ -64,7 +69,9 @@ class ViewNoticeDetailsScreen extends StatelessWidget {
               height: 8.0,
             ),
             ReadMoreText(
-              "${values.iNTBDescription}",
+              val != null
+                  ? "${val!.intBDescription}"
+                  : "${values!.iNTBDescription}",
               style: Theme.of(context).textTheme.labelSmall!.merge(
                     const TextStyle(
                       fontSize: 14,

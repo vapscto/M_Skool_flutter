@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/view_notice/controller/view_notice_data_controller.dart';
@@ -8,6 +9,7 @@ import 'package:m_skool_flutter/staffs/view_notice/screens/circula_screen.dart';
 import 'package:m_skool_flutter/staffs/view_notice/screens/syllabus_screen.dart';
 import 'package:m_skool_flutter/staffs/view_notice/screens/tt_screen.dart';
 import 'package:m_skool_flutter/staffs/view_notice/widget/filter_controller_widget.dart';
+import 'package:m_skool_flutter/staffs/view_notice/widget/filtered_notice.dart';
 import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
@@ -91,6 +93,10 @@ class _ViewNoticeHomeState extends State<ViewNoticeHome> {
                   : FilterControllerWidget(
                       hwCwNbController: hwCwNbController,
                       showFilter: showFilter,
+                      forHwCw: false,
+                      loginSuccessModel: widget.loginSuccessModel,
+                      mskoolController: widget.mskoolController,
+                      datController: viewNoticeDataController,
                     );
             }),
             const SizedBox(
@@ -106,9 +112,16 @@ class _ViewNoticeHomeState extends State<ViewNoticeHome> {
             ),
             Obx(() {
               return hwCwNbController.filter.value > 0
-                  ? const SizedBox(
-                      child: Text("Filter Widget"),
-                    )
+                  ? FilteredNotice(
+                      base:
+                          baseUrlFromInsCode("portal", widget.mskoolController),
+                      datController: viewNoticeDataController,
+                      asmayId: widget.loginSuccessModel.asmaYId!,
+                      endDt: hwCwNbController.dtList.first.toLocal().toString(),
+                      hrmeId: widget.loginSuccessModel.empcode!,
+                      miId: widget.loginSuccessModel.mIID!,
+                      startDt:
+                          hwCwNbController.dtList.last.toLocal().toString())
                   : noticeType.value == "circular"
                       ? CirculaNotice(
                           loginSuccessModel: widget.loginSuccessModel,
