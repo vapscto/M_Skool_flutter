@@ -55,9 +55,15 @@ class _OverallFeeHomeState extends State<OverallFeeHome>
       ).getAppBar(),
       body: TabBarView(
         controller: overallFeeTabController!,
-        children: const [
-          ManagerFeeDetails(),
-          ManagerClassWiseFeeDetails(),
+        children:  [
+          ManagerFeeDetails(
+           loginSuccessModel: widget.loginSuccessModel,
+                            mskoolController: widget.mskoolController,
+          ),
+          ManagerClassWiseFeeDetails(
+  loginSuccessModel: widget.loginSuccessModel,
+                            mskoolController: widget.mskoolController,
+          ),
         ],
       ),
     );
