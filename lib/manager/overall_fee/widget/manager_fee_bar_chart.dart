@@ -64,7 +64,7 @@ class _ManagerFeeBarChartState extends State<ManagerFeeBarChart> {
               height: 10,
             ),
             SizedBox(
-              height: 390,
+              height: 380,
               child: SfCartesianChart(
                 primaryYAxis: NumericAxis(
                   labelStyle: const TextStyle(

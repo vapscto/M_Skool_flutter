@@ -54,9 +54,11 @@ Future<bool> sendMessage({
   required int ismintId,
   required int userId,
   required List<String> image,
+  required int roleId,
   required String base,
 }) async {
   var url = base + URLS.sendMessage;
+  logger.d(url);
   try {
     var response = await dio.post(
       url,
@@ -72,7 +74,7 @@ Future<bool> sendMessage({
         "ISTINT_ComposedByFlg": istintComposedByFlg,
         "ISMINT_Id": ismintId,
         "UserId": userId,
-        "IVRMRT_Id": 7,
+        "IVRMRT_Id": roleId,
         "images_paths": image,
       },
     );

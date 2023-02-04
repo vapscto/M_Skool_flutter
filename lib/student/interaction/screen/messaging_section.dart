@@ -10,7 +10,6 @@ import 'package:m_skool_flutter/student/interaction/controller/interaction_contr
 import 'package:m_skool_flutter/student/interaction/widget/chat_box.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_text_file.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
-import '../model/inbox_model.dart';
 
 class MessagingScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -53,7 +52,14 @@ class _MessagingScreenState extends State<MessagingScreen> {
   @override
   void initState() {
     getMessageData();
-
+    logger.d({
+      "miId": widget.loginSuccessModel.mIID!,
+      "asmayId": widget.loginSuccessModel.asmaYId!,
+      "userId": widget.loginSuccessModel.userId!,
+      "roleId": widget.loginSuccessModel.roleId!,
+      "ismintId": widget.ismintId,
+      "role": widget.loginSuccessModel.roleforlogin
+    });
     super.initState();
   }
 
@@ -102,37 +108,30 @@ class _MessagingScreenState extends State<MessagingScreen> {
                         // physics: const NeverScrollableScrollPhysics(),
                         itemCount: interactionController.messageList.length,
                         itemBuilder: (context, index) {
+                          // logger.d({
+                          //   "username": widget.loginSuccessModel.studname,
+                          //   "sender": interactionController.messageList
+                          //       .elementAt(index)
+                          //       .sender
+                          // });
                           return Column(
                             children: [
-                              // ChatBox(
-                              //     name: widget.loginSuccessModel.studname ==
-                              //             widget.data.receiver
-                              //         ? widget.data.receiver!
-                              //         : widget.data.sender!,
-                              //     isFromMe: widget.data.ismintComposedByFlg ==
-                              //             'Staff'
-                              //         ? false
-                              //         : true,
-                              //     messages: widget.data.ismintInteraction!,
-                              //     istintDateTime: widget.data.ismintDateTime!,
-                              //     attactment: ''),
                               ChatBox(
-                                name: widget.loginSuccessModel.studname ==
+                                name: widget.loginSuccessModel.roleforlogin !=
                                         interactionController.messageList
                                             .elementAt(index)
-                                            .receiver
-                                    ? interactionController.messageList
-                                        .elementAt(index)
-                                        .receiver!
+                                            .istintToFlg
+                                    ? widget.loginSuccessModel.studname!
                                     : interactionController.messageList
                                         .elementAt(index)
                                         .sender!,
-                                isFromMe: interactionController.messageList
-                                            .elementAt(index)
-                                            .istintComposedByFlg ==
-                                        'Student'
-                                    ? true
-                                    : false,
+                                isFromMe:
+                                    widget.loginSuccessModel.roleforlogin !=
+                                            interactionController.messageList
+                                                .elementAt(index)
+                                                .istintToFlg
+                                        ? true
+                                        : false,
                                 messages: interactionController.messageList
                                     .elementAt(index)
                                     .istintInteraction!,
@@ -185,6 +184,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                         userId:
                                             widget.loginSuccessModel.userId!,
                                         image: interactionController.image,
+                                        roleId:
+                                            widget.loginSuccessModel.roleId!,
                                         base: baseUrlFromInsCode(
                                             'portal', widget.mskoolController),
                                       ).then(
@@ -250,6 +251,8 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                         userId:
                                             widget.loginSuccessModel.userId!,
                                         image: interactionController.image,
+                                        roleId:
+                                            widget.loginSuccessModel.roleId!,
                                         base: baseUrlFromInsCode(
                                             'portal', widget.mskoolController),
                                       ).then(
@@ -320,6 +323,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           ismintId: widget.ismintId,
                           userId: widget.loginSuccessModel.userId!,
                           image: interactionController.image,
+                          roleId: widget.loginSuccessModel.roleId!,
                           base: baseUrlFromInsCode(
                               'portal', widget.mskoolController),
                         ).then(

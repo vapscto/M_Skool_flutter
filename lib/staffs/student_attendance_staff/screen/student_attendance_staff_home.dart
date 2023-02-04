@@ -498,6 +498,7 @@ class _StudentAttendanceStaffHomeState
                                     setState(() {
                                       configuration = value!;
                                       selectedfromdate = null;
+                                      todayDate.text = '';
                                       selectedtodate = null;
                                     });
                                   },
@@ -529,6 +530,7 @@ class _StudentAttendanceStaffHomeState
                                     setState(() {
                                       configuration = value!;
                                       selectedfromdate = null;
+                                      todayDate.text = '';
                                       selectedtodate = null;
                                     });
                                   },
@@ -560,6 +562,7 @@ class _StudentAttendanceStaffHomeState
                                     setState(() {
                                       configuration = value!;
                                       selectedfromdate = null;
+                                      todayDate.text = '';
                                       selectedtodate = null;
                                     });
                                   },

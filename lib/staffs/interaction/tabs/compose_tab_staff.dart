@@ -492,7 +492,19 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                             clipBehavior: Clip.none,
                             children: [
                               Container(
-                                height: 180,
+                                height: staffInteractionComposeController
+                                            .getDetailList.length ==
+                                        1
+                                    ? 60
+                                    : staffInteractionComposeController
+                                                .getDetailList.length ==
+                                            2
+                                        ? 120
+                                        : staffInteractionComposeController
+                                                    .getDetailList.length ==
+                                                3
+                                            ? 140
+                                            : 180,
                                 margin: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 10),
                                 padding:
@@ -987,7 +999,9 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                       .selectedradio.value.isEmpty) {
                     Fluttertoast.showToast(msg: 'Select Staff');
                   } else if (staffInteractionComposeController.grpOrInd.value ==
-                      'Individual') {
+                          'Individual' ||
+                      staffInteractionComposeController.grpOrInd.value ==
+                          'Group') {
                     if (selectedInitialDropdown == null) {
                       if (staffInteractionComposeController
                               .selectedradio.value ==
@@ -1043,7 +1057,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                                 "ISMINT_GroupOrIndFlg":
                                     staffInteractionComposeController
                                         .grpOrInd.value,
-                                "ISMINT_Interaction": about.text,
+                                "ISMINT_Interaction": about.text, 
                                 "ISMINT_Subject": subject.text,
                                 "mI_ID": widget.loginSuccessModel.mIID!,
                                 "arrayStudent": arrayStudents,
@@ -1157,7 +1171,9 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                           'portal',
                           widget.mskoolController,
                         ),
-                      ).then((value) => logger.d(value));
+                      ).then((value) {
+                        selectedstudent = null;
+                      });
                       staffInteractionComposeController.issubmitloading(false);
                       staffInteractionComposeController.isbutton(true);
                     }

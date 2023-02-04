@@ -502,7 +502,9 @@ class _ManagerClassWiseFeeDetailsState
                               animationPath: "assets/json/default.json"),
                         )
                       : overallClasswiseController.resultsList.isEmpty
-                          ? const Text('No data avaiable')
+                          ? const Center(
+                              child: Text('No data avaiable'),
+                            )
                           : selectedSection == null
                               ? const SizedBox()
                               : Padding(
