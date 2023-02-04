@@ -257,6 +257,8 @@ class _ManagerFeeDetailsState extends State<ManagerFeeDetails> {
               payable: 50000,
               totalConcession: 10000,
               totalPaid: 40000,
+              asmayId: 0,
+              asmclId: 0,
             ),
           ),
         ],

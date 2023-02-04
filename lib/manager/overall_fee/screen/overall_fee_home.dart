@@ -3,7 +3,6 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/manager/overall_fee/tabs/classwise_fee_details.dart';
 import 'package:m_skool_flutter/manager/overall_fee/tabs/fee_details.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/student/fees/model/feeModel.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 
@@ -55,14 +54,14 @@ class _OverallFeeHomeState extends State<OverallFeeHome>
       ).getAppBar(),
       body: TabBarView(
         controller: overallFeeTabController!,
-        children:  [
+        children: [
           ManagerFeeDetails(
-           loginSuccessModel: widget.loginSuccessModel,
-                            mskoolController: widget.mskoolController,
+            loginSuccessModel: widget.loginSuccessModel,
+            mskoolController: widget.mskoolController,
           ),
           ManagerClassWiseFeeDetails(
-  loginSuccessModel: widget.loginSuccessModel,
-                            mskoolController: widget.mskoolController,
+            loginSuccessModel: widget.loginSuccessModel,
+            mskoolController: widget.mskoolController,
           ),
         ],
       ),

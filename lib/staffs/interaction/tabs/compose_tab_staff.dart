@@ -1002,7 +1002,9 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                           'Individual' ||
                       staffInteractionComposeController.grpOrInd.value ==
                           'Group') {
-                    if (selectedInitialDropdown == null) {
+                    if (staffInteractionComposeController.grpOrInd.value ==
+                            'Individual' &&
+                        selectedInitialDropdown == null) {
                       if (staffInteractionComposeController
                               .selectedradio.value ==
                           'Student') {
@@ -1040,140 +1042,257 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                       return;
                     }
                     if (staffInteractionComposeController.isButton.value) {
-                      logger.d('kkkkkkkk');
                       staffInteractionComposeController.issubmitloading(true);
                       staffInteractionComposeController.isbutton(false);
-                      await submitComposeStaff(
-                        data: staffInteractionComposeController
-                                        .grpOrInd.value ==
-                                    'Group' &&
+
+                      if (staffInteractionComposeController.grpOrInd.value ==
+                              'Group' &&
+                          staffInteractionComposeController
+                                  .selectedradio.value ==
+                              'Student') {
+                        await submitComposeStaff(
+                          data: {
+                            "ASMAY_Id": widget.loginSuccessModel.asmaYId!,
+                            "ISMINT_ComposedByFlg":
+                                widget.loginSuccessModel.roleforlogin!,
+                            "ISMINT_GroupOrIndFlg":
                                 staffInteractionComposeController
-                                        .selectedradio.value ==
-                                    'Student'
-                            ? {
-                                "ASMAY_Id": widget.loginSuccessModel.asmaYId!,
-                                "ISMINT_ComposedByFlg":
-                                    widget.loginSuccessModel.roleforlogin!,
-                                "ISMINT_GroupOrIndFlg":
-                                    staffInteractionComposeController
-                                        .grpOrInd.value,
-                                "ISMINT_Interaction": about.text, 
-                                "ISMINT_Subject": subject.text,
-                                "mI_ID": widget.loginSuccessModel.mIID!,
-                                "arrayStudent": arrayStudents,
-                                "roleflg":
-                                    widget.loginSuccessModel.roleforlogin!,
-                                "userflag": staffInteractionComposeController
-                                    .selectedradio.value,
-                                "userId":
-                                    widget.loginSuccessModel.userId!.toString(),
-                                "images_paths": ""
-                              }
-                            : staffInteractionComposeController
-                                            .grpOrInd.value ==
-                                        'Individual' &&
+                                    .grpOrInd.value,
+                            "ISMINT_Interaction": about.text,
+                            "ISMINT_Subject": subject.text,
+                            "mI_ID": widget.loginSuccessModel.mIID!,
+                            "arrayStudent": arrayStudents,
+                            "roleflg": widget.loginSuccessModel.roleforlogin!,
+                            "userflag": staffInteractionComposeController
+                                .selectedradio.value,
+                            "userId":
+                                widget.loginSuccessModel.userId!.toString(),
+                            "images_paths": ""
+                          },
+                          base: baseUrlFromInsCode(
+                            'portal',
+                            widget.mskoolController,
+                          ),
+                        );
+                      } else if (staffInteractionComposeController
+                                  .grpOrInd.value ==
+                              'Group' &&
+                          staffInteractionComposeController
+                                  .selectedradio.value !=
+                              'Student') {
+                        await submitComposeStaff(
+                          data: {
+                            "ASMAY_Id": widget.loginSuccessModel.asmaYId!,
+                            "ISMINT_ComposedByFlg":
+                                widget.loginSuccessModel.roleforlogin!,
+                            "ISMINT_GroupOrIndFlg":
+                                staffInteractionComposeController
+                                    .grpOrInd.value,
+                            "ISMINT_Interaction": about.text,
+                            "ISMINT_Subject": subject.text,
+                            "mI_ID": widget.loginSuccessModel.mIID!,
+                            "arrayTeachers": arrayTeachers,
+                            "roleflg": widget.loginSuccessModel.roleforlogin!,
+                            "userflag": staffInteractionComposeController
+                                .selectedradio.value,
+                            "userId":
+                                widget.loginSuccessModel.userId!.toString(),
+                            "images_paths": ""
+                          },
+                          base: baseUrlFromInsCode(
+                            'portal',
+                            widget.mskoolController,
+                          ),
+                        );
+                      } else if (staffInteractionComposeController
+                                  .grpOrInd.value ==
+                              'Individual' &&
+                          staffInteractionComposeController
+                                  .selectedradio.value ==
+                              'Student') {
+                        await submitComposeStaff(
+                          data: {
+                            "ASMAY_Id": widget.loginSuccessModel.asmaYId!,
+                            "ISMINT_ComposedByFlg":
+                                widget.loginSuccessModel.roleforlogin!,
+                            "ISMINT_GroupOrIndFlg":
+                                staffInteractionComposeController
+                                    .grpOrInd.value,
+                            "ISMINT_Interaction": about.text,
+                            "ISMINT_Subject": subject.text,
+                            "mI_ID": widget.loginSuccessModel.mIID!,
+                            "student_Id": selectedstudent!.amstId,
+                            "roleflg": widget.loginSuccessModel.roleforlogin!,
+                            "userflag": staffInteractionComposeController
+                                .selectedradio.value,
+                            "userId":
+                                widget.loginSuccessModel.userId!.toString(),
+                            "images_paths": ""
+                          },
+                          base: baseUrlFromInsCode(
+                            'portal',
+                            widget.mskoolController,
+                          ),
+                        );
+                      } else {
+                        await submitComposeStaff(
+                          data: {
+                            "ASMAY_Id": widget.loginSuccessModel.asmaYId!,
+                            "ISMINT_ComposedByFlg":
+                                widget.loginSuccessModel.roleforlogin!,
+                            "ISMINT_GroupOrIndFlg":
+                                staffInteractionComposeController
+                                    .grpOrInd.value,
+                            "ISMINT_Interaction": about.text,
+                            "ISMINT_Subject": subject.text,
+                            "mI_ID": widget.loginSuccessModel.mIID!,
+                            "employee_Id": staffInteractionComposeController
+                                            .selectedradio.value ==
+                                        'EC' ||
                                     staffInteractionComposeController
                                             .selectedradio.value ==
-                                        'Student'
-                                ? {
-                                    "ASMAY_Id":
-                                        widget.loginSuccessModel.asmaYId!,
-                                    "ISMINT_ComposedByFlg":
-                                        widget.loginSuccessModel.roleforlogin!,
-                                    "ISMINT_GroupOrIndFlg":
-                                        staffInteractionComposeController
-                                            .grpOrInd.value,
-                                    "ISMINT_Interaction": about.text,
-                                    "ISMINT_Subject": subject.text,
-                                    "mI_ID": widget.loginSuccessModel.mIID!,
-                                    "student_Id": selectedstudent!.amstId,
-                                    "roleflg":
-                                        widget.loginSuccessModel.roleforlogin!,
-                                    "userflag":
-                                        staffInteractionComposeController
-                                            .selectedradio.value,
-                                    "userId": widget.loginSuccessModel.userId!
-                                        .toString(),
-                                    "images_paths": ""
-                                  }
-                                : staffInteractionComposeController
-                                                .grpOrInd.value ==
-                                            'Group' &&
-                                        staffInteractionComposeController
-                                                .selectedradio.value !=
-                                            'Student'
-                                    ? {
-                                        "ASMAY_Id":
-                                            widget.loginSuccessModel.asmaYId!,
-                                        "ISMINT_ComposedByFlg": widget
-                                            .loginSuccessModel.roleforlogin!,
-                                        "ISMINT_GroupOrIndFlg":
-                                            staffInteractionComposeController
-                                                .grpOrInd.value,
-                                        "ISMINT_Interaction": about.text,
-                                        "ISMINT_Subject": subject.text,
-                                        "mI_ID": widget.loginSuccessModel.mIID!,
-                                        "arrayTeachers": arrayTeachers,
-                                        "roleflg": widget
-                                            .loginSuccessModel.roleforlogin!,
-                                        "userflag":
-                                            staffInteractionComposeController
-                                                .selectedradio.value,
-                                        "userId": widget
-                                            .loginSuccessModel.userId!
-                                            .toString(),
-                                        "images_paths": ""
-                                      }
-                                    : staffInteractionComposeController
-                                                    .grpOrInd.value ==
-                                                'Individual' &&
-                                            staffInteractionComposeController
-                                                    .selectedradio.value !=
-                                                'Student'
-                                        ? {
-                                            "ASMAY_Id": widget
-                                                .loginSuccessModel.asmaYId!,
-                                            "ISMINT_ComposedByFlg": widget
-                                                .loginSuccessModel
-                                                .roleforlogin!,
-                                            "ISMINT_GroupOrIndFlg":
-                                                staffInteractionComposeController
-                                                    .grpOrInd.value,
-                                            "ISMINT_Interaction": about.text,
-                                            "ISMINT_Subject": subject.text,
-                                            "mI_ID":
-                                                widget.loginSuccessModel.mIID!,
-                                            "employee_Id":
-                                                staffInteractionComposeController
-                                                                .selectedradio
-                                                                .value ==
-                                                            'EC' ||
-                                                        staffInteractionComposeController
-                                                                .selectedradio
-                                                                .value ==
-                                                            'Principal'
-                                                    ? selectedInitialDropdown!
-                                                        .id
-                                                    : selectedInitialDropdown!
-                                                        .iD,
-                                            "roleflg": widget.loginSuccessModel
-                                                .roleforlogin!,
-                                            "userflag":
-                                                staffInteractionComposeController
-                                                    .selectedradio.value,
-                                            "userId": widget
-                                                .loginSuccessModel.userId!
-                                                .toString(),
-                                            "images_paths": ""
-                                          }
-                                        : {},
-                        base: baseUrlFromInsCode(
-                          'portal',
-                          widget.mskoolController,
-                        ),
-                      ).then((value) {
-                        selectedstudent = null;
-                      });
+                                        'Principal'
+                                ? selectedInitialDropdown!.id
+                                : selectedInitialDropdown!.iD,
+                            "roleflg": widget.loginSuccessModel.roleforlogin!,
+                            "userflag": staffInteractionComposeController
+                                .selectedradio.value,
+                            "userId":
+                                widget.loginSuccessModel.userId!.toString(),
+                            "images_paths": ""
+                          },
+                          base: baseUrlFromInsCode(
+                            'portal',
+                            widget.mskoolController,
+                          ),
+                        );
+                      }
+                      // await submitComposeStaff(
+                      //   data:
+                      //        {
+                      //           "ASMAY_Id": widget.loginSuccessModel.asmaYId!,
+                      //           "ISMINT_ComposedByFlg":
+                      //               widget.loginSuccessModel.roleforlogin!,
+                      //           "ISMINT_GroupOrIndFlg":
+                      //               staffInteractionComposeController
+                      //                   .grpOrInd.value,
+                      //           "ISMINT_Interaction": about.text,
+                      //           "ISMINT_Subject": subject.text,
+                      //           "mI_ID": widget.loginSuccessModel.mIID!,
+                      //           "arrayStudent": arrayStudents,
+                      //           "roleflg":
+                      //               widget.loginSuccessModel.roleforlogin!,
+                      //           "userflag": staffInteractionComposeController
+                      //               .selectedradio.value,
+                      //           "userId":
+                      //               widget.loginSuccessModel.userId!.toString(),
+                      //           "images_paths": ""
+                      //         }
+                      //       : staffInteractionComposeController
+                      //                       .grpOrInd.value ==
+                      //                   'Individual' &&
+                      //               staffInteractionComposeController
+                      //                       .selectedradio.value ==
+                      //                   'Student'
+                      // ? {
+                      //     "ASMAY_Id":
+                      //         widget.loginSuccessModel.asmaYId!,
+                      //     "ISMINT_ComposedByFlg":
+                      //         widget.loginSuccessModel.roleforlogin!,
+                      //     "ISMINT_GroupOrIndFlg":
+                      //         staffInteractionComposeController
+                      //             .grpOrInd.value,
+                      //     "ISMINT_Interaction": about.text,
+                      //     "ISMINT_Subject": subject.text,
+                      //     "mI_ID": widget.loginSuccessModel.mIID!,
+                      //     "student_Id": selectedstudent!.amstId,
+                      //     "roleflg":
+                      //         widget.loginSuccessModel.roleforlogin!,
+                      //     "userflag":
+                      //         staffInteractionComposeController
+                      //             .selectedradio.value,
+                      //     "userId": widget.loginSuccessModel.userId!
+                      //         .toString(),
+                      //     "images_paths": ""
+                      //   }
+                      // : staffInteractionComposeController
+                      //                 .grpOrInd.value ==
+                      //             'Group' &&
+                      //         staffInteractionComposeController
+                      //                 .selectedradio.value !=
+                      //             'Student'
+                      // ? {
+                      //     "ASMAY_Id":
+                      //         widget.loginSuccessModel.asmaYId!,
+                      //     "ISMINT_ComposedByFlg": widget
+                      //         .loginSuccessModel.roleforlogin!,
+                      //     "ISMINT_GroupOrIndFlg":
+                      //         staffInteractionComposeController
+                      //             .grpOrInd.value,
+                      //     "ISMINT_Interaction": about.text,
+                      //     "ISMINT_Subject": subject.text,
+                      //     "mI_ID": widget.loginSuccessModel.mIID!,
+                      //     "arrayTeachers": arrayTeachers,
+                      //     "roleflg": widget
+                      //         .loginSuccessModel.roleforlogin!,
+                      //     "userflag":
+                      //         staffInteractionComposeController
+                      //             .selectedradio.value,
+                      //     "userId": widget
+                      //         .loginSuccessModel.userId!
+                      //         .toString(),
+                      //     "images_paths": ""
+                      //   }
+                      //               : staffInteractionComposeController
+                      //                               .grpOrInd.value ==
+                      //                           'Individual' &&
+                      //                       staffInteractionComposeController
+                      //                               .selectedradio.value !=
+                      //                           'Student'
+                      // ? {
+                      //     "ASMAY_Id": widget
+                      //         .loginSuccessModel.asmaYId!,
+                      //     "ISMINT_ComposedByFlg": widget
+                      //         .loginSuccessModel
+                      //         .roleforlogin!,
+                      //     "ISMINT_GroupOrIndFlg":
+                      //         staffInteractionComposeController
+                      //             .grpOrInd.value,
+                      //     "ISMINT_Interaction": about.text,
+                      //     "ISMINT_Subject": subject.text,
+                      //     "mI_ID":
+                      //         widget.loginSuccessModel.mIID!,
+                      //     "employee_Id":
+                      //         staffInteractionComposeController
+                      //                         .selectedradio
+                      //                         .value ==
+                      //                     'EC' ||
+                      //                 staffInteractionComposeController
+                      //                         .selectedradio
+                      //                         .value ==
+                      //                     'Principal'
+                      //             ? selectedInitialDropdown!
+                      //                 .id
+                      //             : selectedInitialDropdown!
+                      //                 .iD,
+                      //     "roleflg": widget.loginSuccessModel
+                      //         .roleforlogin!,
+                      //     "userflag":
+                      //         staffInteractionComposeController
+                      //             .selectedradio.value,
+                      //     "userId": widget
+                      //         .loginSuccessModel.userId!
+                      //         .toString(),
+                      //     "images_paths": ""
+                      //   }
+                      //                   : {},
+                      //   base: baseUrlFromInsCode(
+                      //     'portal',
+                      //     widget.mskoolController,
+                      //   ),
+                      // ).then((value) {
+                      //   selectedstudent = null;
+                      // });
                       staffInteractionComposeController.issubmitloading(false);
                       staffInteractionComposeController.isbutton(true);
                     }

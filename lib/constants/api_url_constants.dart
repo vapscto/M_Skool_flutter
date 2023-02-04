@@ -337,12 +337,10 @@ class URLS {
   //////  OVERALL FEE APIS ////////////////////
   static String getOverallFeeAcademicYear =
       'api/PrincipalDefaulterFeeFacade/Getdetails/';
-  static String getOverallFeeClass =
-      'api/PrincipalDefaulterFeeFacade/getclass/';
-  static String getOverallFeeSectin =
-      'api/PrincipalDefaulterFeeFacade/Getsection/';
-  static String getOverallFeeResults =
-      'api/PrincipalDefaulterFeeFacade/Getreport/';
+  static String getOverallClasswiseFeeResults =
+      'api/AdmissionCtrl/AcademicwiseFeesDetails/';
+  static String getClasswiseSectionwiseFeeResults =
+      'api/AdmissionCtrl/AcademicwiseClassFeesDetails/';
   static String examDetails = "api/StudentSearchFacade/showsectionGrid/";
 
   //COE
