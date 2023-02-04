@@ -2,18 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/manager/coe/screen/manager_coe.dart';
-import 'package:m_skool_flutter/manager/employee_details/screens/employee_details_home_screen.dart';
-import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
-import 'package:m_skool_flutter/manager/staff_leave_approval/screen/staff_leave_approval_home.dart';
-import 'package:m_skool_flutter/manager/student_details/screen/student_details_home.dart';
+import 'package:m_skool_flutter/manager/tabs/manager_dashboard.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
-import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
-import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
-import 'package:m_skool_flutter/widget/logout_confirmation.dart';
-
-import '../../controller/global_utilities.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class ManagerHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -29,6 +21,31 @@ class ManagerHome extends StatefulWidget {
 
 class _ManagerHomeState extends State<ManagerHome> {
   final GlobalKey<ScaffoldState> _scaffold = GlobalKey();
+  final PageController controller = PageController(initialPage: 0);
+  final RxList<Widget> homeList = <Widget>[].obs;
+
+  @override
+  void initState() {
+    homeList.add(
+      ManagerDashboard(
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController,
+      ),
+    );
+    homeList.add(
+      Container(),
+    );
+
+    homeList.add(ManagerCoeHome(
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController,
+        title: "Coe"));
+
+    homeList.add(Container());
+    super.initState();
+  }
+
+  RxInt index = RxInt(0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,190 +61,76 @@ class _ManagerHomeState extends State<ManagerHome> {
         ),
         title: const Text("Dashboard"),
       ),
-      body: SingleChildScrollView(
-        child: Column(children: [
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
-              childAspectRatio: 0.8,
-              mainAxisSpacing: 8.0,
-              crossAxisSpacing: 8.0,
-            ),
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  logger.d(widget
-                      .loginSuccessModel.staffmobileappprivileges!.values!
-                      .elementAt(index)
-                      .pagename);
-
-                  if (widget.loginSuccessModel.staffmobileappprivileges!.values!
-                          .elementAt(index)
-                          .pagename ==
-                      "Student Birth Day Report") {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return ManagerStudentDetails(
-                        loginSuccessModel: widget.loginSuccessModel,
-                        mskoolController: widget.mskoolController,
-                        title: widget
-                            .loginSuccessModel.staffmobileappprivileges!.values!
-                            .elementAt(index)
-                            .pagename!,
-                      );
-                    }));
-
-                    return;
-                  }
-                  if (widget.loginSuccessModel.staffmobileappprivileges!.values!
-                          .elementAt(index)
-                          .pagename ==
-                      "Leave Approval Staff") {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return StaffLeaveApproval(
-                        loginSuccessModel: widget.loginSuccessModel,
-                        mskoolController: widget.mskoolController,
-                        title: widget
-                            .loginSuccessModel.staffmobileappprivileges!.values!
-                            .elementAt(index)
-                            .pagename!,
-                      );
-                    }));
-
-                    return;
-                  }
-                  if (widget.loginSuccessModel.staffmobileappprivileges!.values!
-                          .elementAt(index)
-                          .pagename ==
-                      'Notice Board Staff') {
-                    Get.to(() => NoticeBoardStaffHome(
-                          loginSuccessModel: widget.loginSuccessModel,
-                          mskoolController: widget.mskoolController,
-                          title: widget.loginSuccessModel
-                              .staffmobileappprivileges!.values!
-                              .elementAt(index)
-                              .pagename!,
-                        ));
-                  }
-
-                  if (widget.loginSuccessModel.staffmobileappprivileges!.values!
-                          .elementAt(index)
-                          .pagename ==
-                      "Overall Fee") {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) {
-                          return OverallFeeHome(
-                            loginSuccessModel: widget.loginSuccessModel,
-                            mskoolController: widget.mskoolController,
-                            title: widget.loginSuccessModel
-                                .staffmobileappprivileges!.values!
-                                .elementAt(index)
-                                .pagename!,
-                          );
-                        },
-                      ),
-                    );
-
-                    return;
-                  }
-                  if (widget.loginSuccessModel.staffmobileappprivileges!.values!
-                          .elementAt(index)
-                          .pagename ==
-                      "Employee Details") {
-                    Get.to(
-                      () => EmployeeDetailsHomeScreen(
-                        loginSuccessModel: widget.loginSuccessModel,
-                        mskoolController: widget.mskoolController,
-                      ),
-                    );
-                    return;
-                  }
-                  if (widget.loginSuccessModel.staffmobileappprivileges!.values!
-                          .elementAt(index)
-                          .pagename ==
-                      "COE Report") {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return ManagerCoeHome(
-                        loginSuccessModel: widget.loginSuccessModel,
-                        mskoolController: widget.mskoolController,
-                        title: widget
-                            .loginSuccessModel.staffmobileappprivileges!.values!
-                            .elementAt(index)
-                            .pagename!,
-                      );
-                    }));
-
-                    return;
-                  }
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: SizedBox(
-                    width: 80,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset(
-                            getDashBoardIconByName(
-                                "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"),
-                            height: 60,
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}",
-                            //maxLines: 1,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .merge(const TextStyle(fontSize: 13.0)),
-                          ),
-                        )
-                      ],
-                    ),
+      body: PageView.builder(
+        controller: controller,
+        itemBuilder: (_, index) {
+          return homeList.elementAt(index);
+        },
+        itemCount: homeList.length,
+        onPageChanged: (v) {
+          index.value = v;
+        },
+      ),
+      bottomNavigationBar: Material(
+        elevation: 10.0,
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Obx(() {
+          return SalomonBottomBar(
+            currentIndex: index.value,
+            items: [
+              SalomonBottomBarItem(
+                  unselectedColor: const Color(0xFFC0C0C0),
+                  selectedColor: const Color(0xFF9900F0),
+                  icon: Image.asset(
+                    'assets/images/floatingicon.png',
+                    height: 30,
+                    color: (index.value == 0)
+                        ? const Color(0xFF9900F0)
+                        : Colors.grey,
                   ),
-                ),
-              );
+                  title: const Text("Home")),
+              SalomonBottomBarItem(
+                  unselectedColor: const Color(0xFFC0C0C0),
+                  selectedColor: const Color(0xFFFF008C),
+                  icon: Image.asset(
+                    'assets/images/tabinteraction.png',
+                    height: 30,
+                    color: (index.value == 1)
+                        ? const Color(0xFFFF008C)
+                        : Colors.grey,
+                  ),
+                  title: const Text("Interaction")),
+              SalomonBottomBarItem(
+                  unselectedColor: const Color(0xFFC0C0C0),
+                  selectedColor: const Color(0xFFFFA901),
+                  icon: Image.asset(
+                    'assets/images/calendar.png',
+                    height: 24,
+                    color: (index.value == 2)
+                        ? const Color(0xFFFFA901)
+                        : Colors.grey,
+                  ),
+                  title: const Text("COE")),
+              SalomonBottomBarItem(
+                  unselectedColor: const Color(0xFFC0C0C0),
+                  selectedColor: const Color(0xFF3D9292),
+                  icon: Image.asset(
+                    'assets/images/tabprofile.png',
+                    height: 30,
+                    color: (index.value == 3)
+                        ? const Color(0xFF3D9292)
+                        : Colors.grey,
+                  ),
+                  title: const Text("Profile")),
+            ],
+            onTap: (v) {
+              index.value = v;
+              controller.animateToPage(v,
+                  duration: const Duration(milliseconds: 800),
+                  curve: Curves.fastLinearToSlowEaseIn);
             },
-            itemCount: widget
-                .loginSuccessModel.staffmobileappprivileges!.values!.length,
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-            child: SizedBox(
-              width: 180,
-              height: 40,
-              child: CustomElevatedButton(
-                  isGradient: false,
-                  boxShadow: const BoxShadow(),
-                  color: const Color(0xFFFFDFD6),
-                  child: Row(mainAxisSize: MainAxisSize.min, children: const [
-                    Icon(
-                      Icons.logout,
-                      color: Color(0xffF24E1E),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "Log Out",
-                      style: TextStyle(
-                          color: Color(0xffF24E1E),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
-                    )
-                  ]),
-                  onPressed: () {
-                    Get.dialog(const LogoutConfirmationPopup());
-                  }),
-            ),
-          ),
-        ]),
+          );
+        }),
       ),
     );
   }
