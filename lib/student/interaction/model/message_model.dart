@@ -472,8 +472,8 @@ class ViewMessageValue {
             : DateTime.parse(json["ISTINT_DateTime"]),
         istintComposedByFlg: json["ISTINT_ComposedByFlg"],
         istintInteractionOrder: json["ISTINT_InteractionOrder"],
-        sender: json["Sender"],
-        receiver: json["Receiver"],
+        sender: json["Sender"] ?? "Unknown",
+        receiver: json["Receiver"] ?? "Unknown",
       );
 
   Map<String, dynamic> toJson() => {
