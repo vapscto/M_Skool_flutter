@@ -3,11 +3,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/manager/coe/screen/manager_coe.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/manager/staff_leave_approval/screen/staff_leave_approval_home.dart';
 import 'package:m_skool_flutter/manager/student_details/screen/student_details_home.dart';
-import 'package:m_skool_flutter/manager/student_notice_board/screen/student_notice_board_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
@@ -98,8 +99,15 @@ class _ManagerHomeState extends State<ManagerHome> {
                   if (widget.loginSuccessModel.staffmobileappprivileges!.values!
                           .elementAt(index)
                           .pagename ==
-                      'Notice Board') {
-                    Get.to(() => const StudentNoticeBoardHome());
+                      'Notice Board Staff') {
+                    Get.to(() => NoticeBoardStaffHome(
+                          loginSuccessModel: widget.loginSuccessModel,
+                          mskoolController: widget.mskoolController,
+                          title: widget.loginSuccessModel
+                              .staffmobileappprivileges!.values!
+                              .elementAt(index)
+                              .pagename!,
+                        ));
                   }
 
                   if (widget.loginSuccessModel.staffmobileappprivileges!.values!
@@ -121,6 +129,23 @@ class _ManagerHomeState extends State<ManagerHome> {
                         },
                       ),
                     );
+
+                    return;
+                  }
+                  if (widget.loginSuccessModel.staffmobileappprivileges!.values!
+                          .elementAt(index)
+                          .pagename ==
+                      "COE Report") {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return ManagerCoeHome(
+                        loginSuccessModel: widget.loginSuccessModel,
+                        mskoolController: widget.mskoolController,
+                        title: widget
+                            .loginSuccessModel.staffmobileappprivileges!.values!
+                            .elementAt(index)
+                            .pagename!,
+                      );
+                    }));
 
                     return;
                   }

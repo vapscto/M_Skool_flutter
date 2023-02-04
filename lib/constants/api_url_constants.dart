@@ -344,4 +344,11 @@ class URLS {
   static String getOverallFeeResults =
       'api/PrincipalDefaulterFeeFacade/Getreport/';
   static String examDetails = "api/StudentSearchFacade/showsectionGrid/";
+
+  //COE
+  static String getCoeAcaForManager = "api/COEReportFacade/getdata/";
+  static String getEventForManager = "api/COEReportFacade/";
+
+  //LeaveApprovalManager
+  static String getLeaves = "api/LeaveApprovalFacade/getApprovalStatus/";
 }
