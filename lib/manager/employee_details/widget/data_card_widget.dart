@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 
 class DataCardWidget extends StatefulWidget {
-  final String header;
-  const DataCardWidget({super.key, required this.header});
+  final String name;
+  Function(int)? addfunction;
+  Function(int)? removefunction;
+  int? id;
+
+  DataCardWidget({
+    super.key,
+    required this.name,
+    this.id,
+    this.addfunction,
+    this.removefunction,
+  });
 
   @override
   State<DataCardWidget> createState() => _DataCardWidgetState();
@@ -23,7 +33,7 @@ class _DataCardWidgetState extends State<DataCardWidget> {
         contentPadding: const EdgeInsets.symmetric(horizontal: 8),
         visualDensity: const VisualDensity(horizontal: -4.0),
         title: Text(
-          widget.header,
+          widget.name,
           style: Theme.of(context).textTheme.labelSmall!.merge(const TextStyle(
               fontWeight: FontWeight.w400, fontSize: 14.0, letterSpacing: 0.3)),
         ),
@@ -32,6 +42,11 @@ class _DataCardWidgetState extends State<DataCardWidget> {
           setState(() {
             ee = value!;
           });
+          if (value!) {
+            widget.addfunction!(widget.id!);
+            return;
+          }
+          widget.removefunction!(widget.id!);
         },
       ),
     );
