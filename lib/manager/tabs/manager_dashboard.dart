@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/manager/api/dashboard_api.dart';
 import 'package:m_skool_flutter/manager/coe/screen/manager_coe.dart';
 import 'package:m_skool_flutter/manager/controller/manager_dashboard_controller.dart';
+import 'package:m_skool_flutter/manager/employee_details/screens/employee_details_home_screen.dart';
 import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
 import 'package:m_skool_flutter/manager/staff_leave_approval/screen/staff_leave_approval_home.dart';
 import 'package:m_skool_flutter/manager/student_details/screen/student_details_home.dart';
@@ -129,6 +130,18 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
                       );
                     }));
 
+                    return;
+                  }
+                  if (widget.loginSuccessModel.staffmobileappprivileges!.values!
+                          .elementAt(index)
+                          .pagename ==
+                      "Employee Details") {
+                    Get.to(
+                      () => EmployeeDetailsHomeScreen(
+                        loginSuccessModel: widget.loginSuccessModel,
+                        mskoolController: widget.mskoolController,
+                      ),
+                    );
                     return;
                   }
                   if (widget.loginSuccessModel.staffmobileappprivileges!.values!

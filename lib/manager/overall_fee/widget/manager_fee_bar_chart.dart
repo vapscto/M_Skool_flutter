@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/manager/overall_fee/screen/classwise_class_detail_screen.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -9,6 +13,10 @@ class ManagerFeeBarChart extends StatefulWidget {
   final double totalPaid;
   final double payable;
   final double totalConcession;
+  int? asmayId;
+  int? asmclId;
+  LoginSuccessModel? loginSuccessModel;
+  MskoolController? mskoolController;
 
   ManagerFeeBarChart({
     super.key,
@@ -18,6 +26,10 @@ class ManagerFeeBarChart extends StatefulWidget {
     required this.totalCharges,
     required this.totalConcession,
     required this.totalPaid,
+    this.asmayId,
+    this.asmclId,
+    this.loginSuccessModel,
+    this.mskoolController,
   });
 
   @override
@@ -44,17 +56,28 @@ class _ManagerFeeBarChartState extends State<ManagerFeeBarChart> {
                   ),
                 ),
                 if (widget.navigationIcon)
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      color: const Color(0xFF1E38FC),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(6.0),
-                      child: Icon(
-                        Icons.arrow_forward_ios_outlined,
-                        color: Colors.white,
-                        size: 20,
+                  InkWell(
+                    onTap: () {
+                      Get.to(() => ClasswiseClassDetailScreen(
+                            heading: widget.chipText,
+                            loginSuccessModel: widget.loginSuccessModel!,
+                            mskoolController: widget.mskoolController!,
+                            asmayId: widget.asmayId!,
+                            asmclId: widget.asmclId!,
+                          ));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: const Color(0xFF1E38FC),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(6.0),
+                        child: Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          color: Colors.white,
+                          size: 20,
+                        ),
                       ),
                     ),
                   )

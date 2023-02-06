@@ -60,7 +60,7 @@ class _InteractionHomeState extends State<InteractionHome>
           ? AppBar(
               elevation: 0,
               leadingWidth: 30,
-              title: const Text("interaction"),
+              title: const Text("Interaction"),
               leading: const CustomGoBackButton(),
             )
           : null,

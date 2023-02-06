@@ -7,6 +7,7 @@ import 'package:m_skool_flutter/manager/tabs/manager_dashboard.dart';
 import 'package:m_skool_flutter/manager/widget/drawer_widget.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/tabs/staff_profile_tab.dart';
+import 'package:m_skool_flutter/staffs/interaction/screen/interaction_home.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class ManagerHome extends StatefulWidget {
@@ -35,7 +36,12 @@ class _ManagerHomeState extends State<ManagerHome> {
       ),
     );
     homeList.add(
-      Container(),
+      InteractionHome(
+        // Same ui and api for staff and manager
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController,
+        showAppBar: false,
+      ),
     );
 
     homeList.add(ManagerCoeHome(

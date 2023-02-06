@@ -3,9 +3,8 @@ import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/manager/overall_fee/model/overallFeeAcademicYearModel.dart';
-import 'package:m_skool_flutter/manager/overall_fee/model/overallFeeClassModel.dart';
 import 'package:m_skool_flutter/manager/overall_fee/model/overallFeeClasswiseStudentDetailModel.dart';
-import 'package:m_skool_flutter/manager/overall_fee/model/overallFeeSectionModel.dart';
+import 'package:m_skool_flutter/manager/overall_fee/model/overallFeeSectionwiseDataModel.dart';
 
 var dio = Dio();
 Future<OverallFeeAcademicYearModel?> getClasswiseAcademicYearData({
@@ -35,13 +34,12 @@ Future<OverallFeeAcademicYearModel?> getClasswiseAcademicYearData({
   }
 }
 
-Future<OverallFeeClassModel?> getClasswiseClassData({
+Future<ClasswiseFeeResultModel?> getClasswiseResultData({
   required String base,
-  required int miId,
   required int asmayId,
+  required int miId,
 }) async {
-  var url = base + URLS.getOverallFeeClass;
-
+  var url = base + URLS.getOverallClasswiseFeeResults;
   try {
     var response = await dio.post(
       url,
@@ -54,9 +52,9 @@ Future<OverallFeeClassModel?> getClasswiseClassData({
       },
     );
     if (response.statusCode == 200) {
-      OverallFeeClassModel overallFeeClassModel =
-          OverallFeeClassModel.fromJson(response.data);
-      return overallFeeClassModel;
+      ClasswiseFeeResultModel classwiseFeeResultModel =
+          ClasswiseFeeResultModel.fromJson(response.data);
+      return classwiseFeeResultModel;
     }
     return null;
   } catch (e) {
@@ -65,14 +63,13 @@ Future<OverallFeeClassModel?> getClasswiseClassData({
   }
 }
 
-Future<OverallFeeSectionModel?> getClasswiseSectionData({
+Future<ClasswiseSectionDetailModel?> getclasswiseSectionData({
   required String base,
-  required int miId,
   required int asmayId,
   required int asmclId,
+  required int miId,
 }) async {
-  var url = base + URLS.getOverallFeeSectin;
-
+  var url = base + URLS.getClasswiseSectionwiseFeeResults;
   try {
     var response = await dio.post(
       url,
@@ -80,49 +77,15 @@ Future<OverallFeeSectionModel?> getClasswiseSectionData({
         headers: getSession(),
       ),
       data: {
-        "ASMAY_Id": asmayId,
         "MI_Id": miId,
-        "asmcL_Id": asmclId,
+        "ASMAY_Id": asmayId,
+        "ASMCL_Id": asmclId,
       },
     );
     if (response.statusCode == 200) {
-      OverallFeeSectionModel overallFeeSectionModel =
-          OverallFeeSectionModel.fromJson(response.data);
-      return overallFeeSectionModel;
-    }
-    return null;
-  } catch (e) {
-    logger.d(e.toString());
-    return null;
-  }
-}
-
-Future<OverallFeeClasswiseStudentDetailModel?> getClasswiseResultData({
-  required String base,
-  required int asmayId,
-  required int miId,
-  required int asmclId,
-  required int asmsId,
-}) async {
-  var url = base + URLS.getOverallFeeResults;
-  try {
-    var response = await dio.post(
-      url,
-      options: Options(
-        headers: getSession(),
-      ),
-      data: {
-        "ASMAY_Id": asmayId,
-        "asmcL_Id": asmclId,
-        "asmS_Id": asmsId,
-        "MI_Id": miId,
-      },
-    );
-    if (response.statusCode == 200) {
-      OverallFeeClasswiseStudentDetailModel
-          overallFeeClasswiseStudentDetailModel =
-          OverallFeeClasswiseStudentDetailModel.fromJson(response.data);
-      return overallFeeClasswiseStudentDetailModel;
+      ClasswiseSectionDetailModel classwiseSectionDetailModel =
+          ClasswiseSectionDetailModel.fromJson(response.data);
+      return classwiseSectionDetailModel;
     }
     return null;
   } catch (e) {

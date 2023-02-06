@@ -1,26 +1,26 @@
 // To parse this JSON data, do
 //
-//     final classwiseFeeAcademicModel = classwiseFeeAcademicModelFromJson(jsonString);
+//     final classwiseSectionDetailModel = classwiseSectionDetailModelFromJson(jsonString);
 
 import 'dart:convert';
 
-ClasswiseFeeResultModel classwiseFeeAcademicModelFromJson(String str) =>
-    ClasswiseFeeResultModel.fromJson(json.decode(str));
+ClasswiseSectionDetailModel classwiseSectionDetailModelFromJson(String str) =>
+    ClasswiseSectionDetailModel.fromJson(json.decode(str));
 
-String classwiseFeeAcademicModelToJson(ClasswiseFeeResultModel data) =>
+String classwiseSectionDetailModelToJson(ClasswiseSectionDetailModel data) =>
     json.encode(data.toJson());
 
-class ClasswiseFeeResultModel {
-  ClasswiseFeeResultModel({
+class ClasswiseSectionDetailModel {
+  ClasswiseSectionDetailModel({
     this.academicFeesdetails,
   });
 
-  AcademicFeesdetails? academicFeesdetails;
+  SectionWiseFeedetails? academicFeesdetails;
 
-  factory ClasswiseFeeResultModel.fromJson(Map<String, dynamic> json) =>
-      ClasswiseFeeResultModel(
+  factory ClasswiseSectionDetailModel.fromJson(Map<String, dynamic> json) =>
+      ClasswiseSectionDetailModel(
         academicFeesdetails:
-            AcademicFeesdetails.fromJson(json["academicFeesdetails"]),
+            SectionWiseFeedetails.fromJson(json["academicFeesdetails"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -28,22 +28,22 @@ class ClasswiseFeeResultModel {
       };
 }
 
-class AcademicFeesdetails {
-  AcademicFeesdetails({
+class SectionWiseFeedetails {
+  SectionWiseFeedetails({
     this.type,
     this.values,
   });
 
   String? type;
-  List<AcademicFeesdetailsValue?>? values;
+  List<SectionWiseFeedetailsValue?>? values;
 
-  factory AcademicFeesdetails.fromJson(Map<String, dynamic> json) =>
-      AcademicFeesdetails(
+  factory SectionWiseFeedetails.fromJson(Map<String, dynamic> json) =>
+      SectionWiseFeedetails(
         type: json["\$type"],
         values: json['\$values'] == null
             ? []
-            : List<AcademicFeesdetailsValue?>.from(json["\$values"]
-                .map((x) => AcademicFeesdetailsValue.fromJson(x))),
+            : List<SectionWiseFeedetailsValue?>.from(json["\$values"]
+                .map((x) => SectionWiseFeedetailsValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -54,11 +54,11 @@ class AcademicFeesdetails {
       };
 }
 
-class AcademicFeesdetailsValue {
-  AcademicFeesdetailsValue({
+class SectionWiseFeedetailsValue {
+  SectionWiseFeedetailsValue({
     this.type,
     this.asmclClassName,
-    this.asmclId,
+    this.asmcSectionName,
     this.fssPaidAmount,
     this.balance,
     this.concession,
@@ -67,17 +67,17 @@ class AcademicFeesdetailsValue {
 
   String? type;
   String? asmclClassName;
-  int? asmclId;
+  String? asmcSectionName;
   num? fssPaidAmount;
   num? balance;
   num? concession;
   num? fssCurrentYrCharges;
 
-  factory AcademicFeesdetailsValue.fromJson(Map<String, dynamic> json) =>
-      AcademicFeesdetailsValue(
+  factory SectionWiseFeedetailsValue.fromJson(Map<String, dynamic> json) =>
+      SectionWiseFeedetailsValue(
         type: json["\$type"],
         asmclClassName: json["ASMCL_ClassName"],
-        asmclId: json["ASMCL_Id"],
+        asmcSectionName: json["ASMC_SectionName"],
         fssPaidAmount: json["FSS_PaidAmount"],
         balance: json["balance"],
         concession: json["concession"],
@@ -87,7 +87,7 @@ class AcademicFeesdetailsValue {
   Map<String, dynamic> toJson() => {
         "\$type": type,
         "ASMCL_ClassName": asmclClassName,
-        "ASMCL_Id": asmclId,
+        "ASMC_SectionName": asmcSectionName,
         "FSS_PaidAmount": fssPaidAmount,
         "balance": balance,
         "concession": concession,
