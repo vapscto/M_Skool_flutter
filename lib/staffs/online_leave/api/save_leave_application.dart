@@ -37,8 +37,48 @@ class SaveLeaveApplication {
         "temp_table_data": temp
       });
 
+      logger.d(response.statusCode);
+
       if (response.statusCode == 200) {
-        return Future.value(true);
+        if (response.data['returnMsg'] != null &&
+            response.data['returnMsg'] == 'Saved') {
+          return Future.value(true);
+        }
+
+        if (response.data['returnMsg'] != null &&
+            response.data['returnMsg'] == "Duplicate") {
+          return Future.error({
+            "errorTitle": "You have already applied",
+            "errorMsg":
+                "We already have this leave application with us.. you can check the status in homepage"
+          });
+        }
+
+        if (response.data['returnMsg'] != null &&
+            response.data['returnMsg'] == "NoMapping") {
+          return Future.error({
+            "errorTitle": "Exception Occured in server side",
+            "errorMsg":
+                "Please Create Leave Numbering Using Transaction Numbering Page ... Ask your tech team to fix this issue"
+          });
+        }
+
+        if (response.data['returnMsg'] != null &&
+            response.data['returnMsg'] == 'Limits Crossed') {
+          return Future.error({
+            "errorTitle": "Limit Exceeded",
+            "errorMsg": "You have exceeded the limit for this leave"
+          });
+        }
+
+        if (response.data['returnval'] == true) {
+          return Future.value(true);
+        }
+
+        return Future.error({
+          "errorTitle": "Already applied",
+          "errorMsg": "For this date or leave you already applied "
+        });
       }
 
       return Future.error({

@@ -652,12 +652,18 @@ String timeDifference(String fTime, String sTime) {
     minDiff = sMin - fMin;
   }
 
-  return "$hourDiff H $minDiff M";
+  return "$hourDiff h $minDiff m";
 }
 
 String timing(String time) {
   int hr = int.parse(time.split(":").first);
-  int min = int.parse(time.split(":")[1]);
+  int minutes = int.parse(time.split(":")[1]);
+  String min = "";
+  if (minutes < 10) {
+    min += "0$minutes";
+  } else {
+    min = "$minutes";
+  }
   String t = "";
   switch (hr) {
     case 12:

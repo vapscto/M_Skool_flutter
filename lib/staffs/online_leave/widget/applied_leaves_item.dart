@@ -62,7 +62,7 @@ class AppliedLeaveItem extends StatelessWidget {
                         ),
                   ),
                   backgroundColor:
-                      value.hrelaPApplicationStatus!.toLowerCase() == "Rejected"
+                      value.hrelaPApplicationStatus!.toLowerCase() == "rejected"
                           ? Colors.red
                           : value.hrelaPApplicationStatus!.toLowerCase() ==
                                   "applied"

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -47,6 +48,12 @@ class _LeavesState extends State<Leaves> {
             bgColor.add(noticeColor.elementAt(backgroundColor));
             return InkWell(
               onTap: () {
+                if (widget.leaves.elementAt(index).hrelSCBLeaves! <= 0) {
+                  Fluttertoast.showToast(
+                      msg: "You used all your leaves.. you can not apply");
+                  return;
+                }
+
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return ApplyForLeave(
                     values: widget.leaves.elementAt(index),
@@ -97,7 +104,8 @@ class LeaveNames extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 CircularProgressIndicator(
-                  value: leave.hrelSCBLeaves! / leave.hrelSTotalLeaves!,
+                  value: (leave.hrelSTotalLeaves! - leave.hrelSCBLeaves!) /
+                      leave.hrelSTotalLeaves!,
                   backgroundColor: noticeBackgroundColor
                       .elementAt(backgroundColor)
                       .withOpacity(0.8),

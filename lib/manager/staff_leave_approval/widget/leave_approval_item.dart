@@ -1,38 +1,81 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/manager/staff_leave_approval/api/approve_leave.dart';
 import 'package:m_skool_flutter/manager/staff_leave_approval/model/leave_approval_model.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 import '../../../constants/constants.dart';
 
 class AppliedLeaveAprovalItem extends StatelessWidget {
   final LeaveApprovalModelValues value;
+  final bool selectAll;
+  final Function(bool) onSelect;
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
   const AppliedLeaveAprovalItem({
     Key? key,
     required this.value,
+    required this.selectAll,
+    required this.onSelect,
+    required this.loginSuccessModel,
+    required this.mskoolController,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final RxBool select = RxBool(selectAll);
+    final RxBool showCheckBox = RxBool(selectAll);
+    final TextEditingController remark = TextEditingController();
     return CustomContainer(
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              value.hRELAPLeaveReason!,
-              style: Theme.of(context).textTheme.titleSmall!.merge(
-                    const TextStyle(
-                        fontWeight: FontWeight.w600, fontSize: 16.0),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        value.hRELAPLeaveReason!,
+                        style: Theme.of(context).textTheme.titleSmall!.merge(
+                              const TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 16.0),
+                            ),
+                      ),
+                      const SizedBox(
+                        height: 3.0,
+                      ),
+                      Text(value.hRMLLeaveName!),
+                    ],
                   ),
+                ),
+                Obx(() {
+                  return showCheckBox.value == false
+                      ? const SizedBox()
+                      : Checkbox(
+                          value: select.value,
+                          visualDensity: const VisualDensity(
+                            horizontal: VisualDensity.minimumDensity,
+                            vertical: VisualDensity.minimumDensity,
+                          ),
+                          activeColor: Theme.of(context).primaryColor,
+                          onChanged: (b) {
+                            select.value = b!;
+                          });
+                })
+              ],
             ),
-            const SizedBox(
-              height: 3.0,
-            ),
-            Text(value.hRMLLeaveName!),
             const SizedBox(
               height: 6.0,
             ),
@@ -43,8 +86,17 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                       color: noticeBackgroundColor.last),
-                  child: SvgPicture.asset(
-                    'assets/svg/medication.svg',
+                  child: Image.asset(
+                    height: 24.0,
+                    value.hRMLLeaveName!.toLowerCase().contains("casual")
+                        ? "assets/images/cl.png"
+                        : value.hRMLLeaveName!.toLowerCase().contains("sick")
+                            ? 'assets/images/medication.png'
+                            : value.hRMLLeaveName!
+                                    .toLowerCase()
+                                    .contains("emergency")
+                                ? "assets/images/el.png"
+                                : "assets/images/el.png",
                     color: noticeColor.last,
                   ),
                 ),
@@ -92,10 +144,9 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                 //   ),
                 // ),
 
-                const CircleAvatar(
+                CircleAvatar(
                   radius: 16,
-                  backgroundImage: NetworkImage(
-                      "https://images.unsplash.com/photo-1500048993953-d23a436266cf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80"),
+                  backgroundImage: NetworkImage(value.hRMEPhoto!),
                 ),
                 const SizedBox(
                   width: 12.0,
@@ -114,7 +165,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      "${value.hRMEEmployeeFirstName} | {value.empcode} | {value.designation}",
+                      "${value.hRMEEmployeeFirstName} | ${value.hRMEEmployeeCode} | ${value.hRMDESDesignationName}",
                       style: Theme.of(context).textTheme.titleSmall!.merge(
                             const TextStyle(
                               fontWeight: FontWeight.w600,
@@ -212,15 +263,22 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                                           BorderRadius.circular(
                                                               8.0),
                                                     ),
-                                                    child: const Text(
-                                                        "22-11-2022"),
+                                                    child: Text(
+                                                      getFormatedDate(
+                                                        DateTime.parse(value
+                                                            .hRELAPFromDate!),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ],
                                               ),
                                             ),
-                                            const Text(
-                                              "  \u2212  ",
-                                              style: TextStyle(fontSize: 20.0),
+                                            const Center(
+                                              child: Text(
+                                                "  \u2212  ",
+                                                style:
+                                                    TextStyle(fontSize: 20.0),
+                                              ),
                                             ),
                                             Expanded(
                                               child: Column(
@@ -246,8 +304,9 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                                           BorderRadius.circular(
                                                               8.0),
                                                     ),
-                                                    child: const Text(
-                                                        "22-11-2058"),
+                                                    child: Text(getFormatedDate(
+                                                        DateTime.parse(value
+                                                            .hRELAPToDate!))),
                                                   ),
                                                 ],
                                               ),
@@ -268,7 +327,139 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                               minimumSize:
                                                   Size(Get.width * 0.5, 40),
                                             ),
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                barrierDismissible: false,
+                                                builder: (_) {
+                                                  return Dialog(
+                                                    child: FutureBuilder<bool>(
+                                                        future: ApproveLeaveApi
+                                                            .instance
+                                                            .approveNow(
+                                                          remark:
+                                                              "Leave Approved",
+                                                          status: "Approved",
+                                                          base: baseUrlFromInsCode(
+                                                              "leave",
+                                                              mskoolController),
+                                                          miId:
+                                                              loginSuccessModel
+                                                                  .mIID!,
+                                                          loginId:
+                                                              loginSuccessModel
+                                                                  .userId!,
+                                                          getLeaveStatus: [
+                                                            value.toJson()
+                                                          ],
+                                                        ),
+                                                        builder: (_, snapshot) {
+                                                          if (snapshot
+                                                              .hasData) {
+                                                            if (snapshot
+                                                                .data!) {
+                                                              return Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        12.0),
+                                                                child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  children: [
+                                                                    const CircleAvatar(
+                                                                      minRadius:
+                                                                          30.0,
+                                                                      backgroundColor:
+                                                                          Colors
+                                                                              .green,
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .check,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height:
+                                                                          12.0,
+                                                                    ),
+                                                                    Text(
+                                                                      "All Leaves Approved",
+                                                                      style: Theme.of(
+                                                                              context)
+                                                                          .textTheme
+                                                                          .titleSmall!
+                                                                          .merge(
+                                                                            const TextStyle(
+                                                                              fontWeight: FontWeight.w600,
+                                                                            ),
+                                                                          ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height:
+                                                                          6.0,
+                                                                    ),
+                                                                    const Text(
+                                                                        "I approved all leaves that you told me to do.. "),
+                                                                    const SizedBox(
+                                                                      height:
+                                                                          6.0,
+                                                                    ),
+                                                                    MSkollBtn(
+                                                                        title:
+                                                                            "Ok UnderStood",
+                                                                        onPress:
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        })
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            }
+
+                                                            return const ErrWidget(
+                                                                err: {
+                                                                  "errorTitle":
+                                                                      "Server Error Occured",
+                                                                  "errorMsg":
+                                                                      "Currenlty i'm unable to approve leave due to some server issue .. Server not returning 200",
+                                                                });
+                                                          }
+
+                                                          if (snapshot
+                                                              .hasError) {
+                                                            return ErrWidget(
+                                                                err: snapshot
+                                                                        .error
+                                                                    as Map<
+                                                                        String,
+                                                                        dynamic>);
+                                                          }
+                                                          return Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: const [
+                                                              AnimatedProgressWidget(
+                                                                  title:
+                                                                      "Approving Leave",
+                                                                  desc:
+                                                                      "We are in process to approve the leaves...",
+                                                                  animationPath:
+                                                                      "assets/json/default.json"),
+                                                            ],
+                                                          );
+                                                        }),
+                                                  );
+                                                },
+                                              );
+                                            },
                                             child: const Text("Approval"),
                                           ),
                                         ),
@@ -337,7 +528,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                           style: Theme.of(context)
                                               .textTheme
                                               .titleSmall,
-                                          // controller: ,
+                                          controller: remark,
                                           maxLines: 2,
                                           decoration: InputDecoration(
                                             contentPadding:
@@ -406,7 +597,19 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                       ),
                                       Center(
                                         child: MSkollBtn(
-                                            title: "Done", onPress: () {}),
+                                          title: "Done",
+                                          onPress: () {
+                                            if (remark.text.isEmpty) {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "Please provide remark before rejecting");
+                                              return;
+                                            }
+
+                                            acceptOrReject(context, remark.text,
+                                                "Rejected", true, value);
+                                          },
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -423,6 +626,96 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void acceptOrReject(BuildContext context, String remark, String status,
+      bool isRejecting, LeaveApprovalModelValues value) {
+    Navigator.pop(context);
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return Dialog(
+          child: FutureBuilder<bool>(
+              future: ApproveLeaveApi.instance.approveNow(
+                remark: remark,
+                status: status,
+                base: baseUrlFromInsCode("leave", mskoolController),
+                miId: loginSuccessModel.mIID!,
+                loginId: loginSuccessModel.userId!,
+                getLeaveStatus: [value.toJson()],
+              ),
+              builder: (_, snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data!) {
+                    return Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const CircleAvatar(
+                            minRadius: 30.0,
+                            backgroundColor: Colors.green,
+                            child: Icon(
+                              Icons.check,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 12.0,
+                          ),
+                          Text(
+                            isRejecting ? "Leave Rejected" : "Leave Approved",
+                            style:
+                                Theme.of(context).textTheme.titleSmall!.merge(
+                                      const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                          ),
+                          const SizedBox(
+                            height: 6.0,
+                          ),
+                          Text(isRejecting
+                              ? "You successfully rejected the leave..."
+                              : "I approved the leave for you ...."),
+                          const SizedBox(
+                            height: 6.0,
+                          ),
+                          MSkollBtn(
+                              title: "Ok UnderStood",
+                              onPress: () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              })
+                        ],
+                      ),
+                    );
+                  }
+
+                  return const ErrWidget(err: {
+                    "errorTitle": "Server Error Occured",
+                    "errorMsg":
+                        "Currenlty i'm unable to approve leave due to some server issue .. Server not returning 200",
+                  });
+                }
+
+                if (snapshot.hasError) {
+                  return ErrWidget(err: snapshot.error as Map<String, dynamic>);
+                }
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    AnimatedProgressWidget(
+                        title: "Approving All Leaves",
+                        desc: "We are in process to approve all the leaves...",
+                        animationPath: "assets/json/default.json"),
+                  ],
+                );
+              }),
+        );
+      },
     );
   }
 }

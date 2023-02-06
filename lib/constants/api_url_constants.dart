@@ -350,6 +350,7 @@ class URLS {
 
   //LeaveApprovalManager
   static String getLeaves = "api/LeaveApprovalFacade/getApprovalStatus/";
+  static String approveLeave = "api/LeaveApprovalFacade/get_status/";
 
   //ManagerDashboard
   static String managerDashboard = "api/AdmissionCtrl/ManagerDashboardDetails/";

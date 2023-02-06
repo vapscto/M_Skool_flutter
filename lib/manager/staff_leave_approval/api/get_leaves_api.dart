@@ -15,6 +15,7 @@ class GetAppliesLeavesApi {
   }) async {
     final Dio ins = getGlobalDio();
     final String api = base + URLS.getLeaves;
+    logger.d(api);
     try {
       final Response response = await ins.post(api, options: Options(), data: {
         "MI_Id": miId,
