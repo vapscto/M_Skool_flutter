@@ -13,8 +13,8 @@ class ManagerFeeBarChart extends StatefulWidget {
   final double totalPaid;
   final double payable;
   final double totalConcession;
-  final int asmayId;
-  final int asmclId;
+  int? asmayId;
+  int? asmclId;
   LoginSuccessModel? loginSuccessModel;
   MskoolController? mskoolController;
 
@@ -26,8 +26,8 @@ class ManagerFeeBarChart extends StatefulWidget {
     required this.totalCharges,
     required this.totalConcession,
     required this.totalPaid,
-    required this.asmayId,
-    required this.asmclId,
+    this.asmayId,
+    this.asmclId,
     this.loginSuccessModel,
     this.mskoolController,
   });
@@ -62,8 +62,8 @@ class _ManagerFeeBarChartState extends State<ManagerFeeBarChart> {
                             heading: widget.chipText,
                             loginSuccessModel: widget.loginSuccessModel!,
                             mskoolController: widget.mskoolController!,
-                            asmayId: widget.asmayId,
-                            asmclId: widget.asmclId,
+                            asmayId: widget.asmayId!,
+                            asmclId: widget.asmclId!,
                           ));
                     },
                     child: Container(

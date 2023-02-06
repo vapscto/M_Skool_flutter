@@ -342,6 +342,7 @@ class URLS {
   static String getClasswiseSectionwiseFeeResults =
       'api/AdmissionCtrl/AcademicwiseClassFeesDetails/';
   static String examDetails = "api/StudentSearchFacade/showsectionGrid/";
+  static String feeDetails = "api/AdmissionCtrl/ManagerDashboardDetails/";
 
   //COE
   static String getCoeAcaForManager = "api/COEReportFacade/getdata/";
