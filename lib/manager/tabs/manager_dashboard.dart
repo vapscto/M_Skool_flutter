@@ -36,7 +36,12 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
         miId: widget.loginSuccessModel.mIID!,
         asmayId: widget.loginSuccessModel.asmaYId!,
         base: baseUrlFromInsCode("portal", widget.mskoolController),
-        dashboardController: dashboardController);
+        dashboardController: dashboardController,
+        context: context,
+        hrmeId: widget.loginSuccessModel.empcode!,
+        userId: widget.loginSuccessModel.userId!,
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController);
     super.initState();
   }
 
@@ -45,16 +50,24 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
     return RefreshIndicator(
       onRefresh: () async {
         await ManagerDashboardApi.instance.getDashboardData(
-            miId: widget.loginSuccessModel.mIID!,
-            asmayId: widget.loginSuccessModel.asmaYId!,
-            base: baseUrlFromInsCode("portal", widget.mskoolController),
-            dashboardController: dashboardController);
+          miId: widget.loginSuccessModel.mIID!,
+          asmayId: widget.loginSuccessModel.asmaYId!,
+          base: baseUrlFromInsCode("portal", widget.mskoolController),
+          dashboardController: dashboardController,
+          context: context,
+          hrmeId: widget.loginSuccessModel.empcode!,
+          userId: widget.loginSuccessModel.userId!,
+          loginSuccessModel: widget.loginSuccessModel,
+          mskoolController: widget.mskoolController,
+        );
       },
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(12.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           ManagerDashboardContainer(
             dashboardController: dashboardController,
+            loginSuccessModel: widget.loginSuccessModel,
+            mskoolController: widget.mskoolController,
           ),
           const SizedBox(
             height: 12.0,

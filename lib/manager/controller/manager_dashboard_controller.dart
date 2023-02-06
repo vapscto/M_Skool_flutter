@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/manager/model/manager_dashboard_fee_details.dart';
+import 'package:m_skool_flutter/manager/model/manager_dashboard_fee_model.dart';
 import 'package:m_skool_flutter/manager/model/manager_dashboard_leaves_details.dart';
 import 'package:m_skool_flutter/manager/model/manager_dashboard_preadmission.dart';
+import 'package:m_skool_flutter/staffs/model/dashboard_coe_data_model.dart';
 
 class ManagerDashboardController extends GetxController {
   RxBool isLoading = RxBool(false);
@@ -43,21 +45,22 @@ class ManagerDashboardController extends GetxController {
     preAdmission.addAll(prAd);
   }
 
-  // RxList<DashboardPunchReportModelValues> dashboardPunch = RxList();
+  RxList<DashboardFeeModelValues> fee = RxList();
 
-  // void updateDashboardPunch(List<DashboardPunchReportModelValues> punch) {
-  //   if (dashboardPunch.isNotEmpty) {
-  //     dashboardPunch.clear();
-  //   }
-  //   dashboardPunch.addAll(punch);
-  // }
+  void updateDashboardFees(List<DashboardFeeModelValues> punch) {
+    if (fee.isNotEmpty) {
+      fee.clear();
+    }
+    fee.addAll(punch);
+  }
 
-  // RxList<DashboardCoeDataModelValues> dashboardCoe = RxList();
+  RxList<DashboardCoeDataModelValues> dashboardCoe = RxList();
 
-  // void updateDashboardCoe(List<DashboardCoeDataModelValues> coe) {
-  //   if (dashboardCoe.isNotEmpty) {
-  //     dashboardCoe.clear();
-  //   }
-  //   dashboardCoe.addAll(coe);
-  // }
+  void updateDashboardCoe(List<DashboardCoeDataModelValues> coe) {
+    if (dashboardCoe.isNotEmpty) {
+      dashboardCoe.clear();
+    }
+    dashboardCoe.addAll(coe);
+    // }
+  }
 }

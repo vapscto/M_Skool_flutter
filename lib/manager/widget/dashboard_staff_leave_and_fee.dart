@@ -11,28 +11,35 @@ class DashStaffLeavesAndModeofFeePaid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        Expanded(child: Obx(() {
-          return dashboardController.dashboardLeave.isEmpty
-              ? const SizedBox()
-              : DashboardLeaveWidget(
-                  dashboardController: dashboardController,
-                );
-        })),
         const SizedBox(
-          width: 12.0,
+          height: 16.0,
         ),
-        Expanded(
-          child: Obx(
-            () {
-              return dashboardController.feeDetails.isEmpty
+        Row(
+          children: [
+            Expanded(child: Obx(() {
+              return dashboardController.dashboardLeave.isEmpty
                   ? const SizedBox()
-                  : DashboardFeeMode(
+                  : DashboardLeaveWidget(
                       dashboardController: dashboardController,
                     );
-            },
-          ),
+            })),
+            const SizedBox(
+              width: 12.0,
+            ),
+            Expanded(
+              child: Obx(
+                () {
+                  return dashboardController.feeDetails.isEmpty
+                      ? const SizedBox()
+                      : DashboardFeeMode(
+                          dashboardController: dashboardController,
+                        );
+                },
+              ),
+            ),
+          ],
         ),
       ],
     );

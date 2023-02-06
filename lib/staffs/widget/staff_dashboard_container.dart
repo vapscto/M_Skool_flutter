@@ -30,9 +30,6 @@ class StaffDashboardContainer extends StatelessWidget {
                   mList: controller.dashboardCoe,
                   mskoolController: mskoolController,
                 ),
-          const SizedBox(
-            height: 16.0,
-          ),
           controller.dashboardLop.isEmpty
               ? const SizedBox()
               : StaffPunchCardAndLop(

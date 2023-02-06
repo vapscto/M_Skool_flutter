@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/manager/coe/screen/manager_coe.dart';
 import 'package:m_skool_flutter/manager/tabs/manager_dashboard.dart';
+import 'package:m_skool_flutter/manager/widget/drawer_widget.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/tabs/staff_profile_tab.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class ManagerHome extends StatefulWidget {
@@ -40,8 +42,9 @@ class _ManagerHomeState extends State<ManagerHome> {
         loginSuccessModel: widget.loginSuccessModel,
         mskoolController: widget.mskoolController,
         title: "Coe"));
-
-    homeList.add(Container());
+    homeList.add(StaffProfileTab(
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController));
     super.initState();
   }
 
@@ -60,6 +63,12 @@ class _ManagerHomeState extends State<ManagerHome> {
           },
         ),
         title: const Text("Dashboard"),
+      ),
+      drawer: Drawer(
+        child: ManagerDashboardDrawer(
+          loginSuccessModel: widget.loginSuccessModel,
+          mskoolController: widget.mskoolController,
+        ),
       ),
       body: PageView.builder(
         controller: controller,

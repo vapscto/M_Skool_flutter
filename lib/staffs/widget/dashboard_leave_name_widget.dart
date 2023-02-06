@@ -37,9 +37,8 @@ class DashboardLeaveNames extends StatelessWidget {
                 alignment: Alignment.center,
                 children: [
                   CircularProgressIndicator(
-                    value: (values.hRELSTotalLeaves! /
-                            values.hRELSCBLeaves!.toDouble())
-                        .toDouble(),
+                    value: (values.hRELSTotalLeaves! - values.hRELSCBLeaves!) /
+                        values.hRELSTotalLeaves!.toDouble().toDouble(),
                     backgroundColor: noticeBackgroundColor
                         .elementAt(backgroundColor)
                         .withOpacity(0.8),
@@ -69,7 +68,7 @@ class DashboardLeaveNames extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${values.hRELSTotalLeaves!.toInt()}",
+                      "${values.hRELSCBLeaves!.toInt()}",
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
