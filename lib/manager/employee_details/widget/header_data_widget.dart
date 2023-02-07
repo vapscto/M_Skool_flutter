@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-class DataCardWidget extends StatefulWidget {
+class HeaderDataWidget extends StatefulWidget {
   final String name;
-  Function(int)? addfunction;
-  Function(int)? removefunction;
-  int? id;
-
-  DataCardWidget({
+  Function(Map<String, dynamic>)? addfunction;
+  Function(String)? removefunction;
+  String? id;
+  HeaderDataWidget({
     super.key,
     required this.name,
     this.id,
@@ -15,10 +14,10 @@ class DataCardWidget extends StatefulWidget {
   });
 
   @override
-  State<DataCardWidget> createState() => _DataCardWidgetState();
+  State<HeaderDataWidget> createState() => _HeaderDataWidgetState();
 }
 
-class _DataCardWidgetState extends State<DataCardWidget> {
+class _HeaderDataWidgetState extends State<HeaderDataWidget> {
   bool ee = false;
   @override
   Widget build(BuildContext context) {
@@ -43,7 +42,8 @@ class _DataCardWidgetState extends State<DataCardWidget> {
             ee = value!;
           });
           if (value!) {
-            widget.addfunction!(widget.id!);
+            widget.addfunction!(
+                {"columnID": widget.id, "columnName": widget.name});
             return;
           }
           widget.removefunction!(widget.id!);

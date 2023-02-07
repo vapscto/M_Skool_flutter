@@ -356,4 +356,15 @@ class URLS {
 
   //ManagerDashboard
   static String managerDashboard = "api/AdmissionCtrl/ManagerDashboardDetails/";
+
+  ///////////  EMPLOYEE DETAILS ////////////////
+  static String getTypes =
+      'api/EmployeeLateInEarlyOutReportFacade/getalldetails';
+  static String getDepartment =
+      'api/EmployeeLateInEarlyOutReportFacade/get_departments';
+  static String getdesignation =
+      'api/EmployeeLateInEarlyOutReportFacade/get_designation';
+
+  static String getEmployeeDetails =
+      'api/EmployeeDetailsReportFacade/getEmployeedetailsBySelection';
 }
