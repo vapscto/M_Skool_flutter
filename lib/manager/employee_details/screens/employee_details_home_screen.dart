@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/manager/employee_details/controller/employee_details_related_controller.dart';
+import 'package:m_skool_flutter/manager/employee_details/screens/employee_details_screen.dart';
 import 'package:m_skool_flutter/manager/employee_details/widget/data_card_widget.dart';
+import 'package:m_skool_flutter/manager/employee_details/widget/header_data_widget.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
@@ -32,15 +35,7 @@ class _EmployeeDetailsHomeScreenState extends State<EmployeeDetailsHomeScreen> {
   final controller2 = ScrollController();
   final controller3 = ScrollController();
 
-  List<String> headerList = [
-    'Employee Code',
-    'Employee Name',
-    'Father Name',
-    'Mobile No.',
-    'Email Id',
-    'Date Of Birth'
-  ];
-
+  List<Map<String, dynamic>> selectedHeaderList = [];
   List<int> multipletype = [];
   List<int> multipledep = [];
   List<int> multipledes = [];
@@ -114,6 +109,47 @@ class _EmployeeDetailsHomeScreenState extends State<EmployeeDetailsHomeScreen> {
     multipledes.removeWhere((element) => element == id);
   }
 
+  void addToHeaderList(Map<String, dynamic> data) {
+    selectedHeaderList.add(data);
+    logger.d(selectedHeaderList);
+  }
+
+  void removeFromHeaderList(String id) {
+    selectedHeaderList.removeWhere((element) => element['columnID'] == id);
+    logger.d(selectedHeaderList);
+  }
+
+  void searchEmployeeDetails() async {
+    employeeDetailsController.issearchloadig(true);
+    await employeeDetailsController
+        .getEmployeeDetail(
+      miId: widget.loginSuccessModel.mIID!,
+      left: employeeDetailsController.left.value,
+      working: employeeDetailsController.working.value,
+      selectedDepartment: multipledep,
+      selectedDesignation: multipledes,
+      selectedType: multipletype,
+      selectedHeader: selectedHeaderList,
+      base: baseUrlFromInsCode('hrms', widget.mskoolController),
+    )
+        .then(
+      (value) {
+        if (value) {
+          if (employeeDetailsController.employeeDetailsList.isEmpty) {
+            Fluttertoast.showToast(msg: 'No data available.');
+            return;
+          }
+          Get.to(() => EmployeeDetailsScreen(
+                headerList: selectedHeaderList,
+                loginSuccessModel: widget.loginSuccessModel,
+                mskoolController: widget.mskoolController,
+              ));
+        }
+      },
+    );
+    employeeDetailsController.issearchloadig(false);
+  }
+
   @override
   void initState() {
     getTypesData();
@@ -169,10 +205,16 @@ class _EmployeeDetailsHomeScreenState extends State<EmployeeDetailsHomeScreen> {
                               controller: controller,
                               padding: const EdgeInsets.only(bottom: 10),
                               shrinkWrap: true,
-                              itemCount: headerList.length,
+                              itemCount:
+                                  employeeDetailsController.headerList.length,
                               itemBuilder: (context, index) {
-                                return DataCardWidget(
-                                  name: headerList.elementAt(index),
+                                return HeaderDataWidget(
+                                  name: employeeDetailsController.headerList
+                                      .elementAt(index)['columnName'],
+                                  id: employeeDetailsController.headerList
+                                      .elementAt(index)['columnID'],
+                                  addfunction: addToHeaderList,
+                                  removefunction: removeFromHeaderList,
                                 );
                               },
                             ),
@@ -524,6 +566,57 @@ class _EmployeeDetailsHomeScreenState extends State<EmployeeDetailsHomeScreen> {
                       ],
                     ),
                     const SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 120,
+                          child: CheckboxListTile(
+                            activeColor: Theme.of(context).primaryColor,
+                            dense: true,
+                            controlAffinity: ListTileControlAffinity.leading,
+                            title: Text(
+                              'Left',
+                              style:
+                                  Theme.of(context).textTheme.titleSmall!.merge(
+                                        const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                            ),
+                            value: employeeDetailsController.left.value,
+                            onChanged: (value) {
+                              employeeDetailsController.leftCheckbox(value!);
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 150,
+                          child: CheckboxListTile(
+                            activeColor: Theme.of(context).primaryColor,
+                            dense: true,
+                            controlAffinity: ListTileControlAffinity.leading,
+                            title: Text(
+                              'Working',
+                              style:
+                                  Theme.of(context).textTheme.titleSmall!.merge(
+                                        const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                            ),
+                            value: employeeDetailsController.working.value,
+                            onChanged: (value) {
+                              employeeDetailsController.workingCheckbox(value!);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
                       height: 40,
                     ),
                     ElevatedButton(
@@ -536,18 +629,40 @@ class _EmployeeDetailsHomeScreenState extends State<EmployeeDetailsHomeScreen> {
                           borderRadius: BorderRadius.circular(30.0),
                         ),
                       ),
-                      onPressed: () {},
-                      child: Text(
-                        'Search',
-                        style: Theme.of(context).textTheme.labelSmall!.merge(
-                              const TextStyle(
+                      onPressed: () {
+                        if (selectedHeaderList.isEmpty) {
+                          Fluttertoast.showToast(msg: 'Select header');
+                        } else if (multipletype.isEmpty) {
+                          Fluttertoast.showToast(msg: 'Select type');
+                        } else if (multipledep.isEmpty) {
+                          Fluttertoast.showToast(msg: 'Select department');
+                        } else if (multipledes.isEmpty) {
+                          Fluttertoast.showToast(msg: 'Select designation');
+                        } else {
+                          searchEmployeeDetails();
+                        }
+                      },
+                      child: employeeDetailsController.isSearch.value
+                          ? const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
                                 color: Colors.white,
-                                letterSpacing: 0.3,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
                               ),
+                            )
+                          : Text(
+                              'Search',
+                              style:
+                                  Theme.of(context).textTheme.labelSmall!.merge(
+                                        const TextStyle(
+                                          color: Colors.white,
+                                          letterSpacing: 0.3,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
                             ),
-                      ),
                     )
                   ],
                 ),

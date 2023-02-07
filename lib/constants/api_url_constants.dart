@@ -362,4 +362,7 @@ class URLS {
       'api/EmployeeLateInEarlyOutReportFacade/get_departments';
   static String getdesignation =
       'api/EmployeeLateInEarlyOutReportFacade/get_designation';
+
+  static String getEmployeeDetails =
+      'api/EmployeeDetailsReportFacade/getEmployeedetailsBySelection';
 }

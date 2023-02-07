@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/manager/employee_details/api/employee_details_related_api.dart';
 import 'package:m_skool_flutter/manager/employee_details/model/departmentModel.dart';
+import 'package:m_skool_flutter/manager/employee_details/model/employeeDetailsModel.dart';
 import 'package:m_skool_flutter/manager/employee_details/model/typeModel.dart';
 
 import '../model/designationModel.dart';
@@ -10,10 +11,32 @@ class EmployeeDetailsController extends GetxController {
   RxList<FilltypesValue> typeList = <FilltypesValue>[].obs;
   RxList<FilldepartmentValue> departmentList = <FilldepartmentValue>[].obs;
   RxList<FilldesignationValue> designationList = <FilldesignationValue>[].obs;
+  RxList<EmployeeDetailsValue> employeeDetailsList =
+      <EmployeeDetailsValue>[].obs;
+
+  List<Map> headerList = [
+    {"columnID": "HRME_EmployeeCode", "columnName": "Employee Code"},
+    {"columnID": "HRME_EmployeeFirstName", "columnName": "Employee Name"},
+    {"columnID": "HRME_FatherName", "columnName": "Father Name"},
+    {"columnID": "HRME_MobileNo", "columnName": "Mobile No."},
+    {"columnID": "HRME_EmailId", "columnName": "Email Id"},
+    {"columnID": "HRME_DOB", "columnName": "Date Of Birth"}
+  ];
 
   RxBool isType = RxBool(false);
   RxBool isDepartment = RxBool(false);
   RxBool isDesignation = RxBool(false);
+  RxBool isSearch = RxBool(false);
+  RxBool left = RxBool(false);
+  RxBool working = RxBool(false);
+
+  void leftCheckbox(bool check) {
+    left.value = check;
+  }
+
+  void workingCheckbox(bool check) {
+    working.value = check;
+  }
 
   void istypeloading(bool loading) {
     isType.value = loading;
@@ -25,6 +48,10 @@ class EmployeeDetailsController extends GetxController {
 
   void isdesignationloading(bool loading) {
     isDesignation.value = loading;
+  }
+
+  void issearchloadig(bool loading) {
+    isSearch.value = loading;
   }
 
   Future<bool> getTypes({
@@ -99,6 +126,45 @@ class EmployeeDetailsController extends GetxController {
             i++) {
           designationList
               .add(designationModel.filldesignation!.values!.elementAt(i)!);
+        }
+        return true;
+      }
+      return false;
+    } catch (e) {
+      logger.d(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> getEmployeeDetail({
+    required int miId,
+    required bool left,
+    required bool working,
+    required List selectedDepartment,
+    required List selectedDesignation,
+    required List selectedType,
+    required List selectedHeader,
+    required String base,
+  }) async {
+    EmployeDetailsModel? employeDetailsModel = await getEmployeeDetails(
+        miId: miId,
+        left: left,
+        working: working,
+        selectedDepartment: selectedDepartment,
+        selectedDesignation: selectedDesignation,
+        selectedType: selectedType,
+        selectedHeader: selectedHeader,
+        base: base);
+    try {
+      if (employeDetailsModel!.employeeDetailsfromDatabase != null ||
+          employeDetailsModel.employeeDetailsfromDatabase!.values != null) {
+        employeeDetailsList.clear();
+        for (var i = 0;
+            i < employeDetailsModel.employeeDetailsfromDatabase!.values!.length;
+            i++) {
+          employeeDetailsList.add(employeDetailsModel
+              .employeeDetailsfromDatabase!.values!
+              .elementAt(i)!);
         }
         return true;
       }
