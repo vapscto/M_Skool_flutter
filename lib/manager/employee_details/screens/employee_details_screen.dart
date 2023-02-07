@@ -35,196 +35,201 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Obx(
-              //   () =>
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: DataTable(
-                      dataTextStyle: const TextStyle(
-                          fontSize: 12,
-                          color: Color.fromRGBO(0, 0, 0, 0.95),
-                          fontWeight: FontWeight.w500),
-                      dataRowHeight: 37,
-                      headingRowHeight: 40,
-                      horizontalMargin: 8,
-                      columnSpacing: 26,
-                      dividerThickness: 1,
-                      headingTextStyle: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w700),
-                      border: TableBorder.all(
-                        borderRadius: BorderRadius.circular(12),
-                        width: 0.5,
-                        color: Colors.grey.withOpacity(0.5),
-                      ),
-                      // showBottomBorder: true,
-                      headingRowColor: MaterialStateProperty.all(
-                          Theme.of(context).primaryColor),
-                      columns: const [
-                        DataColumn(
-                          label: Text(
-                            ' S.No',
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
+              Obx(
+                () => SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: DataTable(
+                        dataTextStyle: const TextStyle(
+                            fontSize: 12,
+                            color: Color.fromRGBO(0, 0, 0, 0.95),
+                            fontWeight: FontWeight.w500),
+                        dataRowHeight: 37,
+                        headingRowHeight: 40,
+                        horizontalMargin: 8,
+                        columnSpacing: 26,
+                        dividerThickness: 1,
+                        headingTextStyle: const TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.w700),
+                        border: TableBorder.all(
+                          borderRadius: BorderRadius.circular(12),
+                          width: 0.5,
+                          color: Colors.grey.withOpacity(0.5),
                         ),
-                        DataColumn(
-                          label: Text(
-                            'Employee Code',
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Employee Name',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Father Name',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Mobile No.',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Email Id',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Date Of Birth',
-                              textAlign: TextAlign.center,
+                        // showBottomBorder: true,
+                        headingRowColor: MaterialStateProperty.all(
+                            Theme.of(context).primaryColor),
+                        columns: const [
+                          DataColumn(
+                            label: Text(
+                              ' S.No',
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 14,
                               ),
                             ),
                           ),
-                        ),
-                      ],
-
-                      rows: List.generate(
-                          employeeDetailsController.employeeDetailsList.length,
-                          (index) {
-                        var i = index + 1;
-                        return DataRow(
-                          cells: [
-                            DataCell(
-                              Text(
-                                '   $i',
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.ellipsis,
+                          DataColumn(
+                            label: Text(
+                              'Employee Code',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 14,
                               ),
                             ),
-                            DataCell(
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  employeeDetailsController.employeeDetailsList
-                                      .elementAt(index)
-                                      .hrmeEmployeeCode!,
+                          ),
+                          DataColumn(
+                            label: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                '     Employee Name',
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Father Name',
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                '       Mobile No.',
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                ' Email Id',
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: 14),
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                '     Date Of Birth',
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+
+                        rows: List.generate(
+                            employeeDetailsController
+                                .employeeDetailsList.length, (index) {
+                          var i = index + 1;
+                          return DataRow(
+                            cells: [
+                              DataCell(
+                                Text(
+                                  '   $i',
                                   textAlign: TextAlign.center,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
-                            ),
-                            DataCell(
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  employeeDetailsController.employeeDetailsList
-                                      .elementAt(index)
-                                      .hrmeEmployeeFirstName!,
-                                  overflow: TextOverflow.ellipsis,
+                              DataCell(
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    employeeDetailsController
+                                        .employeeDetailsList
+                                        .elementAt(index)
+                                        .hrmeEmployeeCode!,
+                                    textAlign: TextAlign.center,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ),
-                            ),
-                            DataCell(
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  employeeDetailsController.employeeDetailsList
-                                      .elementAt(index)
-                                      .hrmeFatherName!,
-                                  overflow: TextOverflow.ellipsis,
+                              DataCell(
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    employeeDetailsController
+                                        .employeeDetailsList
+                                        .elementAt(index)
+                                        .hrmeEmployeeFirstName!,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ),
-                            ),
-                            DataCell(
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  employeeDetailsController.employeeDetailsList
-                                      .elementAt(index)
-                                      .hrmeMobileNo!,
-                                  overflow: TextOverflow.ellipsis,
+                              DataCell(
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    employeeDetailsController
+                                        .employeeDetailsList
+                                        .elementAt(index)
+                                        .hrmeFatherName!,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ),
-                            ),
-                            DataCell(
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  employeeDetailsController.employeeDetailsList
-                                      .elementAt(index)
-                                      .hrmeEmailId!,
-                                  overflow: TextOverflow.ellipsis,
+                              DataCell(
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    employeeDetailsController
+                                        .employeeDetailsList
+                                        .elementAt(index)
+                                        .hrmeMobileNo!,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ),
-                            ),
-                            DataCell(
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  employeeDetailsController.employeeDetailsList
-                                      .elementAt(index)
-                                      .hrmeDob!,
-                                  overflow: TextOverflow.ellipsis,
+                              DataCell(
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    employeeDetailsController
+                                        .employeeDetailsList
+                                        .elementAt(index)
+                                        .hrmeEmailId!,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        );
-                      }),
+                              DataCell(
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    employeeDetailsController
+                                        .employeeDetailsList
+                                        .elementAt(index)
+                                        .hrmeDob!,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
+                      ),
                     ),
                   ),
                 ),
               ),
-              // ),
             ],
           ),
         ),

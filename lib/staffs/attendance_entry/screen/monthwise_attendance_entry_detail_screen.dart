@@ -27,8 +27,12 @@ class _MonthWiseAttendanceEntryDetailScreenState
     extends State<MonthWiseAttendanceEntryDetailScreen> {
   final AttendanceEntryController attendanceEntryController =
       Get.put(AttendanceEntryController());
+
+  List<Map<String, dynamic>> studentList = [];
   @override
   Widget build(BuildContext context) {
+    attendanceEntryController.textEditingController.clear();
+
     return Scaffold(
       appBar: AppBar(
         leading: const CustomGoBackButton(),
@@ -40,7 +44,36 @@ class _MonthWiseAttendanceEntryDetailScreenState
                 const EdgeInsets.symmetric(vertical: 13.0, horizontal: 16.0),
             child: SaveBtn(
               title: 'Save',
-              onPress: () {},
+              onPress: () {
+                studentList.clear();
+                for (var i = 0;
+                    i < attendanceEntryController.textEditingController.length;
+                    i++) {
+                  studentList.add({
+                    "amaY_RollNo": attendanceEntryController
+                        .monthwiseStudentList
+                        .elementAt(i)
+                        .amaYRollNo,
+                    "amsT_AdmNo": attendanceEntryController.monthwiseStudentList
+                        .elementAt(i)
+                        .amsTAdmNo,
+                    "amsT_Id": attendanceEntryController.monthwiseStudentList
+                        .elementAt(i)
+                        .amsTId,
+                    "studentname": attendanceEntryController
+                        .monthwiseStudentList
+                        .elementAt(i)
+                        .studentname,
+                    "pdays": double.parse(
+                        '${attendanceEntryController.textEditingController.elementAt(i).text}.0'),
+                    "amsT_RegistrationNo": attendanceEntryController
+                        .monthwiseStudentList
+                        .elementAt(i)
+                        .amsTRegistrationNo
+                  });
+                }
+                // save api call
+              },
             ),
           ),
         ],
@@ -188,6 +221,8 @@ class _MonthWiseAttendanceEntryDetailScreenState
                             attendanceEntryController
                                 .monthwiseStudentList.length, (index) {
                           var i = index + 1;
+                          attendanceEntryController
+                              .addToTextFeildList(TextEditingController());
                           return DataRow(
                             cells: [
                               DataCell(
@@ -223,10 +258,13 @@ class _MonthWiseAttendanceEntryDetailScreenState
                                   ),
                                 ),
                               ),
-                              const DataCell(
+                              DataCell(
                                 Align(
                                   alignment: Alignment.center,
-                                  child: AttendanceTextfieldWidget(),
+                                  child: AttendanceTextfieldWidget(
+                                      textController: attendanceEntryController
+                                          .textEditingController
+                                          .elementAt(index)),
                                 ),
                               ),
                             ],

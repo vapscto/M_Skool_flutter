@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/api/attendance_entry_related_api.dart';
@@ -23,6 +24,9 @@ class AttendanceEntryController extends GetxController {
   RxList<PeroidWiseStudentListValue> periodwiseStudentList =
       <PeroidWiseStudentListValue>[].obs;
 
+  RxList<TextEditingController> textEditingController =
+      <TextEditingController>[].obs;
+
   RxString attendanceEntryType = ''.obs;
   RxNum countClassHeld = RxNum(0.0);
   RxInt asaId = RxInt(0);
@@ -32,6 +36,10 @@ class AttendanceEntryController extends GetxController {
   RxBool isStudentData = RxBool(false);
   RxBool isSubject = RxBool(false);
   RxBool isSave = RxBool(false);
+
+  void addToTextFeildList(TextEditingController value) {
+    textEditingController.add(value);
+  }
 
   void isinitialdataloading(bool loading) async {
     isInitialData.value = loading;

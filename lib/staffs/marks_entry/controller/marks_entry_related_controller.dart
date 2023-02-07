@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -19,6 +20,9 @@ class MarksEntryController extends GetxController {
   List<StudentListValue> marksEntryDataTableList = <StudentListValue>[].obs;
   List<SubsubjectlistValue> subSubjectList = <SubsubjectlistValue>[].obs;
 
+  RxList<TextEditingController> textEditingControllerList =
+      <TextEditingController>[].obs;
+
   RxBool isAcamedicYear = RxBool(false);
   RxBool isClass = RxBool(false);
   RxBool isSection = RxBool(false);
@@ -27,6 +31,10 @@ class MarksEntryController extends GetxController {
   RxBool isSubSubject = RxBool(false);
   RxBool isTable = RxBool(false);
   RxBool isSave = RxBool(false);
+
+  void addToTextEditingList(TextEditingController textEditingController) {
+    textEditingControllerList.add(textEditingController);
+  }
 
   void isacademicyearloading(bool loading) {
     isAcamedicYear.value = loading;

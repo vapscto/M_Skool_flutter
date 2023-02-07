@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AttendanceTextfieldWidget extends StatefulWidget {
-  const AttendanceTextfieldWidget({super.key});
+  final TextEditingController textController;
+  const AttendanceTextfieldWidget({
+    super.key,
+    required this.textController,
+  });
 
   @override
   State<AttendanceTextfieldWidget> createState() =>
@@ -14,6 +18,7 @@ class _AttendanceTextfieldWidgetState extends State<AttendanceTextfieldWidget> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextFormField(
+        controller: widget.textController,
         textAlign: TextAlign.center,
         keyboardType: TextInputType.number,
         style: const TextStyle(
