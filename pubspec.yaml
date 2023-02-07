@@ -74,6 +74,7 @@ dependencies:
   document_file_save_plus: ^1.0.9
   cached_network_image: ^3.2.3
   data_table_2: ^2.3.10
+  number_to_words_english: ^2.0.2
 
 dev_dependencies:
   flutter_test:

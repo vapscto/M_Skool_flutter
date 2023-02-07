@@ -119,7 +119,7 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
                   height: 8.0,
                 ),
                 ReadMoreText(
-                  widget.value.intBDescription!,
+                  widget.value.intBDescription ?? "N/A",
                   style: Theme.of(context).textTheme.labelSmall!.merge(
                         const TextStyle(
                           fontSize: 14,

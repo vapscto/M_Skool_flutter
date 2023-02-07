@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/staffs/view_notice/widget/filter_controller_widg
 import 'package:m_skool_flutter/staffs/view_notice/widget/filtered_notice.dart';
 import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 
 import '../widget/filter_notice_by_type.dart';
 
@@ -146,6 +147,7 @@ class _ViewNoticeHomeState extends State<ViewNoticeHome> {
           ],
         ),
       ),
+      floatingActionButton: const HomeFab(),
     );
   }
 

@@ -19,6 +19,8 @@ class GetCertificateType {
   }) async {
     final String apiUrl = baseUrl + URLS.getCertitificateType;
     final Dio ins = getGlobalDio();
+
+    logger.d(apiUrl);
     try {
       Response response = await ins
           .post(apiUrl, options: Options(headers: getSession()), data: {

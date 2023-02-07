@@ -728,6 +728,7 @@ class ApplyLeaveWidget extends StatelessWidget {
                                         title: "Ok Understood",
                                         onPress: () {
                                           Navigator.pop(context);
+                                          Navigator.pop(context);
                                         },
                                       )
                                     ],

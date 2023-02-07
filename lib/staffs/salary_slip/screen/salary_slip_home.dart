@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/staffs/salary_slip/controller/salary_slip_related_controller.dart';
 import 'package:m_skool_flutter/staffs/salary_slip/model/yearandmonthdropdown.dart';
+import 'package:m_skool_flutter/staffs/salary_slip/pdf/generate_pdf.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
@@ -30,6 +31,7 @@ class _SalarySlipHomeState extends State<SalarySlipHome> {
   YearDropdownValue? yearDropdownSelectedValue;
   MonthDropdownValue? monthDropdownSelectedValue;
 
+  bool showGenerate = false;
   Future<void> getYear() async {
     salarySlipController.yearLoading(true);
     await salarySlipController
@@ -148,9 +150,12 @@ class _SalarySlipHomeState extends State<SalarySlipHome> {
                             ),
                           );
                         }),
-                        onChanged: (s) {
+                        onChanged: (s) async {
                           yearDropdownSelectedValue = s;
-                          salarySlipController.getSalaryDetails(
+
+                          showGenerate = false;
+                          setState(() {});
+                          await salarySlipController.getSalaryDetails(
                             miId: widget.loginSuccessModel.mIID!,
                             userId: widget.loginSuccessModel.userId!,
                             hresYear: s!.hrmlYLeaveYear.toString(),
@@ -159,6 +164,7 @@ class _SalarySlipHomeState extends State<SalarySlipHome> {
                             base: baseUrlFromInsCode(
                                 'portal', widget.mskoolController),
                           );
+                          setState(() {});
                         },
                       ),
                     ),
@@ -225,9 +231,11 @@ class _SalarySlipHomeState extends State<SalarySlipHome> {
                             ),
                           );
                         }),
-                        onChanged: (s) {
+                        onChanged: (s) async {
                           monthDropdownSelectedValue = s!;
-                          salarySlipController.getSalaryDetails(
+                          showGenerate = false;
+                          setState(() {});
+                          await salarySlipController.getSalaryDetails(
                             miId: widget.loginSuccessModel.mIID!,
                             userId: widget.loginSuccessModel.userId!,
                             hresYear: yearDropdownSelectedValue!.hrmlYLeaveYear
@@ -236,14 +244,22 @@ class _SalarySlipHomeState extends State<SalarySlipHome> {
                             base: baseUrlFromInsCode(
                                 'portal', widget.mskoolController),
                           );
+
+                          showGenerate = true;
+                          setState(() {});
                         },
                       ),
                     ),
                     const SizedBox(height: 40),
-                    MSkollBtn(
-                        title: 'Generate PDF',
-                        onPress: () {},
-                        size: const Size.fromWidth(300)),
+                    showGenerate == false
+                        ? const CircularProgressIndicator()
+                        : MSkollBtn(
+                            title: 'Generate PDF',
+                            onPress: () {
+                              GenerateSalarySlip.instance.generateNow(
+                                  controller: salarySlipController);
+                            },
+                            size: const Size.fromWidth(300)),
                     const SizedBox(height: 50),
                     Image.asset('assets/images/salaryslipillustration.png'),
                   ],

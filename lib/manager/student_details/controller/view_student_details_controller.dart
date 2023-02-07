@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/manager/student_details/model/academic_history_model.dart';
 import 'package:m_skool_flutter/manager/student_details/model/exam_model.dart';
 import 'package:m_skool_flutter/manager/student_details/model/manager_attendance_model.dart';
 import 'package:m_skool_flutter/manager/student_details/model/manager_get_fee_details.dart';
@@ -22,11 +23,35 @@ class ViewStudentDetailsController extends GetxController {
     isErrorOccured.value = b;
   }
 
+  RxBool isHistoryLoading = RxBool(false);
+  RxString historyStatus = RxString("");
+  RxBool isErrorOccuredInHistory = RxBool(false);
+
+  void updateIsHistoryLoading(bool b) {
+    isHistoryLoading.value = b;
+  }
+
+  void updateHistoryStatus(String status) {
+    historyStatus.value = status;
+  }
+
+  void updateIsErrorOccuredInHistory(bool b) {
+    isErrorOccuredInHistory.value = b;
+  }
+
+  RxList<AcademicHistoryValues> academicHistory = RxList();
   RxList<PersonalDetailsValues> personalData = RxList();
   RxList<ManagerAttendanceModelValues> attendance = RxList();
   RxList<GetFeeDetailsValues> feeDetails = RxList();
   RxList<GetTermFeeDetailsValues> getTermFee = RxList();
   RxList<ManagerExamModelValues> managerExam = RxList();
+
+  void updateAcademicHistoryModel(List<AcademicHistoryValues> his) {
+    if (academicHistory.isNotEmpty) {
+      academicHistory.clear();
+    }
+    academicHistory.addAll(his);
+  }
 
   void updatePersonalData(List<PersonalDetailsValues> d) {
     if (personalData.isNotEmpty) {

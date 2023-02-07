@@ -54,6 +54,7 @@ Future<SalarySlipDetailModel?> getSalaryDetail({
           "MI_Id": miId,
           "LogInUserId": userId,
         });
+
     if (response.statusCode == 200) {
       SalarySlipDetailModel salarySlipDetailModel =
           SalarySlipDetailModel.fromJson(response.data);

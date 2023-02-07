@@ -336,7 +336,8 @@ class _HwCwDetailScreenState extends State<HwCwDetailScreen> {
                   )
                 : const SizedBox(),
             widget.attachmentType != null &&
-                    widget.attachmentType!.toLowerCase() == "others"
+                    widget.attachmentType!.toLowerCase() == "others" &&
+                    widget.attachmentName != null
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

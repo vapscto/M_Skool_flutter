@@ -47,24 +47,24 @@ class HwCwUploadedContentItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              InkWell(
-                onTap: onViewClicked,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  padding: const EdgeInsets.all(8.0),
-                  child: SvgPicture.asset(
-                    "assets/svg/eye_svg.svg",
-                    color: Colors.white,
-                    height: 24,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 12.0,
-              ),
+              // InkWell(
+              //   onTap: onViewClicked,
+              //   child: Container(
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(8.0),
+              //       color: Theme.of(context).primaryColor,
+              //     ),
+              //     padding: const EdgeInsets.all(8.0),
+              //     child: SvgPicture.asset(
+              //       "assets/svg/eye_svg.svg",
+              //       color: Colors.white,
+              //       height: 24,
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   width: 12.0,
+              // ),
               InkWell(
                 onTap: onDownloadClicked,
                 child: Container(

@@ -244,123 +244,140 @@ class _VerifyHwCwItemState extends State<VerifyHwCwItem> {
                                                 base: widget.base),
                                         builder: (_, snapshot) {
                                           if (snapshot.hasData) {
-                                            return ListView.separated(
-                                                shrinkWrap: true,
-                                                padding:
-                                                    const EdgeInsets.all(16.0),
-                                                itemBuilder: (_, index) {
-                                                  if (snapshot.data!
-                                                      .elementAt(index)
-                                                      .ihwupLFileName!
-                                                      .endsWith(".pdf")) {
+                                            if (snapshot.data!.isEmpty) {
+                                              return Column(
+                                                children: const [
+                                                  AnimatedProgressWidget(
+                                                    title: "No Attachment",
+                                                    desc:
+                                                        "There is no attachment for this item",
+                                                    animationPath:
+                                                        "assets/json/nodata.json",
+                                                    animatorHeight: 250,
+                                                  ),
+                                                ],
+                                              );
+                                            }
+                                            return Expanded(
+                                              child: ListView.separated(
+                                                  shrinkWrap: true,
+                                                  padding: const EdgeInsets.all(
+                                                      16.0),
+                                                  itemBuilder: (_, index) {
+                                                    if (snapshot.data!
+                                                        .elementAt(index)
+                                                        .ihwupLFileName!
+                                                        .endsWith(".pdf")) {
+                                                      return HwCwUploadedContentItem(
+                                                        onViewClicked:
+                                                            () async {
+                                                          if (await canLaunchUrl(
+                                                              Uri.parse(snapshot
+                                                                  .data!
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .ihwupLAttachment!))) {
+                                                            await launchUrl(
+                                                                Uri.parse(snapshot
+                                                                    .data!
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .ihwupLAttachment!),
+                                                                mode: LaunchMode
+                                                                    .externalApplication);
+                                                          }
+                                                        },
+                                                        onDownloadClicked:
+                                                            () async {
+                                                          if (await canLaunchUrl(
+                                                              Uri.parse(snapshot
+                                                                  .data!
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .ihwupLAttachment!))) {
+                                                            await launchUrl(
+                                                                Uri.parse(snapshot
+                                                                    .data!
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .ihwupLAttachment!),
+                                                                mode: LaunchMode
+                                                                    .externalApplication);
+                                                          }
+                                                        },
+                                                        title: snapshot.data!
+                                                            .elementAt(index)
+                                                            .ihwupLFileName!,
+                                                        isPdf: true,
+                                                      );
+                                                    }
                                                     return HwCwUploadedContentItem(
-                                                      onViewClicked: () async {
-                                                        if (await canLaunchUrl(
-                                                            Uri.parse(snapshot
-                                                                .data!
-                                                                .elementAt(
-                                                                    index)
-                                                                .ihwupLAttachment!))) {
-                                                          await launchUrl(
+                                                        onViewClicked:
+                                                            () async {
+                                                          if ([
+                                                            ".jpg",
+                                                            ".png",
+                                                            ".jpeg",
+                                                            ".gif",
+                                                          ].contains(p.extension(
+                                                              "snapshot.data.elementAt(index).ihwupLAttachment"))) {
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder: (_) => ViewImage(
+                                                                        image: snapshot
+                                                                            .data!
+                                                                            .elementAt(index)
+                                                                            .ihwupLAttachment!)));
+                                                            return;
+                                                          }
+                                                          if (await canLaunchUrl(
                                                               Uri.parse(snapshot
                                                                   .data!
                                                                   .elementAt(
                                                                       index)
-                                                                  .ihwupLAttachment!),
-                                                              mode: LaunchMode
-                                                                  .externalApplication);
-                                                        }
-                                                      },
-                                                      onDownloadClicked:
-                                                          () async {
-                                                        if (await canLaunchUrl(
-                                                            Uri.parse(snapshot
-                                                                .data!
-                                                                .elementAt(
-                                                                    index)
-                                                                .ihwupLAttachment!))) {
-                                                          await launchUrl(
+                                                                  .ihwupLAttachment!))) {
+                                                            await launchUrl(
+                                                                Uri.parse(snapshot
+                                                                    .data!
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .ihwupLAttachment!),
+                                                                mode: LaunchMode
+                                                                    .externalApplication);
+                                                          }
+                                                        },
+                                                        onDownloadClicked:
+                                                            () async {
+                                                          if (await canLaunchUrl(
                                                               Uri.parse(snapshot
                                                                   .data!
                                                                   .elementAt(
                                                                       index)
-                                                                  .ihwupLAttachment!),
-                                                              mode: LaunchMode
-                                                                  .externalApplication);
-                                                        }
-                                                      },
-                                                      title: snapshot.data!
-                                                          .elementAt(index)
-                                                          .ihwupLFileName!,
-                                                      isPdf: true,
+                                                                  .ihwupLAttachment!))) {
+                                                            await launchUrl(
+                                                                Uri.parse(snapshot
+                                                                    .data!
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .ihwupLAttachment!),
+                                                                mode: LaunchMode
+                                                                    .externalApplication);
+                                                          }
+                                                        },
+                                                        title: snapshot.data!
+                                                            .elementAt(index)
+                                                            .ihwupLFileName!,
+                                                        isPdf: false);
+                                                  },
+                                                  separatorBuilder: (_, index) {
+                                                    return const SizedBox(
+                                                      height: 16.0,
                                                     );
-                                                  }
-                                                  return HwCwUploadedContentItem(
-                                                      onViewClicked: () async {
-                                                        if ([
-                                                          ".jpg",
-                                                          ".png",
-                                                          ".jpeg",
-                                                          ".gif",
-                                                        ].contains(p.extension(
-                                                            "snapshot.data.elementAt(index).ihwupLAttachment"))) {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (_) => ViewImage(
-                                                                      image: snapshot
-                                                                          .data!
-                                                                          .elementAt(
-                                                                              index)
-                                                                          .ihwupLAttachment!)));
-                                                          return;
-                                                        }
-                                                        if (await canLaunchUrl(
-                                                            Uri.parse(snapshot
-                                                                .data!
-                                                                .elementAt(
-                                                                    index)
-                                                                .ihwupLAttachment!))) {
-                                                          await launchUrl(
-                                                              Uri.parse(snapshot
-                                                                  .data!
-                                                                  .elementAt(
-                                                                      index)
-                                                                  .ihwupLAttachment!),
-                                                              mode: LaunchMode
-                                                                  .externalApplication);
-                                                        }
-                                                      },
-                                                      onDownloadClicked:
-                                                          () async {
-                                                        if (await canLaunchUrl(
-                                                            Uri.parse(snapshot
-                                                                .data!
-                                                                .elementAt(
-                                                                    index)
-                                                                .ihwupLAttachment!))) {
-                                                          await launchUrl(
-                                                              Uri.parse(snapshot
-                                                                  .data!
-                                                                  .elementAt(
-                                                                      index)
-                                                                  .ihwupLAttachment!),
-                                                              mode: LaunchMode
-                                                                  .externalApplication);
-                                                        }
-                                                      },
-                                                      title: snapshot.data!
-                                                          .elementAt(index)
-                                                          .ihwupLFileName!,
-                                                      isPdf: false);
-                                                },
-                                                separatorBuilder: (_, index) {
-                                                  return const SizedBox(
-                                                    height: 16.0,
-                                                  );
-                                                },
-                                                itemCount:
-                                                    snapshot.data!.length);
+                                                  },
+                                                  itemCount:
+                                                      snapshot.data!.length),
+                                            );
                                           }
                                           if (snapshot.hasError) {
                                             return ErrWidget(
@@ -392,123 +409,140 @@ class _VerifyHwCwItemState extends State<VerifyHwCwItem> {
                                                 base: widget.base),
                                         builder: (_, snapshot) {
                                           if (snapshot.hasData) {
-                                            return ListView.separated(
-                                                shrinkWrap: true,
-                                                padding:
-                                                    const EdgeInsets.all(16.0),
-                                                itemBuilder: (_, index) {
-                                                  if (snapshot.data!
-                                                      .elementAt(index)
-                                                      .icwupLFileName!
-                                                      .endsWith(".pdf")) {
+                                            if (snapshot.data!.isEmpty) {
+                                              return Column(
+                                                children: const [
+                                                  AnimatedProgressWidget(
+                                                    title: "No Attachment",
+                                                    desc:
+                                                        "There is no attachment for this item",
+                                                    animationPath:
+                                                        "assets/json/nodata.json",
+                                                    animatorHeight: 250,
+                                                  ),
+                                                ],
+                                              );
+                                            }
+                                            return Expanded(
+                                              child: ListView.separated(
+                                                  shrinkWrap: true,
+                                                  padding: const EdgeInsets.all(
+                                                      16.0),
+                                                  itemBuilder: (_, index) {
+                                                    if (snapshot.data!
+                                                        .elementAt(index)
+                                                        .icwupLFileName!
+                                                        .endsWith(".pdf")) {
+                                                      return HwCwUploadedContentItem(
+                                                        onViewClicked:
+                                                            () async {
+                                                          if (await canLaunchUrl(
+                                                              Uri.parse(snapshot
+                                                                  .data!
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .icwupLAttachment!))) {
+                                                            await launchUrl(
+                                                                Uri.parse(snapshot
+                                                                    .data!
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .icwupLAttachment!),
+                                                                mode: LaunchMode
+                                                                    .externalApplication);
+                                                          }
+                                                        },
+                                                        onDownloadClicked:
+                                                            () async {
+                                                          if (await canLaunchUrl(
+                                                              Uri.parse(snapshot
+                                                                  .data!
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .icwupLAttachment!))) {
+                                                            await launchUrl(
+                                                                Uri.parse(snapshot
+                                                                    .data!
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .icwupLAttachment!),
+                                                                mode: LaunchMode
+                                                                    .externalApplication);
+                                                          }
+                                                        },
+                                                        title: snapshot.data!
+                                                            .elementAt(index)
+                                                            .icwupLAttachment!,
+                                                        isPdf: true,
+                                                      );
+                                                    }
                                                     return HwCwUploadedContentItem(
-                                                      onViewClicked: () async {
-                                                        if (await canLaunchUrl(
-                                                            Uri.parse(snapshot
-                                                                .data!
-                                                                .elementAt(
-                                                                    index)
-                                                                .icwupLAttachment!))) {
-                                                          await launchUrl(
+                                                        onViewClicked:
+                                                            () async {
+                                                          if ([
+                                                            ".jpg",
+                                                            ".png",
+                                                            ".jpeg",
+                                                            ".gif",
+                                                          ].contains(p.extension(
+                                                              "snapshot.data.elementAt(index).ihwupLAttachment"))) {
+                                                            Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder: (_) => ViewImage(
+                                                                        image: snapshot
+                                                                            .data!
+                                                                            .elementAt(index)
+                                                                            .icwupLAttachment!)));
+                                                            return;
+                                                          }
+                                                          if (await canLaunchUrl(
                                                               Uri.parse(snapshot
                                                                   .data!
                                                                   .elementAt(
                                                                       index)
-                                                                  .icwupLAttachment!),
-                                                              mode: LaunchMode
-                                                                  .externalApplication);
-                                                        }
-                                                      },
-                                                      onDownloadClicked:
-                                                          () async {
-                                                        if (await canLaunchUrl(
-                                                            Uri.parse(snapshot
-                                                                .data!
-                                                                .elementAt(
-                                                                    index)
-                                                                .icwupLAttachment!))) {
-                                                          await launchUrl(
+                                                                  .icwupLAttachment!))) {
+                                                            await launchUrl(
+                                                                Uri.parse(snapshot
+                                                                    .data!
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .icwupLAttachment!),
+                                                                mode: LaunchMode
+                                                                    .externalApplication);
+                                                          }
+                                                        },
+                                                        onDownloadClicked:
+                                                            () async {
+                                                          if (await canLaunchUrl(
                                                               Uri.parse(snapshot
                                                                   .data!
                                                                   .elementAt(
                                                                       index)
-                                                                  .icwupLAttachment!),
-                                                              mode: LaunchMode
-                                                                  .externalApplication);
-                                                        }
-                                                      },
-                                                      title: snapshot.data!
-                                                          .elementAt(index)
-                                                          .icwupLAttachment!,
-                                                      isPdf: true,
+                                                                  .icwupLAttachment!))) {
+                                                            await launchUrl(
+                                                                Uri.parse(snapshot
+                                                                    .data!
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .icwupLAttachment!),
+                                                                mode: LaunchMode
+                                                                    .externalApplication);
+                                                          }
+                                                        },
+                                                        title: snapshot.data!
+                                                            .elementAt(index)
+                                                            .icwupLFileName!,
+                                                        isPdf: false);
+                                                  },
+                                                  separatorBuilder: (_, index) {
+                                                    return const SizedBox(
+                                                      height: 16.0,
                                                     );
-                                                  }
-                                                  return HwCwUploadedContentItem(
-                                                      onViewClicked: () async {
-                                                        if ([
-                                                          ".jpg",
-                                                          ".png",
-                                                          ".jpeg",
-                                                          ".gif",
-                                                        ].contains(p.extension(
-                                                            "snapshot.data.elementAt(index).ihwupLAttachment"))) {
-                                                          Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (_) => ViewImage(
-                                                                      image: snapshot
-                                                                          .data!
-                                                                          .elementAt(
-                                                                              index)
-                                                                          .icwupLAttachment!)));
-                                                          return;
-                                                        }
-                                                        if (await canLaunchUrl(
-                                                            Uri.parse(snapshot
-                                                                .data!
-                                                                .elementAt(
-                                                                    index)
-                                                                .icwupLAttachment!))) {
-                                                          await launchUrl(
-                                                              Uri.parse(snapshot
-                                                                  .data!
-                                                                  .elementAt(
-                                                                      index)
-                                                                  .icwupLAttachment!),
-                                                              mode: LaunchMode
-                                                                  .externalApplication);
-                                                        }
-                                                      },
-                                                      onDownloadClicked:
-                                                          () async {
-                                                        if (await canLaunchUrl(
-                                                            Uri.parse(snapshot
-                                                                .data!
-                                                                .elementAt(
-                                                                    index)
-                                                                .icwupLAttachment!))) {
-                                                          await launchUrl(
-                                                              Uri.parse(snapshot
-                                                                  .data!
-                                                                  .elementAt(
-                                                                      index)
-                                                                  .icwupLAttachment!),
-                                                              mode: LaunchMode
-                                                                  .externalApplication);
-                                                        }
-                                                      },
-                                                      title: snapshot.data!
-                                                          .elementAt(index)
-                                                          .icwupLFileName!,
-                                                      isPdf: false);
-                                                },
-                                                separatorBuilder: (_, index) {
-                                                  return const SizedBox(
-                                                    height: 16.0,
-                                                  );
-                                                },
-                                                itemCount:
-                                                    snapshot.data!.length);
+                                                  },
+                                                  itemCount:
+                                                      snapshot.data!.length),
+                                            );
                                           }
                                           if (snapshot.hasError) {
                                             return ErrWidget(

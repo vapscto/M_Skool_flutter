@@ -150,21 +150,25 @@ class _SplashScreenState extends State<SplashScreen> {
 
       logger.d(loginSuccessModel.roleId);
 
-      if (loginSuccessModel.roleId == URLS.staff ||
-          loginSuccessModel.roleId == URLS.hod) {
+      if (loginSuccessModel.roleforlogin!.toLowerCase() ==
+              URLS.staff.toLowerCase() ||
+          loginSuccessModel.roleforlogin!.toLowerCase() ==
+              URLS.hod.toLowerCase()) {
         return Future.value(StaffHomeScreen(
             loginSuccessModel: loginSuccessModel,
             mskoolController: mskoolController));
       }
 
-      if (loginSuccessModel.roleId == URLS.manager) {
+      if (loginSuccessModel.roleforlogin!.toLowerCase() ==
+          URLS.manager.toLowerCase()) {
         return Future.value(ManagerHome(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,
         ));
       }
 
-      if (loginSuccessModel.roleId == URLS.student) {
+      if (loginSuccessModel.roleforlogin!.toLowerCase() ==
+          URLS.student.toLowerCase()) {
         return Future.value(Home(
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,

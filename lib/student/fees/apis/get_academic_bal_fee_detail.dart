@@ -27,6 +27,8 @@ class GetAcademicFeeDetailBalanceApi {
         "ASMAY_Id": asmayId,
         "configset": configSet,
       });
+
+      logger.d(api);
       final Response response = await dio.post(
         api,
         options: Options(headers: getSession()),

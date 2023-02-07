@@ -22,24 +22,28 @@ class OtherAttachment extends StatelessWidget {
           child: CustomContainer(
             child: Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 12.0, vertical: 16),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.image,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      const SizedBox(
-                        width: 12.0,
-                      ),
-                      Text(
-                        attachmentName,
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.titleSmall,
-                      )
-                    ],
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 16),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.image,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        const SizedBox(
+                          width: 12.0,
+                        ),
+                        Expanded(
+                          child: Text(
+                            attachmentName,
+                            maxLines: 1,
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],

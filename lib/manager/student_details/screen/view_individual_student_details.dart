@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/manager/student_details/api/get_academic_history.dart';
 import 'package:m_skool_flutter/manager/student_details/api/get_student_details.dart';
 import 'package:m_skool_flutter/manager/student_details/controller/view_student_details_controller.dart';
 import 'package:m_skool_flutter/manager/student_details/tabs/view_details_tabs/academic.dart';
@@ -44,7 +45,12 @@ class _ViewStudentIndividualDetailsState
       base: widget.baseUrl,
       controller: studentDetailsController,
     );
-
+    GetAcademicHistoryApi.instance.getHistory(
+        miId: widget.miId,
+        amstId: widget.amstId,
+        asmayId: widget.asmayId,
+        base: widget.baseUrl,
+        controller: studentDetailsController);
     super.initState();
   }
 
