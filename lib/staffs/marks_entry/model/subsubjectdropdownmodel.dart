@@ -45,7 +45,7 @@ class SubSubjectDropdownModel {
   int? emEId;
   int? ismSId;
   int? roleid;
-  int? estMMarks;
+  double? estMMarks;
   int? id;
   DateTime? loginDateTime;
   bool? estMActiveFlg;

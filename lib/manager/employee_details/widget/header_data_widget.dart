@@ -44,9 +44,11 @@ class _HeaderDataWidgetState extends State<HeaderDataWidget> {
           if (value!) {
             widget.addfunction!(
                 {"columnID": widget.id, "columnName": widget.name});
+                
             return;
           }
           widget.removefunction!(widget.id!);
+
         },
       ),
     );

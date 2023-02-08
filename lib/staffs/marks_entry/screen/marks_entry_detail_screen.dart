@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -21,17 +21,17 @@ class MarksEntryDetailScreen extends StatefulWidget {
   final int emeId;
   final int ismsId;
   final int emssId;
-  const MarksEntryDetailScreen(
-      {super.key,
-      required this.loginSuccessModel,
-      required this.mskoolController,
-      required this.asmsId,
-      required this.asmclId,
-      required this.asmayId,
-      required this.emeId,
-      required this.ismsId,
-      required this.emssId,
-      });
+  const MarksEntryDetailScreen({
+    super.key,
+    required this.loginSuccessModel,
+    required this.mskoolController,
+    required this.asmsId,
+    required this.asmclId,
+    required this.asmayId,
+    required this.emeId,
+    required this.ismsId,
+    required this.emssId,
+  });
 
   @override
   State<MarksEntryDetailScreen> createState() => _MarksEntryDetailScreenState();
@@ -40,10 +40,8 @@ class MarksEntryDetailScreen extends StatefulWidget {
 class _MarksEntryDetailScreenState extends State<MarksEntryDetailScreen> {
   final MarksEntryController marksEntryController =
       Get.put(MarksEntryController());
-
-  List<Map<String, dynamic>> detailsList = [
-    {"amsTId": 19633, "estMId": 2303994, "obtainmarks": "55"}
-  ];
+  bool restrictChanges = false;
+  List<Map<String, dynamic>> detailsList = [];
 
   void getMarksDataTable() async {
     marksEntryController.istableloading(true);
@@ -61,11 +59,59 @@ class _MarksEntryDetailScreenState extends State<MarksEntryDetailScreen> {
         widget.mskoolController,
       ),
     );
+    // logger.d('hfhfhhfhfhhf');
     marksEntryController.istableloading(false);
+    marksEntryController.textEditingControllerList.clear();
+    for (var i = 0;
+        i < marksEntryController.marksEntryDataTableList.length;
+        i++) {
+      marksEntryController.addToTextEditingList(
+        TextEditingController(
+            text: marksEntryController.marksEntryDataTableList
+                .elementAt(i)
+                .obtainmarks!
+                .toString()
+                .substring(0, 4)),
+      );
+    }
+    // logger.d(marksEntryController.textEditingControllerList.length);
+    // logger.d(marksEntryController.marksEntryDataTableList.length);
   }
 
   void saveDetails() async {
+    detailsList.clear();
     marksEntryController.issaveloading(true);
+    for (var i = 0;
+        i < marksEntryController.textEditingControllerList.length;
+        i++) {
+      if (double.parse(marksEntryController.textEditingControllerList
+              .elementAt(i)
+              .text) >
+          double.parse(marksEntryController
+              .marksEntryDataTableList.first.totalMarks!
+              .toString())) {
+        marksEntryController.issaveloading(false);
+        Fluttertoast.showToast(
+            msg:
+                'Entered Marks is greater than ${marksEntryController.marksEntryDataTableList.first.totalMarks} for S.NO ${i + 1}');
+
+        return;
+      }
+    }
+    for (var i = 0;
+        i < marksEntryController.textEditingControllerList.length;
+        i++) {
+      detailsList.add({
+        "amsT_Id":
+            marksEntryController.marksEntryDataTableList.elementAt(i).amsTId,
+        "estM_Id":
+            marksEntryController.marksEntryDataTableList.elementAt(i).estMId,
+        "obtainmarks": double.parse(
+          marksEntryController.textEditingControllerList.elementAt(i).text,
+        ),
+      });
+    }
+
     await saveMarksEntryDetails(
       miId: widget.loginSuccessModel.mIID!,
       asmayId: widget.asmayId,
@@ -80,28 +126,24 @@ class _MarksEntryDetailScreenState extends State<MarksEntryDetailScreen> {
         'exam',
         widget.mskoolController,
       ),
-      // emssId: widget.emssId,
-    ).then((value) => logger.d(value));
-    marksEntryController.issaveloading(false);
-  }
-
-  void enterMarks(int index, int amsTId, int estMId, String obtainmarks) async {
-    detailsList.add({
-      "amsTId": amsTId,
-      "estMId": estMId,
-      "obtainmarks": obtainmarks,
+    ).then((value) {
+      if (value) {
+        Fluttertoast.showToast(msg: 'Marks Save Successfully.');
+      }
     });
+    marksEntryController.issaveloading(false);
   }
 
   @override
   void initState() {
     getMarksDataTable();
-    logger.d(detailsList);
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    logger.d("builindlosdnasldnaslkdskdibjlsdf");
     return Scaffold(
       appBar: AppBar(
         leading: const CustomGoBackButton(),
@@ -191,7 +233,7 @@ class _MarksEntryDetailScreenState extends State<MarksEntryDetailScreen> {
                                     fontSize: 12,
                                     color: Color.fromRGBO(0, 0, 0, 0.95),
                                     fontWeight: FontWeight.w500),
-                                dataRowHeight: 35,
+                                dataRowHeight: 45,
                                 headingRowHeight: 40,
                                 horizontalMargin: 10,
                                 columnSpacing: 40,
@@ -279,38 +321,22 @@ class _MarksEntryDetailScreenState extends State<MarksEntryDetailScreen> {
                                         ),
                                       ),
                                       DataCell(
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: TextFormField(
-                                            initialValue: marksEntryController
-                                                .marksEntryDataTableList
-                                                .elementAt(index)
-                                                .obtainmarks!
-                                                .substring(0, 2),
-                                            onChanged: (value) {
-                                              enterMarks(
-                                                  index,
-                                                  marksEntryController
-                                                      .marksEntryDataTableList
-                                                      .elementAt(index)
-                                                      .amsTId!
-                                                      .toInt(),
-                                                  marksEntryController
-                                                      .marksEntryDataTableList
-                                                      .elementAt(index)
-                                                      .estMId!
-                                                      .toInt(),
-                                                  value);
-                                            },
-                                            keyboardType: TextInputType.number,
-                                            inputFormatters: [
-                                              LengthLimitingTextInputFormatter(
-                                                  2)
-                                            ],
-                                            style: const TextStyle(
-                                              fontSize: 14,
+                                        SizedBox(
+                                          width: 100,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 8.0),
+                                            child: TextField(
+                                              controller: marksEntryController
+                                                  .textEditingControllerList
+                                                  .elementAt(index),
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                              ),
+                                              textAlign: TextAlign.center,
                                             ),
-                                            textAlign: TextAlign.center,
                                           ),
                                         ),
                                       ),
