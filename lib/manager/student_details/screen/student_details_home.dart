@@ -36,6 +36,13 @@ class _ManagerStudentDetailsState extends State<ManagerStudentDetails>
   }
 
   @override
+  void dispose() {
+    Get.delete<StudentDetailsController>();
+    Get.delete<CustomSearchHandler>();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
