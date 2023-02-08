@@ -429,7 +429,7 @@ class StudentListValue {
         totalMarks: json["totalMarks"],
         marksEnterFor: json["marksEnterFor"],
         minMarks: json["minMarks"],
-        obtainmarks: json["obtainmarks"],
+        obtainmarks: json["obtainmarks"] ?? 0.00,
         amaYRollNo: json["amaY_RollNo"],
         amsTAdmNo: json["amsT_AdmNo"],
         amsTRegistrationNo: json["amsT_RegistrationNo"],

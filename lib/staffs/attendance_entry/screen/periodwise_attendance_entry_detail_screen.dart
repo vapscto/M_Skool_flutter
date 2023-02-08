@@ -76,12 +76,44 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                   return;
                 }
                 attendanceEntryController.issaveloading(true);
+                logger.d(
+                  {
+                    "ASA_Id": widget.asaId,
+                    "MI_Id": widget.loginSuccessModel.mIID!,
+                    "ASMAY_Id": widget.asmayId,
+                    "ASA_Att_Type": "period",
+                    "ASA_Att_EntryType":
+                        attendanceEntryController.attendanceEntryType.value ==
+                                'P'
+                            ? 'Present'
+                            : 'Absent',
+                    "ASA_ClassHeld": "1.00",
+                    "ASMCL_Id": widget.asmclId,
+                    "ASMS_Id": widget.asmsId,
+                    "ASA_Entry_DateTime": DateTime.now().toString(),
+                    "ASA_FromDate": DateTime.now().toString(),
+                    "ASA_ToDate": DateTime.now().toString(),
+                    "ASA_Regular_Extra": widget.selectedradio,
+                    "ASA_Network_IP": "::1",
+                    "stdList": stdList,
+                    "username": widget.loginSuccessModel.userName!,
+                    "userId": widget.loginSuccessModel.userId!,
+                    "ismS_Id": widget.subjectId,
+                    "TTMP_Id": widget.periodId,
+                  },
+                );
                 await saveAttendanceEntry(
                   data: {
                     "ASA_Id": widget.asaId,
                     "MI_Id": widget.loginSuccessModel.mIID!,
                     "ASMAY_Id": widget.asmayId,
                     "ASA_Att_Type": "period",
+                    "ASA_Att_EntryType":
+                        attendanceEntryController.attendanceEntryType.value ==
+                                'P'
+                            ? 'Present'
+                            : 'Absent',
+                    "ASA_ClassHeld": "1.00",
                     "ASMCL_Id": widget.asmclId,
                     "ASMS_Id": widget.asmsId,
                     "ASA_Entry_DateTime": DateTime.now().toString(),
@@ -99,7 +131,13 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                     'admission',
                     widget.mskoolController,
                   ),
-                ).then((value) => logger.d(value));
+                ).then((value) {
+                  logger.d(value);
+                  if (value) {
+                    Fluttertoast.showToast(
+                        msg: 'Attendance entered successfully');
+                  }
+                });
                 attendanceEntryController.issaveloading(false);
               },
             ),
@@ -196,7 +234,7 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                             fontSize: 12,
                             color: Color.fromRGBO(0, 0, 0, 0.95),
                             fontWeight: FontWeight.w500),
-                        dataRowHeight: 37,
+                        dataRowHeight: 45,
                         headingRowHeight: 40,
                         horizontalMargin: 8,
                         columnSpacing: 25,
@@ -279,6 +317,10 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                             attendanceEntryController
                                 .periodwiseStudentList.length, (index) {
                           var i = index + 1;
+                          logger.d(attendanceEntryController
+                              .periodwiseStudentList
+                              .elementAt(index)
+                              .pdays);
                           return DataRow(
                             cells: [
                               DataCell(Align(

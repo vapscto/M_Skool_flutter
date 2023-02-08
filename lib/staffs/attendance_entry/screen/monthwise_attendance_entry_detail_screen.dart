@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/controller/attendance_entry_related_controller.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/widget/attendance_textfield_widget.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
@@ -12,10 +12,12 @@ import '../../../controller/mskoll_controller.dart';
 class MonthWiseAttendanceEntryDetailScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final AttendanceEntryController attendanceEntryController;
   const MonthWiseAttendanceEntryDetailScreen({
     super.key,
     required this.loginSuccessModel,
     required this.mskoolController,
+    required this.attendanceEntryController,
   });
 
   @override
@@ -25,14 +27,16 @@ class MonthWiseAttendanceEntryDetailScreen extends StatefulWidget {
 
 class _MonthWiseAttendanceEntryDetailScreenState
     extends State<MonthWiseAttendanceEntryDetailScreen> {
-  final AttendanceEntryController attendanceEntryController =
-      Get.put(AttendanceEntryController());
-
   List<Map<String, dynamic>> studentList = [];
   @override
-  Widget build(BuildContext context) {
-    attendanceEntryController.textEditingController.clear();
+  void initState() {
+    logger.d(widget.attendanceEntryController.monthwiseStudentList.length);
+    logger.d(widget.attendanceEntryController.textEditingController.length);
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: const CustomGoBackButton(),
@@ -47,31 +51,38 @@ class _MonthWiseAttendanceEntryDetailScreenState
               onPress: () {
                 studentList.clear();
                 for (var i = 0;
-                    i < attendanceEntryController.textEditingController.length;
+                    i <
+                        widget.attendanceEntryController.textEditingController
+                            .length;
                     i++) {
                   studentList.add({
-                    "amaY_RollNo": attendanceEntryController
-                        .monthwiseStudentList
+                    "amaY_RollNo": widget
+                        .attendanceEntryController.monthwiseStudentList
                         .elementAt(i)
                         .amaYRollNo,
-                    "amsT_AdmNo": attendanceEntryController.monthwiseStudentList
+                    "amsT_AdmNo": widget
+                        .attendanceEntryController.monthwiseStudentList
                         .elementAt(i)
                         .amsTAdmNo,
-                    "amsT_Id": attendanceEntryController.monthwiseStudentList
+                    "amsT_Id": widget
+                        .attendanceEntryController.monthwiseStudentList
                         .elementAt(i)
                         .amsTId,
-                    "studentname": attendanceEntryController
-                        .monthwiseStudentList
+                    "studentname": widget
+                        .attendanceEntryController.monthwiseStudentList
                         .elementAt(i)
                         .studentname,
-                    "pdays": double.parse(
-                        '${attendanceEntryController.textEditingController.elementAt(i).text}.0'),
-                    "amsT_RegistrationNo": attendanceEntryController
-                        .monthwiseStudentList
+                    "pdays": double.parse(widget
+                        .attendanceEntryController.textEditingController
+                        .elementAt(i)
+                        .text),
+                    "amsT_RegistrationNo": widget
+                        .attendanceEntryController.monthwiseStudentList
                         .elementAt(i)
                         .amsTRegistrationNo
                   });
                 }
+                logger.d(studentList);
                 // save api call
               },
             ),
@@ -144,7 +155,7 @@ class _MonthWiseAttendanceEntryDetailScreenState
                             fontSize: 12,
                             color: Color.fromRGBO(0, 0, 0, 0.95),
                             fontWeight: FontWeight.w500),
-                        dataRowHeight: 37,
+                        dataRowHeight: 45,
                         headingRowHeight: 40,
                         horizontalMargin: 8,
                         columnSpacing: 33,
@@ -204,7 +215,7 @@ class _MonthWiseAttendanceEntryDetailScreenState
                           ),
                           DataColumn(
                             label: Align(
-                              alignment: Alignment.center,
+                              alignment: Alignment.centerRight,
                               child: Text(
                                 'Class\nAttended',
                                 textAlign: TextAlign.center,
@@ -218,11 +229,9 @@ class _MonthWiseAttendanceEntryDetailScreenState
                         ],
 
                         rows: List.generate(
-                            attendanceEntryController
+                            widget.attendanceEntryController
                                 .monthwiseStudentList.length, (index) {
                           var i = index + 1;
-                          attendanceEntryController
-                              .addToTextFeildList(TextEditingController());
                           return DataRow(
                             cells: [
                               DataCell(
@@ -236,7 +245,7 @@ class _MonthWiseAttendanceEntryDetailScreenState
                               ),
                               DataCell(
                                 Text(
-                                  '${attendanceEntryController.monthwiseStudentList.elementAt(index).studentname}',
+                                  '${widget.attendanceEntryController.monthwiseStudentList.elementAt(index).studentname}',
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
@@ -244,7 +253,7 @@ class _MonthWiseAttendanceEntryDetailScreenState
                                 Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    "${attendanceEntryController.monthwiseStudentList.elementAt(index).amaYRollNo!}",
+                                    "${widget.attendanceEntryController.monthwiseStudentList.elementAt(index).amaYRollNo!}",
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
@@ -253,7 +262,7 @@ class _MonthWiseAttendanceEntryDetailScreenState
                                 Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    '${attendanceEntryController.countClassHeld.toInt()}',
+                                    '${widget.attendanceEntryController.countClassHeld.toInt()}',
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
@@ -261,10 +270,24 @@ class _MonthWiseAttendanceEntryDetailScreenState
                               DataCell(
                                 Align(
                                   alignment: Alignment.center,
-                                  child: AttendanceTextfieldWidget(
-                                      textController: attendanceEntryController
-                                          .textEditingController
-                                          .elementAt(index)),
+                                  child: SizedBox(
+                                    width: 100,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8.0),
+                                      child: TextField(
+                                        controller: widget
+                                            .attendanceEntryController
+                                            .textEditingController
+                                            .elementAt(index),
+                                        keyboardType: TextInputType.number,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
