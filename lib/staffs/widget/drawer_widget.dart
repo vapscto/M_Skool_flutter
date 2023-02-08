@@ -9,6 +9,8 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_entry_home.dart';
 import 'package:m_skool_flutter/staffs/coe/screens/coe_home.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/screen/marks_entry_home.dart';
+import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
+import 'package:m_skool_flutter/staffs/salary_slip/screen/salary_slip_home.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/screen/student_attendance_staff_home.dart';
 import 'package:m_skool_flutter/staffs/homework_classwork/screen/hw_cw_home.dart';
 import 'package:m_skool_flutter/staffs/interaction/screen/interaction_home.dart';
@@ -100,6 +102,18 @@ class StaffDashboardDrawer extends StatelessWidget {
                       if (loginSuccessModel.staffmobileappprivileges!.values!
                               .elementAt(index)
                               .pagename ==
+                          "Salary Slip") {
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
+                          return SalarySlipHome(
+                            loginSuccessModel: loginSuccessModel,
+                            mskoolController: mskoolController,
+                          );
+                        }));
+                        return;
+                      }
+                      if (loginSuccessModel.staffmobileappprivileges!.values!
+                              .elementAt(index)
+                              .pagename ==
                           "Staff Birth Day Report") {
                         Navigator.push(context, MaterialPageRoute(builder: (_) {
                           return StudentBdayHome(
@@ -131,6 +145,29 @@ class StaffDashboardDrawer extends StatelessWidget {
                               .elementAt(index)
                               .pagename! ==
                           "Notice Board") {
+                        // Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        //   return ViewNoticeHome(
+                        //     loginSuccessModel: loginSuccessModel,
+                        //     mskoolController: mskoolController,
+                        //     title: loginSuccessModel
+                        //         .staffmobileappprivileges!.values!
+                        //         .elementAt(index)
+                        //         .pagename!,
+                        //   );
+                        // }));
+
+                        // Notice Board Staff
+                        Get.to(() => NoticeBoardStaffHome(
+                              loginSuccessModel: loginSuccessModel,
+                              mskoolController: mskoolController,
+                              title: 'Notice Board',
+                            ));
+                        return;
+                      }
+                      if (loginSuccessModel.staffmobileappprivileges!.values!
+                              .elementAt(index)
+                              .pagename! ==
+                          "View Notice") {
                         Navigator.push(context, MaterialPageRoute(builder: (_) {
                           return ViewNoticeHome(
                             loginSuccessModel: loginSuccessModel,
@@ -142,8 +179,6 @@ class StaffDashboardDrawer extends StatelessWidget {
                           );
                         }));
 
-                        // Notice Board Staff
-                        // Get.to(() => const NoticeBoardStaffHome());
                         return;
                       }
                       if (loginSuccessModel.staffmobileappprivileges!.values!

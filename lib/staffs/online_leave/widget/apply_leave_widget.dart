@@ -617,8 +617,9 @@ class ApplyLeaveWidget extends StatelessWidget {
               return;
             }
 
-            if (!phone.text.isPhoneNumber) {
-              Fluttertoast.showToast(msg: "Please provide phone number");
+            if (RegExp("/^[6-9]{1,1}[0-9]{9,9}?\$/").hasMatch(phone.text)) {
+              Fluttertoast.showToast(
+                  msg: "Please provide a valid phone number");
               return;
             }
 
@@ -727,6 +728,7 @@ class ApplyLeaveWidget extends StatelessWidget {
                                       MSkollBtn(
                                         title: "Ok Understood",
                                         onPress: () {
+                                          Navigator.pop(context);
                                           Navigator.pop(context);
                                         },
                                       )

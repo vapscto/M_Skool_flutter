@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/manager/student_details/controller/custom_search_handler.dart';
 import 'package:m_skool_flutter/manager/student_details/controller/student_details_controller.dart';
 import 'package:m_skool_flutter/manager/student_details/tabs/all_student.dart';
 import 'package:m_skool_flutter/manager/student_details/tabs/individual.dart';
@@ -27,10 +28,18 @@ class _ManagerStudentDetailsState extends State<ManagerStudentDetails>
   TabController? tabController;
   final StudentDetailsController studentDetails =
       Get.put(StudentDetailsController());
+  final CustomSearchHandler handler = Get.put(CustomSearchHandler());
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    Get.delete<StudentDetailsController>();
+    Get.delete<CustomSearchHandler>();
+    super.dispose();
   }
 
   @override
@@ -61,6 +70,7 @@ class _ManagerStudentDetailsState extends State<ManagerStudentDetails>
                 AllStudent(
                   loginSuccessModel: widget.loginSuccessModel,
                   mskoolController: widget.mskoolController,
+                  handler: handler,
                 ),
               ],
             ),

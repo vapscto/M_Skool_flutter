@@ -15,6 +15,7 @@ import 'package:m_skool_flutter/staffs/view_notice/widget/filter_controller_widg
 import 'package:m_skool_flutter/student/information/controller/hwcwnb_controller.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class HwCwHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -151,6 +152,7 @@ class _HwCwHomeState extends State<HwCwHome>
           }),
         ],
       ).getAppBar(),
+      floatingActionButton: const HomeFab(),
       body: Column(
         children: [
           Obx(() {

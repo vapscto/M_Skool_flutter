@@ -21,6 +21,8 @@ class AttendanceShortageApi {
     final Dio ins = getGlobalDio();
     final String api = base + URLS.attendanceShortage;
 
+    logger.d(api);
+
     try {
       final Response response = await ins.post(api,
           options: Options(headers: getSession()),

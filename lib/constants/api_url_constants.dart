@@ -147,12 +147,12 @@ class URLS {
 
   // Role Constant's
 
-  static int student = 7;
-  static int hod = 26;
-  static int staff = 18;
+  static String student = "Student";
+  static String hod = "Hod";
+  static String staff = "Staff";
   static int principal = 23;
   static int chairman = 22;
-  static int manager = 24;
+  static String manager = "Manager";
 
   // ****************Staff Api****************//
 
@@ -333,6 +333,8 @@ class URLS {
       "api/AdmissionCtrl/AcademicyearwiseClassSectionStudent/";
   static String getStudentDetails =
       "api/StudentSearchFacade/getstudentdetails/";
+  static String getAcademicHistory =
+      "api/StudentDashboardFacade/ViewStudentProfile/";
 
   //////  OVERALL FEE APIS ////////////////////
   static String getOverallFeeAcademicYear =

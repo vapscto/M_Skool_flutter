@@ -22,23 +22,27 @@ class PdfAttachment extends StatelessWidget {
           child: CustomContainer(
             child: Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        "assets/svg/pdf.svg",
-                        width: 70,
-                      ),
-                      const SizedBox(
-                        width: 12.0,
-                      ),
-                      Text(
-                        attachmentName,
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.titleSmall,
-                      )
-                    ],
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          "assets/svg/pdf.svg",
+                          width: 70,
+                        ),
+                        const SizedBox(
+                          width: 12.0,
+                        ),
+                        Expanded(
+                          child: Text(
+                            attachmentName,
+                            maxLines: 1,
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],

@@ -75,6 +75,7 @@ class ManagerDashboardApi {
       }
 
       if (response.data['leavecount'] as int > 0) {
+        // ignore: use_build_context_synchronously
         showDialog(
             context: context,
             builder: (_) {

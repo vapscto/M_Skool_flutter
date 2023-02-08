@@ -450,8 +450,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                                     Get.offAll(
                                                       () => snapshot
-                                                                  .data!.roleId! ==
-                                                              URLS.student
+                                                                  .data!.roleforlogin!.toLowerCase() ==
+                                                              URLS.student.toLowerCase()
                                                           ? Home(
                                                               loginSuccessModel:
                                                                   snapshot
@@ -460,12 +460,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                   widget
                                                                       .mskoolController,
                                                             )
-                                                          : snapshot.data!.roleId! ==
+                                                          : snapshot.data!.roleforlogin!.toLowerCase() ==
                                                                       URLS
-                                                                          .staff ||
+                                                                          .staff.toLowerCase() ||
                                                                   snapshot.data!
-                                                                          .roleId ==
-                                                                      URLS.hod
+                                                                          .roleforlogin!.toLowerCase() ==
+                                                                      URLS.hod.toLowerCase()
                                                               ? StaffHomeScreen(
                                                                   loginSuccessModel:
                                                                       snapshot
@@ -474,9 +474,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                       widget
                                                                           .mskoolController)
                                                               : snapshot.data!
-                                                                          .roleId! ==
+                                                                          .roleforlogin!.toLowerCase() ==
                                                                       URLS
-                                                                          .manager
+                                                                          .manager.toLowerCase()
                                                                   ? ManagerHome(
                                                                       loginSuccessModel:
                                                                           snapshot

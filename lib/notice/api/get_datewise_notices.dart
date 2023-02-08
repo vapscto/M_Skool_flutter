@@ -25,6 +25,7 @@ class GetDateWiseNotice {
     nbController.updateIsNoticeDataLoading(true);
 
     String apiUrl = base + URLS.noticeDatewise;
+    logger.d(apiUrl);
     // logger.d("Notice Reached");
     // logger.d({
     //   "MI_Id": miId.toString(),
