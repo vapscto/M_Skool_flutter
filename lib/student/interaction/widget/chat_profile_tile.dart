@@ -16,6 +16,7 @@ class ChatProfileTile extends StatelessWidget {
   final int ismintId;
   final int istintId;
   final int ismintComposeById;
+  final String role;
   // final bool isGroup;
   // final bool isSeen;
   // final Color color;
@@ -31,6 +32,7 @@ class ChatProfileTile extends StatelessWidget {
       required this.ismintId,
       required this.istintId,
       required this.ismintComposeById,
+      required this.role,
       // required this.isGroup,
       // required this.isSeen,
       // required this.color,

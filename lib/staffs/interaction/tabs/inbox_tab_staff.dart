@@ -46,6 +46,7 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
 
   @override
   void initState() {
+    logger.d(widget.loginSuccessModel.roleforlogin);
     getInboxData();
     super.initState();
   }
@@ -84,12 +85,39 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
                           .inboxList[index].ismintSubject!,
                       istintId: staffInteractionInboxController
                           .inboxList[index].istintToId!,
-                      istintToFlg: staffInteractionInboxController
-                          .inboxList[index].istintToFlg!,
-                      receiver: staffInteractionInboxController
-                          .inboxList[index].receiver!,
-                      receiverFilePath: staffInteractionInboxController
-                          .inboxList[index].receiverFilepath!,
+                      istintToFlg: widget.loginSuccessModel.roleforlogin!
+                                  .toLowerCase() ==
+                              staffInteractionInboxController.inboxList
+                                  .elementAt(index)
+                                  .ismintComposedByFlg!
+                                  .toLowerCase()
+                          ? staffInteractionInboxController
+                              .inboxList[index].istintToFlg!
+                          : staffInteractionInboxController
+                              .inboxList[index].ismintComposedByFlg!,
+                      receiver: widget.loginSuccessModel.roleforlogin!
+                                  .toLowerCase() ==
+                              staffInteractionInboxController.inboxList
+                                  .elementAt(index)
+                                  .ismintComposedByFlg!
+                                  .toLowerCase()
+                          ? staffInteractionInboxController
+                              .inboxList[index].receiver!
+                          : staffInteractionInboxController.inboxList
+                              .elementAt(index)
+                              .sender!,
+                      receiverFilePath: widget.loginSuccessModel.roleforlogin!
+                                  .toLowerCase() ==
+                              staffInteractionInboxController.inboxList
+                                  .elementAt(index)
+                                  .ismintComposedByFlg!
+                                  .toLowerCase()
+                          ? staffInteractionInboxController
+                              .inboxList[index].receiverFilepath!
+                          : staffInteractionInboxController
+                              .inboxList[index].senderFilepath!,
+                      role: staffInteractionInboxController
+                          .inboxList[index].role!,
 
                       // isGroup: Random().nextBool(),
                       // isSeen:
