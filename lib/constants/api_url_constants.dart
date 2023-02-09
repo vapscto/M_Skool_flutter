@@ -367,4 +367,6 @@ class URLS {
 
   static String getEmployeeDetails =
       'api/EmployeeDetailsReportFacade/getEmployeedetailsBySelection';
+
+  static String searchStudent = "api/StudentSearchFacade/";
 }

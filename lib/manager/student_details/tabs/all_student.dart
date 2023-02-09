@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/manager/student_details/controller/custom_search_handler.dart';
 import 'package:m_skool_flutter/manager/student_details/model/search_types.dart';
+import 'package:m_skool_flutter/manager/student_details/screen/search_result_screen.dart';
 import 'package:m_skool_flutter/manager/student_details/widgets/type_handler.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
@@ -40,12 +42,57 @@ class AllStudent extends StatelessWidget {
     }
 
     logger.d(handler.options.length);
+    RxString status = RxString("All");
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          const SizedBox(
-            height: 16.0,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Obx(() {
+                    return Radio(
+                        value: "All",
+                        groupValue: status.value,
+                        activeColor: Theme.of(context).primaryColor,
+                        onChanged: (sts) {
+                          status.value = sts!;
+                        });
+                  }),
+                  const Text("All"),
+                ],
+              ),
+              Row(
+                children: [
+                  Obx(() {
+                    return Radio(
+                        value: "S",
+                        groupValue: status.value,
+                        activeColor: Theme.of(context).primaryColor,
+                        onChanged: (sts) {
+                          status.value = sts!;
+                        });
+                  }),
+                  const Text("Studying"),
+                ],
+              ),
+              Row(
+                children: [
+                  Obx(() {
+                    return Radio(
+                        value: "L",
+                        groupValue: status.value,
+                        activeColor: Theme.of(context).primaryColor,
+                        onChanged: (sts) {
+                          status.value = sts!;
+                        });
+                  }),
+                  const Text("Left"),
+                ],
+              ),
+            ],
           ),
           Obx(() {
             return Column(children: [
@@ -105,7 +152,7 @@ class AllStudent extends StatelessWidget {
                 );
               },
               child: Text(
-                "Add New",
+                "+ Add New",
                 style: Theme.of(context)
                     .textTheme
                     .titleSmall!
@@ -124,6 +171,35 @@ class AllStudent extends StatelessWidget {
               List<String> condition = [];
               List<String> value = [];
 
+              for (int i = 0; i < handler.fields.length; i++) {
+                if (handler.fields.elementAt(i).value.name == "AadharNo") {
+                  if (handler.optionTextEditingController
+                          .elementAt(i)
+                          .text
+                          .length !=
+                      12) {
+                    Fluttertoast.showToast(msg: "Aadhar no must be 12 digit");
+                    return;
+                  }
+                }
+
+                if (handler.fields.elementAt(i).value.name == "MobileNo") {
+                  if (!RegExp("/^[6-9]{1,1}[0-9]{9,9}?\$/").hasMatch(
+                      handler.optionTextEditingController.elementAt(i).text)) {
+                    Fluttertoast.showToast(
+                        msg: "Please provide a valid phone number");
+                    return;
+                  }
+                }
+                if (handler.optionTextEditingController
+                    .elementAt(i)
+                    .text
+                    .isEmpty) {
+                  Fluttertoast.showToast(
+                      msg: "Somewhere you forgot to provide value");
+                  return;
+                }
+              }
               for (var element in handler.fields) {
                 fields.add(element.value.value);
               }
@@ -135,16 +211,27 @@ class AllStudent extends StatelessWidget {
                 value.add(element.text);
               }
 
-              for (var element in handler.conditions) {
-                condition.add(element.value.value);
+              for (int i = 1; i < handler.conditions.length; i++) {
+                condition.add(handler.conditions.elementAt(i).value.value);
               }
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return SearchResultScreen(
+                  condition: condition,
+                  field: fields,
+                  loginSuccessModel: loginSuccessModel,
+                  mskoolController: mskoolController,
+                  operators: operators,
+                  status: status.value,
+                  values: value,
+                );
+              }));
 
-              logger.d(fields);
-              logger.d(operators);
+              // logger.d(fields);
+              // logger.d(operators);
 
-              logger.d(condition);
+              // logger.d(condition);
 
-              logger.d(value);
+              // logger.d(value);
             },
             title: 'Search',
           ),

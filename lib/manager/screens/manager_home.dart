@@ -6,6 +6,7 @@ import 'package:m_skool_flutter/manager/coe/screen/manager_coe.dart';
 import 'package:m_skool_flutter/manager/tabs/manager_dashboard.dart';
 import 'package:m_skool_flutter/manager/widget/drawer_widget.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/staffs/tabs/staff_profile_tab.dart';
 import 'package:m_skool_flutter/staffs/interaction/screen/interaction_home.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -60,16 +61,43 @@ class _ManagerHomeState extends State<ManagerHome> {
     return Scaffold(
       key: _scaffold,
       appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        leading: IconButton(
-          icon: SvgPicture.asset('assets/svg/menu.svg'),
-          onPressed: () {
-            _scaffold.currentState!.openDrawer();
-          },
-        ),
-        title: const Text("Dashboard"),
-      ),
+          centerTitle: true,
+          elevation: 0,
+          leading: IconButton(
+            icon: SvgPicture.asset('assets/svg/menu.svg'),
+            onPressed: () {
+              _scaffold.currentState!.openDrawer();
+            },
+          ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) {
+                        return NotificationScreen(
+                          // appBarTitle: "Notice",
+                          loginSuccessModel: widget.loginSuccessModel,
+                          mskoolController: widget.mskoolController,
+                          openFor: 'manager',
+                        );
+                        // hwCwNbController: hwCwNbController);
+                      },
+                    ),
+                  );
+                },
+                icon: SvgPicture.asset('assets/svg/bell.svg'))
+          ],
+          title: Obx(() {
+            return Text(index.value == 0
+                ? "Dashboard"
+                : index.value == 1
+                    ? "Interaction"
+                    : index.value == 2
+                        ? "COE"
+                        : "Profile");
+          })),
       drawer: Drawer(
         child: ManagerDashboardDrawer(
           loginSuccessModel: widget.loginSuccessModel,
