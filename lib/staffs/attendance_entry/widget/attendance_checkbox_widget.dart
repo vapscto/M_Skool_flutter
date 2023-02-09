@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/controller/attendance_entry_related_controller.dart';
 
 class AttendanceCheckboxWidget extends StatefulWidget {
   int index;
   bool attendance;
-  Function(Map<String, dynamic>)? addToStudentlist;
+  final AttendanceEntryController attendanceEntryController;
+  Function(bool)? addToBoolList;
   Function(int)? removeFromStudentlist;
   final int rollNo;
   final String admNo;
@@ -16,7 +16,8 @@ class AttendanceCheckboxWidget extends StatefulWidget {
     super.key,
     required this.index,
     required this.attendance,
-    this.addToStudentlist,
+    required this.attendanceEntryController,
+    this.addToBoolList,
     this.removeFromStudentlist,
     required this.rollNo,
     required this.amstId,
@@ -31,8 +32,6 @@ class AttendanceCheckboxWidget extends StatefulWidget {
 }
 
 class _AttendanceCheckboxWidgetState extends State<AttendanceCheckboxWidget> {
-  final AttendanceEntryController attendanceEntryController =
-      Get.put(AttendanceEntryController());
   @override
   Widget build(BuildContext context) {
     return Checkbox(
@@ -44,52 +43,8 @@ class _AttendanceCheckboxWidgetState extends State<AttendanceCheckboxWidget> {
       onChanged: (value) {
         setState(() {
           widget.attendance = value!;
+          // widget.addToBoolList!(value);
         });
-        if (value!) {
-          if (attendanceEntryController.attendanceEntry.value == 'P') {
-            widget.addToStudentlist!({
-              "amaY_RollNo": widget.rollNo,
-              "amsT_AdmNo": widget.admNo,
-              "amsT_Id": widget.amstId,
-              "studentname": widget.studentName,
-              "selected": value,
-              "pdays": 0.0,
-              "ASAS_Id": null,
-              "FirstHalfflag": null,
-              "SecondHalfflag": null,
-              "asA_Dailytwice_Flag": null,
-              "asA_Id": attendanceEntryController.asaId.value,
-              "TTMP_Id": null,
-              "ISMS_Id": 0,
-              "asasB_Id": 0,
-              "amsT_RegistrationNo": widget.amstRegistrationNo,
-            });
-          }
-          if (attendanceEntryController.attendanceEntry.value == 'D') {
-            widget.addToStudentlist!({
-              "amaY_RollNo": widget.rollNo,
-              "amsT_AdmNo": widget.admNo,
-              "amsT_Id": widget.amstId,
-              "studentname": widget.studentName,
-              "selected": value,
-              "asasB_Id": 0,
-              "amsT_RegistrationNo": widget.amstRegistrationNo,
-            });
-          }
-          if (attendanceEntryController.attendanceEntry.value == 'H') {
-            widget.addToStudentlist!({
-              "amaY_RollNo": widget.rollNo,
-              "amsT_AdmNo": widget.admNo,
-              "amsT_Id": widget.amstId,
-              "studentname": widget.studentName,
-              "FirstHalfflag": value,
-              "SecondHalfflag": false,
-              "amsT_RegistrationNo": widget.amstRegistrationNo
-            });
-          }
-        } else if (!value) {
-          widget.removeFromStudentlist!(widget.rollNo);
-        }
       },
     );
   }

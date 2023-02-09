@@ -31,7 +31,6 @@ class _SalarySlipHomeState extends State<SalarySlipHome> {
   YearDropdownValue? yearDropdownSelectedValue;
   MonthDropdownValue? monthDropdownSelectedValue;
 
-  bool showGenerate = false;
   Future<void> getYear() async {
     salarySlipController.yearLoading(true);
     await salarySlipController
@@ -153,8 +152,9 @@ class _SalarySlipHomeState extends State<SalarySlipHome> {
                         onChanged: (s) async {
                           yearDropdownSelectedValue = s;
 
-                          showGenerate = false;
+                          salarySlipController.showgenerateloading(true);
                           setState(() {});
+                          salarySlipController.salarySlipDetail.clear();
                           await salarySlipController.getSalaryDetails(
                             miId: widget.loginSuccessModel.mIID!,
                             userId: widget.loginSuccessModel.userId!,
@@ -164,7 +164,7 @@ class _SalarySlipHomeState extends State<SalarySlipHome> {
                             base: baseUrlFromInsCode(
                                 'portal', widget.mskoolController),
                           );
-                          setState(() {});
+                          salarySlipController.showgenerateloading(false);
                         },
                       ),
                     ),
@@ -233,8 +233,8 @@ class _SalarySlipHomeState extends State<SalarySlipHome> {
                         }),
                         onChanged: (s) async {
                           monthDropdownSelectedValue = s!;
-                          showGenerate = false;
-                          setState(() {});
+                          salarySlipController.showgenerateloading(true);
+                          salarySlipController.salarySlipDetail.clear();
                           await salarySlipController.getSalaryDetails(
                             miId: widget.loginSuccessModel.mIID!,
                             userId: widget.loginSuccessModel.userId!,
@@ -244,14 +244,12 @@ class _SalarySlipHomeState extends State<SalarySlipHome> {
                             base: baseUrlFromInsCode(
                                 'portal', widget.mskoolController),
                           );
-
-                          showGenerate = true;
-                          setState(() {});
+                          salarySlipController.showgenerateloading(false);
                         },
                       ),
                     ),
                     const SizedBox(height: 40),
-                    showGenerate == false
+                    salarySlipController.showGenerate.value
                         ? const CircularProgressIndicator()
                         : MSkollBtn(
                             title: 'Generate PDF',

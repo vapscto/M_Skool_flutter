@@ -69,6 +69,53 @@ class _DailyTwiceAttendanceEntryDetailScreenState
                   Fluttertoast.showToast(msg: 'Select Attendance');
                   return;
                 }
+                stdList.clear();
+                for (var i = 0;
+                    i <
+                        attendanceEntryController
+                            .dailyOnceAndDailyTwiceStudentList.length;
+                    i++) {
+                  stdList.add(
+                    {
+                      "amaY_RollNo": attendanceEntryController
+                          .dailyOnceAndDailyTwiceStudentList
+                          .elementAt(i)
+                          .amaYRollNo,
+                      "amsT_AdmNo": attendanceEntryController
+                          .dailyOnceAndDailyTwiceStudentList
+                          .elementAt(i)
+                          .amsTAdmNo,
+                      "amsT_Id": attendanceEntryController
+                          .dailyOnceAndDailyTwiceStudentList
+                          .elementAt(i)
+                          .amsTId,
+                      "studentname": attendanceEntryController
+                          .dailyOnceAndDailyTwiceStudentList
+                          .elementAt(i)
+                          .studentname,
+                      "pdays": 0.0,
+                      "selected": null,
+                      "ASAS_Id": attendanceEntryController
+                          .dailyOnceAndDailyTwiceStudentList
+                          .elementAt(i)
+                          .asaSId,
+                      "FirstHalfflag": true,
+                      "SecondHalfflag": true,
+                      "asA_Dailytwice_Flag": null,
+                      "asA_Id": attendanceEntryController
+                          .dailyOnceAndDailyTwiceStudentList
+                          .elementAt(i)
+                          .asAId,
+                      "TTMP_Id": null,
+                      "ISMS_Id": 0,
+                      "asasB_Id": 0,
+                      "amsT_RegistrationNo": attendanceEntryController
+                          .dailyOnceAndDailyTwiceStudentList
+                          .elementAt(i)
+                          .amsTRegistrationNo
+                    },
+                  );
+                }
                 attendanceEntryController.issaveloading(true);
                 await saveAttendanceEntry(
                   data: {
@@ -76,15 +123,29 @@ class _DailyTwiceAttendanceEntryDetailScreenState
                     "MI_Id": widget.loginSuccessModel.mIID!,
                     "ASMAY_Id": widget.asmayId,
                     "ASA_Att_Type": "Dailytwice",
+                    "ASA_Att_EntryType":
+                        attendanceEntryController.attendanceEntryType.value ==
+                                'P'
+                            ? 'Present'
+                            : 'Absent',
                     "ASMCL_Id": widget.asmclId,
                     "ASMS_Id": widget.asmsId,
                     "ASA_Entry_DateTime": DateTime.now().toString(),
                     "ASA_FromDate": DateTime.now().toString(),
                     "ASA_ToDate": DateTime.now().toString(),
                     "ASA_ClassHeld": "1.00",
+                    "ASA_Regular_Extra": "Regular",
+                    "ASA_Network_IP": "::1",
+                    "ASAS_Id": null,
+                    "AMST_Id": 0,
+                    "ASA_Class_Attended": 0.0,
                     "stdList": stdList,
                     "username": widget.loginSuccessModel.userName!,
                     "userId": widget.loginSuccessModel.userId!,
+                    "ismS_Id": 0,
+                    "TTMP_Id": 0,
+                    "attcount": 0,
+                    "asasB_Id": 0
                   },
                   base: baseUrlFromInsCode(
                     'admission',
@@ -281,8 +342,9 @@ class _DailyTwiceAttendanceEntryDetailScreenState
                         ],
 
                         rows: List.generate(
-                            attendanceEntryController.studentList1.length,
-                            (index) {
+                            attendanceEntryController
+                                .dailyOnceAndDailyTwiceStudentList
+                                .length, (index) {
                           var i = index + 1;
                           return DataRow(
                             cells: [
@@ -292,14 +354,14 @@ class _DailyTwiceAttendanceEntryDetailScreenState
                                       overflow: TextOverflow.ellipsis))),
                               DataCell(
                                 Text(
-                                    '${attendanceEntryController.studentList1.elementAt(index).studentname}',
+                                    '${attendanceEntryController.dailyOnceAndDailyTwiceStudentList.elementAt(index).studentname}',
                                     overflow: TextOverflow.ellipsis),
                               ),
                               DataCell(
                                 Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                      '${attendanceEntryController.studentList1.elementAt(index).amaYRollNo}',
+                                      '${attendanceEntryController.dailyOnceAndDailyTwiceStudentList.elementAt(index).amaYRollNo}',
                                       overflow: TextOverflow.ellipsis),
                                 ),
                               ),
@@ -307,7 +369,7 @@ class _DailyTwiceAttendanceEntryDetailScreenState
                                 Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                      '${attendanceEntryController.studentList1.elementAt(index).amsTAdmNo}',
+                                      '${attendanceEntryController.dailyOnceAndDailyTwiceStudentList.elementAt(index).amsTAdmNo}',
                                       overflow: TextOverflow.ellipsis),
                                 ),
                               ),
@@ -316,30 +378,44 @@ class _DailyTwiceAttendanceEntryDetailScreenState
                                   alignment: Alignment.center,
                                   child: AttendanceCheckboxWidget(
                                     index: index,
-                                    attendance: selectAll ? true : false,
+                                    attendance: selectAll
+                                        ? true
+                                        : attendanceEntryController
+                                                        .dailyOnceAndDailyTwiceStudentList
+                                                        .elementAt(index)
+                                                        .pdays ==
+                                                    0.50 &&
+                                                attendanceEntryController
+                                                        .dailyOnceAndDailyTwiceStudentList
+                                                        .elementAt(index)
+                                                        .asaDailytwiceFlag!
+                                                        .toLowerCase() ==
+                                                    'secondhalf'
+                                            ? true
+                                            : false,
                                     admNo: attendanceEntryController
-                                        .studentList1
+                                        .dailyOnceAndDailyTwiceStudentList
                                         .elementAt(index)
                                         .amsTAdmNo!,
                                     amstId: attendanceEntryController
-                                        .studentList1
+                                        .dailyOnceAndDailyTwiceStudentList
                                         .elementAt(index)
                                         .amsTId!,
                                     amstRegistrationNo:
-                                        attendanceEntryController.studentList1
+                                        attendanceEntryController
+                                            .dailyOnceAndDailyTwiceStudentList
                                             .elementAt(index)
                                             .amsTRegistrationNo!,
                                     rollNo: attendanceEntryController
-                                        .studentList1
+                                        .dailyOnceAndDailyTwiceStudentList
                                         .elementAt(index)
                                         .amaYRollNo!,
                                     studentName: attendanceEntryController
-                                        .studentList1
+                                        .dailyOnceAndDailyTwiceStudentList
                                         .elementAt(index)
                                         .studentname!,
-                                    addToStudentlist: addToStudentList,
-                                    removeFromStudentlist:
-                                        removeFromStudentList,
+                                    attendanceEntryController:
+                                        attendanceEntryController,
                                   ),
                                 ),
                               ),
@@ -348,30 +424,44 @@ class _DailyTwiceAttendanceEntryDetailScreenState
                                   alignment: Alignment.center,
                                   child: AttendanceCheckboxWidget(
                                     index: index,
-                                    attendance: selectAll ? true : false,
+                                    attendance: selectAll
+                                        ? true
+                                        : attendanceEntryController
+                                                        .dailyOnceAndDailyTwiceStudentList
+                                                        .elementAt(index)
+                                                        .pdays ==
+                                                    0.50 &&
+                                                attendanceEntryController
+                                                        .dailyOnceAndDailyTwiceStudentList
+                                                        .elementAt(index)
+                                                        .asaDailytwiceFlag!
+                                                        .toLowerCase() ==
+                                                    'firsthalf'
+                                            ? true
+                                            : false,
                                     admNo: attendanceEntryController
-                                        .studentList1
+                                        .dailyOnceAndDailyTwiceStudentList
                                         .elementAt(index)
                                         .amsTAdmNo!,
                                     amstId: attendanceEntryController
-                                        .studentList1
+                                        .dailyOnceAndDailyTwiceStudentList
                                         .elementAt(index)
                                         .amsTId!,
                                     amstRegistrationNo:
-                                        attendanceEntryController.studentList1
+                                        attendanceEntryController
+                                            .dailyOnceAndDailyTwiceStudentList
                                             .elementAt(index)
                                             .amsTRegistrationNo!,
                                     rollNo: attendanceEntryController
-                                        .studentList1
+                                        .dailyOnceAndDailyTwiceStudentList
                                         .elementAt(index)
                                         .amaYRollNo!,
                                     studentName: attendanceEntryController
-                                        .studentList1
+                                        .dailyOnceAndDailyTwiceStudentList
                                         .elementAt(index)
                                         .studentname!,
-                                    // addToStudentlist: addToStudentList,
-                                    // removeFromStudentlist:
-                                    //     removeFromStudentList,
+                                    attendanceEntryController:
+                                        attendanceEntryController,
                                   ),
                                 ),
                               ),

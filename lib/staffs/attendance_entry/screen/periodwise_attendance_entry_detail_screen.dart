@@ -75,33 +75,46 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                   Fluttertoast.showToast(msg: 'Select Attendance');
                   return;
                 }
+                for (var i = 0;
+                    i < attendanceEntryController.periodwiseStudentList.length;
+                    i++) {
+                  stdList.add({
+                    "amaY_RollNo": attendanceEntryController
+                        .periodwiseStudentList
+                        .elementAt(i)
+                        .amaYRollNo,
+                    "amsT_AdmNo": attendanceEntryController
+                        .periodwiseStudentList
+                        .elementAt(i)
+                        .amsTAdmNo,
+                    "amsT_Id": attendanceEntryController.periodwiseStudentList
+                        .elementAt(i)
+                        .amsTId,
+                    "studentname": attendanceEntryController
+                        .periodwiseStudentList
+                        .elementAt(i)
+                        .studentname,
+                    "pdays": 0.0,
+                    "selected": true,
+                    "ASAS_Id": attendanceEntryController.periodwiseStudentList
+                        .elementAt(i)
+                        .asaSId,
+                    "FirstHalfflag": null,
+                    "SecondHalfflag": null,
+                    "asA_Dailytwice_Flag": null,
+                    "asA_Id": attendanceEntryController.periodwiseStudentList
+                        .elementAt(i)
+                        .asAId,
+                    "TTMP_Id": null,
+                    "ISMS_Id": 0,
+                    "asasB_Id": 0,
+                    "amsT_RegistrationNo": attendanceEntryController
+                        .periodwiseStudentList
+                        .elementAt(i)
+                        .amsTRegistrationNo
+                  });
+                }
                 attendanceEntryController.issaveloading(true);
-                logger.d(
-                  {
-                    "ASA_Id": widget.asaId,
-                    "MI_Id": widget.loginSuccessModel.mIID!,
-                    "ASMAY_Id": widget.asmayId,
-                    "ASA_Att_Type": "period",
-                    "ASA_Att_EntryType":
-                        attendanceEntryController.attendanceEntryType.value ==
-                                'P'
-                            ? 'Present'
-                            : 'Absent',
-                    "ASA_ClassHeld": "1.00",
-                    "ASMCL_Id": widget.asmclId,
-                    "ASMS_Id": widget.asmsId,
-                    "ASA_Entry_DateTime": DateTime.now().toString(),
-                    "ASA_FromDate": DateTime.now().toString(),
-                    "ASA_ToDate": DateTime.now().toString(),
-                    "ASA_Regular_Extra": widget.selectedradio,
-                    "ASA_Network_IP": "::1",
-                    "stdList": stdList,
-                    "username": widget.loginSuccessModel.userName!,
-                    "userId": widget.loginSuccessModel.userId!,
-                    "ismS_Id": widget.subjectId,
-                    "TTMP_Id": widget.periodId,
-                  },
-                );
                 await saveAttendanceEntry(
                   data: {
                     "ASA_Id": widget.asaId,
@@ -113,19 +126,20 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                                 'P'
                             ? 'Present'
                             : 'Absent',
-                    "ASA_ClassHeld": "1.00",
                     "ASMCL_Id": widget.asmclId,
                     "ASMS_Id": widget.asmsId,
                     "ASA_Entry_DateTime": DateTime.now().toString(),
                     "ASA_FromDate": DateTime.now().toString(),
                     "ASA_ToDate": DateTime.now().toString(),
+                    "ASA_ClassHeld": "1.00",
                     "ASA_Regular_Extra": widget.selectedradio,
                     "ASA_Network_IP": "::1",
+                    "AMST_Id": 0,
+                    "ASA_Class_Attended": 0.0,
                     "stdList": stdList,
-                    "username": widget.loginSuccessModel.userName!,
                     "userId": widget.loginSuccessModel.userId!,
                     "ismS_Id": widget.subjectId,
-                    "TTMP_Id": widget.periodId,
+                    "TTMP_Id": widget.periodId
                   },
                   base: baseUrlFromInsCode(
                     'admission',
@@ -317,10 +331,6 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                             attendanceEntryController
                                 .periodwiseStudentList.length, (index) {
                           var i = index + 1;
-                          logger.d(attendanceEntryController
-                              .periodwiseStudentList
-                              .elementAt(index)
-                              .pdays);
                           return DataRow(
                             cells: [
                               DataCell(Align(
@@ -353,10 +363,17 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                                   alignment: Alignment.center,
                                   child: AttendanceCheckboxWidget(
                                     index: index,
-                                    attendance: selectAll ? true : false,
-                                    addToStudentlist: addToStudentList,
-                                    removeFromStudentlist:
-                                        removeFromStudentList,
+                                    attendance: selectAll
+                                        ? true
+                                        : attendanceEntryController
+                                                    .periodwiseStudentList
+                                                    .elementAt(index)
+                                                    .pdays ==
+                                                0.0
+                                            ? false
+                                            : true,
+                                    attendanceEntryController:
+                                        attendanceEntryController,
                                     admNo: attendanceEntryController
                                         .periodwiseStudentList
                                         .elementAt(index)

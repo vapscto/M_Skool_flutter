@@ -3,11 +3,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/api/attendance_entry_related_api.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/controller/attendance_entry_related_controller.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/widget/attendance_checkbox_widget.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
@@ -38,17 +36,15 @@ class _DailyOnceAttendanceEntryDetailScreenState
     extends State<DailyOnceAttendanceEntryDetailScreen> {
   final AttendanceEntryController attendanceEntryController =
       Get.put(AttendanceEntryController());
+
   bool selectAll = false;
   List<Map<String, dynamic>> stdList = [];
-
-  void addToStudentList(Map<String, dynamic> data) {
-    stdList.add(data);
-    logger.d(stdList);
-  }
-
-  void removeFromStudentList(int rollNo) {
-    stdList.removeWhere((element) => element['amaY_RollNo'] == rollNo);
-    logger.d(stdList);
+  List<bool> boollist = [];
+  @override
+  void initState() {
+    boollist.clear();
+    boollist = attendanceEntryController.boolList;
+    super.initState();
   }
 
   @override
@@ -65,11 +61,56 @@ class _DailyOnceAttendanceEntryDetailScreenState
             child: SaveBtn(
               title: 'Save',
               onPress: () async {
-                if (stdList.isEmpty) {
-                  Fluttertoast.showToast(msg: 'Select Attendance');
-                  return;
+                // logger.d(boollist.length);
+                // for (var i = 0; i < boollist.length; i++) {
+                //   logger.d(boollist.elementAt(i));
+                // }
+                stdList.clear();
+                for (var i = 0;
+                    i < attendanceEntryController.boolList.length;
+                    i++) {
+                  stdList.add(
+                    {
+                      "amaY_RollNo": attendanceEntryController
+                          .dailyOnceAndDailyTwiceStudentList
+                          .elementAt(i)
+                          .amaYRollNo,
+                      "amsT_AdmNo": attendanceEntryController
+                          .dailyOnceAndDailyTwiceStudentList
+                          .elementAt(i)
+                          .amsTAdmNo,
+                      "amsT_Id": attendanceEntryController
+                          .dailyOnceAndDailyTwiceStudentList
+                          .elementAt(i)
+                          .amsTId,
+                      "studentname": attendanceEntryController
+                          .dailyOnceAndDailyTwiceStudentList
+                          .elementAt(i)
+                          .studentname,
+                      "pdays": 0.0,
+                      "selected": boollist.elementAt(i),
+                      "ASAS_Id": attendanceEntryController
+                          .dailyOnceAndDailyTwiceStudentList
+                          .elementAt(i)
+                          .asaSId,
+                      "FirstHalfflag": null,
+                      "SecondHalfflag": null,
+                      "asA_Dailytwice_Flag": null,
+                      "asA_Id": attendanceEntryController
+                          .dailyOnceAndDailyTwiceStudentList
+                          .elementAt(i)
+                          .asAId,
+                      "TTMP_Id": null,
+                      "ISMS_Id": 0,
+                      "asasB_Id": 0,
+                      "amsT_RegistrationNo": attendanceEntryController
+                          .dailyOnceAndDailyTwiceStudentList
+                          .elementAt(i)
+                          .amsTRegistrationNo
+                    },
+                  );
                 }
-                logger.d(stdList);
+
                 attendanceEntryController.issaveloading(true);
                 await saveAttendanceEntry(
                   data: {
@@ -77,22 +118,36 @@ class _DailyOnceAttendanceEntryDetailScreenState
                     "MI_Id": widget.loginSuccessModel.mIID!,
                     "ASMAY_Id": widget.asmayId,
                     "ASA_Att_Type": "Dailyonce",
+                    "ASA_Att_EntryType":
+                        attendanceEntryController.attendanceEntryType.value ==
+                                'P'
+                            ? 'Present'
+                            : 'Absent',
                     "ASMCL_Id": widget.asmclId,
                     "ASMS_Id": widget.asmsId,
                     "ASA_Entry_DateTime": DateTime.now().toString(),
                     "ASA_FromDate": DateTime.now().toString(),
                     "ASA_ToDate": DateTime.now().toString(),
                     "ASA_ClassHeld": "1.00",
-                    "ASA_Class_Attended": "1.0",
+                    "ASA_Regular_Extra": "Regular",
+                    "ASA_Network_IP": "::1",
+                    "AMST_Id": 0,
                     "stdList": stdList,
                     "username": widget.loginSuccessModel.userName!,
                     "userId": widget.loginSuccessModel.userId!,
+                    "ismS_Id": 0,
+                    "TTMP_Id": 0,
+                    "asasB_Id": 0
                   },
                   base: baseUrlFromInsCode(
                     'admission',
                     widget.mskoolController,
                   ),
-                ).then((value) => logger.d(value));
+                ).then((value) {
+                  if (value) {
+                    Fluttertoast.showToast(msg: 'Attendance save successfully');
+                  }
+                });
                 attendanceEntryController.issaveloading(false);
               },
             ),
@@ -269,8 +324,9 @@ class _DailyOnceAttendanceEntryDetailScreenState
                         ],
 
                         rows: List.generate(
-                            attendanceEntryController.studentList1.length,
-                            (index) {
+                            attendanceEntryController
+                                .dailyOnceAndDailyTwiceStudentList
+                                .length, (index) {
                           var i = index + 1;
                           return DataRow(
                             cells: [
@@ -280,14 +336,14 @@ class _DailyOnceAttendanceEntryDetailScreenState
                                       overflow: TextOverflow.ellipsis))),
                               DataCell(
                                 Text(
-                                    '${attendanceEntryController.studentList1.elementAt(index).studentname}',
+                                    '${attendanceEntryController.dailyOnceAndDailyTwiceStudentList.elementAt(index).studentname}',
                                     overflow: TextOverflow.ellipsis),
                               ),
                               DataCell(
                                 Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                      ' ${attendanceEntryController.studentList1.elementAt(index).amaYRollNo}',
+                                      ' ${attendanceEntryController.dailyOnceAndDailyTwiceStudentList.elementAt(index).amaYRollNo}',
                                       overflow: TextOverflow.ellipsis),
                                 ),
                               ),
@@ -295,39 +351,24 @@ class _DailyOnceAttendanceEntryDetailScreenState
                                 Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                      '${attendanceEntryController.studentList1.elementAt(index).amsTAdmNo}',
+                                      '${attendanceEntryController.dailyOnceAndDailyTwiceStudentList.elementAt(index).amsTAdmNo}',
                                       overflow: TextOverflow.ellipsis),
                                 ),
                               ),
                               DataCell(
                                 Align(
                                   alignment: Alignment.center,
-                                  child: AttendanceCheckboxWidget(
-                                    index: index,
-                                    attendance: selectAll ? true : false,
-                                    addToStudentlist: addToStudentList,
-                                    removeFromStudentlist:
-                                        removeFromStudentList,
-                                    admNo: attendanceEntryController
-                                        .studentList1
-                                        .elementAt(index)
-                                        .amsTAdmNo!,
-                                    amstId: attendanceEntryController
-                                        .studentList1
-                                        .elementAt(index)
-                                        .amsTId!,
-                                    amstRegistrationNo:
-                                        attendanceEntryController.studentList1
-                                            .elementAt(index)
-                                            .amsTRegistrationNo!,
-                                    rollNo: attendanceEntryController
-                                        .studentList1
-                                        .elementAt(index)
-                                        .amaYRollNo!,
-                                    studentName: attendanceEntryController
-                                        .studentList1
-                                        .elementAt(index)
-                                        .studentname!,
+                                  child: Checkbox(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    activeColor: Theme.of(context).primaryColor,
+                                    value: boollist[index],
+                                    onChanged: (value) {
+                                      setState(() {
+                                        boollist[index] = value!;
+                                      });
+                                    },
                                   ),
                                 ),
                               ),

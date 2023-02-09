@@ -1,50 +1,56 @@
 // To parse this JSON data, do
 //
-//     final periodWiseStudentListModel = periodWiseStudentListModelFromJson(jsonString);
+//     final monthWiseStudentListModel = monthWiseStudentListModelFromJson(jsonString);
 
 import 'dart:convert';
 
-PeriodWiseStudentListModel periodWiseStudentListModelFromJson(String str) =>
-    PeriodWiseStudentListModel.fromJson(json.decode(str));
+MonthWiseStudentListModel monthWiseStudentListModelFromJson(String str) =>
+    MonthWiseStudentListModel.fromJson(json.decode(str));
 
-String periodWiseStudentListModelToJson(PeriodWiseStudentListModel data) =>
+String monthWiseStudentListModelToJson(MonthWiseStudentListModel data) =>
     json.encode(data.toJson());
 
-class PeriodWiseStudentListModel {
-  PeriodWiseStudentListModel({
+class MonthWiseStudentListModel {
+  MonthWiseStudentListModel({
     this.asAId,
     this.studentList,
+    this.countclass,
   });
-  int? asAId;
-  StudentList? studentList;
 
-  factory PeriodWiseStudentListModel.fromJson(Map<String, dynamic> json) =>
-      PeriodWiseStudentListModel(
+  int? asAId;
+  MonthWiseStudentList? studentList;
+  double? countclass;
+
+  factory MonthWiseStudentListModel.fromJson(Map<String, dynamic> json) =>
+      MonthWiseStudentListModel(
         asAId: json["asA_Id"],
-        studentList: StudentList.fromJson(json["studentList"]),
+        studentList: MonthWiseStudentList.fromJson(json["studentList"]),
+        countclass: json["countclass"],
       );
 
   Map<String, dynamic> toJson() => {
         "asA_Id": asAId,
         "studentList": studentList!.toJson(),
+        "countclass": countclass,
       };
 }
 
-class StudentList {
-  StudentList({
+class MonthWiseStudentList {
+  MonthWiseStudentList({
     this.type,
     this.values,
   });
 
   String? type;
-  List<PeroidWiseStudentListValue?>? values;
+  List<MonthWiseStudentListValue?>? values;
 
-  factory StudentList.fromJson(Map<String, dynamic> json) => StudentList(
+  factory MonthWiseStudentList.fromJson(Map<String, dynamic> json) =>
+      MonthWiseStudentList(
         type: json["\$type"],
         values: json["\$values"] == null
             ? []
-            : List<PeroidWiseStudentListValue?>.from(json["\$values"]
-                .map((x) => PeroidWiseStudentListValue.fromJson(x))),
+            : List<MonthWiseStudentListValue?>.from(json["\$values"]
+                .map((x) => MonthWiseStudentListValue.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -55,8 +61,8 @@ class StudentList {
       };
 }
 
-class PeroidWiseStudentListValue {
-  PeroidWiseStudentListValue({
+class MonthWiseStudentListValue {
+  MonthWiseStudentListValue({
     this.amaYRollNo,
     this.amsTAdmNo,
     this.amsTId,
@@ -80,8 +86,8 @@ class PeroidWiseStudentListValue {
   int? asasBId;
   String? amsTRegistrationNo;
 
-  factory PeroidWiseStudentListValue.fromJson(Map<String, dynamic> json) =>
-      PeroidWiseStudentListValue(
+  factory MonthWiseStudentListValue.fromJson(Map<String, dynamic> json) =>
+      MonthWiseStudentListValue(
         amaYRollNo: json["amaY_RollNo"],
         amsTAdmNo: json["amsT_AdmNo"],
         amsTId: json["amsT_Id"],
