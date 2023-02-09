@@ -624,6 +624,7 @@ class PeroidWiseStudentListValue {
     this.amaYRollNo,
     this.amsTAdmNo,
     this.amsTId,
+    this.pdays,
     this.studentname,
     this.asAId,
     this.ismSId,
@@ -634,6 +635,7 @@ class PeroidWiseStudentListValue {
   int? amaYRollNo;
   String? amsTAdmNo;
   int? amsTId;
+  double? pdays;
   String? studentname;
   int? asAId;
   int? ismSId;
@@ -645,6 +647,7 @@ class PeroidWiseStudentListValue {
         amaYRollNo: json["amaY_RollNo"],
         amsTAdmNo: json["amsT_AdmNo"],
         amsTId: json["amsT_Id"],
+        pdays: json["pdays"] ?? 0.00,
         studentname: json["studentname"],
         asAId: json["asA_Id"],
         ismSId: json["ismS_Id"],
@@ -656,6 +659,7 @@ class PeroidWiseStudentListValue {
         "amaY_RollNo": amaYRollNo,
         "amsT_AdmNo": amsTAdmNo,
         "amsT_Id": amsTId,
+        "pdays": pdays,
         "studentname": studentname,
         "asA_Id": asAId,
         "ismS_Id": ismSId,

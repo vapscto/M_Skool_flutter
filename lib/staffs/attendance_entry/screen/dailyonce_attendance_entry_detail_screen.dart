@@ -69,6 +69,7 @@ class _DailyOnceAttendanceEntryDetailScreenState
                   Fluttertoast.showToast(msg: 'Select Attendance');
                   return;
                 }
+                logger.d(stdList);
                 attendanceEntryController.issaveloading(true);
                 await saveAttendanceEntry(
                   data: {
@@ -188,7 +189,7 @@ class _DailyOnceAttendanceEntryDetailScreenState
                             fontSize: 12,
                             color: Color.fromRGBO(0, 0, 0, 0.95),
                             fontWeight: FontWeight.w500),
-                        dataRowHeight: 37,
+                        dataRowHeight: 45,
                         headingRowHeight: 40,
                         horizontalMargin: 8,
                         columnSpacing: 25,

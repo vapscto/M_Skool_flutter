@@ -644,6 +644,7 @@ class StudentListValues {
     this.amsTAdmNo,
     this.amsTId,
     this.studentname,
+    this.pdays,
     this.asAId,
     this.ismSId,
     this.asasBId,
@@ -654,6 +655,7 @@ class StudentListValues {
   String? amsTAdmNo;
   int? amsTId;
   String? studentname;
+  double? pdays;
   int? asAId;
   int? ismSId;
   int? asasBId;
@@ -665,6 +667,7 @@ class StudentListValues {
         amsTAdmNo: json["amsT_AdmNo"],
         amsTId: json["amsT_Id"],
         studentname: json["studentname"],
+        pdays: json["pdays"] ?? 0.00,
         asAId: json["asA_Id"],
         ismSId: json["ismS_Id"],
         asasBId: json["asasB_Id"],
@@ -676,6 +679,7 @@ class StudentListValues {
         "amsT_AdmNo": amsTAdmNo,
         "amsT_Id": amsTId,
         "studentname": studentname,
+        "pdays": pdays,
         "asA_Id": asAId,
         "ismS_Id": ismSId,
         "asasB_Id": asasBId,

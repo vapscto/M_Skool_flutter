@@ -15,16 +15,19 @@ class AttendanceTextfieldWidget extends StatefulWidget {
 class _AttendanceTextfieldWidgetState extends State<AttendanceTextfieldWidget> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: TextFormField(
-        controller: widget.textController,
-        textAlign: TextAlign.center,
-        keyboardType: TextInputType.number,
-        style: const TextStyle(
-            fontSize: 13,
-            color: Color.fromRGBO(0, 0, 0, 0.95),
-            fontWeight: FontWeight.w400),
+    return SizedBox(
+      width: 100,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: TextFormField(
+          controller: widget.textController,
+          textAlign: TextAlign.center,
+          keyboardType: TextInputType.number,
+          style: const TextStyle(
+              fontSize: 13,
+              color: Color.fromRGBO(0, 0, 0, 0.95),
+              fontWeight: FontWeight.w400),
+        ),
       ),
     );
   }

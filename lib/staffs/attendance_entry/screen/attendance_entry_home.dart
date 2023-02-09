@@ -92,7 +92,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
       ),
     )
         .then((value) {
-      logger.d(attendanceEntryController.attendanceEntryType.value);
+      logger.d(attendanceEntryController.attendanceEntry.value);
       logger.d(value);
       if (!value || value && attendanceEntryController.sectionList.isEmpty) {
         Fluttertoast.showToast(
@@ -124,9 +124,22 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
         attendanceEntryController.isstudentdataloading(false);
         return;
       }
-      logger.d(attendanceEntryController.monthwiseStudentList.first);
+      logger.d(attendanceEntryController.monthwiseStudentList.length);
     });
     attendanceEntryController.isstudentdataloading(false);
+    attendanceEntryController.textEditingController.clear();
+    for (var i = 0;
+        i < attendanceEntryController.monthwiseStudentList.length;
+        i++) {
+      attendanceEntryController.addToTextFeildList(
+        TextEditingController(
+            text: attendanceEntryController.monthwiseStudentList
+                .elementAt(i)
+                .pdays!
+                .toString()
+                .substring(0, 4)),
+      );
+    }
   }
 
   void getStudentListOnChangeOfSection(String asmsId) async {
@@ -141,10 +154,10 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
       fromDate: todayDate.text,
       asmclId: selectedClass!.asmcLId!.toString(),
       asmsId: asmsId,
-      monthFlag: attendanceEntryController.attendanceEntryType.value,
-      monthFlag1: attendanceEntryController.attendanceEntryType.value == 'D'
+      monthFlag: attendanceEntryController.attendanceEntry.value,
+      monthFlag1: attendanceEntryController.attendanceEntry.value == 'D'
           ? 'Dailyonce'
-          : attendanceEntryController.attendanceEntryType.value == 'H'
+          : attendanceEntryController.attendanceEntry.value == 'H'
               ? 'Dailytwice '
               : '',
       base: baseUrlFromInsCode(
@@ -189,6 +202,8 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
 
   void getStudentListOnChangeOfPeriod(int ttmpId) async {
     attendanceEntryController.isstudentdataloading(true);
+    attendanceEntryController.periodwiseStudentList.clear();
+    attendanceEntryController.asaId.value = 0;
     await attendanceEntryController
         .getStudentListOnChangePeriod(
       asmayId: selectedAcademicYear!.asmaYId!.toInt(),
@@ -209,7 +224,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
           attendanceEntryController.isstudentdataloading(false);
           return;
         }
-        logger.d(attendanceEntryController.periodwiseStudentList.first);
+        logger.d(attendanceEntryController.periodwiseStudentList.first.pdays);
       },
     );
     attendanceEntryController.isstudentdataloading(false);
@@ -320,6 +335,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                         }),
                         onChanged: (s) {
                           selectedAcademicYear = s!;
+                          logger.d(s.asmaYId);
                           setState(() {
                             selectedClass = null;
                             selectedSection = null;
@@ -407,6 +423,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                         }),
                         onChanged: (s) {
                           selectedClass = s!;
+                          logger.d(s.asmcLId);
                           selectedSection = null;
                           selectedMonth = null;
                           startDate.text = '';
@@ -498,6 +515,8 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                               }),
                               onChanged: (s) {
                                 selectedSection = s!;
+                                logger.d(s.asmSId);
+
                                 setState(() {
                                   selectedMonth = null;
                                   selectedSubject = null;
@@ -507,15 +526,15 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                 });
 
                                 if (attendanceEntryController
-                                            .attendanceEntryType.value ==
+                                            .attendanceEntry.value ==
                                         'D' ||
                                     attendanceEntryController
-                                            .attendanceEntryType.value ==
+                                            .attendanceEntry.value ==
                                         'H') {
                                   getStudentListOnChangeOfSection(
                                       s.asmSId.toString());
                                 } else if (attendanceEntryController
-                                        .attendanceEntryType.value ==
+                                        .attendanceEntry.value ==
                                     'P') {
                                   getSubjectList(s.asmSId!.toInt());
                                 }
@@ -524,7 +543,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                           ),
                     attendanceEntryController.isSection.value
                         ? const SizedBox()
-                        : attendanceEntryController.attendanceEntryType.value ==
+                        : attendanceEntryController.attendanceEntry.value ==
                                     'M' &&
                                 selectedSection != null
                             ? Container(
@@ -619,17 +638,16 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                             : const SizedBox(),
                     attendanceEntryController.isSection.value
                         ? const SizedBox()
-                        : (attendanceEntryController
-                                            .attendanceEntryType.value ==
+                        : (attendanceEntryController.attendanceEntry.value ==
                                         'D' ||
                                     attendanceEntryController
-                                            .attendanceEntryType.value ==
+                                            .attendanceEntry.value ==
                                         'H' ||
                                     attendanceEntryController
-                                            .attendanceEntryType.value ==
+                                            .attendanceEntry.value ==
                                         'P' ||
                                     attendanceEntryController
-                                            .attendanceEntryType.value ==
+                                            .attendanceEntry.value ==
                                         'M') &&
                                 selectedSection != null
                             ? Container(
@@ -695,7 +713,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                             : const SizedBox(),
                     attendanceEntryController.isSection.value
                         ? const SizedBox()
-                        : attendanceEntryController.attendanceEntryType.value ==
+                        : attendanceEntryController.attendanceEntry.value ==
                                     'M' &&
                                 selectedSection != null &&
                                 selectedMonth != null
@@ -718,7 +736,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                               context: context,
                                               initialDate: DateTime.now(),
                                               firstDate: DateTime(2000),
-                                              lastDate: DateTime(2030),
+                                              lastDate: DateTime.now(),
                                             );
 
                                             if (selectedstartdate != null) {
@@ -818,7 +836,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                               context: context,
                                               initialDate: DateTime.now(),
                                               firstDate: DateTime(2000),
-                                              lastDate: DateTime(2030),
+                                              lastDate: DateTime.now(),
                                             );
 
                                             if (selectedenddate != null) {
@@ -911,8 +929,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                           )
                         : attendanceEntryController.isSection.value
                             ? const SizedBox()
-                            : attendanceEntryController
-                                            .attendanceEntryType.value ==
+                            : attendanceEntryController.attendanceEntry.value ==
                                         'P' &&
                                     selectedSection != null
                                 ? Container(
@@ -998,7 +1015,8 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                         );
                                       }),
                                       onChanged: (s) {
-                                        selectedSubject = s!;
+                                        logger.d(s!.ismSId);
+                                        selectedSubject = s;
                                         setState(() {});
                                       },
                                     ),
@@ -1009,8 +1027,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                         : attendanceEntryController.isSection.value ||
                                 selectedSubject == null
                             ? const SizedBox()
-                            : attendanceEntryController
-                                            .attendanceEntryType.value ==
+                            : attendanceEntryController.attendanceEntry.value ==
                                         'P' &&
                                     selectedSection != null
                                 ? Container(
@@ -1098,6 +1115,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                       }),
                                       onChanged: (s) {
                                         selectedPeriod = s!;
+                                        logger.d(s.ttmPId);
                                         setState(() {});
                                         getStudentListOnChangeOfPeriod(
                                             s.ttmPId!.toInt());
@@ -1110,8 +1128,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                         : attendanceEntryController.isSection.value ||
                                 selectedPeriod == null
                             ? const SizedBox()
-                            : attendanceEntryController
-                                            .attendanceEntryType.value ==
+                            : attendanceEntryController.attendanceEntry.value ==
                                         'P' &&
                                     selectedSection != null
                                 ? SizedBox(
@@ -1141,6 +1158,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                         setState(() {
                                           selectedRadio = value.toString();
                                         });
+                                        logger.d(value);
                                       },
                                     ),
                                   )
@@ -1150,8 +1168,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                         : attendanceEntryController.isSection.value ||
                                 selectedPeriod == null
                             ? const SizedBox()
-                            : attendanceEntryController
-                                            .attendanceEntryType.value ==
+                            : attendanceEntryController.attendanceEntry.value ==
                                         'P' &&
                                     selectedSection != null
                                 ? SizedBox(
@@ -1181,6 +1198,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                         setState(() {
                                           selectedRadio = value.toString();
                                         });
+                                        logger.d(value);
                                       },
                                     ),
                                   )
@@ -1197,8 +1215,10 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                         ),
                       ),
                       onPressed: () {
-                        if (attendanceEntryController
-                                .attendanceEntryType.value ==
+                        if (selectedSection == null) {
+                          Fluttertoast.showToast(msg: 'Select section');
+                        } else if (attendanceEntryController
+                                .attendanceEntry.value ==
                             'M') {
                           if (selectedMonth == null) {
                             Fluttertoast.showToast(msg: 'Select month');
@@ -1211,6 +1231,8 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                             Get.to(() => MonthWiseAttendanceEntryDetailScreen(
                                   loginSuccessModel: widget.loginSuccessModel,
                                   mskoolController: widget.mskoolController,
+                                  attendanceEntryController:
+                                      attendanceEntryController,
                                 ));
                           } else {
                             Fluttertoast.showToast(
@@ -1218,7 +1240,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                     "Please Enter The Number Of Class Held For Particular Month In Master Class Held");
                           }
                         } else if (attendanceEntryController
-                                .attendanceEntryType.value ==
+                                .attendanceEntry.value ==
                             'D') {
                           if (attendanceEntryController
                               .studentList1.isNotEmpty) {
@@ -1236,7 +1258,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                 msg: "Something went wrong..");
                           }
                         } else if (attendanceEntryController
-                                .attendanceEntryType.value ==
+                                .attendanceEntry.value ==
                             'H') {
                           if (attendanceEntryController
                               .studentList1.isNotEmpty) {
@@ -1254,7 +1276,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                 msg: "Something went wrong..");
                           }
                         } else if (attendanceEntryController
-                                .attendanceEntryType.value ==
+                                .attendanceEntry.value ==
                             'P') {
                           if (selectedSubject == null) {
                             Fluttertoast.showToast(msg: "Select Subject.");

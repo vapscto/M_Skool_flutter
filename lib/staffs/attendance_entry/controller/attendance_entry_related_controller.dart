@@ -27,6 +27,7 @@ class AttendanceEntryController extends GetxController {
   RxList<TextEditingController> textEditingController =
       <TextEditingController>[].obs;
 
+  RxString attendanceEntry = ''.obs;
   RxString attendanceEntryType = ''.obs;
   RxNum countClassHeld = RxNum(0.0);
   RxInt asaId = RxInt(0);
@@ -142,10 +143,12 @@ class AttendanceEntryController extends GetxController {
           sectionModel.sectionList!.values != null) {
         sectionList.clear();
         attendanceEntryType.value = '';
+        attendanceEntry.value = '';
         for (var i = 0; i < sectionModel.sectionList!.values!.length; i++) {
           sectionList.add(sectionModel.sectionList!.values!.elementAt(i)!);
         }
-        attendanceEntryType.value = sectionModel.asAAttEntryType!;
+        attendanceEntry.value = sectionModel.asAAttEntryType!;
+        attendanceEntryType.value = sectionModel.attendanceentryflag!;
         return true;
       }
       return false;

@@ -46,19 +46,26 @@ class _AttendanceCheckboxWidgetState extends State<AttendanceCheckboxWidget> {
           widget.attendance = value!;
         });
         if (value!) {
-          if (attendanceEntryController.attendanceEntryType.value == 'P') {
+          if (attendanceEntryController.attendanceEntry.value == 'P') {
             widget.addToStudentlist!({
               "amaY_RollNo": widget.rollNo,
               "amsT_AdmNo": widget.admNo,
               "amsT_Id": widget.amstId,
               "studentname": widget.studentName,
               "selected": value,
+              "pdays": 0.0,
               "ASAS_Id": null,
+              "FirstHalfflag": null,
+              "SecondHalfflag": null,
+              "asA_Dailytwice_Flag": null,
+              "asA_Id": attendanceEntryController.asaId.value,
+              "TTMP_Id": null,
+              "ISMS_Id": 0,
               "asasB_Id": 0,
               "amsT_RegistrationNo": widget.amstRegistrationNo,
             });
           }
-          if (attendanceEntryController.attendanceEntryType.value == 'D') {
+          if (attendanceEntryController.attendanceEntry.value == 'D') {
             widget.addToStudentlist!({
               "amaY_RollNo": widget.rollNo,
               "amsT_AdmNo": widget.admNo,
@@ -69,7 +76,7 @@ class _AttendanceCheckboxWidgetState extends State<AttendanceCheckboxWidget> {
               "amsT_RegistrationNo": widget.amstRegistrationNo,
             });
           }
-          if (attendanceEntryController.attendanceEntryType.value == 'H') {
+          if (attendanceEntryController.attendanceEntry.value == 'H') {
             widget.addToStudentlist!({
               "amaY_RollNo": widget.rollNo,
               "amsT_AdmNo": widget.admNo,
