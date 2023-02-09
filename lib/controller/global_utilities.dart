@@ -180,5 +180,9 @@ String getStaffDashboardIcon(String pageName) {
     return icon += "staff_coe.png";
   }
 
+  if (pageName.toLowerCase().contains("slip")) {
+    return icon += "feeReceipt.png";
+  }
+
   return icon += "Timetable.png";
 }

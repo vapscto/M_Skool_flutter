@@ -215,12 +215,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 },
                                 child: showPassword.value
                                     ? Icon(
-                                        Icons.visibility_off_outlined,
+                                        Icons.visibility,
                                         size: 24.0,
                                         color: Theme.of(context).primaryColor,
                                       )
                                     : Icon(
-                                        Icons.visibility,
+                                        Icons.visibility_off_outlined,
                                         size: 24.0,
                                         color: Theme.of(context).primaryColor,
                                       ))),
@@ -449,9 +449,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         "isLoggedIn", true);
 
                                                     Get.offAll(
-                                                      () => snapshot
-                                                                  .data!.roleforlogin!.toLowerCase() ==
-                                                              URLS.student.toLowerCase()
+                                                      () => snapshot.data!
+                                                                  .roleforlogin!
+                                                                  .toLowerCase() ==
+                                                              URLS.student
+                                                                  .toLowerCase()
                                                           ? Home(
                                                               loginSuccessModel:
                                                                   snapshot
@@ -461,29 +463,25 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                       .mskoolController,
                                                             )
                                                           : snapshot.data!.roleforlogin!.toLowerCase() ==
-                                                                      URLS
-                                                                          .staff.toLowerCase() ||
+                                                                      URLS.staff
+                                                                          .toLowerCase() ||
                                                                   snapshot.data!
-                                                                          .roleforlogin!.toLowerCase() ==
-                                                                      URLS.hod.toLowerCase()
+                                                                          .roleforlogin!
+                                                                          .toLowerCase() ==
+                                                                      URLS.hod
+                                                                          .toLowerCase()
                                                               ? StaffHomeScreen(
                                                                   loginSuccessModel:
                                                                       snapshot
                                                                           .data!,
-                                                                  mskoolController:
-                                                                      widget
-                                                                          .mskoolController)
-                                                              : snapshot.data!
-                                                                          .roleforlogin!.toLowerCase() ==
-                                                                      URLS
-                                                                          .manager.toLowerCase()
+                                                                  mskoolController: widget
+                                                                      .mskoolController)
+                                                              : snapshot.data!.roleforlogin!.toLowerCase() ==
+                                                                      URLS.manager
+                                                                          .toLowerCase()
                                                                   ? ManagerHome(
-                                                                      loginSuccessModel:
-                                                                          snapshot
-                                                                              .data!,
-                                                                      mskoolController:
-                                                                          widget
-                                                                              .mskoolController)
+                                                                      loginSuccessModel: snapshot.data!,
+                                                                      mskoolController: widget.mskoolController)
                                                                   : Scaffold(
                                                                       body:
                                                                           Center(

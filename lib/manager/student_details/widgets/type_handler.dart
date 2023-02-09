@@ -100,7 +100,9 @@ class _SearchTypeHandlerState extends State<SearchTypeHandler> {
                               child: Text(e.name),
                             )))
                         .toList(),
-                    onChanged: (e) async {}),
+                    onChanged: (e) async {
+                      widget.condition.value = e!;
+                    }),
               )
             : const SizedBox(),
         const SizedBox(
@@ -246,10 +248,25 @@ class _SearchTypeHandlerState extends State<SearchTypeHandler> {
         ),
         CustomContainer(child: Obx(() {
           return TextField(
+            maxLength: widget.searchType.value.name == "AadharNo"
+                ? 12
+                : widget.searchType.value.name == "MobileNo"
+                    ? 10
+                    : null,
             controller: widget.textEditingController,
             style: Theme.of(context).textTheme.titleSmall,
             keyboardType: widget.searchType.value.keyboardType,
             decoration: InputDecoration(
+              // counter: const SizedBox(),
+              hintText: widget.searchType.value.name == "Date"
+                  ? "DD-MM-YY"
+                  : widget.searchType.value.name == "Sex"
+                      ? "Female/Male/Other"
+                      : widget.searchType.value.name == "AadharNo"
+                          ? "Aadhar No must be 12 digit"
+                          : widget.searchType.value.name == "Class"
+                              ? "Class must be in Roman Letter"
+                              : "Enter the value here",
               focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Colors.transparent,

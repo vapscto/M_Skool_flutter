@@ -1,6 +1,8 @@
 import 'package:dotted_border/dotted_border.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
@@ -508,6 +510,30 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                                               ),
                                             ],
                                           ),
+                                          Row(
+                                            children: [
+                                              Theme(
+                                                data: ThemeData(
+                                                    unselectedWidgetColor:
+                                                        Theme.of(context)
+                                                            .primaryColor),
+                                                child: Radio(
+                                                  value: "easebuzz",
+                                                  activeColor: Theme.of(context)
+                                                      .primaryColor,
+                                                  groupValue: paymentType,
+                                                  onChanged: ((value) {
+                                                    paymentType = value!;
+                                                    setState(() {});
+                                                  }),
+                                                ),
+                                              ),
+                                              SvgPicture.asset(
+                                                "assets/svg/easebuzz.svg",
+                                                width: 100,
+                                              ),
+                                            ],
+                                          ),
                                           // Row(
                                           //   children: [
                                           //     Radio(
@@ -739,208 +765,160 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
                                                     trackSelection
                                                         .totalInstallment
                                                         .value = 0;
-                                                    showModalBottomSheet(
-                                                      context: context,
-                                                      builder: (_) {
-                                                        return FutureBuilder<
-                                                            PaymentGateWayDetails>(
-                                                          future: GetPayablePaymentDetailApi.instance.openPaymentGateWay(
-                                                              miId: widget
-                                                                  .loginSuccessModel
-                                                                  .mIID!,
-                                                              amstId: widget
-                                                                  .loginSuccessModel
-                                                                  .amsTId!,
-                                                              asmayId: widget
-                                                                  .loginSuccessModel
-                                                                  .asmaYId!,
-                                                              asmclId:
-                                                                  payOnlineDataController
-                                                                      .fillStudent
-                                                                      .first
-                                                                      .asmcLID!,
-                                                              base: baseUrlFromInsCode(
-                                                                  "fee",
-                                                                  widget
-                                                                      .mskoolController),
-                                                              paymentSelectionTracking:
-                                                                  trackSelection),
-                                                          builder:
-                                                              (_, snapshot) {
-                                                            if (snapshot
-                                                                .hasData) {
-                                                              return Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .all(
-                                                                        16.0),
-                                                                child: Column(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .min,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    Text(
-                                                                      "Net Payment Detail's",
-                                                                      style: Theme.of(
-                                                                              context)
-                                                                          .textTheme
-                                                                          .titleMedium!
-                                                                          .merge(
-                                                                              const TextStyle(
-                                                                            fontSize:
-                                                                                20.0,
-                                                                          )),
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      height:
-                                                                          16.0,
-                                                                    ),
-                                                                    ListTile(
-                                                                      contentPadding:
-                                                                          EdgeInsets
-                                                                              .zero,
-                                                                      title: const Text(
-                                                                          "Total Amount"),
-                                                                      subtitle:
-                                                                          const Text(
-                                                                              "All selected installment included"),
-                                                                      trailing:
-                                                                          Text(
-                                                                        "₹${snapshot.data!.fmAAmount}",
-                                                                        style: Theme.of(context)
-                                                                            .textTheme
-                                                                            .titleSmall,
-                                                                      ),
-                                                                    ),
-                                                                    ListTile(
-                                                                        contentPadding:
-                                                                            EdgeInsets
-                                                                                .zero,
-                                                                        title: const Text(
-                                                                            "Total Fine"),
-                                                                        subtitle:
-                                                                            const Text(
-                                                                                "All selected installment included"),
-                                                                        trailing:
-                                                                            Text(
-                                                                          "₹${snapshot.data!.fsSFineAmount}",
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .titleSmall,
-                                                                        )),
-                                                                    ListTile(
-                                                                      contentPadding:
-                                                                          EdgeInsets
-                                                                              .zero,
-                                                                      title: const Text(
-                                                                          "Total Rebate"),
-                                                                      subtitle:
-                                                                          const Text(
-                                                                              "Rebate offered to you"),
-                                                                      trailing:
-                                                                          Text(
-                                                                        "₹${snapshot.data!.fsSRebateAmount}",
-                                                                        style: Theme.of(context)
-                                                                            .textTheme
-                                                                            .titleSmall,
-                                                                      ),
-                                                                    ),
-                                                                    const SizedBox(
-                                                                      height:
-                                                                          16.0,
-                                                                    ),
-                                                                    Center(
+
+                                                    paymentType == "razorpay"
+                                                        ? showModalBottomSheet(
+                                                            context: context,
+                                                            builder: (_) {
+                                                              return FutureBuilder<
+                                                                  PaymentGateWayDetails>(
+                                                                future: GetPayablePaymentDetailApi.instance.openPaymentGateWay(
+                                                                    miId: widget
+                                                                        .loginSuccessModel
+                                                                        .mIID!,
+                                                                    amstId: widget
+                                                                        .loginSuccessModel
+                                                                        .amsTId!,
+                                                                    asmayId: widget
+                                                                        .loginSuccessModel
+                                                                        .asmaYId!,
+                                                                    asmclId: payOnlineDataController
+                                                                        .fillStudent
+                                                                        .first
+                                                                        .asmcLID!,
+                                                                    base: baseUrlFromInsCode(
+                                                                        "fee",
+                                                                        widget
+                                                                            .mskoolController),
+                                                                    paymentSelectionTracking:
+                                                                        trackSelection),
+                                                                builder: (_,
+                                                                    snapshot) {
+                                                                  if (snapshot
+                                                                      .hasData) {
+                                                                    return Padding(
+                                                                      padding: const EdgeInsets
+                                                                              .all(
+                                                                          16.0),
                                                                       child:
-                                                                          ElevatedButton(
-                                                                        style: ElevatedButton.styleFrom(
-                                                                            minimumSize:
-                                                                                Size(Get.width * 0.5, 50),
-                                                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0))),
-                                                                        onPressed:
-                                                                            () {
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                          Map<String, dynamic>
-                                                                              paymentDetails =
-                                                                              {
-                                                                            "key":
-                                                                                snapshot.data!.merchantkey!,
-                                                                            'amount':
-                                                                                snapshot.data!.fmAAmount! * 100,
-                                                                            // 'name':
-                                                                            //     'Test Payment',
-                                                                            // 'description':
-                                                                            //     'Smart phone',
-                                                                            'retry':
-                                                                                {
-                                                                              'enabled': true,
-                                                                              'max_count': 1
-                                                                            },
-                                                                            'send_sms_hash':
-                                                                                true,
-                                                                            'order_id':
-                                                                                snapshot.data!.transId!,
-                                                                            'prefill':
-                                                                                {
-                                                                              'contact': payOnlineDataController.fillStudent.first.amstMobile,
-                                                                              'email': payOnlineDataController.fillStudent.first.amstEmailId,
-                                                                            },
-                                                                            // 'external': {
-                                                                            //   'wallets': ['paytm']
-                                                                            // }
-                                                                          };
-
-                                                                          logger
-                                                                              .d(paymentDetails);
-                                                                          if (paymentType ==
-                                                                              "razorpay") {
-                                                                            Razorpay
-                                                                                razorpay =
-                                                                                Razorpay();
-                                                                            razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
-                                                                                onPaymentSuccess);
-                                                                            razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
-                                                                                onPaymentFail);
-                                                                            razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET,
-                                                                                onExternalWallet);
-                                                                            razorpay.open(paymentDetails);
-                                                                          }
-                                                                        },
-                                                                        child:
-                                                                            Text(
-                                                                          "Continue",
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .labelMedium!
-                                                                              .merge(const TextStyle(
-                                                                                color: Colors.white,
+                                                                          Column(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.min,
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          Text(
+                                                                            "Net Payment Detail's",
+                                                                            style: Theme.of(context).textTheme.titleMedium!.merge(const TextStyle(
+                                                                                  fontSize: 20.0,
+                                                                                )),
+                                                                          ),
+                                                                          const SizedBox(
+                                                                            height:
+                                                                                16.0,
+                                                                          ),
+                                                                          ListTile(
+                                                                            contentPadding:
+                                                                                EdgeInsets.zero,
+                                                                            title:
+                                                                                const Text("Total Amount"),
+                                                                            subtitle:
+                                                                                const Text("All selected installment included"),
+                                                                            trailing:
+                                                                                Text(
+                                                                              "₹${snapshot.data!.fmAAmount}",
+                                                                              style: Theme.of(context).textTheme.titleSmall,
+                                                                            ),
+                                                                          ),
+                                                                          ListTile(
+                                                                              contentPadding: EdgeInsets.zero,
+                                                                              title: const Text("Total Fine"),
+                                                                              subtitle: const Text("All selected installment included"),
+                                                                              trailing: Text(
+                                                                                "₹${snapshot.data!.fsSFineAmount}",
+                                                                                style: Theme.of(context).textTheme.titleSmall,
                                                                               )),
-                                                                        ),
+                                                                          ListTile(
+                                                                            contentPadding:
+                                                                                EdgeInsets.zero,
+                                                                            title:
+                                                                                const Text("Total Rebate"),
+                                                                            subtitle:
+                                                                                const Text("Rebate offered to you"),
+                                                                            trailing:
+                                                                                Text(
+                                                                              "₹${snapshot.data!.fsSRebateAmount}",
+                                                                              style: Theme.of(context).textTheme.titleSmall,
+                                                                            ),
+                                                                          ),
+                                                                          const SizedBox(
+                                                                            height:
+                                                                                16.0,
+                                                                          ),
+                                                                          Center(
+                                                                            child:
+                                                                                ElevatedButton(
+                                                                              style: ElevatedButton.styleFrom(minimumSize: Size(Get.width * 0.5, 50), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24.0))),
+                                                                              onPressed: () {
+                                                                                Navigator.pop(context);
+                                                                                Map<String, dynamic> paymentDetails = {
+                                                                                  "key": snapshot.data!.merchantkey!,
+                                                                                  'amount': snapshot.data!.fmAAmount! * 100,
+                                                                                  // 'name':
+                                                                                  //     'Test Payment',
+                                                                                  // 'description':
+                                                                                  //     'Smart phone',
+                                                                                  'retry': {
+                                                                                    'enabled': true,
+                                                                                    'max_count': 1
+                                                                                  },
+                                                                                  'send_sms_hash': true,
+                                                                                  'order_id': snapshot.data!.transId!,
+                                                                                  'prefill': {
+                                                                                    'contact': payOnlineDataController.fillStudent.first.amstMobile,
+                                                                                    'email': payOnlineDataController.fillStudent.first.amstEmailId,
+                                                                                  },
+                                                                                  // 'external': {
+                                                                                  //   'wallets': ['paytm']
+                                                                                  // }
+                                                                                };
+
+                                                                                logger.d(paymentDetails);
+                                                                                if (paymentType == "razorpay") {
+                                                                                  Razorpay razorpay = Razorpay();
+                                                                                  razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, onPaymentSuccess);
+                                                                                  razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, onPaymentFail);
+                                                                                  razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, onExternalWallet);
+                                                                                  razorpay.open(paymentDetails);
+                                                                                }
+                                                                              },
+                                                                              child: Text(
+                                                                                "Continue",
+                                                                                style: Theme.of(context).textTheme.labelMedium!.merge(const TextStyle(
+                                                                                      color: Colors.white,
+                                                                                    )),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
                                                                       ),
-                                                                    ),
-                                                                  ],
-                                                                ),
+                                                                    );
+                                                                  }
+
+                                                                  if (snapshot
+                                                                      .hasError) {
+                                                                    return ErrWidget(
+                                                                        err: snapshot.error as Map<
+                                                                            String,
+                                                                            dynamic>);
+                                                                  }
+
+                                                                  return const ProgressWidget();
+                                                                },
                                                               );
-                                                            }
-
-                                                            if (snapshot
-                                                                .hasError) {
-                                                              return ErrWidget(
-                                                                  err: snapshot
-                                                                          .error
-                                                                      as Map<
-                                                                          String,
-                                                                          dynamic>);
-                                                            }
-
-                                                            return const ProgressWidget();
-                                                          },
-                                                        );
-                                                      },
-                                                    );
+                                                            },
+                                                          )
+                                                        : easeBuzz();
                                                   },
                                                 ),
                                               )
@@ -956,6 +934,95 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
               );
       }),
     );
+  }
+
+  Future<void> easeBuzz() async {
+    const MethodChannel channel = MethodChannel('easebuzz');
+    String accessKey =
+        "980225f09549f1682b9c7da95507c4d0ced877335dcb50b858298bf19aeabda1";
+    String payMode = "test";
+    Object parameters = {"access_key": accessKey, "pay_mode": payMode};
+    final paymentResponse =
+        await channel.invokeMethod("payWithEasebuzz", parameters);
+    logger.d(paymentResponse);
+    Map<Object?, Object?> response = paymentResponse as Map<Object?, Object?>;
+    if (response['result'] == "payment_successfull") {
+      showPopUpForEaseBuzz(
+          true, "Successfully initiated the payment", "Payment Successfull");
+      return;
+    }
+    if (response['result'] == "payment_failed") {
+      showPopUpForEaseBuzz(
+          false, "faild to initiated the payment", "Payment Failed");
+
+      return;
+    }
+    if (response['result'] == "txn_session_timeout") {
+      showPopUpForEaseBuzz(
+          false,
+          "you timeout to pay for the current transaction",
+          "Transaction Timeout");
+
+      return;
+    }
+
+    if (response['result'] == "user_cancelled") {
+      showPopUpForEaseBuzz(
+          false, "User cancelled the payment", "Cancelled By You");
+
+      return;
+    }
+    showPopUpForEaseBuzz(
+      false,
+      "Payment get failed due to ${response['result']}  ",
+      "Payment Failed",
+    );
+  }
+
+  showPopUpForEaseBuzz(bool status, String desc, String title) {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return Dialog(
+            child: status
+                ? SuccessWidget(title: title, message: desc, onPressed: () {})
+                : Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ErrWidget(err: {
+                        "errorTitle": title,
+                        "errorMsg": desc,
+                      })
+                    ],
+                  ),
+            // child: Column(
+            //   children: [
+            //     CircleAvatar(
+            //       minRadius: 24.0,
+            //       backgroundColor: status ? Colors.green : Colors.red,
+            //       child: status
+            //           ? const Icon(
+            //               Icons.check,
+            //               color: Colors.white,
+            //             )
+            //           : const Icon(
+            //               Icons.close,
+            //               color: Colors.white,
+            //             ),
+            //     ),
+            //     const SizedBox(height: 12.0,),
+            //     Text(title,style: Theme.of(context).textTheme.titleMedium,),
+            //     const SizedBox(height: 6.0,),
+            //     Text(desc),
+
+            //      const SizedBox(
+            //       height: 6.0,
+            //     ),
+
+            //   ],
+            // ),
+          );
+        });
   }
 
   void onPaymentSuccess(
