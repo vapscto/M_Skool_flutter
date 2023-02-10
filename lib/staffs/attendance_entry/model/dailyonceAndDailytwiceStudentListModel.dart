@@ -93,7 +93,7 @@ class DailyOnceAndDailyTwiceStudentListValue {
         amsTAdmNo: json["amsT_AdmNo"],
         amsTId: json["amsT_Id"],
         studentname: json["studentname"],
-        pdays: json["pdays"] ?? 0.0,
+        pdays: json["pdays"],
         asaSId: json["asaS_Id"] ?? 0,
         asaDailytwiceFlag: json["asA_Dailytwice_Flag"] ?? '',
         asAId: json["asA_Id"],

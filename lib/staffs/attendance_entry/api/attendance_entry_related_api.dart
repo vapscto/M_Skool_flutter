@@ -233,6 +233,7 @@ Future<PeriodWiseStudentListModel?> onChangeOfPeriod({
   required int ttmpId,
   required int ismsId,
   required int miId,
+  required String fromDate,
   required String base,
 }) async {
   var url = base + URLS.onChangePeriod;
@@ -243,7 +244,7 @@ Future<PeriodWiseStudentListModel?> onChangeOfPeriod({
         headers: getSession(),
       ),
       data: {
-        "ASA_FromDate": DateTime.now().toString(),
+        "ASA_FromDate": fromDate,
         "ASMAY_Id": asmayId,
         "ASMCL_Id": asmclId.toString(),
         "ASMS_Id": asmsId.toString(),

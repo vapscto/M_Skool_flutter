@@ -45,6 +45,7 @@ class _MarksEntryDetailScreenState extends State<MarksEntryDetailScreen> {
 
   void getMarksDataTable() async {
     marksEntryController.istableloading(true);
+    marksEntryController.textEditingControllerList.clear();
     await marksEntryController.getMarksEntrytabledetail(
       userId: widget.loginSuccessModel.userId!,
       miId: widget.loginSuccessModel.mIID!,
@@ -61,21 +62,6 @@ class _MarksEntryDetailScreenState extends State<MarksEntryDetailScreen> {
     );
     // logger.d('hfhfhhfhfhhf');
     marksEntryController.istableloading(false);
-    marksEntryController.textEditingControllerList.clear();
-    for (var i = 0;
-        i < marksEntryController.marksEntryDataTableList.length;
-        i++) {
-      marksEntryController.addToTextEditingList(
-        TextEditingController(
-            text: marksEntryController.marksEntryDataTableList
-                .elementAt(i)
-                .obtainmarks!
-                .toString()
-                .substring(0, 4)),
-      );
-    }
-    // logger.d(marksEntryController.textEditingControllerList.length);
-    // logger.d(marksEntryController.marksEntryDataTableList.length);
   }
 
   void saveDetails() async {

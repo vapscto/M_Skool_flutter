@@ -244,9 +244,9 @@ class AttendanceEntryController extends GetxController {
           dailyOnceAndDailyTwiceStudentList
               .add(studentListModel1.studentList!.values!.elementAt(i)!);
           boolList.add(
-              studentListModel1.studentList!.values!.elementAt(i)!.pdays == 0.0
-                  ? false
-                  : true);
+              studentListModel1.studentList!.values!.elementAt(i)!.pdays == 1.00
+                  ? true
+                  : false);
         }
         asaId.value = studentListModel1.asAId!;
         return true;
@@ -309,6 +309,7 @@ class AttendanceEntryController extends GetxController {
     required int ttmpId,
     required int ismsId,
     required int miId,
+    required String fromeDate,
     required String base,
   }) async {
     PeriodWiseStudentListModel? periodWiseStudentListModel =
@@ -319,6 +320,7 @@ class AttendanceEntryController extends GetxController {
             ttmpId: ttmpId,
             ismsId: ismsId,
             miId: miId,
+            fromDate: fromeDate,
             base: base);
     try {
       if (periodWiseStudentListModel!.studentList != null ||
@@ -328,12 +330,14 @@ class AttendanceEntryController extends GetxController {
             i++) {
           periodwiseStudentList.add(
               periodWiseStudentListModel.studentList!.values!.elementAt(i)!);
-          boolList.add(periodWiseStudentListModel.studentList!.values!
-                      .elementAt(i)!
-                      .pdays ==
-                  0.0
-              ? false
-              : true);
+          boolList.add(
+            periodWiseStudentListModel.studentList!.values!
+                        .elementAt(i)!
+                        .pdays ==
+                    1.00
+                ? true
+                : false,
+          );
         }
         asaId.value = periodWiseStudentListModel.asAId!;
         return true;

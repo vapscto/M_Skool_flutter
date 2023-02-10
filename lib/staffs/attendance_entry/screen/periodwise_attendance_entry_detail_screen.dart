@@ -45,6 +45,8 @@ class _PeriodWiseAttendanceEntryDetailScreenState
       Get.put(AttendanceEntryController());
   bool selectAll = false;
   List<Map<String, dynamic>> stdList = [];
+  String date =
+      '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}';
 
   List<bool> boollist = [];
   @override
@@ -108,6 +110,7 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                         .amsTRegistrationNo
                   });
                 }
+
                 attendanceEntryController.issaveloading(true);
                 await saveAttendanceEntry(
                   data: {
@@ -122,9 +125,9 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                             : 'Absent',
                     "ASMCL_Id": widget.asmclId,
                     "ASMS_Id": widget.asmsId,
-                    "ASA_Entry_DateTime": DateTime.now().toString(),
-                    "ASA_FromDate": DateTime.now().toString(),
-                    "ASA_ToDate": DateTime.now().toString(),
+                    "ASA_Entry_DateTime": date,
+                    "ASA_FromDate": date,
+                    "ASA_ToDate": date,
                     "ASA_ClassHeld": "1.00",
                     "ASA_Regular_Extra": widget.selectedradio,
                     "ASA_Network_IP": "::1",

@@ -159,8 +159,6 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
           attendanceEntryController.isstudentdataloading(false);
           return;
         }
-        logger.d(
-            attendanceEntryController.dailyOnceAndDailyTwiceStudentList.first);
       },
     );
     attendanceEntryController.isstudentdataloading(false);
@@ -191,7 +189,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
   void getStudentListOnChangeOfPeriod(int ttmpId) async {
     attendanceEntryController.isstudentdataloading(true);
     attendanceEntryController.periodwiseStudentList.clear();
-    attendanceEntryController.textEditingController.clear();
+    attendanceEntryController.boolList.clear();
     attendanceEntryController.asaId.value = 0;
     await attendanceEntryController
         .getStudentListOnChangePeriod(
@@ -201,6 +199,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
       ttmpId: ttmpId,
       ismsId: selectedSubject!.ismSId!,
       miId: widget.loginSuccessModel.mIID!,
+      fromeDate: todayDate.text,
       base: baseUrlFromInsCode(
         'admission',
         widget.mskoolController,
@@ -213,7 +212,6 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
           attendanceEntryController.isstudentdataloading(false);
           return;
         }
-        // logger.d(attendanceEntryController.periodwiseStudentList.first.pdays);
       },
     );
     attendanceEntryController.isstudentdataloading(false);
@@ -658,7 +656,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                       if (selecteddate != null) {
                                         setState(() {
                                           todayDate.text =
-                                              "${numberList[selecteddate!.day]}-${numberList[selecteddate!.month]}-${selecteddate!.year}";
+                                              "${numberList[selecteddate!.day]}/${numberList[selecteddate!.month]}/${selecteddate!.year}";
                                         });
                                       }
                                     },

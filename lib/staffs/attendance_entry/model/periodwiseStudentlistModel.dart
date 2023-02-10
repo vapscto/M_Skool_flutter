@@ -86,7 +86,7 @@ class PeroidWiseStudentListValue {
         amsTAdmNo: json["amsT_AdmNo"],
         amsTId: json["amsT_Id"],
         studentname: json["studentname"],
-        pdays: json["pdays"] ?? 0.0,
+        pdays: json["pdays"],
         asaSId: json["asaS_Id"] ?? 0,
         asAId: json["asA_Id"],
         ismSId: json["ismS_Id"],
