@@ -62,8 +62,8 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                         // showBottomBorder: true,
                         headingRowColor: MaterialStateProperty.all(
                             Theme.of(context).primaryColor),
-                        columns: const [
-                          DataColumn(
+                        columns: [
+                          const DataColumn(
                             label: Text(
                               ' S.No',
                               overflow: TextOverflow.ellipsis,
@@ -72,68 +72,92 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                               ),
                             ),
                           ),
-                          DataColumn(
-                            label: Text(
-                              'Employee Code',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                '     Employee Name',
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontSize: 14),
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Father Name',
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontSize: 14),
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                '       Mobile No.',
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontSize: 14),
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                ' Email Id',
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(fontSize: 14),
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                '     Date Of Birth',
-                                textAlign: TextAlign.center,
+                          if (widget.headerList.contains({
+                            "columnID": "HRME_EmployeeCode",
+                            "columnName": "Employee Code"
+                          }))
+                            const DataColumn(
+                              label: Text(
+                                'Employee Code',
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: 14,
                                 ),
                               ),
                             ),
-                          ),
+                          if (widget.headerList.contains({
+                            "columnID": "HRME_EmployeeFirstName",
+                            "columnName": "Employee Name"
+                          }))
+                            const DataColumn(
+                              label: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  '     Employee Name',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          if (widget.headerList.contains({
+                            "columnID": "HRME_FatherName",
+                            "columnName": "Father Name"
+                          }))
+                            const DataColumn(
+                              label: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Father Name',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          if (widget.headerList.contains({
+                            "columnID": "HRME_MobileNo",
+                            "columnName": "Mobile No."
+                          }))
+                            const DataColumn(
+                              label: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  '       Mobile No.',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          if (widget.headerList.contains({
+                            "columnID": "HRME_EmailId",
+                            "columnName": "Email Id"
+                          }))
+                            const DataColumn(
+                              label: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  ' Email Id',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          if (widget.headerList.contains({
+                            "columnID": "HRME_DOB",
+                            "columnName": "Date Of Birth"
+                          }))
+                            const DataColumn(
+                              label: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  '     Date Of Birth',
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ),
                         ],
 
                         rows: List.generate(
@@ -149,79 +173,103 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
-                              DataCell(
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    employeeDetailsController
-                                        .employeeDetailsList
-                                        .elementAt(index)
-                                        .hrmeEmployeeCode!,
-                                    textAlign: TextAlign.center,
-                                    overflow: TextOverflow.ellipsis,
+                              if (widget.headerList.contains({
+                                "columnID": "HRME_EmployeeCode",
+                                "columnName": "Employee Code"
+                              }))
+                                DataCell(
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      employeeDetailsController
+                                          .employeeDetailsList
+                                          .elementAt(index)
+                                          .hrmeEmployeeCode!,
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              DataCell(
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    employeeDetailsController
-                                        .employeeDetailsList
-                                        .elementAt(index)
-                                        .hrmeEmployeeFirstName!,
-                                    overflow: TextOverflow.ellipsis,
+                              if (widget.headerList.contains({
+                                "columnID": "HRME_EmployeeFirstName",
+                                "columnName": "Employee Name"
+                              }))
+                                DataCell(
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      employeeDetailsController
+                                          .employeeDetailsList
+                                          .elementAt(index)
+                                          .hrmeEmployeeFirstName!,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              DataCell(
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    employeeDetailsController
-                                        .employeeDetailsList
-                                        .elementAt(index)
-                                        .hrmeFatherName!,
-                                    overflow: TextOverflow.ellipsis,
+                              if (widget.headerList.contains({
+                                "columnID": "HRME_FatherName",
+                                "columnName": "Father Name"
+                              }))
+                                DataCell(
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      employeeDetailsController
+                                          .employeeDetailsList
+                                          .elementAt(index)
+                                          .hrmeFatherName!,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              DataCell(
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    employeeDetailsController
-                                        .employeeDetailsList
-                                        .elementAt(index)
-                                        .hrmeMobileNo!,
-                                    overflow: TextOverflow.ellipsis,
+                              if (widget.headerList.contains({
+                                "columnID": "HRME_MobileNo",
+                                "columnName": "Mobile No."
+                              }))
+                                DataCell(
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      employeeDetailsController
+                                          .employeeDetailsList
+                                          .elementAt(index)
+                                          .hrmeMobileNo!,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              DataCell(
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    employeeDetailsController
-                                        .employeeDetailsList
-                                        .elementAt(index)
-                                        .hrmeEmailId!,
-                                    overflow: TextOverflow.ellipsis,
+                              if (widget.headerList.contains({
+                                "columnID": "HRME_EmailId",
+                                "columnName": "Email Id"
+                              }))
+                                DataCell(
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      employeeDetailsController
+                                          .employeeDetailsList
+                                          .elementAt(index)
+                                          .hrmeEmailId!,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              DataCell(
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    employeeDetailsController
-                                        .employeeDetailsList
-                                        .elementAt(index)
-                                        .hrmeDob!,
-                                    overflow: TextOverflow.ellipsis,
+                              if (widget.headerList.contains({
+                                "columnID": "HRME_DOB",
+                                "columnName": "Date Of Birth"
+                              }))
+                                DataCell(
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      employeeDetailsController
+                                          .employeeDetailsList
+                                          .elementAt(index)
+                                          .hrmeDob!,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
                                 ),
-                              ),
                             ],
                           );
                         }),
