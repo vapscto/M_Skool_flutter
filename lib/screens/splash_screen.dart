@@ -54,24 +54,31 @@ class _SplashScreenState extends State<SplashScreen> {
             if (snapshot.hasError) {
               Map<String, dynamic> err = snapshot.error as Map<String, dynamic>;
               return Center(
-                child: Column(
-                  children: [
-                    Text(
-                      err['errorTitle'],
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleMedium!.merge(
-                            const TextStyle(fontSize: 20.0),
-                          ),
-                    ),
-                    const SizedBox(
-                      height: 12.0,
-                    ),
-                    Text(
-                      err['errorMsg'],
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
-                  ],
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        err['errorTitle'],
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.titleMedium!.merge(
+                              const TextStyle(
+                                  fontSize: 20.0, color: Colors.white),
+                            ),
+                      ),
+                      const SizedBox(
+                        height: 12.0,
+                      ),
+                      Text(
+                        err['errorMsg'],
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.labelMedium!.merge(
+                              const TextStyle(color: Colors.white),
+                            ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }

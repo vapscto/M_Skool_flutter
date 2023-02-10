@@ -995,7 +995,6 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
 
   Future<void> easeBuzz(String accessKey, String payMode) async {
     const MethodChannel channel = MethodChannel('easebuzz');
-
     Object parameters = {"access_key": accessKey, "pay_mode": payMode};
     final paymentResponse =
         await channel.invokeMethod("payWithEasebuzz", parameters);

@@ -25,6 +25,11 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
   final EmployeeDetailsController employeeDetailsController =
       Get.put(EmployeeDetailsController());
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'Employee details').getAppBar(),

@@ -288,6 +288,14 @@ class MarksEntryController extends GetxController {
             i++) {
           marksEntryDataTableList
               .add(marksEntryDataTableModel.studentList!.values!.elementAt(i)!);
+          textEditingControllerList.add(
+            TextEditingController(
+                text: marksEntryDataTableModel.studentList!.values!
+                    .elementAt(i)!
+                    .obtainmarks!
+                    .toString()
+                    .substring(0, 4)),
+          );
         }
         return true;
       }

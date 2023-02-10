@@ -75,6 +75,9 @@ dependencies:
   cached_network_image: ^3.2.3
   data_table_2: ^2.3.10
   number_to_words_english: ^2.0.2
+  firebase_messaging: ^14.2.2
+  firebase_core: ^2.5.0
+
 
 dev_dependencies:
   flutter_test:

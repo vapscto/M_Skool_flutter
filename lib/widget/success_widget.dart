@@ -54,7 +54,7 @@ class SuccessWidget extends StatelessWidget {
                 )),
             onPressed: onPressed,
             child: Text(
-              "Thanks",
+              "OK",
               style: Theme.of(context).textTheme.titleMedium!.merge(
                     const TextStyle(
                       color: Colors.white,

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -30,6 +31,7 @@ Logger logger =
     Logger(printer: PrettyPrinter(methodCount: 0), filter: MyFilter());
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   // debugPaintSizeEnabled = true;
   // SystemChrome.setPreferredOrientations(
   //     [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);

@@ -173,499 +173,571 @@ class _EmployeeDetailsHomeScreenState extends State<EmployeeDetailsHomeScreen> {
             : SingleChildScrollView(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 50),
-                child: Column(
-                  children: [
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          height: 180,
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            borderRadius: BorderRadius.circular(16.0),
-                            boxShadow: const [
-                              BoxShadow(
-                                offset: Offset(0, 1),
-                                blurRadius: 4,
-                                color: Colors.black12,
+                child: employeeDetailsController.typeList.isEmpty
+                    ? Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const CircleAvatar(
+                            backgroundColor: Colors.red,
+                            radius: 36.0,
+                            child: Icon(
+                              Icons.close_rounded,
+                              color: Colors.white,
+                              size: 36.0,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 16.0,
+                          ),
+                          Text(
+                            'Something went wrong',
+                            textAlign: TextAlign.center,
+                            style:
+                                Theme.of(context).textTheme.titleSmall!.merge(
+                                      const TextStyle(fontSize: 20.0),
+                                    ),
+                          ),
+                          const SizedBox(
+                            height: 8.0,
+                          ),
+                          Text(
+                            'Unable to load data try after some time.',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .merge(const TextStyle(letterSpacing: 0.2)),
+                          ),
+                          const SizedBox(
+                            height: 16.0,
+                          ),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Container(
+                                height: 180,
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 10),
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      offset: Offset(0, 1),
+                                      blurRadius: 4,
+                                      color: Colors.black12,
+                                    ),
+                                  ],
+                                ),
+                                child: RawScrollbar(
+                                  thumbColor: const Color(0xFF1E38FC),
+                                  trackColor:
+                                      const Color.fromRGBO(223, 239, 253, 1),
+                                  trackRadius: const Radius.circular(10),
+                                  trackVisibility: true,
+                                  radius: const Radius.circular(10),
+                                  thickness: 14,
+                                  thumbVisibility: true,
+                                  controller: controller,
+                                  child: ListView.builder(
+                                    controller: controller,
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    shrinkWrap: true,
+                                    itemCount: employeeDetailsController
+                                        .headerList.length,
+                                    itemBuilder: (context, index) {
+                                      return HeaderDataWidget(
+                                        name: employeeDetailsController
+                                            .headerList
+                                            .elementAt(index)['columnName'],
+                                        id: employeeDetailsController.headerList
+                                            .elementAt(index)['columnID'],
+                                        addfunction: addToHeaderList,
+                                        removefunction: removeFromHeaderList,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: -20,
+                                left: 14,
+                                child: Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 7),
+                                  decoration: const BoxDecoration(
+                                    color: Color.fromRGBO(235, 253, 255, 1),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(12),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/headericon.png',
+                                        fit: BoxFit.contain,
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        ' Header',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .merge(
+                                              const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.0,
+                                                color: Color.fromRGBO(
+                                                    50, 185, 202, 1),
+                                              ),
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
                             ],
                           ),
-                          child: RawScrollbar(
-                            thumbColor: const Color(0xFF1E38FC),
-                            trackColor: const Color.fromRGBO(223, 239, 253, 1),
-                            trackRadius: const Radius.circular(10),
-                            trackVisibility: true,
-                            radius: const Radius.circular(10),
-                            thickness: 14,
-                            thumbVisibility: true,
-                            controller: controller,
-                            child: ListView.builder(
-                              controller: controller,
-                              padding: const EdgeInsets.only(bottom: 10),
-                              shrinkWrap: true,
-                              itemCount:
-                                  employeeDetailsController.headerList.length,
-                              itemBuilder: (context, index) {
-                                return HeaderDataWidget(
-                                  name: employeeDetailsController.headerList
-                                      .elementAt(index)['columnName'],
-                                  id: employeeDetailsController.headerList
-                                      .elementAt(index)['columnID'],
-                                  addfunction: addToHeaderList,
-                                  removefunction: removeFromHeaderList,
-                                );
-                              },
-                            ),
+                          const SizedBox(
+                            height: 40,
                           ),
-                        ),
-                        Positioned(
-                          top: -20,
-                          left: 14,
-                          child: Container(
-                            height: 30,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 7),
-                            decoration: const BoxDecoration(
-                              color: Color.fromRGBO(235, 253, 255, 1),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(12),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset(
-                                  'assets/images/headericon.png',
-                                  fit: BoxFit.contain,
+                          Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Container(
+                                height: 180,
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 10),
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      offset: Offset(0, 1),
+                                      blurRadius: 4,
+                                      color: Colors.black12,
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  ' Header',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .merge(
-                                        const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14.0,
-                                          color:
-                                              Color.fromRGBO(50, 185, 202, 1),
-                                        ),
+                                child: RawScrollbar(
+                                  thumbColor: const Color(0xFF1E38FC),
+                                  trackColor:
+                                      const Color.fromRGBO(223, 239, 253, 1),
+                                  trackRadius: const Radius.circular(10),
+                                  trackVisibility: true,
+                                  radius: const Radius.circular(10),
+                                  thickness: 14,
+                                  thumbVisibility: true,
+                                  controller: controller1,
+                                  child: ListView.builder(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    controller: controller1,
+                                    itemCount: employeeDetailsController
+                                        .typeList.length,
+                                    itemBuilder: (context, index) {
+                                      return DataCardWidget(
+                                        name: employeeDetailsController.typeList
+                                            .elementAt(index)
+                                            .hrmgTEmployeeGroupType!,
+                                        id: employeeDetailsController.typeList
+                                            .elementAt(index)
+                                            .hrmgTId!,
+                                        addfunction: addToMultipleType,
+                                        removefunction: removeFromMultipleType,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                top: -20,
+                                left: 14,
+                                child: Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 7),
+                                  decoration: const BoxDecoration(
+                                    color: Color.fromRGBO(219, 253, 245, 1),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(12),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/typeicon.png',
+                                        color: const Color.fromRGBO(
+                                            71, 186, 158, 1),
+                                        fit: BoxFit.contain,
                                       ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          height: 180,
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            borderRadius: BorderRadius.circular(16.0),
-                            boxShadow: const [
-                              BoxShadow(
-                                offset: Offset(0, 1),
-                                blurRadius: 4,
-                                color: Colors.black12,
-                              ),
-                            ],
-                          ),
-                          child: RawScrollbar(
-                            thumbColor: const Color(0xFF1E38FC),
-                            trackColor: const Color.fromRGBO(223, 239, 253, 1),
-                            trackRadius: const Radius.circular(10),
-                            trackVisibility: true,
-                            radius: const Radius.circular(10),
-                            thickness: 14,
-                            thumbVisibility: true,
-                            controller: controller1,
-                            child: ListView.builder(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              controller: controller1,
-                              itemCount:
-                                  employeeDetailsController.typeList.length,
-                              itemBuilder: (context, index) {
-                                return DataCardWidget(
-                                  name: employeeDetailsController.typeList
-                                      .elementAt(index)
-                                      .hrmgTEmployeeGroupType!,
-                                  id: employeeDetailsController.typeList
-                                      .elementAt(index)
-                                      .hrmgTId!,
-                                  addfunction: addToMultipleType,
-                                  removefunction: removeFromMultipleType,
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: -20,
-                          left: 14,
-                          child: Container(
-                            height: 30,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 7),
-                            decoration: const BoxDecoration(
-                              color: Color.fromRGBO(219, 253, 245, 1),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(12),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset(
-                                  'assets/images/typeicon.png',
-                                  color: const Color.fromRGBO(71, 186, 158, 1),
-                                  fit: BoxFit.contain,
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  ' Type',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .merge(
-                                        const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14.0,
-                                          color:
-                                              Color.fromRGBO(71, 186, 158, 1),
-                                        ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        ' Type',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .merge(
+                                              const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.0,
+                                                color: Color.fromRGBO(
+                                                    71, 186, 158, 1),
+                                              ),
+                                            ),
                                       ),
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          height: 180,
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            borderRadius: BorderRadius.circular(16.0),
-                            boxShadow: const [
-                              BoxShadow(
-                                offset: Offset(0, 1),
-                                blurRadius: 4,
-                                color: Colors.black12,
                               ),
                             ],
                           ),
-                          child: RawScrollbar(
-                            thumbColor: const Color(0xFF1E38FC),
-                            trackColor: const Color.fromRGBO(223, 239, 253, 1),
-                            trackRadius: const Radius.circular(10),
-                            trackVisibility: true,
-                            radius: const Radius.circular(10),
-                            thickness: 14,
-                            thumbVisibility: true,
-                            controller: controller2,
-                            child: employeeDetailsController.isDepartment.value
-                                ? const Align(
-                                    alignment: Alignment.center,
-                                    child: CircularProgressIndicator(),
-                                  )
-                                : employeeDetailsController
-                                        .departmentList.isNotEmpty
-                                    ? ListView.builder(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 10),
-                                        controller: controller2,
-                                        itemCount: employeeDetailsController
-                                            .departmentList.length,
-                                        itemBuilder: (context, index) {
-                                          return DataCardWidget(
-                                            name: employeeDetailsController
-                                                .departmentList
-                                                .elementAt(index)
-                                                .hrmDDepartmentName!,
-                                            id: employeeDetailsController
-                                                .departmentList
-                                                .elementAt(index)
-                                                .hrmDId,
-                                            addfunction:
-                                                addToMultipleDepartment,
-                                            removefunction:
-                                                removeFromMultipleDepartment,
-                                          );
-                                        },
-                                      )
-                                    : const Center(
-                                        child: Text(
-                                            'No department available for selected types'),
-                                      ),
+                          const SizedBox(
+                            height: 40,
                           ),
-                        ),
-                        Positioned(
-                          top: -20,
-                          left: 14,
-                          child: Container(
-                            height: 30,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 7),
-                            decoration: const BoxDecoration(
-                              color: Color.fromRGBO(255, 235, 234, 1),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(12),
+                          Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Container(
+                                height: 180,
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 10),
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      offset: Offset(0, 1),
+                                      blurRadius: 4,
+                                      color: Colors.black12,
+                                    ),
+                                  ],
+                                ),
+                                child: RawScrollbar(
+                                  thumbColor: const Color(0xFF1E38FC),
+                                  trackColor:
+                                      const Color.fromRGBO(223, 239, 253, 1),
+                                  trackRadius: const Radius.circular(10),
+                                  trackVisibility: true,
+                                  radius: const Radius.circular(10),
+                                  thickness: 14,
+                                  thumbVisibility: true,
+                                  controller: controller2,
+                                  child: employeeDetailsController
+                                          .isDepartment.value
+                                      ? const Align(
+                                          alignment: Alignment.center,
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      : employeeDetailsController
+                                              .departmentList.isNotEmpty
+                                          ? ListView.builder(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 10),
+                                              controller: controller2,
+                                              itemCount:
+                                                  employeeDetailsController
+                                                      .departmentList.length,
+                                              itemBuilder: (context, index) {
+                                                return DataCardWidget(
+                                                  name:
+                                                      employeeDetailsController
+                                                          .departmentList
+                                                          .elementAt(index)
+                                                          .hrmDDepartmentName!,
+                                                  id: employeeDetailsController
+                                                      .departmentList
+                                                      .elementAt(index)
+                                                      .hrmDId,
+                                                  addfunction:
+                                                      addToMultipleDepartment,
+                                                  removefunction:
+                                                      removeFromMultipleDepartment,
+                                                );
+                                              },
+                                            )
+                                          : const Center(
+                                              child: Text(
+                                                  'No department available for selected types'),
+                                            ),
+                                ),
                               ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset(
-                                  'assets/images/subjectfielicon.png',
-                                  fit: BoxFit.contain,
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  ' Department',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .merge(
-                                        const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14.0,
-                                          color:
-                                              Color.fromRGBO(255, 111, 103, 1),
-                                        ),
+                              Positioned(
+                                top: -20,
+                                left: 14,
+                                child: Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 7),
+                                  decoration: const BoxDecoration(
+                                    color: Color.fromRGBO(255, 235, 234, 1),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(12),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/subjectfielicon.png',
+                                        fit: BoxFit.contain,
                                       ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        ' Department',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .merge(
+                                              const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.0,
+                                                color: Color.fromRGBO(
+                                                    255, 111, 103, 1),
+                                              ),
+                                            ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Container(
-                          height: 180,
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                            borderRadius: BorderRadius.circular(16.0),
-                            boxShadow: const [
-                              BoxShadow(
-                                offset: Offset(0, 1),
-                                blurRadius: 4,
-                                color: Colors.black12,
                               ),
                             ],
                           ),
-                          child: RawScrollbar(
-                            thumbColor: const Color(0xFF1E38FC),
-                            trackColor: const Color.fromRGBO(223, 239, 253, 1),
-                            trackRadius: const Radius.circular(10),
-                            trackVisibility: true,
-                            radius: const Radius.circular(10),
-                            thickness: 14,
-                            thumbVisibility: true,
-                            controller: controller3,
-                            child: employeeDetailsController.isDesignation.value
-                                ? const Align(
-                                    alignment: Alignment.center,
-                                    child: CircularProgressIndicator(),
-                                  )
-                                : employeeDetailsController
-                                        .designationList.isNotEmpty
-                                    ? ListView.builder(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 10),
-                                        controller: controller3,
-                                        itemCount: employeeDetailsController
-                                            .designationList.length,
-                                        itemBuilder: (context, index) {
-                                          return DataCardWidget(
-                                            name: employeeDetailsController
-                                                .designationList
-                                                .elementAt(index)
-                                                .hrmdeSDesignationName!,
-                                            id: employeeDetailsController
-                                                .designationList
-                                                .elementAt(index)
-                                                .hrmdeSId,
-                                            addfunction:
-                                                addToMultipleDesignation,
-                                            removefunction:
-                                                removeFromMultipleDesignation,
-                                          );
-                                        },
-                                      )
-                                    : const Center(
-                                        child: Text(
-                                            'No designation available for selected types and department',
-                                            textAlign: TextAlign.center),
-                                      ),
+                          const SizedBox(
+                            height: 40,
                           ),
-                        ),
-                        Positioned(
-                          top: -20,
-                          left: 14,
-                          child: Container(
-                            height: 30,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 7),
-                            decoration: const BoxDecoration(
-                              color: Color.fromRGBO(229, 243, 255, 1),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(12),
+                          Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Container(
+                                height: 180,
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 10),
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      offset: Offset(0, 1),
+                                      blurRadius: 4,
+                                      color: Colors.black12,
+                                    ),
+                                  ],
+                                ),
+                                child: RawScrollbar(
+                                  thumbColor: const Color(0xFF1E38FC),
+                                  trackColor:
+                                      const Color.fromRGBO(223, 239, 253, 1),
+                                  trackRadius: const Radius.circular(10),
+                                  trackVisibility: true,
+                                  radius: const Radius.circular(10),
+                                  thickness: 14,
+                                  thumbVisibility: true,
+                                  controller: controller3,
+                                  child: employeeDetailsController
+                                          .isDesignation.value
+                                      ? const Align(
+                                          alignment: Alignment.center,
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      : employeeDetailsController
+                                              .designationList.isNotEmpty
+                                          ? ListView.builder(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 10),
+                                              controller: controller3,
+                                              itemCount:
+                                                  employeeDetailsController
+                                                      .designationList.length,
+                                              itemBuilder: (context, index) {
+                                                return DataCardWidget(
+                                                  name: employeeDetailsController
+                                                      .designationList
+                                                      .elementAt(index)
+                                                      .hrmdeSDesignationName!,
+                                                  id: employeeDetailsController
+                                                      .designationList
+                                                      .elementAt(index)
+                                                      .hrmdeSId,
+                                                  addfunction:
+                                                      addToMultipleDesignation,
+                                                  removefunction:
+                                                      removeFromMultipleDesignation,
+                                                );
+                                              },
+                                            )
+                                          : const Center(
+                                              child: Text(
+                                                  'No designation available for selected types and department',
+                                                  textAlign: TextAlign.center),
+                                            ),
+                                ),
+                              ),
+                              Positioned(
+                                top: -20,
+                                left: 14,
+                                child: Container(
+                                  height: 30,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 7),
+                                  decoration: const BoxDecoration(
+                                    color: Color.fromRGBO(229, 243, 255, 1),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(12),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/selectteachericon.png',
+                                        fit: BoxFit.contain,
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        ' Designation',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .merge(
+                                              const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.0,
+                                                color: Color.fromRGBO(
+                                                    62, 120, 170, 1),
+                                              ),
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 120,
+                                child: CheckboxListTile(
+                                  activeColor: Theme.of(context).primaryColor,
+                                  dense: true,
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  title: Text(
+                                    'Left',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(
+                                          const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16.0,
+                                          ),
+                                        ),
+                                  ),
+                                  value: employeeDetailsController.left.value,
+                                  onChanged: (value) {
+                                    employeeDetailsController
+                                        .leftCheckbox(value!);
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                width: 150,
+                                child: CheckboxListTile(
+                                  activeColor: Theme.of(context).primaryColor,
+                                  dense: true,
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  title: Text(
+                                    'Working',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(
+                                          const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16.0,
+                                          ),
+                                        ),
+                                  ),
+                                  value:
+                                      employeeDetailsController.working.value,
+                                  onChanged: (value) {
+                                    employeeDetailsController
+                                        .workingCheckbox(value!);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              fixedSize: const Size.fromWidth(150),
+                              backgroundColor: Theme.of(context).primaryColor,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 26, vertical: 14.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
                               ),
                             ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset(
-                                  'assets/images/selectteachericon.png',
-                                  fit: BoxFit.contain,
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  ' Designation',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .merge(
-                                        const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14.0,
-                                          color:
-                                              Color.fromRGBO(62, 120, 170, 1),
-                                        ),
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 120,
-                          child: CheckboxListTile(
-                            activeColor: Theme.of(context).primaryColor,
-                            dense: true,
-                            controlAffinity: ListTileControlAffinity.leading,
-                            title: Text(
-                              'Left',
-                              style:
-                                  Theme.of(context).textTheme.titleSmall!.merge(
-                                        const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16.0,
-                                        ),
-                                      ),
-                            ),
-                            value: employeeDetailsController.left.value,
-                            onChanged: (value) {
-                              employeeDetailsController.leftCheckbox(value!);
+                            onPressed: () {
+                              if (selectedHeaderList.isEmpty) {
+                                Fluttertoast.showToast(msg: 'Select header');
+                              } else if (multipletype.isEmpty) {
+                                Fluttertoast.showToast(msg: 'Select type');
+                              } else if (multipledep.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: 'Select department');
+                              } else if (multipledes.isEmpty) {
+                                Fluttertoast.showToast(
+                                    msg: 'Select designation');
+                              } else {
+                                searchEmployeeDetails();
+                              }
                             },
-                          ),
-                        ),
-                        SizedBox(
-                          width: 150,
-                          child: CheckboxListTile(
-                            activeColor: Theme.of(context).primaryColor,
-                            dense: true,
-                            controlAffinity: ListTileControlAffinity.leading,
-                            title: Text(
-                              'Working',
-                              style:
-                                  Theme.of(context).textTheme.titleSmall!.merge(
-                                        const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16.0,
+                            child: employeeDetailsController.isSearch.value
+                                ? const SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : Text(
+                                    'Search',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall!
+                                        .merge(
+                                          const TextStyle(
+                                            color: Colors.white,
+                                            letterSpacing: 0.3,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w700,
+                                          ),
                                         ),
-                                      ),
-                            ),
-                            value: employeeDetailsController.working.value,
-                            onChanged: (value) {
-                              employeeDetailsController.workingCheckbox(value!);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: const Size.fromWidth(150),
-                        backgroundColor: Theme.of(context).primaryColor,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 26, vertical: 14.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
+                                  ),
+                          )
+                        ],
                       ),
-                      onPressed: () {
-                        if (selectedHeaderList.isEmpty) {
-                          Fluttertoast.showToast(msg: 'Select header');
-                        } else if (multipletype.isEmpty) {
-                          Fluttertoast.showToast(msg: 'Select type');
-                        } else if (multipledep.isEmpty) {
-                          Fluttertoast.showToast(msg: 'Select department');
-                        } else if (multipledes.isEmpty) {
-                          Fluttertoast.showToast(msg: 'Select designation');
-                        } else {
-                          searchEmployeeDetails();
-                        }
-                      },
-                      child: employeeDetailsController.isSearch.value
-                          ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Colors.white,
-                              ),
-                            )
-                          : Text(
-                              'Search',
-                              style:
-                                  Theme.of(context).textTheme.labelSmall!.merge(
-                                        const TextStyle(
-                                          color: Colors.white,
-                                          letterSpacing: 0.3,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                            ),
-                    )
-                  ],
-                ),
               ),
       ),
     );

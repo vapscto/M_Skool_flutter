@@ -5,8 +5,8 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/initialdataModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/periodwiseStudentlistModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/sectionModel.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/model/studentListModel.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/model/studentListModel1.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/model/monthwiseStudentListModel.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/model/dailyonceAndDailytwiceStudentListModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/subjectModel.dart';
 
 var dio = Dio();
@@ -97,7 +97,7 @@ Future<SectionModel?> getSectionData({
   }
 }
 
-Future<StudentListModel?> getAttendanceDataOnChangeofMonth({
+Future<MonthWiseStudentListModel?> getAttendanceDataOnChangeofMonth({
   required int miId,
   required int asmayId,
   required int asmclId,
@@ -123,8 +123,8 @@ Future<StudentListModel?> getAttendanceDataOnChangeofMonth({
       },
     );
     if (response.statusCode == 200) {
-      StudentListModel studentListModel =
-          StudentListModel.fromJson(response.data);
+      MonthWiseStudentListModel studentListModel =
+          MonthWiseStudentListModel.fromJson(response.data);
       return studentListModel;
     }
     return null;
@@ -134,7 +134,9 @@ Future<StudentListModel?> getAttendanceDataOnChangeofMonth({
   }
 }
 
-Future<StudentListModel1?> onChangeOfSection({
+// onchange of section to get dailyonce and dailytwice studentlist.
+
+Future<DailyOnceAndDailyTwiceStudentListModel?> onChangeOfSection({
   required int asmayId,
   required int userId,
   required int miId,
@@ -170,8 +172,8 @@ Future<StudentListModel1?> onChangeOfSection({
       },
     );
     if (response.statusCode == 200) {
-      StudentListModel1 studentListModel1 =
-          StudentListModel1.fromJson(response.data);
+      DailyOnceAndDailyTwiceStudentListModel studentListModel1 =
+          DailyOnceAndDailyTwiceStudentListModel.fromJson(response.data);
       return studentListModel1;
     }
     return null;
@@ -231,6 +233,7 @@ Future<PeriodWiseStudentListModel?> onChangeOfPeriod({
   required int ttmpId,
   required int ismsId,
   required int miId,
+  required String fromDate,
   required String base,
 }) async {
   var url = base + URLS.onChangePeriod;
@@ -241,12 +244,11 @@ Future<PeriodWiseStudentListModel?> onChangeOfPeriod({
         headers: getSession(),
       ),
       data: {
-        "ASA_FromDate": DateTime.now().toString(),
+        "ASA_FromDate": fromDate,
         "ASMAY_Id": asmayId,
         "ASMCL_Id": asmclId.toString(),
         "ASMS_Id": asmsId.toString(),
         "TTMP_Id": ttmpId.toString(),
-        "asasB_Id": null,
         "ismS_Id": ismsId.toString(),
         "monthflag": "P",
         "monthflag1": "period",

@@ -24,6 +24,7 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 33
@@ -102,5 +103,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.google.android.gms:play-services-auth:20.4.1'
     implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
-    implementation files('F:\\Cloned Appskart\\m_skool_flutter\\android\\app\\libs\\peb-lib-android-x.aar')
+    implementation files('libs\\peb-lib-android-x.aar')
+    implementation platform('com.google.firebase:firebase-bom:31.2.0')
 }

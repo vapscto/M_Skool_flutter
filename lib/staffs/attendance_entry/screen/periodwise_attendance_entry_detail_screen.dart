@@ -7,7 +7,6 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/api/attendance_entry_related_api.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/controller/attendance_entry_related_controller.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/widget/attendance_checkbox_widget.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
@@ -46,15 +45,15 @@ class _PeriodWiseAttendanceEntryDetailScreenState
       Get.put(AttendanceEntryController());
   bool selectAll = false;
   List<Map<String, dynamic>> stdList = [];
+  String date =
+      '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}';
 
-  void addToStudentList(Map<String, dynamic> data) {
-    stdList.add(data);
-    logger.d(stdList);
-  }
-
-  void removeFromStudentList(int rollNo) {
-    stdList.removeWhere((element) => element['amaY_RollNo'] == rollNo);
-    logger.d(stdList);
+  List<bool> boollist = [];
+  @override
+  void initState() {
+    boollist.clear();
+    boollist = attendanceEntryController.boolList;
+    super.initState();
   }
 
   @override
@@ -71,37 +70,48 @@ class _PeriodWiseAttendanceEntryDetailScreenState
             child: SaveBtn(
               title: 'Save',
               onPress: () async {
-                if (stdList.isEmpty) {
-                  Fluttertoast.showToast(msg: 'Select Attendance');
-                  return;
+                stdList.clear();
+                for (var i = 0;
+                    i < attendanceEntryController.periodwiseStudentList.length;
+                    i++) {
+                  stdList.add({
+                    "amaY_RollNo": attendanceEntryController
+                        .periodwiseStudentList
+                        .elementAt(i)
+                        .amaYRollNo,
+                    "amsT_AdmNo": attendanceEntryController
+                        .periodwiseStudentList
+                        .elementAt(i)
+                        .amsTAdmNo,
+                    "amsT_Id": attendanceEntryController.periodwiseStudentList
+                        .elementAt(i)
+                        .amsTId,
+                    "studentname": attendanceEntryController
+                        .periodwiseStudentList
+                        .elementAt(i)
+                        .studentname,
+                    "pdays": 0.0,
+                    "selected": boollist.elementAt(i),
+                    "ASAS_Id": attendanceEntryController.periodwiseStudentList
+                        .elementAt(i)
+                        .asaSId,
+                    "FirstHalfflag": null,
+                    "SecondHalfflag": null,
+                    "asA_Dailytwice_Flag": null,
+                    "asA_Id": attendanceEntryController.periodwiseStudentList
+                        .elementAt(i)
+                        .asAId,
+                    "TTMP_Id": null,
+                    "ISMS_Id": 0,
+                    "asasB_Id": 0,
+                    "amsT_RegistrationNo": attendanceEntryController
+                        .periodwiseStudentList
+                        .elementAt(i)
+                        .amsTRegistrationNo
+                  });
                 }
+
                 attendanceEntryController.issaveloading(true);
-                logger.d(
-                  {
-                    "ASA_Id": widget.asaId,
-                    "MI_Id": widget.loginSuccessModel.mIID!,
-                    "ASMAY_Id": widget.asmayId,
-                    "ASA_Att_Type": "period",
-                    "ASA_Att_EntryType":
-                        attendanceEntryController.attendanceEntryType.value ==
-                                'P'
-                            ? 'Present'
-                            : 'Absent',
-                    "ASA_ClassHeld": "1.00",
-                    "ASMCL_Id": widget.asmclId,
-                    "ASMS_Id": widget.asmsId,
-                    "ASA_Entry_DateTime": DateTime.now().toString(),
-                    "ASA_FromDate": DateTime.now().toString(),
-                    "ASA_ToDate": DateTime.now().toString(),
-                    "ASA_Regular_Extra": widget.selectedradio,
-                    "ASA_Network_IP": "::1",
-                    "stdList": stdList,
-                    "username": widget.loginSuccessModel.userName!,
-                    "userId": widget.loginSuccessModel.userId!,
-                    "ismS_Id": widget.subjectId,
-                    "TTMP_Id": widget.periodId,
-                  },
-                );
                 await saveAttendanceEntry(
                   data: {
                     "ASA_Id": widget.asaId,
@@ -113,19 +123,20 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                                 'P'
                             ? 'Present'
                             : 'Absent',
-                    "ASA_ClassHeld": "1.00",
                     "ASMCL_Id": widget.asmclId,
                     "ASMS_Id": widget.asmsId,
-                    "ASA_Entry_DateTime": DateTime.now().toString(),
-                    "ASA_FromDate": DateTime.now().toString(),
-                    "ASA_ToDate": DateTime.now().toString(),
+                    "ASA_Entry_DateTime": date,
+                    "ASA_FromDate": date,
+                    "ASA_ToDate": date,
+                    "ASA_ClassHeld": "1.00",
                     "ASA_Regular_Extra": widget.selectedradio,
                     "ASA_Network_IP": "::1",
+                    "AMST_Id": 0,
+                    "ASA_Class_Attended": 0.0,
                     "stdList": stdList,
-                    "username": widget.loginSuccessModel.userName!,
                     "userId": widget.loginSuccessModel.userId!,
                     "ismS_Id": widget.subjectId,
-                    "TTMP_Id": widget.periodId,
+                    "TTMP_Id": widget.periodId
                   },
                   base: baseUrlFromInsCode(
                     'admission',
@@ -134,8 +145,7 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                 ).then((value) {
                   logger.d(value);
                   if (value) {
-                    Fluttertoast.showToast(
-                        msg: 'Attendance entered successfully');
+                    Fluttertoast.showToast(msg: 'Attendance save successfully');
                   }
                 });
                 attendanceEntryController.issaveloading(false);
@@ -219,6 +229,9 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                       setState(() {
                         selectAll = value!;
                       });
+                      for (var i = 0; i < boollist.length; i++) {
+                        boollist[i] = value!;
+                      }
                     },
                   ),
                 ),
@@ -317,10 +330,6 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                             attendanceEntryController
                                 .periodwiseStudentList.length, (index) {
                           var i = index + 1;
-                          logger.d(attendanceEntryController
-                              .periodwiseStudentList
-                              .elementAt(index)
-                              .pdays);
                           return DataRow(
                             cells: [
                               DataCell(Align(
@@ -351,33 +360,17 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                               DataCell(
                                 Align(
                                   alignment: Alignment.center,
-                                  child: AttendanceCheckboxWidget(
-                                    index: index,
-                                    attendance: selectAll ? true : false,
-                                    addToStudentlist: addToStudentList,
-                                    removeFromStudentlist:
-                                        removeFromStudentList,
-                                    admNo: attendanceEntryController
-                                        .periodwiseStudentList
-                                        .elementAt(index)
-                                        .amsTAdmNo!,
-                                    amstId: attendanceEntryController
-                                        .periodwiseStudentList
-                                        .elementAt(index)
-                                        .amsTId!,
-                                    amstRegistrationNo:
-                                        attendanceEntryController
-                                            .periodwiseStudentList
-                                            .elementAt(index)
-                                            .amsTRegistrationNo!,
-                                    rollNo: attendanceEntryController
-                                        .periodwiseStudentList
-                                        .elementAt(index)
-                                        .amaYRollNo!,
-                                    studentName: attendanceEntryController
-                                        .periodwiseStudentList
-                                        .elementAt(index)
-                                        .studentname!,
+                                  child: Checkbox(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    activeColor: Theme.of(context).primaryColor,
+                                    value: boollist[index],
+                                    onChanged: (value) {
+                                      setState(() {
+                                        boollist[index] = value!;
+                                      });
+                                    },
                                   ),
                                 ),
                               ),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/api/attendance_entry_related_api.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/controller/attendance_entry_related_controller.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
@@ -12,12 +15,25 @@ import '../../../controller/mskoll_controller.dart';
 class MonthWiseAttendanceEntryDetailScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  final AttendanceEntryController attendanceEntryController;
+  final int asmayId;
+  final int asaId;
+  final int asmclId;
+  final int asmsId;
+  final String fromDate;
+  final String toDate;
+  final String classheld;
+
   const MonthWiseAttendanceEntryDetailScreen({
     super.key,
     required this.loginSuccessModel,
     required this.mskoolController,
-    required this.attendanceEntryController,
+    required this.asmayId,
+    required this.asaId,
+    required this.asmclId,
+    required this.asmsId,
+    required this.fromDate,
+    required this.classheld,
+    required this.toDate,
   });
 
   @override
@@ -27,13 +43,9 @@ class MonthWiseAttendanceEntryDetailScreen extends StatefulWidget {
 
 class _MonthWiseAttendanceEntryDetailScreenState
     extends State<MonthWiseAttendanceEntryDetailScreen> {
+  final AttendanceEntryController attendanceEntryController =
+      Get.put(AttendanceEntryController());
   List<Map<String, dynamic>> studentList = [];
-  @override
-  void initState() {
-    logger.d(widget.attendanceEntryController.monthwiseStudentList.length);
-    logger.d(widget.attendanceEntryController.textEditingController.length);
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,42 +60,109 @@ class _MonthWiseAttendanceEntryDetailScreenState
                 const EdgeInsets.symmetric(vertical: 13.0, horizontal: 16.0),
             child: SaveBtn(
               title: 'Save',
-              onPress: () {
+              onPress: () async {
+                for (var i = 0;
+                    i < attendanceEntryController.textEditingController.length;
+                    i++) {
+                  if (double.parse(attendanceEntryController
+                          .textEditingController
+                          .elementAt(i)
+                          .text) >
+                      attendanceEntryController.countClassHeld.value
+                          .toDouble()) {
+                    Fluttertoast.showToast(
+                        msg:
+                            'Class attended is more than class taken of Roll No. ${attendanceEntryController.monthwiseStudentList.elementAt(i).amaYRollNo}');
+                    return;
+                  }
+                }
                 studentList.clear();
                 for (var i = 0;
-                    i <
-                        widget.attendanceEntryController.textEditingController
-                            .length;
+                    i < attendanceEntryController.monthwiseStudentList.length;
                     i++) {
-                  studentList.add({
-                    "amaY_RollNo": widget
-                        .attendanceEntryController.monthwiseStudentList
-                        .elementAt(i)
-                        .amaYRollNo,
-                    "amsT_AdmNo": widget
-                        .attendanceEntryController.monthwiseStudentList
-                        .elementAt(i)
-                        .amsTAdmNo,
-                    "amsT_Id": widget
-                        .attendanceEntryController.monthwiseStudentList
-                        .elementAt(i)
-                        .amsTId,
-                    "studentname": widget
-                        .attendanceEntryController.monthwiseStudentList
-                        .elementAt(i)
-                        .studentname,
-                    "pdays": double.parse(widget
-                        .attendanceEntryController.textEditingController
-                        .elementAt(i)
-                        .text),
-                    "amsT_RegistrationNo": widget
-                        .attendanceEntryController.monthwiseStudentList
-                        .elementAt(i)
-                        .amsTRegistrationNo
-                  });
+                  studentList.add(
+                    {
+                      "amaY_RollNo": attendanceEntryController
+                          .monthwiseStudentList
+                          .elementAt(i)
+                          .amaYRollNo,
+                      "amsT_AdmNo": attendanceEntryController
+                          .monthwiseStudentList
+                          .elementAt(i)
+                          .amsTAdmNo,
+                      "amsT_Id": attendanceEntryController.monthwiseStudentList
+                          .elementAt(i)
+                          .amsTId,
+                      "studentname": attendanceEntryController
+                          .monthwiseStudentList
+                          .elementAt(i)
+                          .studentname,
+                      "pdays": double.parse(attendanceEntryController
+                          .textEditingController
+                          .elementAt(i)
+                          .text),
+                      "selected": null,
+                      "ASAS_Id": attendanceEntryController.monthwiseStudentList
+                          .elementAt(i)
+                          .asaSId,
+                      "FirstHalfflag": null,
+                      "SecondHalfflag": null,
+                      "asA_Dailytwice_Flag": null,
+                      "asA_Id": attendanceEntryController.monthwiseStudentList
+                          .elementAt(i)
+                          .asAId,
+                      "TTMP_Id": null,
+                      "ISMS_Id": 0,
+                      "asasB_Id": 0,
+                      "amsT_RegistrationNo": attendanceEntryController
+                          .monthwiseStudentList
+                          .elementAt(i)
+                          .amsTRegistrationNo
+                    },
+                  );
                 }
                 logger.d(studentList);
-                // save api call
+                attendanceEntryController.issaveloading(true);
+                await saveAttendanceEntry(
+                  data: {
+                    "ASA_Id": widget.asaId,
+                    "MI_Id": widget.loginSuccessModel.mIID!,
+                    "ASMAY_Id": widget.asmayId,
+                    "ASA_Att_Type": "monthly",
+                    "ASA_Att_EntryType":
+                        attendanceEntryController.attendanceEntryType.value ==
+                                'P'
+                            ? 'Present'
+                            : 'Absent',
+                    "ASMCL_Id": widget.asmclId,
+                    "ASMS_Id": widget.asmsId,
+                    "ASA_Entry_DateTime": DateTime.now().toString(),
+                    "ASA_FromDate": widget.fromDate,
+                    "ASA_ToDate": widget.toDate,
+                    "ASA_ClassHeld": widget.classheld,
+                    "ASA_Regular_Extra": "Regular",
+                    "ASA_Network_IP": "::1",
+                    "ASAS_Id": null,
+                    "AMST_Id": 0,
+                    "ASA_Class_Attended": 0.0,
+                    "stdList": studentList,
+                    "username": widget.loginSuccessModel.userName!,
+                    "userId": widget.loginSuccessModel.userId!,
+                    "ismS_Id": 0,
+                    "TTMP_Id": 0,
+                    "attcount": 0,
+                    "asasB_Id": 0
+                  },
+                  base: baseUrlFromInsCode(
+                    'admission',
+                    widget.mskoolController,
+                  ),
+                ).then((value) {
+                  if (value) {
+                    Fluttertoast.showToast(msg: 'Attendance save successfully');
+                  }
+                });
+                attendanceEntryController.issaveloading(false);
               },
             ),
           ),
@@ -229,7 +308,7 @@ class _MonthWiseAttendanceEntryDetailScreenState
                         ],
 
                         rows: List.generate(
-                            widget.attendanceEntryController
+                            attendanceEntryController
                                 .monthwiseStudentList.length, (index) {
                           var i = index + 1;
                           return DataRow(
@@ -245,7 +324,7 @@ class _MonthWiseAttendanceEntryDetailScreenState
                               ),
                               DataCell(
                                 Text(
-                                  '${widget.attendanceEntryController.monthwiseStudentList.elementAt(index).studentname}',
+                                  '${attendanceEntryController.monthwiseStudentList.elementAt(index).studentname}',
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
@@ -253,7 +332,7 @@ class _MonthWiseAttendanceEntryDetailScreenState
                                 Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    "${widget.attendanceEntryController.monthwiseStudentList.elementAt(index).amaYRollNo!}",
+                                    "${attendanceEntryController.monthwiseStudentList.elementAt(index).amaYRollNo!}",
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
@@ -262,7 +341,7 @@ class _MonthWiseAttendanceEntryDetailScreenState
                                 Align(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    '${widget.attendanceEntryController.countClassHeld.toInt()}',
+                                    '${attendanceEntryController.countClassHeld.toInt()}',
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
@@ -276,8 +355,7 @@ class _MonthWiseAttendanceEntryDetailScreenState
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 8.0),
                                       child: TextField(
-                                        controller: widget
-                                            .attendanceEntryController
+                                        controller: attendanceEntryController
                                             .textEditingController
                                             .elementAt(index),
                                         keyboardType: TextInputType.number,

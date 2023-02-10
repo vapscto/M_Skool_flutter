@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/api/attendance_entry_related_api.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/model/dailyonceAndDailytwiceStudentListModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/initialdataModel.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/model/monthwiseStudentListModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/periodwiseStudentlistModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/sectionModel.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/model/studentListModel.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/model/studentListModel1.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/subjectModel.dart'
     as PWM;
 
@@ -19,13 +19,17 @@ class AttendanceEntryController extends GetxController {
   RxList<PeriodlistValue> periodList = <PeriodlistValue>[].obs;
   RxList<MonthListValue> monthList = <MonthListValue>[].obs;
 
-  RxList<StudentListValues> monthwiseStudentList = <StudentListValues>[].obs;
-  RxList<StudentListValuess> studentList1 = <StudentListValuess>[].obs;
+  RxList<MonthWiseStudentListValue> monthwiseStudentList =
+      <MonthWiseStudentListValue>[].obs;
+  RxList<DailyOnceAndDailyTwiceStudentListValue>
+      dailyOnceAndDailyTwiceStudentList =
+      <DailyOnceAndDailyTwiceStudentListValue>[].obs;
   RxList<PeroidWiseStudentListValue> periodwiseStudentList =
       <PeroidWiseStudentListValue>[].obs;
 
   RxList<TextEditingController> textEditingController =
       <TextEditingController>[].obs;
+  RxList<bool> boolList = <bool>[].obs;
 
   RxString attendanceEntry = ''.obs;
   RxString attendanceEntryType = ''.obs;
@@ -38,9 +42,13 @@ class AttendanceEntryController extends GetxController {
   RxBool isSubject = RxBool(false);
   RxBool isSave = RxBool(false);
 
-  void addToTextFeildList(TextEditingController value) {
-    textEditingController.add(value);
-  }
+  // void addToTextFeildList(TextEditingController value) {
+  //   textEditingController.add(value);
+  // }
+
+  // void addToBoolList(bool value) {
+  //   boolList.add(value);
+  // }
 
   void isinitialdataloading(bool loading) async {
     isInitialData.value = loading;
@@ -166,13 +174,14 @@ class AttendanceEntryController extends GetxController {
     required int monthId,
     required String base,
   }) async {
-    StudentListModel? studentListModel = await getAttendanceDataOnChangeofMonth(
-        miId: miId,
-        asmayId: asmayId,
-        asmclId: asmclId,
-        asmsId: asmsId,
-        monthId: monthId,
-        base: base);
+    MonthWiseStudentListModel? studentListModel =
+        await getAttendanceDataOnChangeofMonth(
+            miId: miId,
+            asmayId: asmayId,
+            asmclId: asmclId,
+            asmsId: asmsId,
+            monthId: monthId,
+            base: base);
     monthwiseStudentList.clear();
     try {
       if (studentListModel!.studentList != null ||
@@ -180,6 +189,11 @@ class AttendanceEntryController extends GetxController {
         for (var i = 0; i < studentListModel.studentList!.values!.length; i++) {
           monthwiseStudentList
               .add(studentListModel.studentList!.values!.elementAt(i)!);
+          textEditingController.add(TextEditingController(
+              text: studentListModel.studentList!.values!
+                  .elementAt(i)!
+                  .pdays!
+                  .toString()));
         }
         countClassHeld.value = studentListModel.countclass!;
         asaId.value = studentListModel.asAId!;
@@ -205,28 +219,34 @@ class AttendanceEntryController extends GetxController {
     required String monthFlag1,
     required String base,
   }) async {
-    StudentListModel1? studentListModel1 = await onChangeOfSection(
-        asmayId: asmayId,
-        userId: userId,
-        miId: miId,
-        username: username,
-        roleId: roleId,
-        fromDate: fromDate,
-        asmclId: asmclId,
-        asmsId: asmsId,
-        monthFlag: monthFlag,
-        monthFlag1: monthFlag1,
-        base: base);
+    DailyOnceAndDailyTwiceStudentListModel? studentListModel1 =
+        await onChangeOfSection(
+            asmayId: asmayId,
+            userId: userId,
+            miId: miId,
+            username: username,
+            roleId: roleId,
+            fromDate: fromDate,
+            asmclId: asmclId,
+            asmsId: asmsId,
+            monthFlag: monthFlag,
+            monthFlag1: monthFlag1,
+            base: base);
 
     try {
       if (studentListModel1!.studentList != null ||
           studentListModel1.studentList!.values != null) {
-        studentList1.clear();
+        dailyOnceAndDailyTwiceStudentList.clear();
+        boolList.clear();
         for (var i = 0;
             i < studentListModel1.studentList!.values!.length;
             i++) {
-          studentList1
+          dailyOnceAndDailyTwiceStudentList
               .add(studentListModel1.studentList!.values!.elementAt(i)!);
+          boolList.add(
+              studentListModel1.studentList!.values!.elementAt(i)!.pdays == 1.00
+                  ? true
+                  : false);
         }
         asaId.value = studentListModel1.asAId!;
         return true;
@@ -289,6 +309,7 @@ class AttendanceEntryController extends GetxController {
     required int ttmpId,
     required int ismsId,
     required int miId,
+    required String fromeDate,
     required String base,
   }) async {
     PeriodWiseStudentListModel? periodWiseStudentListModel =
@@ -299,6 +320,7 @@ class AttendanceEntryController extends GetxController {
             ttmpId: ttmpId,
             ismsId: ismsId,
             miId: miId,
+            fromDate: fromeDate,
             base: base);
     try {
       if (periodWiseStudentListModel!.studentList != null ||
@@ -308,6 +330,14 @@ class AttendanceEntryController extends GetxController {
             i++) {
           periodwiseStudentList.add(
               periodWiseStudentListModel.studentList!.values!.elementAt(i)!);
+          boolList.add(
+            periodWiseStudentListModel.studentList!.values!
+                        .elementAt(i)!
+                        .pdays ==
+                    1.00
+                ? true
+                : false,
+          );
         }
         asaId.value = periodWiseStudentListModel.asAId!;
         return true;

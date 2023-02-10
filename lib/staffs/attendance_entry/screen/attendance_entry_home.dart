@@ -127,19 +127,6 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
       logger.d(attendanceEntryController.monthwiseStudentList.length);
     });
     attendanceEntryController.isstudentdataloading(false);
-    attendanceEntryController.textEditingController.clear();
-    for (var i = 0;
-        i < attendanceEntryController.monthwiseStudentList.length;
-        i++) {
-      attendanceEntryController.addToTextFeildList(
-        TextEditingController(
-            text: attendanceEntryController.monthwiseStudentList
-                .elementAt(i)
-                .pdays!
-                .toString()
-                .substring(0, 4)),
-      );
-    }
   }
 
   void getStudentListOnChangeOfSection(String asmsId) async {
@@ -172,7 +159,6 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
           attendanceEntryController.isstudentdataloading(false);
           return;
         }
-        logger.d(attendanceEntryController.studentList1.first);
       },
     );
     attendanceEntryController.isstudentdataloading(false);
@@ -203,6 +189,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
   void getStudentListOnChangeOfPeriod(int ttmpId) async {
     attendanceEntryController.isstudentdataloading(true);
     attendanceEntryController.periodwiseStudentList.clear();
+    attendanceEntryController.boolList.clear();
     attendanceEntryController.asaId.value = 0;
     await attendanceEntryController
         .getStudentListOnChangePeriod(
@@ -212,6 +199,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
       ttmpId: ttmpId,
       ismsId: selectedSubject!.ismSId!,
       miId: widget.loginSuccessModel.mIID!,
+      fromeDate: todayDate.text,
       base: baseUrlFromInsCode(
         'admission',
         widget.mskoolController,
@@ -224,7 +212,6 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
           attendanceEntryController.isstudentdataloading(false);
           return;
         }
-        logger.d(attendanceEntryController.periodwiseStudentList.first.pdays);
       },
     );
     attendanceEntryController.isstudentdataloading(false);
@@ -669,7 +656,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                       if (selecteddate != null) {
                                         setState(() {
                                           todayDate.text =
-                                              "${numberList[selecteddate!.day]}-${numberList[selecteddate!.month]}-${selecteddate!.year}";
+                                              "${numberList[selecteddate!.day]}/${numberList[selecteddate!.month]}/${selecteddate!.year}";
                                         });
                                       }
                                     },
@@ -734,9 +721,21 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                             selectedstartdate =
                                                 await showDatePicker(
                                               context: context,
-                                              initialDate: DateTime.now(),
-                                              firstDate: DateTime(2000),
-                                              lastDate: DateTime.now(),
+                                              initialDate: DateTime(
+                                                DateTime.now().year,
+                                                selectedMonth!.ivrMMonthId!
+                                                    .toInt(),
+                                              ),
+                                              firstDate: DateTime(
+                                                  DateTime.now().year,
+                                                  selectedMonth!.ivrMMonthId!
+                                                      .toInt(),
+                                                  1),
+                                              lastDate: DateTime(
+                                                  DateTime.now().year,
+                                                  selectedMonth!.ivrMMonthId!
+                                                      .toInt(),
+                                                  31),
                                             );
 
                                             if (selectedstartdate != null) {
@@ -834,9 +833,20 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                             selectedenddate =
                                                 await showDatePicker(
                                               context: context,
-                                              initialDate: DateTime.now(),
-                                              firstDate: DateTime(2000),
-                                              lastDate: DateTime.now(),
+                                              initialDate: DateTime(
+                                                  DateTime.now().year,
+                                                  selectedMonth!.ivrMMonthId!
+                                                      .toInt(),
+                                                  DateTime.now().day),
+                                              firstDate: DateTime(
+                                                  DateTime.now().year,
+                                                  selectedMonth!.ivrMMonthId!
+                                                      .toInt()),
+                                              lastDate: DateTime(
+                                                  DateTime.now().year,
+                                                  selectedMonth!.ivrMMonthId!
+                                                      .toInt(),
+                                                  DateTime.now().day),
                                             );
 
                                             if (selectedenddate != null) {
@@ -1231,8 +1241,16 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                             Get.to(() => MonthWiseAttendanceEntryDetailScreen(
                                   loginSuccessModel: widget.loginSuccessModel,
                                   mskoolController: widget.mskoolController,
-                                  attendanceEntryController:
-                                      attendanceEntryController,
+                                  asaId: attendanceEntryController.asaId.value,
+                                  asmayId:
+                                      selectedAcademicYear!.asmaYId!.toInt(),
+                                  asmclId: selectedClass!.asmcLId!.toInt(),
+                                  asmsId: selectedSection!.asmSId!.toInt(),
+                                  fromDate: selectedstartdate.toString(),
+                                  classheld: attendanceEntryController
+                                      .countClassHeld.value
+                                      .toStringAsFixed(0),
+                                  toDate: selectedenddate.toString(),
                                 ));
                           } else {
                             Fluttertoast.showToast(
@@ -1243,7 +1261,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                 .attendanceEntry.value ==
                             'D') {
                           if (attendanceEntryController
-                              .studentList1.isNotEmpty) {
+                              .dailyOnceAndDailyTwiceStudentList.isNotEmpty) {
                             Get.to(() => DailyOnceAttendanceEntryDetailScreen(
                                   loginSuccessModel: widget.loginSuccessModel,
                                   mskoolController: widget.mskoolController,
@@ -1261,7 +1279,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                 .attendanceEntry.value ==
                             'H') {
                           if (attendanceEntryController
-                              .studentList1.isNotEmpty) {
+                              .dailyOnceAndDailyTwiceStudentList.isNotEmpty) {
                             Get.to(() => DailyTwiceAttendanceEntryDetailScreen(
                                   loginSuccessModel: widget.loginSuccessModel,
                                   mskoolController: widget.mskoolController,
