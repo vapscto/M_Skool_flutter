@@ -7,7 +7,6 @@ import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/api/attendance_entry_related_api.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/controller/attendance_entry_related_controller.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/widget/attendance_checkbox_widget.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
@@ -47,14 +46,12 @@ class _PeriodWiseAttendanceEntryDetailScreenState
   bool selectAll = false;
   List<Map<String, dynamic>> stdList = [];
 
-  void addToStudentList(Map<String, dynamic> data) {
-    stdList.add(data);
-    logger.d(stdList);
-  }
-
-  void removeFromStudentList(int rollNo) {
-    stdList.removeWhere((element) => element['amaY_RollNo'] == rollNo);
-    logger.d(stdList);
+  List<bool> boollist = [];
+  @override
+  void initState() {
+    boollist.clear();
+    boollist = attendanceEntryController.boolList;
+    super.initState();
   }
 
   @override
@@ -71,10 +68,7 @@ class _PeriodWiseAttendanceEntryDetailScreenState
             child: SaveBtn(
               title: 'Save',
               onPress: () async {
-                if (stdList.isEmpty) {
-                  Fluttertoast.showToast(msg: 'Select Attendance');
-                  return;
-                }
+                stdList.clear();
                 for (var i = 0;
                     i < attendanceEntryController.periodwiseStudentList.length;
                     i++) {
@@ -95,7 +89,7 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                         .elementAt(i)
                         .studentname,
                     "pdays": 0.0,
-                    "selected": true,
+                    "selected": boollist.elementAt(i),
                     "ASAS_Id": attendanceEntryController.periodwiseStudentList
                         .elementAt(i)
                         .asaSId,
@@ -148,8 +142,7 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                 ).then((value) {
                   logger.d(value);
                   if (value) {
-                    Fluttertoast.showToast(
-                        msg: 'Attendance entered successfully');
+                    Fluttertoast.showToast(msg: 'Attendance save successfully');
                   }
                 });
                 attendanceEntryController.issaveloading(false);
@@ -233,6 +226,9 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                       setState(() {
                         selectAll = value!;
                       });
+                      for (var i = 0; i < boollist.length; i++) {
+                        boollist[i] = value!;
+                      }
                     },
                   ),
                 ),
@@ -361,40 +357,17 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                               DataCell(
                                 Align(
                                   alignment: Alignment.center,
-                                  child: AttendanceCheckboxWidget(
-                                    index: index,
-                                    attendance: selectAll
-                                        ? true
-                                        : attendanceEntryController
-                                                    .periodwiseStudentList
-                                                    .elementAt(index)
-                                                    .pdays ==
-                                                0.0
-                                            ? false
-                                            : true,
-                                    attendanceEntryController:
-                                        attendanceEntryController,
-                                    admNo: attendanceEntryController
-                                        .periodwiseStudentList
-                                        .elementAt(index)
-                                        .amsTAdmNo!,
-                                    amstId: attendanceEntryController
-                                        .periodwiseStudentList
-                                        .elementAt(index)
-                                        .amsTId!,
-                                    amstRegistrationNo:
-                                        attendanceEntryController
-                                            .periodwiseStudentList
-                                            .elementAt(index)
-                                            .amsTRegistrationNo!,
-                                    rollNo: attendanceEntryController
-                                        .periodwiseStudentList
-                                        .elementAt(index)
-                                        .amaYRollNo!,
-                                    studentName: attendanceEntryController
-                                        .periodwiseStudentList
-                                        .elementAt(index)
-                                        .studentname!,
+                                  child: Checkbox(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    activeColor: Theme.of(context).primaryColor,
+                                    value: boollist[index],
+                                    onChanged: (value) {
+                                      setState(() {
+                                        boollist[index] = value!;
+                                      });
+                                    },
                                   ),
                                 ),
                               ),

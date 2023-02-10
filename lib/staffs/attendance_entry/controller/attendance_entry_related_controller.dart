@@ -328,6 +328,12 @@ class AttendanceEntryController extends GetxController {
             i++) {
           periodwiseStudentList.add(
               periodWiseStudentListModel.studentList!.values!.elementAt(i)!);
+          boolList.add(periodWiseStudentListModel.studentList!.values!
+                      .elementAt(i)!
+                      .pdays ==
+                  0.0
+              ? false
+              : true);
         }
         asaId.value = periodWiseStudentListModel.asAId!;
         return true;

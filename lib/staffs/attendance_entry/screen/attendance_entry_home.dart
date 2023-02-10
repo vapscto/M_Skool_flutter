@@ -191,6 +191,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
   void getStudentListOnChangeOfPeriod(int ttmpId) async {
     attendanceEntryController.isstudentdataloading(true);
     attendanceEntryController.periodwiseStudentList.clear();
+    attendanceEntryController.textEditingController.clear();
     attendanceEntryController.asaId.value = 0;
     await attendanceEntryController
         .getStudentListOnChangePeriod(
@@ -723,19 +724,20 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                                 await showDatePicker(
                                               context: context,
                                               initialDate: DateTime(
-                                                  DateTime.now().year,
-                                                  selectedMonth!.ivrMMonthId!
-                                                      .toInt(),
-                                                  DateTime.now().day),
+                                                DateTime.now().year,
+                                                selectedMonth!.ivrMMonthId!
+                                                    .toInt(),
+                                              ),
                                               firstDate: DateTime(
                                                   DateTime.now().year,
                                                   selectedMonth!.ivrMMonthId!
-                                                      .toInt()),
+                                                      .toInt(),
+                                                  1),
                                               lastDate: DateTime(
                                                   DateTime.now().year,
                                                   selectedMonth!.ivrMMonthId!
                                                       .toInt(),
-                                                  DateTime.now().day),
+                                                  31),
                                             );
 
                                             if (selectedstartdate != null) {
