@@ -939,7 +939,7 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
   Future<void> easeBuzz() async {
     const MethodChannel channel = MethodChannel('easebuzz');
     String accessKey =
-        "980225f09549f1682b9c7da95507c4d0ced877335dcb50b858298bf19aeabda1";
+        "918331eb394e17a74b0226007ad6ff1ad34b57a462b59f6a4a3eb7ddbf751a96";
     String payMode = "test";
     Object parameters = {"access_key": accessKey, "pay_mode": payMode};
     final paymentResponse =
