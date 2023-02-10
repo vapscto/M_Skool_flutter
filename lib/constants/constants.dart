@@ -752,3 +752,22 @@ Map<String, dynamic> getNotificationItem(String module) {
     "image": "assets/images/hat.png",
   };
 }
+
+List<Color> borderColor = [
+  const Color(0xFFC147E9),
+  const Color(0xFF4DEEEA),
+  const Color(0xFF74EE15),
+  const Color(0xFFFFE700),
+  const Color(0xFFF000FF),
+  const Color(0xFF001EFF),
+  const Color(0xFF4DEEEA),
+];
+List<Color> lighterColorBg = [
+  const Color(0xFFFCF1FF),
+  const Color(0xffEfffff),
+  const Color(0xFFF5FFEE),
+  const Color.fromARGB(255, 255, 253, 232),
+  const Color(0xFFFEF3FF),
+  const Color(0xFFF4F6FF),
+  const Color.fromARGB(255, 254, 255, 255)
+];

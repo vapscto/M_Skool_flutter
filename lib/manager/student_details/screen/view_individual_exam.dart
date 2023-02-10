@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/manager/student_details/api/get_exam_details.dart';
 import 'package:m_skool_flutter/manager/student_details/model/subject_wise_model.dart';
@@ -7,7 +8,7 @@ import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 
-class ViewIndividualMarks extends StatelessWidget {
+class ViewIndividualMarks extends StatefulWidget {
   final int miId;
   final int asmayId;
   final int emeId;
@@ -24,17 +25,43 @@ class ViewIndividualMarks extends StatelessWidget {
       required this.base});
 
   @override
+  State<ViewIndividualMarks> createState() => _ViewIndividualMarksState();
+}
+
+class _ViewIndividualMarksState extends State<ViewIndividualMarks> {
+  RxString ttM = RxString("0/0");
+  double totalMarks = 0;
+  double obtained = 0;
+  @override
   Widget build(BuildContext context) {
     int color = -1;
     return Scaffold(
-      appBar: CustomAppBar(title: examName).getAppBar(),
+      appBar: CustomAppBar(title: widget.examName).getAppBar(),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+        child: CustomContainer(
+            child: ListTile(
+          title: const Text("Total Marks"),
+          trailing: Obx(() {
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(ttM.split("/").first,
+                    style: Theme.of(context).textTheme.titleMedium),
+                const Text("/"),
+                Text(ttM.split("/").last)
+              ],
+            );
+          }),
+        )),
+      ),
       body: FutureBuilder<List<SubjectWiseDataModelValues>>(
           future: GetExamDetails.instance.getDetails(
-              miId: miId,
-              emeId: emeId,
-              amstId: amstId,
-              asmayId: asmayId,
-              base: base),
+              miId: widget.miId,
+              emeId: widget.emeId,
+              amstId: widget.amstId,
+              asmayId: widget.asmayId,
+              base: widget.base),
           builder: (_, snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data!.isEmpty) {
@@ -48,6 +75,7 @@ class ViewIndividualMarks extends StatelessWidget {
                   ),
                 );
               }
+              changeMarks(snapshot.data!);
               return GridView.builder(
                   itemCount: snapshot.data!.length,
                   padding: const EdgeInsets.all(16.0),
@@ -61,6 +89,7 @@ class ViewIndividualMarks extends StatelessWidget {
                     if (color % 6 == 0) {
                       color = 0;
                     }
+
                     return CustomContainer(
                       child: Column(
                         children: [
@@ -176,5 +205,15 @@ class ViewIndividualMarks extends StatelessWidget {
             );
           }),
     );
+  }
+
+  void changeMarks(List<SubjectWiseDataModelValues> values) async {
+    await Future.delayed(const Duration(seconds: 2));
+    for (var element in values) {
+      totalMarks += element.eSTMPSMaxMarks!.toDouble();
+      obtained += element.eSTMPSObtainedMarks!.toDouble();
+    }
+
+    ttM.value = "$obtained/$totalMarks";
   }
 }

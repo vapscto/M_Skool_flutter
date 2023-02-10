@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/manager/controller/manager_dashboard_controller.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
@@ -9,7 +11,7 @@ class DashboardLeaveWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      // height: Get.width * 0.5 - 28,
+      height: Get.width * 0.5,
       child: CustomContainer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -27,18 +29,22 @@ class DashboardLeaveWidget extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleSmall!.merge(
                           const TextStyle(
                             fontWeight: FontWeight.w600,
+                            // fontSize: 12.0,
                           ),
                         ),
                   ),
-                  // trailing: Text(
-                  //     getFormatedDate(DateTime.parse(values.punchdate!))
-                  //         .substring(
-                  //             0,
-                  //             getFormatedDate(DateTime.parse(values.punchdate!))
-                  //                     .length -
-                  //                 2)
-                  //         .trim(),
-                  //     style: Theme.of(context).textTheme.titleSmall),
+                  trailing: Chip(
+                    backgroundColor: const Color(0xFFF8FFD6),
+                    label: Text(
+                        getFormatedDate(DateTime.now().toLocal()).substring(
+                            0,
+                            getFormatedDate(DateTime.now().toLocal()).length -
+                                2),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall!
+                            .merge(const TextStyle(color: Color(0xFF97AE1F)))),
+                  ),
                 ),
                 Image.asset(
                   "assets/images/leave.png",

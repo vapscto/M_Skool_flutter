@@ -8,26 +8,37 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/coe/screens/coe_home.dart';
 import 'package:m_skool_flutter/staffs/model/dashboard_coe_data_model.dart';
 
+import '../../manager/coe/screen/manager_coe.dart';
+
 class CoeStaffSlider extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final DashboardCoeDataModelValues coeValue;
+  final bool? forManager;
   const CoeStaffSlider(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController,
-      required this.coeValue});
+      required this.coeValue,
+      this.forManager});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return StaffCoeHome(
-            loginSuccessModel: loginSuccessModel,
-            mskoolController: mskoolController,
-            title: 'COE',
-          );
+          return forManager != null
+              ? ManagerCoeHome(
+                  formDashboard: true,
+                  loginSuccessModel: loginSuccessModel,
+                  mskoolController: mskoolController,
+                  title: 'Coe',
+                )
+              : StaffCoeHome(
+                  loginSuccessModel: loginSuccessModel,
+                  mskoolController: mskoolController,
+                  title: 'COE',
+                );
         }));
       },
       child: Card(
@@ -108,7 +119,7 @@ class CoeStaffSlider extends StatelessWidget {
                             width: 8.0,
                           ),
                           Text(
-                            coeValue.cOEEEStartTime!,
+                            "${coeValue.cOEEEStartTime}",
                             style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,

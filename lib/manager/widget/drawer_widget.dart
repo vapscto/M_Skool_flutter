@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_st
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
 import '../../forgotpassword/screens/reset_password.dart';
+import '../../screens/theme_switcher.dart';
 
 class ManagerDashboardDrawer extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -34,8 +35,7 @@ class ManagerDashboardDrawer extends StatelessWidget {
                   loginSuccessModel.staffmobileappprivileges!.values!.length,
                   (index) => ListTile(
                     onTap: () {
-                     if (loginSuccessModel.staffmobileappprivileges!
-                              .values!
+                      if (loginSuccessModel.staffmobileappprivileges!.values!
                               .elementAt(index)
                               .pagename ==
                           "Student Birth Day Report") {
@@ -52,8 +52,7 @@ class ManagerDashboardDrawer extends StatelessWidget {
 
                         return;
                       }
-                      if (loginSuccessModel.staffmobileappprivileges!
-                              .values!
+                      if (loginSuccessModel.staffmobileappprivileges!.values!
                               .elementAt(index)
                               .pagename ==
                           "Leave Approval Staff") {
@@ -70,8 +69,7 @@ class ManagerDashboardDrawer extends StatelessWidget {
 
                         return;
                       }
-                      if (loginSuccessModel.staffmobileappprivileges!
-                              .values!
+                      if (loginSuccessModel.staffmobileappprivileges!.values!
                               .elementAt(index)
                               .pagename ==
                           'Notice Board Staff') {
@@ -85,8 +83,7 @@ class ManagerDashboardDrawer extends StatelessWidget {
                             ));
                       }
 
-                      if (loginSuccessModel.staffmobileappprivileges!
-                              .values!
+                      if (loginSuccessModel.staffmobileappprivileges!.values!
                               .elementAt(index)
                               .pagename ==
                           "Overall Fee") {
@@ -108,8 +105,7 @@ class ManagerDashboardDrawer extends StatelessWidget {
 
                         return;
                       }
-                      if (loginSuccessModel.staffmobileappprivileges!
-                              .values!
+                      if (loginSuccessModel.staffmobileappprivileges!.values!
                               .elementAt(index)
                               .pagename ==
                           "COE Report") {
@@ -121,6 +117,7 @@ class ManagerDashboardDrawer extends StatelessWidget {
                                 .staffmobileappprivileges!.values!
                                 .elementAt(index)
                                 .pagename!,
+                            formDashboard: true,
                           );
                         }));
 
@@ -134,7 +131,7 @@ class ManagerDashboardDrawer extends StatelessWidget {
                       child: CircleAvatar(
                         // radius: 18,
                         backgroundImage: AssetImage(
-                          getStaffDashboardIcon(
+                          getManagerDashboardIconByName(
                               "${loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"),
                         ),
                         backgroundColor: Colors.white,
@@ -184,6 +181,26 @@ class ManagerDashboardDrawer extends StatelessWidget {
                     Navigator.pop(context);
                     Get.to(() => ForgotPasswordScreen(
                         mskoolController: mskoolController));
+                  },
+                ),
+                ListTile(
+                  title: const Text("Select Theme"),
+                  leading: Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: const CircleAvatar(
+                      // radius: 18,
+                      backgroundImage: AssetImage(
+                        "assets/images/theme.png",
+                      ),
+                      backgroundColor: Colors.white,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return const ThemeSwitcher();
+                    }));
                   },
                 ),
                 Padding(
@@ -339,6 +356,17 @@ class _StaffDrawerHeaderState extends State<StaffDrawerHeader> {
                 const SizedBox(
                   height: 6.0,
                 ),
+                // Align(
+                //   alignment: Alignment.bottomRight,
+                //   child: IconButton(
+                //       onPressed: () {
+                //         Navigator.push(context, MaterialPageRoute(builder: (_) {
+                //           return const ThemeSwitcher();
+                //         }));
+                //       },
+                //       icon: Image.asset("assets/images/theme.png")),
+                // ),
+                // IconButton(onPressed: (){}, icon: Icon(Icons.setting))
               ],
             ),
           ),

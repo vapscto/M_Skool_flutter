@@ -56,6 +56,7 @@ class Dashboard extends StatelessWidget {
               loginSuccessModel: loginSuccessModel,
               mskoolController: mskoolController,
             ),
+
             Text(
               "Dashboard",
               style: Theme.of(context).textTheme.titleSmall!.merge(
@@ -153,7 +154,7 @@ class Dashboard extends StatelessWidget {
                     if (loginSuccessModel.staffmobileappprivileges!.values!
                             .elementAt(index)
                             .pagename ==
-                        "Staff Birth Day Report") {
+                        "Student Birth Day Report") {
                       Navigator.push(context, MaterialPageRoute(builder: (_) {
                         return StudentBdayHome(
                           loginSuccessModel: loginSuccessModel,

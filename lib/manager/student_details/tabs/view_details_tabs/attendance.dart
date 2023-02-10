@@ -175,6 +175,13 @@ class _AttendanceTabState extends State<AttendanceTab> {
                               ),
                             ),
                           ),
+                          const SizedBox(
+                            height: 36.0,
+                          ),
+                          Image.asset(
+                            "assets/images/att.png",
+                            height: 250,
+                          )
                         ],
                       ),
                     );

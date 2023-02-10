@@ -18,6 +18,7 @@ class GetPayablePaymentDetailApi {
     required int asmayId,
     required int asmclId,
     required String base,
+    required String gateWayType,
     required PaymentSelectionTracking paymentSelectionTracking,
   }) async {
     final String apiUrl = base + URLS.openPaymentGateWay;
@@ -64,7 +65,7 @@ class GetPayablePaymentDetailApi {
       "AMST_Id": amstId,
       "ASMAY_Id": asmayId,
       "ASMCL_ID": asmclId,
-      "onlinepaygteway": "RAZORPAY",
+      "onlinepaygteway": gateWayType,
       "automanualreceiptno": "Auto",
       "transnumbconfigurationsettingsss": {},
       "FYP_PayModeType": "MOBILE"
@@ -77,6 +78,8 @@ class GetPayablePaymentDetailApi {
           options: Options(headers: getSession()), data: responseBody);
       final PaymentGateWayDetails gateWayDetails =
           PaymentGateWayDetails.fromJson(response.data);
+
+      logger.d(gateWayDetails.toJson());
 
       return Future.value(gateWayDetails);
     } on Exception catch (e) {

@@ -28,11 +28,12 @@ class ApproveLeaveApi {
         "get_leave_status": getLeaveStatus
       });
 
+      logger.d(response.statusCode);
+
       if (response.statusCode == 200) {
         logger.d(response.data);
-        Fluttertoast.showToast(
-            msg:
-                "${(response.data['activityIds'] as List).length} Application Operation done");
+
+        Fluttertoast.showToast(msg: "What you want is done...");
         return Future.value(true);
       }
 

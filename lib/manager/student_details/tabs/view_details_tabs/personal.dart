@@ -54,8 +54,7 @@ class PersonalTab extends StatelessWidget {
                               Container(
                                 margin: const EdgeInsets.only(top: 30),
                                 child: CustomContainer(
-                                  color:
-                                      const Color.fromARGB(255, 196, 219, 255),
+                                  color: const Color(0xFFEBF6FF),
                                   child: Column(
                                     children: [
                                       SizedBox(
@@ -97,8 +96,12 @@ class PersonalTab extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              const CircleAvatar(
+                              CircleAvatar(
                                 minRadius: 36.0,
+                                child: Image.asset(
+                                  "assets/images/prof2.png",
+                                  height: 68.0,
+                                ),
                                 // backgroundImage: NetworkImage(controller.personalData.first.),
                               ),
                             ],
@@ -119,7 +122,7 @@ class PersonalTab extends StatelessWidget {
                             height: 12.0,
                           ),
                           CustomContainer(
-                            color: const Color.fromARGB(255, 255, 236, 238),
+                            color: const Color(0xFFFFEFF2),
                             child: Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: Column(
@@ -130,7 +133,7 @@ class PersonalTab extends StatelessWidget {
                                         .personalData.first.classname!,
                                   ),
                                   const SizedBox(
-                                    height: 6.0,
+                                    height: 12.0,
                                   ),
                                   PunchReportItem(
                                     title: "Section",
@@ -138,7 +141,7 @@ class PersonalTab extends StatelessWidget {
                                         .personalData.first.sectionname!,
                                   ),
                                   const SizedBox(
-                                    height: 6.0,
+                                    height: 12.0,
                                   ),
                                   PunchReportItem(
                                     title: "Roll Number",
@@ -146,7 +149,7 @@ class PersonalTab extends StatelessWidget {
                                         "${controller.personalData.first.amayRollNo}",
                                   ),
                                   const SizedBox(
-                                    height: 6.0,
+                                    height: 12.0,
                                   ),
                                   PunchReportItem(
                                     title: "Admission Number",
@@ -154,7 +157,7 @@ class PersonalTab extends StatelessWidget {
                                         .personalData.first.amstAdmNo!,
                                   ),
                                   const SizedBox(
-                                    height: 6.0,
+                                    height: 12.0,
                                   ),
                                   PunchReportItem(
                                       title: "Register Number",
@@ -180,7 +183,7 @@ class PersonalTab extends StatelessWidget {
                             height: 12.0,
                           ),
                           CustomContainer(
-                            color: const Color(0xFFFBF1FF),
+                            color: const Color(0xFFFEFAFF),
                             child: Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: Column(
@@ -191,7 +194,7 @@ class PersonalTab extends StatelessWidget {
                                         .personalData.first.fathername!,
                                   ),
                                   const SizedBox(
-                                    height: 6.0,
+                                    height: 12.0,
                                   ),
                                   PunchReportItem(
                                     title: "Mother Name",
@@ -199,7 +202,7 @@ class PersonalTab extends StatelessWidget {
                                         .personalData.first.mothername!,
                                   ),
                                   const SizedBox(
-                                    height: 6.0,
+                                    height: 12.0,
                                   ),
                                   PunchReportItem(
                                     title: "Email Id",
@@ -207,7 +210,7 @@ class PersonalTab extends StatelessWidget {
                                         "${controller.personalData.first.amstEmailid}",
                                   ),
                                   const SizedBox(
-                                    height: 6.0,
+                                    height: 12.0,
                                   ),
                                   PunchReportItem(
                                     title: "Mobile Number",
@@ -215,7 +218,7 @@ class PersonalTab extends StatelessWidget {
                                         "${controller.personalData.first.amstMobile}",
                                   ),
                                   const SizedBox(
-                                    height: 6.0,
+                                    height: 12.0,
                                   ),
                                   PunchReportItem(
                                       title: "Address",

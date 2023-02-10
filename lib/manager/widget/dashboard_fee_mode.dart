@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/manager/controller/manager_dashboard_controller.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 
@@ -9,7 +11,7 @@ class DashboardFeeMode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      // height: Get.width * 0.5 - 28,
+      height: Get.width * 0.5,
       child: CustomContainer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -24,21 +26,27 @@ class DashboardFeeMode extends StatelessWidget {
                       vertical: VisualDensity.minimumDensity),
                   title: Text(
                     "Fee Collection",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleSmall!.merge(
                           const TextStyle(
                             fontWeight: FontWeight.w600,
+                            // fontSize: 12.0,
                           ),
                         ),
                   ),
-                  // trailing: Text(
-                  //     getFormatedDate(DateTime.parse(values.punchdate!))
-                  //         .substring(
-                  //             0,
-                  //             getFormatedDate(DateTime.parse(values.punchdate!))
-                  //                     .length -
-                  //                 2)
-                  //         .trim(),
-                  //     style: Theme.of(context).textTheme.titleSmall),
+                  trailing: Chip(
+                    backgroundColor: const Color(0xFFFFEDD8),
+                    label: Text(
+                        getFormatedDate(DateTime.now().toLocal()).substring(
+                            0,
+                            getFormatedDate(DateTime.now().toLocal()).length -
+                                2),
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall!
+                            .merge(const TextStyle(color: Color(0xFFFF8700)))),
+                  ),
                 ),
                 Image.asset(
                   "assets/images/money.png",
@@ -66,6 +74,7 @@ class DashboardFeeMode extends StatelessWidget {
                   color: const Color(0xFFE5FFF3)),
               child: Text(
                 "${dashboardController.feeDetails.first.totalPaidOnline} Student paid fee through online fee payment",
+                maxLines: 2,
                 style: Theme.of(context).textTheme.titleSmall!.merge(
                     const TextStyle(color: Color(0xFF269962), fontSize: 13.0)),
               ),

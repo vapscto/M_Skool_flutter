@@ -54,10 +54,22 @@ class _DashboardPreAdmissionWidgetState
                       topRight: Radius.circular(12.0),
                     ),
                     color: Color(0xFFE2FCFF)),
-                child: const ListTile(
-                  visualDensity:
-                      VisualDensity(vertical: VisualDensity.minimumDensity),
-                  title: Text("Pre Admission"),
+                child: ListTile(
+                  visualDensity: const VisualDensity(
+                      vertical: VisualDensity.minimumDensity),
+                  title: Text(
+                    "Pre Admission",
+                    style: Theme.of(context).textTheme.titleSmall!.merge(
+                          const TextStyle(
+                            color: Color(0xFF46A869),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                  ),
+                  trailing: Chip(
+                      backgroundColor: const Color(0xFFFFFFFF),
+                      label: Text(widget.dashboardController.preAdmission.first
+                          .currentyear!)),
                   // trailing: Chip(label: Text("${widget.dashboardController.preAdmission.first.}")),
                 ),
               ),
@@ -69,8 +81,8 @@ class _DashboardPreAdmissionWidgetState
                   Expanded(
                     flex: 4,
                     child: SizedBox(
-                      width: Get.width * 0.3,
-                      height: Get.width * 0.3,
+                      width: Get.width * 0.36,
+                      height: Get.width * 0.36,
                       child: SfCircularChart(
                         enableMultiSelection: true,
                         series: <CircularSeries>[

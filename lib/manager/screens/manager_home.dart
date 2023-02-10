@@ -46,6 +46,7 @@ class _ManagerHomeState extends State<ManagerHome> {
     );
 
     homeList.add(ManagerCoeHome(
+        formDashboard: false,
         loginSuccessModel: widget.loginSuccessModel,
         mskoolController: widget.mskoolController,
         title: "Coe"));

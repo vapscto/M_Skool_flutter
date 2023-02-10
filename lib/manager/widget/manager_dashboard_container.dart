@@ -28,6 +28,7 @@ class ManagerDashboardContainer extends StatelessWidget {
                 loginSuccessModel: loginSuccessModel,
                 mList: dashboardController.dashboardCoe,
                 mskoolController: mskoolController,
+                forManager: true,
               ),
         DashStaffLeavesAndModeofFeePaid(
           dashboardController: dashboardController,

@@ -9,6 +9,7 @@ import 'package:m_skool_flutter/forgotpassword/screens/reset_password.dart';
 
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
+import 'package:m_skool_flutter/screens/theme_switcher.dart';
 import 'package:m_skool_flutter/student/attendance/screens/home_page.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
 import 'package:m_skool_flutter/student/classwork/screen/classwork_home_screen.dart';
@@ -243,6 +244,26 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                           mskoolController: widget.mskoolController));
                     },
                   ),
+                  ListTile(
+                    title: const Text("Select Theme"),
+                    leading: Container(
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: const CircleAvatar(
+                        // radius: 18,
+                        backgroundImage: AssetImage(
+                          "assets/images/theme.png",
+                        ),
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return const ThemeSwitcher();
+                      }));
+                    },
+                  ),
                   Padding(
                       padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
                       child: SizedBox(
@@ -431,6 +452,16 @@ class _DrawerHeaderState extends State<DrawerHeader> {
                 const SizedBox(
                   height: 6.0,
                 ),
+                // Align(
+                //   alignment: Alignment.bottomRight,
+                //   child: IconButton(
+                //       onPressed: () {
+                //         Navigator.push(context, MaterialPageRoute(builder: (_) {
+                //           return const ThemeSwitcher();
+                //         }));
+                //       },
+                //       icon: Image.asset("assets/images/theme.png")),
+                // ),
               ],
             ),
           ),

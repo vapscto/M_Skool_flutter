@@ -62,7 +62,7 @@ class _SearchTypeHandlerState extends State<SearchTypeHandler> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Image.asset(
-                              "assets/images/cap.png",
+                              "assets/images/condition.png",
                               height: 24.0,
                             ),
                             const SizedBox(
@@ -204,7 +204,7 @@ class _SearchTypeHandlerState extends State<SearchTypeHandler> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Image.asset(
-                        "assets/images/cap.png",
+                        "assets/images/operator.png",
                         height: 24.0,
                       ),
                       const SizedBox(
@@ -289,7 +289,7 @@ class _SearchTypeHandlerState extends State<SearchTypeHandler> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Image.asset(
-                      "assets/images/cap.png",
+                      "assets/images/profileiconsa.png",
                       height: 24.0,
                     ),
                     const SizedBox(

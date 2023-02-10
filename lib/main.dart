@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
@@ -67,9 +66,10 @@ class MyApp extends StatelessWidget {
           behavior: HitTestBehavior.translucent,
           child: GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            darkTheme:
-                CustomThemeData().getThemeData(themeData.isLightMode.value),
-            theme: CustomThemeData().getThemeData(themeData.isLightMode.value),
+            darkTheme: CustomThemeData().getThemeData(
+                themeData.isLightMode.value, themeData.theme.value),
+            theme: CustomThemeData().getThemeData(
+                themeData.isLightMode.value, themeData.theme.value),
             translations: LocalizationService(),
             locale: LocalizationService().getCurrentLocale(),
             fallbackLocale: const Locale(

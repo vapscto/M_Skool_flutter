@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:m_skool_flutter/main.dart';
 
 class CustomThemeData {
-  ThemeData? getThemeData(isLightMode) {
+  ThemeData? getThemeData(isLightMode, int v) {
+    // int value = themeBox!.get("colorTheme");
+    int value = 0;
+    if (themeBox!.get("colorTheme") == null) {
+      themeBox!.put("colorTheme", 0);
+    } else {
+      value = themeBox!.get("colorTheme");
+    }
     return isLightMode
         ? ThemeData(
             colorScheme: const ColorScheme(
@@ -20,7 +28,13 @@ class CustomThemeData {
               surface: Colors.white,
               onSurface: Color(0xff525252),
             ),
-            primaryColor: const Color(0xFF1E38FC),
+            primaryColor: value == 0
+                ? const Color(0xFF1E38FC)
+                : value == 1
+                    ? const Color(0xFFFF385C)
+                    : value == 2
+                        ? const Color(0xFF604A7B)
+                        : const Color(0xFFFFA500),
             textTheme: TextTheme(
               titleSmall: GoogleFonts.roboto(
                 fontSize: 15,
@@ -61,6 +75,13 @@ class CustomThemeData {
             scaffoldBackgroundColor: Colors.white, //const Color(0xff121212),
             appBarTheme: AppBarTheme(
               //color: Colors.white,
+              backgroundColor: value == 0
+                  ? const Color(0xFF1E38FC)
+                  : value == 1
+                      ? const Color(0xFFFF385C)
+                      : value == 2
+                          ? const Color(0xFF604A7B)
+                          : const Color(0xFFFFA500),
               centerTitle: false,
               titleTextStyle: GoogleFonts.inter(
                 fontSize: 16,
@@ -72,6 +93,17 @@ class CustomThemeData {
               ),
               elevation: 1,
             ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(
+              value == 0
+                  ? const Color(0xFF1E38FC)
+                  : value == 1
+                      ? const Color(0xFFFF385C)
+                      : value == 2
+                          ? const Color(0xFF604A7B)
+                          : const Color(0xFFFFA500),
+            ))),
             bottomAppBarTheme: const BottomAppBarTheme(
               color: Colors.white,
               elevation: 5,
@@ -184,11 +216,22 @@ class CustomThemeData {
   }
 
   static void changeStatusBarColor(BuildContext context) {
+    int value = 0;
+    if (themeBox!.get("colorTheme") == null) {
+    } else {
+      value = themeBox!.get("colorTheme");
+    }
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor:
             MediaQuery.of(context).platformBrightness == Brightness.light
-                ? const Color(0xFF1E38FC)
+                ? value == 0
+                    ? const Color(0xFF1E38FC)
+                    : value == 1
+                        ? const Color(0xFFFF385C)
+                        : value == 2
+                            ? const Color(0xFF604A7B)
+                            : const Color(0xFFFFA500)
                 : Colors.black,
         statusBarIconBrightness:
             MediaQuery.of(context).platformBrightness == Brightness.light

@@ -105,15 +105,19 @@ class AllStudent extends StatelessWidget {
                               : Align(
                                   alignment: Alignment.centerRight,
                                   child: IconButton(
-                                      onPressed: () {
-                                        handler.options.removeAt(index);
-                                        handler.fields.removeAt(index);
-                                        handler.operators.removeAt(index);
-                                        handler.conditions.removeAt(index);
-                                        handler.optionTextEditingController
-                                            .removeAt(index);
-                                      },
-                                      icon: const Icon(Icons.delete_forever)),
+                                    onPressed: () {
+                                      handler.options.removeAt(index);
+                                      handler.fields.removeAt(index);
+                                      handler.operators.removeAt(index);
+                                      handler.conditions.removeAt(index);
+                                      handler.optionTextEditingController
+                                          .removeAt(index);
+                                    },
+                                    icon: Image.asset(
+                                      "assets/images/delete.png",
+                                      width: 24.0,
+                                    ),
+                                  ),
                                 ),
                           handler.options.elementAt(index),
                           const SizedBox(

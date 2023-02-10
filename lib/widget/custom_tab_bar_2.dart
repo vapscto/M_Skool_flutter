@@ -89,9 +89,9 @@ class _CustomTabBarState extends State<CustomTabBar2> {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w400,
                                     letterSpacing: 0.1,
-                                    fontSize: 14,
+                                    fontSize: 12,
                                     color: index == i
                                         ? Theme.of(context).primaryColor
                                         : Colors.white)),

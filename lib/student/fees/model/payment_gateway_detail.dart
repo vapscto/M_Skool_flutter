@@ -128,6 +128,9 @@ class PaymentGateWayDetails {
   int? fmbanKId;
   int? rebateamount;
   int? ftoTRebateAmount;
+  int? easebuzzstatus;
+  String? easebuzzdata;
+  String? easebuzzenv;
 
   PaymentGateWayDetails(
       {this.fyppsTSettlementDate,
@@ -258,7 +261,10 @@ class PaymentGateWayDetails {
       this.fcspdCAmount,
       this.fmbanKId,
       this.rebateamount,
-      this.ftoTRebateAmount});
+      this.ftoTRebateAmount,
+      this.easebuzzstatus,
+      this.easebuzzdata,
+      this.easebuzzenv});
 
   PaymentGateWayDetails.fromJson(Map<String, dynamic> json) {
     fyppsTSettlementDate = json['fyppsT_Settlement_Date'];
@@ -403,6 +409,9 @@ class PaymentGateWayDetails {
     fmbanKId = json['fmbanK_Id'];
     rebateamount = json['rebateamount'];
     ftoTRebateAmount = json['ftoT_RebateAmount'];
+    easebuzzstatus = json['easebuzzstatus'];
+    easebuzzdata = json['easebuzzdata'];
+    easebuzzenv = json['easebuzzenv'];
   }
 
   Map<String, dynamic> toJson() {
@@ -545,6 +554,9 @@ class PaymentGateWayDetails {
     data['fmbanK_Id'] = fmbanKId;
     data['rebateamount'] = rebateamount;
     data['ftoT_RebateAmount'] = ftoTRebateAmount;
+    data['easebuzzstatus'] = easebuzzstatus;
+    data['easebuzzdata'] = easebuzzdata;
+    data['easebuzzenv'] = easebuzzenv;
     return data;
   }
 }

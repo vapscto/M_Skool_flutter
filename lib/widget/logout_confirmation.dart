@@ -39,10 +39,16 @@ class _LogoutConfirmationPopupState extends State<LogoutConfirmationPopup>
     return ScaleTransition(
       scale: scaleAnimation,
       child: AlertDialog(
-        title:
-            Text("Logout".tr, style: Theme.of(context).textTheme.labelMedium),
+        title: Text("Logout".tr,
+            style:
+                Theme.of(context).textTheme.titleSmall!.merge(const TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ))),
         content: Text("Are you sure, you want to logout?".tr,
-            style: Theme.of(context).textTheme.labelMedium),
+            style: Theme.of(context)
+                .textTheme
+                .labelSmall!
+                .merge(const TextStyle(letterSpacing: 0.2))),
         actions: [
           TextButton(
             onPressed: () async {

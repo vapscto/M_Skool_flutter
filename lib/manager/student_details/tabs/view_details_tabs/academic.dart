@@ -51,7 +51,14 @@ class AcademicTab extends StatelessWidget {
                         return CustomContainer(
                           child: Container(
                               // height: 100,
-                              color: noticeBackgroundColor.elementAt(color),
+                              decoration: BoxDecoration(
+                                // color: noticeBackgroundColor
+                                //     .elementAt(color)
+                                //     .withOpacity(0.2),
+
+                                color: lighterColorBg.elementAt(color),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -59,7 +66,7 @@ class AcademicTab extends StatelessWidget {
                                     width: 10.0,
                                     height: 80,
                                     decoration: BoxDecoration(
-                                      color: noticeColor.elementAt(color),
+                                      color: borderColor.elementAt(color),
                                       borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(8.0),
                                         bottomLeft: Radius.circular(8.0),
@@ -80,6 +87,9 @@ class AcademicTab extends StatelessWidget {
                                               children: [
                                                 Text(
                                                   "Academic Year",
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .labelMedium!

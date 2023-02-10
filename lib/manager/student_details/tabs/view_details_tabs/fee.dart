@@ -235,7 +235,7 @@ class _FeeTabState extends State<FeeTab> {
                                       backgroundColor: const Color.fromARGB(
                                           255, 255, 237, 237),
                                       label: Text(
-                                        "₹$amount",
+                                        "Total ₹$amount",
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleSmall!

@@ -13,8 +13,7 @@ import 'package:m_skool_flutter/manager/student_details/screen/student_details_h
 import 'package:m_skool_flutter/manager/widget/manager_dashboard_container.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/notice_board_staff/screen/notice_board_staff_home.dart';
-import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
-import 'package:m_skool_flutter/widget/logout_confirmation.dart';
+import 'package:m_skool_flutter/widget/custom_container.dart';
 
 class ManagerDashboard extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -71,6 +70,92 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
             mskoolController: widget.mskoolController,
           ),
           const SizedBox(
+            height: 16.0,
+          ),
+          Text(
+            "Quick Search",
+            style: Theme.of(context).textTheme.titleSmall!.merge(
+                  const TextStyle(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+          ),
+          const SizedBox(
+            height: 16.0,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: CustomContainer(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return ManagerStudentDetails(
+                          loginSuccessModel: widget.loginSuccessModel,
+                          mskoolController: widget.mskoolController,
+                          title: 'Student Details',
+                        );
+                      }));
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          color: const Color(0xFFFAEFFE)),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            "assets/images/stu_d.png",
+                            width: 36.0,
+                          ),
+                          const SizedBox(
+                            width: 12.0,
+                          ),
+                          const Expanded(child: Text("Student"))
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 12.0,
+              ),
+              Expanded(
+                child: CustomContainer(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (_) {
+                        return EmployeeDetailsHomeScreen(
+                          loginSuccessModel: widget.loginSuccessModel,
+                          mskoolController: widget.mskoolController,
+                        );
+                      }));
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          color: const Color(0xFFECF8FF)),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            "assets/images/emp_d.png",
+                            width: 36.0,
+                          ),
+                          const SizedBox(
+                            width: 12.0,
+                          ),
+                          const Expanded(child: Text("Staff"))
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
             height: 12.0,
           ),
           Text(
@@ -101,7 +186,7 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
                   if (widget.loginSuccessModel.staffmobileappprivileges!.values!
                           .elementAt(index)
                           .pagename ==
-                      "Student Birth Day Report") {
+                      "Student") {
                     Navigator.push(context, MaterialPageRoute(builder: (_) {
                       return ManagerStudentDetails(
                         loginSuccessModel: widget.loginSuccessModel,
@@ -147,7 +232,7 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
                   if (widget.loginSuccessModel.staffmobileappprivileges!.values!
                           .elementAt(index)
                           .pagename ==
-                      'Notice Board Staff') {
+                      'Notice Board') {
                     Get.to(() => NoticeBoardStaffHome(
                           loginSuccessModel: widget.loginSuccessModel,
                           mskoolController: widget.mskoolController,
@@ -192,6 +277,7 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
                             .loginSuccessModel.staffmobileappprivileges!.values!
                             .elementAt(index)
                             .pagename!,
+                        formDashboard: true,
                       );
                     }));
 
@@ -207,7 +293,7 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Image.asset(
-                            getDashBoardIconByName(
+                            getManagerDashboardIconByName(
                                 "${widget.loginSuccessModel.staffmobileappprivileges!.values![index].pagename}"),
                             height: 60,
                           ),
@@ -232,36 +318,36 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
             itemCount: widget
                 .loginSuccessModel.staffmobileappprivileges!.values!.length,
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-            child: SizedBox(
-              width: 180,
-              height: 40,
-              child: CustomElevatedButton(
-                  isGradient: false,
-                  boxShadow: const BoxShadow(),
-                  color: const Color(0xFFFFDFD6),
-                  child: Row(mainAxisSize: MainAxisSize.min, children: const [
-                    Icon(
-                      Icons.logout,
-                      color: Color(0xffF24E1E),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "Log Out",
-                      style: TextStyle(
-                          color: Color(0xffF24E1E),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
-                    )
-                  ]),
-                  onPressed: () {
-                    Get.dialog(const LogoutConfirmationPopup());
-                  }),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+          //   child: SizedBox(
+          //     width: 180,
+          //     height: 40,
+          //     child: CustomElevatedButton(
+          //         isGradient: false,
+          //         boxShadow: const BoxShadow(),
+          //         color: const Color(0xFFFFDFD6),
+          //         child: Row(mainAxisSize: MainAxisSize.min, children: const [
+          //           Icon(
+          //             Icons.logout,
+          //             color: Color(0xffF24E1E),
+          //           ),
+          //           SizedBox(
+          //             width: 10,
+          //           ),
+          //           Text(
+          //             "Log Out",
+          //             style: TextStyle(
+          //                 color: Color(0xffF24E1E),
+          //                 fontSize: 16,
+          //                 fontWeight: FontWeight.w600),
+          //           )
+          //         ]),
+          //         onPressed: () {
+          //           Get.dialog(const LogoutConfirmationPopup());
+          //         }),
+          //   ),
+          // ),
         ]),
       ),
     );

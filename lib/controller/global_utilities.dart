@@ -181,7 +181,39 @@ String getStaffDashboardIcon(String pageName) {
   }
 
   if (pageName.toLowerCase().contains("slip")) {
-    return icon += "feeReceipt.png";
+    return icon += "FeeReceipt.png";
+  }
+
+  return icon += "Timetable.png";
+}
+
+String getManagerDashboardIconByName(String pageName) {
+  String icon = "assets/images/";
+
+  if (pageName.toLowerCase().contains("student")) {
+    return icon += "student_details.png";
+  }
+  if (pageName.toLowerCase().contains("interaction")) {
+    return icon += "staff_interaction.png";
+  }
+  if (pageName.toLowerCase().contains("leave")) {
+    return icon += "staff_olp.png";
+  }
+  if (pageName.toLowerCase().contains("coe")) {
+    return icon += "staff_coe.png";
+  }
+
+  if (pageName.toLowerCase().contains("slip")) {
+    return icon += "FeeReceipt.png";
+  }
+  if (pageName.toLowerCase().contains("employee")) {
+    return icon += "employee_details.png";
+  }
+  if (pageName.toLowerCase().contains("fee")) {
+    return icon += "manager_fee.png";
+  }
+  if (pageName.toLowerCase().contains("notice")) {
+    return icon += "staff_nb.png";
   }
 
   return icon += "Timetable.png";

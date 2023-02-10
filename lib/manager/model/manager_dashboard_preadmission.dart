@@ -29,9 +29,13 @@ class ManagerDashboardPreadmissionDetailsValues {
   int? totalRegistred;
   int? totalPaid;
   int? totalConfirmed;
-
+  String? currentyear;
   ManagerDashboardPreadmissionDetailsValues(
-      {this.type, this.totalRegistred, this.totalPaid, this.totalConfirmed});
+      {this.type,
+      this.totalRegistred,
+      this.totalPaid,
+      this.totalConfirmed,
+      this.currentyear});
 
   ManagerDashboardPreadmissionDetailsValues.fromJson(
       Map<String, dynamic> json) {
@@ -39,6 +43,7 @@ class ManagerDashboardPreadmissionDetailsValues {
     totalRegistred = json['TotalRegistred'];
     totalPaid = json['TotalPaid'];
     totalConfirmed = json['TotalConfirmed'];
+    currentyear = json['currentyear'];
   }
 
   Map<String, dynamic> toJson() {
@@ -47,6 +52,7 @@ class ManagerDashboardPreadmissionDetailsValues {
     data['TotalRegistred'] = totalRegistred;
     data['TotalPaid'] = totalPaid;
     data['TotalConfirmed'] = totalConfirmed;
+    data['currentyear'] = currentyear;
     return data;
   }
 }

@@ -106,6 +106,8 @@ class URLS {
 
   static String razorPayResponse =
       "api/FeeOnlinePaymentFacade/Razorpaypaymentresponse";
+  static String easeBuzzPaymentResponseCall =
+      "api/FeeOnlinePaymentFacade/getpaymentresponseeasybuzzmobile/";
 
   // Dashboard
   static String studentDashboard = "api/AdmissionCtrl/stdDashboardDet/";
@@ -335,6 +337,7 @@ class URLS {
       "api/StudentSearchFacade/getstudentdetails/";
   static String getAcademicHistory =
       "api/StudentDashboardFacade/ViewStudentProfile/";
+  static String searchStudent = "api/StudentSearchFacade/";
 
   //////  OVERALL FEE APIS ////////////////////
   static String getOverallFeeAcademicYear =
@@ -367,6 +370,4 @@ class URLS {
 
   static String getEmployeeDetails =
       'api/EmployeeDetailsReportFacade/getEmployeedetailsBySelection';
-
-  static String searchStudent = "api/StudentSearchFacade/";
 }

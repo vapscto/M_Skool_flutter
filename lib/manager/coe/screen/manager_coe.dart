@@ -10,17 +10,21 @@ import 'package:m_skool_flutter/manager/coe/widget/coe_manager_selector.dart';
 import 'package:m_skool_flutter/manager/coe/widget/manager_coe_item.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
+import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class ManagerCoeHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final String title;
+  final bool formDashboard;
   const ManagerCoeHome(
       {super.key,
       required this.loginSuccessModel,
       required this.mskoolController,
-      required this.title});
+      required this.title,
+      required this.formDashboard});
 
   @override
   State<ManagerCoeHome> createState() => _ManagerCoeHomeState();
@@ -62,6 +66,10 @@ class _ManagerCoeHomeState extends State<ManagerCoeHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: widget.formDashboard
+          ? const CustomAppBar(title: "Coe").getAppBar()
+          : null,
+      floatingActionButton: widget.formDashboard ? const HomeFab() : null,
       body: Obx(() {
         return coeDataHandler.isErrorOccuredWhileLoadingAcademic.value
             ? Center(

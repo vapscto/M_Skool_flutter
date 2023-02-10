@@ -65,6 +65,9 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                       ? const SizedBox()
                       : Checkbox(
                           value: select.value,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
                           visualDensity: const VisualDensity(
                             horizontal: VisualDensity.minimumDensity,
                             vertical: VisualDensity.minimumDensity,
@@ -413,6 +416,8 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                                                                             "Ok UnderStood",
                                                                         onPress:
                                                                             () {
+                                                                          Navigator.pop(
+                                                                              context);
                                                                           Navigator.pop(
                                                                               context);
                                                                           Navigator.pop(

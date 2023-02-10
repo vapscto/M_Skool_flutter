@@ -10,11 +10,13 @@ class StaffCarasouel extends StatelessWidget {
   final List<DashboardCoeDataModelValues> mList;
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final bool? forManager;
   const StaffCarasouel(
       {super.key,
       required this.mList,
       required this.loginSuccessModel,
-      required this.mskoolController});
+      required this.mskoolController,
+      this.forManager});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class StaffCarasouel extends StatelessWidget {
       itemCount: mList.length,
       itemBuilder: (_, index, count) {
         return CoeStaffSlider(
+          forManager: forManager,
           coeValue: mList.elementAt(index),
           loginSuccessModel: loginSuccessModel,
           mskoolController: mskoolController,

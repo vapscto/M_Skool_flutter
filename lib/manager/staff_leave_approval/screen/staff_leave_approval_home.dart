@@ -12,6 +12,7 @@ import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class StaffLeaveApproval extends StatefulWidget {
@@ -38,6 +39,7 @@ class _StaffLeaveApprovalState extends State<StaffLeaveApproval> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: widget.title).getAppBar(),
+      floatingActionButton: const HomeFab(),
       body: FutureBuilder<List<LeaveApprovalModelValues>>(
           future: GetAppliesLeavesApi.instance.getAppliedLeaves(
             base: baseUrlFromInsCode("leave", widget.mskoolController),
@@ -207,6 +209,7 @@ class _StaffLeaveApprovalState extends State<StaffLeaveApproval> {
                                                                                   MSkollBtn(
                                                                                       title: "Ok UnderStood",
                                                                                       onPress: () {
+                                                                                        Navigator.pop(context);
                                                                                         Navigator.pop(context);
                                                                                         Navigator.pop(context);
                                                                                       })

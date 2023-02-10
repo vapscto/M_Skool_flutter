@@ -5,6 +5,11 @@ import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/manager/coe/screen/manager_coe.dart';
+import 'package:m_skool_flutter/manager/employee_details/screens/employee_details_home_screen.dart';
+import 'package:m_skool_flutter/manager/overall_fee/screen/overall_fee_home.dart';
+import 'package:m_skool_flutter/manager/staff_leave_approval/screen/staff_leave_approval_home.dart';
+import 'package:m_skool_flutter/manager/student_details/screen/student_details_home.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/model/notification_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
@@ -88,12 +93,24 @@ class NotificationScreen extends StatelessWidget {
                       return;
                     }
 
-                    openUsingHeaderForStaff(
+                    if (openFor == "staff") {
+                      openUsingHeaderForStaff(
+                          snapshot.data!
+                              .elementAt(index)
+                              .pNSDHeaderFlg!
+                              .capitalize!,
+                          context);
+                    }
+
+                    if (openFor == "manager") {
+                      openUsingHeaderForManager(
                         snapshot.data!
                             .elementAt(index)
                             .pNSDHeaderFlg!
                             .capitalize!,
-                        context);
+                        context,
+                      );
+                    }
                   },
                   child: Container(
                     padding: const EdgeInsets.all(12.0),
@@ -507,6 +524,76 @@ class NotificationScreen extends StatelessWidget {
           },
         ),
       );
+      return;
+    }
+  }
+
+  void openUsingHeaderForManager(String s, BuildContext context) {
+    if (s.toLowerCase().contains("student")) {
+      Navigator.push(context, MaterialPageRoute(builder: (_) {
+        return ManagerStudentDetails(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+          title: "Student Details",
+        );
+      }));
+
+      return;
+    }
+    if (s.toLowerCase().contains("approval")) {
+      Navigator.push(context, MaterialPageRoute(builder: (_) {
+        return StaffLeaveApproval(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+          title: "Leave Approval Staff",
+        );
+      }));
+
+      return;
+    }
+    if (s.toLowerCase().contains("employee")) {
+      Get.to(
+        () => EmployeeDetailsHomeScreen(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+        ),
+      );
+      return;
+    }
+    if (s.toLowerCase().contains("notice")) {
+      Get.to(() => NoticeBoardStaffHome(
+            loginSuccessModel: loginSuccessModel,
+            mskoolController: mskoolController,
+            title: "Notice Board",
+          ));
+    }
+
+    if (s.toLowerCase().contains("fee")) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) {
+            return OverallFeeHome(
+              loginSuccessModel: loginSuccessModel,
+              mskoolController: mskoolController,
+              title: "Overall Fee",
+            );
+          },
+        ),
+      );
+
+      return;
+    }
+    if (s.toLowerCase().contains("coe")) {
+      Navigator.push(context, MaterialPageRoute(builder: (_) {
+        return ManagerCoeHome(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController,
+          title: "Coe",
+          formDashboard: true,
+        );
+      }));
+
       return;
     }
   }
