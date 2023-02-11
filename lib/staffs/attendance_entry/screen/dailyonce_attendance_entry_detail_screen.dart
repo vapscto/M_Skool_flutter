@@ -142,8 +142,14 @@ class _DailyOnceAttendanceEntryDetailScreenState
                   ),
                 ).then((value) {
                   if (value) {
-                    Fluttertoast.showToast(msg: 'Attendance save successfully');
+                    Fluttertoast.showToast(
+                        msg: 'Attendance Save Successfully',
+                        backgroundColor: Theme.of(context).primaryColor);
+                    return;
                   }
+                  Fluttertoast.showToast(
+                      msg: 'Something went wrong',
+                      backgroundColor: Theme.of(context).primaryColor);
                 });
                 attendanceEntryController.issaveloading(false);
               },
@@ -226,6 +232,9 @@ class _DailyOnceAttendanceEntryDetailScreenState
                       setState(() {
                         selectAll = value!;
                       });
+                      for (var i = 0; i < boollist.length; i++) {
+                        boollist[i] = value!;
+                      }
                     },
                   ),
                 ),

@@ -66,7 +66,7 @@ class _MarksEntryDetailScreenState extends State<MarksEntryDetailScreen> {
 
   void saveDetails() async {
     detailsList.clear();
-    marksEntryController.issaveloading(true);
+
     for (var i = 0;
         i < marksEntryController.textEditingControllerList.length;
         i++) {
@@ -76,11 +76,10 @@ class _MarksEntryDetailScreenState extends State<MarksEntryDetailScreen> {
           double.parse(marksEntryController
               .marksEntryDataTableList.first.totalMarks!
               .toString())) {
-        marksEntryController.issaveloading(false);
         Fluttertoast.showToast(
             msg:
-                'Entered Marks is greater than ${marksEntryController.marksEntryDataTableList.first.totalMarks} for S.NO ${i + 1}');
-
+                'Entered Marks is greater than ${marksEntryController.marksEntryDataTableList.first.totalMarks} for S.NO ${i + 1}',
+            backgroundColor: Theme.of(context).primaryColor);
         return;
       }
     }
@@ -97,7 +96,7 @@ class _MarksEntryDetailScreenState extends State<MarksEntryDetailScreen> {
         ),
       });
     }
-
+    marksEntryController.issaveloading(true);
     await saveMarksEntryDetails(
       miId: widget.loginSuccessModel.mIID!,
       asmayId: widget.asmayId,
@@ -114,8 +113,14 @@ class _MarksEntryDetailScreenState extends State<MarksEntryDetailScreen> {
       ),
     ).then((value) {
       if (value) {
-        Fluttertoast.showToast(msg: 'Marks Save Successfully.');
+        Fluttertoast.showToast(
+            msg: 'Marks Save Successfully',
+            backgroundColor: Theme.of(context).primaryColor);
+        return;
       }
+      Fluttertoast.showToast(
+          msg: 'Something went wrong',
+          backgroundColor: Theme.of(context).primaryColor);
     });
     marksEntryController.issaveloading(false);
   }
