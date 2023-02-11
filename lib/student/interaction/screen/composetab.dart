@@ -471,7 +471,14 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
                       FocusScope.of(context).unfocus();
                       subject.text = '';
                       about.text = '';
+                      Fluttertoast.showToast(
+                          msg: 'Compose successfully',
+                          backgroundColor: Theme.of(context).primaryColor);
+                      return;
                     }
+                    Fluttertoast.showToast(
+                        msg: 'Something went wrong',
+                        backgroundColor: Theme.of(context).primaryColor);
                   });
                   composeController.issend(false);
                   composeController.isbutton(true);
@@ -484,7 +491,7 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
                         width: 18,
                         child: CircularProgressIndicator(
                           color: Colors.white,
-                          strokeWidth: 3,
+                          strokeWidth: 2,
                         ),
                       )
                     : Text(

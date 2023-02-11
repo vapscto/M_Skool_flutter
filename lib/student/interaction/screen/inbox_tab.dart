@@ -1,3 +1,5 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -76,14 +78,27 @@ class _InboxTabScreenState extends State<InboxTabScreen> {
                       ismintSubject:
                           inboxController.inboxList[index].ismintSubject!,
                       istintId: inboxController.inboxList[index].istintId!,
-                      istintToFlg:
-                          inboxController.inboxList[index].istintToFlg!,
-                      receiver: inboxController.inboxList[index].receiver!,
-                      receiverFilePath:
-                          inboxController.inboxList[index].receiverFilepath!,
+                      designation: inboxController.userHrmeId ==
+                              inboxController
+                                  .inboxList[index].ismintComposedById
+                          ? inboxController.inboxList[index].istintToFlg!
+                          : inboxController
+                              .inboxList[index].ismintComposedByFlg!,
+                      title: inboxController.userHrmeId ==
+                              inboxController
+                                  .inboxList[index].ismintComposedById
+                          ? inboxController.inboxList[index].receiver!
+                          : inboxController.inboxList[index].sender!,
+                      profileimage: inboxController.userHrmeId ==
+                              inboxController
+                                  .inboxList[index].ismintComposedById
+                          ? inboxController.inboxList[index].receiverFilepath!
+                          : inboxController
+                              .inboxList[index].senderSenderFilepath!,
                       role: inboxController.inboxList[index].role!,
                       userHrmeId: inboxController.userHrmeId.value,
                       sender: inboxController.inboxList[index].sender!,
+                      receiver: inboxController.inboxList[index].receiver!,
                       // isGroup: Random().nextBool(),
                       // isSeen:
                       //     inboxController.inboxList[index].istintReadFlg == 1

@@ -1,3 +1,5 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -85,37 +87,29 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
                           .inboxList[index].ismintSubject!,
                       istintId: staffInteractionInboxController
                           .inboxList[index].istintToId!,
-                      istintToFlg: widget.loginSuccessModel.roleforlogin!
-                                  .toLowerCase() ==
-                              staffInteractionInboxController.inboxList
-                                  .elementAt(index)
-                                  .ismintComposedByFlg!
-                                  .toLowerCase()
+                      designation: staffInteractionInboxController.userHrmeId ==
+                              staffInteractionInboxController
+                                  .inboxList[index].ismintComposedById
                           ? staffInteractionInboxController
                               .inboxList[index].istintToFlg!
                           : staffInteractionInboxController
                               .inboxList[index].ismintComposedByFlg!,
-                      receiver: widget.loginSuccessModel.roleforlogin!
-                                  .toLowerCase() ==
-                              staffInteractionInboxController.inboxList
-                                  .elementAt(index)
-                                  .ismintComposedByFlg!
-                                  .toLowerCase()
+                      title: staffInteractionInboxController.userHrmeId ==
+                              staffInteractionInboxController
+                                  .inboxList[index].ismintComposedById
                           ? staffInteractionInboxController
                               .inboxList[index].receiver!
                           : staffInteractionInboxController.inboxList
                               .elementAt(index)
                               .sender!,
-                      receiverFilePath: widget.loginSuccessModel.roleforlogin!
-                                  .toLowerCase() ==
-                              staffInteractionInboxController.inboxList
-                                  .elementAt(index)
-                                  .ismintComposedByFlg!
-                                  .toLowerCase()
-                          ? staffInteractionInboxController
-                              .inboxList[index].receiverFilepath!
-                          : staffInteractionInboxController
-                              .inboxList[index].senderFilepath!,
+                      profileimage:
+                          staffInteractionInboxController.userHrmeId ==
+                                  staffInteractionInboxController
+                                      .inboxList[index].ismintComposedById
+                              ? staffInteractionInboxController
+                                  .inboxList[index].receiverFilepath!
+                              : staffInteractionInboxController
+                                  .inboxList[index].senderFilepath!,
                       role: staffInteractionInboxController
                           .inboxList[index].role!,
 
@@ -123,6 +117,8 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
                           staffInteractionInboxController.userHrmeId.value,
                       sender: staffInteractionInboxController
                           .inboxList[index].sender!,
+                      receiver: staffInteractionInboxController
+                          .inboxList[index].receiver!,
                       // isGroup: Random().nextBool(),
                       // isSeen:
                       //     staffInteractionInboxController.inboxList[index].istintReadFlg == 1
