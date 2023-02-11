@@ -28,6 +28,14 @@ class SalaryOverallDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: month).getAppBar(),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+        onPressed: () {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        },
+        child: const Icon(Icons.home),
+      ),
       body: FutureBuilder<SplitSalaryModel>(
           future: SalaryBreakApi.instance.getSalaryDivision(
               miId: loginSuccessModel.mIID!,

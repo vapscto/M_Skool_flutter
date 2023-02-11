@@ -32,7 +32,7 @@ class AppliedLeaveItem extends StatelessWidget {
                             ),
                       ),
                       const SizedBox(
-                        height: 6.0,
+                        height: 2.0,
                       ),
                       Text(
                         "${value.hrmLLeaveName} | ${value.hrelaPTotalDays} Days",
@@ -46,9 +46,9 @@ class AppliedLeaveItem extends StatelessWidget {
                                       .color),
                             ),
                       ),
-                      const SizedBox(
-                        height: 6.0,
-                      ),
+                      // const SizedBox(
+                      //   height: 2.0,
+                      // ),
                     ],
                   ),
                 ),
@@ -77,7 +77,9 @@ class AppliedLeaveItem extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0),
-                        color: noticeBackgroundColor.elementAt(color)),
+                        color: noticeBackgroundColor
+                            .elementAt(color)
+                            .withOpacity(0.3)),
                     child: Image.asset(
                       value.hrmLLeaveName!.toLowerCase() == "sick leave"
                           ? "assets/images/sl.png"

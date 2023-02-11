@@ -158,7 +158,7 @@ class _StaffEmployeeState extends State<StaffEmployee> {
                                                                       FontWeight
                                                                           .w400,
                                                                   fontSize:
-                                                                      16.0,
+                                                                      14.0,
                                                                   letterSpacing:
                                                                       0.3)),
                                                         ),

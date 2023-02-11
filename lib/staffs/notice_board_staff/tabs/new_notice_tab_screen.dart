@@ -219,7 +219,9 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
           ),
           CustomContainer(
             child: TextField(
-              style: Theme.of(context).textTheme.titleSmall,
+              style: Theme.of(context).textTheme.titleSmall!.merge(
+                    const TextStyle(fontSize: 16.0),
+                  ),
 
               controller: widget.noticeBoardController.noticeTitle.value,
               // maxLines: 5,
@@ -277,7 +279,9 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
           ),
           CustomContainer(
             child: TextField(
-              style: Theme.of(context).textTheme.titleSmall,
+              style: Theme.of(context).textTheme.titleSmall!.merge(
+                    const TextStyle(fontSize: 16.0),
+                  ),
               controller: widget.noticeBoardController.desc.value,
               maxLines: 5,
               decoration: InputDecoration(
@@ -333,7 +337,9 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
           CustomContainer(
             child: TextField(
               controller: startDate,
-              style: Theme.of(context).textTheme.titleSmall,
+              style: Theme.of(context).textTheme.titleSmall!.merge(
+                    const TextStyle(fontSize: 16.0),
+                  ),
               readOnly: true,
               //maxLines: 4,
               onTap: () async {
@@ -420,7 +426,9 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
           CustomContainer(
             child: TextField(
               controller: endDate,
-              style: Theme.of(context).textTheme.titleSmall,
+              style: Theme.of(context).textTheme.titleSmall!.merge(
+                    const TextStyle(fontSize: 16.0),
+                  ),
               readOnly: true,
               //maxLines: 4,
               onTap: () async {
@@ -500,7 +508,9 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
           CustomContainer(
             child: TextField(
               controller: displayDate,
-              style: Theme.of(context).textTheme.titleSmall,
+              style: Theme.of(context).textTheme.titleSmall!.merge(
+                    const TextStyle(fontSize: 16.0),
+                  ),
               readOnly: true,
               //maxLines: 4,
               onTap: () async {

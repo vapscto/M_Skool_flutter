@@ -55,7 +55,9 @@ class _AssignmentDetailsState extends State<AssignmentDetails> {
                 child: TextField(
                   readOnly: true,
                   controller: hwDate,
-                  style: Theme.of(context).textTheme.titleSmall,
+                  style: Theme.of(context).textTheme.titleSmall!.merge(
+                        const TextStyle(fontSize: 16.0),
+                      ),
                   decoration: InputDecoration(
                     isDense: true,
                     contentPadding: const EdgeInsets.only(top: 48.0, left: 12),
@@ -133,7 +135,9 @@ class _AssignmentDetailsState extends State<AssignmentDetails> {
                   Expanded(
                     child: CustomContainer(
                       child: TextField(
-                        style: Theme.of(context).textTheme.titleSmall,
+                        style: Theme.of(context).textTheme.titleSmall!.merge(
+                              const TextStyle(fontSize: 16.0),
+                            ),
                         readOnly: true,
                         //maxLines: 4,
                         controller: startDtCtrl,
@@ -222,7 +226,9 @@ class _AssignmentDetailsState extends State<AssignmentDetails> {
                     child: CustomContainer(
                       child: TextField(
                         readOnly: true,
-                        style: Theme.of(context).textTheme.titleSmall,
+                        style: Theme.of(context).textTheme.titleSmall!.merge(
+                              const TextStyle(fontSize: 16.0),
+                            ),
                         controller: startDtEndCtrl,
                         //maxLines: 4,
                         decoration: InputDecoration(
@@ -312,7 +318,9 @@ class _AssignmentDetailsState extends State<AssignmentDetails> {
         CustomContainer(
           child: TextField(
             controller: topic,
-            style: Theme.of(context).textTheme.titleSmall,
+            style: Theme.of(context).textTheme.titleSmall!.merge(
+                  const TextStyle(fontSize: 16.0),
+                ),
             readOnly: false,
 
             //maxLines: 4,
@@ -380,7 +388,9 @@ class _AssignmentDetailsState extends State<AssignmentDetails> {
         CustomContainer(
           child: TextField(
             controller: ass,
-            style: Theme.of(context).textTheme.titleSmall,
+            style: Theme.of(context).textTheme.titleSmall!.merge(
+                  const TextStyle(fontSize: 16.0),
+                ),
             readOnly: false,
             maxLines: widget.forHw ? 4 : null,
             decoration: InputDecoration(
@@ -449,7 +459,9 @@ class _AssignmentDetailsState extends State<AssignmentDetails> {
             : CustomContainer(
                 child: TextField(
                   controller: content,
-                  style: Theme.of(context).textTheme.titleSmall,
+                  style: Theme.of(context).textTheme.titleSmall!.merge(
+                        const TextStyle(fontSize: 16.0),
+                      ),
                   readOnly: false,
                   maxLines: 4,
                   decoration: InputDecoration(

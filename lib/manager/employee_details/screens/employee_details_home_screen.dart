@@ -11,6 +11,7 @@ import 'package:m_skool_flutter/manager/employee_details/widget/header_data_widg
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class EmployeeDetailsHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -160,6 +161,7 @@ class _EmployeeDetailsHomeScreenState extends State<EmployeeDetailsHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'Employee details').getAppBar(),
+      floatingActionButton: const HomeFab(),
       body: Obx(
         () => employeeDetailsController.isType.value
             ? const Align(

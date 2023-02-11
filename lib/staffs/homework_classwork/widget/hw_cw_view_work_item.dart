@@ -40,7 +40,7 @@ class HwCwViewWorkItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        color: lighterColor.elementAt(color),
+        color: lighterColor.elementAt(color).withOpacity(0.3),
       ),
       child: Column(
         children: [

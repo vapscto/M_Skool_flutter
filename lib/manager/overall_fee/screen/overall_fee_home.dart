@@ -5,6 +5,7 @@ import 'package:m_skool_flutter/manager/overall_fee/tabs/fee_details.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/student/interaction/widget/custom_tab_bar.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
+import 'package:m_skool_flutter/widget/home_fab.dart';
 
 class OverallFeeHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -33,11 +34,17 @@ class _OverallFeeHomeState extends State<OverallFeeHome>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: const HomeFab(),
       appBar: CustomAppBar(
         title: widget.title,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(50),
-          child: Container(
+        // bottom: PreferredSize(
+        //   preferredSize: const Size.fromHeight(50),
+        //   child:
+        // ),
+      ).getAppBar(),
+      body: Column(
+        children: [
+          Container(
             color: Theme.of(context).scaffoldBackgroundColor,
             child: CustomTabBar(
               tabController: overallFeeTabController!,
@@ -50,18 +57,20 @@ class _OverallFeeHomeState extends State<OverallFeeHome>
               ],
             ),
           ),
-        ),
-      ).getAppBar(),
-      body: TabBarView(
-        controller: overallFeeTabController!,
-        children: [
-          ManagerFeeDetails(
-            loginSuccessModel: widget.loginSuccessModel,
-            mskoolController: widget.mskoolController,
-          ),
-          ManagerClassWiseFeeDetails(
-            loginSuccessModel: widget.loginSuccessModel,
-            mskoolController: widget.mskoolController,
+          Expanded(
+            child: TabBarView(
+              controller: overallFeeTabController!,
+              children: [
+                ManagerFeeDetails(
+                  loginSuccessModel: widget.loginSuccessModel,
+                  mskoolController: widget.mskoolController,
+                ),
+                ManagerClassWiseFeeDetails(
+                  loginSuccessModel: widget.loginSuccessModel,
+                  mskoolController: widget.mskoolController,
+                ),
+              ],
+            ),
           ),
         ],
       ),

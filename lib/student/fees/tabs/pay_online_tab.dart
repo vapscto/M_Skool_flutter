@@ -1007,28 +1007,25 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
     }
     if (response['result'] == "payment_failed") {
       onEaseBuzzPaymentFailed(
-          "faild to get the payment done ... if money get deducted then contact your school admin and show them this transaction Id : ${response['txnId']}");
+          "faild to get the payment done ... if money get deducted then contact your school admin and show them this transaction Id : ${response['txnId']}",
+          response);
 
       return;
     }
     if (response['result'] == "txn_session_timeout") {
       onEaseBuzzPaymentFailed(
-        "you timeout to pay for the current transaction",
-      );
+          "you timeout to pay for the current transaction", response);
 
       return;
     }
 
     if (response['result'] == "user_cancelled") {
-      onEaseBuzzPaymentFailed(
-        "User cancelled the payment",
-      );
+      onEaseBuzzPaymentFailed("User cancelled the payment", response);
 
       return;
     }
     onEaseBuzzPaymentFailed(
-      "Payment get failed due to ${response['result']}  ",
-    );
+        "Payment get failed due to ${response['result']}  ", response);
   }
 
   showPopUpForEaseBuzz(
@@ -1218,7 +1215,7 @@ class _PayOnlineTabState extends State<PayOnlineTab> {
         });
   }
 
-  void onEaseBuzzPaymentFailed(String message) {
+  void onEaseBuzzPaymentFailed(String message, Map<Object?, Object?> response) {
     showDialog(
         context: context,
         builder: (_) {

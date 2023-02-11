@@ -54,178 +54,168 @@ class _HwCwViewWorkState extends State<HwCwViewWork> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Obx(() {
-        return widget.hwController.isErrorOccuredWhileLoadingWork.value
-            ? Center(
-                child: Center(
-                child: ErrWidget(err: {
-                  "errorTitle": "An Error Occured",
-                  "errorMsg": widget.hwController.viewWorkLoadingStatus.value
-                }),
-              ))
-            : widget.hwController.isWorkLoading.value
-                ? const Center(
-                    child: AnimatedProgressWidget(
-                        title: "Loading Assigned Work's",
-                        desc:
-                            "Please wait while we load your assigned work.. your view will be visible here.",
-                        animationPath: "assets/json/default.json"),
-                  )
-                : widget.forHw
-                    ? widget.hwController.homeWorks.isEmpty
-                        ? const Center(
-                            child: AnimatedProgressWidget(
-                              title: "No Assigned Work's",
-                              desc:
-                                  "There are no assigned work available right now, try with adding some work.",
-                              animationPath: "assets/json/nodata.json",
-                              animatorHeight: 250,
-                            ),
-                          )
-                        : ListView.separated(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            padding: const EdgeInsets.all(16.0),
-                            itemBuilder: (_, index) {
-                              color += 1;
-                              if (color % 6 == 0) {
-                                color = 0;
-                              }
-                              return HwCwViewWorkItem(
-                                miId: widget.loginSuccessModel.mIID!,
-                                color: color,
-                                forHw: widget.forHw,
-                                homeWork: widget.hwController.homeWorks
-                                    .elementAt(index),
-                                mskoolController: widget.mskoolController,
-                                func: () {
-                                  if (widget.hwController.filterCount.value ==
-                                      0) {
-                                    GetHomeWorks.instance.getHomeWorks(
+    return Obx(() {
+      return widget.hwController.isErrorOccuredWhileLoadingWork.value
+          ? Center(
+              child: Center(
+              child: ErrWidget(err: {
+                "errorTitle": "An Error Occured",
+                "errorMsg": widget.hwController.viewWorkLoadingStatus.value
+              }),
+            ))
+          : widget.hwController.isWorkLoading.value
+              ? const Center(
+                  child: AnimatedProgressWidget(
+                      title: "Loading Assigned Work's",
+                      desc:
+                          "Please wait while we load your assigned work.. your view will be visible here.",
+                      animationPath: "assets/json/default.json"),
+                )
+              : widget.forHw
+                  ? widget.hwController.homeWorks.isEmpty
+                      ? const Center(
+                          child: AnimatedProgressWidget(
+                            title: "No Assigned Work's",
+                            desc:
+                                "There are no assigned work available right now, try with adding some work.",
+                            animationPath: "assets/json/nodata.json",
+                            animatorHeight: 250,
+                          ),
+                        )
+                      : ListView.separated(
+                          shrinkWrap: true,
+                          // physics: const NeverScrollableScrollPhysics(),
+                          padding: const EdgeInsets.all(16.0),
+                          itemBuilder: (_, index) {
+                            color += 1;
+                            if (color % 6 == 0) {
+                              color = 0;
+                            }
+                            return HwCwViewWorkItem(
+                              miId: widget.loginSuccessModel.mIID!,
+                              color: color,
+                              forHw: widget.forHw,
+                              homeWork: widget.hwController.homeWorks
+                                  .elementAt(index),
+                              mskoolController: widget.mskoolController,
+                              func: () {
+                                if (widget.hwController.filterCount.value ==
+                                    0) {
+                                  GetHomeWorks.instance.getHomeWorks(
+                                    miId: widget.loginSuccessModel.mIID!,
+                                    asmayId: widget.loginSuccessModel.asmaYId!,
+                                    hrmeId: widget.loginSuccessModel.empcode!,
+                                    userId: widget.loginSuccessModel.userId!,
+                                    ivrmrtId: widget.loginSuccessModel.roleId!,
+                                    loginId: widget.loginSuccessModel.userId!,
+                                    base: baseUrlFromInsCode(
+                                      "portal",
+                                      widget.mskoolController,
+                                    ),
+                                    controller: widget.hwController,
+                                    forHw: widget.forHw,
+                                  );
+                                } else {
+                                  GetHomeWorks.instance.getFilteredHwCw(
                                       miId: widget.loginSuccessModel.mIID!,
                                       asmayId:
                                           widget.loginSuccessModel.asmaYId!,
                                       hrmeId: widget.loginSuccessModel.empcode!,
-                                      userId: widget.loginSuccessModel.userId!,
-                                      ivrmrtId:
-                                          widget.loginSuccessModel.roleId!,
-                                      loginId: widget.loginSuccessModel.userId!,
+                                      startDate: widget.filteration.dtList.first
+                                          .toLocal()
+                                          .toString(),
+                                      endDate: widget.filteration.dtList.last
+                                          .toLocal()
+                                          .toString(),
                                       base: baseUrlFromInsCode(
                                         "portal",
                                         widget.mskoolController,
                                       ),
                                       controller: widget.hwController,
-                                      forHw: widget.forHw,
-                                    );
-                                  } else {
-                                    GetHomeWorks.instance.getFilteredHwCw(
-                                        miId: widget.loginSuccessModel.mIID!,
-                                        asmayId:
-                                            widget.loginSuccessModel.asmaYId!,
-                                        hrmeId:
-                                            widget.loginSuccessModel.empcode!,
-                                        startDate: widget
-                                            .filteration.dtList.first
-                                            .toLocal()
-                                            .toString(),
-                                        endDate: widget.filteration.dtList.last
-                                            .toLocal()
-                                            .toString(),
-                                        base: baseUrlFromInsCode(
-                                          "portal",
-                                          widget.mskoolController,
-                                        ),
-                                        controller: widget.hwController,
-                                        forHw: widget.forHw);
-                                  }
-                                },
-                              );
-                            },
-                            separatorBuilder: (_, index) {
-                              return const SizedBox(
-                                height: 16.0,
-                              );
-                            },
-                            itemCount: widget.hwController.homeWorks.length)
-                    : widget.hwController.classWorks.isEmpty
-                        ? const Center(
-                            child: AnimatedProgressWidget(
-                              title: "No Assigned Work's",
-                              desc:
-                                  "There are no assigned work available right now, try with adding some work.",
-                              animationPath: "assets/json/nodata.json",
-                              animatorHeight: 250,
-                            ),
-                          )
-                        : ListView.separated(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            padding: const EdgeInsets.all(16.0),
-                            itemBuilder: (_, index) {
-                              color += 1;
-                              if (color % 6 == 0) {
-                                color = 0;
-                              }
-                              return HwCwViewWorkItem(
-                                color: color,
-                                forHw: widget.forHw,
-                                classwork: widget.hwController.classWorks
-                                    .elementAt(index),
-                                mskoolController: widget.mskoolController,
-                                miId: widget.loginSuccessModel.mIID!,
-                                func: () {
-                                  if (widget.hwController.filterCount.value ==
-                                      0) {
-                                    GetHomeWorks.instance.getHomeWorks(
+                                      forHw: widget.forHw);
+                                }
+                              },
+                            );
+                          },
+                          separatorBuilder: (_, index) {
+                            return const SizedBox(
+                              height: 16.0,
+                            );
+                          },
+                          itemCount: widget.hwController.homeWorks.length)
+                  : widget.hwController.classWorks.isEmpty
+                      ? const Center(
+                          child: AnimatedProgressWidget(
+                            title: "No Assigned Work's",
+                            desc:
+                                "There are no assigned work available right now, try with adding some work.",
+                            animationPath: "assets/json/nodata.json",
+                            animatorHeight: 250,
+                          ),
+                        )
+                      : ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: const EdgeInsets.all(16.0),
+                          itemBuilder: (_, index) {
+                            color += 1;
+                            if (color % 6 == 0) {
+                              color = 0;
+                            }
+                            return HwCwViewWorkItem(
+                              color: color,
+                              forHw: widget.forHw,
+                              classwork: widget.hwController.classWorks
+                                  .elementAt(index),
+                              mskoolController: widget.mskoolController,
+                              miId: widget.loginSuccessModel.mIID!,
+                              func: () {
+                                if (widget.hwController.filterCount.value ==
+                                    0) {
+                                  GetHomeWorks.instance.getHomeWorks(
+                                    miId: widget.loginSuccessModel.mIID!,
+                                    asmayId: widget.loginSuccessModel.asmaYId!,
+                                    hrmeId: widget.loginSuccessModel.empcode!,
+                                    userId: widget.loginSuccessModel.userId!,
+                                    ivrmrtId: widget.loginSuccessModel.roleId!,
+                                    loginId: widget.loginSuccessModel.userId!,
+                                    base: baseUrlFromInsCode(
+                                      "portal",
+                                      widget.mskoolController,
+                                    ),
+                                    controller: widget.hwController,
+                                    forHw: widget.forHw,
+                                  );
+                                } else {
+                                  GetHomeWorks.instance.getFilteredHwCw(
                                       miId: widget.loginSuccessModel.mIID!,
                                       asmayId:
                                           widget.loginSuccessModel.asmaYId!,
                                       hrmeId: widget.loginSuccessModel.empcode!,
-                                      userId: widget.loginSuccessModel.userId!,
-                                      ivrmrtId:
-                                          widget.loginSuccessModel.roleId!,
-                                      loginId: widget.loginSuccessModel.userId!,
+                                      startDate: widget.filteration.dtList.first
+                                          .toLocal()
+                                          .toString(),
+                                      endDate: widget.filteration.dtList.last
+                                          .toLocal()
+                                          .toString(),
                                       base: baseUrlFromInsCode(
                                         "portal",
                                         widget.mskoolController,
                                       ),
                                       controller: widget.hwController,
-                                      forHw: widget.forHw,
-                                    );
-                                  } else {
-                                    GetHomeWorks.instance.getFilteredHwCw(
-                                        miId: widget.loginSuccessModel.mIID!,
-                                        asmayId:
-                                            widget.loginSuccessModel.asmaYId!,
-                                        hrmeId:
-                                            widget.loginSuccessModel.empcode!,
-                                        startDate: widget
-                                            .filteration.dtList.first
-                                            .toLocal()
-                                            .toString(),
-                                        endDate: widget.filteration.dtList.last
-                                            .toLocal()
-                                            .toString(),
-                                        base: baseUrlFromInsCode(
-                                          "portal",
-                                          widget.mskoolController,
-                                        ),
-                                        controller: widget.hwController,
-                                        forHw: widget.forHw);
-                                  }
-                                },
-                              );
-                            },
-                            separatorBuilder: (_, index) {
-                              return const SizedBox(
-                                height: 16.0,
-                              );
-                            },
-                            itemCount: widget.hwController.classWorks.length,
-                          );
-      }),
-    );
+                                      forHw: widget.forHw);
+                                }
+                              },
+                            );
+                          },
+                          separatorBuilder: (_, index) {
+                            return const SizedBox(
+                              height: 16.0,
+                            );
+                          },
+                          itemCount: widget.hwController.classWorks.length,
+                        );
+    });
 
     // return widget.forHw
     //     ? FutureBuilder<List<HomeWorkViewWorkValues>>(

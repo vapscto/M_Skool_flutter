@@ -96,7 +96,17 @@ class _FeeTabState extends State<FeeTab> {
                             child: Column(
                               children: [
                                 ListTile(
-                                  title: const Text("Academic Year"),
+                                  title: Text(
+                                    "Academic Year",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(
+                                          const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                  ),
                                   subtitle: Text(
                                     widget.controller.feeDetails.first.acdYear!,
                                   ),
@@ -136,10 +146,14 @@ class _FeeTabState extends State<FeeTab> {
                                             "Payable",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .labelMedium!
+                                                .titleSmall!
                                                 .merge(
-                                                  const TextStyle(
-                                                    fontWeight: FontWeight.w600,
+                                                  TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Theme.of(context)
+                                                        .textTheme
+                                                        .labelMedium!
+                                                        .color,
                                                   ),
                                                 ),
                                           )
@@ -165,10 +179,14 @@ class _FeeTabState extends State<FeeTab> {
                                             "Concession",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .labelMedium!
+                                                .titleSmall!
                                                 .merge(
-                                                  const TextStyle(
-                                                    fontWeight: FontWeight.w600,
+                                                  TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Theme.of(context)
+                                                        .textTheme
+                                                        .labelMedium!
+                                                        .color,
                                                   ),
                                                 ),
                                           )
@@ -194,10 +212,14 @@ class _FeeTabState extends State<FeeTab> {
                                             "Paid",
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .labelMedium!
+                                                .titleSmall!
                                                 .merge(
-                                                  const TextStyle(
-                                                    fontWeight: FontWeight.w600,
+                                                  TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Theme.of(context)
+                                                        .textTheme
+                                                        .labelMedium!
+                                                        .color,
                                                   ),
                                                 ),
                                           )

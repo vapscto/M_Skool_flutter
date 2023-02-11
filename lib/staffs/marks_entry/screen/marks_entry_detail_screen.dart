@@ -333,6 +333,9 @@ class _MarksEntryDetailScreenState extends State<MarksEntryDetailScreen> {
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          height: 128.0,
+                        ),
                       ],
                     ),
                   ))
