@@ -12,19 +12,27 @@ String periodWiseStudentListModelToJson(PeriodWiseStudentListModel data) =>
 
 class PeriodWiseStudentListModel {
   PeriodWiseStudentListModel({
+    this.attendanceEntryFlag,
+    this.asaAttEntryType,
     this.asAId,
     this.studentList,
   });
+  String? attendanceEntryFlag;
+  String? asaAttEntryType;
   int? asAId;
   StudentList? studentList;
 
   factory PeriodWiseStudentListModel.fromJson(Map<String, dynamic> json) =>
       PeriodWiseStudentListModel(
+        attendanceEntryFlag: json["attendanceentryflag"],
+        asaAttEntryType: json["asA_Att_EntryType"],
         asAId: json["asA_Id"],
         studentList: StudentList.fromJson(json["studentList"]),
       );
 
   Map<String, dynamic> toJson() => {
+        "attendanceentryflag": attendanceEntryFlag,
+        "asA_Att_EntryType": asaAttEntryType,
         "asA_Id": asAId,
         "studentList": studentList!.toJson(),
       };
@@ -86,7 +94,7 @@ class PeroidWiseStudentListValue {
         amsTAdmNo: json["amsT_AdmNo"],
         amsTId: json["amsT_Id"],
         studentname: json["studentname"],
-        pdays: json["pdays"],
+        pdays: json["pdays"] ?? 0.00,
         asaSId: json["asaS_Id"] ?? 0,
         asAId: json["asA_Id"],
         ismSId: json["ismS_Id"],

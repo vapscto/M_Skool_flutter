@@ -82,7 +82,8 @@ class _InboxTabScreenState extends State<InboxTabScreen> {
                       receiverFilePath:
                           inboxController.inboxList[index].receiverFilepath!,
                       role: inboxController.inboxList[index].role!,
-
+                      userHrmeId: inboxController.userHrmeId.value,
+                      sender: inboxController.inboxList[index].sender!,
                       // isGroup: Random().nextBool(),
                       // isSeen:
                       //     inboxController.inboxList[index].istintReadFlg == 1

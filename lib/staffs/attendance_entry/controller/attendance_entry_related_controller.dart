@@ -30,6 +30,7 @@ class AttendanceEntryController extends GetxController {
   RxList<TextEditingController> textEditingController =
       <TextEditingController>[].obs;
   RxList<bool> boolList = <bool>[].obs;
+  RxList<bool> boolList2 = <bool>[].obs;
 
   RxString attendanceEntry = ''.obs;
   RxString attendanceEntryType = ''.obs;
@@ -243,10 +244,45 @@ class AttendanceEntryController extends GetxController {
             i++) {
           dailyOnceAndDailyTwiceStudentList
               .add(studentListModel1.studentList!.values!.elementAt(i)!);
-          boolList.add(
-              studentListModel1.studentList!.values!.elementAt(i)!.pdays == 1.00
-                  ? true
-                  : false);
+          if (studentListModel1.asaAttEntryType == 'D') {
+            if (studentListModel1.attendanceEntryFlag == 'A') {
+              if (studentListModel1.studentList!.values!.elementAt(i)!.pdays! ==
+                  0.00) {
+                boolList.add(true);
+              } else {
+                boolList.add(false);
+              }
+            } else if (studentListModel1.attendanceEntryFlag == 'P') {
+              if (studentListModel1.studentList!.values!.elementAt(i)!.pdays! >
+                  0.00) {
+                boolList.add(true);
+              } else {
+                boolList.add(false);
+              }
+            }
+          } else if (studentListModel1.asaAttEntryType == 'H') {
+            if (studentListModel1.attendanceEntryFlag == 'A') {
+              if (studentListModel1.studentList!.values!.elementAt(i)!.pdays! ==
+                  0.50) {
+                if (studentListModel1.studentList!.values!
+                        .elementAt(i)!
+                        .asaDailytwiceFlag ==
+                    'firsthalf') {
+                  boolList.add(false);
+                  boolList2.add(true);
+                } else if (studentListModel1.studentList!.values!
+                        .elementAt(i)!
+                        .asaDailytwiceFlag ==
+                    'Secondhalf') {
+                  boolList.add(true);
+                  boolList2.add(false);
+                }
+
+              }else if(studentListModel1.studentList!.values!.elementAt(i)!.pdays! == 1.00){
+                
+              }
+            }
+          }
         }
         asaId.value = studentListModel1.asAId!;
         return true;
@@ -330,14 +366,25 @@ class AttendanceEntryController extends GetxController {
             i++) {
           periodwiseStudentList.add(
               periodWiseStudentListModel.studentList!.values!.elementAt(i)!);
-          boolList.add(
-            periodWiseStudentListModel.studentList!.values!
-                        .elementAt(i)!
-                        .pdays ==
-                    1.00
-                ? true
-                : false,
-          );
+          if (periodWiseStudentListModel.attendanceEntryFlag == 'A') {
+            if (periodWiseStudentListModel.studentList!.values!
+                    .elementAt(i)!
+                    .pdays! ==
+                0.00) {
+              boolList.add(true);
+            } else {
+              boolList.add(false);
+            }
+          } else if (periodWiseStudentListModel.attendanceEntryFlag == 'P') {
+            if (periodWiseStudentListModel.studentList!.values!
+                    .elementAt(i)!
+                    .pdays! >
+                0.00) {
+              boolList.add(true);
+            } else {
+              boolList.add(false);
+            }
+          }
         }
         asaId.value = periodWiseStudentListModel.asAId!;
         return true;

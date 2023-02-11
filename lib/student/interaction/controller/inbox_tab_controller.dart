@@ -8,6 +8,7 @@ class InboxController extends GetxController {
   RxList<GetinboxmsgValue> unReadList = <GetinboxmsgValue>[].obs;
   // RxList<GetinboxmsgReadflgValue> messageFlagList =
   //     <GetinboxmsgReadflgValue>[].obs;
+  RxInt userHrmeId = RxInt(0);
   RxBool isInboxLoading = RxBool(false);
 
   void isInboxloading(bool loading) async {
@@ -41,6 +42,9 @@ class InboxController extends GetxController {
       if (inboxDataModel!.getinboxmsg != null ||
           inboxDataModel.getinboxmsg!.values != null) {
         inboxList.clear();
+        userHrmeId.value = 0;
+
+        userHrmeId.value = inboxDataModel.userhrmEId!;
         List<GetinboxmsgValue>? inboxMessage =
             inboxDataModel.getinboxmsg!.values;
 

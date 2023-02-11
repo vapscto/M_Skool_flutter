@@ -6,6 +6,8 @@ import 'package:m_skool_flutter/staffs/interaction/model/staffInboxModel.dart';
 class StaffInteractionInboxController extends GetxController {
   RxList<GetinboxmsgValue> inboxList = <GetinboxmsgValue>[].obs;
 
+  RxInt userHrmeId = RxInt(0);
+
   RxBool isInbox = RxBool(false);
 
   void isinboxloading(bool loading) async {
@@ -34,6 +36,9 @@ class StaffInteractionInboxController extends GetxController {
       if (staffInboxModel!.getinboxmsg != null ||
           staffInboxModel.getinboxmsg!.values != null) {
         inboxList.clear();
+        userHrmeId.value = 0;
+
+        userHrmeId.value = staffInboxModel.userhrmEId!;
         List<GetinboxmsgValue?>? inboxMessage =
             staffInboxModel.getinboxmsg!.values;
         var readFlags = staffInboxModel.getinboxmsgReadflg!.values;

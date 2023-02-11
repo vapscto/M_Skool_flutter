@@ -62,10 +62,6 @@ class _DailyOnceAttendanceEntryDetailScreenState
             child: SaveBtn(
               title: 'Save',
               onPress: () async {
-                // logger.d(boollist.length);
-                // for (var i = 0; i < boollist.length; i++) {
-                //   logger.d(boollist.elementAt(i));
-                // }
                 stdList.clear();
                 for (var i = 0;
                     i < attendanceEntryController.boolList.length;

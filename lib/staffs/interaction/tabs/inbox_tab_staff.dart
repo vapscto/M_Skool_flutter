@@ -119,6 +119,10 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
                       role: staffInteractionInboxController
                           .inboxList[index].role!,
 
+                      userHrmeId:
+                          staffInteractionInboxController.userHrmeId.value,
+                      sender: staffInteractionInboxController
+                          .inboxList[index].sender!,
                       // isGroup: Random().nextBool(),
                       // isSeen:
                       //     staffInteractionInboxController.inboxList[index].istintReadFlg == 1

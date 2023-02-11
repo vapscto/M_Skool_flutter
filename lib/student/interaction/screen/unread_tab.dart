@@ -79,6 +79,8 @@ class _UnReadTabScreenState extends State<UnReadTabScreen> {
                       receiverFilePath:
                           inboxController.inboxList[index].receiverFilepath!,
                       role: inboxController.inboxList[index].role!,
+                      userHrmeId: inboxController.userHrmeId.value,
+                      sender: inboxController.inboxList[index].sender!,
                       // isGroup: Random().nextBool(),
                       // isSeen:
                       //     inboxController.unReadList[index].istintReadFlg == 1

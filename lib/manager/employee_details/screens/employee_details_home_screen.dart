@@ -235,7 +235,7 @@ class _EmployeeDetailsHomeScreenState extends State<EmployeeDetailsHomeScreen> {
                                   ],
                                 ),
                                 child: RawScrollbar(
-                                  thumbColor: const Color(0xFF1E38FC),
+                                  thumbColor: Theme.of(context).primaryColor,
                                   trackColor:
                                       const Color.fromRGBO(223, 239, 253, 1),
                                   trackRadius: const Radius.circular(10),
@@ -259,6 +259,7 @@ class _EmployeeDetailsHomeScreenState extends State<EmployeeDetailsHomeScreen> {
                                             .elementAt(index)['columnID'],
                                         addfunction: addToHeaderList,
                                         removefunction: removeFromHeaderList,
+                                        index: index,
                                       );
                                     },
                                   ),
@@ -328,7 +329,7 @@ class _EmployeeDetailsHomeScreenState extends State<EmployeeDetailsHomeScreen> {
                                   ],
                                 ),
                                 child: RawScrollbar(
-                                  thumbColor: const Color(0xFF1E38FC),
+                                  thumbColor: Theme.of(context).primaryColor,
                                   trackColor:
                                       const Color.fromRGBO(223, 239, 253, 1),
                                   trackRadius: const Radius.circular(10),
@@ -423,7 +424,7 @@ class _EmployeeDetailsHomeScreenState extends State<EmployeeDetailsHomeScreen> {
                                   ],
                                 ),
                                 child: RawScrollbar(
-                                  thumbColor: const Color(0xFF1E38FC),
+                                  thumbColor: Theme.of(context).primaryColor,
                                   trackColor:
                                       const Color.fromRGBO(223, 239, 253, 1),
                                   trackRadius: const Radius.circular(10),
@@ -535,7 +536,7 @@ class _EmployeeDetailsHomeScreenState extends State<EmployeeDetailsHomeScreen> {
                                   ],
                                 ),
                                 child: RawScrollbar(
-                                  thumbColor: const Color(0xFF1E38FC),
+                                  thumbColor: Theme.of(context).primaryColor,
                                   trackColor:
                                       const Color.fromRGBO(223, 239, 253, 1),
                                   trackRadius: const Radius.circular(10),

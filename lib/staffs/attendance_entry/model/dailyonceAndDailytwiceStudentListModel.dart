@@ -14,22 +14,29 @@ String dailyOnceAndDailyTwiceStudentListModelToJson(
 
 class DailyOnceAndDailyTwiceStudentListModel {
   DailyOnceAndDailyTwiceStudentListModel({
+    this.attendanceEntryFlag,
+    this.asaAttEntryType,
     this.asAId,
     this.studentList,
   });
-
+  String? attendanceEntryFlag;
+  String? asaAttEntryType;
   int? asAId;
   DailyOnceAndDailyTwiceStudentList? studentList;
 
   factory DailyOnceAndDailyTwiceStudentListModel.fromJson(
           Map<String, dynamic> json) =>
       DailyOnceAndDailyTwiceStudentListModel(
+        attendanceEntryFlag: json["attendanceentryflag"],
+        asaAttEntryType: json["asA_Att_EntryType"],
         asAId: json["asA_Id"],
         studentList:
             DailyOnceAndDailyTwiceStudentList.fromJson(json["studentList"]),
       );
 
   Map<String, dynamic> toJson() => {
+        "attendanceentryflag": attendanceEntryFlag,
+        "asA_Att_EntryType": asaAttEntryType,
         "asA_Id": asAId,
         "studentList": studentList!.toJson(),
       };
@@ -93,7 +100,7 @@ class DailyOnceAndDailyTwiceStudentListValue {
         amsTAdmNo: json["amsT_AdmNo"],
         amsTId: json["amsT_Id"],
         studentname: json["studentname"],
-        pdays: json["pdays"],
+        pdays: json["pdays"] ?? 0.00,
         asaSId: json["asaS_Id"] ?? 0,
         asaDailytwiceFlag: json["asA_Dailytwice_Flag"] ?? '',
         asAId: json["asA_Id"],

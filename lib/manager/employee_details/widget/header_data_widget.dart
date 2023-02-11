@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/manager/employee_details/controller/employee_details_related_controller.dart';
 
 class HeaderDataWidget extends StatefulWidget {
   final String name;
   Function(Map<String, dynamic>)? addfunction;
   Function(String)? removefunction;
   String? id;
+  int index;
   HeaderDataWidget({
     super.key,
     required this.name,
     this.id,
     this.addfunction,
     this.removefunction,
+    required this.index,
   });
 
   @override
@@ -18,6 +23,8 @@ class HeaderDataWidget extends StatefulWidget {
 }
 
 class _HeaderDataWidgetState extends State<HeaderDataWidget> {
+  final EmployeeDetailsController employeeDetailsController =
+      Get.put(EmployeeDetailsController());
   bool ee = false;
   @override
   Widget build(BuildContext context) {
@@ -44,11 +51,14 @@ class _HeaderDataWidgetState extends State<HeaderDataWidget> {
           if (value!) {
             widget.addfunction!(
                 {"columnID": widget.id, "columnName": widget.name});
-                
+
+            employeeDetailsController.addToSelectedHeaderList(widget.index);
+            logger.d(employeeDetailsController.selectedHeaderList);
             return;
           }
           widget.removefunction!(widget.id!);
-
+          employeeDetailsController.removeFromSelectedHeaderList(widget.index);
+          logger.d(employeeDetailsController.selectedHeaderList);
         },
       ),
     );

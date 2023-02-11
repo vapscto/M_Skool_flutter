@@ -14,14 +14,24 @@ class EmployeeDetailsController extends GetxController {
   RxList<EmployeeDetailsValue> employeeDetailsList =
       <EmployeeDetailsValue>[].obs;
 
-  List<Map> headerList = [
+  RxList<Map> headerList = <Map>[
     {"columnID": "HRME_EmployeeCode", "columnName": "Employee Code"},
     {"columnID": "HRME_EmployeeFirstName", "columnName": "Employee Name"},
     {"columnID": "HRME_FatherName", "columnName": "Father Name"},
     {"columnID": "HRME_MobileNo", "columnName": "Mobile No."},
     {"columnID": "HRME_EmailId", "columnName": "Email Id"},
     {"columnID": "HRME_DOB", "columnName": "Date Of Birth"}
-  ];
+  ].obs;
+
+  RxList<int> selectedHeaderList = <int>[].obs;
+
+  void addToSelectedHeaderList(int index) {
+    selectedHeaderList.add(index);
+  }
+
+  void removeFromSelectedHeaderList(int index) {
+    selectedHeaderList.removeWhere((i) => i == index);
+  }
 
   RxBool isType = RxBool(false);
   RxBool isDepartment = RxBool(false);

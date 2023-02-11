@@ -17,6 +17,8 @@ class ChatProfileTile extends StatelessWidget {
   final int istintId;
   final int ismintComposeById;
   final String role;
+  final int userHrmeId;
+  final String sender;
   // final bool isGroup;
   // final bool isSeen;
   // final Color color;
@@ -33,6 +35,8 @@ class ChatProfileTile extends StatelessWidget {
       required this.istintId,
       required this.ismintComposeById,
       required this.role,
+      required this.userHrmeId,
+      required this.sender,
       // required this.isGroup,
       // required this.isSeen,
       // required this.color,
@@ -115,7 +119,23 @@ class ChatProfileTile extends StatelessWidget {
                     ?.copyWith(fontSize: 14),
               ),
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 10),
+            ismintComposeById == userHrmeId
+                ? Text(
+                    'To : $receiver',
+                    style: Theme.of(context)
+                        .textTheme
+                        .displaySmall!
+                        .copyWith(fontSize: 12),
+                  )
+                : Text(
+                    'From : $sender',
+                    style: Theme.of(context)
+                        .textTheme
+                        .displaySmall!
+                        .copyWith(fontSize: 12),
+                  ),
+
             //double_check.svg
             //blue_double_check.svg
             //single_check.svg

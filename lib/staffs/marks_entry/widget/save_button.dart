@@ -31,9 +31,13 @@ class _SaveBtnState extends State<SaveBtn> {
       child: Obx(
         () => marksEntryController.isSave.value ||
                 attendanceEntryController.isSave.value
-            ? const Center(
+            ? Center(
                 child: SizedBox(
-                    height: 20, width: 20, child: CircularProgressIndicator()),
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      color: Theme.of(context).primaryColor,
+                    )),
               )
             : Text(
                 widget.title,
