@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:m_skool_flutter/manager/student_details/api/get_section_api.dart';
 import 'package:m_skool_flutter/manager/student_details/api/get_student_api.dart';
 import 'package:m_skool_flutter/manager/student_details/controller/student_details_controller.dart';
@@ -47,8 +48,8 @@ class ManagerClassDD extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Image.asset(
-                        "assets/images/classnew.png",
+                      SvgPicture.asset(
+                        "assets/svg/red_class.svg",
                         height: 24.0,
                       ),
                       const SizedBox(

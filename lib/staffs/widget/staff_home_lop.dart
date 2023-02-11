@@ -36,7 +36,7 @@ class StaffHomeLop extends StatelessWidget {
             ),
             Image.asset(
               "assets/images/money.png",
-              height: 60,
+              height: Get.height * 0.05,
             ),
             // const SizedBox(
             //   height: 12.0,
@@ -44,9 +44,9 @@ class StaffHomeLop extends StatelessWidget {
             Text(
               "₹ ${value.lOPAmount}",
               style: Theme.of(context).textTheme.titleMedium!.merge(
-                    const TextStyle(
-                      fontSize: 25.0,
-                      color: Color(0xFFFF385C),
+                    TextStyle(
+                      fontSize: Get.width * 0.06,
+                      color: const Color(0xFFFF385C),
                     ),
                   ),
             ),

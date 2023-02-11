@@ -140,7 +140,7 @@ class _StaffWidgetState extends State<StaffWidget> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w400,
-                                                                fontSize: 16.0,
+                                                                fontSize: 14.0,
                                                                 letterSpacing:
                                                                     0.3)),
                                                       ),

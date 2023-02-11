@@ -89,8 +89,7 @@ class HwCwSectionDD extends StatelessWidget {
               left: 14,
               child: Container(
                 height: 30,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
                 decoration: const BoxDecoration(
                   color: Color(0xFFDBFDF5),
                   borderRadius: BorderRadius.all(

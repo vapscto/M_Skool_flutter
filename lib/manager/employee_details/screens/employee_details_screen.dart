@@ -33,6 +33,14 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: 'Employee details').getAppBar(),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+        onPressed: () {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        },
+        child: const Icon(Icons.home),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding:

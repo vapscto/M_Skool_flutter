@@ -56,7 +56,7 @@ class ManagerAcademicYearDD extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Image.asset(
-                        "assets/images/cap.png",
+                        "assets/images/hat.png",
                         height: 24.0,
                       ),
                       const SizedBox(

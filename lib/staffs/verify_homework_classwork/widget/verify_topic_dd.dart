@@ -402,12 +402,12 @@ class _VerifyTopicDDState extends State<VerifyTopicDD> {
                                 50,
                               ),
                             ),
-                            const AnimatedProgressWidget(
-                              title: "",
-                              desc: "",
-                              animationPath: "assets/json/nodata.json",
-                              animatorHeight: 250,
-                            ),
+                            // const AnimatedProgressWidget(
+                            //   title: "",
+                            //   desc: "",
+                            //   animationPath: "assets/json/nodata.json",
+                            //   animatorHeight: 250,
+                            // ),
                           ],
                         );
                 });

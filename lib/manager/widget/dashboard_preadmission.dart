@@ -67,6 +67,8 @@ class _DashboardPreAdmissionWidgetState
                         ),
                   ),
                   trailing: Chip(
+                      visualDensity: const VisualDensity(
+                          horizontal: VisualDensity.minimumDensity),
                       backgroundColor: const Color(0xFFFFFFFF),
                       label: Text(widget.dashboardController.preAdmission.first
                           .currentyear!)),

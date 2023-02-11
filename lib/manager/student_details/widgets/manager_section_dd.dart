@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/manager/student_details/api/get_student_api.dart';
 import 'package:m_skool_flutter/manager/student_details/controller/student_details_controller.dart';
@@ -80,8 +81,8 @@ class ManagerSectionDD extends StatelessWidget {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Image.asset(
-                                        "assets/images/sectionnew.png",
+                                      SvgPicture.asset(
+                                        "assets/svg/section_.png",
                                         height: 24.0,
                                       ),
                                       const SizedBox(

@@ -141,7 +141,7 @@ class _NoticeSectionState extends State<NoticeSection> {
                                                         .merge(const TextStyle(
                                                             fontWeight:
                                                                 FontWeight.w400,
-                                                            fontSize: 16.0,
+                                                            fontSize: 14.0,
                                                             letterSpacing:
                                                                 0.3)),
                                                   ),
