@@ -1,6 +1,5 @@
 import 'package:document_file_save_plus/document_file_save_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -627,24 +626,24 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                               List<pw.Widget> pdfPages = [];
 
                                               pdfPages.add(pw.Row(children: [
-                                                pw.Image(
-                                                    pw.MemoryImage(
-                                                      (await rootBundle.load(
-                                                              'assets/images/vpslogo.png'))
-                                                          .buffer
-                                                          .asUint8List(),
-                                                    ),
-                                                    height: 36.0),
-                                                pw.SizedBox(
-                                                  width: 16.0,
-                                                ),
-                                                pw.Text(
-                                                  "Vaps International School",
-                                                  style: pw.TextStyle(
-                                                      fontWeight:
-                                                          pw.FontWeight.bold,
-                                                      fontSize: 24.0),
-                                                ),
+                                                // pw.Image(
+                                                //     pw.MemoryImage(
+                                                //       (await rootBundle.load(
+                                                //               'assets/images/vpslogo.png'))
+                                                //           .buffer
+                                                //           .asUint8List(),
+                                                //     ),
+                                                //     height: 36.0),
+                                                // pw.SizedBox(
+                                                //   width: 16.0,
+                                                // ),
+                                                // pw.Text(
+                                                //   "${feeController.}",
+                                                //   style: pw.TextStyle(
+                                                //       fontWeight:
+                                                //           pw.FontWeight.bold,
+                                                //       fontSize: 24.0),
+                                                // ),
                                               ]));
                                               pdfPages.add(
                                                   pw.SizedBox(height: 16.0));
