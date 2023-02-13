@@ -14,7 +14,6 @@ import 'package:m_skool_flutter/staffs/attendance_entry/screen/dailyonce_attenda
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/dailytwice_attendance_entry_detail.screen.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/monthwise_attendance_entry_detail_screen.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/periodwise_attendance_entry_detail_screen.dart';
-import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -74,7 +73,9 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
   void getSectionData(int asmclId) async {
     attendanceEntryController.issectionloading(true);
     if (selectedAcademicYear == null) {
-      Fluttertoast.showToast(msg: 'Select Academic year.');
+      Fluttertoast.showToast(
+          backgroundColor: Theme.of(context).primaryColor,
+          msg: 'Select Academic year.');
       attendanceEntryController.issectionloading(false);
       return;
     }
@@ -96,6 +97,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
       logger.d(value);
       if (!value || value && attendanceEntryController.sectionList.isEmpty) {
         Fluttertoast.showToast(
+            backgroundColor: Theme.of(context).primaryColor,
             msg:
                 'Map The Attendance Entry Type For This Class i.e., Daily /Daily Twice/ Monthly');
       }
@@ -283,11 +285,37 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                   letterSpacing: 0.3)),
                           hintText: 'Select Year',
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          label: const CustomDropDownLabel(
-                            icon: 'assets/images/hat.png',
-                            containerColor: Color.fromRGBO(223, 251, 254, 1),
-                            text: 'Academic Year',
-                            textColor: Color.fromRGBO(40, 182, 200, 1),
+                          label: Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFDFFBFE),
+                              borderRadius: BorderRadius.circular(24.0),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 6.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(
+                                  "assets/images/cap.png",
+                                  height: 28.0,
+                                ),
+                                const SizedBox(
+                                  width: 6.0,
+                                ),
+                                Text(
+                                  " Academic Year ",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .merge(
+                                        const TextStyle(
+                                            backgroundColor: Color(0xFFDFFBFE),
+                                            fontSize: 20.0,
+                                            color: Color(0xFF28B6C8)),
+                                      ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         icon: const Padding(
@@ -372,11 +400,37 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                           hintText: 'Select Class',
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           isDense: true,
-                          label: const CustomDropDownLabel(
-                            icon: 'assets/images/classnew.png',
-                            containerColor: Color.fromRGBO(255, 235, 234, 1),
-                            text: 'Class',
-                            textColor: Color.fromRGBO(255, 111, 103, 1),
+                          label: Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFFFEBEA),
+                              borderRadius: BorderRadius.circular(24.0),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12.0, vertical: 6.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/svg/class_.svg",
+                                  height: 24.0,
+                                  color: const Color(0xFFFF6F67),
+                                ),
+                                const SizedBox(
+                                  width: 6.0,
+                                ),
+                                Text(
+                                  " Class ",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .merge(
+                                        const TextStyle(
+                                            fontSize: 20.0,
+                                            color: Color(0xFFFF6F67)),
+                                      ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         icon: const Padding(
@@ -420,8 +474,10 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                       ),
                     ),
                     attendanceEntryController.isSection.value
-                        ? const Center(
-                            child: CircularProgressIndicator(),
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              color: Theme.of(context).primaryColor,
+                            ),
                           )
                         : Container(
                             margin: const EdgeInsets.symmetric(
@@ -461,12 +517,37 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                 hintText: 'Select Section',
                                 floatingLabelBehavior:
                                     FloatingLabelBehavior.always,
-                                label: const CustomDropDownLabel(
-                                  icon: 'assets/images/sectionnew.png',
-                                  containerColor:
-                                      Color.fromRGBO(219, 253, 245, 1),
-                                  text: 'Section',
-                                  textColor: Color.fromRGBO(71, 186, 158, 1),
+                                label: Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFDBFDF5),
+                                    borderRadius: BorderRadius.circular(24.0),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0, vertical: 6.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/svg/section_.svg",
+                                        height: 24.0,
+                                        color: const Color(0xFF47BA9E),
+                                      ),
+                                      const SizedBox(
+                                        width: 6.0,
+                                      ),
+                                      Text(
+                                        " Section ",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
+                                            .merge(
+                                              const TextStyle(
+                                                  fontSize: 20.0,
+                                                  color: Color(0xFF47BA9E)),
+                                            ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                               icon: const Padding(
@@ -572,14 +653,40 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                     hintText: 'Select Month',
                                     floatingLabelBehavior:
                                         FloatingLabelBehavior.always,
-                                    label: const CustomDropDownLabel(
-                                      icon:
-                                          'assets/images/darkbluecalendar.png',
-                                      containerColor:
-                                          Color.fromRGBO(229, 243, 255, 1),
-                                      text: 'Select Month',
-                                      textColor:
-                                          Color.fromRGBO(62, 120, 170, 1),
+                                    label: Container(
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromRGBO(
+                                            229, 243, 255, 1),
+                                        borderRadius:
+                                            BorderRadius.circular(24.0),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12.0, vertical: 6.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Image.asset(
+                                            'assets/images/darkbluecalendar.png',
+                                            height: 20.0,
+                                          ),
+                                          const SizedBox(
+                                            width: 6.0,
+                                          ),
+                                          Text(
+                                            " Select Month ",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelMedium!
+                                                .merge(
+                                                  const TextStyle(
+                                                    fontSize: 18.0,
+                                                    color: Color.fromRGBO(
+                                                        62, 120, 170, 1),
+                                                  ),
+                                                ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   icon: const Padding(
@@ -663,16 +770,38 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                     decoration: InputDecoration(
                                       border: const OutlineInputBorder(),
                                       label: Container(
-                                        margin:
-                                            const EdgeInsets.only(bottom: 20),
-                                        child: const CustomDropDownLabel(
-                                          icon:
+                                        decoration: BoxDecoration(
+                                          color: const Color.fromRGBO(
+                                              229, 243, 255, 1),
+                                          borderRadius:
+                                              BorderRadius.circular(24.0),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12.0, vertical: 6.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Image.asset(
                                               'assets/images/darkbluecalendar.png',
-                                          containerColor:
-                                              Color.fromRGBO(229, 243, 255, 1),
-                                          text: 'Select Date',
-                                          textColor:
-                                              Color.fromRGBO(62, 120, 170, 1),
+                                              height: 20.0,
+                                            ),
+                                            const SizedBox(
+                                              width: 6.0,
+                                            ),
+                                            Text(
+                                              " Select Date ",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium!
+                                                  .merge(
+                                                    const TextStyle(
+                                                      fontSize: 20.0,
+                                                      color: Color.fromRGBO(
+                                                          62, 120, 170, 1),
+                                                    ),
+                                                  ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       hintText: 'Select date.'.tr,
@@ -751,7 +880,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                               icon: SvgPicture.asset(
                                                 'assets/svg/calendar_icon.svg',
                                                 color: const Color(0xFF3E78AA),
-                                                height: 22.0,
+                                                height: 18.0,
                                               ),
                                             ),
                                             contentPadding:
@@ -778,7 +907,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                                     "assets/svg/calendar_icon.svg",
                                                     color:
                                                         const Color(0xFF3E78AA),
-                                                    height: 24.0,
+                                                    height: 20.0,
                                                   ),
                                                   const SizedBox(
                                                     width: 6.0,
@@ -790,7 +919,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                                         .labelMedium!
                                                         .merge(
                                                           const TextStyle(
-                                                            fontSize: 20.0,
+                                                            fontSize: 18.0,
                                                             color: Color(
                                                                 0xFF3E78AA),
                                                           ),
@@ -846,7 +975,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                                   DateTime.now().year,
                                                   selectedMonth!.ivrMMonthId!
                                                       .toInt(),
-                                                  DateTime.now().day),
+                                                  31),
                                             );
 
                                             if (selectedenddate != null) {
@@ -866,7 +995,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                               icon: SvgPicture.asset(
                                                 'assets/svg/calendar_icon.svg',
                                                 color: const Color(0xFF3E78AA),
-                                                height: 22.0,
+                                                height: 18.0,
                                               ),
                                             ),
                                             border: const OutlineInputBorder(),
@@ -890,7 +1019,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                                     "assets/svg/calendar_icon.svg",
                                                     color:
                                                         const Color(0xFF3E78AA),
-                                                    height: 24.0,
+                                                    height: 20.0,
                                                   ),
                                                   const SizedBox(
                                                     width: 6.0,
@@ -902,7 +1031,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                                         .labelMedium!
                                                         .merge(
                                                           const TextStyle(
-                                                              fontSize: 20.0,
+                                                              fontSize: 18.0,
                                                               color: Color(
                                                                   0xFF3E78AA)),
                                                         ),
@@ -934,8 +1063,10 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                               )
                             : const SizedBox(),
                     attendanceEntryController.isSubject.value
-                        ? const Center(
-                            child: CircularProgressIndicator(),
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              color: Theme.of(context).primaryColor,
+                            ),
                           )
                         : attendanceEntryController.isSection.value
                             ? const SizedBox()
@@ -982,13 +1113,42 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                         floatingLabelBehavior:
                                             FloatingLabelBehavior.always,
                                         isDense: true,
-                                        label: const CustomDropDownLabel(
-                                          icon: 'assets/images/selectSub.png',
-                                          containerColor:
-                                              Color.fromRGBO(229, 243, 255, 1),
-                                          text: 'Select Subject',
-                                          textColor:
-                                              Color.fromRGBO(62, 120, 170, 1),
+                                        label: Container(
+                                          decoration: BoxDecoration(
+                                            color: const Color.fromRGBO(
+                                                229, 243, 255, 1),
+                                            borderRadius:
+                                                BorderRadius.circular(24.0),
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 12.0, vertical: 6.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Image.asset(
+                                                "assets/images/selectSub.png",
+                                                height: 20.0,
+                                              ),
+                                              const SizedBox(
+                                                width: 6.0,
+                                              ),
+                                              Text(
+                                                " Select Subject ",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelMedium!
+                                                    .merge(
+                                                      const TextStyle(
+                                                        backgroundColor:
+                                                            Color(0xFFDFFBFE),
+                                                        fontSize: 19.0,
+                                                        color: Color.fromRGBO(
+                                                            62, 120, 170, 1),
+                                                      ),
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       icon: const Padding(
@@ -1080,14 +1240,40 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                         hintText: 'Select Period',
                                         floatingLabelBehavior:
                                             FloatingLabelBehavior.always,
-                                        label: const CustomDropDownLabel(
-                                          icon:
-                                              'assets/images/selectPeriod.png',
-                                          containerColor:
-                                              Color.fromRGBO(238, 232, 255, 1),
-                                          text: 'Select Period',
-                                          textColor:
-                                              Color.fromRGBO(111, 88, 180, 1),
+                                        label: Container(
+                                          decoration: BoxDecoration(
+                                            color: const Color.fromRGBO(
+                                                238, 232, 255, 1),
+                                            borderRadius:
+                                                BorderRadius.circular(24.0),
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 12.0, vertical: 6.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Image.asset(
+                                                'assets/images/selectPeriod.png',
+                                                height: 20.0,
+                                              ),
+                                              const SizedBox(
+                                                width: 6.0,
+                                              ),
+                                              Text(
+                                                " Select Period ",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelMedium!
+                                                    .merge(
+                                                      const TextStyle(
+                                                        fontSize: 18.0,
+                                                        color: Color.fromRGBO(
+                                                            111, 88, 180, 1),
+                                                      ),
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       icon: const Padding(
@@ -1226,15 +1412,20 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                       ),
                       onPressed: () {
                         if (selectedSection == null) {
-                          Fluttertoast.showToast(msg: 'Select section');
+                          Fluttertoast.showToast(
+                              backgroundColor: Theme.of(context).primaryColor,
+                              msg: 'Select section');
                         } else if (attendanceEntryController
                                 .attendanceEntry.value ==
                             'M') {
                           if (selectedMonth == null) {
-                            Fluttertoast.showToast(msg: 'Select month');
+                            Fluttertoast.showToast(
+                                backgroundColor: Theme.of(context).primaryColor,
+                                msg: 'Select month');
                           } else if (startDate.text.isEmpty ||
                               endDate.text.isEmpty) {
                             Fluttertoast.showToast(
+                                backgroundColor: Theme.of(context).primaryColor,
                                 msg: 'Select start date and end date.');
                           } else if (attendanceEntryController
                               .monthwiseStudentList.isNotEmpty) {
@@ -1254,6 +1445,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                 ));
                           } else {
                             Fluttertoast.showToast(
+                                backgroundColor: Theme.of(context).primaryColor,
                                 msg:
                                     "Please Enter The Number Of Class Held For Particular Month In Master Class Held");
                           }
@@ -1273,6 +1465,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                 ));
                           } else {
                             Fluttertoast.showToast(
+                                backgroundColor: Theme.of(context).primaryColor,
                                 msg: "Something went wrong..");
                           }
                         } else if (attendanceEntryController
@@ -1291,15 +1484,20 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                 ));
                           } else {
                             Fluttertoast.showToast(
+                                backgroundColor: Theme.of(context).primaryColor,
                                 msg: "Something went wrong..");
                           }
                         } else if (attendanceEntryController
                                 .attendanceEntry.value ==
                             'P') {
                           if (selectedSubject == null) {
-                            Fluttertoast.showToast(msg: "Select Subject.");
+                            Fluttertoast.showToast(
+                                backgroundColor: Theme.of(context).primaryColor,
+                                msg: "Select Subject.");
                           } else if (selectedPeriod == null) {
-                            Fluttertoast.showToast(msg: "Select Peroid.");
+                            Fluttertoast.showToast(
+                                backgroundColor: Theme.of(context).primaryColor,
+                                msg: "Select Peroid.");
                           } else if (attendanceEntryController
                               .periodwiseStudentList.isNotEmpty) {
                             Get.to(() => PeriodWiseAttendanceEntryDetailScreen(
@@ -1315,7 +1513,9 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                   subjectId: selectedSubject!.ismSId!.toInt(),
                                 ));
                           } else {
-                            Fluttertoast.showToast(msg: "No data available...");
+                            Fluttertoast.showToast(
+                                backgroundColor: Theme.of(context).primaryColor,
+                                msg: "No data available...");
                           }
                         }
                       },

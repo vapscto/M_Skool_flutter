@@ -41,7 +41,7 @@ class _HeaderDataWidgetState extends State<HeaderDataWidget> {
         title: Text(
           widget.name,
           style: Theme.of(context).textTheme.labelSmall!.merge(const TextStyle(
-              fontWeight: FontWeight.w400, fontSize: 14.0, letterSpacing: 0.3)),
+              fontWeight: FontWeight.w500, fontSize: 13.0, letterSpacing: 0.3)),
         ),
         value: ee,
         onChanged: (value) {

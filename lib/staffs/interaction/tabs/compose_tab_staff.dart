@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
@@ -489,94 +490,109 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                             staffInteractionComposeController
                                     .selectedradio.value !=
                                 'Student'
-                        ? Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              Container(
-                                height: staffInteractionComposeController
-                                            .getDetailList.length ==
-                                        1
-                                    ? 60
-                                    : staffInteractionComposeController
-                                                .getDetailList.length ==
-                                            2
-                                        ? 120
-                                        : staffInteractionComposeController
-                                                    .getDetailList.length ==
-                                                3
-                                            ? 140
-                                            : 180,
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 10),
-                                padding:
-                                    const EdgeInsets.only(top: 5, bottom: 10),
-                                decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  borderRadius: BorderRadius.circular(16.0),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      offset: Offset(0, 1),
-                                      blurRadius: 4,
-                                      color: Colors.black12,
-                                    ),
-                                  ],
-                                ),
-                                child: RawScrollbar(
-                                  thumbColor: const Color(0xFF1E38FC),
-                                  trackColor:
-                                      const Color.fromRGBO(223, 239, 253, 1),
-                                  trackRadius: const Radius.circular(10),
-                                  trackVisibility: true,
-                                  radius: const Radius.circular(10),
-                                  thickness: 14,
-                                  thumbVisibility: true,
-                                  controller: _controller,
-                                  child: ListView.builder(
-                                    controller: _controller,
-                                    itemCount: staffInteractionComposeController
-                                        .getDetailList.length,
-                                    itemBuilder: (context, index) {
-                                      return TeacherListWidget(
-                                        data: staffInteractionComposeController
-                                            .getDetailList
-                                            .elementAt(index),
-                                        function: addStaffInList,
-                                        function1: removeStaffFromList,
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                top: -10,
-                                left: 14,
-                                child: Container(
-                                  height: 30,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 7),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        'Select staffs',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .merge(
-                                              const TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 16.0,
-                                                color: Color.fromRGBO(
-                                                    137, 137, 137, 1),
-                                              ),
-                                            ),
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Stack(
+                              clipBehavior: Clip.none,
+                              children: [
+                                Container(
+                                  height: staffInteractionComposeController
+                                              .getDetailList.length ==
+                                          1
+                                      ? 60
+                                      : staffInteractionComposeController
+                                                  .getDetailList.length ==
+                                              2
+                                          ? 120
+                                          : staffInteractionComposeController
+                                                      .getDetailList.length ==
+                                                  3
+                                              ? 140
+                                              : 180,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 10),
+                                  padding:
+                                      const EdgeInsets.only(top: 5, bottom: 10),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor,
+                                    borderRadius: BorderRadius.circular(16.0),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        offset: Offset(0, 1),
+                                        blurRadius: 4,
+                                        color: Colors.black12,
                                       ),
                                     ],
                                   ),
+                                  child: RawScrollbar(
+                                    thumbColor: const Color(0xFF1E38FC),
+                                    trackColor:
+                                        const Color.fromRGBO(223, 239, 253, 1),
+                                    trackRadius: const Radius.circular(10),
+                                    trackVisibility: true,
+                                    radius: const Radius.circular(10),
+                                    thickness: 14,
+                                    thumbVisibility: true,
+                                    controller: _controller,
+                                    child: ListView.builder(
+                                      controller: _controller,
+                                      itemCount:
+                                          staffInteractionComposeController
+                                              .getDetailList.length,
+                                      itemBuilder: (context, index) {
+                                        return TeacherListWidget(
+                                          data:
+                                              staffInteractionComposeController
+                                                  .getDetailList
+                                                  .elementAt(index),
+                                          function: addStaffInList,
+                                          function1: removeStaffFromList,
+                                        );
+                                      },
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ],
+                                Positioned(
+                                  top: -8,
+                                  left: 30,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12, vertical: 4),
+                                    decoration: const BoxDecoration(
+                                      color: Color.fromRGBO(229, 243, 255, 1),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(24),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Image.asset(
+                                          'assets/images/selectteachericon.png',
+                                          height: 18,
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Text(
+                                          'Select Staff',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .merge(
+                                                const TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 12.0,
+                                                  color: Color.fromRGBO(
+                                                      60, 120, 170, 1),
+                                                ),
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           )
                         : Container(
                             margin: const EdgeInsets.symmetric(
@@ -595,45 +611,65 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                             child: DropdownButtonFormField<GetdetailsValues>(
                               value: selectedInitialDropdown,
                               decoration: InputDecoration(
-                                  focusedBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                    ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
                                   ),
-                                  enabledBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                    ),
+                                ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
                                   ),
-                                  isDense: true,
-                                  hintStyle: Theme.of(context)
-                                      .textTheme
-                                      .labelSmall!
-                                      .merge(const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14.0,
-                                          letterSpacing: 0.3)),
-                                  hintText: 'select',
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.always,
-                                  label: Text(
-                                    staffInteractionComposeController
-                                                .selectedradio.value ==
-                                            'Student'
-                                        ? 'Class'
-                                        : 'Staff',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .merge(
-                                          const TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 20.0,
-                                            color: Color.fromRGBO(
-                                                137, 137, 137, 1),
-                                          ),
-                                        ),
-                                  )),
+                                ),
+                                isDense: true,
+                                hintStyle: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .merge(const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14.0,
+                                        letterSpacing: 0.3)),
+                                hintText: 'select',
+                                floatingLabelBehavior:
+                                    FloatingLabelBehavior.always,
+                                label: Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFFFEBEA),
+                                    borderRadius: BorderRadius.circular(24.0),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0, vertical: 6.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/svg/class_.svg",
+                                        height: 24.0,
+                                        color: const Color(0xFFFF6F67),
+                                      ),
+                                      const SizedBox(
+                                        width: 6.0,
+                                      ),
+                                      Text(
+                                        staffInteractionComposeController
+                                                    .selectedradio.value ==
+                                                'Student'
+                                            ? ' Class '
+                                            : ' Staff ',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .merge(
+                                              const TextStyle(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 20.0,
+                                                  color: Color(0xFFFF6F67)),
+                                            ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
                               icon: const Padding(
                                 padding: EdgeInsets.only(top: 3),
                                 child: Icon(
@@ -721,40 +757,59 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                             InteractionSectionListValue>(
                           value: selectedsection,
                           decoration: InputDecoration(
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
                               ),
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                ),
+                            ),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
                               ),
-                              isDense: true,
-                              hintStyle: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall!
-                                  .merge(const TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14.0,
-                                      letterSpacing: 0.3)),
-                              hintText: 'select',
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                              label: Text(
-                                'Section',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .merge(
-                                      const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 20.0,
-                                        color: Color.fromRGBO(137, 137, 137, 1),
-                                      ),
-                                    ),
-                              )),
+                            ),
+                            isDense: true,
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .merge(const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.0,
+                                    letterSpacing: 0.3)),
+                            hintText: 'select section',
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            label: Container(
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFDBFDF5),
+                                borderRadius: BorderRadius.circular(24.0),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12.0, vertical: 6.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/svg/section_.svg",
+                                    height: 24.0,
+                                    color: const Color(0xFF47BA9E),
+                                  ),
+                                  const SizedBox(
+                                    width: 6.0,
+                                  ),
+                                  Text(
+                                    " Section ",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
+                                        .merge(
+                                          const TextStyle(
+                                              fontSize: 20.0,
+                                              color: Color(0xFF47BA9E)),
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                           icon: const Padding(
                             padding: EdgeInsets.only(top: 3),
                             child: Icon(
@@ -824,40 +879,61 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                         child: DropdownButtonFormField<GetStudentValue>(
                           value: selectedstudent,
                           decoration: InputDecoration(
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            isDense: true,
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .merge(const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.0,
+                                    letterSpacing: 0.3)),
+                            hintText: 'select',
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            label: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 4),
+                              decoration: const BoxDecoration(
+                                color: Color.fromRGBO(229, 243, 255, 1),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(24),
                                 ),
                               ),
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Image.asset(
+                                    'assets/images/selectteachericon.png',
+                                    height: 26,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    'Select Teacher',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(
+                                          const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18.0,
+                                            color:
+                                                Color.fromRGBO(60, 120, 170, 1),
+                                          ),
+                                        ),
+                                  ),
+                                ],
                               ),
-                              isDense: true,
-                              hintStyle: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall!
-                                  .merge(const TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14.0,
-                                      letterSpacing: 0.3)),
-                              hintText: 'select',
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                              label: Text(
-                                'Select Students',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .merge(
-                                      const TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 20.0,
-                                        color: Color.fromRGBO(137, 137, 137, 1),
-                                      ),
-                                    ),
-                              )),
+                            ),
+                          ),
                           icon: const Padding(
                             padding: EdgeInsets.only(top: 3),
                             child: Icon(
@@ -950,26 +1026,36 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                             ),
                           ),
                           Positioned(
-                            top: -10,
-                            left: 14,
+                            top: -8,
+                            left: 30,
                             child: Container(
-                              height: 30,
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 7),
+                                  horizontal: 12, vertical: 4),
+                              decoration: const BoxDecoration(
+                                color: Color.fromRGBO(229, 243, 255, 1),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(24),
+                                ),
+                              ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
+                                  Image.asset(
+                                    'assets/images/selectteachericon.png',
+                                    height: 18,
+                                  ),
+                                  const SizedBox(width: 10),
                                   Text(
-                                    'Select Students',
+                                    'Select Teacher',
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleSmall!
                                         .merge(
                                           const TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 16.0,
-                                            color: Color.fromRGBO(
-                                                137, 137, 137, 1),
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12.0,
+                                            color:
+                                                Color.fromRGBO(60, 120, 170, 1),
                                           ),
                                         ),
                                   ),
