@@ -145,8 +145,14 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                 ).then((value) {
                   logger.d(value);
                   if (value) {
-                    Fluttertoast.showToast(msg: 'Attendance save successfully');
+                    Fluttertoast.showToast(
+                        msg: 'Attendance Save Successfully',
+                        backgroundColor: Theme.of(context).primaryColor);
+                    return;
                   }
+                  Fluttertoast.showToast(
+                      msg: 'Something went wrong',
+                      backgroundColor: Theme.of(context).primaryColor);
                 });
                 attendanceEntryController.issaveloading(false);
               },

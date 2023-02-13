@@ -1174,8 +1174,14 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                       ),
                     ).then((value) {
                       if (value) {
-                        Fluttertoast.showToast(msg: 'Compose successfully');
+                        Fluttertoast.showToast(
+                            msg: 'Compose successfully',
+                            backgroundColor: Theme.of(context).primaryColor);
+                        return;
                       }
+                      Fluttertoast.showToast(
+                          msg: 'Something went wrong',
+                          backgroundColor: Theme.of(context).primaryColor);
                     });
                     staffInteractionComposeController.issubmitloading(false);
                   }
@@ -1186,7 +1192,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                         width: 18,
                         child: CircularProgressIndicator(
                           color: Colors.white,
-                          strokeWidth: 3,
+                          strokeWidth: 2,
                         ),
                       )
                     : Text(

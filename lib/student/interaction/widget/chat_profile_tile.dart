@@ -8,9 +8,9 @@ import 'package:m_skool_flutter/student/interaction/screen/messaging_section.dar
 class ChatProfileTile extends StatelessWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  final String receiverFilePath;
-  final String receiver;
-  final String istintToFlg;
+  final String profileimage;
+  final String title;
+  final String designation;
   final String ismintSubject;
   final DateTime ismintDateTime;
   final int ismintId;
@@ -19,6 +19,7 @@ class ChatProfileTile extends StatelessWidget {
   final String role;
   final int userHrmeId;
   final String sender;
+  final String receiver;
   // final bool isGroup;
   // final bool isSeen;
   // final Color color;
@@ -26,9 +27,9 @@ class ChatProfileTile extends StatelessWidget {
   const ChatProfileTile(
       {required this.loginSuccessModel,
       required this.mskoolController,
-      required this.receiverFilePath,
-      required this.receiver,
-      required this.istintToFlg,
+      required this.profileimage,
+      required this.title,
+      required this.designation,
       required this.ismintSubject,
       required this.ismintDateTime,
       required this.ismintId,
@@ -37,6 +38,7 @@ class ChatProfileTile extends StatelessWidget {
       required this.role,
       required this.userHrmeId,
       required this.sender,
+      required this.receiver,
       // required this.isGroup,
       // required this.isSeen,
       // required this.color,
@@ -56,24 +58,25 @@ class ChatProfileTile extends StatelessWidget {
             ismintComposedById: ismintComposeById,
             loginSuccessModel: loginSuccessModel,
             mskoolController: mskoolController,
+            hrmeId: userHrmeId,
           ),
         ),
         contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
         leading:
-            // data.receiverFilePath!.isNotEmpty
+            // data.profileimage!.isNotEmpty
             //     ?
             CircleAvatar(
           radius: 30,
           // backgroundColor: color,
-          backgroundImage: receiverFilePath.isNotEmpty
-              ? NetworkImage(receiverFilePath.toString())
+          backgroundImage: profileimage.isNotEmpty
+              ? NetworkImage(profileimage.toString())
               : const NetworkImage(
                   "https://img.icons8.com/fluency/48/null/user-male-circle.png"),
         ),
         title: Text.rich(
             overflow: TextOverflow.ellipsis,
             TextSpan(
-                text: "$receiver  |",
+                text: "$title  |",
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge
@@ -81,7 +84,7 @@ class ChatProfileTile extends StatelessWidget {
                 children: [
                   TextSpan(
                     text:
-                        "  ${istintToFlg[0].toUpperCase()}${istintToFlg.substring(1).toLowerCase()}",
+                        "  ${designation[0].toUpperCase()}${designation.substring(1).toLowerCase()}",
                     style: Theme.of(context)
                         .textTheme
                         .displaySmall

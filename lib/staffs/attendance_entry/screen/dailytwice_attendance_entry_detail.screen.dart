@@ -3,11 +3,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/api/attendance_entry_related_api.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/controller/attendance_entry_related_controller.dart';
-import 'package:m_skool_flutter/staffs/attendance_entry/widget/attendance_checkbox_widget.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
@@ -39,16 +37,18 @@ class _DailyTwiceAttendanceEntryDetailScreenState
   final AttendanceEntryController attendanceEntryController =
       Get.put(AttendanceEntryController());
   bool selectAll = false;
+  String date =
+      '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}';
   List<Map<String, dynamic>> stdList = [];
-
-  void addToStudentList(Map<String, dynamic> data) {
-    stdList.add(data);
-    logger.d(stdList);
-  }
-
-  void removeFromStudentList(int rollNo) {
-    stdList.removeWhere((element) => element['amaY_RollNo'] == rollNo);
-    logger.d(stdList);
+  List<bool> boollist = [];
+  List<bool> boollist2 = [];
+  @override
+  void initState() {
+    boollist.clear();
+    boollist2.clear();
+    boollist = attendanceEntryController.boolList;
+    boollist2 = attendanceEntryController.boolList2;
+    super.initState();
   }
 
   @override
@@ -65,10 +65,6 @@ class _DailyTwiceAttendanceEntryDetailScreenState
             child: SaveBtn(
               title: 'Save',
               onPress: () async {
-                if (stdList.isEmpty) {
-                  Fluttertoast.showToast(msg: 'Select Attendance');
-                  return;
-                }
                 stdList.clear();
                 for (var i = 0;
                     i <
@@ -99,8 +95,8 @@ class _DailyTwiceAttendanceEntryDetailScreenState
                           .dailyOnceAndDailyTwiceStudentList
                           .elementAt(i)
                           .asaSId,
-                      "FirstHalfflag": true,
-                      "SecondHalfflag": true,
+                      "FirstHalfflag": boollist.elementAt(i),
+                      "SecondHalfflag": boollist2.elementAt(i),
                       "asA_Dailytwice_Flag": null,
                       "asA_Id": attendanceEntryController
                           .dailyOnceAndDailyTwiceStudentList
@@ -130,9 +126,9 @@ class _DailyTwiceAttendanceEntryDetailScreenState
                             : 'Absent',
                     "ASMCL_Id": widget.asmclId,
                     "ASMS_Id": widget.asmsId,
-                    "ASA_Entry_DateTime": DateTime.now().toString(),
-                    "ASA_FromDate": DateTime.now().toString(),
-                    "ASA_ToDate": DateTime.now().toString(),
+                    "ASA_Entry_DateTime": date,
+                    "ASA_FromDate": date,
+                    "ASA_ToDate": date,
                     "ASA_ClassHeld": "1.00",
                     "ASA_Regular_Extra": "Regular",
                     "ASA_Network_IP": "::1",
@@ -151,7 +147,17 @@ class _DailyTwiceAttendanceEntryDetailScreenState
                     'admission',
                     widget.mskoolController,
                   ),
-                ).then((value) => logger.d(value));
+                ).then((value) {
+                  if (value) {
+                    Fluttertoast.showToast(
+                        msg: 'Attendance Save Successfully',
+                        backgroundColor: Theme.of(context).primaryColor);
+                    return;
+                  }
+                  Fluttertoast.showToast(
+                      msg: 'Something went wrong',
+                      backgroundColor: Theme.of(context).primaryColor);
+                });
                 attendanceEntryController.issaveloading(false);
               },
             ),
@@ -234,6 +240,10 @@ class _DailyTwiceAttendanceEntryDetailScreenState
                       setState(() {
                         selectAll = value!;
                       });
+                      for (var i = 0; i < boollist.length; i++) {
+                        boollist[i] = value!;
+                        boollist2[i] = value;
+                      }
                     },
                   ),
                 ),
@@ -376,92 +386,34 @@ class _DailyTwiceAttendanceEntryDetailScreenState
                               DataCell(
                                 Align(
                                   alignment: Alignment.center,
-                                  child: AttendanceCheckboxWidget(
-                                    index: index,
-                                    attendance: selectAll
-                                        ? true
-                                        : attendanceEntryController
-                                                        .dailyOnceAndDailyTwiceStudentList
-                                                        .elementAt(index)
-                                                        .pdays ==
-                                                    0.50 &&
-                                                attendanceEntryController
-                                                        .dailyOnceAndDailyTwiceStudentList
-                                                        .elementAt(index)
-                                                        .asaDailytwiceFlag!
-                                                        .toLowerCase() ==
-                                                    'secondhalf'
-                                            ? true
-                                            : false,
-                                    admNo: attendanceEntryController
-                                        .dailyOnceAndDailyTwiceStudentList
-                                        .elementAt(index)
-                                        .amsTAdmNo!,
-                                    amstId: attendanceEntryController
-                                        .dailyOnceAndDailyTwiceStudentList
-                                        .elementAt(index)
-                                        .amsTId!,
-                                    amstRegistrationNo:
-                                        attendanceEntryController
-                                            .dailyOnceAndDailyTwiceStudentList
-                                            .elementAt(index)
-                                            .amsTRegistrationNo!,
-                                    rollNo: attendanceEntryController
-                                        .dailyOnceAndDailyTwiceStudentList
-                                        .elementAt(index)
-                                        .amaYRollNo!,
-                                    studentName: attendanceEntryController
-                                        .dailyOnceAndDailyTwiceStudentList
-                                        .elementAt(index)
-                                        .studentname!,
-                                    attendanceEntryController:
-                                        attendanceEntryController,
+                                  child: Checkbox(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    activeColor: Theme.of(context).primaryColor,
+                                    value: boollist[index],
+                                    onChanged: (value) {
+                                      setState(() {
+                                        boollist[index] = value!;
+                                      });
+                                    },
                                   ),
                                 ),
                               ),
                               DataCell(
                                 Align(
                                   alignment: Alignment.center,
-                                  child: AttendanceCheckboxWidget(
-                                    index: index,
-                                    attendance: selectAll
-                                        ? true
-                                        : attendanceEntryController
-                                                        .dailyOnceAndDailyTwiceStudentList
-                                                        .elementAt(index)
-                                                        .pdays ==
-                                                    0.50 &&
-                                                attendanceEntryController
-                                                        .dailyOnceAndDailyTwiceStudentList
-                                                        .elementAt(index)
-                                                        .asaDailytwiceFlag!
-                                                        .toLowerCase() ==
-                                                    'firsthalf'
-                                            ? true
-                                            : false,
-                                    admNo: attendanceEntryController
-                                        .dailyOnceAndDailyTwiceStudentList
-                                        .elementAt(index)
-                                        .amsTAdmNo!,
-                                    amstId: attendanceEntryController
-                                        .dailyOnceAndDailyTwiceStudentList
-                                        .elementAt(index)
-                                        .amsTId!,
-                                    amstRegistrationNo:
-                                        attendanceEntryController
-                                            .dailyOnceAndDailyTwiceStudentList
-                                            .elementAt(index)
-                                            .amsTRegistrationNo!,
-                                    rollNo: attendanceEntryController
-                                        .dailyOnceAndDailyTwiceStudentList
-                                        .elementAt(index)
-                                        .amaYRollNo!,
-                                    studentName: attendanceEntryController
-                                        .dailyOnceAndDailyTwiceStudentList
-                                        .elementAt(index)
-                                        .studentname!,
-                                    attendanceEntryController:
-                                        attendanceEntryController,
+                                  child: Checkbox(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    activeColor: Theme.of(context).primaryColor,
+                                    value: boollist2[index],
+                                    onChanged: (value) {
+                                      setState(() {
+                                        boollist2[index] = value!;
+                                      });
+                                    },
                                   ),
                                 ),
                               ),

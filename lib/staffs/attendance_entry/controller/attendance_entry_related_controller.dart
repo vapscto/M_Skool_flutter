@@ -277,9 +277,47 @@ class AttendanceEntryController extends GetxController {
                   boolList.add(true);
                   boolList2.add(false);
                 }
-
-              }else if(studentListModel1.studentList!.values!.elementAt(i)!.pdays! == 1.00){
-                
+              } else if (studentListModel1.studentList!.values!
+                      .elementAt(i)!
+                      .pdays! ==
+                  1.00) {
+                boolList.add(false);
+                boolList2.add(false);
+              } else if (studentListModel1.studentList!.values!
+                      .elementAt(i)!
+                      .pdays! ==
+                  0.00) {
+                boolList.add(true);
+                boolList2.add(true);
+              } else {
+                boolList.add(false);
+                boolList2.add(false);
+              }
+            } else if (studentListModel1.attendanceEntryFlag == 'P') {
+              if (studentListModel1.studentList!.values!.elementAt(i)!.pdays! ==
+                  0.50) {
+                if (studentListModel1.studentList!.values!
+                        .elementAt(i)!
+                        .asaDailytwiceFlag ==
+                    'firsthalf') {
+                  boolList.add(true);
+                  boolList2.add(false);
+                } else if (studentListModel1.studentList!.values!
+                        .elementAt(i)!
+                        .asaDailytwiceFlag ==
+                    'Secondhalf') {
+                  boolList.add(false);
+                  boolList2.add(true);
+                }
+              } else if (studentListModel1.studentList!.values!
+                      .elementAt(i)!
+                      .pdays! ==
+                  1.00) {
+                boolList.add(true);
+                boolList2.add(true);
+              } else {
+                boolList.add(false);
+                boolList2.add(false);
               }
             }
           }

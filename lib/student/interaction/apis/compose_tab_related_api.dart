@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -80,10 +79,8 @@ Future<bool> saveDetail({
       },
     );
     if (response.statusCode == 200) {
-      Fluttertoast.showToast(msg: 'Composed Successfully!!');
       return true;
     }
-    Fluttertoast.showToast(msg: 'Something went wrong');
     return false;
   } catch (e) {
     logger.d(e.toString());

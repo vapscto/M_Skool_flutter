@@ -17,15 +17,18 @@ class MessagingScreen extends StatefulWidget {
   final int ismintId;
   final int istintId;
   final int ismintComposedById;
+  final int hrmeId;
   // final GetinboxmsgValue data;
-  const MessagingScreen(
-      {super.key,
-      // required this.data,
-      required this.ismintId,
-      required this.istintId,
-      required this.ismintComposedById,
-      required this.loginSuccessModel,
-      required this.mskoolController});
+  const MessagingScreen({
+    super.key,
+    // required this.data,
+    required this.ismintId,
+    required this.istintId,
+    required this.ismintComposedById,
+    required this.loginSuccessModel,
+    required this.mskoolController,
+    required this.hrmeId,
+  });
 
   @override
   State<MessagingScreen> createState() => _MessagingScreenState();
@@ -100,8 +103,10 @@ class _MessagingScreenState extends State<MessagingScreen> {
             Expanded(
               child: Obx(
                 () => interactionController.isMessage.value
-                    ? const Center(
-                        child: CircularProgressIndicator(),
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: Theme.of(context).primaryColor,
+                        ),
                       )
                     : ListView.builder(
                         shrinkWrap: true,
@@ -117,21 +122,22 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           return Column(
                             children: [
                               ChatBox(
-                                name: widget.loginSuccessModel.roleforlogin !=
+                                name: widget.hrmeId ==
                                         interactionController.messageList
                                             .elementAt(index)
-                                            .istintToFlg
-                                    ? widget.loginSuccessModel.studname!
+                                            .istintComposedById
+                                    ? interactionController.messageList
+                                        .elementAt(index)
+                                        .sender!
                                     : interactionController.messageList
                                         .elementAt(index)
                                         .sender!,
-                                isFromMe:
-                                    widget.loginSuccessModel.roleforlogin !=
-                                            interactionController.messageList
-                                                .elementAt(index)
-                                                .istintToFlg
-                                        ? true
-                                        : false,
+                                isFromMe: widget.hrmeId ==
+                                        interactionController.messageList
+                                            .elementAt(index)
+                                            .istintComposedById
+                                    ? true
+                                    : false,
                                 messages: interactionController.messageList
                                     .elementAt(index)
                                     .istintInteraction!,
@@ -303,8 +309,13 @@ class _MessagingScreenState extends State<MessagingScreen> {
                   () => FloatingActionButton(
                     backgroundColor: Theme.of(context).primaryColor,
                     child: interactionController.isSending.value
-                        ? const CircularProgressIndicator(
-                            backgroundColor: Colors.white,
+                        ? const SizedBox(
+                            height: 25,
+                            width: 25,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
                           )
                         : SvgPicture.asset("assets/svg/send_arrow.svg"),
                     onPressed: () async {
