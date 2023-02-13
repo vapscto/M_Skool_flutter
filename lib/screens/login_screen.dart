@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -32,6 +33,17 @@ class _LoginScreenState extends State<LoginScreen> {
   RxBool showPassword = RxBool(false);
 
   bool policyAccepted = false;
+  String deviceToken = '';
+  @override
+  void initState() {
+    getDeviceTokenForFCM();
+    super.initState();
+  }
+
+  getDeviceTokenForFCM() async {
+    deviceToken = await getDeviceToken();
+    logger.d('Device Id : $deviceToken');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -369,12 +381,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: FutureBuilder<LoginSuccessModel>(
                                       future: AuthenticateUserApi.instance
                                           .authenticateNow(
-                                        userName.text,
-                                        password.text,
-                                        widget.mskoolController
-                                            .universalInsCodeModel!.value.miId,
-                                        loginBaseUrl,
-                                      ),
+                                              userName.text,
+                                              password.text,
+                                              widget
+                                                  .mskoolController
+                                                  .universalInsCodeModel!
+                                                  .value
+                                                  .miId,
+                                              loginBaseUrl,
+                                              deviceToken),
                                       builder: (_, snapshot) {
                                         if (snapshot.hasData) {
                                           return Padding(
@@ -597,4 +612,10 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+}
+
+Future getDeviceToken() async {
+  FirebaseMessaging firebaseMessage = FirebaseMessaging.instance;
+  String? deviceToken = await firebaseMessage.getToken();
+  return (deviceToken == null) ? "" : deviceToken;
 }

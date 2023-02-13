@@ -11,8 +11,8 @@ class AuthenticateUserApi {
   AuthenticateUserApi.init();
   static AuthenticateUserApi instance = AuthenticateUserApi.init();
 
-  Future<LoginSuccessModel> authenticateNow(
-      String userName, String password, int miId, String loginBaseUrl) async {
+  Future<LoginSuccessModel> authenticateNow(String userName, String password,
+      int miId, String loginBaseUrl, String mobiledeviceid) async {
     final Dio ins = getGlobalDio();
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     String loginApiUrl = loginBaseUrl + URLS.login;
@@ -31,7 +31,7 @@ class AuthenticateUserApi {
       "username": userName,
       "password": password,
       "Logintype": "Mobile",
-      "mobiledeviceid": mobileUniqueID,
+      "mobiledeviceid": mobiledeviceid,
     });
 
     if (response.data['message'] != null) {

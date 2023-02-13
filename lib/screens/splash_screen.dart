@@ -27,9 +27,16 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final MskoolController mskoolController = Get.put(MskoolController());
+  String deviceToken = '';
   @override
   void initState() {
+    getDeviceTokenForFCM();
     super.initState();
+  }
+
+  getDeviceTokenForFCM() async {
+    deviceToken = await getDeviceToken();
+    logger.d('Device Id : $deviceToken');
   }
 
   @override
@@ -154,7 +161,7 @@ class _SplashScreenState extends State<SplashScreen> {
       }
       final LoginSuccessModel loginSuccessModel = await AuthenticateUserApi
           .instance
-          .authenticateNow(userName, password, miId, loginBaseUrl);
+          .authenticateNow(userName, password, miId, loginBaseUrl, deviceToken);
 
       logger.d(loginSuccessModel.roleId);
 
