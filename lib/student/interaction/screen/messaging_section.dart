@@ -108,51 +108,54 @@ class _MessagingScreenState extends State<MessagingScreen> {
                           color: Theme.of(context).primaryColor,
                         ),
                       )
-                    : ListView.builder(
-                        shrinkWrap: true,
-                        // physics: const NeverScrollableScrollPhysics(),
-                        itemCount: interactionController.messageList.length,
-                        itemBuilder: (context, index) {
-                          // logger.d({
-                          //   "username": widget.loginSuccessModel.studname,
-                          //   "sender": interactionController.messageList
-                          //       .elementAt(index)
-                          //       .sender
-                          // });
-                          return Column(
-                            children: [
-                              ChatBox(
-                                name: widget.hrmeId ==
-                                        interactionController.messageList
+                    : interactionController.messageList.isEmpty
+                        ? const Text('No message, start chatting.')
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            // physics: const NeverScrollableScrollPhysics(),
+                            itemCount: interactionController.messageList.length,
+                            itemBuilder: (context, index) {
+                              // logger.d({
+                              //   "username": widget.loginSuccessModel.studname,
+                              //   "sender": interactionController.messageList
+                              //       .elementAt(index)
+                              //       .sender
+                              // });
+                              return Column(
+                                children: [
+                                  ChatBox(
+                                    name: widget.hrmeId ==
+                                            interactionController.messageList
+                                                .elementAt(index)
+                                                .istintComposedById
+                                        ? interactionController.messageList
                                             .elementAt(index)
-                                            .istintComposedById
-                                    ? interactionController.messageList
-                                        .elementAt(index)
-                                        .sender!
-                                    : interactionController.messageList
-                                        .elementAt(index)
-                                        .sender!,
-                                isFromMe: widget.hrmeId ==
-                                        interactionController.messageList
+                                            .sender!
+                                        : interactionController.messageList
                                             .elementAt(index)
-                                            .istintComposedById
-                                    ? true
-                                    : false,
-                                messages: interactionController.messageList
-                                    .elementAt(index)
-                                    .istintInteraction!,
-                                istintDateTime: interactionController
-                                    .messageList
-                                    .elementAt(index)
-                                    .istintDateTime!,
-                                attactment: interactionController.messageList
-                                    .elementAt(index)
-                                    .istintAttachment!,
-                              ),
-                            ],
-                          );
-                        },
-                      ),
+                                            .sender!,
+                                    isFromMe: widget.hrmeId ==
+                                            interactionController.messageList
+                                                .elementAt(index)
+                                                .istintComposedById
+                                        ? true
+                                        : false,
+                                    messages: interactionController.messageList
+                                        .elementAt(index)
+                                        .istintInteraction!,
+                                    istintDateTime: interactionController
+                                        .messageList
+                                        .elementAt(index)
+                                        .istintDateTime!,
+                                    attactment: interactionController
+                                        .messageList
+                                        .elementAt(index)
+                                        .istintAttachment!,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
               ),
             ),
             Row(

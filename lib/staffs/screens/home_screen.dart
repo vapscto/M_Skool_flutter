@@ -82,7 +82,7 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
         userId: widget.loginSuccessModel.userId!,
         base: baseUrlFromInsCode("portal", widget.mskoolController),
         controller: dashboardController);
-
+    pushNotificationNavigator();
     super.initState();
   }
 

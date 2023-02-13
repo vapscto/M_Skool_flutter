@@ -637,6 +637,10 @@ class _EmployeeDetailsHomeScreenState extends State<EmployeeDetailsHomeScreen> {
                                 child: CheckboxListTile(
                                   activeColor: Theme.of(context).primaryColor,
                                   dense: true,
+                                  contentPadding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  visualDensity:
+                                      const VisualDensity(horizontal: -4.0),
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
                                   title: Text(
@@ -663,6 +667,10 @@ class _EmployeeDetailsHomeScreenState extends State<EmployeeDetailsHomeScreen> {
                                 child: CheckboxListTile(
                                   activeColor: Theme.of(context).primaryColor,
                                   dense: true,
+                                  contentPadding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  visualDensity:
+                                      const VisualDensity(horizontal: -4.0),
                                   controlAffinity:
                                       ListTileControlAffinity.leading,
                                   title: Text(
