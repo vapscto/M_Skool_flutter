@@ -26,6 +26,15 @@ class PushNotification {
           "flag": openFor,
         },
       );
+
+      if (response.data['getpushnotifications'] == null) {
+        return Future.error({
+          "errorTitle": "Unexpected error occured",
+          "errorMsg":
+              "There are no getpushnotifications array in the api .... contact your tech team",
+        });
+      }
+
       final NotificationDataModel notificationDataModel =
           NotificationDataModel.fromJson(response.data['getpushnotifications']);
       return Future.value(notificationDataModel.values);

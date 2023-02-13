@@ -2,17 +2,22 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/api/get_attachment_api.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/model/classwork_attachment_model.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/model/homework_attachment_model.dart';
+import 'package:m_skool_flutter/staffs/homework_classwork/widget/hw_cw_content_item.dart';
 import 'package:m_skool_flutter/student/homework/api/upload_assignment.dart';
 import 'package:m_skool_flutter/student/information/controller/upload_assignment_controller.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -276,148 +281,883 @@ class _HwCwDetailScreenState extends State<HwCwDetailScreen> {
             const SizedBox(
               height: 24.0,
             ),
-            widget.attachmentType != null &&
-                    widget.attachmentType!.toLowerCase() == "pdf"
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SvgPicture.asset('assets/svg/pdf.svg'),
-                      const SizedBox(
-                        width: 36.0,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.0),
-                            color: const Color(0xFFD9EDFF)),
-                        child: IconButton(
-                            onPressed: () async {
-                              if (widget.attachmentUrl == null ||
-                                  widget.attachmentUrl!.isEmpty) {
-                                return;
-                              }
+            // Row(
+            //   children: [
+            //     Expanded(
+            //       flex: 7,
+            //       child: CustomContainer(
+            //         child: ListTile(
+            //           onTap: () {
+            //              showDialog(
+            //             context: context,
+            //             builder: (_) {
+            //               return Dialog(
+            //                 insetPadding: const EdgeInsets.all(16.0),
+            //                 shape: RoundedRectangleBorder(
+            //                   borderRadius: BorderRadius.circular(16.0),
+            //                 ),
+            //                 child: Column(
+            //                   mainAxisSize: MainAxisSize.min,
+            //                   children: [
+            //                     Container(
+            //                       width: double.infinity,
+            //                       padding: const EdgeInsets.symmetric(
+            //                           horizontal: 16.0, vertical: 16.0),
+            //                       decoration: BoxDecoration(
+            //                         color: Theme.of(context).primaryColor,
+            //                         borderRadius: const BorderRadius.only(
+            //                           topLeft: Radius.circular(8.0),
+            //                           topRight: Radius.circular(8.0),
+            //                         ),
+            //                       ),
+            //                       child: Row(
+            //                         mainAxisAlignment:
+            //                             MainAxisAlignment.spaceBetween,
+            //                         children: [
+            //                           Text(
+            //                             "Attachment's",
+            //                             style: Theme.of(context)
+            //                                 .textTheme
+            //                                 .titleSmall!
+            //                                 .merge(
+            //                                   const TextStyle(
+            //                                       color: Colors.white,
+            //                                       fontSize: 18.0),
+            //                                 ),
+            //                           ),
+            //                           IconButton(
+            //                               padding: const EdgeInsets.all(0),
+            //                               visualDensity: const VisualDensity(
+            //                                   horizontal:
+            //                                       VisualDensity.minimumDensity,
+            //                                   vertical:
+            //                                       VisualDensity.minimumDensity),
+            //                               onPressed: () {
+            //                                 Navigator.pop(context);
+            //                               },
+            //                               icon: const Icon(
+            //                                 Icons.close,
+            //                                 color: Colors.white,
+            //                               ))
+            //                         ],
+            //                       ),
+            //                     ),
+            //                     widget.forHw
+            //                         ? FutureBuilder<
+            //                                 List<HwStuAttachmentModelValues>>(
+            //                             future: GetStudentAttachmentApi.instance
+            //                                 .getHomeWorkUploads(
+            //                                     miId: widget.miId,
+            //                                     loginId: widget
+            //                                         .loginSuccessModel.userId!,
+            //                                     asmayId: widget.asmayId,
+            //                                     userId: widget
+            //                                         .loginSuccessModel.userId!,
+            //                                     amstId: widget.model!.aMSTId!,
+            //                                     iHwuplId:
+            //                                         widget.model!.iHWUPLId!,
+            //                                     iHwId: widget.model!.iHWId!,
+            //                                     base: widget.base),
+            //                             builder: (_, snapshot) {
+            //                               if (snapshot.hasData) {
+            //                                 if (snapshot.data!.isEmpty) {
+            //                                   return Column(
+            //                                     children: const [
+            //                                       AnimatedProgressWidget(
+            //                                         title: "No Attachment",
+            //                                         desc:
+            //                                             "There is no attachment for this item",
+            //                                         animationPath:
+            //                                             "assets/json/nodata.json",
+            //                                         animatorHeight: 250,
+            //                                       ),
+            //                                     ],
+            //                                   );
+            //                                 }
+            //                                 return Expanded(
+            //                                   child: ListView.separated(
+            //                                       shrinkWrap: true,
+            //                                       padding: const EdgeInsets.all(
+            //                                           16.0),
+            //                                       itemBuilder: (_, index) {
+            //                                         if (snapshot.data!
+            //                                             .elementAt(index)
+            //                                             .ihwupLFileName!
+            //                                             .endsWith(".pdf")) {
+            //                                           return HwCwUploadedContentItem(
+            //                                             onViewClicked:
+            //                                                 () async {
+            //                                               if (await canLaunchUrl(
+            //                                                   Uri.parse(snapshot
+            //                                                       .data!
+            //                                                       .elementAt(
+            //                                                           index)
+            //                                                       .ihwupLAttachment!))) {
+            //                                                 await launchUrl(
+            //                                                     Uri.parse(snapshot
+            //                                                         .data!
+            //                                                         .elementAt(
+            //                                                             index)
+            //                                                         .ihwupLAttachment!),
+            //                                                     mode: LaunchMode
+            //                                                         .externalApplication);
+            //                                               }
+            //                                             },
+            //                                             onDownloadClicked:
+            //                                                 () async {
+            //                                               if (await canLaunchUrl(
+            //                                                   Uri.parse(snapshot
+            //                                                       .data!
+            //                                                       .elementAt(
+            //                                                           index)
+            //                                                       .ihwupLAttachment!))) {
+            //                                                 await launchUrl(
+            //                                                     Uri.parse(snapshot
+            //                                                         .data!
+            //                                                         .elementAt(
+            //                                                             index)
+            //                                                         .ihwupLAttachment!),
+            //                                                     mode: LaunchMode
+            //                                                         .externalApplication);
+            //                                               }
+            //                                             },
+            //                                             title: snapshot.data!
+            //                                                 .elementAt(index)
+            //                                                 .ihwupLFileName!,
+            //                                             isPdf: true,
+            //                                           );
+            //                                         }
+            //                                         return HwCwUploadedContentItem(
+            //                                             onViewClicked:
+            //                                                 () async {
+            //                                               if ([
+            //                                                 ".jpg",
+            //                                                 ".png",
+            //                                                 ".jpeg",
+            //                                                 ".gif",
+            //                                               ].contains(p.extension(
+            //                                                   "snapshot.data.elementAt(index).ihwupLAttachment"))) {
+            //                                                 Navigator.push(
+            //                                                     context,
+            //                                                     MaterialPageRoute(
+            //                                                         builder: (_) => ViewImage(
+            //                                                             image: snapshot
+            //                                                                 .data!
+            //                                                                 .elementAt(index)
+            //                                                                 .ihwupLAttachment!)));
+            //                                                 return;
+            //                                               }
+            //                                               if (await canLaunchUrl(
+            //                                                   Uri.parse(snapshot
+            //                                                       .data!
+            //                                                       .elementAt(
+            //                                                           index)
+            //                                                       .ihwupLAttachment!))) {
+            //                                                 await launchUrl(
+            //                                                     Uri.parse(snapshot
+            //                                                         .data!
+            //                                                         .elementAt(
+            //                                                             index)
+            //                                                         .ihwupLAttachment!),
+            //                                                     mode: LaunchMode
+            //                                                         .externalApplication);
+            //                                               }
+            //                                             },
+            //                                             onDownloadClicked:
+            //                                                 () async {
+            //                                               if (await canLaunchUrl(
+            //                                                   Uri.parse(snapshot
+            //                                                       .data!
+            //                                                       .elementAt(
+            //                                                           index)
+            //                                                       .ihwupLAttachment!))) {
+            //                                                 await launchUrl(
+            //                                                     Uri.parse(snapshot
+            //                                                         .data!
+            //                                                         .elementAt(
+            //                                                             index)
+            //                                                         .ihwupLAttachment!),
+            //                                                     mode: LaunchMode
+            //                                                         .externalApplication);
+            //                                               }
+            //                                             },
+            //                                             title: snapshot.data!
+            //                                                 .elementAt(index)
+            //                                                 .ihwupLFileName!,
+            //                                             isPdf: false);
+            //                                       },
+            //                                       separatorBuilder: (_, index) {
+            //                                         return const SizedBox(
+            //                                           height: 16.0,
+            //                                         );
+            //                                       },
+            //                                       itemCount:
+            //                                           snapshot.data!.length),
+            //                                 );
+            //                               }
+            //                               if (snapshot.hasError) {
+            //                                 return ErrWidget(
+            //                                     err: snapshot.error
+            //                                         as Map<String, dynamic>);
+            //                               }
+            //                               return const AnimatedProgressWidget(
+            //                                 animationPath:
+            //                                     "assets/json/default.json",
+            //                                 title: "Loading attachment",
+            //                                 desc:
+            //                                     'Student uploaded files will appear here..',
+            //                               );
+            //                             })
+            //                         : FutureBuilder<
+            //                                 List<CwStuAttachmentModelValues>>(
+            //                             future: GetStudentAttachmentApi.instance
+            //                                 .getClassWorkUploads(
+            //                                     miId: widget.miId,
+            //                                     loginId: widget
+            //                                         .loginSuccessModel.userId!,
+            //                                     asmayId: widget.asmayId,
+            //                                     userId: widget
+            //                                         .loginSuccessModel.userId!,
+            //                                     amstId: widget.cwList!.aMSTId!,
+            //                                     icwuplId:
+            //                                         widget.cwList!.iCWUPLId!,
+            //                                     icwId: widget.cwList!.iCWId!,
+            //                                     base: widget.base),
+            //                             builder: (_, snapshot) {
+            //                               if (snapshot.hasData) {
+            //                                 if (snapshot.data!.isEmpty) {
+            //                                   return Column(
+            //                                     children: const [
+            //                                       AnimatedProgressWidget(
+            //                                         title: "No Attachment",
+            //                                         desc:
+            //                                             "There is no attachment for this item",
+            //                                         animationPath:
+            //                                             "assets/json/nodata.json",
+            //                                         animatorHeight: 250,
+            //                                       ),
+            //                                     ],
+            //                                   );
+            //                                 }
+            //                                 return Expanded(
+            //                                   child: ListView.separated(
+            //                                       shrinkWrap: true,
+            //                                       padding: const EdgeInsets.all(
+            //                                           16.0),
+            //                                       itemBuilder: (_, index) {
+            //                                         if (snapshot.data!
+            //                                             .elementAt(index)
+            //                                             .icwupLFileName!
+            //                                             .endsWith(".pdf")) {
+            //                                           return HwCwUploadedContentItem(
+            //                                             onViewClicked:
+            //                                                 () async {
+            //                                               if (await canLaunchUrl(
+            //                                                   Uri.parse(snapshot
+            //                                                       .data!
+            //                                                       .elementAt(
+            //                                                           index)
+            //                                                       .icwupLAttachment!))) {
+            //                                                 await launchUrl(
+            //                                                     Uri.parse(snapshot
+            //                                                         .data!
+            //                                                         .elementAt(
+            //                                                             index)
+            //                                                         .icwupLAttachment!),
+            //                                                     mode: LaunchMode
+            //                                                         .externalApplication);
+            //                                               }
+            //                                             },
+            //                                             onDownloadClicked:
+            //                                                 () async {
+            //                                               if (await canLaunchUrl(
+            //                                                   Uri.parse(snapshot
+            //                                                       .data!
+            //                                                       .elementAt(
+            //                                                           index)
+            //                                                       .icwupLAttachment!))) {
+            //                                                 await launchUrl(
+            //                                                     Uri.parse(snapshot
+            //                                                         .data!
+            //                                                         .elementAt(
+            //                                                             index)
+            //                                                         .icwupLAttachment!),
+            //                                                     mode: LaunchMode
+            //                                                         .externalApplication);
+            //                                               }
+            //                                             },
+            //                                             title: snapshot.data!
+            //                                                 .elementAt(index)
+            //                                                 .icwupLAttachment!,
+            //                                             isPdf: true,
+            //                                           );
+            //                                         }
+            //                                         return HwCwUploadedContentItem(
+            //                                             onViewClicked:
+            //                                                 () async {
+            //                                               if ([
+            //                                                 ".jpg",
+            //                                                 ".png",
+            //                                                 ".jpeg",
+            //                                                 ".gif",
+            //                                               ].contains(p.extension(
+            //                                                   "snapshot.data.elementAt(index).ihwupLAttachment"))) {
+            //                                                 Navigator.push(
+            //                                                     context,
+            //                                                     MaterialPageRoute(
+            //                                                         builder: (_) => ViewImage(
+            //                                                             image: snapshot
+            //                                                                 .data!
+            //                                                                 .elementAt(index)
+            //                                                                 .icwupLAttachment!)));
+            //                                                 return;
+            //                                               }
+            //                                               if (await canLaunchUrl(
+            //                                                   Uri.parse(snapshot
+            //                                                       .data!
+            //                                                       .elementAt(
+            //                                                           index)
+            //                                                       .icwupLAttachment!))) {
+            //                                                 await launchUrl(
+            //                                                     Uri.parse(snapshot
+            //                                                         .data!
+            //                                                         .elementAt(
+            //                                                             index)
+            //                                                         .icwupLAttachment!),
+            //                                                     mode: LaunchMode
+            //                                                         .externalApplication);
+            //                                               }
+            //                                             },
+            //                                             onDownloadClicked:
+            //                                                 () async {
+            //                                               if (await canLaunchUrl(
+            //                                                   Uri.parse(snapshot
+            //                                                       .data!
+            //                                                       .elementAt(
+            //                                                           index)
+            //                                                       .icwupLAttachment!))) {
+            //                                                 await launchUrl(
+            //                                                     Uri.parse(snapshot
+            //                                                         .data!
+            //                                                         .elementAt(
+            //                                                             index)
+            //                                                         .icwupLAttachment!),
+            //                                                     mode: LaunchMode
+            //                                                         .externalApplication);
+            //                                               }
+            //                                             },
+            //                                             title: snapshot.data!
+            //                                                 .elementAt(index)
+            //                                                 .icwupLFileName!,
+            //                                             isPdf: false);
+            //                                       },
+            //                                       separatorBuilder: (_, index) {
+            //                                         return const SizedBox(
+            //                                           height: 16.0,
+            //                                         );
+            //                                       },
+            //                                       itemCount:
+            //                                           snapshot.data!.length),
+            //                                 );
+            //                               }
+            //                               if (snapshot.hasError) {
+            //                                 return ErrWidget(
+            //                                     err: snapshot.error
+            //                                         as Map<String, dynamic>);
+            //                               }
+            //                               return const AnimatedProgressWidget(
+            //                                 animationPath:
+            //                                     "assets/json/default.json",
+            //                                 title: "Loading attachment",
+            //                                 desc:
+            //                                     'Student uploaded files will appear here..',
+            //                               );
+            //                             })
+            //                   ],
+            //                 ),
+            //               );
+            //             });
+            //           },
+            //           minLeadingWidth: 10.0,
+            //           leading: Icon(
+            //             Icons.attachment,
+            //             color: Theme.of(context).primaryColor,
+            //           ),
+            //           title: Text(
+            //             "View Attachment's",
+            //             style: Theme.of(context).textTheme.titleSmall,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //     const Expanded(flex: 3, child: SizedBox())
+            //   ],
+            // ),
 
-                              if (await canLaunchUrl(
-                                  Uri.parse(widget.attachmentUrl!))) {
-                                await launchUrl(
-                                    Uri.parse(widget.attachmentUrl!),
-                                    mode: LaunchMode.externalApplication);
-                              }
-                            },
-                            icon: SvgPicture.asset(
-                              'assets/svg/download.svg',
+            Row(
+              children: [
+                Expanded(
+                  flex: 7,
+                  child: InkWell(
+                    onTap: () {
+                      if (widget.screenType == "homework") {
+                        showDialog(
+                            context: context,
+                            builder: (_) {
+                              return Dialog(
+                                insetPadding: const EdgeInsets.all(16.0),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0)),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      width: double.infinity,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16.0, vertical: 16.0),
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).primaryColor,
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(8.0),
+                                          topRight: Radius.circular(8.0),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Attachment's",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .merge(
+                                                  const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 18.0),
+                                                ),
+                                          ),
+                                          IconButton(
+                                              padding: const EdgeInsets.all(0),
+                                              visualDensity:
+                                                  const VisualDensity(
+                                                      horizontal: VisualDensity
+                                                          .minimumDensity,
+                                                      vertical: VisualDensity
+                                                          .minimumDensity),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              icon: const Icon(
+                                                Icons.close,
+                                                color: Colors.white,
+                                              ))
+                                        ],
+                                      ),
+                                    ),
+                                    FutureBuilder<
+                                            List<
+                                                HomeWorkAttachmentModelValues>>(
+                                        future: GetAttachmentApi.instance
+                                            .getHomeWorkAttachment(
+                                                ihwId: widget.ihcId,
+                                                base: baseUrlFromInsCode(
+                                                    "portal",
+                                                    widget.mskoolController)),
+                                        builder: (_, snapshot) {
+                                          if (snapshot.hasData) {
+                                            if (snapshot.data!.isEmpty) {
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: const [
+                                                  AnimatedProgressWidget(
+                                                    title:
+                                                        "No Attachment Found",
+                                                    desc:
+                                                        "There are no attachment for this homework",
+                                                    animationPath:
+                                                        "assets/json/nodata.json",
+                                                    animatorHeight: 250,
+                                                  ),
+                                                ],
+                                              );
+                                            }
+                                            return ListView.separated(
+                                                shrinkWrap: true,
+                                                padding:
+                                                    const EdgeInsets.all(16.0),
+                                                itemBuilder: (_, index) {
+                                                  return HwCwContentItem(
+                                                      onDownloadClicked:
+                                                          () async {
+                                                        if (await canLaunchUrl(
+                                                            Uri.parse(snapshot
+                                                                .data!
+                                                                .elementAt(
+                                                                    index)
+                                                                .ihwatTAttachment!))) {
+                                                          await launchUrl(
+                                                              Uri.parse(snapshot
+                                                                  .data!
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .ihwatTAttachment!),
+                                                              mode: LaunchMode
+                                                                  .externalApplication);
+                                                        }
+                                                      },
+                                                      title: snapshot.data!
+                                                          .elementAt(index)
+                                                          .ihwatTFileName!,
+                                                      isPdf: snapshot.data!
+                                                          .elementAt(index)
+                                                          .ihwatTFileName!
+                                                          .endsWith(".pdf"));
+                                                },
+                                                separatorBuilder: (_, index) {
+                                                  return const SizedBox(
+                                                    height: 16.0,
+                                                  );
+                                                },
+                                                itemCount:
+                                                    snapshot.data!.length);
+                                          }
+
+                                          if (snapshot.hasError) {
+                                            return ErrWidget(
+                                                err: snapshot.error
+                                                    as Map<String, dynamic>);
+                                          }
+
+                                          return Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: const [
+                                              AnimatedProgressWidget(
+                                                  title: "Loading Attachment",
+                                                  desc:
+                                                      "Please wait while we load attached files for you.",
+                                                  animationPath:
+                                                      "assets/json/default.json"),
+                                            ],
+                                          );
+                                        }),
+                                  ],
+                                ),
+                              );
+                            });
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (_) {
+                              return Dialog(
+                                insetPadding: const EdgeInsets.all(16.0),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0)),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      width: double.infinity,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16.0, vertical: 16.0),
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).primaryColor,
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(8.0),
+                                          topRight: Radius.circular(8.0),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Attachment's",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .merge(
+                                                  const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 18.0),
+                                                ),
+                                          ),
+                                          IconButton(
+                                              padding: const EdgeInsets.all(0),
+                                              visualDensity:
+                                                  const VisualDensity(
+                                                      horizontal: VisualDensity
+                                                          .minimumDensity,
+                                                      vertical: VisualDensity
+                                                          .minimumDensity),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              icon: const Icon(
+                                                Icons.close,
+                                                color: Colors.white,
+                                              ))
+                                        ],
+                                      ),
+                                    ),
+                                    FutureBuilder<
+                                            List<
+                                                ClassWorkAttachmentModelValues>>(
+                                        future: GetAttachmentApi.instance
+                                            .getClassWorkAttachment(
+                                                icwId: widget.ihcId,
+                                                base: baseUrlFromInsCode(
+                                                    "portal",
+                                                    widget.mskoolController)),
+                                        builder: (_, snapshot) {
+                                          if (snapshot.hasData) {
+                                            if (snapshot.data!.isEmpty) {
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: const [
+                                                  AnimatedProgressWidget(
+                                                    title: "No Attachment",
+                                                    desc:
+                                                        "There are no attachment.. try with another work",
+                                                    animationPath:
+                                                        "assets/json/nodata.json",
+                                                    animatorHeight: 250,
+                                                  ),
+                                                ],
+                                              );
+                                            }
+
+                                            return ListView.separated(
+                                                padding:
+                                                    const EdgeInsets.all(16.0),
+                                                itemBuilder: (_, index) {
+                                                  return HwCwContentItem(
+                                                      onDownloadClicked:
+                                                          () async {
+                                                        if (await canLaunchUrl(
+                                                            Uri.parse(snapshot
+                                                                .data!
+                                                                .elementAt(
+                                                                    index)
+                                                                .icwatTAttachment!))) {
+                                                          await launchUrl(
+                                                              Uri.parse(snapshot
+                                                                  .data!
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .icwatTAttachment!),
+                                                              mode: LaunchMode
+                                                                  .externalApplication);
+                                                        }
+                                                      },
+                                                      title: snapshot.data!
+                                                          .elementAt(index)
+                                                          .icwatTFileName!,
+                                                      isPdf: snapshot.data!
+                                                          .elementAt(index)
+                                                          .icwatTFileName!
+                                                          .endsWith(".pdf"));
+                                                },
+                                                separatorBuilder: (_, index) {
+                                                  return const SizedBox(
+                                                    height: 16.0,
+                                                  );
+                                                },
+                                                itemCount:
+                                                    snapshot.data!.length);
+                                          }
+
+                                          if (snapshot.hasError) {
+                                            return ErrWidget(
+                                                err: snapshot.error
+                                                    as Map<String, dynamic>);
+                                          }
+                                          return Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: const [
+                                              AnimatedProgressWidget(
+                                                  title: "Loading Attachment",
+                                                  desc:
+                                                      "Please wait while we load attached files for you.",
+                                                  animationPath:
+                                                      "assets/json/default.json"),
+                                            ],
+                                          );
+                                        }),
+                                  ],
+                                ),
+                              );
+                            });
+                      }
+                    },
+                    child: CustomContainer(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(
+                              width: 12.0,
+                            ),
+                            Icon(
+                              Icons.attachment,
                               color: Theme.of(context).primaryColor,
-                              height: 20.0,
-                            )),
-                      )
-                      // ElevatedButton(
-                      //   style: ElevatedButton.styleFrom(
-                      //     backgroundColor:
-                      //         Theme.of(context).colorScheme.secondary,
-                      //     padding: const EdgeInsets.symmetric(
-                      //         horizontal: 24, vertical: 12.0),
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.circular(30.0),
-                      //     ),
-                      //   ),
-                      //   onPressed: () {},
-                      //   child: Text(
-                      //     "Download",
-                      //     style: Theme.of(context).textTheme.labelSmall!.merge(
-                      //           const TextStyle(
-                      //             color: Color(0xFF35658F),
-                      //             letterSpacing: 0.3,
-                      //             fontSize: 16,
-                      //             fontWeight: FontWeight.w700,
-                      //           ),
-                      //         ),
-                      //   ),
-                      // ),
-                    ],
-                  )
-                : const SizedBox(),
-            widget.attachmentType != null &&
-                    widget.attachmentType!.toLowerCase() == "others" &&
-                    widget.attachmentName != null
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: CustomContainer(
-                          // decoration: BoxDecoration(
-                          //   border: Border.all(
-                          //     color: Colors.grey.shade300,
-                          //   ),
-                          //   borderRadius: BorderRadius.circular(16.0),
-                          // ),
-                          child: ListTile(
-                            leading: Icon(
-                              Icons.image_outlined,
-                              color: Theme.of(context).primaryColor,
                             ),
-                            visualDensity: const VisualDensity(
-                              horizontal: VisualDensity.minimumDensity,
+                            const SizedBox(
+                              width: 12.0,
                             ),
-                            minLeadingWidth: 24,
-                            title: Text(
-                              widget.attachmentName!,
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                          ),
+                            const Expanded(child: Text("View Attachment's")),
+                          ],
                         ),
                       ),
-                      const SizedBox(
-                        width: 36.0,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.0),
-                            color: const Color(0xFFD9EDFF)),
-                        child: IconButton(
-                            onPressed: () async {
-                              if (widget.attachmentUrl == null ||
-                                  widget.attachmentUrl!.isEmpty) {
-                                return;
-                              }
+                    ),
+                  ),
+                ),
+                const Expanded(flex: 3, child: SizedBox())
+              ],
+            ),
+            // widget.attachmentType != null &&
+            //         widget.attachmentType!.toLowerCase() == "pdf"
+            //     ? Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           SvgPicture.asset('assets/svg/pdf.svg'),
+            //           const SizedBox(
+            //             width: 36.0,
+            //           ),
+            //           Container(
+            //             decoration: BoxDecoration(
+            //                 borderRadius: BorderRadius.circular(12.0),
+            //                 color: const Color(0xFFD9EDFF)),
+            //             child: IconButton(
+            //                 onPressed: () async {
+            //                   if (widget.attachmentUrl == null ||
+            //                       widget.attachmentUrl!.isEmpty) {
+            //                     return;
+            //                   }
 
-                              if (await canLaunchUrl(
-                                  Uri.parse(widget.attachmentUrl!))) {
-                                await launchUrl(
-                                    Uri.parse(widget.attachmentUrl!),
-                                    mode: LaunchMode.externalApplication);
-                              }
-                            },
-                            icon: SvgPicture.asset(
-                              'assets/svg/download.svg',
-                              color: Theme.of(context).primaryColor,
-                              height: 20.0,
-                            )),
-                      )
-                      // ElevatedButton(
-                      //   style: ElevatedButton.styleFrom(
-                      //     backgroundColor:
-                      //         Theme.of(context).colorScheme.secondary,
-                      //     padding: const EdgeInsets.symmetric(
-                      //         horizontal: 24, vertical: 12.0),
-                      //     shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.circular(30.0),
-                      //     ),
-                      //   ),
-                      //   onPressed: () {},
-                      //   child: Text(
-                      //     "Download",
-                      //     style: Theme.of(context).textTheme.labelSmall!.merge(
-                      //           const TextStyle(
-                      //             color: Color(0xFF35658F),
-                      //             letterSpacing: 0.3,
-                      //             fontSize: 16,
-                      //             fontWeight: FontWeight.w700,
-                      //           ),
-                      //         ),
-                      //   ),
-                      // ),
-                    ],
-                  )
-                : const SizedBox(),
+            //                   if (await canLaunchUrl(
+            //                       Uri.parse(widget.attachmentUrl!))) {
+            //                     await launchUrl(
+            //                         Uri.parse(widget.attachmentUrl!),
+            //                         mode: LaunchMode.externalApplication);
+            //                   }
+            //                 },
+            //                 icon: SvgPicture.asset(
+            //                   'assets/svg/download.svg',
+            //                   color: Theme.of(context).primaryColor,
+            //                   height: 20.0,
+            //                 )),
+            //           )
+            //           // ElevatedButton(
+            //           //   style: ElevatedButton.styleFrom(
+            //           //     backgroundColor:
+            //           //         Theme.of(context).colorScheme.secondary,
+            //           //     padding: const EdgeInsets.symmetric(
+            //           //         horizontal: 24, vertical: 12.0),
+            //           //     shape: RoundedRectangleBorder(
+            //           //       borderRadius: BorderRadius.circular(30.0),
+            //           //     ),
+            //           //   ),
+            //           //   onPressed: () {},
+            //           //   child: Text(
+            //           //     "Download",
+            //           //     style: Theme.of(context).textTheme.labelSmall!.merge(
+            //           //           const TextStyle(
+            //           //             color: Color(0xFF35658F),
+            //           //             letterSpacing: 0.3,
+            //           //             fontSize: 16,
+            //           //             fontWeight: FontWeight.w700,
+            //           //           ),
+            //           //         ),
+            //           //   ),
+            //           // ),
+            //         ],
+            //       )
+            //     : const SizedBox(),
+            // widget.attachmentType != null &&
+            //         widget.attachmentType!.toLowerCase() == "others" &&
+            //         widget.attachmentName != null
+            //     ? Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           Expanded(
+            //             child: CustomContainer(
+            //               // decoration: BoxDecoration(
+            //               //   border: Border.all(
+            //               //     color: Colors.grey.shade300,
+            //               //   ),
+            //               //   borderRadius: BorderRadius.circular(16.0),
+            //               // ),
+            //               child: ListTile(
+            //                 leading: Icon(
+            //                   Icons.image_outlined,
+            //                   color: Theme.of(context).primaryColor,
+            //                 ),
+            //                 visualDensity: const VisualDensity(
+            //                   horizontal: VisualDensity.minimumDensity,
+            //                 ),
+            //                 minLeadingWidth: 24,
+            //                 title: Text(
+            //                   widget.attachmentName!,
+            //                   style: Theme.of(context).textTheme.titleSmall,
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //           const SizedBox(
+            //             width: 36.0,
+            //           ),
+            //           Container(
+            //             decoration: BoxDecoration(
+            //                 borderRadius: BorderRadius.circular(12.0),
+            //                 color: const Color(0xFFD9EDFF)),
+            //             child: IconButton(
+            //                 onPressed: () async {
+            //                   if (widget.attachmentUrl == null ||
+            //                       widget.attachmentUrl!.isEmpty) {
+            //                     return;
+            //                   }
+
+            //                   if (await canLaunchUrl(
+            //                       Uri.parse(widget.attachmentUrl!))) {
+            //                     await launchUrl(
+            //                         Uri.parse(widget.attachmentUrl!),
+            //                         mode: LaunchMode.externalApplication);
+            //                   }
+            //                 },
+            //                 icon: SvgPicture.asset(
+            //                   'assets/svg/download.svg',
+            //                   color: Theme.of(context).primaryColor,
+            //                   height: 20.0,
+            //                 )),
+            //           )
+            //           // ElevatedButton(
+            //           //   style: ElevatedButton.styleFrom(
+            //           //     backgroundColor:
+            //           //         Theme.of(context).colorScheme.secondary,
+            //           //     padding: const EdgeInsets.symmetric(
+            //           //         horizontal: 24, vertical: 12.0),
+            //           //     shape: RoundedRectangleBorder(
+            //           //       borderRadius: BorderRadius.circular(30.0),
+            //           //     ),
+            //           //   ),
+            //           //   onPressed: () {},
+            //           //   child: Text(
+            //           //     "Download",
+            //           //     style: Theme.of(context).textTheme.labelSmall!.merge(
+            //           //           const TextStyle(
+            //           //             color: Color(0xFF35658F),
+            //           //             letterSpacing: 0.3,
+            //           //             fontSize: 16,
+            //           //             fontWeight: FontWeight.w700,
+            //           //           ),
+            //           //         ),
+            //           //   ),
+            //           // ),
+            //         ],
+            //       )
+            //     : const SizedBox(),
             SizedBox(
               height: Get.height * 0.2,
             ),

@@ -48,12 +48,19 @@ class InstitutionalCodeApi {
 
       debugPrint(response.headers.map.toString());
       return institutionalCodeModel;
+    } on DioError catch (e) {
+      logger.e(e.stackTrace);
+      logger.e(e.message);
+      return Future.error({
+        "errorTitle": "Unable to process request",
+        "errorMsg": e.message,
+      });
     } on Exception catch (e) {
       debugPrint(e.toString());
       return Future.error({
         "errorTitle": "Unable to process request",
         "errorMsg":
-            "Sorry! but we are unable to connect to server right now, Try after some time",
+            "Sorry! but we are unable to process right now due to internal error",
       });
     }
 

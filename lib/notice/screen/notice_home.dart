@@ -452,6 +452,9 @@ class _NoticeHomeState extends State<NoticeHome> {
                                                     .elementAt(index),
                                                 isFiltring: false,
                                                 forSyllabus: false,
+                                                base: baseUrlFromInsCode(
+                                                    "portal",
+                                                    widget.mskoolController),
                                               ));
                                         },
                                         child: NoticeItem(
@@ -577,6 +580,8 @@ class _SyllabusNoticesState extends State<SyllabusNotices> {
                           value: snapshot.data!.elementAt(index),
                           isFiltring: false,
                           forSyllabus: true,
+                          base: baseUrlFromInsCode(
+                              "portal", widget.mskoolController),
                         ));
                   },
                   child: NoticeItem(

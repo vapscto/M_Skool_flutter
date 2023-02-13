@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 
 import 'package:m_skool_flutter/notice/model/notice_data_model.dart';
+import 'package:m_skool_flutter/staffs/notice_board_staff/api/get_attachment_api.dart';
+import 'package:m_skool_flutter/staffs/notice_board_staff/model/nb_attachment_model.dart';
+import 'package:m_skool_flutter/staffs/verify_homework_classwork/widget/hw_cw_content_item.dart';
+import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
+import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:readmore/readmore.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,12 +18,14 @@ class NoticeDetailScreen extends StatefulWidget {
   final NoticeDataModelValues value;
   final bool isFiltring;
   final bool forSyllabus;
+  final String base;
   const NoticeDetailScreen(
       {super.key,
       required this.color,
       required this.value,
       required this.isFiltring,
-      required this.forSyllabus});
+      required this.forSyllabus,
+      required this.base});
 
   @override
   State<NoticeDetailScreen> createState() => _NoticeDetailScreenState();
@@ -252,206 +258,388 @@ class _NoticeDetailScreenState extends State<NoticeDetailScreen> {
                 //         widget.value.intBAttachment!.endsWith("pdf") &&
                 //         widget.value.intBAttachment!.isNotEmpty
 
-                showPdf || showPng
-                    ? Column(
-                        children: [
-                          const SizedBox(
-                            height: 16.0,
-                          ),
-                          Text(
-                            "Attached Files",
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          const SizedBox(
-                            height: 0.0,
-                          ),
-                        ],
-                      )
-                    : const Text(""),
-                showPdf
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SvgPicture.asset(
-                            'assets/svg/pdf.svg',
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12.0),
-                                color: const Color(0xFFD9EDFF)),
-                            child: IconButton(
-                                onPressed: () async {
-                                  if (widget.isFiltring) {
-                                    if (widget.value.iNTBFLFilePath == null ||
-                                        widget.value.iNTBFLFilePath!.isEmpty) {
-                                      return;
-                                    }
-                                  } else if (widget.forSyllabus) {
-                                    if (widget.value.iNTBFLFilePath == null ||
-                                        widget.value.iNTBFLFilePath!.isEmpty) {
-                                      return;
-                                    }
-                                  } else {
-                                    if (widget.value.iNTBFLFilePath == null ||
-                                        widget.value.iNTBFLFilePath!.isEmpty) {
-                                      return;
-                                    }
-                                  }
+                // showPdf || showPng
+                //     ? Column(
+                //         children: [
+                //           const SizedBox(
+                //             height: 16.0,
+                //           ),
+                //           Text(
+                //             "Attached Files",
+                //             style: Theme.of(context).textTheme.titleMedium,
+                //           ),
+                //           const SizedBox(
+                //             height: 0.0,
+                //           ),
+                //         ],
+                //       )
+                //     : const Text(""),
+                // showPdf
+                //     ? Row(
+                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //         children: [
+                //           SvgPicture.asset(
+                //             'assets/svg/pdf.svg',
+                //           ),
+                //           Container(
+                //             decoration: BoxDecoration(
+                //                 borderRadius: BorderRadius.circular(12.0),
+                //                 color: const Color(0xFFD9EDFF)),
+                //             child: IconButton(
+                //                 onPressed: () async {
+                //                   if (widget.isFiltring) {
+                //                     if (widget.value.iNTBFLFilePath == null ||
+                //                         widget.value.iNTBFLFilePath!.isEmpty) {
+                //                       return;
+                //                     }
+                //                   } else if (widget.forSyllabus) {
+                //                     if (widget.value.iNTBFLFilePath == null ||
+                //                         widget.value.iNTBFLFilePath!.isEmpty) {
+                //                       return;
+                //                     }
+                //                   } else {
+                //                     if (widget.value.iNTBFLFilePath == null ||
+                //                         widget.value.iNTBFLFilePath!.isEmpty) {
+                //                       return;
+                //                     }
+                //                   }
 
-                                  // if (widget.value.intBFilePath == null ||
-                                  //     widget.value.intBFilePath!.isEmpty) {
-                                  //   return;
-                                  // }
+                //                   // if (widget.value.intBFilePath == null ||
+                //                   //     widget.value.intBFilePath!.isEmpty) {
+                //                   //   return;
+                //                   // }
 
-                                  if (await canLaunchUrl(Uri.parse(
-                                      widget.isFiltring || widget.forSyllabus
-                                          ? widget.value.iNTBFLFilePath!
-                                          : widget.value.iNTBFLFilePath!))) {
-                                    await launchUrl(
-                                        Uri.parse(widget.isFiltring ||
-                                                widget.forSyllabus
-                                            ? widget.value.iNTBFLFilePath!
-                                            : widget.value.iNTBFLFilePath!),
-                                        mode: LaunchMode.externalApplication);
-                                  }
-                                },
-                                icon: SvgPicture.asset(
-                                  'assets/svg/download.svg',
+                //                   if (await canLaunchUrl(Uri.parse(
+                //                       widget.isFiltring || widget.forSyllabus
+                //                           ? widget.value.iNTBFLFilePath!
+                //                           : widget.value.iNTBFLFilePath!))) {
+                //                     await launchUrl(
+                //                         Uri.parse(widget.isFiltring ||
+                //                                 widget.forSyllabus
+                //                             ? widget.value.iNTBFLFilePath!
+                //                             : widget.value.iNTBFLFilePath!),
+                //                         mode: LaunchMode.externalApplication);
+                //                   }
+                //                 },
+                //                 icon: SvgPicture.asset(
+                //                   'assets/svg/download.svg',
+                //                   color: Theme.of(context).primaryColor,
+                //                   height: 20.0,
+                //                 )),
+                //           )
+                //           // ElevatedButton(
+                //           //   style: ElevatedButton.styleFrom(
+                //           //     backgroundColor:
+                //           //         Theme.of(context).colorScheme.secondary,
+                //           //     padding: const EdgeInsets.symmetric(
+                //           //         horizontal: 24, vertical: 12.0),
+                //           //     shape: RoundedRectangleBorder(
+                //           //       borderRadius: BorderRadius.circular(30.0),
+                //           //     ),
+                //           //   ),
+                //           //   onPressed: () {},
+                //           //   child: Text(
+                //           //     "Download",
+                //           //     style: Theme.of(context).textTheme.labelSmall!.merge(
+                //           //           const TextStyle(
+                //           //             color: Color(0xFF35658F),
+                //           //             letterSpacing: 0.3,
+                //           //             fontSize: 16,
+                //           //             fontWeight: FontWeight.w700,
+                //           //           ),
+                //           //         ),
+                //           //   ),
+                //           // ),
+                //         ],
+                //       )
+                //     : const SizedBox(),
+                // const SizedBox(
+                //   height: 16.0,
+                // ),
+                // // widget.value.intBAttachment != null &&
+                // //         !widget.value.intBAttachment!.endsWith("pdf") &&
+                // //         widget.value.intBAttachment!.isNotEmpty
+                // showPng
+                //     ? Row(
+                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //         children: [
+                //           Expanded(
+                //             child: CustomContainer(
+                //               // decoration: BoxDecoration(
+                //               //   border: Border.all(
+                //               //     color: Colors.grey.shade300,
+                //               //   ),
+                //               //   borderRadius: BorderRadius.circular(16.0),
+                //               // ),
+                //               child: ListTile(
+                //                 leading: Icon(
+                //                   Icons.image_outlined,
+                //                   color: Theme.of(context).primaryColor,
+                //                   size: 30.0,
+                //                 ),
+                //                 visualDensity: const VisualDensity(
+                //                   horizontal: VisualDensity.minimumDensity,
+                //                 ),
+                //                 minLeadingWidth: 24,
+                //                 title: Text(
+                //                   widget.isFiltring
+                //                       ? widget.value.iNTBFLFileName!
+                //                       : widget.forSyllabus
+                //                           ? widget.value.iNTBFLFileName!
+                //                           : widget.value.iNTBFLFileName!,
+                //                   style: Theme.of(context).textTheme.titleSmall,
+                //                 ),
+                //               ),
+                //             ),
+                //           ),
+                //           const SizedBox(
+                //             width: 36.0,
+                //           ),
+                //           Container(
+                //             decoration: BoxDecoration(
+                //                 borderRadius: BorderRadius.circular(12.0),
+                //                 color: const Color(0xFFD9EDFF)),
+                //             child: IconButton(
+                //                 onPressed: () async {
+                //                   if (widget.value.iNTBFLFilePath == null ||
+                //                       widget.value.iNTBFLFilePath!.isEmpty) {
+                //                     return;
+                //                   }
+                //                   // } else if (widget.forSyllabus) {
+                //                   //   if (widget.value.iNTBFLFilePath == null ||
+                //                   //       widget.value.iNTBFLFilePath!.isEmpty) {
+                //                   //     return;
+                //                   //   }
+                //                   // } else {
+                //                   //   if (widget.value.intBFilePath == null ||
+                //                   //       widget.value.intBFilePath!.isEmpty) {
+                //                   //     return;
+                //                   //   }
+                //                   // }
+
+                //                   if (await canLaunchUrl(Uri.parse(
+                //                       // widget.isFiltring || widget.forSyllabus
+                //                       widget.value
+                //                           .iNTBFLFilePath! /*  : widget.value.intBFilePath!*/))) {
+                //                     await launchUrl(
+                //                         Uri.parse(widget.value.iNTBFLFilePath!),
+                //                         mode: LaunchMode.externalApplication);
+                //                   }
+                //                 },
+                //                 icon: SvgPicture.asset(
+                //                   'assets/svg/download.svg',
+                //                   color: Theme.of(context).primaryColor,
+                //                   height: 20.0,
+                //                 )),
+                //           )
+                //           // ElevatedButton(
+                //           //   style: ElevatedButton.styleFrom(
+                //           //     backgroundColor:
+                //           //         Theme.of(context).colorScheme.secondary,
+                //           //     padding: const EdgeInsets.symmetric(
+                //           //         horizontal: 24, vertical: 12.0),
+                //           //     shape: RoundedRectangleBorder(
+                //           //       borderRadius: BorderRadius.circular(30.0),
+                //           //     ),
+                //           //   ),
+                //           //   onPressed: () {},
+                //           //   child: Text(
+                //           //     "Download",
+                //           //     style: Theme.of(context).textTheme.labelSmall!.merge(
+                //           //           const TextStyle(
+                //           //             color: Color(0xFF35658F),
+                //           //             letterSpacing: 0.3,
+                //           //             fontSize: 16,
+                //           //             fontWeight: FontWeight.w700,
+                //           //           ),
+                //           //         ),
+                //           //   ),
+                //           // ),
+                //         ],
+                //       )
+                //     : const SizedBox(),
+
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 7,
+                      child: InkWell(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) {
+                                return Dialog(
+                                  insetPadding: const EdgeInsets.all(16.0),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(12.0)),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16.0, vertical: 16.0),
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context).primaryColor,
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(8.0),
+                                            topRight: Radius.circular(8.0),
+                                          ),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "Attachment's",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .merge(
+                                                    const TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 18.0),
+                                                  ),
+                                            ),
+                                            IconButton(
+                                                padding:
+                                                    const EdgeInsets.all(0),
+                                                visualDensity:
+                                                    const VisualDensity(
+                                                        horizontal:
+                                                            VisualDensity
+                                                                .minimumDensity,
+                                                        vertical: VisualDensity
+                                                            .minimumDensity),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                icon: const Icon(
+                                                  Icons.close,
+                                                  color: Colors.white,
+                                                ))
+                                          ],
+                                        ),
+                                      ),
+                                      FutureBuilder<
+                                              List<NBAttachmentModelValues>>(
+                                          future: GetNbAttachmentApi.instance
+                                              .getNbAtt(
+                                            intbId: widget.value.intBId!,
+                                            base: widget.base,
+                                          ),
+                                          builder: (_, snapshot) {
+                                            if (snapshot.hasData) {
+                                              if (snapshot.data!.isEmpty) {
+                                                return Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: const [
+                                                    AnimatedProgressWidget(
+                                                      title:
+                                                          "No Attachment Found",
+                                                      desc:
+                                                          "For this particular notice there is no attachment",
+                                                      animationPath:
+                                                          "assets/json/nodata.json",
+                                                      animatorHeight: 250,
+                                                    ),
+                                                  ],
+                                                );
+                                              }
+                                              return ListView.separated(
+                                                  padding: const EdgeInsets.all(
+                                                      12.0),
+                                                  shrinkWrap: true,
+                                                  itemBuilder: (_, index) {
+                                                    return HwCwUploadedContentItem(
+                                                      onDownloadClicked:
+                                                          () async {
+                                                        if (await canLaunchUrl(
+                                                            Uri.parse(snapshot
+                                                                .data!
+                                                                .elementAt(
+                                                                    index)
+                                                                .intbfLFilePath!))) {
+                                                          await launchUrl(
+                                                              Uri.parse(snapshot
+                                                                  .data!
+                                                                  .elementAt(
+                                                                      index)
+                                                                  .intbfLFilePath!),
+                                                              mode: LaunchMode
+                                                                  .externalApplication);
+                                                        }
+                                                      },
+                                                      title: snapshot.data!
+                                                          .elementAt(index)
+                                                          .intbfLFileName!,
+                                                      isPdf: snapshot.data!
+                                                          .elementAt(index)
+                                                          .intbfLFileName!
+                                                          .endsWith(".pdf"),
+                                                      onViewClicked: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                    );
+                                                  },
+                                                  separatorBuilder:
+                                                      (context, index) {
+                                                    return const SizedBox(
+                                                      height: 12.0,
+                                                    );
+                                                  },
+                                                  itemCount:
+                                                      snapshot.data!.length);
+                                            }
+                                            if (snapshot.hasError) {
+                                              return ErrWidget(
+                                                  err: snapshot.error
+                                                      as Map<String, dynamic>);
+                                            }
+                                            return Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: const [
+                                                AnimatedProgressWidget(
+                                                  title: "Loading Attachment",
+                                                  desc:
+                                                      "We are loading attachment for this particular notice",
+                                                  animationPath:
+                                                      "assets/json/default.json",
+                                                ),
+                                              ],
+                                            );
+                                          }),
+                                    ],
+                                  ),
+                                );
+                              });
+                        },
+                        child: CustomContainer(
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.attachment,
                                   color: Theme.of(context).primaryColor,
-                                  height: 20.0,
-                                )),
-                          )
-                          // ElevatedButton(
-                          //   style: ElevatedButton.styleFrom(
-                          //     backgroundColor:
-                          //         Theme.of(context).colorScheme.secondary,
-                          //     padding: const EdgeInsets.symmetric(
-                          //         horizontal: 24, vertical: 12.0),
-                          //     shape: RoundedRectangleBorder(
-                          //       borderRadius: BorderRadius.circular(30.0),
-                          //     ),
-                          //   ),
-                          //   onPressed: () {},
-                          //   child: Text(
-                          //     "Download",
-                          //     style: Theme.of(context).textTheme.labelSmall!.merge(
-                          //           const TextStyle(
-                          //             color: Color(0xFF35658F),
-                          //             letterSpacing: 0.3,
-                          //             fontSize: 16,
-                          //             fontWeight: FontWeight.w700,
-                          //           ),
-                          //         ),
-                          //   ),
-                          // ),
-                        ],
-                      )
-                    : const SizedBox(),
-                const SizedBox(
-                  height: 16.0,
-                ),
-                // widget.value.intBAttachment != null &&
-                //         !widget.value.intBAttachment!.endsWith("pdf") &&
-                //         widget.value.intBAttachment!.isNotEmpty
-                showPng
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: CustomContainer(
-                              // decoration: BoxDecoration(
-                              //   border: Border.all(
-                              //     color: Colors.grey.shade300,
-                              //   ),
-                              //   borderRadius: BorderRadius.circular(16.0),
-                              // ),
-                              child: ListTile(
-                                leading: Icon(
-                                  Icons.image_outlined,
-                                  color: Theme.of(context).primaryColor,
-                                  size: 30.0,
                                 ),
-                                visualDensity: const VisualDensity(
-                                  horizontal: VisualDensity.minimumDensity,
+                                const SizedBox(
+                                  width: 12.0,
                                 ),
-                                minLeadingWidth: 24,
-                                title: Text(
-                                  widget.isFiltring
-                                      ? widget.value.iNTBFLFileName!
-                                      : widget.forSyllabus
-                                          ? widget.value.iNTBFLFileName!
-                                          : widget.value.iNTBFLFileName!,
-                                  style: Theme.of(context).textTheme.titleSmall,
+                                const Expanded(
+                                  child: Text("View Attachment"),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
-                          const SizedBox(
-                            width: 36.0,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12.0),
-                                color: const Color(0xFFD9EDFF)),
-                            child: IconButton(
-                                onPressed: () async {
-                                  if (widget.value.iNTBFLFilePath == null ||
-                                      widget.value.iNTBFLFilePath!.isEmpty) {
-                                    return;
-                                  }
-                                  // } else if (widget.forSyllabus) {
-                                  //   if (widget.value.iNTBFLFilePath == null ||
-                                  //       widget.value.iNTBFLFilePath!.isEmpty) {
-                                  //     return;
-                                  //   }
-                                  // } else {
-                                  //   if (widget.value.intBFilePath == null ||
-                                  //       widget.value.intBFilePath!.isEmpty) {
-                                  //     return;
-                                  //   }
-                                  // }
-
-                                  if (await canLaunchUrl(Uri.parse(
-                                      // widget.isFiltring || widget.forSyllabus
-                                      widget.value
-                                          .iNTBFLFilePath! /*  : widget.value.intBFilePath!*/))) {
-                                    await launchUrl(
-                                        Uri.parse(widget.value.iNTBFLFilePath!),
-                                        mode: LaunchMode.externalApplication);
-                                  }
-                                },
-                                icon: SvgPicture.asset(
-                                  'assets/svg/download.svg',
-                                  color: Theme.of(context).primaryColor,
-                                  height: 20.0,
-                                )),
-                          )
-                          // ElevatedButton(
-                          //   style: ElevatedButton.styleFrom(
-                          //     backgroundColor:
-                          //         Theme.of(context).colorScheme.secondary,
-                          //     padding: const EdgeInsets.symmetric(
-                          //         horizontal: 24, vertical: 12.0),
-                          //     shape: RoundedRectangleBorder(
-                          //       borderRadius: BorderRadius.circular(30.0),
-                          //     ),
-                          //   ),
-                          //   onPressed: () {},
-                          //   child: Text(
-                          //     "Download",
-                          //     style: Theme.of(context).textTheme.labelSmall!.merge(
-                          //           const TextStyle(
-                          //             color: Color(0xFF35658F),
-                          //             letterSpacing: 0.3,
-                          //             fontSize: 16,
-                          //             fontWeight: FontWeight.w700,
-                          //           ),
-                          //         ),
-                          //   ),
-                          // ),
-                        ],
-                      )
-                    : const SizedBox(),
+                        ),
+                      ),
+                    ),
+                    const Expanded(flex: 3, child: SizedBox())
+                  ],
+                ),
               ],
             ),
           ],
