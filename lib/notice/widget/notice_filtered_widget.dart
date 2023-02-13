@@ -110,6 +110,8 @@ class _NoticeFilteredWidgetState extends State<NoticeFilteredWidget> {
                                   color: noticeColor.elementAt(color),
                                   value: widget.hwCwNbController.noticeList
                                       .elementAt(index),
+                                  base: baseUrlFromInsCode(
+                                      "portal", widget.mskoolController),
                                   isFiltring: true,
                                   forSyllabus: widget
                                               .hwCwNbController.noticeList

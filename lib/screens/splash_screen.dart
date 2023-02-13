@@ -53,6 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
             }
             if (snapshot.hasError) {
               Map<String, dynamic> err = snapshot.error as Map<String, dynamic>;
+
               return Center(
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height,
