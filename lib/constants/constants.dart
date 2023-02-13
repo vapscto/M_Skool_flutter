@@ -747,8 +747,8 @@ Map<String, dynamic> getNotificationItem(String module) {
   }
 
   return {
-    "color": timetablePeriodColor.elementAt(Random.secure().nextInt(6)),
-    "bgColor": timetablePeriodColor
+    "color": noticeColor.elementAt(Random.secure().nextInt(6)),
+    "bgColor": noticeBackgroundColor
         .elementAt(Random.secure().nextInt(6))
         .withOpacity(0.3),
     "image": "assets/images/hat.png",
