@@ -764,15 +764,15 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
                     nTBTTSyllabusFlag: widget
                                 .noticeBoardController.noticeType.value
                                 .toLowerCase() ==
-                            "Others"
+                            "others"
                         ? "O"
                         : widget.noticeBoardController.noticeType.value
                                     .toLowerCase() ==
-                                "Portion"
+                                "portion"
                             ? "P"
                             : widget.noticeBoardController.noticeType.value
                                         .toLowerCase() ==
-                                    "Syllabus"
+                                    "syllabus"
                                 ? "S"
                                 : "TT"),
                 builder: (_, snapshot) {
@@ -899,15 +899,15 @@ class _NewNoticeTabScreenState extends State<NewNoticeTabScreen> {
                     nTBTTSyllabusFlag: widget
                                 .noticeBoardController.noticeType.value
                                 .toLowerCase() ==
-                            "Others"
+                            "others"
                         ? "O"
                         : widget.noticeBoardController.noticeType.value
                                     .toLowerCase() ==
-                                "Portion"
+                                "portion"
                             ? "P"
                             : widget.noticeBoardController.noticeType.value
                                         .toLowerCase() ==
-                                    "Syllabus"
+                                    "syllabus"
                                 ? "S"
                                 : "TT"),
                 builder: (_, snapshot) {
