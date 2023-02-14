@@ -15,7 +15,7 @@ import 'package:m_skool_flutter/staffs/student_attendance_staff/widget/selectdat
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
-import 'package:m_skool_flutter/widget/home_fab.dart';
+import 'package:m_skool_flutter/widget/staff_home_fab.dart';
 
 class StudentAttendanceStaffHome extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -115,7 +115,10 @@ class _StudentAttendanceStaffHomeState
           Fluttertoast.showToast(msg: 'No data available.');
           return;
         }
-        Get.to(() => const ConsolidatedMonthlyStudentAttendanceDetailScreen());
+        Get.to(() => ConsolidatedMonthlyStudentAttendanceDetailScreen(
+              loginSuccessModel: widget.loginSuccessModel,
+              mskoolController: widget.mskoolController,
+            ));
       }
     });
     studentAttendanceController.isdetailloading(false);
@@ -143,7 +146,10 @@ class _StudentAttendanceStaffHomeState
         leadingWidth: 25,
         title: const Text('Student Attendance'),
       ),
-      floatingActionButton: const HomeFab(),
+      floatingActionButton: StaffHomeFab(
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController,
+      ),
       body: Obx(
         () => studentAttendanceController.isAcademicYear.value
             ? const Center(

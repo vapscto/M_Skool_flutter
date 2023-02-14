@@ -273,20 +273,18 @@ class URLS {
   // ATTENDANCE ENTRY API .................
   static String getAttendanceInitialData =
       'api/StudentAttendanceEntryFacade/getinitialdata';
-
   static String onChangeClass =
       'api/StudentAttendanceEntryFacade/getstudentdata'; // same url for onChangeofSection
-
   static String onChangeMonth =
       'api/StudentAttendanceEntryFacade/getmonthclassheld/';
-
   static String onChangePeriod =
       'api/StudentAttendanceEntryFacade/getstdlistperiod';
-
   static String saveAttendanceEntry =
       'api/StudentAttendanceEntryFacade/savestudentattendance/';
-  // ..............
+  static String getAttendanceRecord =
+      'api/StudentAttendanceEntryFacade/ViewAttendanceDetailsStaffWise';
 
+  // ..............
   //Dashboard
   static String staffDashboard = "api/AdmissionCtrl/staffDashboardDetails/";
   static String getStaffProfileDet = "api/AdmissionCtrl/staffProfile/";

@@ -1,4 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -37,16 +36,6 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
       Get.put(StaffDashboardController());
   final PageController controller = PageController(initialPage: 0);
 
-  pushNotificationNavigator() async {
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage remoteMessage) {
-      Get.to(() => NotificationScreen(
-            loginSuccessModel: widget.loginSuccessModel,
-            mskoolController: widget.mskoolController,
-            openFor: 'staff',
-          ));
-    });
-  }
-
   @override
   void initState() {
     //
@@ -82,7 +71,6 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
         userId: widget.loginSuccessModel.userId!,
         base: baseUrlFromInsCode("portal", widget.mskoolController),
         controller: dashboardController);
-    pushNotificationNavigator();
     super.initState();
   }
 

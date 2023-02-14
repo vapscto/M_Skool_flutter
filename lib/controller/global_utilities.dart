@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/categories_api_item.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/screens/notification.dart';
 
 import '../main.dart';
 
@@ -217,4 +223,42 @@ String getManagerDashboardIconByName(String pageName) {
   }
 
   return icon += "Timetable.png";
+}
+
+Future<void> initializeFCMNotification() async {
+  var messaging = FirebaseMessaging.instance;
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    badge: true,
+    provisional: false,
+    sound: true,
+  );
+  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    print('User granted permission');
+  } else {
+    print('User declined or has not accepted permission');
+  }
+}
+
+pushNotificationNavigator({
+  required LoginSuccessModel loginSuccessModel,
+  required MskoolController mskoolController,
+}) async {
+  Get.to(() => NotificationScreen(
+        loginSuccessModel: loginSuccessModel,
+        mskoolController: mskoolController,
+        openFor: loginSuccessModel.roleforlogin!,
+      ));
+}
+
+notificationCallback(
+  NotificationResponse details,
+) async {
+  Map<String, dynamic> subject = jsonDecode(details.payload!);
+  logger.d(subject);
+  MskoolController mskoolController = Get.find<MskoolController>();
+  logger.d('notificationcall back');
+  pushNotificationNavigator(
+      loginSuccessModel: mskoolController.loginSuccessModel!.value,
+      mskoolController: mskoolController);
 }

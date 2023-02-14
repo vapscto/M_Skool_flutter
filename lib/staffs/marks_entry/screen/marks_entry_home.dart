@@ -12,8 +12,8 @@ import 'package:m_skool_flutter/staffs/marks_entry/model/subsubjectdropdownmodel
 import 'package:m_skool_flutter/staffs/marks_entry/screen/marks_entry_detail_screen.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/dropdown_label.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
-import 'package:m_skool_flutter/widget/home_fab.dart';
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
+import 'package:m_skool_flutter/widget/staff_home_fab.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../controller/mskoll_controller.dart';
@@ -222,7 +222,10 @@ class _MarksEntryHomeState extends State<MarksEntryHome> {
         leadingWidth: 25,
         title: const Text('Marks Entry'),
       ),
-      floatingActionButton: const HomeFab(),
+      floatingActionButton: StaffHomeFab(
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController,
+      ),
       body: Obx(
         () => marksEntryController.isAcamedicYear.value
             ? const Center(

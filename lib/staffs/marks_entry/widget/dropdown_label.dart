@@ -33,10 +33,7 @@ class CustomDropDownLabel extends StatelessWidget {
           Text(
             text,
             style: Theme.of(context).textTheme.labelMedium!.merge(
-                  TextStyle(
-                      backgroundColor: const Color(0xFFDFFBFE),
-                      fontSize: 20.0,
-                      color: textColor),
+                  TextStyle(fontSize: 20.0, color: textColor),
                 ),
           ),
         ],

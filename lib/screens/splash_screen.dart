@@ -1,9 +1,14 @@
+import 'dart:convert';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/apis/authenticate_user_api.dart';
 import 'package:m_skool_flutter/apis/institutional_code_api.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/manager/screens/manager_home.dart';
@@ -28,15 +33,89 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   final MskoolController mskoolController = Get.put(MskoolController());
   String deviceToken = '';
+  late FirebaseMessaging messaging;
   @override
   void initState() {
-    getDeviceTokenForFCM();
+    messaging = FirebaseMessaging.instance;
     super.initState();
   }
 
-  getDeviceTokenForFCM() async {
+  getDeviceTokenForFCM(
+      {required LoginSuccessModel loginSuccessModel,
+      required MskoolController mskoolController}) async {
     deviceToken = await getDeviceToken();
     logger.d('Device Id : $deviceToken');
+    FirebaseMessaging.onMessage.listen(
+      (RemoteMessage message) async {
+        logger.d(message.data);
+        logger.d(message.notification);
+        logger.d(message.notification!.body);
+        logger.d(message.notification!.title);
+
+        FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+            FlutterLocalNotificationsPlugin();
+        var initializationSettingsAndroid =
+            const AndroidInitializationSettings('@mipmap/launcher_icon');
+        var initializationSettingsIOS = const DarwinInitializationSettings();
+        var initializationSettings = InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: initializationSettingsIOS);
+        flutterLocalNotificationsPlugin.initialize(
+          initializationSettings,
+          onDidReceiveBackgroundNotificationResponse: notificationCallback,
+          onDidReceiveNotificationResponse: notificationCallback,
+        );
+        RemoteNotification? notification = message.notification;
+        AndroidNotificationChannel channel = const AndroidNotificationChannel(
+          'high_importance_channel', // id
+          'High Importance Notifications', // title
+          importance: Importance.high,
+        );
+        var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+          channel.id,
+          channel.name,
+          channelDescription: channel.description,
+          styleInformation: const BigTextStyleInformation(''),
+          icon: "@mipmap/launcher_icon",
+        );
+        var iOSPlatformChannelSpecifics =
+            const DarwinNotificationDetails(sound: "slow_spring_board.aiff");
+        var platformChannelSpecifics = NotificationDetails(
+            android: androidPlatformChannelSpecifics,
+            iOS: iOSPlatformChannelSpecifics);
+        // notificationController.getNotificationsCount();
+        await flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification!.title,
+          notification.body,
+          platformChannelSpecifics,
+          payload: jsonEncode(message.data),
+        );
+      },
+    );
+    messaging.getToken().then((token) async {
+      // AuthenticationController().loginVerification(fcmToken: token ?? "").then(
+      // (value) async {
+      // await checkVersionPermission();
+      // notificationController.getNotificationsCount();
+      messaging.getInitialMessage().then((message) async {
+        if (message != null) {
+          pushNotificationNavigator(
+              loginSuccessModel: loginSuccessModel,
+              mskoolController: mskoolController);
+          logger.d(message.data);
+        }
+      });
+      initializeFCMNotification().then((value) => null);
+      FirebaseMessaging.onMessageOpenedApp.listen(
+        (message) {
+          messaging = FirebaseMessaging.instance;
+          pushNotificationNavigator(
+              loginSuccessModel: loginSuccessModel,
+              mskoolController: mskoolController);
+        },
+      );
+    });
   }
 
   @override
@@ -59,7 +138,7 @@ class _SplashScreenState extends State<SplashScreen> {
               return snapshot.data!;
             }
             if (snapshot.hasError) {
-              Map<String, dynamic> err = snapshot.error as Map<String, dynamic>;
+              dynamic err = snapshot.error;
 
               return Center(
                 child: SizedBox(
@@ -162,6 +241,10 @@ class _SplashScreenState extends State<SplashScreen> {
       final LoginSuccessModel loginSuccessModel = await AuthenticateUserApi
           .instance
           .authenticateNow(userName, password, miId, loginBaseUrl, deviceToken);
+      mskoolController.updateLoginSuccessModel(loginSuccessModel);
+      getDeviceTokenForFCM(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController);
 
       logger.d(loginSuccessModel.roleId);
 

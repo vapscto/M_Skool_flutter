@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/model/attendanceEntryRecordModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/initialdataModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/periodwiseStudentlistModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/sectionModel.dart';
@@ -287,5 +288,44 @@ Future<bool> saveAttendanceEntry({
   } catch (e) {
     logger.d(e.toString());
     return false;
+  }
+}
+
+Future<AttendanceEntryRecordModel?> getAttendanceEntryRecords({
+  required String base,
+  required int miId,
+  required int asmayId,
+  required int asmclId,
+  required int asmsId,
+  required String username,
+  required int userId,
+  required String attentrytype,
+}) async {
+  var url = base + URLS.getAttendanceRecord;
+  try {
+    var response = await dio.post(
+      url,
+      options: Options(
+        headers: getSession(),
+      ),
+      data: {
+        "MI_Id": miId,
+        "ASMAY_Id": asmayId,
+        "ASMCL_Id": asmclId,
+        "ASMS_Id": asmsId,
+        "username": username,
+        "userId": userId,
+        "att_entry_type": attentrytype
+      },
+    );
+    if (response.statusCode == 200) {
+      AttendanceEntryRecordModel attendanceEntryRecordModel =
+          AttendanceEntryRecordModel.fromJson(response.data);
+      return attendanceEntryRecordModel;
+    }
+    return null;
+  } catch (e) {
+    logger.d(e.toString());
+    return null;
   }
 }

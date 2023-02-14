@@ -57,6 +57,7 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MskoolController mskoolController = Get.find<MskoolController>();
     return Scaffold(
       appBar: const CustomAppBar(title: "Notification").getAppBar(),
       body: FutureBuilder<List<NotificationDataModelValues>>(

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/api/attendance_entry_related_api.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/model/attendanceEntryRecordModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/dailyonceAndDailytwiceStudentListModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/initialdataModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/monthwiseStudentListModel.dart';
@@ -18,12 +19,19 @@ class AttendanceEntryController extends GetxController {
   RxList<PWM.SubjectListValue> subjectList = <PWM.SubjectListValue>[].obs;
   RxList<PeriodlistValue> periodList = <PeriodlistValue>[].obs;
   RxList<MonthListValue> monthList = <MonthListValue>[].obs;
+  RxList<ViewStudentPeriodWiseAttDetailsValue> attendanceEntryRecordList =
+      <ViewStudentPeriodWiseAttDetailsValue>[].obs;
 
+  // student data list for table of monthwise attendance entry.
   RxList<MonthWiseStudentListValue> monthwiseStudentList =
       <MonthWiseStudentListValue>[].obs;
+  // student data list for table of daily and dailytwice attendance entry.
+
   RxList<DailyOnceAndDailyTwiceStudentListValue>
       dailyOnceAndDailyTwiceStudentList =
       <DailyOnceAndDailyTwiceStudentListValue>[].obs;
+  // student data list for table of periodwise attendance entry.
+
   RxList<PeroidWiseStudentListValue> periodwiseStudentList =
       <PeroidWiseStudentListValue>[].obs;
 
@@ -42,6 +50,7 @@ class AttendanceEntryController extends GetxController {
   RxBool isStudentData = RxBool(false);
   RxBool isSubject = RxBool(false);
   RxBool isSave = RxBool(false);
+  RxBool isViewRecord = RxBool(false);
 
   // void addToTextFeildList(TextEditingController value) {
   //   textEditingController.add(value);
@@ -69,6 +78,10 @@ class AttendanceEntryController extends GetxController {
 
   void issaveloading(bool loading) async {
     isSave.value = loading;
+  }
+
+  void isviewrecordloading(bool loading) async {
+    isViewRecord.value = loading;
   }
 
   Future<bool> getAttendanceEntryInitialData({
@@ -425,6 +438,49 @@ class AttendanceEntryController extends GetxController {
           }
         }
         asaId.value = periodWiseStudentListModel.asAId!;
+        return true;
+      }
+      return false;
+    } catch (e) {
+      logger.d(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> getAttendanceEntryRecord({
+    required String base,
+    required int miId,
+    required int asmayId,
+    required int asmclId,
+    required int asmsId,
+    required String username,
+    required int userId,
+    required String attentrytype,
+  }) async {
+    attendanceEntryRecordList.clear();
+    AttendanceEntryRecordModel? attendanceEntryRecordModel =
+        await getAttendanceEntryRecords(
+            base: base,
+            miId: miId,
+            asmayId: asmayId,
+            asmclId: asmclId,
+            asmsId: asmsId,
+            username: username,
+            userId: userId,
+            attentrytype: attentrytype);
+    try {
+      if (attendanceEntryRecordModel!.viewStudentPeriodWiseAttDetails != null ||
+          attendanceEntryRecordModel.viewStudentPeriodWiseAttDetails!.values !=
+              null) {
+        for (var i = 0;
+            i <
+                attendanceEntryRecordModel
+                    .viewStudentPeriodWiseAttDetails!.values!.length;
+            i++) {
+          attendanceEntryRecordList.add(attendanceEntryRecordModel
+              .viewStudentPeriodWiseAttDetails!.values!
+              .elementAt(i)!);
+        }
         return true;
       }
       return false;
