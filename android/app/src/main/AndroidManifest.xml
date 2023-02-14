@@ -12,8 +12,8 @@ xmlns:tools="http://schemas.android.com/tools"
         <package android:name="com.whatsapp" />
     </queries>
    <application
-        android:label="m_skool_flutter"
-        android:name="M Skool"
+        android:label="M Skool"
+        android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         tools:replace="android:label">
         <activity

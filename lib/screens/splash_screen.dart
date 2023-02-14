@@ -137,7 +137,7 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
-  notificationCallback(NotificationResponse details) {
+  static notificationCallback(NotificationResponse details) {
     Map<String, dynamic> subject = jsonDecode(details.payload!);
     logger.d(subject);
     // checkNotificationType(subject);
