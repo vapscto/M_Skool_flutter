@@ -2,28 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 	<dict>
-		<key>NSAppTransportSecurity</key>
-		<dict>
-			<key>NSAllowsArbitraryLoads</key>
-			<true/>
-		</dict>
-		<key>LSApplicationQueriesSchemes</key>
-		<array>
-			<string>tez</string>
-			<string>phonepe</string>
-			<string>paytm</string>
-			<string>gpay</string>
-		</array>
-		<key>NSPhotoLibraryUsageDescription </key>
-		<string>Mskoll uses this permission to save images in your gallery</string>
-		<key>NSCameraUsageDescription </key>
-		<string>Mskoll uses camera permission in order to capture photo for assignments</string>
-		<key>NSMicrophoneUsageDescription</key>
-		<string>Mskoll uses microphone permission in order to use camera</string>
+		<key>CADisableMinimumFrameDurationOnPhone</key>
+		<true/>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
 		<string>M Skool Flutter</string>
+		<key>NSCameraUsageDescription</key>
+		<string>Camera Permission required to click images and uploading</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Need Photo library Permission required to uploading images</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
@@ -40,7 +28,27 @@
 		<string>????</string>
 		<key>CFBundleVersion</key>
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>tez</string>
+			<string>phonepe</string>
+			<string>paytm</string>
+			<string>gpay</string>
+		</array>
 		<key>LSRequiresIPhoneOS</key>
+		<true/>
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+		</dict>
+		<key>NSCameraUsageDescription </key>
+		<string>Mskoll uses camera permission in order to capture photo for assignments</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Mskoll uses microphone permission in order to use camera</string>
+		<key>NSPhotoLibraryUsageDescription </key>
+		<string>Mskoll uses this permission to save images in your gallery</string>
+		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
@@ -61,9 +69,5 @@
 		</array>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
-		<key>CADisableMinimumFrameDurationOnPhone</key>
-		<true/>
-		<key>UIApplicationSupportsIndirectInputEvents</key>
-		<true/>
 	</dict>
 </plist>
