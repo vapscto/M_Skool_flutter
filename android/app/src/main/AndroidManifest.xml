@@ -13,7 +13,7 @@ xmlns:tools="http://schemas.android.com/tools"
     </queries>
    <application
         android:label="m_skool_flutter"
-        android:name="${applicationName}"
+        android:name="M Skool"
         android:icon="@mipmap/ic_launcher"
         tools:replace="android:label">
         <activity

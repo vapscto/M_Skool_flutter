@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/apis/authenticate_user_api.dart';
 import 'package:m_skool_flutter/apis/institutional_code_api.dart';
@@ -18,6 +22,21 @@ import 'package:m_skool_flutter/staffs/screens/home_screen.dart';
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
 
+Future<void> initializeFCMNotification() async {
+  var messaging = FirebaseMessaging.instance;
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    badge: true,
+    provisional: false,
+    sound: true,
+  );
+  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+    print('User granted permission');
+  } else {
+    print('User declined or has not accepted permission');
+  }
+}
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -28,17 +47,108 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   final MskoolController mskoolController = Get.put(MskoolController());
   String deviceToken = '';
+  late FirebaseMessaging messaging;
   @override
   void initState() {
+    messaging = FirebaseMessaging.instance;
     getDeviceTokenForFCM();
+
     super.initState();
   }
 
   getDeviceTokenForFCM() async {
     deviceToken = await getDeviceToken();
     logger.d('Device Id : $deviceToken');
+    FirebaseMessaging.onMessage.listen(
+      (RemoteMessage message) async {
+        logger.d(message.data);
+        logger.d(message.notification);
+        logger.d(message.notification!.body);
+        logger.d(message.notification!.title);
+
+        FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+            FlutterLocalNotificationsPlugin();
+        var initializationSettingsAndroid =
+            const AndroidInitializationSettings('@mipmap/launcher_icon');
+        var initializationSettingsIOS = const DarwinInitializationSettings();
+        var initializationSettings = InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: initializationSettingsIOS);
+        flutterLocalNotificationsPlugin.initialize(
+          initializationSettings,
+          onDidReceiveBackgroundNotificationResponse: notificationCallback,
+          onDidReceiveNotificationResponse: notificationCallback,
+        );
+        RemoteNotification? notification = message.notification;
+        AndroidNotificationChannel channel = const AndroidNotificationChannel(
+          'high_importance_channel', // id
+          'High Importance Notifications', // title
+          importance: Importance.high,
+        );
+        var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+          channel.id,
+          channel.name,
+          channelDescription: channel.description,
+          styleInformation: const BigTextStyleInformation(''),
+          icon: "@mipmap/launcher_icon",
+        );
+        var iOSPlatformChannelSpecifics =
+            const DarwinNotificationDetails(sound: "slow_spring_board.aiff");
+        var platformChannelSpecifics = NotificationDetails(
+            android: androidPlatformChannelSpecifics,
+            iOS: iOSPlatformChannelSpecifics);
+        // notificationController.getNotificationsCount();
+        await flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification!.title,
+          notification.body,
+          platformChannelSpecifics,
+          payload: jsonEncode(message.data),
+        );
+      },
+    );
+    messaging.getToken().then((token) async {
+      // AuthenticationController().loginVerification(fcmToken: token ?? "").then(
+      // (value) async {
+      // await checkVersionPermission();
+      // notificationController.getNotificationsCount();
+      messaging.getInitialMessage().then((message) async {
+        if (message != null) {
+          // notificationController.getNotificationsCount();
+          // checkNotificationType(message.data);
+          logger.d(message.data);
+        }
+      });
+      initializeFCMNotification().then((value) => null);
+      FirebaseMessaging.onMessageOpenedApp.listen(
+        (message) {
+          messaging = FirebaseMessaging.instance;
+          messaging.getToken().then((token) async {
+            logger.i(token); // AuthenticationController()
+            //     .loginVerification(fcmToken: token ?? "")
+            //     .then((value) async {
+            //   // notificationController.getNotificationsCount();
+            //   // checkNotificationType(message.data);
+            // });
+          });
+          // });
+        },
+      );
+    });
   }
 
+  notificationCallback(NotificationResponse details) {
+    Map<String, dynamic> subject = jsonDecode(details.payload!);
+    logger.d(subject);
+    // checkNotificationType(subject);
+  }
+
+// Future<void> messageHandler(
+//   RemoteMessage message,
+// ) async {
+//   // currentHomeTab.value = 1;
+//   print('background message received ${message.notification!.body}');
+// }
   @override
   Widget build(BuildContext context) {
     //InstitutionalCodeApi.instance.loginWithInsCode("DEMOBGH");
@@ -59,7 +169,7 @@ class _SplashScreenState extends State<SplashScreen> {
               return snapshot.data!;
             }
             if (snapshot.hasError) {
-              Map<String, dynamic> err = snapshot.error as Map<String, dynamic>;
+              dynamic err = snapshot.error;
 
               return Center(
                 child: SizedBox(

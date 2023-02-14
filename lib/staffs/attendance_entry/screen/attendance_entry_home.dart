@@ -10,6 +10,7 @@ import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/controller/attendance_entry_related_controller.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/initialdataModel.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/sectionModel.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/screen/attendance_records_popup_screen.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/dailyonce_attendance_entry_detail_screen.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/dailytwice_attendance_entry_detail.screen.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/screen/monthwise_attendance_entry_detail_screen.dart';
@@ -20,6 +21,7 @@ import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/home_fab.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/subjectModel.dart'
     as PWM;
+import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 
 class AttendanceEntryHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -1400,138 +1402,225 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                   )
                                 : const SizedBox(),
                     const SizedBox(height: 80),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: const Size.fromWidth(180),
-                        backgroundColor: Theme.of(context).primaryColor,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 26, vertical: 14.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        MSkollBtn(
+                          title: 'View Records',
+                          onPress: () {
+                            if (selectedAcademicYear == null) {
+                              Fluttertoast.showToast(
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  msg: 'Select academic year');
+                            } else if (selectedClass == null) {
+                              Fluttertoast.showToast(
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  msg: 'Select class');
+                            } else if (selectedSection == null) {
+                              Fluttertoast.showToast(
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  msg: 'Select section');
+                            } else {
+                              Get.dialog(AttendanceRecordPopupScreen(
+                                loginSuccessModel: widget.loginSuccessModel,
+                                mskoolController: widget.mskoolController,
+                                asmayId: selectedAcademicYear!.asmaYId!.toInt(),
+                                asmclId: selectedClass!.asmcLId!.toInt(),
+                                asmsId: selectedSection!.asmSId!.toInt(),
+                                attentrytype: attendanceEntryController
+                                            .attendanceEntry.value ==
+                                        'D'
+                                    ? 'Dailyonce'
+                                    : attendanceEntryController
+                                                .attendanceEntry.value ==
+                                            'H'
+                                        ? 'Dailytwice'
+                                        : attendanceEntryController
+                                                    .attendanceEntry.value ==
+                                                'P'
+                                            ? 'Period'
+                                            : attendanceEntryController
+                                                        .attendanceEntry
+                                                        .value ==
+                                                    'M'
+                                                ? 'Monthly'
+                                                : '',
+                              ));
+                            }
+                          },
+                          size: const Size.fromWidth(180),
                         ),
-                      ),
-                      onPressed: () {
-                        if (selectedSection == null) {
-                          Fluttertoast.showToast(
-                              backgroundColor: Theme.of(context).primaryColor,
-                              msg: 'Select section');
-                        } else if (attendanceEntryController
-                                .attendanceEntry.value ==
-                            'M') {
-                          if (selectedMonth == null) {
-                            Fluttertoast.showToast(
-                                backgroundColor: Theme.of(context).primaryColor,
-                                msg: 'Select month');
-                          } else if (startDate.text.isEmpty ||
-                              endDate.text.isEmpty) {
-                            Fluttertoast.showToast(
-                                backgroundColor: Theme.of(context).primaryColor,
-                                msg: 'Select start date and end date.');
-                          } else if (attendanceEntryController
-                              .monthwiseStudentList.isNotEmpty) {
-                            Get.to(() => MonthWiseAttendanceEntryDetailScreen(
-                                  loginSuccessModel: widget.loginSuccessModel,
-                                  mskoolController: widget.mskoolController,
-                                  asaId: attendanceEntryController.asaId.value,
-                                  asmayId:
-                                      selectedAcademicYear!.asmaYId!.toInt(),
-                                  asmclId: selectedClass!.asmcLId!.toInt(),
-                                  asmsId: selectedSection!.asmSId!.toInt(),
-                                  fromDate: selectedstartdate.toString(),
-                                  classheld: attendanceEntryController
-                                      .countClassHeld.value
-                                      .toStringAsFixed(0),
-                                  toDate: selectedenddate.toString(),
-                                ));
-                          } else {
-                            Fluttertoast.showToast(
-                                backgroundColor: Theme.of(context).primaryColor,
-                                msg:
-                                    "Please Enter The Number Of Class Held For Particular Month In Master Class Held");
-                          }
-                        } else if (attendanceEntryController
-                                .attendanceEntry.value ==
-                            'D') {
-                          if (attendanceEntryController
-                              .dailyOnceAndDailyTwiceStudentList.isNotEmpty) {
-                            Get.to(() => DailyOnceAttendanceEntryDetailScreen(
-                                  loginSuccessModel: widget.loginSuccessModel,
-                                  mskoolController: widget.mskoolController,
-                                  asaId: attendanceEntryController.asaId.value,
-                                  asmayId:
-                                      selectedAcademicYear!.asmaYId!.toInt(),
-                                  asmclId: selectedClass!.asmcLId!.toInt(),
-                                  asmsId: selectedSection!.asmSId!.toInt(),
-                                ));
-                          } else {
-                            Fluttertoast.showToast(
-                                backgroundColor: Theme.of(context).primaryColor,
-                                msg: "Something went wrong..");
-                          }
-                        } else if (attendanceEntryController
-                                .attendanceEntry.value ==
-                            'H') {
-                          if (attendanceEntryController
-                              .dailyOnceAndDailyTwiceStudentList.isNotEmpty) {
-                            Get.to(() => DailyTwiceAttendanceEntryDetailScreen(
-                                  loginSuccessModel: widget.loginSuccessModel,
-                                  mskoolController: widget.mskoolController,
-                                  asaId: attendanceEntryController.asaId.value,
-                                  asmayId:
-                                      selectedAcademicYear!.asmaYId!.toInt(),
-                                  asmclId: selectedClass!.asmcLId!.toInt(),
-                                  asmsId: selectedSection!.asmSId!.toInt(),
-                                ));
-                          } else {
-                            Fluttertoast.showToast(
-                                backgroundColor: Theme.of(context).primaryColor,
-                                msg: "Something went wrong..");
-                          }
-                        } else if (attendanceEntryController
-                                .attendanceEntry.value ==
-                            'P') {
-                          if (selectedSubject == null) {
-                            Fluttertoast.showToast(
-                                backgroundColor: Theme.of(context).primaryColor,
-                                msg: "Select Subject.");
-                          } else if (selectedPeriod == null) {
-                            Fluttertoast.showToast(
-                                backgroundColor: Theme.of(context).primaryColor,
-                                msg: "Select Peroid.");
-                          } else if (attendanceEntryController
-                              .periodwiseStudentList.isNotEmpty) {
-                            Get.to(() => PeriodWiseAttendanceEntryDetailScreen(
-                                  loginSuccessModel: widget.loginSuccessModel,
-                                  mskoolController: widget.mskoolController,
-                                  asaId: attendanceEntryController.asaId.value,
-                                  asmayId:
-                                      selectedAcademicYear!.asmaYId!.toInt(),
-                                  asmclId: selectedClass!.asmcLId!.toInt(),
-                                  asmsId: selectedSection!.asmSId!.toInt(),
-                                  periodId: selectedPeriod!.ttmPId!.toInt(),
-                                  selectedradio: selectedRadio,
-                                  subjectId: selectedSubject!.ismSId!.toInt(),
-                                ));
-                          } else {
-                            Fluttertoast.showToast(
-                                backgroundColor: Theme.of(context).primaryColor,
-                                msg: "No data available...");
-                          }
-                        }
-                      },
-                      child: attendanceEntryController.isStudentData.value
-                          ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 3,
-                                color: Colors.white,
-                              ),
-                            )
-                          : Text(
-                              'View Details',
-                              style:
-                                  Theme.of(context).textTheme.labelSmall!.merge(
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            fixedSize: const Size.fromWidth(180),
+                            backgroundColor: Theme.of(context).primaryColor,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 26, vertical: 14.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                          ),
+                          onPressed: () {
+                            if (selectedAcademicYear == null) {
+                              Fluttertoast.showToast(
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  msg: 'Select academic year');
+                            } else if (selectedClass == null) {
+                              Fluttertoast.showToast(
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  msg: 'Select class');
+                            } else if (selectedSection == null) {
+                              Fluttertoast.showToast(
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  msg: 'Select section');
+                            } else if (attendanceEntryController
+                                    .attendanceEntry.value ==
+                                'M') {
+                              if (selectedMonth == null) {
+                                Fluttertoast.showToast(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                    msg: 'Select month');
+                              } else if (startDate.text.isEmpty ||
+                                  endDate.text.isEmpty) {
+                                Fluttertoast.showToast(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                    msg: 'Select start date and end date.');
+                              } else if (attendanceEntryController
+                                  .monthwiseStudentList.isNotEmpty) {
+                                Get.to(() =>
+                                    MonthWiseAttendanceEntryDetailScreen(
+                                      loginSuccessModel:
+                                          widget.loginSuccessModel,
+                                      mskoolController: widget.mskoolController,
+                                      asaId:
+                                          attendanceEntryController.asaId.value,
+                                      asmayId: selectedAcademicYear!.asmaYId!
+                                          .toInt(),
+                                      asmclId: selectedClass!.asmcLId!.toInt(),
+                                      asmsId: selectedSection!.asmSId!.toInt(),
+                                      fromDate: selectedstartdate.toString(),
+                                      classheld: attendanceEntryController
+                                          .countClassHeld.value
+                                          .toStringAsFixed(0),
+                                      toDate: selectedenddate.toString(),
+                                    ));
+                              } else {
+                                Fluttertoast.showToast(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                    msg:
+                                        "Please Enter The Number Of Class Held For Particular Month In Master Class Held");
+                              }
+                            } else if (attendanceEntryController
+                                    .attendanceEntry.value ==
+                                'D') {
+                              if (attendanceEntryController
+                                  .dailyOnceAndDailyTwiceStudentList
+                                  .isNotEmpty) {
+                                Get.to(() =>
+                                    DailyOnceAttendanceEntryDetailScreen(
+                                      loginSuccessModel:
+                                          widget.loginSuccessModel,
+                                      mskoolController: widget.mskoolController,
+                                      asaId:
+                                          attendanceEntryController.asaId.value,
+                                      asmayId: selectedAcademicYear!.asmaYId!
+                                          .toInt(),
+                                      asmclId: selectedClass!.asmcLId!.toInt(),
+                                      asmsId: selectedSection!.asmSId!.toInt(),
+                                    ));
+                              } else {
+                                Fluttertoast.showToast(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                    msg: "Something went wrong..");
+                              }
+                            } else if (attendanceEntryController
+                                    .attendanceEntry.value ==
+                                'H') {
+                              if (attendanceEntryController
+                                  .dailyOnceAndDailyTwiceStudentList
+                                  .isNotEmpty) {
+                                Get.to(() =>
+                                    DailyTwiceAttendanceEntryDetailScreen(
+                                      loginSuccessModel:
+                                          widget.loginSuccessModel,
+                                      mskoolController: widget.mskoolController,
+                                      asaId:
+                                          attendanceEntryController.asaId.value,
+                                      asmayId: selectedAcademicYear!.asmaYId!
+                                          .toInt(),
+                                      asmclId: selectedClass!.asmcLId!.toInt(),
+                                      asmsId: selectedSection!.asmSId!.toInt(),
+                                    ));
+                              } else {
+                                Fluttertoast.showToast(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                    msg: "Something went wrong..");
+                              }
+                            } else if (attendanceEntryController
+                                    .attendanceEntry.value ==
+                                'P') {
+                              if (selectedSubject == null) {
+                                Fluttertoast.showToast(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                    msg: "Select Subject.");
+                              } else if (selectedPeriod == null) {
+                                Fluttertoast.showToast(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                    msg: "Select Peroid.");
+                              } else if (attendanceEntryController
+                                  .periodwiseStudentList.isNotEmpty) {
+                                Get.to(() =>
+                                    PeriodWiseAttendanceEntryDetailScreen(
+                                      loginSuccessModel:
+                                          widget.loginSuccessModel,
+                                      mskoolController: widget.mskoolController,
+                                      asaId:
+                                          attendanceEntryController.asaId.value,
+                                      asmayId: selectedAcademicYear!.asmaYId!
+                                          .toInt(),
+                                      asmclId: selectedClass!.asmcLId!.toInt(),
+                                      asmsId: selectedSection!.asmSId!.toInt(),
+                                      periodId: selectedPeriod!.ttmPId!.toInt(),
+                                      selectedradio: selectedRadio,
+                                      subjectId:
+                                          selectedSubject!.ismSId!.toInt(),
+                                    ));
+                              } else {
+                                Fluttertoast.showToast(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                    msg: "No data available...");
+                              }
+                            }
+                          },
+                          child: attendanceEntryController.isStudentData.value
+                              ? const SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 3,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : Text(
+                                  'View Details',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall!
+                                      .merge(
                                         const TextStyle(
                                           color: Colors.white,
                                           letterSpacing: 0.3,
@@ -1539,8 +1628,10 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                           fontWeight: FontWeight.w700,
                                         ),
                                       ),
-                            ),
-                    )
+                                ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
               ),
