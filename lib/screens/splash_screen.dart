@@ -8,6 +8,7 @@ import 'package:m_skool_flutter/apis/authenticate_user_api.dart';
 import 'package:m_skool_flutter/apis/institutional_code_api.dart';
 import 'package:m_skool_flutter/config/themes/theme_data.dart';
 import 'package:m_skool_flutter/constants/api_url_constants.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/manager/screens/manager_home.dart';
@@ -21,21 +22,6 @@ import 'package:m_skool_flutter/screens/on_board.dart';
 import 'package:m_skool_flutter/staffs/screens/home_screen.dart';
 import 'package:m_skool_flutter/widget/custom_elevated_button.dart';
 import 'package:m_skool_flutter/widget/logout_confirmation.dart';
-
-Future<void> initializeFCMNotification() async {
-  var messaging = FirebaseMessaging.instance;
-  NotificationSettings settings = await messaging.requestPermission(
-    alert: true,
-    badge: true,
-    provisional: false,
-    sound: true,
-  );
-  if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-    print('User granted permission');
-  } else {
-    print('User declined or has not accepted permission');
-  }
-}
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -51,12 +37,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     messaging = FirebaseMessaging.instance;
-    getDeviceTokenForFCM();
-
     super.initState();
   }
 
-  getDeviceTokenForFCM() async {
+  getDeviceTokenForFCM(
+      {required LoginSuccessModel loginSuccessModel,
+      required MskoolController mskoolController}) async {
     deviceToken = await getDeviceToken();
     logger.d('Device Id : $deviceToken');
     FirebaseMessaging.onMessage.listen(
@@ -114,8 +100,9 @@ class _SplashScreenState extends State<SplashScreen> {
       // notificationController.getNotificationsCount();
       messaging.getInitialMessage().then((message) async {
         if (message != null) {
-          // notificationController.getNotificationsCount();
-          // checkNotificationType(message.data);
+          pushNotificationNavigator(
+              loginSuccessModel: loginSuccessModel,
+              mskoolController: mskoolController);
           logger.d(message.data);
         }
       });
@@ -123,32 +110,14 @@ class _SplashScreenState extends State<SplashScreen> {
       FirebaseMessaging.onMessageOpenedApp.listen(
         (message) {
           messaging = FirebaseMessaging.instance;
-          messaging.getToken().then((token) async {
-            logger.i(token); // AuthenticationController()
-            //     .loginVerification(fcmToken: token ?? "")
-            //     .then((value) async {
-            //   // notificationController.getNotificationsCount();
-            //   // checkNotificationType(message.data);
-            // });
-          });
-          // });
+          pushNotificationNavigator(
+              loginSuccessModel: loginSuccessModel,
+              mskoolController: mskoolController);
         },
       );
     });
   }
 
-  static notificationCallback(NotificationResponse details) {
-    Map<String, dynamic> subject = jsonDecode(details.payload!);
-    logger.d(subject);
-    // checkNotificationType(subject);
-  }
-
-// Future<void> messageHandler(
-//   RemoteMessage message,
-// ) async {
-//   // currentHomeTab.value = 1;
-//   print('background message received ${message.notification!.body}');
-// }
   @override
   Widget build(BuildContext context) {
     //InstitutionalCodeApi.instance.loginWithInsCode("DEMOBGH");
@@ -272,6 +241,10 @@ class _SplashScreenState extends State<SplashScreen> {
       final LoginSuccessModel loginSuccessModel = await AuthenticateUserApi
           .instance
           .authenticateNow(userName, password, miId, loginBaseUrl, deviceToken);
+      mskoolController.updateLoginSuccessModel(loginSuccessModel);
+      getDeviceTokenForFCM(
+          loginSuccessModel: loginSuccessModel,
+          mskoolController: mskoolController);
 
       logger.d(loginSuccessModel.roleId);
 
