@@ -50,6 +50,7 @@ class AttendanceEntryController extends GetxController {
   RxBool isStudentData = RxBool(false);
   RxBool isSubject = RxBool(false);
   RxBool isSave = RxBool(false);
+  RxBool isViewRecord = RxBool(false);
 
   // void addToTextFeildList(TextEditingController value) {
   //   textEditingController.add(value);
@@ -77,6 +78,10 @@ class AttendanceEntryController extends GetxController {
 
   void issaveloading(bool loading) async {
     isSave.value = loading;
+  }
+
+  void isviewrecordloading(bool loading) async {
+    isViewRecord.value = loading;
   }
 
   Future<bool> getAttendanceEntryInitialData({

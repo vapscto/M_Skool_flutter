@@ -18,10 +18,10 @@ import 'package:m_skool_flutter/staffs/attendance_entry/screen/periodwise_attend
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
-import 'package:m_skool_flutter/widget/home_fab.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/subjectModel.dart'
     as PWM;
 import 'package:m_skool_flutter/widget/mskoll_btn.dart';
+import 'package:m_skool_flutter/widget/staff_home_fab.dart';
 
 class AttendanceEntryHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -75,9 +75,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
   void getSectionData(int asmclId) async {
     attendanceEntryController.issectionloading(true);
     if (selectedAcademicYear == null) {
-      Fluttertoast.showToast(
-          backgroundColor: Theme.of(context).primaryColor,
-          msg: 'Select Academic year.');
+      Fluttertoast.showToast(msg: 'Select Academic year.');
       attendanceEntryController.issectionloading(false);
       return;
     }
@@ -99,7 +97,6 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
       logger.d(value);
       if (!value || value && attendanceEntryController.sectionList.isEmpty) {
         Fluttertoast.showToast(
-            backgroundColor: Theme.of(context).primaryColor,
             msg:
                 'Map The Attendance Entry Type For This Class i.e., Daily /Daily Twice/ Monthly');
       }
@@ -237,7 +234,10 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
         leadingWidth: 25,
         title: const Text('Attendance Entry'),
       ),
-      floatingActionButton: const HomeFab(),
+      floatingActionButton: StaffHomeFab(
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController,
+      ),
       body: Obx(
         () => attendanceEntryController.isInitialData.value
             ? const Center(
@@ -667,9 +667,10 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Image.asset(
-                                            'assets/images/darkbluecalendar.png',
-                                            height: 20.0,
+                                          SvgPicture.asset(
+                                            "assets/svg/calendar_icon.svg",
+                                            color: const Color(0xFF3E78AA),
+                                            height: 18,
                                           ),
                                           const SizedBox(
                                             width: 6.0,
@@ -778,14 +779,17 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                           borderRadius:
                                               BorderRadius.circular(24.0),
                                         ),
+                                        margin:
+                                            const EdgeInsets.only(bottom: 10),
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 12.0, vertical: 6.0),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            Image.asset(
-                                              'assets/images/darkbluecalendar.png',
-                                              height: 20.0,
+                                            SvgPicture.asset(
+                                              "assets/svg/calendar_icon.svg",
+                                              color: const Color(0xFF3E78AA),
+                                              height: 18.0,
                                             ),
                                             const SizedBox(
                                               width: 6.0,
@@ -807,9 +811,12 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                         ),
                                       ),
                                       hintText: 'Select date.'.tr,
-                                      suffixIcon: Image.asset(
-                                        'assets/images/darkbluecalendar.png',
-                                        color: const Color(0xFF3E78AA),
+                                      suffixIcon: Padding(
+                                        padding: const EdgeInsets.all(12),
+                                        child: SvgPicture.asset(
+                                          "assets/svg/calendar_icon.svg",
+                                          color: const Color(0xFF3E78AA),
+                                        ),
                                       ),
                                       floatingLabelBehavior:
                                           FloatingLabelBehavior.always,
@@ -880,9 +887,9 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                             suffixIcon: IconButton(
                                               onPressed: () {},
                                               icon: SvgPicture.asset(
-                                                'assets/svg/calendar_icon.svg',
+                                                "assets/svg/calendar_icon.svg",
                                                 color: const Color(0xFF3E78AA),
-                                                height: 18.0,
+                                                height: 18,
                                               ),
                                             ),
                                             contentPadding:
@@ -909,7 +916,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                                     "assets/svg/calendar_icon.svg",
                                                     color:
                                                         const Color(0xFF3E78AA),
-                                                    height: 20.0,
+                                                    height: 18,
                                                   ),
                                                   const SizedBox(
                                                     width: 6.0,
@@ -995,9 +1002,9 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                             suffixIcon: IconButton(
                                               onPressed: () {},
                                               icon: SvgPicture.asset(
-                                                'assets/svg/calendar_icon.svg',
+                                                "assets/svg/calendar_icon.svg",
                                                 color: const Color(0xFF3E78AA),
-                                                height: 18.0,
+                                                height: 18,
                                               ),
                                             ),
                                             border: const OutlineInputBorder(),
@@ -1021,7 +1028,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                                     "assets/svg/calendar_icon.svg",
                                                     color:
                                                         const Color(0xFF3E78AA),
-                                                    height: 20.0,
+                                                    height: 18,
                                                   ),
                                                   const SizedBox(
                                                     width: 6.0,
@@ -1141,8 +1148,6 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                                     .labelMedium!
                                                     .merge(
                                                       const TextStyle(
-                                                        backgroundColor:
-                                                            Color(0xFFDFFBFE),
                                                         fontSize: 19.0,
                                                         color: Color.fromRGBO(
                                                             62, 120, 170, 1),
@@ -1410,45 +1415,55 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                           onPress: () {
                             if (selectedAcademicYear == null) {
                               Fluttertoast.showToast(
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor,
                                   msg: 'Select academic year');
                             } else if (selectedClass == null) {
-                              Fluttertoast.showToast(
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor,
-                                  msg: 'Select class');
+                              Fluttertoast.showToast(msg: 'Select class');
                             } else if (selectedSection == null) {
-                              Fluttertoast.showToast(
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor,
-                                  msg: 'Select section');
+                              Fluttertoast.showToast(msg: 'Select section');
                             } else {
-                              Get.dialog(AttendanceRecordPopupScreen(
-                                loginSuccessModel: widget.loginSuccessModel,
-                                mskoolController: widget.mskoolController,
-                                asmayId: selectedAcademicYear!.asmaYId!.toInt(),
-                                asmclId: selectedClass!.asmcLId!.toInt(),
-                                asmsId: selectedSection!.asmSId!.toInt(),
-                                attentrytype: attendanceEntryController
-                                            .attendanceEntry.value ==
-                                        'D'
-                                    ? 'Dailyonce'
-                                    : attendanceEntryController
-                                                .attendanceEntry.value ==
-                                            'H'
-                                        ? 'Dailytwice'
-                                        : attendanceEntryController
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (context) {
+                                    return Dialog(
+                                      insetPadding: const EdgeInsets.all(10),
+                                      shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(8.0))),
+                                      child: AttendanceRecordPopupScreen(
+                                        loginSuccessModel:
+                                            widget.loginSuccessModel,
+                                        mskoolController:
+                                            widget.mskoolController,
+                                        asmayId: selectedAcademicYear!.asmaYId!
+                                            .toInt(),
+                                        asmclId:
+                                            selectedClass!.asmcLId!.toInt(),
+                                        asmsId:
+                                            selectedSection!.asmSId!.toInt(),
+                                        attentrytype: attendanceEntryController
                                                     .attendanceEntry.value ==
-                                                'P'
-                                            ? 'Period'
+                                                'D'
+                                            ? 'Dailyonce'
                                             : attendanceEntryController
                                                         .attendanceEntry
                                                         .value ==
-                                                    'M'
-                                                ? 'Monthly'
-                                                : '',
-                              ));
+                                                    'H'
+                                                ? 'Dailytwice'
+                                                : attendanceEntryController
+                                                            .attendanceEntry
+                                                            .value ==
+                                                        'P'
+                                                    ? 'Period'
+                                                    : attendanceEntryController
+                                                                .attendanceEntry
+                                                                .value ==
+                                                            'M'
+                                                        ? 'Monthly'
+                                                        : '',
+                                      ),
+                                    );
+                                  });
                             }
                           },
                           size: const Size.fromWidth(180),
@@ -1466,32 +1481,19 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                           onPressed: () {
                             if (selectedAcademicYear == null) {
                               Fluttertoast.showToast(
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor,
                                   msg: 'Select academic year');
                             } else if (selectedClass == null) {
-                              Fluttertoast.showToast(
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor,
-                                  msg: 'Select class');
+                              Fluttertoast.showToast(msg: 'Select class');
                             } else if (selectedSection == null) {
-                              Fluttertoast.showToast(
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor,
-                                  msg: 'Select section');
+                              Fluttertoast.showToast(msg: 'Select section');
                             } else if (attendanceEntryController
                                     .attendanceEntry.value ==
                                 'M') {
                               if (selectedMonth == null) {
-                                Fluttertoast.showToast(
-                                    backgroundColor:
-                                        Theme.of(context).primaryColor,
-                                    msg: 'Select month');
+                                Fluttertoast.showToast(msg: 'Select month');
                               } else if (startDate.text.isEmpty ||
                                   endDate.text.isEmpty) {
                                 Fluttertoast.showToast(
-                                    backgroundColor:
-                                        Theme.of(context).primaryColor,
                                     msg: 'Select start date and end date.');
                               } else if (attendanceEntryController
                                   .monthwiseStudentList.isNotEmpty) {
@@ -1514,8 +1516,6 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                     ));
                               } else {
                                 Fluttertoast.showToast(
-                                    backgroundColor:
-                                        Theme.of(context).primaryColor,
                                     msg:
                                         "Please Enter The Number Of Class Held For Particular Month In Master Class Held");
                               }
@@ -1539,8 +1539,6 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                     ));
                               } else {
                                 Fluttertoast.showToast(
-                                    backgroundColor:
-                                        Theme.of(context).primaryColor,
                                     msg: "Something went wrong..");
                               }
                             } else if (attendanceEntryController
@@ -1563,23 +1561,15 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                     ));
                               } else {
                                 Fluttertoast.showToast(
-                                    backgroundColor:
-                                        Theme.of(context).primaryColor,
                                     msg: "Something went wrong..");
                               }
                             } else if (attendanceEntryController
                                     .attendanceEntry.value ==
                                 'P') {
                               if (selectedSubject == null) {
-                                Fluttertoast.showToast(
-                                    backgroundColor:
-                                        Theme.of(context).primaryColor,
-                                    msg: "Select Subject.");
+                                Fluttertoast.showToast(msg: "Select Subject.");
                               } else if (selectedPeriod == null) {
-                                Fluttertoast.showToast(
-                                    backgroundColor:
-                                        Theme.of(context).primaryColor,
-                                    msg: "Select Peroid.");
+                                Fluttertoast.showToast(msg: "Select Peroid.");
                               } else if (attendanceEntryController
                                   .periodwiseStudentList.isNotEmpty) {
                                 Get.to(() =>
@@ -1600,8 +1590,6 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                     ));
                               } else {
                                 Fluttertoast.showToast(
-                                    backgroundColor:
-                                        Theme.of(context).primaryColor,
                                     msg: "No data available...");
                               }
                             }

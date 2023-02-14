@@ -8,7 +8,7 @@ import 'package:m_skool_flutter/staffs/attendance_entry/api/attendance_entry_rel
 import 'package:m_skool_flutter/staffs/attendance_entry/controller/attendance_entry_related_controller.dart';
 import 'package:m_skool_flutter/staffs/marks_entry/widget/save_button.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
-import 'package:m_skool_flutter/widget/home_fab.dart';
+import 'package:m_skool_flutter/widget/staff_home_fab.dart';
 
 class DailyOnceAttendanceEntryDetailScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
@@ -202,7 +202,10 @@ class _DailyOnceAttendanceEntryDetailScreenState
           ),
         ),
       ),
-      floatingActionButton: const HomeFab(),
+      floatingActionButton: StaffHomeFab(
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController,
+      ),
       body: Obx(
         () => SingleChildScrollView(
           child: Padding(

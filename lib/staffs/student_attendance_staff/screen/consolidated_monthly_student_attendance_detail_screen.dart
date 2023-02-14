@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/student_attendance_staff/controller/student_attendance_related_controller.dart';
 import 'package:m_skool_flutter/widget/custom_back_btn.dart';
-import 'package:m_skool_flutter/widget/home_fab.dart';
+import 'package:m_skool_flutter/widget/staff_home_fab.dart';
 
 class ConsolidatedMonthlyStudentAttendanceDetailScreen extends StatefulWidget {
-  const ConsolidatedMonthlyStudentAttendanceDetailScreen({super.key});
+  final LoginSuccessModel loginSuccessModel;
+  final MskoolController mskoolController;
+  const ConsolidatedMonthlyStudentAttendanceDetailScreen({
+    super.key,
+    required this.loginSuccessModel,
+    required this.mskoolController,
+  });
 
   @override
   State<ConsolidatedMonthlyStudentAttendanceDetailScreen> createState() =>
@@ -24,7 +32,10 @@ class _ConsolidatedMonthlyStudentAttendanceDetailScreenState
         leadingWidth: 25,
         title: const Text('Student Attendance'),
       ),
-      floatingActionButton: const HomeFab(),
+      floatingActionButton: StaffHomeFab(
+        loginSuccessModel: widget.loginSuccessModel,
+        mskoolController: widget.mskoolController,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding:
