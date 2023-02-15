@@ -6,8 +6,8 @@ import 'package:m_skool_flutter/student/interaction/model/inbox_model.dart';
 class InboxController extends GetxController {
   RxList<GetinboxmsgValue> inboxList = <GetinboxmsgValue>[].obs;
   RxList<GetinboxmsgValue> unReadList = <GetinboxmsgValue>[].obs;
-  // RxList<GetinboxmsgReadflgValue> messageFlagList =
-  //     <GetinboxmsgReadflgValue>[].obs;
+  RxList<GetinboxmsgReadflgValue> messageFlagList =
+      <GetinboxmsgReadflgValue>[].obs;
   RxInt userHrmeId = RxInt(0);
   RxBool isInboxLoading = RxBool(false);
 
@@ -49,8 +49,11 @@ class InboxController extends GetxController {
             inboxDataModel.getinboxmsg!.values;
 
         var readFlags = inboxDataModel.getinboxmsgReadflg!.values;
+        for (var i = 0; i < readFlags!.length; i++) {
+          messageFlagList.add(readFlags.elementAt(i));
+        }
         for (var i = 0; i < inboxMessage!.length; i++) {
-          final rf = readFlags!.firstWhere(
+          final rf = readFlags.firstWhere(
               (value) => value.ismintId == inboxMessage[i].ismintId);
           final readFlag = rf;
           int? readFlagValue;

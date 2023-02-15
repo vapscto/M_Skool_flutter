@@ -100,10 +100,11 @@ class _InboxTabScreenState extends State<InboxTabScreen> {
                       sender: inboxController.inboxList[index].sender!,
                       receiver: inboxController.inboxList[index].receiver!,
                       // isGroup: Random().nextBool(),
-                      // isSeen:
-                      //     inboxController.inboxList[index].istintReadFlg == 1
-                      //         ? true
-                      //         : false,
+                      isSeen: inboxController
+                                  .messageFlagList[index].istintReadFlg ==
+                              1
+                          ? true
+                          : false,
                       // color: Color.fromRGBO(Random().nextInt(255),
                       //     Random().nextInt(255), Random().nextInt(255), 1),
                     );
