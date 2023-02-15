@@ -34,10 +34,23 @@ class GetTTNoticeApi {
         "stdupdate": 1,
       });
 
+      if (response.data['noticelist'] == null) {
+        return Future.error({
+          "errorTitle": "Unexpected Error Occured",
+          "errorMsg":
+              "There is no timetable array present ... contact your tech team to add the same",
+        });
+      }
       final NoticeDataModel noticeDataModel =
           NoticeDataModel.fromJson(response.data['noticelist']);
 
       return Future.value(noticeDataModel.values);
+    } on DioError catch (e) {
+      logger.e(e.stackTrace);
+      return Future.error({
+        "errorTitle": "Unexpected Error Occured",
+        "errorMsg": e.message,
+      });
     } catch (e) {
       logger.e(e.toString());
       return Future.error({

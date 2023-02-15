@@ -244,7 +244,7 @@ class StaffSaveNoticeApi {
     }
 
     controller
-        .updateSaveStatus("Please We are sending your notice to employee.. ");
+        .updateSaveStatus("Please We are sending your notice to Students.. ");
     List<Map<String, dynamic>> att = [];
 
     for (var element in attValues) {

@@ -1,6 +1,7 @@
 import UIKit
 import Flutter
 import Easebuzz
+import FirebaseCore
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate,PayWithEasebuzzCallback {
