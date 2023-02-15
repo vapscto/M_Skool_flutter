@@ -5,6 +5,8 @@ import 'package:m_skool_flutter/staffs/interaction/model/staffInboxModel.dart';
 
 class StaffInteractionInboxController extends GetxController {
   RxList<GetinboxmsgValue> inboxList = <GetinboxmsgValue>[].obs;
+  RxList<GetinboxmsgReadflgValue> inboxMsgReadFlagValue =
+      <GetinboxmsgReadflgValue>[].obs;
 
   RxInt userHrmeId = RxInt(0);
 
@@ -36,15 +38,19 @@ class StaffInteractionInboxController extends GetxController {
       if (staffInboxModel!.getinboxmsg != null ||
           staffInboxModel.getinboxmsg!.values != null) {
         inboxList.clear();
+        inboxMsgReadFlagValue.clear();
         userHrmeId.value = 0;
 
         userHrmeId.value = staffInboxModel.userhrmEId!;
         List<GetinboxmsgValue?>? inboxMessage =
             staffInboxModel.getinboxmsg!.values;
-        var readFlags = staffInboxModel.getinboxmsgReadflg!.values;
-
+        List<GetinboxmsgReadflgValue?>? readFlags =
+            staffInboxModel.getinboxmsgReadflg!.values;
+        for (var i = 0; i < readFlags!.length; i++) {
+          inboxMsgReadFlagValue.add(readFlags.elementAt(i)!);
+        }
         for (var i = 0; i < inboxMessage!.length; i++) {
-          final rf = readFlags!.firstWhere(
+          final rf = readFlags.firstWhere(
               (value) => value!.ismintId == inboxMessage[i]!.ismintId);
           final readFlag = rf;
           int? readFlagValue;

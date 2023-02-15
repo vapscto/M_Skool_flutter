@@ -70,6 +70,8 @@ class ViewStudentPeriodWiseAttDetailsValue {
     this.asmcOrder,
     this.asaFRomdateTemp,
     this.deleteFlag,
+    this.subjectName,
+    this.periodName,
   });
 
   String? type;
@@ -84,6 +86,8 @@ class ViewStudentPeriodWiseAttDetailsValue {
   int? asmcOrder;
   DateTime? asaFRomdateTemp;
   int? deleteFlag;
+  String? subjectName;
+  String? periodName;
 
   factory ViewStudentPeriodWiseAttDetailsValue.fromJson(
           Map<String, dynamic> json) =>
@@ -100,6 +104,8 @@ class ViewStudentPeriodWiseAttDetailsValue {
         asmcOrder: json["ASMC_Order"],
         asaFRomdateTemp: DateTime.parse(json["ASA_fROMDATETemp"]),
         deleteFlag: json["DELETE_FLAG"],
+        subjectName: json["ISMS_SUBJECTNAME"],
+        periodName: json["TTMP_PeriodName"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -115,5 +121,7 @@ class ViewStudentPeriodWiseAttDetailsValue {
         "ASMC_Order": asmcOrder,
         "ASA_fROMDATETemp": asaFRomdateTemp!.toIso8601String(),
         "DELETE_FLAG": deleteFlag,
+        "ISMS_SUBJECTNAME": subjectName,
+        "TTMP_PeriodName": periodName,
       };
 }

@@ -759,7 +759,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                       selecteddate = await showDatePicker(
                                         context: context,
                                         initialDate: DateTime.now(),
-                                        firstDate: DateTime.now(),
+                                        firstDate: DateTime(2000),
                                         lastDate: DateTime.now(),
                                       );
 
@@ -1444,22 +1444,22 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                         attentrytype: attendanceEntryController
                                                     .attendanceEntry.value ==
                                                 'D'
-                                            ? 'Dailyonce'
+                                            ? 'dailyonce'
                                             : attendanceEntryController
                                                         .attendanceEntry
                                                         .value ==
                                                     'H'
-                                                ? 'Dailytwice'
+                                                ? 'dailytwice'
                                                 : attendanceEntryController
                                                             .attendanceEntry
                                                             .value ==
                                                         'P'
-                                                    ? 'Period'
+                                                    ? 'period'
                                                     : attendanceEntryController
                                                                 .attendanceEntry
                                                                 .value ==
                                                             'M'
-                                                        ? 'Monthly'
+                                                        ? 'monthly'
                                                         : '',
                                       ),
                                     );

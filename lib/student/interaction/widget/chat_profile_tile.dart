@@ -21,10 +21,10 @@ class ChatProfileTile extends StatelessWidget {
   final String sender;
   final String receiver;
   // final bool isGroup;
-  // final bool isSeen;
+  bool? isSeen;
   // final Color color;
   // final GetinboxmsgValue data;
-  const ChatProfileTile(
+  ChatProfileTile(
       {required this.loginSuccessModel,
       required this.mskoolController,
       required this.profileimage,
@@ -40,7 +40,7 @@ class ChatProfileTile extends StatelessWidget {
       required this.sender,
       required this.receiver,
       // required this.isGroup,
-      // required this.isSeen,
+      this.isSeen,
       // required this.color,
       // required this.data,
       super.key});
@@ -94,15 +94,27 @@ class ChatProfileTile extends StatelessWidget {
         subtitle: Row(
           children: [
             Flexible(
-              child: Text(
-                ismintSubject.toString(),
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context)
-                    .textTheme
-                    .displaySmall
-                    ?.copyWith(fontSize: 16),
+              child: SizedBox(
+                width: 50,
+                child: Text(
+                  ismintSubject.toString(),
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall
+                      ?.copyWith(fontSize: 16),
+                ),
               ),
             ),
+            const SizedBox(
+              width: 3,
+            ),
+            if (isSeen!)
+              const Icon(
+                Icons.circle,
+                size: 8,
+                color: Colors.blue,
+              ),
             // SvgPicture.asset(
             //   "assets/svg/double_check.svg",
             //   color: isSeen ? Colors.blue : Colors.grey,

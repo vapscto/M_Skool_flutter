@@ -283,6 +283,8 @@ class URLS {
       'api/StudentAttendanceEntryFacade/savestudentattendance/';
   static String getAttendanceRecord =
       'api/StudentAttendanceEntryFacade/ViewAttendanceDetailsStaffWise';
+  static String attendanceRecordDelete =
+      'api/StudentAttendanceEntryFacade/AttendanceDeleteRecordWise/';
 
   // ..............
   //Dashboard

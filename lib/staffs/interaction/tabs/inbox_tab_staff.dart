@@ -120,10 +120,11 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
                       receiver: staffInteractionInboxController
                           .inboxList[index].receiver!,
                       // isGroup: Random().nextBool(),
-                      // isSeen:
-                      //     staffInteractionInboxController.inboxList[index].istintReadFlg == 1
-                      //         ? true
-                      //         : false,
+                      isSeen: staffInteractionInboxController
+                                  .inboxMsgReadFlagValue[index].istintReadFlg ==
+                              1
+                          ? true
+                          : false,
                       // color: Color.fromRGBO(Random().nextInt(255),
                       //     Random().nextInt(255), Random().nextInt(255), 1),
                     );

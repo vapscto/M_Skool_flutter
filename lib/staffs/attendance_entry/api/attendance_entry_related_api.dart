@@ -303,6 +303,17 @@ Future<AttendanceEntryRecordModel?> getAttendanceEntryRecords({
 }) async {
   var url = base + URLS.getAttendanceRecord;
   try {
+    logger.d(
+      {
+        "MI_Id": miId,
+        "ASMAY_Id": asmayId,
+        "ASMCL_Id": asmclId,
+        "ASMS_Id": asmsId,
+        "username": username,
+        "userId": userId,
+        "att_entry_type": attentrytype
+      },
+    );
     var response = await dio.post(
       url,
       options: Options(
@@ -327,5 +338,26 @@ Future<AttendanceEntryRecordModel?> getAttendanceEntryRecords({
   } catch (e) {
     logger.d(e.toString());
     return null;
+  }
+}
+
+Future<bool> deleteAttendanceEntryRecord(
+    {required String base, required int asaId, required int userId}) async {
+  var url = base + URLS.attendanceRecordDelete;
+  try {
+    var response = await dio.post(
+      url,
+      options: Options(
+        headers: getSession(),
+      ),
+      data: {"ASA_Id": asaId, "userId": userId},
+    );
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  } catch (e) {
+    logger.d(e.toString());
+    return false;
   }
 }

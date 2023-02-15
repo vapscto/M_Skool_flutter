@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
+import 'package:m_skool_flutter/staffs/attendance_entry/api/attendance_entry_related_api.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/controller/attendance_entry_related_controller.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
@@ -56,6 +58,21 @@ class _AttendanceRecordPopupScreenState
             attentrytype: widget.attentrytype)
         .then((value) => logger.d(value));
     attendanceEntryController.isviewrecordloading(false);
+  }
+
+  deleteAttendanceRecord(int asaId) async {
+    attendanceEntryController.isviewrecordloading(true);
+    await deleteAttendanceEntryRecord(
+            base: baseUrlFromInsCode('admission', widget.mskoolController),
+            asaId: asaId,
+            userId: widget.loginSuccessModel.userId!)
+        .then((value) {
+      if (value) {
+        Fluttertoast.showToast(msg: 'Delete successfully');
+        getAttendanceRecord();
+      }
+      Fluttertoast.showToast(msg: 'Something went wrong');
+    });
   }
 
   @override
@@ -113,7 +130,6 @@ class _AttendanceRecordPopupScreenState
                   : SizedBox(
                       height: MediaQuery.of(context).size.height / 2,
                       child: ListView.builder(
-                        
                           shrinkWrap: true,
                           itemCount: attendanceEntryController
                               .attendanceEntryRecordList.length,
@@ -122,58 +138,175 @@ class _AttendanceRecordPopupScreenState
                               padding: const EdgeInsets.symmetric(
                                   vertical: 10.0, horizontal: 20),
                               child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(
                                     flex: 6,
                                     child: CustomContainer(
-                                      child: ListTile(
-                                        minLeadingWidth: 10,
-                                        leading: Icon(
-                                          Icons.calendar_today_outlined,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                        title: Text(
-                                          attendanceEntryController
-                                              .attendanceEntryRecordList
-                                              .elementAt(index)
-                                              .asaEntryDateTime!
-                                              .toString(),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .copyWith(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                        ),
-                                      ),
-                                    ),
+                                        child: ListTile(
+                                            minLeadingWidth: 10,
+                                            // leading: Icon(
+                                            //   Icons.calendar_today_outlined,
+                                            //   color: Theme.of(context).primaryColor,
+                                            // ),
+                                            title: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Academic Year : ${attendanceEntryController.attendanceEntryRecordList.elementAt(index).asmayYear!.toString()}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .copyWith(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 3,
+                                                ),
+                                                Text(
+                                                  "Class : ${attendanceEntryController.attendanceEntryRecordList.elementAt(index).asmclClassName!.toString()}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .copyWith(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 3,
+                                                ),
+                                                Text(
+                                                  "Section : ${attendanceEntryController.attendanceEntryRecordList.elementAt(index).asmcSectionName!.toString()}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .copyWith(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 3,
+                                                ),
+                                                Text(
+                                                  "Attendance Date : ${attendanceEntryController.attendanceEntryRecordList.elementAt(index).asaEntryDateTime!.toString()}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .copyWith(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 3,
+                                                ),
+                                                Text(
+                                                  "Entry Date : ${attendanceEntryController.attendanceEntryRecordList.elementAt(index).asaFromdate!.toString()}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .copyWith(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 3,
+                                                ),
+                                                Text(
+                                                  "Entry By : ${attendanceEntryController.attendanceEntryRecordList.elementAt(index).employeename!.toString()}",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleSmall!
+                                                      .copyWith(
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 3,
+                                                ),
+                                                if (attendanceEntryController
+                                                        .attendanceEntryRecordList
+                                                        .elementAt(index)
+                                                        .subjectName !=
+                                                    null)
+                                                  Text(
+                                                    "Subject : ${attendanceEntryController.attendanceEntryRecordList.elementAt(index).subjectName!.toString()}",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall!
+                                                        .copyWith(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                  ),
+                                                const SizedBox(
+                                                  height: 3,
+                                                ),
+                                                if (attendanceEntryController
+                                                        .attendanceEntryRecordList
+                                                        .elementAt(index)
+                                                        .periodName !=
+                                                    null)
+                                                  Text(
+                                                    "Period : ${attendanceEntryController.attendanceEntryRecordList.elementAt(index).periodName!.toString()}",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall!
+                                                        .copyWith(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                  ),
+                                              ],
+                                            ),
+                                            trailing: attendanceEntryController
+                                                        .attendanceEntryRecordList
+                                                        .elementAt(index)
+                                                        .deleteFlag ==
+                                                    1
+                                                ? InkWell(
+                                                    onTap: () async {
+                                                      await deleteAttendanceRecord(
+                                                          attendanceEntryController
+                                                              .attendanceEntryRecordList
+                                                              .elementAt(index)
+                                                              .asaId!);
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                        color: Theme.of(context)
+                                                            .primaryColor,
+                                                      ),
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: SvgPicture.asset(
+                                                        "assets/svg/delete.svg",
+                                                        color: Colors.white,
+                                                        height: 24,
+                                                      ),
+                                                    ),
+                                                  )
+                                                : const SizedBox())),
                                   ),
-                                  Expanded(
-                                    flex: 4,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        InkWell(
-                                          onTap: () {},
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                            ),
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: SvgPicture.asset(
-                                              "assets/svg/delete.svg",
-                                              color: Colors.white,
-                                              height: 24,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
                                 ],
                               ),
                             );
