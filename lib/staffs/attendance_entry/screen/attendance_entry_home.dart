@@ -20,7 +20,6 @@ import 'package:m_skool_flutter/widget/custom_back_btn.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/model/subjectModel.dart'
     as PWM;
-import 'package:m_skool_flutter/widget/mskoll_btn.dart';
 import 'package:m_skool_flutter/widget/staff_home_fab.dart';
 
 class AttendanceEntryHomeScreen extends StatefulWidget {
@@ -52,7 +51,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
   var todayDate = TextEditingController();
   var startDate = TextEditingController();
   var endDate = TextEditingController();
-  DateTime? selecteddate;
+  DateTime selecteddate = DateTime.now();
   DateTime? selectedstartdate;
   DateTime? selectedenddate;
 
@@ -611,6 +610,78 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                               },
                             ),
                           ),
+                    (selectedSection != null)
+                        ? Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                              ),
+                              child: TextButton(
+                                onPressed: () {
+                                  if (selectedAcademicYear == null) {
+                                    Fluttertoast.showToast(
+                                        msg: 'Select academic year');
+                                  } else if (selectedClass == null) {
+                                    Fluttertoast.showToast(msg: 'Select class');
+                                  } else if (selectedSection == null) {
+                                    Fluttertoast.showToast(
+                                        msg: 'Select section');
+                                  } else {
+                                    showDialog(
+                                        context: context,
+                                        // barrierDismissible: false,
+                                        builder: (context) {
+                                          return Dialog(
+                                            insetPadding:
+                                                const EdgeInsets.all(10),
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8.0))),
+                                            child: AttendanceRecordPopupScreen(
+                                              loginSuccessModel:
+                                                  widget.loginSuccessModel,
+                                              mskoolController:
+                                                  widget.mskoolController,
+                                              asmayId: selectedAcademicYear!
+                                                  .asmaYId!
+                                                  .toInt(),
+                                              asmclId: selectedClass!.asmcLId!
+                                                  .toInt(),
+                                              asmsId: selectedSection!.asmSId!
+                                                  .toInt(),
+                                              attentrytype: attendanceEntryController
+                                                          .attendanceEntry
+                                                          .value ==
+                                                      'D'
+                                                  ? 'Dailyonce'
+                                                  : attendanceEntryController
+                                                              .attendanceEntry
+                                                              .value ==
+                                                          'H'
+                                                      ? 'Dailytwice'
+                                                      : attendanceEntryController
+                                                                  .attendanceEntry
+                                                                  .value ==
+                                                              'P'
+                                                          ? 'Period'
+                                                          : attendanceEntryController
+                                                                      .attendanceEntry
+                                                                      .value ==
+                                                                  'M'
+                                                              ? 'Monthly'
+                                                              : '',
+                                            ),
+                                          );
+                                        });
+                                  }
+                                },
+                                // size: const Size.fromWidth(180),
+                                child: const Text('View Records'),
+                              ),
+                            ),
+                          )
+                        : Container(),
                     attendanceEntryController.isSection.value
                         ? const SizedBox()
                         : attendanceEntryController.attendanceEntry.value ==
@@ -756,19 +827,25 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                         Theme.of(context).textTheme.titleSmall,
                                     controller: todayDate,
                                     onTap: () async {
-                                      selecteddate = await showDatePicker(
+                                      showDatePicker(
                                         context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(2000),
+                                        initialDate: selecteddate,
+                                        firstDate: DateTime(
+                                          selectedAcademicYear!
+                                              .asmaYFromDate!.year,
+                                        ),
                                         lastDate: DateTime.now(),
-                                      );
-
-                                      if (selecteddate != null) {
-                                        setState(() {
-                                          todayDate.text =
-                                              "${numberList[selecteddate!.day]}/${numberList[selecteddate!.month]}/${selecteddate!.year}";
-                                        });
-                                      }
+                                      ).then((value) {
+                                        if (value != null) {
+                                          selecteddate = value;
+                                          setState(() {
+                                            todayDate.text =
+                                                "${numberList[selecteddate.day]}/${numberList[selecteddate.month]}/${selecteddate.year}";
+                                          });
+                                          getStudentListOnChangeOfPeriod(
+                                              selectedPeriod!.ttmPId!.toInt());
+                                        }
+                                      });
                                     },
                                     decoration: InputDecoration(
                                       border: const OutlineInputBorder(),
@@ -1410,64 +1487,6 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        MSkollBtn(
-                          title: 'View Records',
-                          onPress: () {
-                            if (selectedAcademicYear == null) {
-                              Fluttertoast.showToast(
-                                  msg: 'Select academic year');
-                            } else if (selectedClass == null) {
-                              Fluttertoast.showToast(msg: 'Select class');
-                            } else if (selectedSection == null) {
-                              Fluttertoast.showToast(msg: 'Select section');
-                            } else {
-                              showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (context) {
-                                    return Dialog(
-                                      insetPadding: const EdgeInsets.all(10),
-                                      shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(8.0))),
-                                      child: AttendanceRecordPopupScreen(
-                                        loginSuccessModel:
-                                            widget.loginSuccessModel,
-                                        mskoolController:
-                                            widget.mskoolController,
-                                        asmayId: selectedAcademicYear!.asmaYId!
-                                            .toInt(),
-                                        asmclId:
-                                            selectedClass!.asmcLId!.toInt(),
-                                        asmsId:
-                                            selectedSection!.asmSId!.toInt(),
-                                        attentrytype: attendanceEntryController
-                                                    .attendanceEntry.value ==
-                                                'D'
-                                            ? 'dailyonce'
-                                            : attendanceEntryController
-                                                        .attendanceEntry
-                                                        .value ==
-                                                    'H'
-                                                ? 'dailytwice'
-                                                : attendanceEntryController
-                                                            .attendanceEntry
-                                                            .value ==
-                                                        'P'
-                                                    ? 'period'
-                                                    : attendanceEntryController
-                                                                .attendanceEntry
-                                                                .value ==
-                                                            'M'
-                                                        ? 'monthly'
-                                                        : '',
-                                      ),
-                                    );
-                                  });
-                            }
-                          },
-                          size: const Size.fromWidth(180),
-                        ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             fixedSize: const Size.fromWidth(180),
@@ -1587,6 +1606,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                       selectedradio: selectedRadio,
                                       subjectId:
                                           selectedSubject!.ismSId!.toInt(),
+                                      dateTime: selecteddate,
                                     ));
                               } else {
                                 Fluttertoast.showToast(

@@ -663,7 +663,7 @@ class GetinboxmsgValue {
         istintAttachment: json["ISTINT_Attachment"],
         ismintId: json["ISMINT_Id"],
         istintId: json["ISTINT_ToId"],
-        ismintInteractionId: json["ISMINT_InteractionId"],
+        ismintInteractionId: json["ISMINT_InteractionId"]??"",
         ismintSubject: json["ISMINT_Subject"],
         ismintInteraction: json["ISMINT_Interaction"],
         ismintGroupOrIndFlg: json["ISMINT_GroupOrIndFlg"],

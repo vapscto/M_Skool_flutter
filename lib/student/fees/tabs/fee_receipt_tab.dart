@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:document_file_save_plus/document_file_save_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -910,10 +912,17 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
 
                                               // await GallerySaver.saveImage(
                                               //     file.path);
-                                              await DocumentFileSavePlus.saveFile(
-                                                  await document.save(),
-                                                  "FR-${DateTime.now().millisecondsSinceEpoch}",
-                                                  "application/pdf");
+                                              if (Platform.isIOS) {
+                                                await DocumentFileSavePlus.saveFile(
+                                                    await document.save(),
+                                                    "FR-${DateTime.now().millisecondsSinceEpoch}.pdf",
+                                                    "application/pdf");
+                                              } else {
+                                                await DocumentFileSavePlus.saveFile(
+                                                    await document.save(),
+                                                    "FR-${DateTime.now().millisecondsSinceEpoch}",
+                                                    "application/pdf");
+                                              }
                                               Fluttertoast.showToast(
                                                   msg:
                                                       "Receipt saved to Download");

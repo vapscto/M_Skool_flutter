@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:document_file_save_plus/document_file_save_plus.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:m_skool_flutter/main.dart';
@@ -168,10 +170,19 @@ class GenerateSalarySlip {
       ),
     );
     try {
-      await DocumentFileSavePlus.saveFile(
+      if (Platform.isIOS) {
+        await DocumentFileSavePlus.saveFile(
+          await document.save(),
+          "Salary-Slip-${DateTime.now().millisecondsSinceEpoch}.pdf",
+          "application/pdf",
+        );
+      } else {
+        await DocumentFileSavePlus.saveFile(
           await document.save(),
           "Salary-Slip-${DateTime.now().millisecondsSinceEpoch}",
-          "application/pdf");
+          "application/pdf",
+        );
+      }
       Fluttertoast.showToast(msg: "Salary slip saved to download folder.");
     } catch (e) {
       logger.e(e.toString());

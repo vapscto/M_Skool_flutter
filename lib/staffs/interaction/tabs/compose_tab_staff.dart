@@ -135,6 +135,15 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
     logger.d(arrayTeachers);
   }
 
+  changeTabAfterCompose(bool value) async {
+    if (value) {
+      Fluttertoast.showToast(msg: 'Compose successfully');
+
+      return;
+    }
+    Fluttertoast.showToast(msg: 'Something went wrong');
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -1154,9 +1163,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                         widget.mskoolController,
                       ),
                     ).then((value) {
-                      if (value) {
-                        Fluttertoast.showToast(msg: 'Compose successfully');
-                      }
+                      changeTabAfterCompose(value);
                     });
                     staffInteractionComposeController.issubmitloading(false);
                   } else if (staffInteractionComposeController.grpOrInd.value ==
@@ -1188,9 +1195,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                         widget.mskoolController,
                       ),
                     ).then((value) {
-                      if (value) {
-                        Fluttertoast.showToast(msg: 'Compose successfully');
-                      }
+                      changeTabAfterCompose(value);
                     });
                     staffInteractionComposeController.issubmitloading(false);
                   } else if (staffInteractionComposeController.grpOrInd.value ==
@@ -1221,9 +1226,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                         widget.mskoolController,
                       ),
                     ).then((value) {
-                      if (value) {
-                        Fluttertoast.showToast(msg: 'Compose successfully');
-                      }
+                      changeTabAfterCompose(value);
                     });
                     staffInteractionComposeController.issubmitloading(false);
                   } else {
@@ -1259,15 +1262,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                         widget.mskoolController,
                       ),
                     ).then((value) {
-                      if (value) {
-                        Fluttertoast.showToast(
-                            msg: 'Compose successfully',
-                            backgroundColor: Theme.of(context).primaryColor);
-                        return;
-                      }
-                      Fluttertoast.showToast(
-                          msg: 'Something went wrong',
-                          backgroundColor: Theme.of(context).primaryColor);
+                      changeTabAfterCompose(value);
                     });
                     staffInteractionComposeController.issubmitloading(false);
                   }
