@@ -211,7 +211,7 @@ class _StaffLeaveApprovalState extends State<StaffLeaveApproval> {
                                                                                       onPress: () {
                                                                                         Navigator.pop(context);
                                                                                         Navigator.pop(context);
-                                                                                        Navigator.pop(context);
+                                                                                        // Navigator.pop(context);
                                                                                       })
                                                                                 ],
                                                                               ),
@@ -529,6 +529,7 @@ class _StaffLeaveApprovalState extends State<StaffLeaveApproval> {
                           MSkollBtn(
                               title: "Ok UnderStood",
                               onPress: () {
+                                Navigator.pop(context);
                                 Navigator.pop(context);
                                 Navigator.pop(context);
                               })

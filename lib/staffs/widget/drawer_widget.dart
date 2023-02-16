@@ -405,7 +405,9 @@ class StaffDashboardDrawer extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                     Get.to(() => ForgotPasswordScreen(
-                        mskoolController: mskoolController));
+                          mskoolController: mskoolController,
+                          forExpire: false,
+                        ));
                   },
                 ),
                 ListTile(

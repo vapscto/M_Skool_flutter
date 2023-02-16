@@ -10,6 +10,7 @@ import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/api/send_otp_mobile.dart';
 import 'package:m_skool_flutter/forgotpassword/api/send_otp_to_email.dart';
 import 'package:m_skool_flutter/forgotpassword/controller/opt_sent_controller.dart';
+import 'package:m_skool_flutter/forgotpassword/screens/change_expired_password.dart';
 
 import 'package:m_skool_flutter/forgotpassword/screens/change_password.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
@@ -21,6 +22,7 @@ class OTPScreen extends StatefulWidget {
   final MskoolController mskoolController;
   final bool isEmailVerification;
   final String otpSendingInfo;
+  final bool forExpiry;
   final String userName;
   const OTPScreen({
     super.key,
@@ -28,6 +30,7 @@ class OTPScreen extends StatefulWidget {
     required this.isEmailVerification,
     required this.otpSendingInfo,
     required this.userName,
+    required this.forExpiry,
   });
 
   @override
@@ -307,11 +310,20 @@ class _OTPScreenState extends State<OTPScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (_) {
-                                        return ChangePassword(
-                                          mskoolController:
-                                              widget.mskoolController,
-                                          userName: widget.userName,
-                                        );
+                                        return widget.forExpiry
+                                            ? ResetExpiredPassword(
+                                                base: baseUrlFromInsCode(
+                                                    "login",
+                                                    widget.mskoolController),
+                                                userName: widget.userName,
+                                                mskoolController:
+                                                    widget.mskoolController,
+                                              )
+                                            : ChangePassword(
+                                                mskoolController:
+                                                    widget.mskoolController,
+                                                userName: widget.userName,
+                                              );
                                       },
                                     ),
                                   );

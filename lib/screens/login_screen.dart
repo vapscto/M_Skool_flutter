@@ -276,6 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 builder: (_) {
                                   return ForgotPasswordScreen(
                                     mskoolController: widget.mskoolController,
+                                    forExpire: false,
                                   );
                                 },
                               ),
@@ -568,9 +569,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                           final Map<String, dynamic> err =
                                               snapshot.error
                                                   as Map<String, dynamic>;
-                                          return ErrWidget(
-                                            err: err,
-                                          );
+                                          return err['type'] == "exp"
+                                              ? ErrWidget(
+                                                  err: err,
+                                                  btnTitle: "Update Password",
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (_) {
+                                                          return ForgotPasswordScreen(
+                                                            mskoolController: widget
+                                                                .mskoolController,
+                                                            forExpire: true,
+                                                          );
+                                                        },
+                                                      ),
+                                                    );
+                                                  },
+                                                )
+                                              : ErrWidget(
+                                                  err: err,
+                                                );
                                         }
                                         return Column(
                                           mainAxisSize: MainAxisSize.min,

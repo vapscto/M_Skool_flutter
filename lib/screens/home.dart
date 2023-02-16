@@ -66,6 +66,8 @@ class _HomeState extends State<Home> {
   final PageController pageController = PageController();
   @override
   void initState() {
+    version(widget.loginSuccessModel, widget.mskoolController);
+
     dashboardController.studentDashBoardDetails(
         miId: widget.loginSuccessModel.mIID!,
         asmayId: widget.loginSuccessModel.asmaYId!,

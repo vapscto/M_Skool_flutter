@@ -39,6 +39,8 @@ class _StaffHomeScreen extends State<StaffHomeScreen> {
   @override
   void initState() {
     //
+    version(widget.loginSuccessModel, widget.mskoolController);
+
     homeList.add(
       Dashboard(
         mskoolController: widget.mskoolController,

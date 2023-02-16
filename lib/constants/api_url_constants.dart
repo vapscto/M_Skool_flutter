@@ -13,7 +13,7 @@ class URLS {
   static String getProfile = "profile";
   static String updateProfile = "profile/update";
   static String fileUpload = "upload/file";
-  static String versionControl = "current/version";
+  static String versionControl = "api/AdmissionCtrl/Mobileversion_control";
   static String getApiUrl = "api/LoginFacade/getinstitutionapiNew/";
 
   //Common ids used in all pages.
@@ -370,4 +370,9 @@ class URLS {
 
   static String getEmployeeDetails =
       'api/EmployeeDetailsReportFacade/getEmployeedetailsBySelection';
+
+  static String playStoreLink =
+      "https://play.google.com/store/apps/details?id=com.app.mskool";
+
+  static String expiredPwd = "api/changepwdFacade/";
 }

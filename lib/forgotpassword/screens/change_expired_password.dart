@@ -1,32 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/api/reset_password.dart';
+import 'package:m_skool_flutter/forgotpassword/screens/forgot_password_screen.dart';
 import 'package:m_skool_flutter/main.dart';
+import 'package:m_skool_flutter/screens/splash_screen.dart';
 
-import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
 import 'package:m_skool_flutter/widget/success_widget.dart';
 
-class ResetPassword extends StatefulWidget {
+class ResetExpiredPassword extends StatefulWidget {
+  final String base;
+  final String userName;
   final MskoolController mskoolController;
-  final LoginSuccessModel loginSuccessModel;
-
-  const ResetPassword(
-      {super.key,
-      required this.mskoolController,
-      required this.loginSuccessModel});
+  final String? fromSplash;
+  const ResetExpiredPassword({
+    super.key,
+    required this.base,
+    required this.userName,
+    required this.mskoolController,
+    this.fromSplash,
+  });
 
   @override
-  State<ResetPassword> createState() => _ResetPasswordState();
+  State<ResetExpiredPassword> createState() => _ResetExpiredPasswordState();
 }
 
-class _ResetPasswordState extends State<ResetPassword> {
+class _ResetExpiredPasswordState extends State<ResetExpiredPassword> {
   final TextEditingController previousPassword = TextEditingController();
   final TextEditingController newPassword = TextEditingController();
   final TextEditingController confirmPassword = TextEditingController();
@@ -42,14 +46,14 @@ class _ResetPasswordState extends State<ResetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Change Password").getAppBar(),
+      appBar: const CustomAppBar(title: "Update Password").getAppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Create New Password",
+              "Change Expired Password",
               style: Theme.of(context).textTheme.titleMedium!.merge(
                     const TextStyle(fontSize: 20.0),
                   ),
@@ -79,6 +83,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             CustomContainer(
               child: TextField(
                 controller: previousPassword,
+                obscureText: true,
                 style: Theme.of(context).textTheme.titleSmall!.merge(
                       TextStyle(
                           fontSize: 16,
@@ -92,9 +97,38 @@ class _ResetPasswordState extends State<ResetPassword> {
                     hintText: " Enter your previous password"),
               ),
             ),
-            const SizedBox(
-              height: 30.0,
+            // const SizedBox(
+            //   height: 30.0,
+            // ),
+            Align(
+              alignment: Alignment.topRight,
+              child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) {
+                          return ForgotPasswordScreen(
+                            mskoolController: widget.mskoolController,
+                            forExpire: false,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "FORGOT PASSWORD ?",
+                    style: Theme.of(context).textTheme.labelSmall!.merge(
+                          const TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Color(0xFF666FB0),
+                          ),
+                        ),
+                  )),
             ),
+            // const SizedBox(
+            //   height: 30.0,
+            // ),
             Text(
               "New Password",
               style: Theme.of(context)
@@ -108,6 +142,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             CustomContainer(
               child: TextField(
                 controller: newPassword,
+                obscureText: true,
                 style: Theme.of(context).textTheme.titleSmall!.merge(
                       TextStyle(
                           fontSize: 16,
@@ -137,6 +172,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             CustomContainer(
               child: TextField(
                 controller: confirmPassword,
+                obscureText: true,
                 style: Theme.of(context).textTheme.titleSmall!.merge(
                       TextStyle(
                           fontSize: 16,
@@ -164,6 +200,13 @@ class _ResetPasswordState extends State<ResetPassword> {
                     if (previousPassword.text.isEmpty) {
                       Fluttertoast.showToast(
                           msg: "Please provide previously used password");
+                      return;
+                    }
+
+                    if (previousPassword.text != logInBox!.get("password") &&
+                        widget.fromSplash != null) {
+                      Fluttertoast.showToast(
+                          msg: "Please enter a valid previous password");
                       return;
                     }
                     if (previousPassword.text == newPassword.text) {
@@ -194,14 +237,14 @@ class _ResetPasswordState extends State<ResetPassword> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(24.0)),
                             child: FutureBuilder<bool>(
-                              future: ResetPasswordApi.instance.resetPassword(
-                                  password: previousPassword.text,
-                                  newPassword: newPassword.text,
-                                  userId: widget.loginSuccessModel.userId!,
-                                  miId: widget.mskoolController
-                                      .universalInsCodeModel!.value.miId,
-                                  base: baseUrlFromInsCode(
-                                      "login", widget.mskoolController)),
+                              future: ResetPasswordApi.instance
+                                  .changeExpiredPassword(
+                                password: previousPassword.text,
+                                newPassword: newPassword.text,
+                                entryDate: DateTime.now().toLocal().toString(),
+                                userName: widget.userName,
+                                base: widget.base,
+                              ),
                               builder: (_, snapshot) {
                                 if (snapshot.hasData && snapshot.data!) {
                                   logInBox!.put("password", newPassword.text);
@@ -210,8 +253,10 @@ class _ResetPasswordState extends State<ResetPassword> {
                                     message:
                                         "You can now use your new password for login.",
                                     onPressed: () {
-                                      Navigator.pop(context);
-                                      Navigator.pop(context);
+                                      Navigator.pushReplacement(context,
+                                          MaterialPageRoute(builder: (_) {
+                                        return const SplashScreen();
+                                      }));
                                     },
                                   );
                                 }

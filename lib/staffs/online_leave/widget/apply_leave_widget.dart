@@ -136,7 +136,7 @@ class ApplyLeaveWidget extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleSmall,
                         maxLength: 10,
                         //maxLines: 4,
-
+                        keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
                           counter: const SizedBox(),
                           contentPadding:
@@ -728,6 +728,7 @@ class ApplyLeaveWidget extends StatelessWidget {
                                       MSkollBtn(
                                         title: "Ok Understood",
                                         onPress: () {
+                                          Navigator.pop(context);
                                           Navigator.pop(context);
                                           Navigator.pop(context);
                                         },

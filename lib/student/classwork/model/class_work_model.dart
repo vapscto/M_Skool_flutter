@@ -78,7 +78,7 @@ class ClassWorkModelValues {
     icWId = json['icW_Id'];
     icWEvaluation = json['icW_Evaluation'];
     icWAttachment = json['icW_Attachment'];
-    icWFilePath = json['icW_FilePath'];
+    icWFilePath = json['icW_FilePath'].toString();
     asmcLId = json['asmcL_Id'];
     ismSSubjectName = json['ismS_SubjectName'];
     icwupLMarks = json['icwupL_Marks'];

@@ -452,6 +452,10 @@ class _HomeWorkState extends State<HomeWork> {
                                                 .elementAt(index)
                                                 .ihWAssignment!,
                                             color: noticeColor.elementAt(color),
+                                            verified: int.parse(widget
+                                                .hwCwNbController.homeWorkList
+                                                .elementAt(index)
+                                                .ihWFilePath!),
                                           ),
                                         );
                                       },

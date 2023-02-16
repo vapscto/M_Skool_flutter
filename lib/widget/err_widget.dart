@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ErrWidget extends StatelessWidget {
+  final String? btnTitle;
+  final Function()? onPressed;
   const ErrWidget({
     Key? key,
     required this.err,
+    this.btnTitle,
+    this.onPressed,
   }) : super(key: key);
 
   final Map<String, dynamic> err;
@@ -58,11 +62,12 @@ class ErrWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16.0),
               ),
             ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+            onPressed: onPressed ??
+                () {
+                  Navigator.pop(context);
+                },
             child: Text(
-              "Close",
+              btnTitle ?? "Close",
               style: Theme.of(context).textTheme.labelMedium!.merge(
                     const TextStyle(color: Colors.white),
                   ),

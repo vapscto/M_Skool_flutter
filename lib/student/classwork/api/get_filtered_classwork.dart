@@ -46,6 +46,13 @@ class GetFilteredClasswork {
         },
       );
 
+      if (response.data['assignmentlist'] == null) {
+        hwCwNbController.updateIsClassWorkDataLoading(false);
+        hwCwNbController.updateErrorHappendWhileLoadingClsWrk(true);
+
+        return;
+      }
+
       final ClassWorkModel classWorkModel =
           ClassWorkModel.fromJson(response.data['assignmentlist']);
       //logger.d(classWorkModel.toJson());
@@ -53,6 +60,8 @@ class GetFilteredClasswork {
       hwCwNbController.updateIsClassWorkDataLoading(false);
     } on Exception catch (e) {
       logger.e(e.toString());
+      hwCwNbController.updateIsClassWorkDataLoading(false);
+
       hwCwNbController.updateErrorHappendWhileLoadingClsWrk(true);
     }
   }

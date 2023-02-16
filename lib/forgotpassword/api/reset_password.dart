@@ -43,4 +43,41 @@ class ResetPasswordApi {
       });
     }
   }
+
+  Future<bool> changeExpiredPassword({
+    required String userName,
+    required String password,
+    required String newPassword,
+    required String entryDate,
+    required String base,
+  }) async {
+    final String api = base + URLS.expiredPwd;
+    final Dio ins = getGlobalDio();
+
+    try {
+      final Response response =
+          await ins.post(api, options: Options(headers: getSession()), data: {
+        "username": userName,
+        "password": password,
+        "schoolcollege": "\u0000",
+        "Logintype": "mobile",
+        "old_password": null,
+        "new_password": newPassword,
+        "Entry_Date": entryDate,
+        "changepasswordtypeflag": "expired"
+      });
+
+      if (response.data['returnMsg'].toString().toLowerCase() == "success") {
+        return Future.value(true);
+      }
+      return Future.error({
+        "errorTitle": "Password Not Matched",
+        "errorMsg": response.data['returnMsg'].toString(),
+      });
+    } on DioError catch (e) {
+      logger.e(e.stackTrace);
+    }
+
+    return Future.error(false);
+  }
 }

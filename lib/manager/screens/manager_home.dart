@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/manager/coe/screen/manager_coe.dart';
 import 'package:m_skool_flutter/manager/tabs/manager_dashboard.dart';
@@ -30,6 +31,8 @@ class _ManagerHomeState extends State<ManagerHome> {
 
   @override
   void initState() {
+    version(widget.loginSuccessModel, widget.mskoolController);
+
     homeList.add(
       ManagerDashboard(
         loginSuccessModel: widget.loginSuccessModel,

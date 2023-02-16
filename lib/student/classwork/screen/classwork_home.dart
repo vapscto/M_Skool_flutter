@@ -42,7 +42,7 @@ class _ClassworkHomeState extends State<ClassworkHome> {
                 child: ErrWidget(err: {
                   "errorTitle": "Unable to connect to server.",
                   "errorMsg":
-                      "Sorry! but we are unable to connect to server right now. Try again later."
+                      "Something went wrong either I'am unable to connect to server or data array is not present...ask your tech team to solve this issue"
                 }),
               )
             : Obx(() {
@@ -211,6 +211,10 @@ class _ClassworkHomeState extends State<ClassworkHome> {
                                           .elementAt(index)
                                           .icWContent!,
                                       color: noticeColor.elementAt(color),
+                                      verified: int.parse(snapshot.data!
+                                              .elementAt(index)
+                                              .icWFilePath ??
+                                          "0"),
                                     ));
                               },
                               itemCount: snapshot.data!.length,

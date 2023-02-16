@@ -34,8 +34,7 @@ class ChangePasswordApi {
 
       return Future.error({
         "errorTitle": "Password Change Unsuccessfull",
-        "errorMsg":
-            "Currently we are unable to change password, try again later",
+        "errorMsg": passwordChangedModel.message,
       });
     } on Exception catch (e) {
       logger.e(e.toString());

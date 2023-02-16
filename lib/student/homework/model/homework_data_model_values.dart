@@ -65,7 +65,7 @@ class HomeWorkDataModelValues {
     ihWAssignment = json['ihW_Assignment'];
     ihWAttachment = json['ihW_Attachment'];
     asmSId = json['asmS_Id'];
-    ihWFilePath = json['ihW_FilePath'];
+    ihWFilePath = json['ihW_FilePath'].toString();
     ismSId = json['ismS_Id'];
     ismSSubjectName = json['ismS_SubjectName'];
     asmcLId = json['asmcL_Id'];

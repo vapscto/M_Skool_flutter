@@ -105,9 +105,10 @@ class _FiltredHwState extends State<FiltredHw> {
                                         .elementAt(index)
                                         .ihWId!,
                                     assignment: widget
-                                        .hwCwNbController.homeWorkList
-                                        .elementAt(index)
-                                        .ihWAssignment!,
+                                            .hwCwNbController.homeWorkList
+                                            .elementAt(index)
+                                            .ihWAssignment ??
+                                        "N/A",
                                     date: widget.hwCwNbController.homeWorkList
                                         .elementAt(index)
                                         .ihWDate!,
@@ -115,10 +116,7 @@ class _FiltredHwState extends State<FiltredHw> {
                                         .hwCwNbController.homeWorkList
                                         .elementAt(index)
                                         .ismSSubjectName!,
-                                    attachmentUrl: widget
-                                        .hwCwNbController.homeWorkList
-                                        .elementAt(index)
-                                        .ihWAttachment,
+                                    attachmentUrl: "",
                                     attachmentType: widget
                                                 .hwCwNbController.homeWorkList
                                                 .elementAt(index)
@@ -188,9 +186,14 @@ class _FiltredHwState extends State<FiltredHw> {
                                     .elementAt(index)
                                     .ismSSubjectName!,
                                 topic: widget.hwCwNbController.homeWorkList
-                                    .elementAt(index)
-                                    .ihWAssignment!,
+                                        .elementAt(index)
+                                        .ihWAssignment ??
+                                    "N/A",
                                 color: noticeColor.elementAt(color),
+                                verified: int.parse(widget
+                                    .hwCwNbController.homeWorkList
+                                    .elementAt(index)
+                                    .ihWFilePath!),
                               ),
                             );
                           },

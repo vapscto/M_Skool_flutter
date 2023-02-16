@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:document_file_save_plus/document_file_save_plus.dart';
@@ -62,6 +63,13 @@ class TTPdfGenerator {
               }));
     }));
     try {
+      if (Platform.isIOS) {
+        await DocumentFileSavePlus.saveFile(
+            await document.save(),
+            "Staff-DTT-${DateTime.now().millisecondsSinceEpoch}.pdf",
+            "application/pdf");
+        return;
+      }
       await DocumentFileSavePlus.saveFile(
           await document.save(),
           "Staff-DTT-${DateTime.now().millisecondsSinceEpoch}",
@@ -158,6 +166,13 @@ class TTPdfGenerator {
           ]));
     }));
     try {
+      if (Platform.isIOS) {
+        await DocumentFileSavePlus.saveFile(
+            await document.save(),
+            "Staff-WTT-${DateTime.now().millisecondsSinceEpoch}.pdf",
+            "application/pdf");
+        return;
+      }
       await DocumentFileSavePlus.saveFile(
           await document.save(),
           "Staff-WTT-${DateTime.now().millisecondsSinceEpoch}",

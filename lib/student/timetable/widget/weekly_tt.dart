@@ -408,10 +408,17 @@ class _WeeklyTTState extends State<WeeklyTT> {
                         return pw.Row(children: pdfTemplate);
                       }));
 
-                      DocumentFileSavePlus.saveFile(
-                          await pdf.save(),
-                          "WTT-${DateTime.now().millisecondsSinceEpoch}",
-                          "application/pdf");
+                      if (Platform.isIOS) {
+                        DocumentFileSavePlus.saveFile(
+                            await pdf.save(),
+                            "WTT-${DateTime.now().millisecondsSinceEpoch}.pdf",
+                            "application/pdf");
+                      } else {
+                        DocumentFileSavePlus.saveFile(
+                            await pdf.save(),
+                            "WTT-${DateTime.now().millisecondsSinceEpoch}",
+                            "application/pdf");
+                      }
 
                       // document.dispose();
                       List<Directory>? directory =

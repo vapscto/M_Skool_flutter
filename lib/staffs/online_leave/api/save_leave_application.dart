@@ -23,6 +23,18 @@ class SaveLeaveApplication {
     final Dio ins = getGlobalDio();
     final String apiUrl = base + URLS.saveLeave;
     try {
+      logger.d({
+        "HRELAP_ApplicationDate": applicationDate,
+        "HRELAP_ContactNoOnLeave": contactNoOnLeave,
+        "HRELAP_LeaveReason": leaveReason,
+        "HRELAP_ReportingDate": reportingDate,
+        "HRELT_SupportingDocument": "undefined",
+        "MI_Id": miId,
+        "UserId": "$userId",
+        "asmay_id": asmayId,
+        "frmToDates": frmToDate,
+        "temp_table_data": temp
+      });
       final Response response = await ins
           .post(apiUrl, options: Options(headers: getSession()), data: {
         "HRELAP_ApplicationDate": applicationDate,
@@ -37,6 +49,7 @@ class SaveLeaveApplication {
         "temp_table_data": temp
       });
 
+      // logger.d()
       logger.d(response.statusCode);
 
       if (response.statusCode == 200) {

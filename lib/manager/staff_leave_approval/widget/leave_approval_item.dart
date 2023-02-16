@@ -94,7 +94,7 @@ class AppliedLeaveAprovalItem extends StatelessWidget {
                     value.hRMLLeaveName!.toLowerCase().contains("casual")
                         ? "assets/images/cl.png"
                         : value.hRMLLeaveName!.toLowerCase().contains("sick")
-                            ? 'assets/images/medication.png'
+                            ? 'assets/images/sl.png'
                             : value.hRMLLeaveName!
                                     .toLowerCase()
                                     .contains("emergency")

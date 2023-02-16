@@ -241,7 +241,9 @@ class _HomePageDrawerState extends State<HomePageDrawer> {
                     onTap: () {
                       Navigator.pop(context);
                       Get.to(() => ForgotPasswordScreen(
-                          mskoolController: widget.mskoolController));
+                            mskoolController: widget.mskoolController,
+                            forExpire: false,
+                          ));
                     },
                   ),
                   ListTile(

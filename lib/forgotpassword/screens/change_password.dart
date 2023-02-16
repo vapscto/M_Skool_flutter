@@ -4,14 +4,11 @@ import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/forgotpassword/api/change_password_api.dart';
-import 'package:m_skool_flutter/forgotpassword/screens/reset_password.dart';
 import 'package:m_skool_flutter/main.dart';
-import 'package:m_skool_flutter/screens/login_screen.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
 import 'package:m_skool_flutter/widget/custom_app_bar.dart';
 import 'package:m_skool_flutter/widget/custom_container.dart';
 import 'package:m_skool_flutter/widget/err_widget.dart';
-import 'package:m_skool_flutter/widget/pgr_widget.dart';
 import 'package:m_skool_flutter/widget/success_widget.dart';
 
 class ChangePassword extends StatefulWidget {

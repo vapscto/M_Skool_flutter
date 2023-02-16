@@ -11,12 +11,14 @@ class SelectVerificationType extends StatefulWidget {
   final String emailId;
   final MskoolController mskoolController;
   final String userName;
+  final bool forVerify;
   const SelectVerificationType({
     super.key,
     required this.mobileNo,
     required this.emailId,
     required this.mskoolController,
     required this.userName,
+    required this.forVerify,
   });
 
   @override
@@ -238,6 +240,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                                   mskoolController: widget.mskoolController,
                                   otpSendingInfo: controller.text,
                                   userName: widget.userName,
+                                  forExpiry: widget.forVerify,
                                 );
                               },
                             ),

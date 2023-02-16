@@ -17,7 +17,9 @@ import 'package:m_skool_flutter/widget/success_widget.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   final MskoolController mskoolController;
-  const ForgotPasswordScreen({super.key, required this.mskoolController});
+  final bool forExpire;
+  const ForgotPasswordScreen(
+      {super.key, required this.mskoolController, required this.forExpire});
 
   @override
   State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
@@ -219,6 +221,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                                         .data!.mobileNo!,
                                                     userName:
                                                         userName.text.trim(),
+                                                    forVerify: widget.forExpire,
                                                   );
                                                 },
                                               ),

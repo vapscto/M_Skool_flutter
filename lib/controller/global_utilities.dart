@@ -3,12 +3,17 @@ import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/apis/version_control_api.dart';
+import 'package:m_skool_flutter/constants/api_url_constants.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/categories_api_item.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/screens/notification.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
 
@@ -261,4 +266,52 @@ notificationCallback(
   pushNotificationNavigator(
       loginSuccessModel: mskoolController.loginSuccessModel!.value,
       mskoolController: mskoolController);
+}
+
+void version(LoginSuccessModel loginSuccessModel,
+    MskoolController mskoolController) async {
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+  // String appName = packageInfo.appName;
+  // String packageName = packageInfo.packageName;
+  String version = packageInfo.version;
+  // String buildNumber = packageInfo.buildNumber;
+
+  final bool ctrl = await VersionControlApi.instance.checkVersionAndShowUpgrade(
+    miId: loginSuccessModel.mIID!,
+    version: version,
+    base: baseUrlFromInsCode(
+      "portal",
+      mskoolController,
+    ),
+  );
+
+  if (ctrl) {
+    Get.dialog(AlertDialog(
+      title: const Text("Update App!"),
+      content: const Text(
+        "We have updated this app with new feature's and several bug fixes, we strongly recommend you to update the app before using",
+        style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.w400),
+      ),
+      actions: [
+        TextButton(
+            onPressed: () async {
+              Get.close(1);
+            },
+            child: const Text("Later")),
+        TextButton(
+          onPressed: () async {
+            Get.close(1);
+            if (await canLaunchUrl(Uri.parse(URLS.playStoreLink))) {
+              await launchUrl(Uri.parse(URLS.playStoreLink),
+                  mode: LaunchMode.externalApplication);
+            }
+          },
+          child: const Text("Update"),
+        ),
+      ],
+    ));
+  }
+
+  // logger.d(version);
 }

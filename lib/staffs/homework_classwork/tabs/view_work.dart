@@ -155,7 +155,7 @@ class _HwCwViewWorkState extends State<HwCwViewWork> {
                         )
                       : ListView.separated(
                           shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
+                          // physics: const NeverScrollableScrollPhysics(),
                           padding: const EdgeInsets.all(16.0),
                           itemBuilder: (_, index) {
                             color += 1;

@@ -8,12 +8,14 @@ class HwCwItem extends StatelessWidget {
   final String sub;
   final String topic;
   final Color color;
+  final int verified;
   const HwCwItem({
     Key? key,
     required this.sub,
     required this.topic,
     required this.isRead,
     required this.color,
+    required this.verified,
   }) : super(key: key);
 
   @override
@@ -69,17 +71,30 @@ class HwCwItem extends StatelessWidget {
                   // const SizedBox(
                   //   height: .0,
                   // ),
-                  Text(
-                    topic,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelSmall!.merge(
-                          const TextStyle(
-                              fontWeight: FontWeight.w400,
-                              letterSpacing: 0.2,
-                              color: Color(0xFF1a1a1a),
-                              fontSize: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          topic,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.labelSmall!.merge(
+                                const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 0.2,
+                                    color: Color(0xFF1a1a1a),
+                                    fontSize: 16),
+                              ),
                         ),
+                      ),
+                      Text(
+                        verified == 1 ? "Verified" : "",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall!
+                            .merge(const TextStyle(color: Colors.green)),
+                      )
+                    ],
                   ),
                 ],
               ),
