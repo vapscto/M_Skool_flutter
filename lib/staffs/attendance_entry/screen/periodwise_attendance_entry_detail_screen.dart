@@ -16,6 +16,7 @@ class PeriodWiseAttendanceEntryDetailScreen extends StatefulWidget {
   final MskoolController mskoolController;
   final int asaId;
   final int asmayId;
+  final DateTime dateTime;
   final int asmclId;
   final int asmsId;
   final String selectedradio;
@@ -32,6 +33,7 @@ class PeriodWiseAttendanceEntryDetailScreen extends StatefulWidget {
     required this.selectedradio,
     required this.subjectId,
     required this.periodId,
+    required this.dateTime,
   });
 
   @override
@@ -45,12 +47,13 @@ class _PeriodWiseAttendanceEntryDetailScreenState
       Get.put(AttendanceEntryController());
   bool selectAll = false;
   List<Map<String, dynamic>> stdList = [];
-  String date =
-      '${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}';
+  String date = "";
 
   List<bool> boollist = [];
   @override
   void initState() {
+    date =
+        '${widget.dateTime.year}/${widget.dateTime.month}/${widget.dateTime.day}';
     boollist.clear();
     boollist = attendanceEntryController.boolList;
     super.initState();
