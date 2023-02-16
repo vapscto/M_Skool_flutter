@@ -160,13 +160,13 @@ class _MonthWiseAttendanceEntryDetailScreenState
                 ).then((value) {
                   if (value) {
                     Fluttertoast.showToast(
-                        msg: 'Attendance Save Successfully',
-                        backgroundColor: Theme.of(context).primaryColor);
+                      msg: 'Attendance Save Successfully',
+                    );
                     return;
                   }
                   Fluttertoast.showToast(
-                      msg: 'Something went wrong',
-                      backgroundColor: Theme.of(context).primaryColor);
+                    msg: 'Something went wrong',
+                  );
                 });
                 attendanceEntryController.issaveloading(false);
               },

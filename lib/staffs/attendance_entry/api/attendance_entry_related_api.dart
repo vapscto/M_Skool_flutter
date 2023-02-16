@@ -151,6 +151,22 @@ Future<DailyOnceAndDailyTwiceStudentListModel?> onChangeOfSection({
   required String base,
 }) async {
   var url = base + URLS.onChangeClass;
+  logger.d(
+    {
+      "ASMAY_Id": asmayId,
+      "userId": userId,
+      "MI_Id": miId,
+      "username": username,
+      "flag": "staff",
+      "roleId": roleId,
+      "ASA_FromDate": fromDate,
+      "ASMCL_Id": asmclId,
+      "ASMS_Id": asmsId,
+      "checksubject": "1",
+      "monthflag": monthFlag,
+      "monthflag1": monthFlag1,
+    },
+  );
   try {
     var response = await dio.post(
       url,

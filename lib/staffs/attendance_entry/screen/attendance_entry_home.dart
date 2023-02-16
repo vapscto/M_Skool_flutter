@@ -218,14 +218,6 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
   }
 
   @override
-  void initState() {
-    todayDate.text =
-        "${DateTime.now().year}/${numberList[DateTime.now().month]}/${numberList[DateTime.now().day]}";
-    getInitialData();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -592,17 +584,10 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                   selectedPeriod = null;
                                   startDate.text = '';
                                   endDate.text = '';
+                                  todayDate.text = '';
                                 });
 
                                 if (attendanceEntryController
-                                            .attendanceEntry.value ==
-                                        'D' ||
-                                    attendanceEntryController
-                                            .attendanceEntry.value ==
-                                        'H') {
-                                  getStudentListOnChangeOfSection(
-                                      s.asmSId.toString());
-                                } else if (attendanceEntryController
                                         .attendanceEntry.value ==
                                     'P') {
                                   getSubjectList(s.asmSId!.toInt());
@@ -654,22 +639,22 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                                           .attendanceEntry
                                                           .value ==
                                                       'D'
-                                                  ? 'Dailyonce'
+                                                  ? 'dailyonce'
                                                   : attendanceEntryController
                                                               .attendanceEntry
                                                               .value ==
                                                           'H'
-                                                      ? 'Dailytwice'
+                                                      ? 'dailytwice'
                                                       : attendanceEntryController
                                                                   .attendanceEntry
                                                                   .value ==
                                                               'P'
-                                                          ? 'Period'
+                                                          ? 'period'
                                                           : attendanceEntryController
                                                                       .attendanceEntry
                                                                       .value ==
                                                                   'M'
-                                                              ? 'Monthly'
+                                                              ? 'monthly'
                                                               : '',
                                             ),
                                           );
@@ -840,10 +825,20 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                           selecteddate = value;
                                           setState(() {
                                             todayDate.text =
-                                                "${numberList[selecteddate.day]}/${numberList[selecteddate.month]}/${selecteddate.year}";
+                                                "${selecteddate.year}/${numberList[selecteddate.month]}/${numberList[selecteddate.day]}";
+                                            selectedPeriod = null;
                                           });
-                                          getStudentListOnChangeOfPeriod(
-                                              selectedPeriod!.ttmPId!.toInt());
+
+                                          if (attendanceEntryController
+                                                      .attendanceEntry.value ==
+                                                  'D' ||
+                                              attendanceEntryController
+                                                      .attendanceEntry.value ==
+                                                  'H') {
+                                            getStudentListOnChangeOfSection(
+                                                selectedSection!.asmSId
+                                                    .toString());
+                                          }
                                         }
                                       });
                                     },
@@ -1271,7 +1266,9 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                       onChanged: (s) {
                                         logger.d(s!.ismSId);
                                         selectedSubject = s;
-                                        setState(() {});
+                                        setState(() {
+                                          selectedPeriod = null;
+                                        });
                                       },
                                     ),
                                   )
@@ -1438,6 +1435,8 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                         setState(() {
                                           selectedRadio = value.toString();
                                         });
+                                        getStudentListOnChangeOfPeriod(
+                                            selectedPeriod!.ttmPId!.toInt());
                                         logger.d(value);
                                       },
                                     ),
@@ -1478,6 +1477,8 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                         setState(() {
                                           selectedRadio = value.toString();
                                         });
+                                        getStudentListOnChangeOfPeriod(
+                                            selectedPeriod!.ttmPId!.toInt());
                                         logger.d(value);
                                       },
                                     ),
@@ -1505,6 +1506,8 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                               Fluttertoast.showToast(msg: 'Select class');
                             } else if (selectedSection == null) {
                               Fluttertoast.showToast(msg: 'Select section');
+                            } else if (todayDate.text.isEmpty) {
+                              Fluttertoast.showToast(msg: 'Select date');
                             } else if (attendanceEntryController
                                     .attendanceEntry.value ==
                                 'M') {
@@ -1640,6 +1643,9 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                         )
                       ],
                     ),
+                    const SizedBox(
+                      height: 40,
+                    )
                   ],
                 ),
               ),
