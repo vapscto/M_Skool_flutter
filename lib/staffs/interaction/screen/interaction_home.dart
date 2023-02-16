@@ -83,6 +83,7 @@ class _InteractionHomeState extends State<InteractionHome>
                     ComposeTabStaff(
                       loginSuccessModel: widget.loginSuccessModel,
                       mskoolController: widget.mskoolController,
+                      tabController: _tabController,
                     ),
                     InboxTabStaff(
                       loginSuccessModel: widget.loginSuccessModel,

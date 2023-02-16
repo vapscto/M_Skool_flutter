@@ -84,6 +84,7 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
                     ComposeTabScreen(
                       loginSuccessModel: widget.loginSuccessModel,
                       mskoolController: widget.mskoolController,
+                      tabController: _tabController,
                     ),
                     InboxTabScreen(
                       loginSuccessModel: widget.loginSuccessModel,

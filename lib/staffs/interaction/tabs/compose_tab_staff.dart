@@ -18,10 +18,12 @@ import 'package:m_skool_flutter/widget/custom_container.dart';
 class ComposeTabStaff extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
+  final TabController tabController;
   const ComposeTabStaff({
     super.key,
     required this.loginSuccessModel,
     required this.mskoolController,
+    required this.tabController,
   });
 
   @override
@@ -138,7 +140,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
   changeTabAfterCompose(bool value) async {
     if (value) {
       Fluttertoast.showToast(msg: 'Compose successfully');
-
+      widget.tabController.animateTo(1);
       return;
     }
     Fluttertoast.showToast(msg: 'Something went wrong');

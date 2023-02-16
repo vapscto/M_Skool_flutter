@@ -13,10 +13,13 @@ import 'package:m_skool_flutter/widget/custom_container.dart';
 class ComposeTabScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
-  const ComposeTabScreen(
-      {super.key,
-      required this.loginSuccessModel,
-      required this.mskoolController});
+  final TabController tabController;
+  const ComposeTabScreen({
+    super.key,
+    required this.loginSuccessModel,
+    required this.mskoolController,
+    required this.tabController,
+  });
 
   @override
   State<ComposeTabScreen> createState() => _ComposeTabScreenState();
@@ -58,7 +61,6 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
   @override
   void initState() {
     getStafflistData();
-
     super.initState();
   }
 
@@ -471,14 +473,11 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
                       FocusScope.of(context).unfocus();
                       subject.text = '';
                       about.text = '';
-                      Fluttertoast.showToast(
-                          msg: 'Compose successfully',
-                          backgroundColor: Theme.of(context).primaryColor);
+                      widget.tabController.animateTo(1);
+                      Fluttertoast.showToast(msg: 'Compose successfully');
                       return;
                     }
-                    Fluttertoast.showToast(
-                        msg: 'Something went wrong',
-                        backgroundColor: Theme.of(context).primaryColor);
+                    Fluttertoast.showToast(msg: 'Something went wrong');
                   });
                   composeController.issend(false);
                   composeController.isbutton(true);
