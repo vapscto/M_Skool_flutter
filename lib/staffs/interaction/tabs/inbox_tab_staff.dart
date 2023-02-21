@@ -74,6 +74,9 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
                 )
               : ListView.separated(
                   itemBuilder: (context, index) {
+                    int itemCount = staffInteractionInboxController
+                        .inboxMsgReadFlagValue.length;
+                    int reversedIndex = itemCount - 1 - index;
                     return ChatProfileTile(
                       loginSuccessModel: widget.loginSuccessModel,
                       mskoolController: widget.mskoolController,
@@ -121,7 +124,8 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
                           .inboxList[index].receiver!,
                       // isGroup: Random().nextBool(),
                       isSeen: staffInteractionInboxController
-                                  .inboxMsgReadFlagValue[index].istintReadFlg ==
+                                  .inboxMsgReadFlagValue[reversedIndex]
+                                  .istintReadFlg ==
                               1
                           ? true
                           : false,

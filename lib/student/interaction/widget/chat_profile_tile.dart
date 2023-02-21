@@ -93,28 +93,29 @@ class ChatProfileTile extends StatelessWidget {
                 ])),
         subtitle: Row(
           children: [
-            Flexible(
-              child: SizedBox(
-                width: 50,
-                child: Text(
-                  ismintSubject.toString(),
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context)
-                      .textTheme
-                      .displaySmall
-                      ?.copyWith(fontSize: 16),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 3,
-            ),
             if (isSeen!)
               const Icon(
                 Icons.circle,
-                size: 8,
+                size: 10,
                 color: Colors.blue,
               ),
+            const SizedBox(
+              width: 5,
+            ),
+            Flexible(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width / 2,
+                child: Text(
+                  ismintSubject.toString(),
+                  overflow: TextOverflow.clip,
+                  style: Theme.of(context)
+                      .textTheme
+                      .displaySmall
+                      ?.copyWith(fontSize: 14),
+                ),
+              ),
+            ),
+
             // SvgPicture.asset(
             //   "assets/svg/double_check.svg",
             //   color: isSeen ? Colors.blue : Colors.grey,
@@ -131,7 +132,7 @@ class ChatProfileTile extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .displaySmall
-                    ?.copyWith(fontSize: 14),
+                    ?.copyWith(fontSize: 12),
               ),
             ),
             const SizedBox(height: 10),
@@ -141,14 +142,14 @@ class ChatProfileTile extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .displaySmall!
-                        .copyWith(fontSize: 12),
+                        .copyWith(fontSize: 10),
                   )
                 : Text(
                     'From : $sender',
                     style: Theme.of(context)
                         .textTheme
                         .displaySmall!
-                        .copyWith(fontSize: 12),
+                        .copyWith(fontSize: 10),
                   ),
 
             //double_check.svg
