@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
@@ -488,47 +489,55 @@ class HwCwViewWorkItem extends StatelessWidget {
                                                   );
                                                 }
 
-                                                return ListView.separated(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            16.0),
-                                                    itemBuilder: (_, index) {
-                                                      return HwCwContentItem(
-                                                          onDownloadClicked:
-                                                              () async {
-                                                            if (await canLaunchUrl(
-                                                                Uri.parse(snapshot
-                                                                    .data!
-                                                                    .elementAt(
-                                                                        index)
-                                                                    .icwatTAttachment!))) {
-                                                              await launchUrl(
+                                                return SizedBox(
+                                                  height: Get.height * 0.4,
+                                                  child: ListView.separated(
+                                                      shrinkWrap: true,
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              16.0),
+                                                      itemBuilder: (_, index) {
+                                                        return HwCwContentItem(
+                                                            onDownloadClicked:
+                                                                () async {
+                                                              if (await canLaunchUrl(
                                                                   Uri.parse(snapshot
                                                                       .data!
                                                                       .elementAt(
                                                                           index)
-                                                                      .icwatTAttachment!),
-                                                                  mode: LaunchMode
-                                                                      .externalApplication);
-                                                            }
-                                                          },
-                                                          title: snapshot.data!
-                                                              .elementAt(index)
-                                                              .icwatTFileName!,
-                                                          isPdf: snapshot.data!
-                                                              .elementAt(index)
-                                                              .icwatTFileName!
-                                                              .endsWith(
-                                                                  ".pdf"));
-                                                    },
-                                                    separatorBuilder:
-                                                        (_, index) {
-                                                      return const SizedBox(
-                                                        height: 16.0,
-                                                      );
-                                                    },
-                                                    itemCount:
-                                                        snapshot.data!.length);
+                                                                      .icwatTAttachment!))) {
+                                                                await launchUrl(
+                                                                    Uri.parse(snapshot
+                                                                        .data!
+                                                                        .elementAt(
+                                                                            index)
+                                                                        .icwatTAttachment!),
+                                                                    mode: LaunchMode
+                                                                        .externalApplication);
+                                                              }
+                                                            },
+                                                            title: snapshot
+                                                                .data!
+                                                                .elementAt(
+                                                                    index)
+                                                                .icwatTFileName!,
+                                                            isPdf: snapshot
+                                                                .data!
+                                                                .elementAt(
+                                                                    index)
+                                                                .icwatTFileName!
+                                                                .endsWith(
+                                                                    ".pdf"));
+                                                      },
+                                                      separatorBuilder:
+                                                          (_, index) {
+                                                        return const SizedBox(
+                                                          height: 16.0,
+                                                        );
+                                                      },
+                                                      itemCount: snapshot
+                                                          .data!.length),
+                                                );
                                               }
 
                                               if (snapshot.hasError) {
