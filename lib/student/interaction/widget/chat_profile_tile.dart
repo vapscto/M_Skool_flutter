@@ -80,7 +80,7 @@ class ChatProfileTile extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .bodyLarge
-                    ?.copyWith(fontSize: 18),
+                    ?.copyWith(fontSize: 16),
                 children: [
                   TextSpan(
                     text:
@@ -88,7 +88,7 @@ class ChatProfileTile extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .displaySmall
-                        ?.copyWith(fontSize: 18),
+                        ?.copyWith(fontSize: 16),
                   )
                 ])),
         subtitle: Row(
@@ -111,7 +111,7 @@ class ChatProfileTile extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .displaySmall
-                      ?.copyWith(fontSize: 14),
+                      ?.copyWith(fontSize: 12),
                 ),
               ),
             ),

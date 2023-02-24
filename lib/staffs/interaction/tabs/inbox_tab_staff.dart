@@ -136,7 +136,7 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
                       //     Random().nextInt(255), Random().nextInt(255), 1),
                     );
                   },
-                  separatorBuilder: (_, index) => const Divider(),
+                  separatorBuilder: (_, index) => const Divider(height: 15),
                   itemCount: staffInteractionInboxController.inboxList.length),
     );
   }
