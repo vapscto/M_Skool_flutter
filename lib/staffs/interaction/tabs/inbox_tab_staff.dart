@@ -73,6 +73,7 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
                   ),
                 )
               : ListView.separated(
+                  shrinkWrap: true,
                   itemBuilder: (context, index) {
                     int itemCount = staffInteractionInboxController
                         .inboxMsgReadFlagValue.length;

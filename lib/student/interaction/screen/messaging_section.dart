@@ -111,7 +111,7 @@ class _MessagingScreenState extends State<MessagingScreen> {
                     : interactionController.messageList.isEmpty
                         ? const Text('No message, start chatting.')
                         : ListView.builder(
-                            shrinkWrap: true,
+                            reverse: true,
                             // physics: const NeverScrollableScrollPhysics(),
                             itemCount: interactionController.messageList.length,
                             itemBuilder: (context, index) {
@@ -121,35 +121,38 @@ class _MessagingScreenState extends State<MessagingScreen> {
                               //       .elementAt(index)
                               //       .sender
                               // });
+                              int itemCount =
+                                  interactionController.messageList.length;
+                              int reversedIndex = itemCount - 1 - index;
                               return Column(
                                 children: [
                                   ChatBox(
                                     name: widget.hrmeId ==
                                             interactionController.messageList
-                                                .elementAt(index)
+                                                .elementAt(reversedIndex)
                                                 .istintComposedById
                                         ? interactionController.messageList
-                                            .elementAt(index)
+                                            .elementAt(reversedIndex)
                                             .sender!
                                         : interactionController.messageList
-                                            .elementAt(index)
+                                            .elementAt(reversedIndex)
                                             .sender!,
                                     isFromMe: widget.hrmeId ==
                                             interactionController.messageList
-                                                .elementAt(index)
+                                                .elementAt(reversedIndex)
                                                 .istintComposedById
                                         ? true
                                         : false,
                                     messages: interactionController.messageList
-                                        .elementAt(index)
+                                        .elementAt(reversedIndex)
                                         .istintInteraction!,
                                     istintDateTime: interactionController
                                         .messageList
-                                        .elementAt(index)
+                                        .elementAt(reversedIndex)
                                         .istintDateTime!,
                                     attactment: interactionController
                                         .messageList
-                                        .elementAt(index)
+                                        .elementAt(reversedIndex)
                                         .istintAttachment!,
                                   ),
                                 ],
