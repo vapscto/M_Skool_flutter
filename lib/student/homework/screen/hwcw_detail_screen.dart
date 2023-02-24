@@ -927,44 +927,48 @@ class _HwCwDetailScreenState extends State<HwCwDetailScreen> {
                                               );
                                             }
 
-                                            return ListView.separated(
-                                                padding:
-                                                    const EdgeInsets.all(16.0),
-                                                itemBuilder: (_, index) {
-                                                  return HwCwContentItem(
-                                                      onDownloadClicked:
-                                                          () async {
-                                                        if (await canLaunchUrl(
-                                                            Uri.parse(snapshot
-                                                                .data!
-                                                                .elementAt(
-                                                                    index)
-                                                                .icwatTAttachment!))) {
-                                                          await launchUrl(
+                                            return SizedBox(
+                                              height: Get.height * 0.5,
+                                              child: ListView.separated(
+                                                  padding: const EdgeInsets.all(
+                                                      16.0),
+                                                  shrinkWrap: true,
+                                                  itemBuilder: (_, index) {
+                                                    return HwCwContentItem(
+                                                        onDownloadClicked:
+                                                            () async {
+                                                          if (await canLaunchUrl(
                                                               Uri.parse(snapshot
                                                                   .data!
                                                                   .elementAt(
                                                                       index)
-                                                                  .icwatTAttachment!),
-                                                              mode: LaunchMode
-                                                                  .externalApplication);
-                                                        }
-                                                      },
-                                                      title: snapshot.data!
-                                                          .elementAt(index)
-                                                          .icwatTFileName!,
-                                                      isPdf: snapshot.data!
-                                                          .elementAt(index)
-                                                          .icwatTFileName!
-                                                          .endsWith(".pdf"));
-                                                },
-                                                separatorBuilder: (_, index) {
-                                                  return const SizedBox(
-                                                    height: 16.0,
-                                                  );
-                                                },
-                                                itemCount:
-                                                    snapshot.data!.length);
+                                                                  .icwatTAttachment!))) {
+                                                            await launchUrl(
+                                                                Uri.parse(snapshot
+                                                                    .data!
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .icwatTAttachment!),
+                                                                mode: LaunchMode
+                                                                    .externalApplication);
+                                                          }
+                                                        },
+                                                        title: snapshot.data!
+                                                            .elementAt(index)
+                                                            .icwatTFileName!,
+                                                        isPdf: snapshot.data!
+                                                            .elementAt(index)
+                                                            .icwatTFileName!
+                                                            .endsWith(".pdf"));
+                                                  },
+                                                  separatorBuilder: (_, index) {
+                                                    return const SizedBox(
+                                                      height: 16.0,
+                                                    );
+                                                  },
+                                                  itemCount:
+                                                      snapshot.data!.length),
+                                            );
                                           }
 
                                           if (snapshot.hasError) {
