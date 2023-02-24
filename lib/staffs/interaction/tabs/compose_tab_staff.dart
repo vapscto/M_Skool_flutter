@@ -1057,7 +1057,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                                   ),
                                   const SizedBox(width: 10),
                                   Text(
-                                    'Select Teacher',
+                                    'Select Student',
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleSmall!

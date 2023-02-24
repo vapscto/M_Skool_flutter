@@ -327,7 +327,7 @@ class ApplyLeaveWidget extends StatelessWidget {
                                         "${end.day}-${end.month}-${end.year}";
                                     Duration difference =
                                         endDT.difference(startDT);
-                                    totalDay.value = "${difference.inDays}";
+                                    totalDay.value = "${difference.inDays + 1}";
                                   },
                                   icon: SvgPicture.asset(
                                     'assets/svg/calendar_icon.svg',
@@ -431,7 +431,7 @@ class ApplyLeaveWidget extends StatelessWidget {
                                     onTap: () {
                                       isHalfDay.value = true;
                                       totalDay.value =
-                                          "${endDT.difference(startDT).inDays ~/ 2}";
+                                          "${(endDT.difference(startDT).inDays + 1) / 2}";
                                     },
                                     child: AnimatedContainer(
                                         alignment: Alignment.center,
@@ -468,7 +468,7 @@ class ApplyLeaveWidget extends StatelessWidget {
                                       onTap: () {
                                         isHalfDay.value = false;
                                         totalDay.value =
-                                            "${endDT.difference(startDT).inDays}";
+                                            "${endDT.difference(startDT).inDays + 1}";
                                       },
                                       child: AnimatedContainer(
                                         height: 38.0,
