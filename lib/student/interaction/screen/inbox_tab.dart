@@ -109,6 +109,7 @@ class _InboxTabScreenState extends State<InboxTabScreen> {
                           : false,
                       // color: Color.fromRGBO(Random().nextInt(255),
                       //     Random().nextInt(255), Random().nextInt(255), 1),
+                      getInboxFunction: getInboxListData,
                     );
                   },
                   separatorBuilder: (_, index) => const Divider(height: 15),

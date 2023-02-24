@@ -22,20 +22,20 @@ class UnReadTabScreen extends StatefulWidget {
 
 class _UnReadTabScreenState extends State<UnReadTabScreen> {
   final InboxController inboxController = Get.put(InboxController());
-  // void loadingUnread() async {
-  //   inboxController.isUnreadloading(true);
-  //   // await inboxController.getUnread(
-  //   //   miId: widget.loginSuccessModel.mIID!,
-  //   //   amstId: widget.loginSuccessModel.amsTId!,
-  //   //   asmayId: widget.loginSuccessModel.asmaYId!,
-  //   //   userId: widget.loginSuccessModel.userId!,
-  //   //   base: baseUrlFromInsCode(
-  //   //     'portal',
-  //   //     widget.mskoolController,
-  //   //   ),
-  //   // );
-  //   inboxController.isUnreadloading(false);
-  // }
+  void loadingUnread() async {
+    // inboxController.isUnreadloading(true);
+    // await inboxController.getUnread(
+    //   miId: widget.loginSuccessModel.mIID!,
+    //   amstId: widget.loginSuccessModel.amsTId!,
+    //   asmayId: widget.loginSuccessModel.asmaYId!,
+    //   userId: widget.loginSuccessModel.userId!,
+    //   base: baseUrlFromInsCode(
+    //     'portal',
+    //     widget.mskoolController,
+    //   ),
+    // );
+    // inboxController.isUnreadloading(false);
+  }
 
   @override
   void initState() {
@@ -103,6 +103,7 @@ class _UnReadTabScreenState extends State<UnReadTabScreen> {
                       //         : false,
                       // color: Color.fromRGBO(Random().nextInt(255),
                       //     Random().nextInt(255), Random().nextInt(255), 1),
+                      getInboxFunction: loadingUnread,
                     );
                   },
                   separatorBuilder: (_, index) => const Divider(thickness: 1.5),

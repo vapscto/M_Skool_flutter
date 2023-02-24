@@ -135,6 +135,7 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
                           : false,
                       // color: Color.fromRGBO(Random().nextInt(255),
                       //     Random().nextInt(255), Random().nextInt(255), 1),
+                      getInboxFunction: getInboxData,
                     );
                   },
                   separatorBuilder: (_, index) => const Divider(height: 15),

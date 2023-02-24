@@ -46,7 +46,8 @@ class StaffInteractionInboxController extends GetxController {
             staffInboxModel.getinboxmsg!.values;
         List<GetinboxmsgReadflgValue?>? readFlags =
             staffInboxModel.getinboxmsgReadflg!.values;
-        for (var i = 0; i < readFlags!.length; i++) {
+        logger.d(readFlags!.length);
+        for (var i = 0; i < readFlags.length; i++) {
           inboxMsgReadFlagValue.add(readFlags.elementAt(i)!);
         }
         for (var i = 0; i < inboxMessage!.length; i++) {
@@ -71,6 +72,7 @@ class StaffInteractionInboxController extends GetxController {
             }
           }
         }
+        logger.d(inboxList.length);
         return true;
       }
       return false;

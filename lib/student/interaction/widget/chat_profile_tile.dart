@@ -24,6 +24,7 @@ class ChatProfileTile extends StatelessWidget {
   bool? isSeen;
   // final Color color;
   // final GetinboxmsgValue data;
+  final Function() getInboxFunction;
   ChatProfileTile(
       {required this.loginSuccessModel,
       required this.mskoolController,
@@ -43,6 +44,7 @@ class ChatProfileTile extends StatelessWidget {
       this.isSeen,
       // required this.color,
       // required this.data,
+      required this.getInboxFunction,
       super.key});
 
   @override
@@ -60,7 +62,8 @@ class ChatProfileTile extends StatelessWidget {
             mskoolController: mskoolController,
             hrmeId: userHrmeId,
           ),
-        ),
+        )!
+            .then((value) => getInboxFunction()),
         contentPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
         leading:
             // data.profileimage!.isNotEmpty
