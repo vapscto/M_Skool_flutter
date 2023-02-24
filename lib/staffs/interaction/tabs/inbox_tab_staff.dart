@@ -101,18 +101,20 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
                               staffInteractionInboxController
                                   .inboxList[index].ismintComposedById
                           ? staffInteractionInboxController
-                              .inboxList[index].receiver!
+                                  .inboxList[index].receiver ??
+                              "N/a"
                           : staffInteractionInboxController.inboxList
                               .elementAt(index)
                               .sender!,
-                      profileimage:
-                          staffInteractionInboxController.userHrmeId ==
-                                  staffInteractionInboxController
-                                      .inboxList[index].ismintComposedById
-                              ? staffInteractionInboxController
-                                  .inboxList[index].receiverFilepath!
-                              : staffInteractionInboxController
-                                  .inboxList[index].senderFilepath!,
+                      profileimage: staffInteractionInboxController
+                                  .userHrmeId ==
+                              staffInteractionInboxController
+                                  .inboxList[index].ismintComposedById
+                          ? staffInteractionInboxController
+                                  .inboxList[index].receiverFilepath ??
+                              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                          : staffInteractionInboxController
+                              .inboxList[index].senderFilepath!,
                       role: staffInteractionInboxController
                           .inboxList[index].role!,
 
@@ -121,7 +123,8 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
                       sender: staffInteractionInboxController
                           .inboxList[index].sender!,
                       receiver: staffInteractionInboxController
-                          .inboxList[index].receiver!,
+                              .inboxList[index].receiver ??
+                          "N/a",
                       // isGroup: Random().nextBool(),
                       isSeen: staffInteractionInboxController
                                   .inboxMsgReadFlagValue[reversedIndex]
