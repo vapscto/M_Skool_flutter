@@ -218,6 +218,12 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
   }
 
   @override
+  void initState() {
+    getInitialData();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
