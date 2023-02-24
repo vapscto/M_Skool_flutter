@@ -41,6 +41,7 @@ class InboxController extends GetxController {
           base: base);
       if (inboxDataModel!.getinboxmsg != null ||
           inboxDataModel.getinboxmsg!.values != null) {
+        messageFlagList.clear();
         inboxList.clear();
         userHrmeId.value = 0;
 

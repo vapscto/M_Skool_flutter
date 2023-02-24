@@ -67,6 +67,8 @@ class _InboxTabScreenState extends State<InboxTabScreen> {
                 )
               : ListView.separated(
                   itemBuilder: (context, index) {
+                    int itemCount = inboxController.messageFlagList.length;
+                    int reversedIndex = itemCount - 1 - index;
                     return ChatProfileTile(
                       loginSuccessModel: widget.loginSuccessModel,
                       mskoolController: widget.mskoolController,
@@ -100,8 +102,8 @@ class _InboxTabScreenState extends State<InboxTabScreen> {
                       sender: inboxController.inboxList[index].sender!,
                       receiver: inboxController.inboxList[index].receiver!,
                       // isGroup: Random().nextBool(),
-                      isSeen: inboxController
-                                  .messageFlagList[index].istintReadFlg ==
+                      isSeen: inboxController.messageFlagList[reversedIndex]
+                                  .istintReadFlg ==
                               1
                           ? true
                           : false,
@@ -109,7 +111,7 @@ class _InboxTabScreenState extends State<InboxTabScreen> {
                       //     Random().nextInt(255), Random().nextInt(255), 1),
                     );
                   },
-                  separatorBuilder: (_, index) => const Divider(),
+                  separatorBuilder: (_, index) => const Divider(height: 15),
                   itemCount: inboxController.inboxList.length),
     );
   }

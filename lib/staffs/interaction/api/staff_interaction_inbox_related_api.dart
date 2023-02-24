@@ -16,6 +16,15 @@ Future<StaffInboxModel?> getStaffInbox({
   required String base,
 }) async {
   var url = base + URLS.getInbox;
+  logger.d({
+    "MI_Id": miId,
+    "AMST_Id": amstId.toString(),
+    "ASMAY_Id": asmayId.toString(),
+    "Role_flag": "I",
+    "IVRMRT_Id": roleId,
+    "IVRMRT_Role": role,
+    "userId": userId.toString(),
+  });
   try {
     var response = await dio.post(
       url,
