@@ -329,29 +329,16 @@ class _StaffDrawerHeaderState extends State<StaffDrawerHeader> {
                 ),
                 Row(
                   children: [
-                    const Icon(
-                      Icons.phone,
-                      color: Colors.white,
-                    ),
-                    const SizedBox(
-                      width: 6.0,
-                    ),
-                    Expanded(
-                      child:
-                          // Obx(() {
-                          //   return
-                          Text(
-                        // controller.profileData.elementAt(0).mobileNo ??
-                        "N/A",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.labelSmall!.merge(
-                              const TextStyle(
-                                color: Colors.white,
-                              ),
+                    Text(
+                      // controller.profileData.elementAt(0).mobileNo ??
+                      widget.loginSuccessModel.hrmEEmployeeCode ?? "N/A",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.labelSmall!.merge(
+                            const TextStyle(
+                              color: Colors.white,
                             ),
-                      ),
-                      // }),
+                          ),
                     ),
                   ],
                 ),

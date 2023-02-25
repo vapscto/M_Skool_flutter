@@ -2,6 +2,7 @@ class LoginSuccessModel {
   int? amsTId;
   int? asmcLId;
   int? asmSId;
+  String? amsTAdmNo;
   int? smscreditalert;
   bool? smsalrtflag;
   int? roleId;
@@ -21,6 +22,7 @@ class LoginSuccessModel {
   int? mIID;
   String? schoolcollegeflag;
   String? userImagePath;
+  String? hrmEEmployeeCode;
   int? pageId;
   bool? ivrmirPAddFlag;
   bool? ivrmirPUpdateFlag;
@@ -55,6 +57,8 @@ class LoginSuccessModel {
   String? mIBackgroundImage;
   String? mILogo;
   InstituteDetails? institutedetails;
+  String? asmcLClassName;
+  String? asmSSectionName;
 
   LoginSuccessModel(
       {this.amsTId,
@@ -112,12 +116,17 @@ class LoginSuccessModel {
       this.almsTId,
       this.mIBackgroundImage,
       this.mILogo,
-      this.institutedetails});
+      this.institutedetails,
+      this.amsTAdmNo,
+      this.asmSSectionName,
+      this.asmcLClassName,
+      this.hrmEEmployeeCode});
 
   LoginSuccessModel.fromJson(Map<String, dynamic> json) {
     amsTId = json['amsT_Id'];
     asmcLId = json['asmcL_Id'];
     asmSId = json['asmS_Id'];
+    amsTAdmNo = json['amsT_AdmNo'];
     smscreditalert = json['smscreditalert'];
     smsalrtflag = json['smsalrtflag'];
     roleId = json['roleId'];
@@ -182,6 +191,10 @@ class LoginSuccessModel {
     institutedetails = json['institutedetails'] != null
         ? InstituteDetails.fromJson(json['institutedetails'])
         : null;
+
+    asmcLClassName = json['asmcL_ClassName'];
+    asmSSectionName = json['asmS_SectionName'];
+    hrmEEmployeeCode = json['hrmE_EmployeeCode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -250,6 +263,9 @@ class LoginSuccessModel {
     if (institutedetails != null) {
       data['institutedetails'] = institutedetails!.toJson();
     }
+    data['asmcL_ClassName'] = asmcLClassName;
+    data['asmS_SectionName'] = asmSSectionName;
+    data['hrmE_EmployeeCode'] = hrmEEmployeeCode;
     return data;
   }
 }

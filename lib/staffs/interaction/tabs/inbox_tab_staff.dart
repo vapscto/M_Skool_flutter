@@ -78,6 +78,12 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
                     int itemCount = staffInteractionInboxController
                         .inboxMsgReadFlagValue.length;
                     int reversedIndex = itemCount - 1 - index;
+                    logger.d({
+                      "status": staffInteractionInboxController
+                          .inboxMsgReadFlagValue[reversedIndex].istintReadFlg,
+                      "id": staffInteractionInboxController
+                          .inboxList[index].ismintId!
+                    });
                     return ChatProfileTile(
                       loginSuccessModel: widget.loginSuccessModel,
                       mskoolController: widget.mskoolController,
@@ -131,8 +137,8 @@ class _InboxTabStaffState extends State<InboxTabStaff> {
                                   .inboxMsgReadFlagValue[reversedIndex]
                                   .istintReadFlg ==
                               1
-                          ? true
-                          : false,
+                          ? false
+                          : true,
                       // color: Color.fromRGBO(Random().nextInt(255),
                       //     Random().nextInt(255), Random().nextInt(255), 1),
                       getInboxFunction: getInboxData,

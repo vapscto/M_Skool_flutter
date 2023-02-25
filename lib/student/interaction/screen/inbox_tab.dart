@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
+import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/student/interaction/controller/inbox_tab_controller.dart';
 import 'package:m_skool_flutter/student/interaction/widget/chat_profile_tile.dart';
@@ -69,6 +70,11 @@ class _InboxTabScreenState extends State<InboxTabScreen> {
                   itemBuilder: (context, index) {
                     int itemCount = inboxController.messageFlagList.length;
                     int reversedIndex = itemCount - 1 - index;
+                    logger.d({
+                      "status": inboxController
+                          .messageFlagList[reversedIndex].istintReadFlg,
+                      "id": inboxController.inboxList[index].ismintId!
+                    });
                     return ChatProfileTile(
                       loginSuccessModel: widget.loginSuccessModel,
                       mskoolController: widget.mskoolController,
@@ -105,8 +111,8 @@ class _InboxTabScreenState extends State<InboxTabScreen> {
                       isSeen: inboxController.messageFlagList[reversedIndex]
                                   .istintReadFlg ==
                               1
-                          ? true
-                          : false,
+                          ? false
+                          : true,
                       // color: Color.fromRGBO(Random().nextInt(255),
                       //     Random().nextInt(255), Random().nextInt(255), 1),
                       getInboxFunction: getInboxListData,
