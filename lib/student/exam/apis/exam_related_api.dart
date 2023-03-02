@@ -111,6 +111,8 @@ Future<MarkOverviewModel?> getMarkOverviewList({
   required String base,
 }) async {
   var url = base + URLS.getMarksOverview;
+
+  logger.d(url);
   try {
     var response = await dio.post(
       url,

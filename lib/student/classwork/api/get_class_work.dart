@@ -23,6 +23,8 @@ class GetClassWorkApi {
       final Dio dio = getGlobalDio();
       final String classworkApi = base + URLS.classWork;
       final Map<String, dynamic> data = {};
+
+      logger.d(classworkApi);
       if (controller != null) {
         controller.updateIsClassWorkDataLoading(true);
       }
@@ -30,8 +32,17 @@ class GetClassWorkApi {
         "mI_ID": miId,
         "ASMAY_Id": asmayId,
         "AMST_Id": amstId,
-        "User_Id": 54352,
-        "roleid": 7,
+        "User_Id": userId,
+        "roleid": roleId,
+        "flag": "classwork"
+      });
+
+      logger.d({
+        "mI_ID": miId,
+        "ASMAY_Id": asmayId,
+        "AMST_Id": amstId,
+        "User_Id": userId,
+        "roleid": roleId,
         "flag": "classwork"
       });
       if (startDate != null && endDate != null) {
@@ -48,8 +59,17 @@ class GetClassWorkApi {
         data: data,
       );
 
+      if (response.data['assignmentlist'] == null) {
+        return Future.error({
+          "errorTitle": "No Data Found",
+          "errorMsg":
+              "Sorry! but assignmentlist array not present in database... contact your technical team.",
+        });
+      }
+
       final ClassWorkModel classWorkModel =
           ClassWorkModel.fromJson(response.data['assignmentlist']);
+
       if (controller != null) {
         controller.updateClassWorkList(classWorkModel.values!);
         controller.updateIsClassWorkDataLoading(false);

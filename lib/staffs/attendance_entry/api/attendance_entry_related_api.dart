@@ -151,6 +151,7 @@ Future<DailyOnceAndDailyTwiceStudentListModel?> onChangeOfSection({
   required String base,
 }) async {
   var url = base + URLS.onChangeClass;
+  logger.d(url);
   logger.d(
     {
       "ASMAY_Id": asmayId,

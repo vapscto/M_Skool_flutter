@@ -259,14 +259,29 @@ class AttendanceEntryController extends GetxController {
               .add(studentListModel1.studentList!.values!.elementAt(i)!);
           if (studentListModel1.asaAttEntryType == 'D') {
             if (studentListModel1.attendanceEntryFlag == 'A') {
-              if (studentListModel1.studentList!.values!.elementAt(i)!.pdays! ==
+              logger.d(
+                  "Pdays -> ${studentListModel1.studentList!.values!.elementAt(i)!.pdays}");
+              if (studentListModel1.studentList!.values!.elementAt(i)!.pdays ==
+                  null) {
+                logger.d("message1");
+                boolList.add(false);
+              } else if (studentListModel1.studentList!.values!
+                      .elementAt(i)!
+                      .pdays! ==
                   0.00) {
+                logger.d("message");
                 boolList.add(true);
               } else {
+                logger.d("message2");
                 boolList.add(false);
               }
             } else if (studentListModel1.attendanceEntryFlag == 'P') {
-              if (studentListModel1.studentList!.values!.elementAt(i)!.pdays! >
+              if (studentListModel1.studentList!.values!.elementAt(i)!.pdays ==
+                  null) {
+                boolList.add(false);
+              } else if (studentListModel1.studentList!.values!
+                      .elementAt(i)!
+                      .pdays! >
                   0.00) {
                 boolList.add(true);
               } else {
@@ -275,7 +290,12 @@ class AttendanceEntryController extends GetxController {
             }
           } else if (studentListModel1.asaAttEntryType == 'H') {
             if (studentListModel1.attendanceEntryFlag == 'A') {
-              if (studentListModel1.studentList!.values!.elementAt(i)!.pdays! ==
+              if (studentListModel1.studentList!.values!.elementAt(i)!.pdays ==
+                  null) {
+                boolList.add(false);
+              } else if (studentListModel1.studentList!.values!
+                      .elementAt(i)!
+                      .pdays! ==
                   0.50) {
                 if (studentListModel1.studentList!.values!
                         .elementAt(i)!
@@ -307,7 +327,12 @@ class AttendanceEntryController extends GetxController {
                 boolList2.add(false);
               }
             } else if (studentListModel1.attendanceEntryFlag == 'P') {
-              if (studentListModel1.studentList!.values!.elementAt(i)!.pdays! ==
+              if (studentListModel1.studentList!.values!.elementAt(i)!.pdays ==
+                  null) {
+                boolList.add(false);
+              } else if (studentListModel1.studentList!.values!
+                      .elementAt(i)!
+                      .pdays! ==
                   0.50) {
                 if (studentListModel1.studentList!.values!
                         .elementAt(i)!

@@ -24,6 +24,12 @@ class TTApi {
     try {
       final Dio ins = getGlobalDio();
       final String api = base + URLS.tt;
+      logger.d(api);
+      logger.d({
+        "MI_Id": miId,
+        "AMST_Id": asmtId,
+        "ASMAY_Id": asmayId,
+      });
       final Response response =
           await ins.post(api, options: Options(headers: getSession()), data: {
         "MI_Id": miId,
@@ -77,7 +83,7 @@ class TTApi {
                     .toLowerCase()) {
               dayWiseVal.add(DayWisettValue(
                   subjectName: ttModel.values!.elementAt(j).ismSSubjectName!,
-                  teacher: ttModel.values!.elementAt(j).staffName!,
+                  teacher: "",
                   period:
                       int.parse(ttModel.values!.elementAt(j).ttmPPeriodName!)));
             }
@@ -137,7 +143,7 @@ class TTApi {
           "errorMsg": "Incorrect response from the server, Try again later",
         });
       }
-    } catch (e) {
+    } on Exception catch (e) {
       logger.e(e.toString());
       return Future.error({
         "errorTitle": "Server Not Working",

@@ -26,7 +26,18 @@ class GetEventsApi {
     //     "MI_Id": miId,
     //     "month": month,
     //   },
+
     // );
+
+    logger.d(coeApi);
+    logger.d({
+      "AMST_Id": amstId,
+      "ASMAY_Id": asmayId,
+      "MI_Id": miId,
+      "month": month,
+      "ASMCL_Id": asmclID,
+    });
+
     try {
       Response response = await ins.post(
         coeApi,

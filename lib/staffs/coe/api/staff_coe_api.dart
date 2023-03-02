@@ -32,7 +32,13 @@ class StaffCoeApi {
     final String apiUrl = base + URLS.staffCoe;
 
     logger.d(apiUrl);
-
+    logger.d({
+      "MI_Id": miId,
+      "ASMAY_Id": asmayId,
+      "month": month,
+      "type": 1,
+      "ASMCL_Id": asmclId,
+    });
     final Dio ins = getGlobalDio();
     try {
       final Response response = await ins

@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/student/interaction/apis/inbox_tab_related_api.dart';
@@ -78,6 +79,9 @@ class InboxController extends GetxController {
         // logger.d(inboxList.elementAt(0).istintId);
         return true;
       }
+      Fluttertoast.showToast(
+          msg:
+              "There is no getInboxMsg array in the database... Contact your tech team");
       return false;
     } catch (e) {
       logger.e(e.toString());

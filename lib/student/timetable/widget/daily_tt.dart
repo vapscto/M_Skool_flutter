@@ -262,7 +262,7 @@ class _ShowTTState extends State<ShowTT> {
                                                 padding: const EdgeInsets.only(
                                                     right: 16.0),
                                                 child: Text(
-                                                  "${snapshot.data!.elementAt(index).iSMSSubjectName} | ${snapshot.data!.elementAt(index).tTMSABAbbreviation} | ${snapshot.data!.elementAt(index).tTMDPTStartTime}",
+                                                  "${snapshot.data!.elementAt(index).iSMSSubjectName} |  ${snapshot.data!.elementAt(index).tTMDPTStartTime}",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .titleSmall!

@@ -19,9 +19,19 @@ class DailyttApi {
   }) async {
     final Dio ins = getGlobalDio();
     final String apiUrl = base + URLS.dailyTT;
+
     try {
       final Response response = await ins
           .post(apiUrl, options: Options(headers: getSession()), data: {
+        "MI_Id": miId,
+        "ASMAY_Id": asmayId,
+        "ASMCL_Id": asmclId,
+        "ASMS_Id": asmsId,
+        "AMST_Id": amstId,
+        "dayname": dayName,
+      });
+      logger.d(apiUrl);
+      logger.d({
         "MI_Id": miId,
         "ASMAY_Id": asmayId,
         "ASMCL_Id": asmclId,
