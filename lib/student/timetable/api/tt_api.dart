@@ -143,7 +143,7 @@ class TTApi {
           "errorMsg": "Incorrect response from the server, Try again later",
         });
       }
-    } on Exception catch (e) {
+    } catch (e) {
       logger.e(e.toString());
       return Future.error({
         "errorTitle": "Server Not Working",

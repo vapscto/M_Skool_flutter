@@ -34,6 +34,7 @@ class HwCwDetailScreen extends StatefulWidget {
   final String? attachmentName;
   final String? attachmentUrl;
   final int ihcId;
+  final String content;
   final String screenType;
 
   const HwCwDetailScreen(
@@ -50,7 +51,8 @@ class HwCwDetailScreen extends StatefulWidget {
       required this.mskoolController,
       required this.ihcId,
       required this.screenType,
-      this.endDate});
+      this.endDate,
+      required this.content});
 
   @override
   State<HwCwDetailScreen> createState() => _HwCwDetailScreenState();
@@ -159,7 +161,7 @@ class _HwCwDetailScreenState extends State<HwCwDetailScreen> {
                 Expanded(
                   flex: 3,
                   child: Text(
-                    "Assignment",
+                    "Sub Topic",
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ),
@@ -171,6 +173,37 @@ class _HwCwDetailScreenState extends State<HwCwDetailScreen> {
                   flex: 7,
                   child: Text(
                     widget.assignment,
+                    style: Theme.of(context).textTheme.titleSmall!.merge(
+                          const TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                          ),
+                        ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 8.0,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Text(
+                    "Content",
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                ),
+                const Text(":"),
+                const SizedBox(
+                  width: 24.0,
+                ),
+                Expanded(
+                  flex: 7,
+                  child: Text(
+                    widget.content,
                     style: Theme.of(context).textTheme.titleSmall!.merge(
                           const TextStyle(
                             fontSize: 15.0,

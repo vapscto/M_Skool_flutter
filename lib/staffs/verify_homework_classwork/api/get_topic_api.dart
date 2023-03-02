@@ -91,6 +91,14 @@ class GetVerifyTopicApi {
     controller.updateIsTopicLoading(true);
 
     try {
+      logger.d({
+        "ASMAY_Id": asmayId,
+        "ASMCL_Id": asmclId,
+        "ASMS_Id": asmsId,
+        "ISMS_Id": ismsId,
+        "MI_Id": miId.toString(),
+        "Login_Id": loginId.toString()
+      });
       final Response response = await ins.post(
         api,
         options: Options(headers: getSession()),

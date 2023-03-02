@@ -556,6 +556,16 @@ class _SyllabusNoticesState extends State<SyllabusNotices> {
             base: baseUrlFromInsCode("portal", widget.mskoolController)),
         builder: (_, snapshot) {
           if (snapshot.hasData) {
+            if (snapshot.data!.isEmpty) {
+              return const Center(
+                child: AnimatedProgressWidget(
+                  animationPath: 'assets/json/nodata.json',
+                  title: "No Syllabus found",
+                  desc: "There is no syllabus present currently",
+                  animatorHeight: 250,
+                ),
+              );
+            }
             return ListView.separated(
               padding: const EdgeInsets.all(16.0),
               shrinkWrap: true,
@@ -645,6 +655,16 @@ class _TTNoticeState extends State<TTNotice> {
             base: baseUrlFromInsCode("portal", widget.mskoolController)),
         builder: (_, snapshot) {
           if (snapshot.hasData) {
+            if (snapshot.data!.isEmpty) {
+              return const Center(
+                child: AnimatedProgressWidget(
+                  animationPath: 'assets/json/nodata.json',
+                  title: "No Timetable found",
+                  desc: "There is no timetable present currently",
+                  animatorHeight: 250,
+                ),
+              );
+            }
             return ListView.separated(
               padding: const EdgeInsets.all(16.0),
               shrinkWrap: true,

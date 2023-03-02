@@ -385,7 +385,7 @@ class _ShowTTState extends State<ShowTT> {
                                           ),
                                           pw.Expanded(
                                             child: pw.Text(
-                                              "${snapshot.data!.elementAt(index).iSMSSubjectName} | ${snapshot.data!.elementAt(index).tTMSABAbbreviation} | ${snapshot.data!.elementAt(index).tTMDPTStartTime}",
+                                              "${snapshot.data!.elementAt(index).iSMSSubjectName}  | ${snapshot.data!.elementAt(index).tTMDPTStartTime}",
                                             ),
                                           )
                                         ]),

@@ -65,7 +65,7 @@ class _ChartDataLoaderState extends State<ChartDataLoader> {
         asmclId: widget.loginSuccessModel.asmcLId!,
         asmsId: widget.loginSuccessModel.asmSId!,
         amstId: widget.loginSuccessModel.amsTId!,
-        emeId: widget.selectedExam.eMEId!,
+        emeId: widget.selectedExam.eMEId ?? 0,
         base: baseUrlFromInsCode("portal", widget.mskoolController),
         dashboardController: widget.dashboardController);
     super.initState();

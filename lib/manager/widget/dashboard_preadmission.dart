@@ -70,8 +70,8 @@ class _DashboardPreAdmissionWidgetState
                       visualDensity: const VisualDensity(
                           horizontal: VisualDensity.minimumDensity),
                       backgroundColor: const Color(0xFFFFFFFF),
-                      label: Text(widget.dashboardController.preAdmission.first
-                          .currentyear!)),
+                      label: Text(
+                          "${widget.dashboardController.preAdmission.first.currentyear}")),
                   // trailing: Chip(label: Text("${widget.dashboardController.preAdmission.first.}")),
                 ),
               ),

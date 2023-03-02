@@ -470,7 +470,7 @@ class _HomeTabState extends State<HomeTab> {
                       // const SizedBox(
                       //   height: 6.0,
                       // ),
-                      (dashboardController.timeTableList.isNotEmpty)
+                      (dashboardController.examList.isNotEmpty)
                           ? CustomContainer(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,

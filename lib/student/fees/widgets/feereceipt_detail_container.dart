@@ -3,9 +3,11 @@ import 'package:m_skool_flutter/student/fees/model/fee_receipt_details_model.dar
 
 class FeeReceiptDetailContainer extends StatefulWidget {
   final FillStudentViewDetails dataModel;
+  final String logo;
   const FeeReceiptDetailContainer({
     super.key,
     required this.dataModel,
+    required this.logo,
   });
 
   @override
@@ -45,15 +47,15 @@ class _FeeReceiptDetailContainerState extends State<FeeReceiptDetailContainer> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(
-                'assets/images/vpslogo.png',
-                height: 36,
-              ),
+              // Image.network(
+              //   widget.logo,
+              //   height: 36,
+              // ),
               const SizedBox(
                 width: 12.0,
               ),
               Text(
-                "VAPS International School",
+                widget.logo,
                 style: Theme.of(context)
                     .textTheme
                     .titleMedium!

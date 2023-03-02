@@ -326,40 +326,47 @@ class _WeeklyTTState extends State<WeeklyTT> {
                       //   ),
                       // ).toList());
 
-                      List<pw.TableRow> pdfPeriodsName = [
-                        pw.TableRow(
-                          children: [
-                            pw.Container(
-                              color: PdfColor.fromHex("#1E38FC"),
-                              padding: const pw.EdgeInsets.all(6.0),
-                              child: pw.Text("Day",
-                                  style: pw.TextStyle(
-                                      color: PdfColor.fromHex("#FFFFFF"))),
-                            ),
-                          ],
-                        ),
-                      ];
-                      pdfPeriodsName.addAll(List.generate(
-                        snapshot.data!.gridWeeks.values!.length,
-                        (index) => pw.TableRow(
-                          children: [
-                            pw.Container(
-                                padding: const pw.EdgeInsets.symmetric(
-                                    vertical: 13.0, horizontal: 15.0),
-                                color: PdfColor.fromHex(
-                                    timetablePdfPeriodColor.elementAt(index)),
-                                child: pw.Text(
-                                    "${snapshot.data!.gridWeeks.values!.elementAt(index).ttmDDayCode}",
-                                    style: pw.TextStyle(
-                                        color: PdfColor.fromHex("#FFFFFF")))),
-                          ],
-                        ),
-                      ).toList());
+                      // List<pw.TableRow> pdfPeriodsName = [
+                      //   pw.TableRow(
+                      //     children: [
+                      //       // pw.Container(
+                      //       //   color: PdfColor.fromHex("#1E38FC"),
+                      //       //   padding: const pw.EdgeInsets.all(6.0),
+                      //       //   child: pw.Text("Day",
+                      //       //       style: pw.TextStyle(
+                      //       //           color: PdfColor.fromHex("#FFFFFF"))),
+                      //       // ),
+                      //     ],
+                      //   ),
+                      // ];
+                      // pdfPeriodsName.addAll(List.generate(
+                      //   snapshot.data!.gridWeeks.values!.length,
+                      //   (index) => pw.TableRow(
+                      //     children: [
+                      //       pw.Container(
+                      //           padding: const pw.EdgeInsets.symmetric(
+                      //               vertical: 13.0, horizontal: 15.0),
+                      //           color: PdfColor.fromHex(
+                      //               timetablePdfPeriodColor.elementAt(index)),
+                      //           child: pw.Text(
+                      //               "${snapshot.data!.gridWeeks.values!.elementAt(index).ttmDDayCode}",
+                      //               style: pw.TextStyle(
+                      //                   color: PdfColor.fromHex("#FFFFFF")))),
+                      //     ],
+                      //   ),
+                      // ).toList());
 
                       List<pw.TableRow> pdfSub = [];
                       pdfSub.add(
-                        pw.TableRow(
-                          children: List.generate(
+                        pw.TableRow(children: [
+                          pw.Container(
+                              color: PdfColor.fromHex("#1E38FC"),
+                              padding: const pw.EdgeInsets.symmetric(
+                                  horizontal: 6.0, vertical: 6.0),
+                              child: pw.Text("Days",
+                                  style: pw.TextStyle(
+                                      color: PdfColor.fromHex("#FFFFFF")))),
+                          ...List.generate(
                               snapshot.data!.periodsList.values!.length,
                               (index) => pw.Container(
                                   color: PdfColor.fromHex("#1E38FC"),
@@ -370,43 +377,55 @@ class _WeeklyTTState extends State<WeeklyTT> {
                                       style: pw.TextStyle(
                                           color:
                                               PdfColor.fromHex("#FFFFFF"))))),
-                        ),
+                        ]),
                       );
 
                       for (int i = 0; i < snapshot.data!.dayWise.length; i++) {
                         pdfSub.add(
-                          pw.TableRow(
-                            children: List.generate(
+                          pw.TableRow(children: [
+                            pw.Container(
+                                padding: const pw.EdgeInsets.symmetric(
+                                    vertical: 13.0, horizontal: 15.0),
+                                // color: PdfColor.fromHex(
+                                //     timetablePdfPeriodColor.elementAt(i)),
+                                child: pw.Text(
+                                    "${snapshot.data!.gridWeeks.values!.elementAt(i).ttmDDayCode}",
+                                    style: pw.TextStyle(
+                                        color: PdfColor.fromHex("#000000")))),
+                            ...List.generate(
                                 snapshot.data!.dayWise
                                     .elementAt(i)
                                     .value
                                     .length, (index) {
                               return pw.Container(
-                                color: PdfColor.fromInt(ttLighterBoxColor
-                                    .elementAt(Random().nextInt(12))),
+                                width: 50,
+                                // color: PdfColor.fromInt(ttLighterBoxColor
+                                //     .elementAt(Random().nextInt(12))),
                                 padding: const pw.EdgeInsets.symmetric(
                                     horizontal: 6.0, vertical: 6.0),
                                 child: pw.Text(
-                                    "${snapshot.data!.dayWise.elementAt(i).value.elementAt(index).subjectName}\n${snapshot.data!.dayWise.elementAt(i).value.elementAt(index).teacher}"),
+                                    "${snapshot.data!.dayWise.elementAt(i).value.elementAt(index).subjectName}\n"),
                               );
                             }),
-                          ),
+                          ]),
                         );
                       }
                       List<pw.Widget> pdfTemplate = [
-                        pw.Table(
-                            border: pw.TableBorder.all(
-                                color: PdfColor.fromHex("#000000")),
-                            children: pdfPeriodsName),
+                        // pw.Table(
+                        //     border: pw.TableBorder.all(
+                        //         color: PdfColor.fromHex("#000000")),
+                        //     children: pdfPeriodsName),
                         pw.Table(
                             border: pw.TableBorder.all(
                                 color: PdfColor.fromHex("#000000")),
                             children: pdfSub)
                       ];
 
-                      pdf.addPage(pw.Page(build: (_) {
-                        return pw.Row(children: pdfTemplate);
-                      }));
+                      pdf.addPage(pw.Page(
+                          build: (_) {
+                            return pw.Row(children: pdfTemplate);
+                          },
+                          orientation: pw.PageOrientation.landscape));
 
                       if (Platform.isIOS) {
                         DocumentFileSavePlus.saveFile(
@@ -445,7 +464,7 @@ class _WeeklyTTState extends State<WeeklyTT> {
                       //     fileName, pngBytes, "png",
                       //     mimeType: MimeType.PNG);
                       await GallerySaver.saveImage(file2.path);
-                      Fluttertoast.showToast(msg: "File saved to Gallery");
+                      Fluttertoast.showToast(msg: "File saved to download");
 
                       Navigator.pop(context);
                     } catch (e) {

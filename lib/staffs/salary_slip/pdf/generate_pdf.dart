@@ -17,6 +17,31 @@ class GenerateSalarySlip {
     // final Response response = await getGlobalDio()
     //     .get(controller.salarySlipDetail.first.institutionDetails!.mILogo!);
     // logger.d(response.data.runtimeType);
+    double netSalary = 0.0;
+    double earning = 0.0;
+    double deduction = 0.0;
+    for (int i = 0;
+        i <
+            controller.salarySlipDetail.first.employeeSalaryslipDetails!.values!
+                .length;
+        i++) {
+      if (controller.salarySlipDetail.first.employeeSalaryslipDetails!.values!
+              .elementAt(i)!
+              .hrmedEarnDedFlag!
+              .toLowerCase() ==
+          "earning") {
+        earning += controller
+            .salarySlipDetail.first.employeeSalaryslipDetails!.values!
+            .elementAt(i)!
+            .amount!;
+      } else {
+        deduction += controller
+            .salarySlipDetail.first.employeeSalaryslipDetails!.values!
+            .elementAt(i)!
+            .amount!;
+      }
+    }
+    netSalary = earning - deduction;
     final Document document = Document();
     int i = 0;
     document.addPage(
@@ -156,11 +181,14 @@ class GenerateSalarySlip {
                 ],
               ),
               SizedBox(height: 16.0),
-              Text(
-                  "Net Salary : ${controller.salarySlipDetail.first.employeeSalaryslipDetails!.values!.last!.amount.toString()}"),
+              Text("Total Earning : $earning"),
+              SizedBox(height: 8.0),
+              Text("Total Deduction : $deduction"),
+              SizedBox(height: 8.0),
+              Text("Net Salary : $netSalary"),
               SizedBox(height: 8.0),
               Text(
-                  "Salary In Words : ${NumberToWordsEnglish.convert(controller.salarySlipDetail.first.employeeSalaryslipDetails!.values!.last!.amount!.toInt())}"),
+                  "Salary In Words : ${NumberToWordsEnglish.convert(netSalary.toInt())}"),
               SizedBox(height: 8.0),
               Text(
                   "Note : Signature is not required because it is computer generated statement"),

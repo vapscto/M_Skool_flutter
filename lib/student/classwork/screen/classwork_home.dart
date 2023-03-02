@@ -108,6 +108,9 @@ class _ClassworkHomeState extends State<ClassworkHome> {
                                           endDate: snapshot.data!
                                               .elementAt(index)
                                               .icWToDate,
+                                          content: snapshot.data!
+                                              .elementAt(index)
+                                              .icWContent!,
                                           attachmentName: snapshot.data!
                                                           .elementAt(index)
                                                           .icWFilePath ==

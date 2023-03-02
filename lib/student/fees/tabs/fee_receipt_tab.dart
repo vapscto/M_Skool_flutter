@@ -508,6 +508,12 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                           return RepaintBoundary(
                                             key: _receiptKey,
                                             child: FeeReceiptDetailContainer(
+                                                logo: widget
+                                                    .loginSuccessModel
+                                                    .institutedetails!
+                                                    .values!
+                                                    .first
+                                                    .mIName!,
                                                 dataModel: feeController
                                                     .feeReceiptDetailsList
                                                     .elementAt(receiptIndex)),
@@ -646,6 +652,13 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                                 //           pw.FontWeight.bold,
                                                 //       fontSize: 24.0),
                                                 // ),
+                                                pw.Center(
+                                                    child: pw.Text(widget
+                                                        .loginSuccessModel
+                                                        .institutedetails!
+                                                        .values!
+                                                        .first
+                                                        .mIName!))
                                               ]));
                                               pdfPages.add(
                                                   pw.SizedBox(height: 16.0));

@@ -149,6 +149,10 @@ class _FilteredClassWorkState extends State<FilteredClassWork> {
                                           .hwCwNbController.classWorkList
                                           .elementAt(index)
                                           .icWId!,
+                                      content: widget
+                                          .hwCwNbController.classWorkList
+                                          .elementAt(index)
+                                          .icWContent!,
                                       loginSuccessModel:
                                           widget.loginSuccessModel,
                                       mskoolController: widget.mskoolController,

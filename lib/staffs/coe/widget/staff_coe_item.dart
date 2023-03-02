@@ -20,7 +20,7 @@ class StaffCoeItem extends StatelessWidget {
       //color: Colors.red,
       child: Container(
         //padding: const EdgeInsets.symmetric(vertical: 8.0),
-        height: Get.width * 0.28,
+        height: Get.width * 0.35,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
           color: Theme.of(context).scaffoldBackgroundColor,
@@ -28,7 +28,7 @@ class StaffCoeItem extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              height: Get.width * 0.28,
+              height: Get.width * 0.35,
               width: 60,
               decoration: BoxDecoration(
                 color: color.withOpacity(0.15),
@@ -161,7 +161,7 @@ class StaffCoeItem extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 12.0),
                           child: Text(
                             values.eventName!,
-                            maxLines: 1,
+                            maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.titleMedium,
                           ),

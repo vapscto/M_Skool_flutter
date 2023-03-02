@@ -387,6 +387,10 @@ class _HomeWorkState extends State<HomeWork> {
                                                 mskoolController:
                                                     widget.mskoolController,
                                                 screenType: 'homework',
+                                                content: widget.hwCwNbController
+                                                    .homeWorkList
+                                                    .elementAt(index)
+                                                    .ihWAssignment!,
                                               );
                                             })).then((value) {
                                               if (value == null) {}

@@ -12,6 +12,7 @@ Future<OverallFeeAcademicYearModel?> getClasswiseAcademicYearData({
   required String base,
 }) async {
   var url = base + URLS.getOverallFeeAcademicYear;
+
   try {
     var response = await dio.post(
       url,

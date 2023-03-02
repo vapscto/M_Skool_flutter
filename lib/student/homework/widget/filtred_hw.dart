@@ -104,11 +104,12 @@ class _FiltredHwState extends State<FiltredHw> {
                                     ihcId: widget.hwCwNbController.homeWorkList
                                         .elementAt(index)
                                         .ihWId!,
-                                    assignment: widget
+                                    content: widget
                                             .hwCwNbController.homeWorkList
                                             .elementAt(index)
                                             .ihWAssignment ??
                                         "N/A",
+                                    assignment: "",
                                     date: widget.hwCwNbController.homeWorkList
                                         .elementAt(index)
                                         .ihWDate!,
