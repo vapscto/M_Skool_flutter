@@ -55,9 +55,7 @@ class StaffWeeklyTTApi {
                 className: weeklyTTClassSectionModel.values!
                     .elementAt(i)
                     .asmcLClassName!,
-                sectionName: weeklyTTClassSectionModel.values!
-                    .elementAt(i)
-                    .asmCSectionName!,
+                sectionName: "",
                 periodName:
                     weeklyTTClassSectionModel.values!.elementAt(i).period!,
                 dayName: weeklyTTClassSectionModel.values!.elementAt(i).pDays!),

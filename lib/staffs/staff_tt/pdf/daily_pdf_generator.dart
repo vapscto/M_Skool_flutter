@@ -51,7 +51,7 @@ class TTPdfGenerator {
                     ),
                     Expanded(
                       child: Text(
-                        "Class : ${dailyTT.elementAt(index).asmcLClassName} | Section: ${dailyTT.elementAt(index).asmCSectionName} | Time : ${dailyTT.elementAt(index).ttmdpTStartTime}",
+                        "Class : ${dailyTT.elementAt(index).asmcLClassName} | Time : ${dailyTT.elementAt(index).ttmdpTStartTime}",
                       ),
                     )
                   ]),
@@ -147,7 +147,11 @@ class TTPdfGenerator {
                         dc = Container(
                           padding: const EdgeInsets.all(12.0),
                           child: Text(
-                            "${data.tt.elementAt(e2).classesAt.elementAt(i).className} ${data.tt.elementAt(e2).classesAt.elementAt(i).sectionName}",
+                            data.tt
+                                .elementAt(e2)
+                                .classesAt
+                                .elementAt(i)
+                                .className,
                             style: TextStyle(
                               color: PdfColor.fromHex(
                                 timetablePdfPeriodColor

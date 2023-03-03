@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/apis/push_notification.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
@@ -89,6 +90,7 @@ class NotificationScreen extends StatelessWidget {
                 return InkWell(
                   onTap: () {
                     if (openFor == "student") {
+                      logger.d(snapshot.data!.elementAt(index).pNSDHeaderFlg);
                       openUsingHeaderForStudent(
                           snapshot.data!.elementAt(index).pNSDHeaderFlg!);
                       return;
@@ -322,6 +324,8 @@ class NotificationScreen extends StatelessWidget {
         );
         break;
       default:
+        Fluttertoast.showToast(
+            msg: "There is no page to open this notification");
     }
   }
 
@@ -527,6 +531,7 @@ class NotificationScreen extends StatelessWidget {
       );
       return;
     }
+    Fluttertoast.showToast(msg: "There is no page to open this notification");
   }
 
   void openUsingHeaderForManager(String s, BuildContext context) {
@@ -597,5 +602,6 @@ class NotificationScreen extends StatelessWidget {
 
       return;
     }
+    Fluttertoast.showToast(msg: "There is no page to open this notification");
   }
 }

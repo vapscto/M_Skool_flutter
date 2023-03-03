@@ -257,7 +257,7 @@ class _StaffDailyTTState extends State<StaffDailyTT> {
                                                                       .only(
                                                                   right: 16.0),
                                                           child: Text(
-                                                            "Class : ${widget.ttController.dailyTT.elementAt(index).asmcLClassName} | Section: ${widget.ttController.dailyTT.elementAt(index).asmCSectionName} | Time : ${widget.ttController.dailyTT.elementAt(index).ttmdpTStartTime}",
+                                                            "Class : ${widget.ttController.dailyTT.elementAt(index).asmcLClassName} | Time : ${widget.ttController.dailyTT.elementAt(index).ttmdpTStartTime}",
                                                             style: Theme.of(
                                                                     context)
                                                                 .textTheme
