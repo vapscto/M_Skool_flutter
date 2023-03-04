@@ -43,6 +43,9 @@ class NoticeBoardGetDesignation {
         "departmentlist": departmentList,
       });
 
+      logger.d(api);
+      logger.d(response.data);
+
       if (response.data['designation'] == null) {
         noticeBoardController.updateIsErrorOccuredWhileLoadingDesignation(true);
         noticeBoardController.updateIsDesignationLoading(false);

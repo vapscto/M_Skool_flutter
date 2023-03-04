@@ -193,7 +193,7 @@ class _StaffDesignationState extends State<StaffDesignation> {
                                                       child: Obx(() {
                                                         return CheckBoxContainer(
                                                             sectionName:
-                                                                "${widget.controller.departments.elementAt(index).hRMDCName}",
+                                                                "${widget.controller.designation.elementAt(index).hRMDESDesignationName}",
                                                             func: (b) {
                                                               if (b) {
                                                                 widget
