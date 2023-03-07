@@ -175,9 +175,9 @@ class _StaffEmployeeState extends State<StaffEmployee> {
                                                                 .clear();
                                                           } else {
                                                             widget.controller
-                                                                .selectAllDesignation(widget
+                                                                .selectAllEmployee(widget
                                                                     .controller
-                                                                    .designation);
+                                                                    .employee);
                                                           }
                                                         },
                                                       );

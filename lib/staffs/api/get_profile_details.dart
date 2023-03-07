@@ -15,6 +15,11 @@ class GetStaffProfileDetail {
   }) async {
     final Dio ins = getGlobalDio();
     final String api = base + URLS.getStaffProfileDet;
+    logger.d(api);
+    logger.d({
+      "MI_Id": "$miId",
+      "HRME_Id": "$hrmeId",
+    });
     try {
       final Response response =
           await ins.post(api, options: Options(headers: getSession()), data: {
