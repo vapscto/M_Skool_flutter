@@ -33,6 +33,14 @@ class ManagerDashboardApi {
   }) async {
     final Dio ins = getGlobalDio();
     final String api = base + URLS.managerDashboard;
+
+    logger.d(api);
+    logger.d({
+      "MI_Id": miId,
+      "ASMAY_Id": asmayId,
+      "UserId": userId,
+      "HRME_Id": hrmeId
+    });
     try {
       final Response response = await ins.post(api,
           options: Options(headers: getSession()),

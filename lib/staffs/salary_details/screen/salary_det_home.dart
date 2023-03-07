@@ -70,7 +70,7 @@ class _SalaryDetailsState extends State<SalaryDetails> {
                         ),
                         Chip(
                           label: Text(
-                            "${DateTime.now().year} - ${DateTime.now().year + 1}",
+                            "${DateTime.now().year}",
                             style: const TextStyle(color: Color(0xFF28B6C8)),
                           ),
                           backgroundColor: const Color(0xFFDFFBFE),

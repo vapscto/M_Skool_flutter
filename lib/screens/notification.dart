@@ -276,6 +276,17 @@ class NotificationScreen extends StatelessWidget {
           ),
         );
         break;
+
+      case "noticeboard":
+        Get.to(
+          () => NoticeHome(
+            loginSuccessModel: loginSuccessModel,
+            mskoolController: mskoolController,
+            hwCwNbController: hwCwNbController!,
+            appBarTitle: "${headerName.capitalize}",
+          ),
+        );
+        break;
       case "library":
         String base = baseUrlFromInsCode("portal", mskoolController);
         Get.to(

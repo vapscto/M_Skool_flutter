@@ -18,6 +18,8 @@ class GetStudentApi {
     required StudentDetailsController controller,
   }) async {
     final String api = base + URLS.managerGetStuent;
+
+    logger.d(api);
     final Dio ins = getGlobalDio();
 
     if (controller.isErrorOccuredWhileLoadingStudent.value) {

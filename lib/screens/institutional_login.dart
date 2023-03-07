@@ -80,7 +80,7 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                     height: 36.0,
                   ),
                   Text(
-                    "SCHOOL ID",
+                    "INSTITUTE ID",
                     style: Theme.of(context).textTheme.labelSmall,
                   ),
                   const SizedBox(
@@ -110,7 +110,7 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                         borderRadius: BorderRadius.circular(14.0),
                         borderSide: const BorderSide(color: Colors.transparent),
                       ),
-                      hintText: 'School Id',
+                      hintText: 'Institute Id',
                       //label: Text("Institutional Code"),
                       prefixIcon: Padding(
                         padding: const EdgeInsets.all(12.0),
@@ -134,7 +134,7 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                             minimumSize: Size(Get.width * 0.6, 50)),
                         child: Text(
                           "Submit",
-                          style: Theme.of(context).textTheme.button!.merge(
+                          style: Theme.of(context).textTheme.labelLarge!.merge(
                                 const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16.0,
