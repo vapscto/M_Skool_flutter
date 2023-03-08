@@ -72,6 +72,7 @@ class SujectteachersValues {
     this.hRMEId,
     this.empName,
     this.iSMSSubjectName,
+    this.subjectTeacher,
   });
 
   SujectteachersValues.fromJson(dynamic json) {
@@ -79,11 +80,13 @@ class SujectteachersValues {
     hRMEId = json['HRME_Id'];
     empName = json['emp_name'];
     iSMSSubjectName = json['ISMS_SubjectName'];
+    subjectTeacher = json['SubjectTeacher'];
   }
   String? type;
   num? hRMEId;
   String? empName;
   String? iSMSSubjectName;
+  String? subjectTeacher;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -91,6 +94,7 @@ class SujectteachersValues {
     map['HRME_Id'] = hRMEId;
     map['emp_name'] = empName;
     map['ISMS_SubjectName'] = iSMSSubjectName;
+    map['SubjectTeacher'] = subjectTeacher;
     return map;
   }
 }
@@ -135,22 +139,26 @@ class ClassteacherValues {
     this.type,
     this.hRMEId,
     this.empName,
+    this.classTeacher,
   });
 
   ClassteacherValues.fromJson(dynamic json) {
     type = json['\$type'];
     hRMEId = json['HRME_Id'];
     empName = json['emp_name'];
+    classTeacher = json['ClassTeacher'];
   }
   String? type;
   num? hRMEId;
   String? empName;
+  String? classTeacher;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['\$type'] = type;
     map['HRME_Id'] = hRMEId;
     map['emp_name'] = empName;
+    map['ClassTeacher'] = classTeacher;
     return map;
   }
 }

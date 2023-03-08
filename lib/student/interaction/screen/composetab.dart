@@ -14,11 +14,15 @@ class ComposeTabScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final TabController tabController;
-  const ComposeTabScreen({
+  final String? role;
+  int? hrmeId;
+  ComposeTabScreen({
     super.key,
     required this.loginSuccessModel,
     required this.mskoolController,
     required this.tabController,
+    this.role,
+    this.hrmeId,
   });
 
   @override
@@ -30,7 +34,7 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
   GetdetailsValue? selectedStaff;
   final TextEditingController about = TextEditingController();
   final TextEditingController subject = TextEditingController();
-  String selectedradio = 'ClassTeacher';
+  String? selectedradio;
 
   Future<void> getStafflistData() async {
     composeController.isloading(true);
@@ -40,7 +44,7 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
       amstId: widget.loginSuccessModel.amsTId!,
       asmayId: widget.loginSuccessModel.asmaYId!,
       userId: widget.loginSuccessModel.userId!,
-      key: selectedradio,
+      key: selectedradio!,
       base: baseUrlFromInsCode(
         'portal',
         widget.mskoolController,
@@ -49,18 +53,26 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
         .then((value) {
       if (value) {
         if (composeController.staffList.isNotEmpty) {
-          selectedStaff = composeController.staffList.first;
+          if (widget.hrmeId != null) {
+            selectedStaff = composeController.staffList
+                .firstWhere((element) => widget.hrmeId == element.hrmEId);
+          } else {
+            selectedStaff = composeController.staffList.first;
+          }
         } else {
           composeController.isloading(false);
         }
       }
     });
     composeController.isloading(false);
+    widget.hrmeId = null;
   }
 
   @override
   void initState() {
+    selectedradio = widget.role;
     getStafflistData();
+    // widget.hrmeId = null;
     super.initState();
   }
 
@@ -204,31 +216,31 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
               },
             ),
           ),
-          // SizedBox(
-          //   height: 33,
-          //   child: RadioListTile(
-          //     dense: true,
-          //     activeColor: Theme.of(context).primaryColor,
-          //     contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-          //     visualDensity: const VisualDensity(horizontal: -4.0),
-          //     title: Text(
-          //       "Subject Teachers",
-          //       style: Theme.of(context).textTheme.labelSmall!.merge(
-          //           const TextStyle(
-          //               fontWeight: FontWeight.w400,
-          //               fontSize: 16.0,
-          //               letterSpacing: 0.3)),
-          //     ),
-          //     value: "SubjectTeacher",
-          //     groupValue: selectedradio,
-          //     onChanged: (value) {
-          //       setState(() {
-          //         selectedradio = value.toString();
-          //         getStafflistData();
-          //       });
-          //     },
-          //   ),
-          // ),
+          SizedBox(
+            height: 33,
+            child: RadioListTile(
+              dense: true,
+              activeColor: Theme.of(context).primaryColor,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+              visualDensity: const VisualDensity(horizontal: -4.0),
+              title: Text(
+                "Subject Teachers",
+                style: Theme.of(context).textTheme.labelSmall!.merge(
+                    const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16.0,
+                        letterSpacing: 0.3)),
+              ),
+              value: "SubjectTeacher",
+              groupValue: selectedradio,
+              onChanged: (value) {
+                setState(() {
+                  selectedradio = value.toString();
+                  getStafflistData();
+                });
+              },
+            ),
+          ),
           SizedBox(
             height: 33,
             child: RadioListTile(
@@ -304,136 +316,150 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
               },
             ),
           ),
-          // SizedBox(
-          //   height: 30,
-          //   child: RadioListTile(
-          //     dense: true,
-          //     activeColor: Colors.blue,
-          //     contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-          //     visualDensity: const VisualDensity(horizontal: -4.0),
-          //     title: Text(
-          //       "Exam Co-ordinator",
-          //       style: Theme.of(context).textTheme.labelSmall!.merge(
-          //           const TextStyle(
-          //               fontWeight: FontWeight.w400,
-          //               fontSize: 16.0,
-          //               letterSpacing: 0.3)),
-          //     ),
-          //     value: "EC",
-          //     groupValue: selectedradio,
-          //     onChanged: (value) {
-          //       setState(() {
-          //         selectedradio = value.toString();
-          //         getStafflistData();
-          //       });
-          //     },
-          //   ),
-          // ),
+          SizedBox(
+            height: 30,
+            child: RadioListTile(
+              dense: true,
+              activeColor: Colors.blue,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+              visualDensity: const VisualDensity(horizontal: -4.0),
+              title: Text(
+                "Exam Co-ordinator",
+                style: Theme.of(context).textTheme.labelSmall!.merge(
+                    const TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16.0,
+                        letterSpacing: 0.3)),
+              ),
+              value: "EC",
+              groupValue: selectedradio,
+              onChanged: (value) {
+                setState(() {
+                  selectedradio = value.toString();
+                  getStafflistData();
+                });
+              },
+            ),
+          ),
           const SizedBox(height: 20),
           Obx(
             () => composeController.isLoading.value
                 ? const Center(
                     child: CircularProgressIndicator(),
                   )
-                : Container(
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 20),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      borderRadius: BorderRadius.circular(16.0),
-                      boxShadow: const [
-                        BoxShadow(
-                          offset: Offset(0, 1),
-                          blurRadius: 8,
-                          color: Colors.black12,
-                        ),
-                      ],
-                    ),
-                    child: DropdownButtonFormField<GetdetailsValue>(
-                      value: selectedStaff,
-                      decoration: InputDecoration(
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                        isDense: true,
-                        label: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 4),
-                          decoration: const BoxDecoration(
-                            color: Color.fromRGBO(229, 243, 255, 1),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(24),
+                : composeController.staffList.isEmpty
+                    ? const SizedBox()
+                    : Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 20),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          borderRadius: BorderRadius.circular(16.0),
+                          boxShadow: const [
+                            BoxShadow(
+                              offset: Offset(0, 1),
+                              blurRadius: 8,
+                              color: Colors.black12,
                             ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(
-                                height: 33,
-                                child: Image.asset(
-                                  'assets/images/selectteachericon.png',
+                          ],
+                        ),
+                        child: DropdownButtonFormField<GetdetailsValue>(
+                          value: selectedStaff,
+                          decoration: InputDecoration(
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            isDense: true,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            label: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 4),
+                              decoration: const BoxDecoration(
+                                color: Color.fromRGBO(229, 243, 255, 1),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(24),
                                 ),
                               ),
-                              const SizedBox(width: 10),
-                              Text(
-                                'Select Teacher',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .merge(
-                                      const TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 20.0,
-                                        color: Color.fromRGBO(60, 120, 170, 1),
-                                      ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  SizedBox(
+                                    height: 33,
+                                    child: Image.asset(
+                                      'assets/images/selectteachericon.png',
                                     ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    selectedradio == 'HOD'
+                                        ? 'Select HOD'
+                                        : selectedradio == 'Principal'
+                                            ? 'Select Principal'
+                                            : selectedradio == 'AS'
+                                                ? 'Select Academic Supervisor'
+                                                : selectedradio == 'EC'
+                                                    ? 'Exam Co-ordinator'
+                                                    : 'Select Teacher',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .merge(
+                                          const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 20.0,
+                                            color:
+                                                Color.fromRGBO(60, 120, 170, 1),
+                                          ),
+                                        ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      icon: const Padding(
-                        padding: EdgeInsets.only(top: 3),
-                        child: Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          size: 30,
-                        ),
-                      ),
-                      iconSize: 30,
-                      items: List.generate(composeController.staffList.length,
-                          (index) {
-                        return DropdownMenuItem(
-                          value: composeController.staffList.elementAt(index),
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 13, left: 5),
-                            child: Text(
-                              composeController.staffList
-                                  .elementAt(index)
-                                  .empName!,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall!
-                                  .merge(const TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 16.0,
-                                      letterSpacing: 0.3)),
                             ),
                           ),
-                        );
-                      }),
-                      onChanged: (s) {
-                        selectedStaff = s!;
-                        logger.d(s.hrmEId.toString());
-                      },
-                    ),
-                  ),
+                          icon: const Padding(
+                            padding: EdgeInsets.only(top: 3),
+                            child: Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              size: 30,
+                            ),
+                          ),
+                          iconSize: 30,
+                          items: List.generate(
+                              composeController.staffList.length, (index) {
+                            return DropdownMenuItem(
+                              value:
+                                  composeController.staffList.elementAt(index),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 13, left: 5),
+                                child: Text(
+                                  composeController.staffList
+                                      .elementAt(index)
+                                      .empName!,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall!
+                                      .merge(const TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 16.0,
+                                          letterSpacing: 0.3)),
+                                ),
+                              ),
+                            );
+                          }),
+                          onChanged: (s) {
+                            selectedStaff = s!;
+                            logger.d(s.hrmEId.toString());
+                          },
+                        ),
+                      ),
           ),
           const SizedBox(height: 40),
           Center(
@@ -459,7 +485,7 @@ class _ComposeTabScreenState extends State<ComposeTabScreen> {
                     asmayId: widget.loginSuccessModel.asmaYId!,
                     amstId: widget.loginSuccessModel.amsTId!,
                     userId: widget.loginSuccessModel.userId!,
-                    userFlg: selectedradio,
+                    userFlg: selectedradio!,
                     subject: subject.text,
                     message: about.text,
                     hrmeId: selectedStaff!.hrmEId!,
