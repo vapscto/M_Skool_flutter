@@ -6,11 +6,13 @@ class StudentListWidget extends StatefulWidget {
   final GetStudentValue data;
   final Function(int) function;
   final Function(int) function1;
-  const StudentListWidget({
+  bool? selectAll;
+  StudentListWidget({
     super.key,
     required this.data,
     required this.function,
     required this.function1,
+    this.selectAll,
   });
 
   @override
@@ -18,7 +20,7 @@ class StudentListWidget extends StatefulWidget {
 }
 
 class _StudentListWidgetState extends State<StudentListWidget> {
-  bool check = false;
+  bool? check;
   @override
   void initState() {
     logger.d(widget.data.amstId);
@@ -42,10 +44,10 @@ class _StudentListWidgetState extends State<StudentListWidget> {
           style: Theme.of(context).textTheme.labelSmall!.merge(const TextStyle(
               fontWeight: FontWeight.w400, fontSize: 14.0, letterSpacing: 0.3)),
         ),
-        value: check,
+        value: widget.selectAll,
         onChanged: (value) {
           setState(() {
-            check = value!;
+            widget.selectAll = value!;
           });
           if (value!) {
             widget.function(widget.data.amstId!);

@@ -75,7 +75,9 @@ class ResultAnalysisItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "${datamodel.estmpsMaxMarks!.toInt()}",
+                            datamodel.eycesMarksDisplayFlg!
+                                ? "${datamodel.estmpsMaxMarks!.toInt()}"
+                                : "--",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelMedium!
@@ -103,7 +105,9 @@ class ResultAnalysisItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "${datamodel.eycesMinMarks!.toInt()}",
+                            datamodel.eycesMarksDisplayFlg!
+                                ? "${datamodel.eycesMinMarks!.toInt()}"
+                                : "--",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelMedium!
@@ -131,7 +135,9 @@ class ResultAnalysisItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "${datamodel.estmpsObtainedMarks!.toInt()}",
+                            datamodel.eycesMarksDisplayFlg!
+                                ? "${datamodel.estmpsObtainedMarks!.toInt()}"
+                                : "--",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelMedium!
@@ -174,28 +180,36 @@ class ResultAnalysisItem extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: MarksAnalysisItem(
-                      marks: datamodel.estmpsClassHighest.toString(),
+                      marks: datamodel.eycesMarksDisplayFlg!
+                          ? datamodel.estmpsClassHighest.toString()
+                          : "--",
                       title: "Class Highest",
                     ),
                   ),
                   Expanded(
                     flex: 1,
                     child: MarksAnalysisItem(
-                      marks: datamodel.estmpsSectionHighest.toString(),
+                      marks: datamodel.eycesMarksDisplayFlg!
+                          ? datamodel.estmpsSectionHighest.toString()
+                          : "--",
                       title: "Section Highest",
                     ),
                   ),
                   Expanded(
                     flex: 1,
                     child: MarksAnalysisItem(
-                      marks: datamodel.estmpsSectionAverage.toString(),
+                      marks: datamodel.eycesMarksDisplayFlg!
+                          ? datamodel.estmpsSectionAverage.toString()
+                          : "--",
                       title: "Section Avg",
                     ),
                   ),
                   Expanded(
                     flex: 1,
                     child: MarksAnalysisItem(
-                      marks: datamodel.estmpsClassAverage.toString(),
+                      marks: datamodel.eycesMarksDisplayFlg!
+                          ? datamodel.estmpsClassAverage.toString()
+                          : "--",
                       title: "Class Avg",
                     ),
                   ),
