@@ -144,8 +144,7 @@ class URLS {
   static String composeInteraction = 'api/IVRM_InteractionsFacade/savedetails/';
   static String getMessages = 'api/IVRM_InteractionsFacade/reply/';
   static String sendMessage = 'api/IVRM_InteractionsFacade/savereply/';
-  static String interactionImageUpload =
-      'https://jnujaipur.vapssmartecampus.com:61001/api/LoginFacade/InteractionUpload';
+  static String interactionImageUpload = 'api/LoginFacade/InteractionUpload';
 
   // Role Constant's
 

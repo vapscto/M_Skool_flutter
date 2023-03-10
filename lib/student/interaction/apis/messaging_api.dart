@@ -91,8 +91,8 @@ Future<bool> sendMessage({
 }
 
 Future<String?> jpgToNetworkImageUrl(
-    {required String image, required int miId}) async {
-  var url = URLS.interactionImageUpload;
+    {required String image, required int miId, required String base}) async {
+  var url = base + URLS.interactionImageUpload;
   try {
     FormData formData = FormData.fromMap(
       {

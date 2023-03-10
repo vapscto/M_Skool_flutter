@@ -179,7 +179,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                 onTap: () {
                                   interactionController
                                       .getFromGallery(
-                                          miId: widget.loginSuccessModel.mIID!)
+                                          miId: widget.loginSuccessModel.mIID!,
+                                          base: baseUrlFromInsCode(
+                                              "login", widget.mskoolController))
                                       .then((value) async {
                                     if (value) {
                                       interactionController
@@ -246,7 +248,9 @@ class _MessagingScreenState extends State<MessagingScreen> {
                                 onTap: () {
                                   interactionController
                                       .getFromCamera(
-                                          miId: widget.loginSuccessModel.mIID!)
+                                          miId: widget.loginSuccessModel.mIID!,
+                                          base: baseUrlFromInsCode(
+                                              "login", widget.mskoolController))
                                       .then((value) async {
                                     if (value) {
                                       interactionController

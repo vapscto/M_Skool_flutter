@@ -61,30 +61,30 @@ class InteractionController extends GetxController {
     }
   }
 
-  Future<bool> getFromCamera({required int miId}) async {
+  Future<bool> getFromCamera({required int miId, required String base}) async {
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.camera,
       maxWidth: 1800,
       maxHeight: 1800,
     );
     if (pickedFile != null) {
-      String? imageUrl =
-          await jpgToNetworkImageUrl(image: pickedFile.path, miId: miId);
+      String? imageUrl = await jpgToNetworkImageUrl(
+          image: pickedFile.path, miId: miId, base: base);
       image.add(imageUrl!);
       return true;
     }
     return false;
   }
 
-  Future<bool> getFromGallery({required int miId}) async {
+  Future<bool> getFromGallery({required int miId, required String base}) async {
     XFile? pickedFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
       maxWidth: 1800,
       maxHeight: 1800,
     );
     if (pickedFile != null) {
-      String? imageUrl =
-          await jpgToNetworkImageUrl(image: pickedFile.path, miId: miId);
+      String? imageUrl = await jpgToNetworkImageUrl(
+          image: pickedFile.path, miId: miId, base: base);
       image.add(imageUrl!);
       return true;
     }
