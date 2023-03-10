@@ -70,6 +70,54 @@ class _ExamWiseTabState extends State<ExamWiseTab> {
     examController.isDataListloading(false);
   }
 
+  getAcademicYear() async {
+    examController.isloading(true);
+    await examController
+        .getAcademicYearData(
+            miID: widget.loginSuccessModel.mIID!,
+            amstID: widget.loginSuccessModel.amsTId!,
+            base: baseUrlFromInsCode(
+              'portal',
+              widget.mskoolController,
+            ))
+        .then((value) async {
+      if (value) {
+        await examController
+            .getExamListData(
+                miID: widget.loginSuccessModel.mIID!,
+                amstID: widget.loginSuccessModel.amsTId!,
+                asmayID: examController.selectedYear!.asmaYId!,
+                base: baseUrlFromInsCode(
+                  'portal',
+                  widget.mskoolController,
+                ))
+            .then((value) async {
+          if (value) {
+            examController.examwiseMarkOverview.clear();
+            examController.isDataListloading(true);
+            await examController.getMarkOverviewData(
+                miID: widget.loginSuccessModel.mIID!,
+                asmayID: examController.selectedYear!.asmaYId!,
+                asmtID: widget.loginSuccessModel.amsTId!,
+                emeID: examController.examList.first.emEId!,
+                base: baseUrlFromInsCode(
+                  'portal',
+                  widget.mskoolController,
+                ));
+            examController.isDataListloading(false);
+          }
+        });
+      }
+    });
+    examController.isloading(false);
+  }
+
+  @override
+  void initState() {
+    getAcademicYear();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -125,6 +173,8 @@ class _ExamWiseTabState extends State<ExamWiseTab> {
                                 color: Colors.transparent,
                               ),
                             ),
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintText: 'select year',
                             enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Colors.transparent,
@@ -236,7 +286,15 @@ class _ExamWiseTabState extends State<ExamWiseTab> {
                               ),
                             ),
                             isDense: true,
-
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintText: 'select exam',
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .merge(const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14.0,
+                                    letterSpacing: 0.3)),
                             label: Container(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 16.0, vertical: 6.0),

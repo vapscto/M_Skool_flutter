@@ -15,11 +15,16 @@ class InteractionHomeScreen extends StatefulWidget {
   final LoginSuccessModel loginSuccessModel;
   final MskoolController mskoolController;
   final bool showAppBar;
-  const InteractionHomeScreen(
-      {required this.loginSuccessModel,
-      required this.mskoolController,
-      super.key,
-      this.showAppBar = true});
+  final String? role;
+  final int? hrmeId;
+  const InteractionHomeScreen({
+    required this.loginSuccessModel,
+    required this.mskoolController,
+    super.key,
+    this.showAppBar = true,
+    this.role = 'ClassTeacher',
+    this.hrmeId,
+  });
 
   @override
   State<InteractionHomeScreen> createState() => _InteractionHomeScreenState();
@@ -85,6 +90,8 @@ class _InteractionHomeScreenState extends State<InteractionHomeScreen>
                       loginSuccessModel: widget.loginSuccessModel,
                       mskoolController: widget.mskoolController,
                       tabController: _tabController,
+                      role: widget.role!,
+                      hrmeId: widget.hrmeId,
                     ),
                     InboxTabScreen(
                       loginSuccessModel: widget.loginSuccessModel,

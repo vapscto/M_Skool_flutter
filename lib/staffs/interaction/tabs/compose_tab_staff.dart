@@ -42,6 +42,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
   GetdetailsValues? selectedInitialDropdown;
   InteractionSectionListValue? selectedsection;
   GetStudentValue? selectedstudent;
+  RxBool selectAll = RxBool(false);
 
   void getInitialData(String selectedStaff) async {
     staffInteractionComposeController.isgetdetailloading(true);
@@ -205,6 +206,8 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                     onChanged: (value) {
                       staffInteractionComposeController
                           .groupOrIndividual(value!);
+                      arrayStudents.clear();
+                      arrayTeachers.clear();
                     },
                   ),
                 ),
@@ -547,6 +550,7 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                                     thumbVisibility: true,
                                     controller: _controller,
                                     child: ListView.builder(
+                                      shrinkWrap: true,
                                       controller: _controller,
                                       itemCount:
                                           staffInteractionComposeController
@@ -1020,19 +1024,81 @@ class _ComposeTabStaffState extends State<ComposeTabStaff> {
                               thickness: 14,
                               thumbVisibility: true,
                               controller: _controller,
-                              child: ListView.builder(
-                                controller: _controller,
-                                itemCount: staffInteractionComposeController
-                                    .studentList.length,
-                                itemBuilder: (context, index) {
-                                  return StudentListWidget(
-                                    data: staffInteractionComposeController
-                                        .studentList
-                                        .elementAt(index),
-                                    function: addStudentInList,
-                                    function1: removeFromStudentInList,
-                                  );
-                                },
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: 30,
+                                    child: CheckboxListTile(
+                                      controlAffinity:
+                                          ListTileControlAffinity.leading,
+                                      checkboxShape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(6)),
+                                      dense: true,
+                                      activeColor:
+                                          Theme.of(context).primaryColor,
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                      visualDensity:
+                                          const VisualDensity(horizontal: -4.0),
+                                      title: Text(
+                                        'Select all',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .merge(const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.0,
+                                                letterSpacing: 0.3)),
+                                      ),
+                                      value: selectAll.value,
+                                      onChanged: (value) {
+                                        selectAll.value = value!;
+
+                                        if (value) {
+                                          for (var i = 0;
+                                              i <
+                                                  staffInteractionComposeController
+                                                      .studentList.length;
+                                              i++) {
+                                            arrayStudents.add({
+                                              "AMST_Id":
+                                                  staffInteractionComposeController
+                                                      .studentList
+                                                      .elementAt(i)
+                                                      .amstId
+                                            });
+                                          }
+                                          logger.d(arrayStudents);
+                                          return;
+                                        }
+                                        arrayStudents.clear();
+                                        logger.d(arrayStudents);
+                                      },
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      shrinkWrap: true,
+                                      controller: _controller,
+                                      itemCount:
+                                          staffInteractionComposeController
+                                              .studentList.length,
+                                      itemBuilder: (context, index) {
+                                        return StudentListWidget(
+                                          data:
+                                              staffInteractionComposeController
+                                                  .studentList
+                                                  .elementAt(index),
+                                          function: addStudentInList,
+                                          function1: removeFromStudentInList,
+                                          selectAll: selectAll.value,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),

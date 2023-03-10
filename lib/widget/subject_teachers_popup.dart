@@ -113,8 +113,14 @@ class _SubjectTeachersPopupState extends State<SubjectTeachersPopup> {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (_) {
                             return InteractionHomeScreen(
-                                loginSuccessModel: widget.loginSuccessModel,
-                                mskoolController: widget.mskoolController);
+                              loginSuccessModel: widget.loginSuccessModel,
+                              mskoolController: widget.mskoolController,
+                              role: widget.studentProfileDetails.sujectteachers!
+                                  .values![index].subjectTeacher,
+                              hrmeId: widget.studentProfileDetails
+                                  .sujectteachers!.values![index].hRMEId!
+                                  .toInt(),
+                            );
                           }));
                         },
                         child: Padding(

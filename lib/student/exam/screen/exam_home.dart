@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/student/exam/controller/exam_controller.dart';
@@ -24,57 +23,14 @@ class ExamHome extends StatefulWidget {
 }
 
 class _ExamHomeState extends State<ExamHome> with TickerProviderStateMixin {
-  final examController = Get.put(ExamController());
   TabController? tabController;
   final PageController pageController = PageController();
   int selectedTab = 0;
 
-  getAcademicYear() async {
-    examController.isloading(true);
-    await examController
-        .getAcademicYearData(
-            miID: widget.loginSuccessModel.mIID!,
-            amstID: widget.loginSuccessModel.amsTId!,
-            base: baseUrlFromInsCode(
-              'portal',
-              widget.mskoolController,
-            ))
-        .then((value) async {
-      if (value) {
-        await examController
-            .getExamListData(
-                miID: widget.loginSuccessModel.mIID!,
-                amstID: widget.loginSuccessModel.amsTId!,
-                asmayID: examController.selectedYear!.asmaYId!,
-                base: baseUrlFromInsCode(
-                  'portal',
-                  widget.mskoolController,
-                ))
-            .then((value) async {
-          if (value) {
-            examController.examwiseMarkOverview.clear();
-            examController.isDataListloading(true);
-            await examController.getMarkOverviewData(
-                miID: widget.loginSuccessModel.mIID!,
-                asmayID: examController.selectedYear!.asmaYId!,
-                asmtID: widget.loginSuccessModel.amsTId!,
-                emeID: examController.examList.first.emEId!,
-                base: baseUrlFromInsCode(
-                  'portal',
-                  widget.mskoolController,
-                ));
-            examController.isDataListloading(false);
-          }
-        });
-      }
-    });
-    examController.isloading(false);
-  }
-
   @override
   void initState() {
     super.initState();
-    getAcademicYear();
+
     tabController = TabController(length: 2, vsync: this);
     tabController!.addListener(() {
       pageController.animateToPage(tabController!.index,
@@ -130,6 +86,7 @@ class _ExamHomeState extends State<ExamHome> with TickerProviderStateMixin {
                 child: PageView.builder(
                     onPageChanged: (newPage) {
                       tabController!.animateTo(newPage);
+                      
                     },
                     controller: pageController,
                     itemCount: pages.length,

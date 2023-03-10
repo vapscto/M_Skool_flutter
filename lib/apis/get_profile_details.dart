@@ -54,6 +54,15 @@ class GetProfileDetails {
   }) async {
     final Dio dio = getGlobalDio();
     final String api = base + URLS.studentProfileDetails;
+    logger.d(api);
+    logger.d({
+      "AMST_Id": amstId,
+      "MI_Id": miId,
+      "ASMAY_Id": asmayId,
+      "User_Id": userId,
+      "roleid": roleId,
+      "student_staffflag": "Student"
+    });
     try {
       Response response =
           await dio.post(api, options: Options(headers: getSession()), data: {

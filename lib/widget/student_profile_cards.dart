@@ -107,7 +107,9 @@ class StudentProfileCards extends StatelessWidget {
                               MaterialPageRoute(builder: (_) {
                             return InteractionHomeScreen(
                                 loginSuccessModel: loginSuccessModel,
-                                mskoolController: mskoolController);
+                                mskoolController: mskoolController,
+                                role: studentProfileDetails.classteacher!.values!.first.classTeacher,
+                                hrmeId: studentProfileDetails.classteacher!.values!.first.hRMEId!.toInt(),);
                           }));
                         },
                         child: Padding(

@@ -14,7 +14,6 @@ import 'package:m_skool_flutter/model/exam_list.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/notice/screen/notice_home.dart';
 import 'package:m_skool_flutter/screens/home_page_drawer.dart';
-import 'package:m_skool_flutter/screens/notification.dart';
 import 'package:m_skool_flutter/student/attendance/screens/home_page.dart';
 import 'package:m_skool_flutter/student/certificates/screens/cert_home.dart';
 import 'package:m_skool_flutter/student/classwork/screen/classwork_home_screen.dart';
@@ -198,32 +197,32 @@ class _HomeState extends State<Home> {
             },
           ),
           title: homeViewPage.elementAt(pageNumber.value)["title"]!,
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) {
-                      return NotificationScreen(
-                        // appBarTitle: "Notice",
-                        loginSuccessModel: widget.loginSuccessModel,
-                        mskoolController: widget.mskoolController,
-                        openFor: 'student', hwCwNbController: hwCwNbController,
-                      );
-                      // hwCwNbController: hwCwNbController);
-                    },
-                  ),
-                );
-              },
-              icon: SvgPicture.asset(
-                'assets/svg/bell.svg',
-              ),
-            ),
-            const SizedBox(
-              width: 6.0,
-            ),
-          ],
+          // actions: [
+          //   IconButton(
+          //     onPressed: () {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(
+          //           builder: (_) {
+          //             return NotificationScreen(
+          //               // appBarTitle: "Notice",
+          //               loginSuccessModel: widget.loginSuccessModel,
+          //               mskoolController: widget.mskoolController,
+          //               openFor: 'student', hwCwNbController: hwCwNbController,
+          //             );
+          //             // hwCwNbController: hwCwNbController);
+          //           },
+          //         ),
+          //       );
+          //     },
+          //     icon: SvgPicture.asset(
+          //       'assets/svg/bell.svg',
+          //     ),
+          //   ),
+          //   const SizedBox(
+          //     width: 6.0,
+          //   ),
+          // ],
         ),
         drawer: HomePageDrawer(
           loginSuccessModel: widget.loginSuccessModel,
