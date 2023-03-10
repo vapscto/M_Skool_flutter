@@ -34,14 +34,14 @@ class VapsContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/images/vpslogo.png',
+                  'assets/images/app_icon.png',
                   height: 36,
                 ),
                 const SizedBox(
                   width: 12.0,
                 ),
                 Text(
-                  "VAPS International School".tr,
+                  "St. James' School".tr,
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!

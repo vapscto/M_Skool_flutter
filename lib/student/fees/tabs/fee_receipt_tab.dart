@@ -637,7 +637,7 @@ class _FeeReceiptTabState extends State<FeeReceiptTab> {
                                                 // pw.Image(
                                                 //     pw.MemoryImage(
                                                 //       (await rootBundle.load(
-                                                //               'assets/images/vpslogo.png'))
+                                                //               'assets/images/app_icon.png'))
                                                 //           .buffer
                                                 //           .asUint8List(),
                                                 //     ),

@@ -1,7 +1,7 @@
 const Map<String, String> enUS = {
   "login": "Login",
   "Attendance": "Attendance",
-  "VAPS International School": "VAPS International School",
+  "St. James' School": "St. James' School",
   "Academic Year": "Academic Year",
   "Total Class Held : ": "Total Class Held : ",
   "Total Class Attended : ": "Total Class Attended : ",
