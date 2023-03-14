@@ -3,17 +3,16 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:m_skool_flutter/apis/dashboard_exam_api.dart';
 import 'package:m_skool_flutter/constants/constants.dart';
 import 'package:m_skool_flutter/controller/dashboard_controller.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-
-import 'package:m_skool_flutter/apis/dashboard_exam_api.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
 import 'package:m_skool_flutter/model/exam_graph_model.dart';
 import 'package:m_skool_flutter/model/exam_list.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/widget/animated_progress_widget.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class DashboardLineChart extends StatelessWidget {
   final ExamListNewValues selectedExam;
@@ -128,7 +127,7 @@ class _ChartState extends State<Chart> {
         SfCartesianChart(
           //legend: Legend(isVisible: true),
           primaryYAxis: NumericAxis(
-            labelFormat: "{value}%",
+            labelFormat: "{value}",
             majorGridLines: const MajorGridLines(width: 0.0),
           ),
           primaryXAxis: CategoryAxis(
