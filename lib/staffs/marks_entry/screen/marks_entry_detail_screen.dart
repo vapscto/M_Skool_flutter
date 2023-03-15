@@ -201,7 +201,8 @@ class _MarksEntryDetailScreenState extends State<MarksEntryDetailScreen> {
                                 marksEntryController
                                     .marksEntryDataTableList.first.totalMarks
                                     .toString()
-                                    .substring(0, 2),
+                                    .split(".")
+                                    .first,
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium!

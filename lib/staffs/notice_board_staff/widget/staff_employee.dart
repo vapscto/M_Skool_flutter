@@ -65,7 +65,7 @@ class _StaffEmployeeState extends State<StaffEmployee> {
           return widget.controller.isErrorOccuredWhileLoadingEmployee.value
               ? const ErrWidget(
                   err: {
-                    "errorTite": "An Error Occured",
+                    "errorTitle": "An Error Occured",
                     "errorMsg":
                         "An error occured while trying to get employee list",
                   },
