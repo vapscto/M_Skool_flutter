@@ -21,6 +21,7 @@ class AttendanceEntryController extends GetxController {
   RxList<MonthListValue> monthList = <MonthListValue>[].obs;
   RxList<ViewStudentPeriodWiseAttDetailsValue> attendanceEntryRecordList =
       <ViewStudentPeriodWiseAttDetailsValue>[].obs;
+  RxList<CurrentYearValue> currentYear = <CurrentYearValue>[].obs;
 
   // student data list for table of monthwise attendance entry.
   RxList<MonthWiseStudentListValue> monthwiseStudentList =
@@ -125,6 +126,10 @@ class AttendanceEntryController extends GetxController {
         for (var i = 0; i < initialDataModel.monthList!.values!.length; i++) {
           monthList.add(initialDataModel.monthList!.values!.elementAt(i)!);
         }
+      }
+      if (initialDataModel.currentYear != null ||
+          initialDataModel.currentYear!.values != null) {
+        currentYear.add(initialDataModel.currentYear!.values!.first!);
       }
 
       if (initialDataModel.periodlist != null ||

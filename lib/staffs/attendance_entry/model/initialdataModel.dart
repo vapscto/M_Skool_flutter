@@ -66,7 +66,7 @@ class InitialDataModel {
   num? userId;
   String? flag;
   num? roleId;
-  AcademicYearList? currentYear;
+  CurrentYear? currentYear;
   num? ismSId;
   Periodlist? periodlist;
   num? ttmPId;
@@ -98,7 +98,7 @@ class InitialDataModel {
         userId: json["userId"],
         flag: json["flag"],
         roleId: json["roleId"],
-        currentYear: AcademicYearList.fromJson(json["currentYear"]),
+        currentYear: CurrentYear.fromJson(json["currentYear"]),
         ismSId: json["ismS_Id"],
         periodlist: Periodlist.fromJson(json["periodlist"]),
         ttmPId: json["ttmP_Id"],
@@ -637,5 +637,135 @@ class SubjectListValue {
         "ismS_SubjectNameNew": ismSSubjectNameNew,
         "createdDate": createdDate?.toIso8601String(),
         "updatedDate": updatedDate?.toIso8601String(),
+      };
+}
+
+class CurrentYear {
+  CurrentYear({
+    this.type,
+    this.values,
+  });
+
+  String? type;
+  List<CurrentYearValue?>? values;
+
+  factory CurrentYear.fromJson(Map<String, dynamic> json) => CurrentYear(
+        type: json["\$type"],
+        values: List<CurrentYearValue>.from(
+            json["\$values"].map((x) => CurrentYearValue.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "\$type": type,
+        "\$values": List<dynamic>.from(values!.map((x) => x!.toJson())),
+      };
+}
+
+class CurrentYearValue {
+  CurrentYearValue({
+    this.asmaYId,
+    this.mIId,
+    this.asmaYYear,
+    this.asmaYFromDate,
+    this.asmaYToDate,
+    this.asmaYPreAdmFDate,
+    this.asmaYPreAdmTDate,
+    this.asmaYOrder,
+    this.asmaYActiveFlag,
+    this.asmaYCutOfDate,
+    this.asmaYPreActiveFlag,
+    this.isActive,
+    this.asmaYReggularFlg,
+    this.asmaYNewFlg,
+    this.asmaYNewAdmissionFlg,
+    this.asmaYTransportSDate,
+    this.asmaYTransportEDate,
+    this.asmaYCreatedBy,
+    this.asmaYUpdatedBy,
+    this.asmaYAcademicYearCode,
+    this.asmaYRegularFeeFDate,
+    this.asmaYRegularFeeTDate,
+    this.createdDate,
+    this.updatedDate,
+  });
+
+  int? asmaYId;
+  int? mIId;
+  String? asmaYYear;
+  DateTime? asmaYFromDate;
+  DateTime? asmaYToDate;
+  DateTime? asmaYPreAdmFDate;
+  DateTime? asmaYPreAdmTDate;
+  int? asmaYOrder;
+  int? asmaYActiveFlag;
+  DateTime? asmaYCutOfDate;
+  int? asmaYPreActiveFlag;
+  bool? isActive;
+  bool? asmaYReggularFlg;
+  bool? asmaYNewFlg;
+  bool? asmaYNewAdmissionFlg;
+  DateTime? asmaYTransportSDate;
+  DateTime? asmaYTransportEDate;
+  int? asmaYCreatedBy;
+  int? asmaYUpdatedBy;
+  String? asmaYAcademicYearCode;
+  DateTime? asmaYRegularFeeFDate;
+  DateTime? asmaYRegularFeeTDate;
+  DateTime? createdDate;
+  DateTime? updatedDate;
+
+  factory CurrentYearValue.fromJson(Map<String, dynamic> json) =>
+      CurrentYearValue(
+        asmaYId: json["asmaY_Id"],
+        mIId: json["mI_Id"],
+        asmaYYear: json["asmaY_Year"],
+        asmaYFromDate: DateTime.parse(json["asmaY_From_Date"]),
+        asmaYToDate: DateTime.parse(json["asmaY_To_Date"]),
+        asmaYPreAdmFDate: DateTime.parse(json["asmaY_PreAdm_F_Date"]),
+        asmaYPreAdmTDate: DateTime.parse(json["asmaY_PreAdm_T_Date"]),
+        asmaYOrder: json["asmaY_Order"],
+        asmaYActiveFlag: json["asmaY_ActiveFlag"],
+        asmaYCutOfDate: DateTime.parse(json["asmaY_Cut_Of_Date"]),
+        asmaYPreActiveFlag: json["asmaY_Pre_ActiveFlag"],
+        isActive: json["is_Active"],
+        asmaYReggularFlg: json["asmaY_ReggularFlg"],
+        asmaYNewFlg: json["asmaY_NewFlg"],
+        asmaYNewAdmissionFlg: json["asmaY_NewAdmissionFlg"],
+        asmaYTransportSDate: DateTime.parse(json["asmaY_TransportSDate"]),
+        asmaYTransportEDate: DateTime.parse(json["asmaY_TransportEDate"]),
+        asmaYCreatedBy: json["asmaY_CreatedBy"],
+        asmaYUpdatedBy: json["asmaY_UpdatedBy"],
+        asmaYAcademicYearCode: json["asmaY_AcademicYearCode"],
+        asmaYRegularFeeFDate: DateTime.parse(json["asmaY_RegularFeeFDate"]),
+        asmaYRegularFeeTDate: DateTime.parse(json["asmaY_RegularFeeTDate"]),
+        createdDate: DateTime.parse(json["createdDate"]),
+        updatedDate: DateTime.parse(json["updatedDate"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "asmaY_Id": asmaYId,
+        "mI_Id": mIId,
+        "asmaY_Year": asmaYYear,
+        "asmaY_From_Date": asmaYFromDate!.toIso8601String(),
+        "asmaY_To_Date": asmaYToDate!.toIso8601String(),
+        "asmaY_PreAdm_F_Date": asmaYPreAdmFDate!.toIso8601String(),
+        "asmaY_PreAdm_T_Date": asmaYPreAdmTDate!.toIso8601String(),
+        "asmaY_Order": asmaYOrder,
+        "asmaY_ActiveFlag": asmaYActiveFlag,
+        "asmaY_Cut_Of_Date": asmaYCutOfDate!.toIso8601String(),
+        "asmaY_Pre_ActiveFlag": asmaYPreActiveFlag,
+        "is_Active": isActive,
+        "asmaY_ReggularFlg": asmaYReggularFlg,
+        "asmaY_NewFlg": asmaYNewFlg,
+        "asmaY_NewAdmissionFlg": asmaYNewAdmissionFlg,
+        "asmaY_TransportSDate": asmaYTransportSDate!.toIso8601String(),
+        "asmaY_TransportEDate": asmaYTransportEDate!.toIso8601String(),
+        "asmaY_CreatedBy": asmaYCreatedBy,
+        "asmaY_UpdatedBy": asmaYUpdatedBy,
+        "asmaY_AcademicYearCode": asmaYAcademicYearCode,
+        "asmaY_RegularFeeFDate": asmaYRegularFeeFDate!.toIso8601String(),
+        "asmaY_RegularFeeTDate": asmaYRegularFeeTDate!.toIso8601String(),
+        "createdDate": createdDate!.toIso8601String(),
+        "updatedDate": updatedDate!.toIso8601String(),
       };
 }

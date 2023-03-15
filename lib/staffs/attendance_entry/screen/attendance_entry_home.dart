@@ -1,3 +1,5 @@
+// ignore_for_file: unrelated_type_equality_checks, prefer_interpolation_to_compose_strings
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -590,7 +592,11 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                   selectedPeriod = null;
                                   startDate.text = '';
                                   endDate.text = '';
-                                  todayDate.text = '';
+                                  todayDate.text = attendanceEntryController
+                                              .attendanceEntry.value ==
+                                          'M'
+                                      ? "${DateTime.now().year}/${DateTime.now().month}/${DateTime.now().day}"
+                                      : "";
                                 });
 
                                 if (attendanceEntryController
@@ -787,8 +793,29 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                   }),
                                   onChanged: (s) {
                                     selectedMonth = s!;
-                                    startDate.text = '';
-                                    endDate.text = '';
+                                    startDate.text =
+                                        "${DateTime.now().year}/${s.ivrMMonthId!.toInt()}/1";
+                                    selectedstartdate = DateTime(
+                                        DateTime.now().year,
+                                        s.ivrMMonthId!.toInt(),
+                                        1);
+                                    endDate.text =
+                                        "${DateTime.now().year}/${s.ivrMMonthId!.toInt()}/"
+                                        "${s.ivrMMonthId!.toInt() == 1 || s.ivrMMonthId!.toInt() == 3 || s.ivrMMonthId!.toInt() == 5 || s.ivrMMonthId!.toInt() == 7 || s.ivrMMonthId!.toInt() == 8 || s.ivrMMonthId!.toInt() == 10 || s.ivrMMonthId!.toInt() == 12 ? '31' : s.ivrMMonthId!.toInt() == 2 ? '28' : '30'}";
+                                    selectedenddate = DateTime(
+                                        DateTime.now().year,
+                                        s.ivrMMonthId!.toInt(),
+                                        s.ivrMMonthId!.toInt() == 1 ||
+                                                s.ivrMMonthId!.toInt() == 3 ||
+                                                s.ivrMMonthId!.toInt() == 5 ||
+                                                s.ivrMMonthId!.toInt() == 7 ||
+                                                s.ivrMMonthId!.toInt() == 8 ||
+                                                s.ivrMMonthId!.toInt() == 10 ||
+                                                s.ivrMMonthId!.toInt() == 12
+                                            ? 31
+                                            : s.ivrMMonthId!.toInt() == 2
+                                                ? 28
+                                                : 30);
                                     getStudentListOnChangeOfMonth(
                                         s.ivrMMonthId!.toInt());
                                   },
@@ -821,10 +848,14 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                       showDatePicker(
                                         context: context,
                                         initialDate: selecteddate,
-                                        firstDate: DateTime(
-                                          selectedAcademicYear!
-                                              .asmaYFromDate!.year,
-                                        ),
+                                        firstDate: attendanceEntryController
+                                                    .attendanceEntry.value ==
+                                                'M'
+                                            ? DateTime.now()
+                                            : DateTime(
+                                                selectedAcademicYear!
+                                                    .asmaYFromDate!.year,
+                                              ),
                                         lastDate: DateTime.now(),
                                       ).then((value) {
                                         if (value != null) {
@@ -933,34 +964,34 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                               .titleSmall,
                                           readOnly: true,
                                           controller: startDate,
-                                          onTap: () async {
-                                            selectedstartdate =
-                                                await showDatePicker(
-                                              context: context,
-                                              initialDate: DateTime(
-                                                DateTime.now().year,
-                                                selectedMonth!.ivrMMonthId!
-                                                    .toInt(),
-                                              ),
-                                              firstDate: DateTime(
-                                                  DateTime.now().year,
-                                                  selectedMonth!.ivrMMonthId!
-                                                      .toInt(),
-                                                  1),
-                                              lastDate: DateTime(
-                                                  DateTime.now().year,
-                                                  selectedMonth!.ivrMMonthId!
-                                                      .toInt(),
-                                                  31),
-                                            );
+                                          // onTap: () async {
+                                          //   selectedstartdate =
+                                          //       await showDatePicker(
+                                          //     context: context,
+                                          //     initialDate: DateTime(
+                                          //       DateTime.now().year,
+                                          //       selectedMonth!.ivrMMonthId!
+                                          //           .toInt(),
+                                          //     ),
+                                          //     firstDate: DateTime(
+                                          //         DateTime.now().year,
+                                          //         selectedMonth!.ivrMMonthId!
+                                          //             .toInt(),
+                                          //         1),
+                                          //     lastDate: DateTime(
+                                          //         DateTime.now().year,
+                                          //         selectedMonth!.ivrMMonthId!
+                                          //             .toInt(),
+                                          //         31),
+                                          //   );
 
-                                            if (selectedstartdate != null) {
-                                              setState(() {
-                                                startDate.text =
-                                                    "${numberList[selectedstartdate!.day]}-${numberList[selectedstartdate!.month]}-${selectedstartdate!.year}";
-                                              });
-                                            }
-                                          },
+                                          //   if (selectedstartdate != null) {
+                                          //     setState(() {
+                                          //       startDate.text =
+                                          //           "${numberList[selectedstartdate!.day]}-${numberList[selectedstartdate!.month]}-${selectedstartdate!.year}";
+                                          //     });
+                                          //   }
+                                          // },
                                           decoration: InputDecoration(
                                             suffixIcon: IconButton(
                                               onPressed: () {},
@@ -1045,33 +1076,25 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                               .textTheme
                                               .titleSmall,
                                           controller: endDate,
-                                          onTap: () async {
-                                            selectedenddate =
-                                                await showDatePicker(
-                                              context: context,
-                                              initialDate: DateTime(
-                                                  DateTime.now().year,
-                                                  selectedMonth!.ivrMMonthId!
-                                                      .toInt(),
-                                                  DateTime.now().day),
-                                              firstDate: DateTime(
-                                                  DateTime.now().year,
-                                                  selectedMonth!.ivrMMonthId!
-                                                      .toInt()),
-                                              lastDate: DateTime(
-                                                  DateTime.now().year,
-                                                  selectedMonth!.ivrMMonthId!
-                                                      .toInt(),
-                                                  31),
-                                            );
+                                          // onTap: () async {
+                                          //   selectedenddate =
+                                          //       await showDatePicker(
+                                          //     context: context,
+                                          //     initialDate: DateTime.now(),
+                                          //     firstDate: DateTime(
+                                          //         DateTime.now().year,
+                                          //         selectedMonth!.ivrMMonthId!
+                                          //             .toInt()),
+                                          //     lastDate: DateTime.now(),
+                                          //   );
 
-                                            if (selectedenddate != null) {
-                                              setState(() {
-                                                endDate.text =
-                                                    "${numberList[selectedenddate!.day]}-${numberList[selectedenddate!.month]}-${selectedenddate!.year}";
-                                              });
-                                            }
-                                          },
+                                          //   if (selectedenddate != null) {
+                                          //     setState(() {
+                                          //       endDate.text =
+                                          //           "${numberList[selectedenddate!.day]}-${numberList[selectedenddate!.month]}-${selectedenddate!.year}";
+                                          //     });
+                                          //   }
+                                          // },
                                           decoration: InputDecoration(
                                             isDense: true,
                                             contentPadding:
@@ -1564,6 +1587,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                           .toInt(),
                                       asmclId: selectedClass!.asmcLId!.toInt(),
                                       asmsId: selectedSection!.asmSId!.toInt(),
+                                      selectedDate: selecteddate.toString(),
                                     ));
                               } else {
                                 Fluttertoast.showToast(
@@ -1586,6 +1610,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                           .toInt(),
                                       asmclId: selectedClass!.asmcLId!.toInt(),
                                       asmsId: selectedSection!.asmSId!.toInt(),
+                                      selectedDate: selecteddate.toString(),
                                     ));
                               } else {
                                 Fluttertoast.showToast(
@@ -1615,7 +1640,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                       selectedradio: selectedRadio,
                                       subjectId:
                                           selectedSubject!.ismSId!.toInt(),
-                                      dateTime: selecteddate,
+                                      dateTime: selecteddate.toString(),
                                     ));
                               } else {
                                 Fluttertoast.showToast(
