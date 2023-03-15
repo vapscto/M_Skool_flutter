@@ -16,7 +16,7 @@ class PeriodWiseAttendanceEntryDetailScreen extends StatefulWidget {
   final MskoolController mskoolController;
   final int asaId;
   final int asmayId;
-  final String dateTime;
+  final String selectedDate;
   final int asmclId;
   final int asmsId;
   final String selectedradio;
@@ -33,7 +33,7 @@ class PeriodWiseAttendanceEntryDetailScreen extends StatefulWidget {
     required this.selectedradio,
     required this.subjectId,
     required this.periodId,
-    required this.dateTime,
+    required this.selectedDate,
   });
 
   @override
@@ -112,7 +112,30 @@ class _PeriodWiseAttendanceEntryDetailScreenState
                         .amsTRegistrationNo
                   });
                 }
-
+                logger.d({
+                  "ASA_Id": widget.asaId,
+                  "MI_Id": widget.loginSuccessModel.mIID!,
+                  "ASMAY_Id": widget.asmayId,
+                  "ASA_Att_Type": "period",
+                  "ASA_Att_EntryType":
+                      attendanceEntryController.attendanceEntryType.value == 'P'
+                          ? 'Present'
+                          : 'Absent',
+                  "ASMCL_Id": widget.asmclId,
+                  "ASMS_Id": widget.asmsId,
+                  "ASA_Entry_DateTime": widget.selectedDate,
+                  "ASA_FromDate": date,
+                  "ASA_ToDate": date,
+                  "ASA_ClassHeld": "1.00",
+                  "ASA_Regular_Extra": widget.selectedradio,
+                  "ASA_Network_IP": "::1",
+                  "AMST_Id": 0,
+                  "ASA_Class_Attended": 0.0,
+                  "stdList": stdList,
+                  "userId": widget.loginSuccessModel.userId!,
+                  "ismS_Id": widget.subjectId,
+                  "TTMP_Id": widget.periodId
+                });
                 attendanceEntryController.issaveloading(true);
                 await saveAttendanceEntry(
                   data: {
