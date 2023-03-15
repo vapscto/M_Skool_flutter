@@ -1587,7 +1587,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                           .toInt(),
                                       asmclId: selectedClass!.asmcLId!.toInt(),
                                       asmsId: selectedSection!.asmSId!.toInt(),
-                                      selectedDate: selecteddate.toString(),
+                                      selectedDate: todayDate.text,
                                     ));
                               } else {
                                 Fluttertoast.showToast(
@@ -1610,7 +1610,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                           .toInt(),
                                       asmclId: selectedClass!.asmcLId!.toInt(),
                                       asmsId: selectedSection!.asmSId!.toInt(),
-                                      selectedDate: selecteddate.toString(),
+                                      selectedDate: todayDate.text,
                                     ));
                               } else {
                                 Fluttertoast.showToast(
@@ -1640,7 +1640,7 @@ class _AttendanceEntryHomeScreenState extends State<AttendanceEntryHomeScreen> {
                                       selectedradio: selectedRadio,
                                       subjectId:
                                           selectedSubject!.ismSId!.toInt(),
-                                      dateTime: selecteddate.toString(),
+                                      selectedDate: todayDate.text,
                                     ));
                               } else {
                                 Fluttertoast.showToast(
