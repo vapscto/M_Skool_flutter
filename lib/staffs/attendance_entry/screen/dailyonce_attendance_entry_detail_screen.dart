@@ -17,6 +17,7 @@ class DailyOnceAttendanceEntryDetailScreen extends StatefulWidget {
   final int asmayId;
   final int asmclId;
   final int asmsId;
+  final String selectedDate;
   const DailyOnceAttendanceEntryDetailScreen({
     super.key,
     required this.loginSuccessModel,
@@ -25,6 +26,7 @@ class DailyOnceAttendanceEntryDetailScreen extends StatefulWidget {
     required this.asmayId,
     required this.asmclId,
     required this.asmsId,
+    required this.selectedDate,
   });
 
   @override
@@ -122,7 +124,7 @@ class _DailyOnceAttendanceEntryDetailScreenState
                             : 'Absent',
                     "ASMCL_Id": widget.asmclId,
                     "ASMS_Id": widget.asmsId,
-                    "ASA_Entry_DateTime": date,
+                    "ASA_Entry_DateTime": widget.selectedDate,
                     "ASA_FromDate": date,
                     "ASA_ToDate": date,
                     "ASA_ClassHeld": "1.00",
