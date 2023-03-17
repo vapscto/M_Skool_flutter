@@ -3,7 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:m_skool_flutter/controller/global_utilities.dart';
 import 'package:m_skool_flutter/controller/mskoll_controller.dart';
-import 'package:m_skool_flutter/main.dart';
 import 'package:m_skool_flutter/model/login_success_model.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/api/attendance_entry_related_api.dart';
 import 'package:m_skool_flutter/staffs/attendance_entry/controller/attendance_entry_related_controller.dart';
@@ -110,32 +109,7 @@ class _DailyOnceAttendanceEntryDetailScreenState
                     },
                   );
                 }
-
-                logger.d({
-                  "ASA_Id": widget.asaId,
-                  "MI_Id": widget.loginSuccessModel.mIID!,
-                  "ASMAY_Id": widget.asmayId,
-                  "ASA_Att_Type": "Dailyonce",
-                  "ASA_Att_EntryType":
-                      attendanceEntryController.attendanceEntryType.value == 'P'
-                          ? 'Present'
-                          : 'Absent',
-                  "ASMCL_Id": widget.asmclId,
-                  "ASMS_Id": widget.asmsId,
-                  "ASA_Entry_DateTime": widget.selectedDate,
-                  "ASA_FromDate": date,
-                  "ASA_ToDate": date,
-                  "ASA_ClassHeld": "1.00",
-                  "ASA_Regular_Extra": "Regular",
-                  "ASA_Network_IP": "::1",
-                  "AMST_Id": 0,
-                  "stdList": stdList,
-                  "username": widget.loginSuccessModel.userName!,
-                  "userId": widget.loginSuccessModel.userId!,
-                  "ismS_Id": 0,
-                  "TTMP_Id": 0,
-                  "asasB_Id": 0
-                });
+                
 
                 attendanceEntryController.issaveloading(true);
                 await saveAttendanceEntry(

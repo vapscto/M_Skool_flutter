@@ -46,7 +46,6 @@ class _MonthWiseAttendanceEntryDetailScreenState
   final AttendanceEntryController attendanceEntryController =
       Get.put(AttendanceEntryController());
   List<Map<String, dynamic>> studentList = [];
-  
 
   @override
   Widget build(BuildContext context) {
