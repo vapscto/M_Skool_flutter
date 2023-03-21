@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
-    package="com.app.bghs">
+    package="com.app.bbhs">
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -14,7 +14,7 @@ xmlns:tools="http://schemas.android.com/tools"
         <package android:name="com.whatsapp" />
     </queries>
    <application
-        android:label="BGHS"
+        android:label="BBHS"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         tools:replace="android:label">
