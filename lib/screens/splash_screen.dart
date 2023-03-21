@@ -241,20 +241,16 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       backgroundColor: Colors.white,
                       radius: 36,
-                      child: Icon(
-                        Icons.school_outlined,
-                        size: 46,
-                        color: Theme.of(context).primaryColor,
-                      ),
+                      backgroundImage: AssetImage("assets/images/BGHS.png"),
                     ),
                     const SizedBox(
                       height: 12.0,
                     ),
                     Text(
-                      "M Skool",
+                      "BGHS",
                       style: Theme.of(context).textTheme.titleMedium!.merge(
                           const TextStyle(fontSize: 30.0, color: Colors.white)),
                     ),

@@ -1,4 +1,4 @@
-package com.example.m_skool_flutter
+package com.app.bghs
 
 import android.content.Intent
 import android.os.Bundle

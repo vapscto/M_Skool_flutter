@@ -1,77 +1,34 @@
 {
   "project_info": {
-    "project_number": "542163507398",
-    "project_id": "mskool-6b32d",
-    "storage_bucket": "mskool-6b32d.appspot.com"
+    "project_number": "138301884815",
+    "project_id": "baldwin-girl-s-high-school",
+    "storage_bucket": "baldwin-girl-s-high-school.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:542163507398:android:93d1b1b1403bf147f69fc7",
+        "mobilesdk_app_id": "1:138301884815:android:db2fddba91fc54fcc063fa",
         "android_client_info": {
-          "package_name": "com.app.mskool"
+          "package_name": "com.app.bghs"
         }
       },
       "oauth_client": [
         {
-          "client_id": "542163507398-a30tauipe54770ruoth1lsi9bn51b0th.apps.googleusercontent.com",
+          "client_id": "138301884815-6p9jsqomffuuqh5vlfjm1seh5rn5438k.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyArCbgvnuDOyba452Gt8Irc-9RTb3mF_7M"
+          "current_key": "AIzaSyCHoxLUUwnu_MTvtSFFZ4fxBrNTnxDgM8I"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "542163507398-a30tauipe54770ruoth1lsi9bn51b0th.apps.googleusercontent.com",
+              "client_id": "138301884815-6p9jsqomffuuqh5vlfjm1seh5rn5438k.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "542163507398-a3pit8l3r1iiduoph5v3a6is2qd55uek.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.mSkoolFlutter"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:542163507398:android:34072f646ef507c4f69fc7",
-        "android_client_info": {
-          "package_name": "com.example.m_skool_flutter"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "542163507398-a30tauipe54770ruoth1lsi9bn51b0th.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyArCbgvnuDOyba452Gt8Irc-9RTb3mF_7M"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "542163507398-a30tauipe54770ruoth1lsi9bn51b0th.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "542163507398-a3pit8l3r1iiduoph5v3a6is2qd55uek.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.mSkoolFlutter"
-              }
             }
           ]
         }
