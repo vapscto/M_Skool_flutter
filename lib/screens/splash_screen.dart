@@ -244,13 +244,13 @@ class _SplashScreenState extends State<SplashScreen> {
                     const CircleAvatar(
                       backgroundColor: Colors.white,
                       radius: 36,
-                      backgroundImage: AssetImage("assets/images/BBHS.png"),
+                      backgroundImage: AssetImage("assets/images/bcehs.jpg"),
                     ),
                     const SizedBox(
                       height: 12.0,
                     ),
                     Text(
-                      "BBHS",
+                      "BCEHS",
                       style: Theme.of(context).textTheme.titleMedium!.merge(
                           const TextStyle(fontSize: 30.0, color: Colors.white)),
                     ),

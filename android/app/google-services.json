@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "1048190915232",
-    "project_id": "baldwin-boy-s-high-school",
-    "storage_bucket": "baldwin-boy-s-high-school.appspot.com"
+    "project_number": "321212419526",
+    "project_id": "baldwin-co-education",
+    "storage_bucket": "baldwin-co-education.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1048190915232:android:1b2bbb7c304995b58fafc5",
+        "mobilesdk_app_id": "1:321212419526:android:cb1845c5400d18dc1676c7",
         "android_client_info": {
-          "package_name": "com.app.bbhs"
+          "package_name": "com.app.BCEHS"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1048190915232-rgubk13nhmmn3njbr9mtj534vqvnfmrj.apps.googleusercontent.com",
+          "client_id": "321212419526-et5i1n82tuov1eh69cu7gkaclso4q2ir.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDKFdfrflEI5msYh2BYeH9R1zlfxEnM4Pc"
+          "current_key": "AIzaSyBQYtFUAin7IB5C6uqW8PFBLEsafFFrpjs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1048190915232-rgubk13nhmmn3njbr9mtj534vqvnfmrj.apps.googleusercontent.com",
+              "client_id": "321212419526-et5i1n82tuov1eh69cu7gkaclso4q2ir.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -64,14 +64,14 @@ class _InstitutionalLoginState extends State<InstitutionalLogin> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                        "assets/images/BBHS.png",
+                        "assets/images/bcehs.jpg",
                         height: 40,
                       ),
                       const SizedBox(
                         width: 12.0,
                       ),
                       Text(
-                        "Baldwin Boys's High school",
+                        "Baldwin Co Educational school",
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ],

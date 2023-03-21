@@ -1,4 +1,4 @@
-package com.app.bbhs
+package com.app.bcehs
 
 import android.content.Intent
 import android.os.Bundle
